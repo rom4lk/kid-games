@@ -13,6 +13,12 @@ const DIFFICULTIES = {
 // One mechanic at a time: walk, then gather, then build.
 const COACH_ORDER = ["move", "collect", "build", "done"];
 
+// A pause carries no meaning when motion is reduced, so it is dropped there.
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const STANDARD_BUILDINGS = ["garden", "workshop", "library"];
+const BUILDINGS = [...STANDARD_BUILDINGS, "festival"];
+
 const TILE_DATA = {
   plain: { icon: "🍀", food: 1, wood: 0, idea: 0 },
   forest: { icon: "🌲", food: 0, wood: 2, idea: 0 },
@@ -78,7 +84,6 @@ const elements = {
 };
 
 let soundEnabled = true;
-let audioContext;
 
 function readText(id) {
   return document.querySelector(`#${id}`).textContent.trim();
@@ -188,6 +193,18 @@ function whole(value, fallback) {
   return Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
 }
 
+// A saved game is text the player can edit, so every part of it is filtered
+// down to values the rest of the code already knows how to draw.
+function knownTile(value) {
+  return typeof value === "string" && Object.hasOwn(TILE_DATA, value);
+}
+
+function tileIndexes(value, limit) {
+  return Array.isArray(value)
+    ? value.filter((index) => Number.isInteger(index) && index >= 0 && index < limit)
+    : [];
+}
+
 function loadGame() {
   let saved;
   try {
@@ -199,15 +216,18 @@ function loadGame() {
     !saved
     || !Array.isArray(saved.tiles)
     || saved.tiles.length !== MAP_WIDTH * MAP_HEIGHT
-    || !saved.tiles.every((type) => type in TILE_DATA)
+    || !saved.tiles.every(knownTile)
   ) {
     return false;
   }
 
+  const tileCount = saved.tiles.length;
   Object.assign(state, saved, {
-    revealed: new Set(saved.revealed),
-    collected: new Set(saved.collected),
-    buildings: new Set(saved.buildings),
+    revealed: new Set(tileIndexes(saved.revealed, tileCount)),
+    collected: new Set(tileIndexes(saved.collected, tileCount)),
+    buildings: new Set(Array.isArray(saved.buildings)
+      ? saved.buildings.filter((building) => BUILDINGS.includes(building))
+      : []),
     finished: false,
   });
   if (!DIFFICULTIES[state.difficulty]) state.difficulty = "normal";
@@ -280,7 +300,7 @@ function moveExplorer(index) {
   if (state.energy === 0) {
     window.setTimeout(() => {
       if (!state.finished && state.energy === 0) setMessage("no-energy");
-    }, 700);
+    }, REDUCED_MOTION.matches ? 0 : 700);
   }
 }
 
@@ -339,9 +359,7 @@ function canAfford(button) {
 }
 
 function standardBuildingCount() {
-  return ["garden", "workshop", "library"]
-    .filter((building) => state.buildings.has(building))
-    .length;
+  return STANDARD_BUILDINGS.filter((building) => state.buildings.has(building)).length;
 }
 
 function renderBuildings() {
@@ -428,24 +446,9 @@ function build(button) {
 
 function playSound(type) {
   if (!soundEnabled) return;
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-
-  audioContext ??= new AudioContext();
-  const context = audioContext;
-  if (context.state === "suspended") context.resume();
   const notes = type === "victory" ? [523, 659, 784, 1047] : [440, 554, 659];
   notes.forEach((frequency, index) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.0001, context.currentTime + index * 0.11);
-    gain.gain.exponentialRampToValueAtTime(0.12, context.currentTime + index * 0.11 + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + index * 0.11 + 0.2);
-    oscillator.connect(gain).connect(context.destination);
-    oscillator.start(context.currentTime + index * 0.11);
-    oscillator.stop(context.currentTime + index * 0.11 + 0.22);
+    window.GameSound?.tone({ frequency, delay: index * 0.11, duration: 0.2, volume: 0.12 });
   });
 }
 
@@ -468,6 +471,9 @@ function startGame(difficulty) {
   hideModals();
   render();
   saveGame();
+  // The dialog that had the focus is gone now, so the keyboard is handed the
+  // explorer instead of falling back to the top of the page.
+  elements.map.querySelector(`[data-index="${state.explorer}"]`)?.focus();
 }
 
 // A dialog covers the whole screen, so the board behind it must stop being
