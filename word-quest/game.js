@@ -13,6 +13,10 @@ const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
 
 const SPEECH_LOCALES = { en: "en-US", ru: "ru-RU" };
 
+// A browser can accept start() and then never open the microphone: no start, no
+// error, no end. Without this wait the button would light up and say nothing.
+const RECOGNITION_START_TIMEOUT = 3000;
+
 const DEFAULT_STATE = {
   language: null,
   completed: {},
@@ -53,6 +57,9 @@ let currentHintUsed = false;
 let currentTaskSolved = false;
 let solvedTaskIndexes = new Set();
 let recognition;
+let recognitionStartTimer;
+let recognitionAnswered = false;
+let microphoneRequested = false;
 let audioContext;
 
 function readState() {
@@ -660,31 +667,62 @@ function speechLocale() {
   return SPEECH_LOCALES[activeLanguage] || SPEECH_LOCALES.en;
 }
 
-function startRecognition() {
+async function startRecognition() {
   if (currentTaskSolved || !state.settings.microphone) return;
 
+  // A second press stops listening. Starting again while the previous session is
+  // still closing makes the browser drop the new one without a single event.
+  if (recognition) {
+    stopRecognition();
+    setText("recognitionStatus", "");
+    return;
+  }
+
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!Recognition) {
+  if (!Recognition || !window.isSecureContext) {
     setText("recognitionStatus", ui.play.microphoneUnsupported);
     return;
   }
 
-  stopRecognition();
-  recognition = new Recognition();
-  recognition.lang = speechLocale();
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 3;
+  // The request for access is still waiting for an answer.
+  if (microphoneRequested) return;
 
-  recognition.onstart = () => {
-    elements.microphoneButton.classList.add("active");
-    setText("microphoneLabel", ui.play.microphoneListening);
+  const task = currentTaskOf();
+  showListeningButton();
+  microphoneRequested = true;
+  const allowed = await requestMicrophoneAccess();
+  microphoneRequested = false;
+
+  if (!allowed) {
+    resetMicrophoneButton();
+    setText("recognitionStatus", ui.play.microphonePermission);
+    return;
+  }
+
+  // Asking for access takes as long as the child needs to answer the browser,
+  // so the word on the screen can already be a different one.
+  if (recognition || currentTaskSolved || currentTaskOf() !== task) {
+    resetMicrophoneButton();
+    return;
+  }
+
+  const listener = new Recognition();
+  recognition = listener;
+  recognitionAnswered = false;
+  listener.lang = speechLocale();
+  listener.interimResults = false;
+  listener.maxAlternatives = 3;
+
+  listener.onstart = () => {
+    clearRecognitionTimer();
+    showListeningButton();
     setText("recognitionStatus", ui.play.microphoneListening);
     state.stats.voiceTries += 1;
     saveState();
   };
 
-  recognition.onresult = (event) => {
-    const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
+  listener.onresult = (event) => {
+    recognitionAnswered = true;
     const alternatives = [...event.results[0]].map((result) => result.transcript.trim());
     const target = normalizeSpeech(task.word);
     const matched = alternatives.some((transcript) => {
@@ -705,7 +743,16 @@ function startRecognition() {
     }
   };
 
-  recognition.onerror = (event) => {
+  listener.onnomatch = () => {
+    recognitionAnswered = true;
+    setText("recognitionStatus", ui.play.microphoneError);
+  };
+
+  listener.onerror = (event) => {
+    recognitionAnswered = true;
+    // "aborted" only means the game itself stopped listening.
+    if (event.error === "aborted") return;
+
     const permissionErrors = new Set(["not-allowed", "service-not-allowed", "audio-capture"]);
     setText(
       "recognitionStatus",
@@ -715,29 +762,78 @@ function startRecognition() {
     );
   };
 
-  recognition.onend = () => {
-    elements.microphoneButton.classList.remove("active");
-    setText("microphoneLabel", ui.play.microphone);
+  listener.onend = () => {
+    clearRecognitionTimer();
     recognition = undefined;
+    resetMicrophoneButton();
+
+    // A session that ends with no result and no error must still answer the press.
+    if (!recognitionAnswered) {
+      setText("recognitionStatus", ui.play.microphoneError);
+    }
   };
 
+  recognitionStartTimer = window.setTimeout(() => {
+    recognitionStartTimer = undefined;
+    if (recognition !== listener) return;
+    stopRecognition();
+    setText("recognitionStatus", ui.play.microphoneUnsupported);
+  }, RECOGNITION_START_TIMEOUT);
+
   try {
-    recognition.start();
+    listener.start();
   } catch {
+    stopRecognition();
     setText("recognitionStatus", ui.play.microphoneError);
   }
 }
 
-function stopRecognition() {
-  if (!recognition) return;
-  recognition.onend = null;
-  recognition.abort();
-  recognition = undefined;
+// The speech prompt of the browser is easy to miss, and a prompt that stays
+// unanswered kills the session silently. A plain request for the microphone gives
+// a clear answer and, once it is granted, speech recognition starts right away.
+async function requestMicrophoneAccess() {
+  if (!navigator.mediaDevices?.getUserMedia) return true;
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach((track) => track.stop());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function currentTaskOf() {
+  return currentPack?.chapters[currentChapterIndex]?.tasks[currentTaskIndex];
+}
+
+function showListeningButton() {
+  elements.microphoneButton.classList.add("active");
+  setText("microphoneLabel", ui.play.microphoneListening);
+}
+
+function resetMicrophoneButton() {
   elements.microphoneButton.classList.remove("active");
 
   if (ui) {
     setText("microphoneLabel", ui.play.microphone);
   }
+}
+
+function clearRecognitionTimer() {
+  if (recognitionStartTimer === undefined) return;
+  window.clearTimeout(recognitionStartTimer);
+  recognitionStartTimer = undefined;
+}
+
+function stopRecognition() {
+  clearRecognitionTimer();
+  resetMicrophoneButton();
+  if (!recognition) return;
+
+  recognition.onend = null;
+  recognition.abort();
+  recognition = undefined;
 }
 
 function normalizeSpeech(value) {
