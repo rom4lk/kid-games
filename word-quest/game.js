@@ -58,6 +58,7 @@ let recognitionStartTimer;
 let recognitionAnswered = false;
 let microphoneRequested = false;
 let audioContext;
+let speakTimer;
 
 function readState() {
   try {
@@ -134,6 +135,7 @@ function setText(id, value) {
 }
 
 function showScreen(target) {
+  stopSpeaking();
   screens.forEach((screen) => {
     screen.hidden = screen !== target;
   });
@@ -214,6 +216,7 @@ function initializeStaticContent() {
   setText("tapHint", ui.play.tapHint);
   setText("microphoneLabel", ui.play.microphone);
   setText("hintLabel", ui.play.hint);
+  setText("listenLabel", ui.play.listen);
   setText("choiceInstruction", ui.play.choiceInstruction);
 
   setText("parentEyebrow", ui.parent.eyebrow);
@@ -250,6 +253,7 @@ function bindEvents() {
   elements.wordCard.addEventListener("click", revealHint);
   elements.hintButton.addEventListener("click", revealHint);
   elements.microphoneButton.addEventListener("click", startRecognition);
+  elements.listenButton.addEventListener("click", speakCurrentWord);
   elements.nextButton.addEventListener("click", advanceTask);
   elements.chapterButton.addEventListener("click", leaveChapterCelebration);
   elements.microphoneSetting.addEventListener("change", updateMicrophoneSetting);
@@ -477,6 +481,7 @@ function skipTask() {
 
 function renderTask() {
   stopRecognition();
+  stopSpeaking();
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
   currentAttemptCount = 0;
@@ -606,9 +611,15 @@ function handleChoice(button, choiceId) {
   setText("recognitionStatus", "");
   elements.sceneCharacter.classList.add("celebrate");
   elements.successPanel.hidden = false;
+  elements.listenButton.hidden = !canSpeak();
   elements.nextButton.focus({ preventScroll: true });
   renderHeader();
   playTone("success");
+
+  if (canSpeak()) {
+    // Let the success jingle finish before the voice starts.
+    speakTimer = window.setTimeout(() => speakWord(task.word), 400);
+  }
 }
 
 function advanceTask() {
@@ -676,6 +687,32 @@ function configureMicrophoneButton() {
 
 function speechLocale() {
   return SPEECH_LOCALES[activeLanguage] || SPEECH_LOCALES.en;
+}
+
+function canSpeak() {
+  return state.settings.sound && "speechSynthesis" in window;
+}
+
+function speakWord(word) {
+  if (!canSpeak()) return;
+  window.speechSynthesis.cancel();
+  // Words are stored in upper case; some voices spell capitals letter by letter.
+  const utterance = new SpeechSynthesisUtterance(word.toLocaleLowerCase(speechLocale()));
+  utterance.lang = speechLocale();
+  utterance.rate = 0.9;
+  window.speechSynthesis.speak(utterance);
+}
+
+function speakCurrentWord() {
+  const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
+  speakWord(task.word);
+}
+
+function stopSpeaking() {
+  window.clearTimeout(speakTimer);
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
 }
 
 async function startRecognition() {

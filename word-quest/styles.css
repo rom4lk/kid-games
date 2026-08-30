@@ -1247,6 +1247,19 @@ h1 {
   font-size: 1.4rem;
 }
 
+.success-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.listen-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .success-panel h2 {
   margin-bottom: 3px;
   font-size: 1.05rem;
@@ -1730,8 +1743,12 @@ h1 {
     grid-template-columns: auto 1fr;
   }
 
-  .success-panel .primary-button {
+  .success-panel .success-actions {
     grid-column: 1 / -1;
+  }
+
+  .success-actions .primary-button {
+    flex: 1;
   }
 
   .chapter-celebration {
