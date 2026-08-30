@@ -25,7 +25,13 @@
       "Gather two branches and a stone, follow the glowing path back, and build a campfire. No reading and no way to lose.",
       "Собери две ветки и камень, вернись по светящейся дорожке и сложи костер. Читать не нужно, проиграть нельзя."
     ],
-    ["NO READING", "БЕЗ ЧТЕНИЯ"]
+    ["NO READING", "БЕЗ ЧТЕНИЯ"],
+    ["Cube Island", "Остров кубиков"],
+    [
+      "Take plank blocks from the tray and put them on the bright spots in the river. Five builds in a row: a bridge, a dock, a raft, steps and a base.",
+      "Бери доски из запаса и ставь их на светлые клетки реки. Пять построек подряд: мост, пирс, плот, ступеньки и база."
+    ],
+    ["BUILDING", "СТРОЙКА"]
   ],
   "templates": []
 }
