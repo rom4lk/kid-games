@@ -46,7 +46,7 @@ A local server is needed to load the file with the voice lines. The rest of the 
 - The arrow keys and `WASD` move the hero.
 - `Space` performs the available contextual action.
 - `Escape` pauses the game and resumes it.
-- The speaker button repeats the current hint.
+- The light-bulb button repeats the current hint, the speaker button turns sound off.
 
 ## Logic check
 

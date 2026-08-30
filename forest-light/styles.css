@@ -1088,11 +1088,6 @@ button:focus-visible {
     bottom: 19%;
   }
 
-  .player {
-    --player-x: 47%;
-    --player-y: 55%;
-  }
-
   .hint-hand {
     left: 18%;
     top: 36%;

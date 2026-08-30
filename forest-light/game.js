@@ -309,7 +309,7 @@ function startGame() {
     const x = ((targetRect.left - worldRect.left + targetRect.width / 2) / worldRect.width) * 100;
     const y = ((targetRect.top - worldRect.top + targetRect.height * 0.78) / worldRect.height) * 100;
     updatePlayerPosition(x, y);
-    await safeDelay(moveDuration());
+    await safeDelay(shortened(MOVE_DURATION));
   }
 
   function updateGoal(kind) {
@@ -476,7 +476,8 @@ function startGame() {
     try {
       window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
     } catch {
-      setStatus("A cozy evening.");
+      // Private browsing modes can refuse writes. The chapter still ends the
+      // same way; only the count of finished chapters is lost.
     }
   }
 
@@ -497,10 +498,11 @@ function startGame() {
       victoryOverlay.classList.add("is-visible");
       victoryOverlay.setAttribute("aria-hidden", "false");
       restartButton.focus();
-    }, 1050);
+    }, shortened(VICTORY_DELAY));
   }
 
   function handleMainAction() {
+    if (paused) return;
     if (state.phase === "explore") {
       collectSelectedResource();
     } else if (state.phase === "ready") {
@@ -511,7 +513,6 @@ function startGame() {
   function setPaused(nextPaused) {
     if (state.phase === "evening") return;
     paused = nextPaused;
-    world.classList.toggle("is-paused", paused);
     pauseOverlay.classList.toggle("is-visible", paused);
     pauseOverlay.setAttribute("aria-hidden", String(!paused));
     if (paused) {
@@ -590,9 +591,7 @@ function startGame() {
     const key = event.code;
     if (steps[key]) {
       event.preventDefault();
-      movementSequence += 1;
-      selectedResource = null;
-      action.disabled = true;
+      cancelSelection();
       updatePlayerPosition(playerPosition.x + steps[key][0], playerPosition.y + steps[key][1]);
     }
   });
