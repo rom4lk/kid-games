@@ -86,6 +86,10 @@ Every game writes its progress to `localStorage` under its own key:
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.
 
+Every card on the home page has a settings button in its corner: it opens a small panel for an adult
+that resets the progress of that game after a confirmation. The reset removes only the keys listed
+above, so the sound and language settings stay as they were.
+
 ## Shared principles
 
 The mandatory rules for every existing and new game are described in [GAME_DESIGN.md](GAME_DESIGN.md).

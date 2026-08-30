@@ -1,49 +1,130 @@
 {
   "pairs": [
-    ["Language", "Язык"],
-    ["Interface language", "Язык интерфейса"],
-    ["HOME SHELF", "ДОМАШНЯЯ ПОЛКА"],
-    ["Games for kids", "Игры для детей"],
+    [
+      "Language",
+      "Язык"
+    ],
+    [
+      "Interface language",
+      "Язык интерфейса"
+    ],
+    [
+      "HOME SHELF",
+      "ДОМАШНЯЯ ПОЛКА"
+    ],
+    [
+      "Games for kids",
+      "Игры для детей"
+    ],
     [
       "Small browser games. They need no install, no build and no internet — just open a card below.",
       "Маленькие браузерные игры. Они не требуют установки, сборки или интернета — достаточно открыть карточку ниже."
     ],
-    ["Living Words", "Живые слова"],
+    [
+      "Living Words",
+      "Живые слова"
+    ],
     [
       "Read a word aloud and pick the matching picture. Levels by word length, story chapters of ten words.",
       "Прочитать слово вслух и выбрать подходящую картинку. Уровни по длине слова, главы-истории по 10 слов."
     ],
-    ["READING", "ЧТЕНИЕ"],
-    ["Island of Discovery", "Остров открытий"],
+    [
+      "READING",
+      "ЧТЕНИЕ"
+    ],
+    [
+      "Island of Discovery",
+      "Остров открытий"
+    ],
     [
       "Walk the island one step a day, gather apples, logs and ideas, build a garden, a workshop and a library, and finish with a festival.",
       "Ходи по острову шаг за шагом, собирай яблоки, бревна и идеи, построй сад, мастерскую и библиотеку и устрой праздник."
     ],
-    ["STRATEGY", "СТРАТЕГИЯ"],
-    ["Forest Light", "Лесной огонек"],
+    [
+      "STRATEGY",
+      "СТРАТЕГИЯ"
+    ],
+    [
+      "Forest Light",
+      "Лесной огонек"
+    ],
     [
       "Gather two branches and a stone, follow the glowing path back, and build a campfire. No reading and no way to lose.",
       "Собери две ветки и камень, вернись по светящейся дорожке и сложи костер. Читать не нужно, проиграть нельзя."
     ],
-    ["NO READING", "БЕЗ ЧТЕНИЯ"],
-    ["Cube Island", "Остров кубиков"],
+    [
+      "NO READING",
+      "БЕЗ ЧТЕНИЯ"
+    ],
+    [
+      "Cube Island",
+      "Остров кубиков"
+    ],
     [
       "Take plank blocks from the tray and put them on the bright spots in the river. Five builds in a row: a bridge, a dock, a raft, steps and a base.",
       "Бери доски из запаса и ставь их на светлые клетки реки. Пять построек подряд: мост, пирс, плот, ступеньки и база."
     ],
-    ["BUILDING", "СТРОЙКА"],
-    ["Robo Route", "Маршрут робота"],
+    [
+      "BUILDING",
+      "СТРОЙКА"
+    ],
+    [
+      "Robo Route",
+      "Маршрут робота"
+    ],
     [
       "Build a chain of picture commands, press play and watch the robot carry a parcel to its station. Six levels, no reading.",
       "Собери цепочку картинок-команд, нажми пуск и смотри, как робот везет посылку на станцию. Шесть уровней, читать не нужно."
     ],
-    ["PROGRAMMING", "ПРОГРАММИРОВАНИЕ"],
-    ["Garden Quest", "Садовый квест"],
+    [
+      "PROGRAMMING",
+      "ПРОГРАММИРОВАНИЕ"
+    ],
+    [
+      "Garden Quest",
+      "Садовый квест"
+    ],
     [
       "Walk the garden, collect fruit and vegetables and plan the route before the steps run out. Ten fixed maps, three stars on each.",
       "Ходи по саду, собирай фрукты и овощи и продумывай маршрут, пока не кончились шаги. Десять постоянных карт, на каждой три звезды."
     ],
-    ["PUZZLE", "ГОЛОВОЛОМКА"]
+    [
+      "PUZZLE",
+      "ГОЛОВОЛОМКА"
+    ],
+    [
+      "Progress is stored in this browser.",
+      "Прогресс хранится в этом браузере."
+    ],
+    [
+      "Reset progress",
+      "Сбросить прогресс"
+    ],
+    [
+      "Close",
+      "Закрыть"
+    ],
+    [
+      "Reset progress for this game? This cannot be undone.",
+      "Сбросить прогресс этой игры? Отменить это будет нельзя."
+    ],
+    [
+      "Yes, reset",
+      "Да, сбросить"
+    ],
+    [
+      "Cancel",
+      "Отмена"
+    ],
+    [
+      "Progress reset. The game starts from the beginning.",
+      "Прогресс сброшен. Игра начнется сначала."
+    ]
   ],
-  "templates": []
+  "templates": [
+    [
+      "Settings: {game}",
+      "Настройки: {game}"
+    ]
+  ]
 }

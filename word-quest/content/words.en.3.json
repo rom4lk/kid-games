@@ -603,9 +603,9 @@
               "label": "nut"
             },
             {
-              "id": "acorn",
-              "emoji": "🌰",
-              "label": "acorn"
+              "id": "leaf",
+              "emoji": "🍁",
+              "label": "leaf"
             },
             {
               "id": "berry",
@@ -671,7 +671,7 @@
           "choices": [
             {
               "id": "tea",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "tea"
             },
             {
@@ -1225,7 +1225,7 @@
           "choices": [
             {
               "id": "tea",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "tea"
             },
             {
@@ -2852,7 +2852,7 @@
           "choices": [
             {
               "id": "tea",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "tea"
             },
             {
@@ -4418,7 +4418,7 @@
           "choices": [
             {
               "id": "tea",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "tea"
             },
             {
@@ -4599,7 +4599,7 @@
           "choices": [
             {
               "id": "tea",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "tea"
             },
             {

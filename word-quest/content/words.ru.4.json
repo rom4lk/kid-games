@@ -704,9 +704,9 @@
               "label": "камень"
             },
             {
-              "id": "zheludy",
-              "emoji": "🌰",
-              "label": "желудь"
+              "id": "list",
+              "emoji": "🍁",
+              "label": "лист"
             }
           ],
           "correct": "oreh"
@@ -724,7 +724,7 @@
             },
             {
               "id": "chay",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "чай"
             },
             {
@@ -1363,7 +1363,7 @@
             },
             {
               "id": "chay",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "чай"
             },
             {
@@ -1410,9 +1410,9 @@
               "label": "орех"
             },
             {
-              "id": "zheludy",
-              "emoji": "🌰",
-              "label": "желудь"
+              "id": "list",
+              "emoji": "🍁",
+              "label": "лист"
             },
             {
               "id": "yagoda",
@@ -2500,7 +2500,7 @@
             },
             {
               "id": "chay",
-              "emoji": "🍵",
+              "emoji": "🫖",
               "label": "чай"
             }
           ],

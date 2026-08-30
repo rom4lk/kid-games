@@ -12,6 +12,7 @@
         --muted: #667780;
         --paper: #fffaf0;
         --green-dark: #307157;
+        --danger: #b03a2e;
       }
 
       * {
@@ -19,17 +20,22 @@
       }
 
       body {
-        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
         margin: 0;
-        padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 40px);
+        padding: clamp(14px, 2.6vh, 34px) clamp(16px, 3vw, 36px);
+        gap: clamp(10px, 1.8vh, 20px);
         color: var(--ink);
         background: linear-gradient(150deg, #fff7d8 0%, #e4f0d2 54%, #d7ecdf 100%);
         font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
       }
 
       header {
-        max-width: 620px;
-        margin: 0 auto 28px;
+        flex: none;
+        width: 100%;
+        max-width: 1180px;
+        margin: 0 auto;
       }
 
       .header-top {
@@ -49,38 +55,47 @@
       }
 
       h1 {
-        margin: 4px 0 8px;
-        font-size: clamp(28px, 5vw, 42px);
+        margin: 2px 0 6px;
+        font-size: clamp(24px, 3.6vh, 40px);
       }
 
       header p {
-        max-width: 62ch;
+        max-width: 68ch;
         margin: 0;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.5;
+        font-size: 15px;
+        line-height: 1.45;
       }
 
-      ul {
+      .shelf {
         display: grid;
-        max-width: 620px;
+        flex: 1;
+        width: 100%;
+        max-width: 1180px;
+        min-height: 0;
         margin: 0 auto;
         padding: 0;
-        gap: 14px;
+        gap: clamp(10px, 1.6vh, 16px);
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         list-style: none;
+      }
+
+      .shelf-item {
+        position: relative;
+        min-height: 0;
       }
 
       a.card {
         display: grid;
         height: 100%;
-        padding: 24px 24px 26px;
+        padding: clamp(14px, 2vh, 22px);
         border: 2px solid rgba(48, 113, 87, 0.16);
         border-radius: 20px;
         background: var(--paper);
         box-shadow: 0 12px 30px rgba(71, 76, 57, 0.12);
         color: inherit;
         text-decoration: none;
-        gap: 8px;
+        gap: 6px;
         align-content: start;
         transition: transform 160ms ease, border-color 160ms ease;
       }
@@ -95,29 +110,169 @@
         outline-offset: 3px;
       }
 
+      .card-head {
+        display: flex;
+        min-height: 46px;
+        align-items: center;
+        padding-right: 44px;
+        gap: 12px;
+      }
+
       .emoji {
-        font-size: 56px;
+        font-size: clamp(30px, 4.4vh, 44px);
         line-height: 1;
       }
 
       .card h2 {
-        margin: 4px 0 0;
-        font-size: 26px;
+        margin: 0;
+        font-size: clamp(19px, 2.6vh, 26px);
       }
 
       .card p {
         margin: 0;
+        overflow: hidden;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.45;
+        font-size: 15px;
+        line-height: 1.4;
       }
 
       .tag {
-        margin-top: 6px;
+        margin-top: 2px;
         color: var(--green-dark);
         font-size: 15px;
         font-weight: 900;
         letter-spacing: 0.1em;
+      }
+
+      /* Adult controls: small, quiet and clearly apart from the text a child reads. */
+      .settings-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 2px solid rgba(48, 113, 87, 0.2);
+        border-radius: 50%;
+        background: #fff;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .settings-button:hover {
+        border-color: var(--green-dark);
+        color: var(--green-dark);
+      }
+
+      .settings-button:focus-visible {
+        outline: 3px solid var(--green-dark);
+        outline-offset: 2px;
+      }
+
+      .settings-panel {
+        position: absolute;
+        z-index: 5;
+        top: 58px;
+        right: 10px;
+        width: min(266px, calc(100% - 20px));
+        padding: 14px;
+        border: 2px solid rgba(48, 113, 87, 0.24);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 16px 34px rgba(35, 55, 67, 0.24);
+        text-align: left;
+      }
+
+      .settings-panel[hidden] {
+        display: none;
+      }
+
+      .settings-panel--above {
+        top: auto;
+        bottom: 10px;
+      }
+
+      .settings-panel-title {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .settings-panel-note {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .settings-panel button {
+        width: 100%;
+        min-height: 40px;
+        padding: 8px 12px;
+        border: 2px solid rgba(35, 55, 67, 0.22);
+        border-radius: 12px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .settings-panel button + button {
+        margin-top: 8px;
+      }
+
+      .settings-panel button:focus-visible {
+        outline: 3px solid var(--green-dark);
+        outline-offset: 2px;
+      }
+
+      .settings-danger {
+        border-color: rgba(176, 58, 46, 0.4);
+        color: var(--danger);
+      }
+
+      .settings-danger:hover {
+        background: #fdf1ef;
+      }
+
+      .settings-done {
+        margin: 0;
+        color: var(--green-dark);
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      /* Enough room for the whole shelf: fix the rows so nothing scrolls.
+         Smaller windows keep the plain scrolling shelf above. */
+      @media (min-width: 860px) and (min-height: 700px) {
+        body {
+          height: 100dvh;
+          overflow: hidden;
+        }
+
+        .shelf {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-rows: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 1040px) and (min-height: 620px) {
+        body {
+          height: 100dvh;
+          overflow: hidden;
+        }
+
+        .shelf {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-rows: repeat(2, minmax(0, 1fr));
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -154,51 +309,63 @@
       </p>
     </header>
 
-    <ul>
-      <li>
+    <ul class="shelf">
+      <li class="shelf-item" data-game="word-quest">
         <a class="card" href="word-quest/">
-          <span class="emoji" aria-hidden="true">📖</span>
-          <h2>Living Words</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">📖</span>
+            <h2>Living Words</h2>
+          </div>
           <p>Read a word aloud and pick the matching picture. Levels by word length, story chapters of ten words.</p>
           <span class="tag">READING</span>
         </a>
       </li>
-      <li>
+      <li class="shelf-item" data-game="island-discovery">
         <a class="card" href="island-discovery/">
-          <span class="emoji" aria-hidden="true">🧭</span>
-          <h2>Island of Discovery</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">🧭</span>
+            <h2>Island of Discovery</h2>
+          </div>
           <p>Walk the island one step a day, gather apples, logs and ideas, build a garden, a workshop and a library, and finish with a festival.</p>
           <span class="tag">STRATEGY</span>
         </a>
       </li>
-      <li>
+      <li class="shelf-item" data-game="forest-light">
         <a class="card" href="forest-light/">
-          <span class="emoji" aria-hidden="true">🔥</span>
-          <h2>Forest Light</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">🔥</span>
+            <h2>Forest Light</h2>
+          </div>
           <p>Gather two branches and a stone, follow the glowing path back, and build a campfire. No reading and no way to lose.</p>
           <span class="tag">NO READING</span>
         </a>
       </li>
-      <li>
+      <li class="shelf-item" data-game="cube-island">
         <a class="card" href="cube-island/">
-          <span class="emoji" aria-hidden="true">🧱</span>
-          <h2>Cube Island</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">🧱</span>
+            <h2>Cube Island</h2>
+          </div>
           <p>Take plank blocks from the tray and put them on the bright spots in the river. Five builds in a row: a bridge, a dock, a raft, steps and a base.</p>
           <span class="tag">BUILDING</span>
         </a>
       </li>
-      <li>
+      <li class="shelf-item" data-game="robo-route">
         <a class="card" href="robo-route/">
-          <span class="emoji" aria-hidden="true">🤖</span>
-          <h2>Robo Route</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">🤖</span>
+            <h2>Robo Route</h2>
+          </div>
           <p>Build a chain of picture commands, press play and watch the robot carry a parcel to its station. Six levels, no reading.</p>
           <span class="tag">PROGRAMMING</span>
         </a>
       </li>
-      <li>
+      <li class="shelf-item" data-game="garden-quest">
         <a class="card" href="garden-quest/">
-          <span class="emoji" aria-hidden="true">🧺</span>
-          <h2>Garden Quest</h2>
+          <div class="card-head">
+            <span class="emoji" aria-hidden="true">🧺</span>
+            <h2>Garden Quest</h2>
+          </div>
           <p>Walk the garden, collect fruit and vegetables and plan the route before the steps run out. Ten fixed maps, three stars on each.</p>
           <span class="tag">PUZZLE</span>
         </a>
@@ -206,5 +373,6 @@
     </ul>
 
     <script src="shared/game-language.js"></script>
+    <script src="shelf.js"></script>
   </body>
 </html>
