@@ -3,10 +3,7 @@ const STORAGE_KEY = "livingWordsProgressV2";
 const LANGUAGE_KEY = "kidGamesLanguageV1";
 const SUPPORTED_LANGUAGES = ["en", "ru"];
 
-// Temporary: only levels with a finished word pack are listed. Restore
-// [3, 4, 5, 6, 7] for both languages once words.ru.6, words.en.7 and
-// words.ru.7 are written.
-const LEVELS = { en: [3, 4, 5, 6], ru: [3, 4, 5] };
+const LEVELS = { en: [3, 4, 5, 6, 7], ru: [3, 4, 5, 6, 7] };
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
@@ -651,15 +648,29 @@ function leaveChapterCelebration() {
   startChapter(currentChapterIndex + 1);
 }
 
+// Brave ships the recognition API, but its speech service is switched off on
+// purpose, so every session dies right away with a "network" error.
+function speechRecognitionAvailable() {
+  return (
+    Boolean(window.SpeechRecognition || window.webkitSpeechRecognition)
+    && window.isSecureContext
+    && !navigator.brave
+  );
+}
+
 function configureMicrophoneButton() {
-  const supported = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const supported = speechRecognitionAvailable();
   const enabled = state.settings.microphone;
   elements.microphoneButton.disabled = !enabled || !supported;
   elements.microphoneButton.classList.remove("active");
   setText("microphoneLabel", enabled ? ui.play.microphone : ui.play.microphoneDisabled);
 
+  // The explanation appears as a tooltip over the dead button, not as a
+  // permanent line under the word.
   if (enabled && !supported) {
-    setText("recognitionStatus", ui.play.microphoneUnsupported);
+    elements.microphoneButton.dataset.tooltip = ui.play.microphoneUnsupported;
+  } else {
+    delete elements.microphoneButton.dataset.tooltip;
   }
 }
 
@@ -678,11 +689,11 @@ async function startRecognition() {
     return;
   }
 
-  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!Recognition || !window.isSecureContext) {
+  if (!speechRecognitionAvailable()) {
     setText("recognitionStatus", ui.play.microphoneUnsupported);
     return;
   }
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   // The request for access is still waiting for an answer.
   if (microphoneRequested) return;
@@ -754,12 +765,14 @@ async function startRecognition() {
     if (event.error === "aborted") return;
 
     const permissionErrors = new Set(["not-allowed", "service-not-allowed", "audio-capture"]);
-    setText(
-      "recognitionStatus",
-      permissionErrors.has(event.error)
-        ? ui.play.microphonePermission
-        : ui.play.microphoneError,
-    );
+    let message = ui.play.microphoneError;
+    if (permissionErrors.has(event.error)) {
+      message = ui.play.microphonePermission;
+    } else if (event.error === "network" || event.error === "language-not-supported") {
+      // The browser has no speech service behind the API.
+      message = ui.play.microphoneUnsupported;
+    }
+    setText("recognitionStatus", message);
   };
 
   listener.onend = () => {

@@ -7,7 +7,7 @@ next word.
 ## What is in the game
 
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
-- levels by word length: 3, 4, 5 and 6 letters in English, 3, 4 and 5 letters in Russian;
+- levels by word length, from 3 to 7 letters, in both languages;
 - 20 chapters in every level, 10 words in every chapter — 200 words per level;
 - every level is open from the menu, while the chapters inside a level unlock one after another;
 - a comprehension check through a choice of one picture out of three, with the captions hidden until
@@ -134,10 +134,10 @@ flag, because the levels are written one at a time.
 
 ## Adding a level
 
-The list of playable levels lives in the `LEVELS` constant at the top of [game.js](game.js). Levels 6
-and 7 in Russian and level 7 in English are not listed yet because their packs are not written. After
-a pack passes the validator, add its number to that list — the interface strings for levels 3 to 7
-already exist in both `ui.*.json` files.
+The list of playable levels lives in the `LEVELS` constant at the top of [game.js](game.js). All ten
+packs — levels 3 to 7 in both languages — are written and listed. To add another level, write its
+pack, run the validator, add the level number to `LEVELS` and add its strings to both `ui.*.json`
+files.
 
 ## Deliberate decisions
 

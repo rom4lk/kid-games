@@ -1079,7 +1079,51 @@ h1 {
 
 .microphone-button:disabled {
   cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.microphone-button:disabled > * {
   opacity: 0.48;
+}
+
+/* The reason the button is off, shown only while pointing at it. */
+.microphone-button {
+  position: relative;
+}
+
+.microphone-button[data-tooltip]:hover,
+.microphone-button[data-tooltip]:focus-visible {
+  z-index: 30;
+}
+
+.microphone-button[data-tooltip]::before {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 30;
+  width: max-content;
+  max-width: 260px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #271f52;
+  color: var(--mint);
+  content: attr(data-tooltip);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 0.15s ease;
+}
+
+.microphone-button[data-tooltip]:hover::before,
+.microphone-button[data-tooltip]:focus-visible::before {
+  opacity: 1;
 }
 
 .microphone-icon {
