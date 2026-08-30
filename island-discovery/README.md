@@ -42,7 +42,7 @@ untouched. The note button next to it switches the sound off and on.
 The start dialog and the main screen both provide an English or Russian interface selector. The shared
 choice is saved under `kidGamesLanguageV1`, and English is used when no choice has been saved yet. The
 text of the game is written in English in `index.html`, and the Russian version comes from
-`translations.json` through the shared `game-language.js`.
+`translations.json` through the shared `../shared/game-language.js`.
 
 ## Running
 

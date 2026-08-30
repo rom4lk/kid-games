@@ -24,9 +24,9 @@ the background:
 | `python3 server.py restart` | Stops the server and starts it again |
 | `python3 server.py status` | Reports whether the server runs |
 
-`start` writes the process id to `.server.pid` and the output of the server to `server.log`; both
-files are ignored by git. The commands only see a server that was started with `start`, not one
-running in the foreground.
+`start` writes the process id to `.server/server.pid` and the output of the server to
+`.server/server.log`; the whole `.server/` folder is ignored by git. The commands only see a server
+that was started with `start`, not one running in the foreground.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
 `island-discovery` and `forest-light` load translations and voice content the same way. That does not
@@ -51,7 +51,7 @@ The home page has a language picker and opens in English by default. The choice 
 page is the one a game opens in, and a language picked inside a game is the one the home page shows.
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
-next to it through the shared `game-language.js`. The home page, `island-discovery` and `forest-light`
+next to it through the shared `shared/game-language.js`. The home page, `island-discovery` and `forest-light`
 work this way; `word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks

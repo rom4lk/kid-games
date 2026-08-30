@@ -13,8 +13,9 @@ BIND_HOST = "0.0.0.0"
 DISPLAY_HOST = "127.0.0.1"
 PORT = 4173
 SERVER_PATH = Path(__file__).resolve()
-PID_PATH = SERVER_PATH.parent / ".server.pid"
-LOG_PATH = SERVER_PATH.parent / "server.log"
+RUNTIME_PATH = SERVER_PATH.parent / ".server"
+PID_PATH = RUNTIME_PATH / "server.pid"
+LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
 
 
@@ -53,6 +54,7 @@ def start_command():
         print(f"Already running with pid {pid} at http://{DISPLAY_HOST}:{PORT}/")
         return
 
+    RUNTIME_PATH.mkdir(exist_ok=True)
     with LOG_PATH.open("a", encoding="utf-8") as log:
         process = subprocess.Popen(
             [sys.executable, str(SERVER_PATH)],
@@ -65,7 +67,7 @@ def start_command():
     # A busy port kills the child right away, so give it a moment before reporting success.
     time.sleep(0.5)
     if process.poll() is not None:
-        print(f"Could not start the server, see {LOG_PATH.name}", file=sys.stderr)
+        print(f"Could not start the server, see {LOG_PATH.relative_to(SERVER_PATH.parent)}", file=sys.stderr)
         sys.exit(1)
 
     PID_PATH.write_text(f"{process.pid}\n")
