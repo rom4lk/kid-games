@@ -1,0 +1,959 @@
+:root {
+  --ink: #233743;
+  --muted: #667780;
+  --paper: #fffaf0;
+  --cream: #f6edcf;
+  --yellow: #f7ce57;
+  --orange: #ee8846;
+  --green: #5aa775;
+  --green-dark: #307157;
+  --blue: #7ec8d7;
+  --wood: #a86d3a;
+  --purple: #8c78bd;
+  --shadow: 0 12px 30px rgba(71, 76, 57, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 255, 255, 0.75) 0 4%, transparent 4.2%),
+    linear-gradient(150deg, #fff7d8 0%, #e4f0d2 54%, #d7ecdf 100%);
+  font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 3px;
+}
+
+.heading-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.sun {
+  position: fixed;
+  z-index: -1;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.3;
+}
+
+.sun-one {
+  top: -180px;
+  right: -70px;
+  background: #ffd663;
+}
+
+.sun-two {
+  bottom: -240px;
+  left: -100px;
+  background: #7bcbb5;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 18px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+  background: var(--yellow);
+  box-shadow: 0 7px 0 #e3a84d;
+  font-size: 34px;
+  transform: rotate(-5deg);
+}
+
+.eyebrow,
+.goal-label,
+.turn-label,
+.energy span,
+.city-heading > div > span,
+.build-heading > span {
+  color: var(--green-dark);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.eyebrow {
+  margin: 0 0 2px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(27px, 4vw, 42px);
+  line-height: 1;
+}
+
+.resource-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.resource {
+  display: flex;
+  min-width: 74px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 15px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 17px;
+  box-shadow: 0 6px 16px rgba(67, 71, 48, 0.12);
+  font-size: 25px;
+}
+
+.resource strong {
+  min-width: 20px;
+  font-size: 21px;
+  text-align: center;
+}
+
+.food-resource { background: #ffe2c4; }
+.wood-resource { background: #ead0ac; }
+.idea-resource { background: #f1e6a9; }
+
+.resource.bump {
+  animation: bump 0.42s ease;
+}
+
+.goal-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 20px 0 16px;
+  padding: 13px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: 0 6px 18px rgba(64, 74, 55, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.goal-icon {
+  font-size: 30px;
+}
+
+.goal-card > div:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* The one current goal is the main instruction on the screen. */
+#goal-text {
+  font-size: 24px;
+}
+
+.goal-progress {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--green);
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.72fr);
+  gap: 16px;
+}
+
+.map-card,
+.city-card {
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.map-card {
+  padding: 18px;
+  background: rgba(255, 251, 235, 0.92);
+}
+
+.map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 11px;
+}
+
+.map-toolbar > div:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+#turn-count {
+  font-size: 24px;
+}
+
+.energy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.energy-pips {
+  display: flex;
+  gap: 5px;
+}
+
+.energy-pip {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ce9f38;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+
+.energy-pip.used {
+  border-color: #cbd1c8;
+  background: #e0e3db;
+  box-shadow: none;
+}
+
+.map-wrap {
+  position: relative;
+  padding: 12px;
+  border: 3px solid #b7d7b5;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.52) 0 2%, transparent 2.3%),
+    #b7e1d1;
+  overflow: hidden;
+}
+
+.game-map {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(52px, 1fr));
+  gap: 8px;
+  aspect-ratio: 6 / 4;
+}
+
+.map-tile {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 -6px 0 rgba(52, 72, 51, 0.12),
+    0 3px 4px rgba(72, 97, 73, 0.14);
+  cursor: pointer;
+  font-size: clamp(30px, 4.6vw, 44px);
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.map-tile:hover:not(.hidden),
+.map-tile.reachable {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow:
+    inset 0 -6px 0 rgba(52, 72, 51, 0.12),
+    0 0 0 4px rgba(255, 226, 99, 0.92),
+    0 7px 10px rgba(72, 97, 73, 0.19);
+}
+
+.map-tile.hidden {
+  background: #87a59c;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.17);
+  cursor: default;
+}
+
+.map-tile.hidden::before {
+  content: "?";
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.map-tile.plain { background: #a8d67d; }
+.map-tile.forest { background: #71b879; }
+.map-tile.orchard { background: #bee07d; }
+.map-tile.hill { background: #d3bd8a; }
+.map-tile.lake { background: #7fcbd4; }
+.map-tile.ruins { background: #c7b4d8; }
+.map-tile.village { background: #e8c282; }
+.map-tile.city { background: #f4d268; }
+
+.map-tile.collected {
+  filter: saturate(0.7);
+}
+
+.map-tile.collected::before {
+  content: "✓";
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  color: #2f6b4f;
+  font-size: 17px;
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* A refused move is answered by the board, not only by the status line. */
+.map-tile.refused {
+  animation: tile-refuse 260ms ease;
+}
+
+@keyframes tile-refuse {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(3px) scale(0.95); }
+  65% { transform: translateY(0) scale(1.02); }
+}
+
+.game-map.show-reach .map-tile.reachable,
+.game-map.is-teaching .map-tile.reachable {
+  animation: reach-flash 900ms ease-in-out 2;
+}
+
+@keyframes reach-flash {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 226, 99, 0.92); }
+  50% { box-shadow: 0 0 0 9px rgba(255, 196, 60, 0.95); }
+}
+
+.building-list.is-locked {
+  display: none;
+}
+
+.difficulty-picker {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 20px 0 4px;
+}
+
+.difficulty-card {
+  display: grid;
+  padding: 16px 10px 14px;
+  border: 3px solid rgba(48, 113, 87, 0.2);
+  border-radius: 20px;
+  background: #fffdf3;
+  cursor: pointer;
+  gap: 6px;
+  justify-items: center;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.difficulty-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--green-dark, #307157);
+}
+
+.difficulty-face {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.difficulty-steps {
+  font-size: 19px;
+  letter-spacing: -2px;
+}
+
+.difficulty-card strong {
+  font-size: 16px;
+}
+
+.end-turn-button.is-waiting {
+  animation: end-turn-wait 1.1s ease-in-out infinite;
+}
+
+@keyframes end-turn-wait {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.map-tile.explorer::after {
+  content: "🧭";
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 4px 7px rgba(61, 61, 45, 0.26);
+  font-size: 17px;
+  animation: land 0.28s ease-out;
+}
+
+.map-compass {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: rgba(46, 112, 98, 0.32);
+  font-size: 27px;
+}
+
+.map-tip {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 10px;
+  margin: 11px 2px 10px;
+  padding: 9px 12px;
+  border-radius: 15px;
+  background: #eef5db;
+}
+
+.map-tip p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.tap-icon {
+  font-size: 23px;
+}
+
+.end-turn-button,
+.primary-button {
+  border: 0;
+  border-radius: 16px;
+  background: var(--orange);
+  box-shadow: 0 6px 0 #c96335;
+  color: white;
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.end-turn-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  font-size: 17px;
+}
+
+.end-turn-button:hover,
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #c96335;
+}
+
+.end-turn-button:active,
+.primary-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #c96335;
+}
+
+.city-card {
+  padding: 18px;
+  background: rgba(255, 248, 224, 0.95);
+}
+
+.city-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.city-badge {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 15px;
+  background: #f7d466;
+  font-size: 28px;
+}
+
+.city-heading h2 {
+  margin: 1px 0 0;
+  font-size: 24px;
+}
+
+.city-scene {
+  position: relative;
+  display: flex;
+  height: 92px;
+  align-items: end;
+  justify-content: center;
+  margin: 12px 0 9px;
+  border-radius: 18px;
+  background: linear-gradient(#b8e1e3 0 68%, #98cb79 68%);
+  overflow: hidden;
+}
+
+.castle {
+  z-index: 2;
+  font-size: 66px;
+  line-height: 0.95;
+}
+
+.tree,
+.flowers,
+.cloud {
+  position: absolute;
+}
+
+.tree { right: 19px; bottom: 2px; font-size: 37px; }
+.flowers { left: 13px; bottom: 2px; font-size: 22px; }
+.cloud { top: 5px; opacity: 0.78; }
+.cloud-left { left: 18px; }
+.cloud-right { right: 45px; top: 17px; font-size: 14px; }
+
+.build-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.help-button {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #b9cdb0;
+  border-radius: 50%;
+  background: white;
+  color: var(--green-dark);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.building-list {
+  display: grid;
+  gap: 8px;
+}
+
+.building-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 49px 1fr 28px;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 2px solid #e5dec4;
+  border-radius: 16px;
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* The grid display above outranks the browser default for [hidden], so the
+   festival card has to be hidden explicitly until it is unlocked. */
+.building-card[hidden] {
+  display: none;
+}
+
+.building-card:hover:not(:disabled) {
+  border-color: var(--yellow);
+  transform: translateX(-3px);
+}
+
+.building-card:disabled {
+  cursor: default;
+  opacity: 0.54;
+}
+
+.building-card.built {
+  border-color: #83be82;
+  background: #eef8df;
+  opacity: 1;
+}
+
+.building-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 27px;
+}
+
+.garden-icon { background: #e5ef9d; }
+.workshop-icon { background: #eed3ad; }
+.library-icon { background: #d9d3ed; }
+.festival-icon { background: #ffd7bc; }
+
+.building-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.building-copy strong {
+  font-size: 16px;
+}
+
+.building-copy small {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.cost {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.cost b {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #f4f0e2;
+  font-size: 16px;
+}
+
+.build-check {
+  display: none;
+  color: var(--green);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.building-card.built .build-check {
+  display: block;
+}
+
+.building-card.built .building-copy small,
+.building-card.built .cost {
+  display: none;
+}
+
+.festival-card.ready {
+  border-color: var(--orange);
+  background: #fff0df;
+  opacity: 1;
+  animation: glow 1.7s ease-in-out infinite;
+}
+
+.footer-note {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding-top: 16px;
+  color: #557062;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(40, 58, 52, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.modal-backdrop.visible {
+  display: flex;
+}
+
+.modal-card {
+  width: min(540px, 100%);
+  padding: 27px;
+  border: 4px solid white;
+  border-radius: 29px;
+  background: var(--paper);
+  box-shadow: 0 24px 70px rgba(31, 45, 40, 0.35);
+  text-align: center;
+  animation: modal-in 0.3s ease-out;
+}
+
+.modal-hero {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  margin: -65px auto 16px;
+  place-items: center;
+  border: 4px solid white;
+  border-radius: 23px;
+  background: var(--yellow);
+  box-shadow: 0 7px 0 #dca43e;
+  font-size: 43px;
+  transform: rotate(-4deg);
+}
+
+.modal-card h2 {
+  margin: 5px auto 14px;
+  max-width: 420px;
+  font-size: clamp(25px, 6vw, 34px);
+  line-height: 1.12;
+}
+
+.primary-button {
+  min-width: 190px;
+  padding: 14px 25px;
+  font-size: 19px;
+}
+
+.victory-card {
+  background: linear-gradient(160deg, #fff8dd, #ecf4d3);
+}
+
+.confetti {
+  font-size: 45px;
+  animation: float 1.8s ease-in-out infinite;
+}
+
+.victory-card > p:not(.eyebrow) {
+  max-width: 430px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.victory-stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0 22px;
+}
+
+.victory-stats span {
+  padding: 10px 13px;
+  border-radius: 13px;
+  background: white;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes bump {
+  45% { transform: scale(1.18) rotate(3deg); }
+}
+
+@keyframes land {
+  from { transform: translateY(-16px) scale(0.5) rotate(-30deg); opacity: 0; }
+}
+
+@keyframes modal-in {
+  from { transform: translateY(20px) scale(0.94); opacity: 0; }
+}
+
+@keyframes glow {
+  50% { box-shadow: 0 0 0 5px rgba(238, 136, 70, 0.24); }
+}
+
+@keyframes float {
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+
+@media (max-width: 840px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .city-scene {
+    display: none;
+  }
+
+  .building-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 590px) {
+  .app-shell {
+    width: min(100% - 18px, 540px);
+    padding-top: 12px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .brand-mark {
+    width: 47px;
+    height: 47px;
+    border-radius: 14px;
+    font-size: 26px;
+  }
+
+  .brand .eyebrow {
+    display: none;
+  }
+
+  h1 {
+    max-width: 160px;
+    font-size: 25px;
+    line-height: 0.94;
+  }
+
+  .resource-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .resource {
+    min-width: 46px;
+    gap: 3px;
+    padding: 7px 6px;
+    border-radius: 12px;
+    font-size: 17px;
+  }
+
+  .resource strong {
+    min-width: 13px;
+    font-size: 15px;
+  }
+
+  .goal-card {
+    margin: 14px 0 10px;
+    padding: 9px 12px;
+  }
+
+  .goal-icon { display: none; }
+  #goal-text { font-size: 20px; }
+
+  .map-card,
+  .city-card {
+    padding: 11px;
+    border-radius: 21px;
+  }
+
+  .map-wrap {
+    padding: 7px;
+    border-radius: 16px;
+  }
+
+  .game-map {
+    grid-template-columns: repeat(7, minmax(34px, 1fr));
+    gap: 4px;
+  }
+
+  .map-tile {
+    border-radius: 10px;
+    font-size: clamp(20px, 7vw, 30px);
+  }
+
+  .map-tile.explorer::after {
+    right: -3px;
+    width: 23px;
+    height: 23px;
+    border-width: 2px;
+    font-size: 13px;
+  }
+
+  .building-list {
+    grid-template-columns: 1fr;
+  }
+
+  .building-card {
+    grid-template-columns: 43px 1fr 24px;
+    padding: 7px 9px;
+  }
+
+  .building-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 23px;
+  }
+
+  .footer-note {
+    flex-wrap: wrap;
+    gap: 7px 14px;
+  }
+
+          .modal-card { padding: 23px 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Decorative celebration stops; nothing depends on it. */
+  .confetti {
+    animation: none;
+  }
+
+  /* A gained resource, a landing explorer and an opening dialog appear
+     in place instead of travelling. The changed number, the badge and the
+     dialog itself are the signs of the new state. */
+  .resource.bump,
+  .map-tile.explorer::after,
+  .modal-card {
+    animation: none;
+  }
+
+  /* A refused move is still answered by the board: the reachable tiles
+     below hold a steady ring instead of flashing. */
+  .map-tile.refused {
+    animation: none;
+  }
+
+  .game-map.show-reach .map-tile.reachable,
+  .game-map.is-teaching .map-tile.reachable {
+    animation: none;
+    box-shadow: 0 0 0 7px rgba(255, 196, 60, 0.95);
+  }
+
+  /* Two calls for attention keep calling, without the pulse and the hop. */
+  .festival-card.ready {
+    animation: none;
+    box-shadow: 0 0 0 5px rgba(238, 136, 70, 0.5);
+  }
+
+  .end-turn-button.is-waiting {
+    animation: none;
+    outline: 4px solid var(--yellow);
+    outline-offset: 3px;
+  }
+}

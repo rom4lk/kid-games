@@ -1,17 +1,18 @@
 # Games for kids
 
-A small browser game with no libraries, no build step and no internet access. The game lives in its
-own folder and consists of `index.html`, `styles.css` and `game.js`.
+Small browser games with no libraries, no build step and no internet access. Every game lives in its
+own folder, built around `index.html`, `styles.css` and `game.js`; a game adds its own data files next
+to them — a `translations.json`, or a whole `content/` folder.
 
 ## Running
 
-A single server started from the repository root serves the game:
+A single server started from the repository root serves every game:
 
 ```bash
 python3 server.py
 ```
 
-Then open `http://127.0.0.1:4173/` — that page links to the game.
+Then open `http://127.0.0.1:4173/` — that page links to the games.
 
 Without a command the server runs in the foreground and is stopped with `Ctrl+C`. It can also run in
 the background:
@@ -30,27 +31,29 @@ running in the foreground.
 The home page includes a local server restart button. The custom server keeps static file serving as
 simple as `python -m http.server` and adds only the health and restart endpoints needed by that button.
 
-A local server is required: `word-quest` loads its text and word packs through `fetch`, and that does
-not work when a file is opened directly over `file://`.
+A local server is required: `word-quest` loads its text and word packs through `fetch` and
+`island-discovery` loads its translations the same way, and that does not work when a file is opened
+directly over `file://`.
 
-## The game
+## The games
 
 | Folder | Title | What it is about | Interface language |
 | --- | --- | --- | --- |
 | `word-quest/` | Living Words | Reading a word and picking a picture, levels by word length | Russian, English |
+| `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
 
-Details about the game loop and its deliberate design decisions are in
-[word-quest/README.md](word-quest/README.md).
+Details about a game loop and its deliberate design decisions are in the README of the game:
+[word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md).
 
 ## Language
 
 The home page has a language picker and opens in English by default. The choice is stored in
 `localStorage` under `kidGamesLanguageV1` and is shared with the games: a language picked on the home
-page is the one `word-quest` opens in, and a language picked inside `word-quest` is the one the home
-page shows.
+page is the one a game opens in, and a language picked inside a game is the one the home page shows.
 
-The text of the home page is written in English in `index.html`, and the Russian version comes from
-`translations.json` through the shared `game-language.js`.
+The text is written in English in the HTML, and the Russian version comes from a `translations.json`
+next to it through the shared `game-language.js`. The home page and `island-discovery` both work this
+way; `word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -65,11 +68,12 @@ considered complete.
 
 ## Saved progress
 
-The game writes its progress to `localStorage` under its own key:
+Every game writes its progress to `localStorage` under its own key:
 
 | Game | Key |
 | --- | --- |
 | `word-quest` | `livingWordsProgressV2` |
+| `island-discovery` | `islandDiscoveryV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.

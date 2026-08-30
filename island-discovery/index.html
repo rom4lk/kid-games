@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7d774" />
+    <title>Island of Discovery</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <div class="sun sun-one" aria-hidden="true"></div>
+    <div class="sun sun-two" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">🧭</div>
+          <div>
+            <p class="eyebrow">MY FIRST STRATEGY</p>
+            <h1>Island of Discovery</h1>
+          </div>
+        </div>
+
+        <label class="language-picker language-picker--compact">
+          <span aria-hidden="true">🌐</span>
+          <span class="language-picker-text">Language</span>
+          <select data-language-select aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+          </select>
+        </label>
+
+        <div class="resource-bar" aria-label="City resources">
+          <div class="resource food-resource">
+            <span aria-hidden="true">🍎</span>
+            <strong id="food-count">2</strong>
+          </div>
+          <div class="resource wood-resource">
+            <span aria-hidden="true">🪵</span>
+            <strong id="wood-count">2</strong>
+          </div>
+          <div class="resource idea-resource">
+            <span aria-hidden="true">💡</span>
+            <strong id="idea-count">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="goal-card" aria-label="Game goal">
+        <div class="goal-icon" aria-hidden="true">🎈</div>
+        <div>
+          <span class="goal-label">GOAL</span>
+          <strong id="goal-text">Build 3 friendly places</strong>
+        </div>
+        <div class="goal-progress" id="goal-progress">0 / 3</div>
+      </section>
+
+      <section class="game-layout">
+        <div class="map-card">
+          <div class="map-toolbar">
+            <div>
+              <span class="turn-label">DAY</span>
+              <strong id="turn-count">1</strong>
+            </div>
+            <div class="energy" aria-label="Explorer steps">
+              <span>STEPS</span>
+              <div id="energy-pips" class="energy-pips" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="map-wrap">
+            <div id="game-map" class="game-map" role="group" aria-label="Island map"></div>
+            <div class="map-compass" aria-hidden="true">✦</div>
+          </div>
+
+          <div class="map-tip">
+            <span class="tap-icon" aria-hidden="true">☝️</span>
+            <p id="status-message">Tap a neighboring tile to send the explorer on a journey!</p>
+          </div>
+
+          <button class="end-turn-button" id="end-turn-button" type="button">
+            <span>New day</span>
+            <span aria-hidden="true">☀️</span>
+          </button>
+        </div>
+
+        <aside class="city-card">
+          <div class="city-heading">
+            <div class="city-badge" aria-hidden="true">🏰</div>
+            <div>
+              <span>YOUR CITY</span>
+              <h2>Sunny</h2>
+            </div>
+          </div>
+
+          <div class="city-scene" aria-hidden="true">
+            <span class="cloud cloud-left">☁️</span>
+            <span class="cloud cloud-right">☁️</span>
+            <span class="castle">🏰</span>
+            <span class="tree">🌳</span>
+            <span class="flowers">🌷🌼</span>
+          </div>
+
+          <div class="build-heading">
+            <span>WHAT SHALL WE BUILD?</span>
+            <span class="heading-actions">
+              <button id="sound-button" class="help-button" type="button" aria-label="Turn sound off">♪</button>
+              <button id="restart-button-top" class="help-button" type="button" aria-label="Start over">↻</button>
+            </span>
+          </div>
+
+          <div class="building-list">
+            <button class="building-card" type="button" data-building="garden" data-food="0" data-wood="4" data-idea="0">
+              <span class="building-icon garden-icon" aria-hidden="true">🌻</span>
+              <span class="building-copy">
+                <strong>Garden</strong>
+                <small>Gives one apple every day</small>
+                <span class="cost"><b>🪵 4</b></span>
+              </span>
+              <span class="build-check" aria-hidden="true">✓</span>
+            </button>
+
+            <button class="building-card" type="button" data-building="workshop" data-food="4" data-wood="0" data-idea="0">
+              <span class="building-icon workshop-icon" aria-hidden="true">🛠️</span>
+              <span class="building-copy">
+                <strong>Workshop</strong>
+                <small>Gives one log every day</small>
+                <span class="cost"><b>🍎 4</b></span>
+              </span>
+              <span class="build-check" aria-hidden="true">✓</span>
+            </button>
+
+            <button class="building-card" type="button" data-building="library" data-food="2" data-wood="2" data-idea="0">
+              <span class="building-icon library-icon" aria-hidden="true">📚</span>
+              <span class="building-copy">
+                <strong>Library</strong>
+                <small>Gives one idea every day</small>
+                <span class="cost"><b>🍎 2</b><b>🪵 2</b></span>
+              </span>
+              <span class="build-check" aria-hidden="true">✓</span>
+            </button>
+
+            <button class="building-card festival-card" type="button" data-building="festival" data-food="5" data-wood="5" data-idea="3" hidden>
+              <span class="building-icon festival-icon" aria-hidden="true">🎪</span>
+              <span class="building-copy">
+                <strong>Festival</strong>
+                <small>Unlocks after three buildings</small>
+                <span class="cost"><b>🍎 5</b><b>🪵 5</b><b>💡 3</b></span>
+              </span>
+              <span class="build-lock" aria-hidden="true">🔒</span>
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="footer-note">
+        <span>🌱 No battles</span>
+        <span>⏳ No timer</span>
+        <span>💛 Mistakes are okay</span>
+      </footer>
+    </main>
+
+    <div class="modal-backdrop visible" id="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-title">
+      <div class="modal-card tutorial-card">
+        <div class="modal-hero" aria-hidden="true">🧭</div>
+        <p class="eyebrow">WELCOME!</p>
+        <h2 id="start-title">How many steps each day?</h2>
+        <label class="language-picker">
+          <span aria-hidden="true">🌐</span>
+          <span class="language-picker-text">Language</span>
+          <select data-language-select aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+          </select>
+        </label>
+        <div class="difficulty-picker">
+          <button class="difficulty-card" type="button" data-difficulty="easy">
+            <span class="difficulty-face" aria-hidden="true">🐣</span>
+            <span class="difficulty-steps" aria-hidden="true">👣👣👣</span>
+            <strong>Three steps</strong>
+          </button>
+          <button class="difficulty-card" type="button" data-difficulty="normal">
+            <span class="difficulty-face" aria-hidden="true">🙂</span>
+            <span class="difficulty-steps" aria-hidden="true">👣👣</span>
+            <strong>Two steps</strong>
+          </button>
+          <button class="difficulty-card" type="button" data-difficulty="hard">
+            <span class="difficulty-face" aria-hidden="true">🦉</span>
+            <span class="difficulty-steps" aria-hidden="true">👣</span>
+            <strong>One step</strong>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="victory-modal" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+      <div class="modal-card victory-card">
+        <div class="confetti" aria-hidden="true">🎉 🌟 🎈</div>
+        <p class="eyebrow">THE CITY IS READY!</p>
+        <h2 id="victory-title">The big festival has begun!</h2>
+        <p>You explored the island, helped the city, and brought everyone together.</p>
+        <div class="victory-stats">
+          <span>☀️ Days: <strong id="victory-turns">1</strong></span>
+          <span>🗺️ Discovered: <strong id="victory-tiles">1</strong></span>
+        </div>
+        <button class="primary-button" id="restart-button" type="button">Play again</button>
+      </div>
+    </div>
+
+    <div class="sr-only" aria-hidden="true">
+      <span id="message-start">Tap a neighboring tile to send the explorer on a journey!</span>
+      <span id="message-plain">The green meadow gave you an apple!</span>
+      <span id="message-forest">You found two sturdy logs in the forest!</span>
+      <span id="message-orchard">The orchard gave you two apples!</span>
+      <span id="message-hill">You found a log and a new idea on the hill!</span>
+      <span id="message-lake">A tasty apple grew by the lake!</span>
+      <span id="message-ruins">The old puzzle gave you two ideas!</span>
+      <span id="message-village">The neighbors shared an apple, a log, and an idea!</span>
+      <span id="message-empty">You have already visited this place. Keep exploring!</span>
+      <span id="message-far">The explorer can only move to a neighboring tile.</span>
+      <span id="message-no-energy">No steps left. Press New day.</span>
+      <span id="message-new-day">The city shared its supplies. You can explore the island again!</span>
+      <span id="message-cannot-build">First collect the missing gifts.</span>
+      <span id="message-built">Great! The city has a new friendly place.</span>
+      <span id="message-festival-ready">All places are ready! Collect supplies for the big festival.</span>
+      <span id="message-festival-locked">First build the garden, workshop, and library.</span>
+      <span id="message-city">You returned to Sunny!</span>
+      <span id="coach-move">Tap a tile next to the explorer</span>
+      <span id="coach-collect">Keep going and collect island gifts</span>
+      <span id="coach-build">Build 3 friendly places</span>
+      <span id="goal-festival">Hold a big festival</span>
+      <span id="tile-plain">meadow</span>
+      <span id="tile-forest">forest</span>
+      <span id="tile-orchard">orchard</span>
+      <span id="tile-hill">hill</span>
+      <span id="tile-lake">lake</span>
+      <span id="tile-ruins">puzzle</span>
+      <span id="tile-village">village</span>
+      <span id="tile-city">city</span>
+      <span id="tile-hidden">unexplored land</span>
+    </div>
+
+    <script src="../game-language.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

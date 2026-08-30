@@ -5,8 +5,8 @@
     ["HOME SHELF", "ДОМАШНЯЯ ПОЛКА"],
     ["Games for kids", "Игры для детей"],
     [
-      "A small browser game. It needs no install, no build and no internet — just open a card below.",
-      "Маленькая браузерная игра. Она не требует установки, сборки или интернета — достаточно открыть карточку ниже."
+      "Small browser games. They need no install, no build and no internet — just open a card below.",
+      "Маленькие браузерные игры. Они не требуют установки, сборки или интернета — достаточно открыть карточку ниже."
     ],
     ["Restart server", "Перезапустить сервер"],
     ["Restarting...", "Перезапускаем..."],
@@ -15,10 +15,16 @@
     ["Restart failed", "Не получилось перезапустить"],
     ["Living Words", "Живые слова"],
     [
-      "Read a word aloud and pick the matching picture. Two languages, levels by word length, story chapters of ten words.",
-      "Прочитать слово вслух и выбрать подходящую картинку. Два языка, уровни по длине слова, главы-истории по 10 слов."
+      "Read a word aloud and pick the matching picture. Levels by word length, story chapters of ten words.",
+      "Прочитать слово вслух и выбрать подходящую картинку. Уровни по длине слова, главы-истории по 10 слов."
     ],
-    ["RUSSIAN · ENGLISH · READING", "РУССКИЙ · АНГЛИЙСКИЙ · ЧТЕНИЕ"]
+    ["READING", "ЧТЕНИЕ"],
+    ["Island of Discovery", "Остров открытий"],
+    [
+      "Walk the island one step a day, gather apples, logs and ideas, build a garden, a workshop and a library, and finish with a festival.",
+      "Ходи по острову шаг за шагом, собирай яблоки, бревна и идеи, построй сад, мастерскую и библиотеку и устрой праздник."
+    ],
+    ["STRATEGY", "СТРАТЕГИЯ"]
   ],
   "templates": []
 }
