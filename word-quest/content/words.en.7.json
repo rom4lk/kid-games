@@ -1,0 +1,5066 @@
+{
+  "language": "en",
+  "letters": 7,
+  "chapters": [
+    {
+      "id": "en7-01",
+      "title": "The Mystery Package",
+      "emoji": "📦",
+      "character": "👵",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "The old balloon map is real. Tomorrow we fix the balloon and fly!",
+      "tasks": [
+        {
+          "word": "PACKAGE",
+          "syllables": "PACK-AGE",
+          "prompt": "The mail van stops, and the driver hands us something heavy in brown paper. Read the word.",
+          "success": "A package! It is covered in stamps from far away.",
+          "choices": [
+            {
+              "id": "package",
+              "emoji": "📦",
+              "label": "package"
+            },
+            {
+              "id": "letter",
+              "emoji": "✉️",
+              "label": "letter"
+            },
+            {
+              "id": "basket",
+              "emoji": "🧺",
+              "label": "basket"
+            }
+          ],
+          "correct": "package"
+        },
+        {
+          "word": "MAILBOX",
+          "syllables": "MAIL-BOX",
+          "prompt": "By the gate, a little red house on a pole holds one more note. Read the word.",
+          "success": "The mailbox flag is up - more news inside!",
+          "choices": [
+            {
+              "id": "mailbox",
+              "emoji": "📮",
+              "label": "mailbox"
+            },
+            {
+              "id": "door",
+              "emoji": "🚪",
+              "label": "door"
+            },
+            {
+              "id": "house",
+              "emoji": "🏠",
+              "label": "house"
+            }
+          ],
+          "correct": "mailbox"
+        },
+        {
+          "word": "GRANDMA",
+          "syllables": "GRAND-MA",
+          "prompt": "Who runs in from the garden, wiping her hands on her apron? Read the word.",
+          "success": "Grandma! She knows that handwriting at once.",
+          "choices": [
+            {
+              "id": "grandma",
+              "emoji": "👵",
+              "label": "grandma"
+            },
+            {
+              "id": "queen",
+              "emoji": "👸",
+              "label": "queen"
+            },
+            {
+              "id": "farmer",
+              "emoji": "🧑‍🌾",
+              "label": "farmer"
+            }
+          ],
+          "correct": "grandma"
+        },
+        {
+          "word": "GRANDPA",
+          "syllables": "GRAND-PA",
+          "prompt": "Who hurries down from the attic with dusty knees? Read the word.",
+          "success": "Grandpa! He whistles when he sees the box.",
+          "choices": [
+            {
+              "id": "grandpa",
+              "emoji": "👴",
+              "label": "grandpa"
+            },
+            {
+              "id": "cowboy",
+              "emoji": "🤠",
+              "label": "cowboy"
+            },
+            {
+              "id": "doctor",
+              "emoji": "🧑‍⚕️",
+              "label": "doctor"
+            }
+          ],
+          "correct": "grandpa"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "Inside lies a little travel diary with a golden ribbon. Read the word.",
+          "success": "The journal is full of grandpa's old adventures!",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "book",
+              "emoji": "📖",
+              "label": "book"
+            },
+            {
+              "id": "newspaper",
+              "emoji": "📰",
+              "label": "newspaper"
+            }
+          ],
+          "correct": "journal"
+        },
+        {
+          "word": "COMPASS",
+          "syllables": "COM-PASS",
+          "prompt": "Under the diary waits a round tool with a trembling needle. Read the word.",
+          "success": "The compass needle points straight at the window.",
+          "choices": [
+            {
+              "id": "compass",
+              "emoji": "🧭",
+              "label": "compass"
+            },
+            {
+              "id": "clock",
+              "emoji": "⏰",
+              "label": "clock"
+            },
+            {
+              "id": "magnet",
+              "emoji": "🧲",
+              "label": "magnet"
+            }
+          ],
+          "correct": "compass"
+        },
+        {
+          "word": "GLASSES",
+          "syllables": "GLAS-SES",
+          "prompt": "Grandma puts round frames on her nose to read the tiny letters. Read the word.",
+          "success": "With her glasses on, grandma reads every word.",
+          "choices": [
+            {
+              "id": "glasses",
+              "emoji": "👓",
+              "label": "glasses"
+            },
+            {
+              "id": "hat",
+              "emoji": "👒",
+              "label": "hat"
+            },
+            {
+              "id": "watch",
+              "emoji": "⌚",
+              "label": "watch"
+            }
+          ],
+          "correct": "glasses"
+        },
+        {
+          "word": "PICTURE",
+          "syllables": "PIC-TURE",
+          "prompt": "A framed photo shows a young pilot beside a striped balloon. Read the word.",
+          "success": "The picture shows grandpa flying long ago!",
+          "choices": [
+            {
+              "id": "picture",
+              "emoji": "🖼️",
+              "label": "picture"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            },
+            {
+              "id": "map",
+              "emoji": "🗺️",
+              "label": "map"
+            }
+          ],
+          "correct": "picture"
+        },
+        {
+          "word": "PRESENT",
+          "syllables": "PRE-SENT",
+          "prompt": "At the bottom sit little boxes with bows, one for each old friend. Read the word.",
+          "success": "Presents! The note says: please deliver us.",
+          "choices": [
+            {
+              "id": "present",
+              "emoji": "🎁",
+              "label": "present"
+            },
+            {
+              "id": "ribbon",
+              "emoji": "🎀",
+              "label": "ribbon"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            }
+          ],
+          "correct": "present"
+        },
+        {
+          "word": "LANTERN",
+          "syllables": "LAN-TERN",
+          "prompt": "For night flights we will need a warm light on a hook. Read the word.",
+          "success": "The lantern still works - it glows soft orange.",
+          "choices": [
+            {
+              "id": "lantern",
+              "emoji": "🏮",
+              "label": "lantern"
+            },
+            {
+              "id": "candle",
+              "emoji": "🕯️",
+              "label": "candle"
+            },
+            {
+              "id": "flashlight",
+              "emoji": "🔦",
+              "label": "flashlight"
+            }
+          ],
+          "correct": "lantern"
+        }
+      ]
+    },
+    {
+      "id": "en7-02",
+      "title": "The Balloon Workshop",
+      "emoji": "🧰",
+      "character": "👴",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "The balloon is patched, the basket is loaded. We lift off at sunrise!",
+      "tasks": [
+        {
+          "word": "TOOLBOX",
+          "syllables": "TOOL-BOX",
+          "prompt": "Grandpa drags a heavy red box that rattles with tools. Read the word.",
+          "success": "The toolbox opens with a happy clank!",
+          "choices": [
+            {
+              "id": "toolbox",
+              "emoji": "🧰",
+              "label": "toolbox"
+            },
+            {
+              "id": "hammer",
+              "emoji": "🔨",
+              "label": "hammer"
+            },
+            {
+              "id": "bucket",
+              "emoji": "🪣",
+              "label": "bucket"
+            }
+          ],
+          "correct": "toolbox"
+        },
+        {
+          "word": "BATTERY",
+          "syllables": "BAT-TE-RY",
+          "prompt": "The burner needs power from a small striped brick. Read the word.",
+          "success": "The battery clicks in - full power!",
+          "choices": [
+            {
+              "id": "battery",
+              "emoji": "🔋",
+              "label": "battery"
+            },
+            {
+              "id": "lamp",
+              "emoji": "💡",
+              "label": "lamp"
+            },
+            {
+              "id": "magnet",
+              "emoji": "🧲",
+              "label": "magnet"
+            }
+          ],
+          "correct": "battery"
+        },
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "From the attic we unroll something huge, striped and silky. Read the word.",
+          "success": "The balloon! It smells of wind and adventures.",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            },
+            {
+              "id": "parachute",
+              "emoji": "🪂",
+              "label": "parachute"
+            }
+          ],
+          "correct": "balloon"
+        },
+        {
+          "word": "LUGGAGE",
+          "syllables": "LUG-GAGE",
+          "prompt": "Grandma packs shirts and maps into a case on wheels. Read the word.",
+          "success": "The luggage is packed and ready to roll.",
+          "choices": [
+            {
+              "id": "luggage",
+              "emoji": "🧳",
+              "label": "luggage"
+            },
+            {
+              "id": "backpack",
+              "emoji": "🎒",
+              "label": "backpack"
+            },
+            {
+              "id": "basket",
+              "emoji": "🧺",
+              "label": "basket"
+            }
+          ],
+          "correct": "luggage"
+        },
+        {
+          "word": "MITTENS",
+          "syllables": "MIT-TENS",
+          "prompt": "High in the sky it is cold, so grandma knits warm pairs for our hands. Read the word.",
+          "success": "The mittens are cozy, red and a little fluffy.",
+          "choices": [
+            {
+              "id": "mittens",
+              "emoji": "🧤",
+              "label": "mittens"
+            },
+            {
+              "id": "scarf",
+              "emoji": "🧣",
+              "label": "scarf"
+            },
+            {
+              "id": "sock",
+              "emoji": "🧦",
+              "label": "sock"
+            }
+          ],
+          "correct": "mittens"
+        },
+        {
+          "word": "SLIPPER",
+          "syllables": "SLIP-PER",
+          "prompt": "One soft shoe hides under the bed and does not want to travel. Read the word.",
+          "success": "The slipper is found - the cat was napping on it!",
+          "choices": [
+            {
+              "id": "slipper",
+              "emoji": "🥿",
+              "label": "slipper"
+            },
+            {
+              "id": "boot",
+              "emoji": "🥾",
+              "label": "boot"
+            },
+            {
+              "id": "shoe",
+              "emoji": "👟",
+              "label": "shoe"
+            }
+          ],
+          "correct": "slipper"
+        },
+        {
+          "word": "LAUNDRY",
+          "syllables": "LAUN-DRY",
+          "prompt": "All the travel clothes take a bath and dry on the line. Read the word.",
+          "success": "The laundry flaps in the wind like little flags.",
+          "choices": [
+            {
+              "id": "laundry",
+              "emoji": "🧺",
+              "label": "laundry"
+            },
+            {
+              "id": "soap",
+              "emoji": "🧼",
+              "label": "soap"
+            },
+            {
+              "id": "sponge",
+              "emoji": "🧽",
+              "label": "sponge"
+            }
+          ],
+          "correct": "laundry"
+        },
+        {
+          "word": "PRINTER",
+          "syllables": "PRIN-TER",
+          "prompt": "A humming machine gives us a fresh copy of the map. Read the word.",
+          "success": "The printer hums and hands us the map.",
+          "choices": [
+            {
+              "id": "printer",
+              "emoji": "🖨️",
+              "label": "printer"
+            },
+            {
+              "id": "laptop",
+              "emoji": "💻",
+              "label": "laptop"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            }
+          ],
+          "correct": "printer"
+        },
+        {
+          "word": "MONITOR",
+          "syllables": "MO-NI-TOR",
+          "prompt": "On the desk glows a screen with tomorrow's weather. Read the word.",
+          "success": "The monitor shows sun and a friendly wind.",
+          "choices": [
+            {
+              "id": "monitor",
+              "emoji": "🖥️",
+              "label": "monitor"
+            },
+            {
+              "id": "television",
+              "emoji": "📺",
+              "label": "television"
+            },
+            {
+              "id": "phone",
+              "emoji": "📱",
+              "label": "phone"
+            }
+          ],
+          "correct": "monitor"
+        },
+        {
+          "word": "TRUMPET",
+          "syllables": "TRUM-PET",
+          "prompt": "Grandpa packs a shiny horn to greet friends from the sky. Read the word.",
+          "success": "The trumpet plays a bright ta-da!",
+          "choices": [
+            {
+              "id": "trumpet",
+              "emoji": "🎺",
+              "label": "trumpet"
+            },
+            {
+              "id": "drum",
+              "emoji": "🥁",
+              "label": "drum"
+            },
+            {
+              "id": "guitar",
+              "emoji": "🎸",
+              "label": "guitar"
+            }
+          ],
+          "correct": "trumpet"
+        }
+      ]
+    },
+    {
+      "id": "en7-03",
+      "title": "Lift-off at Sunrise",
+      "emoji": "🌅",
+      "character": "🎈",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The wind carries us gently over the fields. First stop: the big farm!",
+      "tasks": [
+        {
+          "word": "SUNRISE",
+          "syllables": "SUN-RISE",
+          "prompt": "The sky turns pink and gold above the roofs. Read the word.",
+          "success": "Sunrise! The perfect moment to fly.",
+          "choices": [
+            {
+              "id": "sunrise",
+              "emoji": "🌅",
+              "label": "sunrise"
+            },
+            {
+              "id": "moon",
+              "emoji": "🌙",
+              "label": "moon"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            }
+          ],
+          "correct": "sunrise"
+        },
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "The striped giant slowly fills with warm air and stands up. Read the word.",
+          "success": "The balloon tugs at the ropes - it wants to go!",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "airplane",
+              "emoji": "✈️",
+              "label": "airplane"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            }
+          ],
+          "correct": "balloon"
+        },
+        {
+          "word": "VILLAGE",
+          "syllables": "VIL-LAGE",
+          "prompt": "Below us the little houses shrink to toy size. Read the word.",
+          "success": "The whole village waves good morning!",
+          "choices": [
+            {
+              "id": "village",
+              "emoji": "🏘️",
+              "label": "village"
+            },
+            {
+              "id": "castle",
+              "emoji": "🏰",
+              "label": "castle"
+            },
+            {
+              "id": "tent",
+              "emoji": "⛺",
+              "label": "tent"
+            }
+          ],
+          "correct": "village"
+        },
+        {
+          "word": "COTTAGE",
+          "syllables": "COT-TAGE",
+          "prompt": "Our own little home with the garden gets smaller and smaller. Read the word.",
+          "success": "Bye-bye, cottage! See you after the voyage.",
+          "choices": [
+            {
+              "id": "cottage",
+              "emoji": "🏡",
+              "label": "cottage"
+            },
+            {
+              "id": "house",
+              "emoji": "🏠",
+              "label": "house"
+            },
+            {
+              "id": "school",
+              "emoji": "🏫",
+              "label": "school"
+            }
+          ],
+          "correct": "cottage"
+        },
+        {
+          "word": "STATION",
+          "syllables": "STA-TION",
+          "prompt": "A long whistle floats up from the place where trains sleep. Read the word.",
+          "success": "The station clock shines like a little moon.",
+          "choices": [
+            {
+              "id": "station",
+              "emoji": "🚉",
+              "label": "station"
+            },
+            {
+              "id": "train",
+              "emoji": "🚂",
+              "label": "train"
+            },
+            {
+              "id": "bridge",
+              "emoji": "🌉",
+              "label": "bridge"
+            }
+          ],
+          "correct": "station"
+        },
+        {
+          "word": "HIGHWAY",
+          "syllables": "HIGH-WAY",
+          "prompt": "A grey ribbon full of tiny cars runs to the hills. Read the word.",
+          "success": "The highway hums its morning song.",
+          "choices": [
+            {
+              "id": "highway",
+              "emoji": "🛣️",
+              "label": "highway"
+            },
+            {
+              "id": "river",
+              "emoji": "🏞️",
+              "label": "river"
+            },
+            {
+              "id": "bridge",
+              "emoji": "🌉",
+              "label": "bridge"
+            }
+          ],
+          "correct": "highway"
+        },
+        {
+          "word": "TRACTOR",
+          "syllables": "TRAC-TOR",
+          "prompt": "In a field below, a green machine draws straight brown lines. Read the word.",
+          "success": "The tractor driver waves his cap at us!",
+          "choices": [
+            {
+              "id": "tractor",
+              "emoji": "🚜",
+              "label": "tractor"
+            },
+            {
+              "id": "truck",
+              "emoji": "🚚",
+              "label": "truck"
+            },
+            {
+              "id": "car",
+              "emoji": "🚗",
+              "label": "car"
+            }
+          ],
+          "correct": "tractor"
+        },
+        {
+          "word": "ROOSTER",
+          "syllables": "ROOS-TER",
+          "prompt": "Someone loud greets the sun from a fence post. Read the word.",
+          "success": "The rooster crows so hard he almost falls off!",
+          "choices": [
+            {
+              "id": "rooster",
+              "emoji": "🐓",
+              "label": "rooster"
+            },
+            {
+              "id": "turkey",
+              "emoji": "🦃",
+              "label": "turkey"
+            },
+            {
+              "id": "parrot",
+              "emoji": "🦜",
+              "label": "parrot"
+            }
+          ],
+          "correct": "rooster"
+        },
+        {
+          "word": "CHICKEN",
+          "syllables": "CHICK-EN",
+          "prompt": "White feathered ladies hurry out of the coop. Read the word.",
+          "success": "The chickens cluck about our strange balloon.",
+          "choices": [
+            {
+              "id": "chicken",
+              "emoji": "🐔",
+              "label": "chicken"
+            },
+            {
+              "id": "duck",
+              "emoji": "🦆",
+              "label": "duck"
+            },
+            {
+              "id": "owl",
+              "emoji": "🦉",
+              "label": "owl"
+            }
+          ],
+          "correct": "chicken"
+        },
+        {
+          "word": "RAINBOW",
+          "syllables": "RAIN-BOW",
+          "prompt": "Morning mist builds a bridge of seven colors over the river. Read the word.",
+          "success": "A rainbow! Grandpa says it means good luck.",
+          "choices": [
+            {
+              "id": "rainbow",
+              "emoji": "🌈",
+              "label": "rainbow"
+            },
+            {
+              "id": "cloud",
+              "emoji": "☁️",
+              "label": "cloud"
+            },
+            {
+              "id": "sun",
+              "emoji": "☀️",
+              "label": "sun"
+            }
+          ],
+          "correct": "rainbow"
+        }
+      ]
+    },
+    {
+      "id": "en7-04",
+      "title": "Over the Farm",
+      "emoji": "🚜",
+      "character": "🐔",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "With fresh apples and a ladybug on board, we rise into the evening sky.",
+      "tasks": [
+        {
+          "word": "TRACTOR",
+          "syllables": "TRAC-TOR",
+          "prompt": "We land by a barn, next to a dusty green machine. Read the word.",
+          "success": "The farmer lets us honk the tractor horn!",
+          "choices": [
+            {
+              "id": "tractor",
+              "emoji": "🚜",
+              "label": "tractor"
+            },
+            {
+              "id": "truck",
+              "emoji": "🚚",
+              "label": "truck"
+            },
+            {
+              "id": "bus",
+              "emoji": "🚌",
+              "label": "bus"
+            }
+          ],
+          "correct": "tractor"
+        },
+        {
+          "word": "CHICKEN",
+          "syllables": "CHICK-EN",
+          "prompt": "Feathered ladies peck seeds around our basket. Read the word.",
+          "success": "One brave chicken hops right into the basket!",
+          "choices": [
+            {
+              "id": "chicken",
+              "emoji": "🐔",
+              "label": "chicken"
+            },
+            {
+              "id": "duck",
+              "emoji": "🦆",
+              "label": "duck"
+            },
+            {
+              "id": "goose",
+              "emoji": "🪿",
+              "label": "goose"
+            }
+          ],
+          "correct": "chicken"
+        },
+        {
+          "word": "ROOSTER",
+          "syllables": "ROOS-TER",
+          "prompt": "The loudest bird on the farm struts over to inspect us. Read the word.",
+          "success": "The rooster approves of our balloon. Probably.",
+          "choices": [
+            {
+              "id": "rooster",
+              "emoji": "🐓",
+              "label": "rooster"
+            },
+            {
+              "id": "turkey",
+              "emoji": "🦃",
+              "label": "turkey"
+            },
+            {
+              "id": "eagle",
+              "emoji": "🦅",
+              "label": "eagle"
+            }
+          ],
+          "correct": "rooster"
+        },
+        {
+          "word": "BUFFALO",
+          "syllables": "BUF-FA-LO",
+          "prompt": "A big horned fellow watches us calmly from the mud pool. Read the word.",
+          "success": "The buffalo blinks slowly: welcome, travelers.",
+          "choices": [
+            {
+              "id": "buffalo",
+              "emoji": "🐃",
+              "label": "buffalo"
+            },
+            {
+              "id": "cow",
+              "emoji": "🐮",
+              "label": "cow"
+            },
+            {
+              "id": "horse",
+              "emoji": "🐴",
+              "label": "horse"
+            }
+          ],
+          "correct": "buffalo"
+        },
+        {
+          "word": "PUMPKIN",
+          "syllables": "PUMP-KIN",
+          "prompt": "The farmer shows us his biggest orange giant. Read the word.",
+          "success": "The pumpkin is bigger than our luggage!",
+          "choices": [
+            {
+              "id": "pumpkin",
+              "emoji": "🎃",
+              "label": "pumpkin"
+            },
+            {
+              "id": "melon",
+              "emoji": "🍈",
+              "label": "melon"
+            },
+            {
+              "id": "watermelon",
+              "emoji": "🍉",
+              "label": "watermelon"
+            }
+          ],
+          "correct": "pumpkin"
+        },
+        {
+          "word": "CABBAGE",
+          "syllables": "CAB-BAGE",
+          "prompt": "Round green heads sit in neat rows like sleepy soldiers. Read the word.",
+          "success": "The cabbage crunches - a rabbit already tried it.",
+          "choices": [
+            {
+              "id": "cabbage",
+              "emoji": "🥬",
+              "label": "cabbage"
+            },
+            {
+              "id": "broccoli",
+              "emoji": "🥦",
+              "label": "broccoli"
+            },
+            {
+              "id": "corn",
+              "emoji": "🌽",
+              "label": "corn"
+            }
+          ],
+          "correct": "cabbage"
+        },
+        {
+          "word": "SAPLING",
+          "syllables": "SAP-LING",
+          "prompt": "We help plant a baby tree by the gate. Read the word.",
+          "success": "The sapling will be huge when we visit again!",
+          "choices": [
+            {
+              "id": "sapling",
+              "emoji": "🌱",
+              "label": "sapling"
+            },
+            {
+              "id": "tree",
+              "emoji": "🌳",
+              "label": "tree"
+            },
+            {
+              "id": "flower",
+              "emoji": "🌸",
+              "label": "flower"
+            }
+          ],
+          "correct": "sapling"
+        },
+        {
+          "word": "BLOSSOM",
+          "syllables": "BLOS-SOM",
+          "prompt": "The apple trees are covered in white and pink stars. Read the word.",
+          "success": "A blossom lands on grandma's hat.",
+          "choices": [
+            {
+              "id": "blossom",
+              "emoji": "🌼",
+              "label": "blossom"
+            },
+            {
+              "id": "rose",
+              "emoji": "🌹",
+              "label": "rose"
+            },
+            {
+              "id": "tulip",
+              "emoji": "🌷",
+              "label": "tulip"
+            }
+          ],
+          "correct": "blossom"
+        },
+        {
+          "word": "LADYBUG",
+          "syllables": "LA-DY-BUG",
+          "prompt": "A tiny red dot with black spots lands on the map. Read the word.",
+          "success": "The ladybug decides to join the voyage!",
+          "choices": [
+            {
+              "id": "ladybug",
+              "emoji": "🐞",
+              "label": "ladybug"
+            },
+            {
+              "id": "bee",
+              "emoji": "🐝",
+              "label": "bee"
+            },
+            {
+              "id": "butterfly",
+              "emoji": "🦋",
+              "label": "butterfly"
+            }
+          ],
+          "correct": "ladybug"
+        },
+        {
+          "word": "CRICKET",
+          "syllables": "CRICK-ET",
+          "prompt": "Someone chirps a goodbye song from the tall grass. Read the word.",
+          "success": "The cricket chirps: safe travels, friends!",
+          "choices": [
+            {
+              "id": "cricket",
+              "emoji": "🦗",
+              "label": "cricket"
+            },
+            {
+              "id": "ant",
+              "emoji": "🐜",
+              "label": "ant"
+            },
+            {
+              "id": "spider",
+              "emoji": "🕷️",
+              "label": "spider"
+            }
+          ],
+          "correct": "cricket"
+        }
+      ]
+    },
+    {
+      "id": "en7-05",
+      "title": "The Thunder Night",
+      "emoji": "⛈️",
+      "character": "🎈",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "The storm is behind us. Ahead, white mountain peaks sparkle!",
+      "tasks": [
+        {
+          "word": "THUNDER",
+          "syllables": "THUN-DER",
+          "prompt": "Dark clouds grumble far behind the hills. Read the word.",
+          "success": "Thunder! But grandpa knows a safe way around.",
+          "choices": [
+            {
+              "id": "thunder",
+              "emoji": "⛈️",
+              "label": "thunder"
+            },
+            {
+              "id": "cloud",
+              "emoji": "☁️",
+              "label": "cloud"
+            },
+            {
+              "id": "snowflake",
+              "emoji": "❄️",
+              "label": "snowflake"
+            }
+          ],
+          "correct": "thunder"
+        },
+        {
+          "word": "LANTERN",
+          "syllables": "LAN-TERN",
+          "prompt": "We light our warm orange glow in the basket. Read the word.",
+          "success": "The lantern paints golden circles on the balloon.",
+          "choices": [
+            {
+              "id": "lantern",
+              "emoji": "🏮",
+              "label": "lantern"
+            },
+            {
+              "id": "candle",
+              "emoji": "🕯️",
+              "label": "candle"
+            },
+            {
+              "id": "flashlight",
+              "emoji": "🔦",
+              "label": "flashlight"
+            }
+          ],
+          "correct": "lantern"
+        },
+        {
+          "word": "COMPASS",
+          "syllables": "COM-PASS",
+          "prompt": "The needle tool shows us the way between the clouds. Read the word.",
+          "success": "The compass holds steady - north is that way!",
+          "choices": [
+            {
+              "id": "compass",
+              "emoji": "🧭",
+              "label": "compass"
+            },
+            {
+              "id": "clock",
+              "emoji": "⏰",
+              "label": "clock"
+            },
+            {
+              "id": "map",
+              "emoji": "🗺️",
+              "label": "map"
+            }
+          ],
+          "correct": "compass"
+        },
+        {
+          "word": "MITTENS",
+          "syllables": "MIT-TENS",
+          "prompt": "The night wind is chilly, time to warm our fingers. Read the word.",
+          "success": "Warm mittens - grandma thought of everything.",
+          "choices": [
+            {
+              "id": "mittens",
+              "emoji": "🧤",
+              "label": "mittens"
+            },
+            {
+              "id": "scarf",
+              "emoji": "🧣",
+              "label": "scarf"
+            },
+            {
+              "id": "sock",
+              "emoji": "🧦",
+              "label": "sock"
+            }
+          ],
+          "correct": "mittens"
+        },
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "Our striped friend sails calmly between the grumbling clouds. Read the word.",
+          "success": "The balloon does not fear a little rain.",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            },
+            {
+              "id": "parachute",
+              "emoji": "🪂",
+              "label": "parachute"
+            }
+          ],
+          "correct": "balloon"
+        },
+        {
+          "word": "BOULDER",
+          "syllables": "BOUL-DER",
+          "prompt": "We land to wait out the rain beside a giant round stone. Read the word.",
+          "success": "The boulder shelters us from the wind.",
+          "choices": [
+            {
+              "id": "boulder",
+              "emoji": "🪨",
+              "label": "boulder"
+            },
+            {
+              "id": "mountain",
+              "emoji": "⛰️",
+              "label": "mountain"
+            },
+            {
+              "id": "bricks",
+              "emoji": "🧱",
+              "label": "bricks"
+            }
+          ],
+          "correct": "boulder"
+        },
+        {
+          "word": "COTTAGE",
+          "syllables": "COT-TAGE",
+          "prompt": "A light blinks nearby: a tiny house with a red roof invites us in. Read the word.",
+          "success": "The cottage owner pours hot tea for everyone.",
+          "choices": [
+            {
+              "id": "cottage",
+              "emoji": "🏡",
+              "label": "cottage"
+            },
+            {
+              "id": "tent",
+              "emoji": "⛺",
+              "label": "tent"
+            },
+            {
+              "id": "castle",
+              "emoji": "🏰",
+              "label": "castle"
+            }
+          ],
+          "correct": "cottage"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "Grandma writes down our stormy adventure by candlelight. Read the word.",
+          "success": "The journal gets its first exciting page!",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "book",
+              "emoji": "📖",
+              "label": "book"
+            },
+            {
+              "id": "newspaper",
+              "emoji": "📰",
+              "label": "newspaper"
+            }
+          ],
+          "correct": "journal"
+        },
+        {
+          "word": "RAINBOW",
+          "syllables": "RAIN-BOW",
+          "prompt": "At dawn the storm says sorry with seven colors. Read the word.",
+          "success": "A double rainbow! Even grandpa gasps.",
+          "choices": [
+            {
+              "id": "rainbow",
+              "emoji": "🌈",
+              "label": "rainbow"
+            },
+            {
+              "id": "sun",
+              "emoji": "☀️",
+              "label": "sun"
+            },
+            {
+              "id": "moon",
+              "emoji": "🌙",
+              "label": "moon"
+            }
+          ],
+          "correct": "rainbow"
+        },
+        {
+          "word": "SUNRISE",
+          "syllables": "SUN-RISE",
+          "prompt": "The sky turns pink: the night is over. Read the word.",
+          "success": "Sunrise dries the balloon and warms the basket.",
+          "choices": [
+            {
+              "id": "sunrise",
+              "emoji": "🌅",
+              "label": "sunrise"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            },
+            {
+              "id": "cloud",
+              "emoji": "☁️",
+              "label": "cloud"
+            }
+          ],
+          "correct": "sunrise"
+        }
+      ]
+    },
+    {
+      "id": "en7-06",
+      "title": "The Snowy Peak",
+      "emoji": "☃️",
+      "character": "🐆",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "The mammoth waves his trunk goodbye. Next stop: a smoking island!",
+      "tasks": [
+        {
+          "word": "SNOWMAN",
+          "syllables": "SNOW-MAN",
+          "prompt": "Someone round with a carrot nose guards the mountain pass. Read the word.",
+          "success": "The snowman tips his bucket hat hello!",
+          "choices": [
+            {
+              "id": "snowman",
+              "emoji": "☃️",
+              "label": "snowman"
+            },
+            {
+              "id": "snowflake",
+              "emoji": "❄️",
+              "label": "snowflake"
+            },
+            {
+              "id": "ice",
+              "emoji": "🧊",
+              "label": "ice"
+            }
+          ],
+          "correct": "snowman"
+        },
+        {
+          "word": "MITTENS",
+          "syllables": "MIT-TENS",
+          "prompt": "Quick, the snow is cold - cover those fingers! Read the word.",
+          "success": "Mittens on! Snowball fight, anyone?",
+          "choices": [
+            {
+              "id": "mittens",
+              "emoji": "🧤",
+              "label": "mittens"
+            },
+            {
+              "id": "scarf",
+              "emoji": "🧣",
+              "label": "scarf"
+            },
+            {
+              "id": "boot",
+              "emoji": "🥾",
+              "label": "boot"
+            }
+          ],
+          "correct": "mittens"
+        },
+        {
+          "word": "MAMMOTH",
+          "syllables": "MAM-MOTH",
+          "prompt": "A shaggy giant with curly tusks plods out of the snow fog. Read the word.",
+          "success": "A real mammoth! He is friendly and very fluffy.",
+          "choices": [
+            {
+              "id": "mammoth",
+              "emoji": "🦣",
+              "label": "mammoth"
+            },
+            {
+              "id": "elephant",
+              "emoji": "🐘",
+              "label": "elephant"
+            },
+            {
+              "id": "rhino",
+              "emoji": "🦏",
+              "label": "rhino"
+            }
+          ],
+          "correct": "mammoth"
+        },
+        {
+          "word": "BOULDER",
+          "syllables": "BOUL-DER",
+          "prompt": "The mammoth scratches his back on a huge round stone. Read the word.",
+          "success": "The boulder wobbles - careful, big fellow!",
+          "choices": [
+            {
+              "id": "boulder",
+              "emoji": "🪨",
+              "label": "boulder"
+            },
+            {
+              "id": "mountain",
+              "emoji": "⛰️",
+              "label": "mountain"
+            },
+            {
+              "id": "ice",
+              "emoji": "🧊",
+              "label": "ice"
+            }
+          ],
+          "correct": "boulder"
+        },
+        {
+          "word": "CRYSTAL",
+          "syllables": "CRYS-TAL",
+          "prompt": "In an ice cave, something clear glows with blue light. Read the word.",
+          "success": "The crystal hums a quiet icy tune.",
+          "choices": [
+            {
+              "id": "crystal",
+              "emoji": "🔮",
+              "label": "crystal"
+            },
+            {
+              "id": "snowflake",
+              "emoji": "❄️",
+              "label": "snowflake"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            }
+          ],
+          "correct": "crystal"
+        },
+        {
+          "word": "LANTERN",
+          "syllables": "LAN-TERN",
+          "prompt": "The cave is dark, so we bring our warm glow inside. Read the word.",
+          "success": "The lantern makes the ice walls sparkle.",
+          "choices": [
+            {
+              "id": "lantern",
+              "emoji": "🏮",
+              "label": "lantern"
+            },
+            {
+              "id": "candle",
+              "emoji": "🕯️",
+              "label": "candle"
+            },
+            {
+              "id": "flashlight",
+              "emoji": "🔦",
+              "label": "flashlight"
+            }
+          ],
+          "correct": "lantern"
+        },
+        {
+          "word": "OATMEAL",
+          "syllables": "OAT-MEAL",
+          "prompt": "The mammoth invites us to breakfast: warm porridge with berries. Read the word.",
+          "success": "The oatmeal steams - just what climbers need!",
+          "choices": [
+            {
+              "id": "oatmeal",
+              "emoji": "🥣",
+              "label": "oatmeal"
+            },
+            {
+              "id": "soup",
+              "emoji": "🍲",
+              "label": "soup"
+            },
+            {
+              "id": "rice",
+              "emoji": "🍚",
+              "label": "rice"
+            }
+          ],
+          "correct": "oatmeal"
+        },
+        {
+          "word": "PANCAKE",
+          "syllables": "PAN-CAKE",
+          "prompt": "Grandma flips golden circles over the camp fire. Read the word.",
+          "success": "Pancakes with snowberry jam - mmm!",
+          "choices": [
+            {
+              "id": "pancake",
+              "emoji": "🥞",
+              "label": "pancake"
+            },
+            {
+              "id": "waffle",
+              "emoji": "🧇",
+              "label": "waffle"
+            },
+            {
+              "id": "bread",
+              "emoji": "🍞",
+              "label": "bread"
+            }
+          ],
+          "correct": "pancake"
+        },
+        {
+          "word": "LEOPARD",
+          "syllables": "LEO-PARD",
+          "prompt": "A spotted cat in a snowy coat watches us from a ledge. Read the word.",
+          "success": "The snow leopard purrs at the pancake smell.",
+          "choices": [
+            {
+              "id": "leopard",
+              "emoji": "🐆",
+              "label": "leopard"
+            },
+            {
+              "id": "tiger",
+              "emoji": "🐯",
+              "label": "tiger"
+            },
+            {
+              "id": "cat",
+              "emoji": "🐱",
+              "label": "cat"
+            }
+          ],
+          "correct": "leopard"
+        },
+        {
+          "word": "TOOLBOX",
+          "syllables": "TOOL-BOX",
+          "prompt": "The cold made the burner sneeze, grandpa grabs his red box. Read the word.",
+          "success": "The toolbox saves the day again!",
+          "choices": [
+            {
+              "id": "toolbox",
+              "emoji": "🧰",
+              "label": "toolbox"
+            },
+            {
+              "id": "hammer",
+              "emoji": "🔨",
+              "label": "hammer"
+            },
+            {
+              "id": "wrench",
+              "emoji": "🔧",
+              "label": "wrench"
+            }
+          ],
+          "correct": "toolbox"
+        }
+      ]
+    },
+    {
+      "id": "en7-07",
+      "title": "Volcano Island",
+      "emoji": "🌋",
+      "character": "🧜",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "The mermaid gives us a shell that sings. Off to the harbor parade!",
+      "tasks": [
+        {
+          "word": "VOLCANO",
+          "syllables": "VOL-CA-NO",
+          "prompt": "An island rises ahead with a gently smoking top. Read the word.",
+          "success": "The volcano just snores - it is asleep.",
+          "choices": [
+            {
+              "id": "volcano",
+              "emoji": "🌋",
+              "label": "volcano"
+            },
+            {
+              "id": "mountain",
+              "emoji": "⛰️",
+              "label": "mountain"
+            },
+            {
+              "id": "fire",
+              "emoji": "🔥",
+              "label": "fire"
+            }
+          ],
+          "correct": "volcano"
+        },
+        {
+          "word": "COCONUT",
+          "syllables": "CO-CO-NUT",
+          "prompt": "A hairy brown ball drops from a palm right into the basket. Read the word.",
+          "success": "The coconut sloshes - there is juice inside!",
+          "choices": [
+            {
+              "id": "coconut",
+              "emoji": "🥥",
+              "label": "coconut"
+            },
+            {
+              "id": "pineapple",
+              "emoji": "🍍",
+              "label": "pineapple"
+            },
+            {
+              "id": "banana",
+              "emoji": "🍌",
+              "label": "banana"
+            }
+          ],
+          "correct": "coconut"
+        },
+        {
+          "word": "MERMAID",
+          "syllables": "MER-MAID",
+          "prompt": "On a warm rock by the lagoon, someone with a shiny tail waves at us. Read the word.",
+          "success": "The mermaid knows grandpa's old song!",
+          "choices": [
+            {
+              "id": "mermaid",
+              "emoji": "🧜",
+              "label": "mermaid"
+            },
+            {
+              "id": "fairy",
+              "emoji": "🧚",
+              "label": "fairy"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            }
+          ],
+          "correct": "mermaid"
+        },
+        {
+          "word": "DOLPHIN",
+          "syllables": "DOL-PHIN",
+          "prompt": "A smiling grey acrobat jumps over our shadow in the water. Read the word.",
+          "success": "The dolphin clicks happily and splashes us.",
+          "choices": [
+            {
+              "id": "dolphin",
+              "emoji": "🐬",
+              "label": "dolphin"
+            },
+            {
+              "id": "shark",
+              "emoji": "🦈",
+              "label": "shark"
+            },
+            {
+              "id": "whale",
+              "emoji": "🐳",
+              "label": "whale"
+            }
+          ],
+          "correct": "dolphin"
+        },
+        {
+          "word": "CRYSTAL",
+          "syllables": "CRYS-TAL",
+          "prompt": "The mermaid shows us a cave full of glowing stones. Read the word.",
+          "success": "The crystals paint rainbows on the walls.",
+          "choices": [
+            {
+              "id": "crystal",
+              "emoji": "🔮",
+              "label": "crystal"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            },
+            {
+              "id": "ring",
+              "emoji": "💍",
+              "label": "ring"
+            }
+          ],
+          "correct": "crystal"
+        },
+        {
+          "word": "DIAMOND",
+          "syllables": "DIA-MOND",
+          "prompt": "One stone shines brightest of all, clear as water. Read the word.",
+          "success": "A diamond! The mermaid keeps it for the queen of fish.",
+          "choices": [
+            {
+              "id": "diamond",
+              "emoji": "💎",
+              "label": "diamond"
+            },
+            {
+              "id": "ring",
+              "emoji": "💍",
+              "label": "ring"
+            },
+            {
+              "id": "coin",
+              "emoji": "🪙",
+              "label": "coin"
+            }
+          ],
+          "correct": "diamond"
+        },
+        {
+          "word": "BOULDER",
+          "syllables": "BOUL-DER",
+          "prompt": "A round giant stone plugs the old lava tube like a cork. Read the word.",
+          "success": "The boulder keeps the volcano's dreams inside.",
+          "choices": [
+            {
+              "id": "boulder",
+              "emoji": "🪨",
+              "label": "boulder"
+            },
+            {
+              "id": "mountain",
+              "emoji": "⛰️",
+              "label": "mountain"
+            },
+            {
+              "id": "shell",
+              "emoji": "🐚",
+              "label": "shell"
+            }
+          ],
+          "correct": "boulder"
+        },
+        {
+          "word": "COMPASS",
+          "syllables": "COM-PASS",
+          "prompt": "Which way is the harbor? Our needle friend knows. Read the word.",
+          "success": "The compass points across the sparkling sea.",
+          "choices": [
+            {
+              "id": "compass",
+              "emoji": "🧭",
+              "label": "compass"
+            },
+            {
+              "id": "map",
+              "emoji": "🗺️",
+              "label": "map"
+            },
+            {
+              "id": "anchor",
+              "emoji": "⚓",
+              "label": "anchor"
+            }
+          ],
+          "correct": "compass"
+        },
+        {
+          "word": "CAPTAIN",
+          "syllables": "CAP-TAIN",
+          "prompt": "A ship sails into the lagoon, and someone in a smart cap salutes us. Read the word.",
+          "success": "The captain invites us to the harbor parade!",
+          "choices": [
+            {
+              "id": "captain",
+              "emoji": "🧑‍✈️",
+              "label": "captain"
+            },
+            {
+              "id": "cowboy",
+              "emoji": "🤠",
+              "label": "cowboy"
+            },
+            {
+              "id": "clown",
+              "emoji": "🤡",
+              "label": "clown"
+            }
+          ],
+          "correct": "captain"
+        },
+        {
+          "word": "LOBSTER",
+          "syllables": "LOB-STER",
+          "prompt": "A red fellow with big pincers snaps a friendly hello. Read the word.",
+          "success": "The lobster leads the way, walking backwards.",
+          "choices": [
+            {
+              "id": "lobster",
+              "emoji": "🦞",
+              "label": "lobster"
+            },
+            {
+              "id": "crab",
+              "emoji": "🦀",
+              "label": "crab"
+            },
+            {
+              "id": "shrimp",
+              "emoji": "🦐",
+              "label": "shrimp"
+            }
+          ],
+          "correct": "lobster"
+        }
+      ]
+    },
+    {
+      "id": "en7-08",
+      "title": "The Harbor Parade",
+      "emoji": "⚓",
+      "character": "🧑‍✈️",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Two presents delivered! The captain points our way to the green jungle.",
+      "tasks": [
+        {
+          "word": "CAPTAIN",
+          "syllables": "CAP-TAIN",
+          "prompt": "The parade leader stands at the pier in his best cap. Read the word.",
+          "success": "The captain blows his whistle: let it begin!",
+          "choices": [
+            {
+              "id": "captain",
+              "emoji": "🧑‍✈️",
+              "label": "captain"
+            },
+            {
+              "id": "pirate",
+              "emoji": "🏴‍☠️",
+              "label": "pirate"
+            },
+            {
+              "id": "cowboy",
+              "emoji": "🤠",
+              "label": "cowboy"
+            }
+          ],
+          "correct": "captain"
+        },
+        {
+          "word": "TRUMPET",
+          "syllables": "TRUM-PET",
+          "prompt": "Grandpa lifts his shiny horn and joins the harbor band. Read the word.",
+          "success": "The trumpet sings over the whole bay!",
+          "choices": [
+            {
+              "id": "trumpet",
+              "emoji": "🎺",
+              "label": "trumpet"
+            },
+            {
+              "id": "drum",
+              "emoji": "🥁",
+              "label": "drum"
+            },
+            {
+              "id": "violin",
+              "emoji": "🎻",
+              "label": "violin"
+            }
+          ],
+          "correct": "trumpet"
+        },
+        {
+          "word": "DOLPHIN",
+          "syllables": "DOL-PHIN",
+          "prompt": "Grey jumpers dance in pairs ahead of the boats. Read the word.",
+          "success": "The dolphins spin like silver wheels!",
+          "choices": [
+            {
+              "id": "dolphin",
+              "emoji": "🐬",
+              "label": "dolphin"
+            },
+            {
+              "id": "fish",
+              "emoji": "🐟",
+              "label": "fish"
+            },
+            {
+              "id": "whale",
+              "emoji": "🐳",
+              "label": "whale"
+            }
+          ],
+          "correct": "dolphin"
+        },
+        {
+          "word": "OCTOPUS",
+          "syllables": "OC-TO-PUS",
+          "prompt": "Someone with eight arms juggles seashells on the pier. Read the word.",
+          "success": "The octopus takes a bow with all eight arms.",
+          "choices": [
+            {
+              "id": "octopus",
+              "emoji": "🐙",
+              "label": "octopus"
+            },
+            {
+              "id": "squid",
+              "emoji": "🦑",
+              "label": "squid"
+            },
+            {
+              "id": "crab",
+              "emoji": "🦀",
+              "label": "crab"
+            }
+          ],
+          "correct": "octopus"
+        },
+        {
+          "word": "LOBSTER",
+          "syllables": "LOB-STER",
+          "prompt": "The red pincher marches in front, snapping the beat. Read the word.",
+          "success": "The lobster is the proudest drummer ever.",
+          "choices": [
+            {
+              "id": "lobster",
+              "emoji": "🦞",
+              "label": "lobster"
+            },
+            {
+              "id": "crab",
+              "emoji": "🦀",
+              "label": "crab"
+            },
+            {
+              "id": "shrimp",
+              "emoji": "🦐",
+              "label": "shrimp"
+            }
+          ],
+          "correct": "lobster"
+        },
+        {
+          "word": "MERMAID",
+          "syllables": "MER-MAID",
+          "prompt": "The singer on the rock starts the parade song. Read the word.",
+          "success": "The mermaid's song makes the waves dance.",
+          "choices": [
+            {
+              "id": "mermaid",
+              "emoji": "🧜",
+              "label": "mermaid"
+            },
+            {
+              "id": "fairy",
+              "emoji": "🧚",
+              "label": "fairy"
+            },
+            {
+              "id": "genie",
+              "emoji": "🧞",
+              "label": "genie"
+            }
+          ],
+          "correct": "mermaid"
+        },
+        {
+          "word": "PRESENT",
+          "syllables": "PRE-SENT",
+          "prompt": "Time to deliver the first box with a bow - it is for the captain! Read the word.",
+          "success": "The present is a new spyglass. The captain beams!",
+          "choices": [
+            {
+              "id": "present",
+              "emoji": "🎁",
+              "label": "present"
+            },
+            {
+              "id": "ribbon",
+              "emoji": "🎀",
+              "label": "ribbon"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            }
+          ],
+          "correct": "present"
+        },
+        {
+          "word": "PACKAGE",
+          "syllables": "PACK-AGE",
+          "prompt": "One more brown parcel goes to the lighthouse keeper. Read the word.",
+          "success": "The package holds a woolly lighthouse sweater.",
+          "choices": [
+            {
+              "id": "package",
+              "emoji": "📦",
+              "label": "package"
+            },
+            {
+              "id": "letter",
+              "emoji": "✉️",
+              "label": "letter"
+            },
+            {
+              "id": "basket",
+              "emoji": "🧺",
+              "label": "basket"
+            }
+          ],
+          "correct": "package"
+        },
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "Our striped friend floats above the parade like a giant lamp. Read the word.",
+          "success": "Everyone cheers for the balloon!",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "sailboat",
+              "emoji": "⛵",
+              "label": "sailboat"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            }
+          ],
+          "correct": "balloon"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "Grandma draws the whole parade on a fresh page. Read the word.",
+          "success": "The journal now smells a little of sea salt.",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "book",
+              "emoji": "📖",
+              "label": "book"
+            },
+            {
+              "id": "ticket",
+              "emoji": "🎫",
+              "label": "ticket"
+            }
+          ],
+          "correct": "journal"
+        }
+      ]
+    },
+    {
+      "id": "en7-09",
+      "title": "The Jungle Clearing",
+      "emoji": "🦍",
+      "character": "🦒",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The gorilla gets his present: a red drum! He plays us out of the jungle.",
+      "tasks": [
+        {
+          "word": "GIRAFFE",
+          "syllables": "GI-RAFFE",
+          "prompt": "A very tall neck rises above the trees to look at us. Read the word.",
+          "success": "The giraffe nibbles a leaf right off our basket!",
+          "choices": [
+            {
+              "id": "giraffe",
+              "emoji": "🦒",
+              "label": "giraffe"
+            },
+            {
+              "id": "zebra",
+              "emoji": "🦓",
+              "label": "zebra"
+            },
+            {
+              "id": "camel",
+              "emoji": "🐫",
+              "label": "camel"
+            }
+          ],
+          "correct": "giraffe"
+        },
+        {
+          "word": "GORILLA",
+          "syllables": "GO-RIL-LA",
+          "prompt": "A big gentle fellow drums softly on his chest: hello! Read the word.",
+          "success": "The gorilla shakes hands very carefully.",
+          "choices": [
+            {
+              "id": "gorilla",
+              "emoji": "🦍",
+              "label": "gorilla"
+            },
+            {
+              "id": "monkey",
+              "emoji": "🐵",
+              "label": "monkey"
+            },
+            {
+              "id": "bear",
+              "emoji": "🐻",
+              "label": "bear"
+            }
+          ],
+          "correct": "gorilla"
+        },
+        {
+          "word": "LEOPARD",
+          "syllables": "LEO-PARD",
+          "prompt": "Golden spots flash in the green shade. Read the word.",
+          "success": "The leopard just wants to see the balloon.",
+          "choices": [
+            {
+              "id": "leopard",
+              "emoji": "🐆",
+              "label": "leopard"
+            },
+            {
+              "id": "tiger",
+              "emoji": "🐯",
+              "label": "tiger"
+            },
+            {
+              "id": "lion",
+              "emoji": "🦁",
+              "label": "lion"
+            }
+          ],
+          "correct": "leopard"
+        },
+        {
+          "word": "BUFFALO",
+          "syllables": "BUF-FA-LO",
+          "prompt": "A horned heavyweight cools off in the brown river. Read the word.",
+          "success": "The buffalo snorts a bubbly hello.",
+          "choices": [
+            {
+              "id": "buffalo",
+              "emoji": "🐃",
+              "label": "buffalo"
+            },
+            {
+              "id": "cow",
+              "emoji": "🐮",
+              "label": "cow"
+            },
+            {
+              "id": "hippo",
+              "emoji": "🦛",
+              "label": "hippo"
+            }
+          ],
+          "correct": "buffalo"
+        },
+        {
+          "word": "PEACOCK",
+          "syllables": "PEA-COCK",
+          "prompt": "Someone opens a tail like a fan of blue eyes. Read the word.",
+          "success": "The peacock struts - what a show-off!",
+          "choices": [
+            {
+              "id": "peacock",
+              "emoji": "🦚",
+              "label": "peacock"
+            },
+            {
+              "id": "parrot",
+              "emoji": "🦜",
+              "label": "parrot"
+            },
+            {
+              "id": "flamingo",
+              "emoji": "🦩",
+              "label": "flamingo"
+            }
+          ],
+          "correct": "peacock"
+        },
+        {
+          "word": "COCONUT",
+          "syllables": "CO-CO-NUT",
+          "prompt": "The gorilla cracks a hairy ball for juice. Read the word.",
+          "success": "Coconut juice for everyone, with two straws!",
+          "choices": [
+            {
+              "id": "coconut",
+              "emoji": "🥥",
+              "label": "coconut"
+            },
+            {
+              "id": "pineapple",
+              "emoji": "🍍",
+              "label": "pineapple"
+            },
+            {
+              "id": "mango",
+              "emoji": "🥭",
+              "label": "mango"
+            }
+          ],
+          "correct": "coconut"
+        },
+        {
+          "word": "AVOCADO",
+          "syllables": "A-VO-CA-DO",
+          "prompt": "A green fruit with a big round seed drops into grandma's hat. Read the word.",
+          "success": "The avocado is perfectly ripe - lucky hat!",
+          "choices": [
+            {
+              "id": "avocado",
+              "emoji": "🥑",
+              "label": "avocado"
+            },
+            {
+              "id": "pear",
+              "emoji": "🍐",
+              "label": "pear"
+            },
+            {
+              "id": "cucumber",
+              "emoji": "🥒",
+              "label": "cucumber"
+            }
+          ],
+          "correct": "avocado"
+        },
+        {
+          "word": "BLOSSOM",
+          "syllables": "BLOS-SOM",
+          "prompt": "Huge pink flowers open along the river like lamps. Read the word.",
+          "success": "A blossom big as a plate! The jungle shows off too.",
+          "choices": [
+            {
+              "id": "blossom",
+              "emoji": "🌼",
+              "label": "blossom"
+            },
+            {
+              "id": "rose",
+              "emoji": "🌹",
+              "label": "rose"
+            },
+            {
+              "id": "sunflower",
+              "emoji": "🌻",
+              "label": "sunflower"
+            }
+          ],
+          "correct": "blossom"
+        },
+        {
+          "word": "CRICKET",
+          "syllables": "CRICK-ET",
+          "prompt": "The evening singer starts his chirpy concert. Read the word.",
+          "success": "The cricket chirps, the fireflies blink along.",
+          "choices": [
+            {
+              "id": "cricket",
+              "emoji": "🦗",
+              "label": "cricket"
+            },
+            {
+              "id": "ant",
+              "emoji": "🐜",
+              "label": "ant"
+            },
+            {
+              "id": "beetle",
+              "emoji": "🪲",
+              "label": "beetle"
+            }
+          ],
+          "correct": "cricket"
+        },
+        {
+          "word": "SAPLING",
+          "syllables": "SAP-LING",
+          "prompt": "We plant a little tree here too, like on the farm. Read the word.",
+          "success": "The sapling gets jungle rain right away.",
+          "choices": [
+            {
+              "id": "sapling",
+              "emoji": "🌱",
+              "label": "sapling"
+            },
+            {
+              "id": "tree",
+              "emoji": "🌳",
+              "label": "tree"
+            },
+            {
+              "id": "leaf",
+              "emoji": "🍃",
+              "label": "leaf"
+            }
+          ],
+          "correct": "sapling"
+        }
+      ]
+    },
+    {
+      "id": "en7-10",
+      "title": "The Village Fair",
+      "emoji": "🎡",
+      "character": "🤹",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "The baker gets her present: a singing shell! She gives us pretzels for the road.",
+      "tasks": [
+        {
+          "word": "VILLAGE",
+          "syllables": "VIL-LAGE",
+          "prompt": "Flags and music float up from a town square below. Read the word.",
+          "success": "The village is having its summer fair!",
+          "choices": [
+            {
+              "id": "village",
+              "emoji": "🏘️",
+              "label": "village"
+            },
+            {
+              "id": "castle",
+              "emoji": "🏰",
+              "label": "castle"
+            },
+            {
+              "id": "tent",
+              "emoji": "⛺",
+              "label": "tent"
+            }
+          ],
+          "correct": "village"
+        },
+        {
+          "word": "PRETZEL",
+          "syllables": "PRET-ZEL",
+          "prompt": "A baker sells warm salty knots. Read the word.",
+          "success": "The pretzel is still warm - perfect!",
+          "choices": [
+            {
+              "id": "pretzel",
+              "emoji": "🥨",
+              "label": "pretzel"
+            },
+            {
+              "id": "donut",
+              "emoji": "🍩",
+              "label": "donut"
+            },
+            {
+              "id": "cookie",
+              "emoji": "🍪",
+              "label": "cookie"
+            }
+          ],
+          "correct": "pretzel"
+        },
+        {
+          "word": "POPCORN",
+          "syllables": "POP-CORN",
+          "prompt": "Something white pops and jumps in a striped cart. Read the word.",
+          "success": "A big bucket of popcorn for the whole crew!",
+          "choices": [
+            {
+              "id": "popcorn",
+              "emoji": "🍿",
+              "label": "popcorn"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            },
+            {
+              "id": "fries",
+              "emoji": "🍟",
+              "label": "fries"
+            }
+          ],
+          "correct": "popcorn"
+        },
+        {
+          "word": "CUPCAKE",
+          "syllables": "CUP-CAKE",
+          "prompt": "Tiny cakes with swirly hats smile from the stand. Read the word.",
+          "success": "The cupcake has a cherry on top. Had.",
+          "choices": [
+            {
+              "id": "cupcake",
+              "emoji": "🧁",
+              "label": "cupcake"
+            },
+            {
+              "id": "cake",
+              "emoji": "🎂",
+              "label": "cake"
+            },
+            {
+              "id": "pie",
+              "emoji": "🥧",
+              "label": "pie"
+            }
+          ],
+          "correct": "cupcake"
+        },
+        {
+          "word": "BURRITO",
+          "syllables": "BUR-RI-TO",
+          "prompt": "A cook rolls a warm blanket around rice and beans. Read the word.",
+          "success": "The burrito is wrapped like a tiny sleeping bag.",
+          "choices": [
+            {
+              "id": "burrito",
+              "emoji": "🌯",
+              "label": "burrito"
+            },
+            {
+              "id": "taco",
+              "emoji": "🌮",
+              "label": "taco"
+            },
+            {
+              "id": "sandwich",
+              "emoji": "🥪",
+              "label": "sandwich"
+            }
+          ],
+          "correct": "burrito"
+        },
+        {
+          "word": "NOODLES",
+          "syllables": "NOO-DLES",
+          "prompt": "Long soft strings steam in a deep bowl. Read the word.",
+          "success": "The noodles are slurpy and extra long!",
+          "choices": [
+            {
+              "id": "noodles",
+              "emoji": "🍜",
+              "label": "noodles"
+            },
+            {
+              "id": "spaghetti",
+              "emoji": "🍝",
+              "label": "spaghetti"
+            },
+            {
+              "id": "soup",
+              "emoji": "🍲",
+              "label": "soup"
+            }
+          ],
+          "correct": "noodles"
+        },
+        {
+          "word": "JUGGLER",
+          "syllables": "JUG-GLER",
+          "prompt": "Five oranges fly in a circle above someone's head. Read the word.",
+          "success": "The juggler adds a sixth orange - wow!",
+          "choices": [
+            {
+              "id": "juggler",
+              "emoji": "🤹",
+              "label": "juggler"
+            },
+            {
+              "id": "clown",
+              "emoji": "🤡",
+              "label": "clown"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            }
+          ],
+          "correct": "juggler"
+        },
+        {
+          "word": "ACROBAT",
+          "syllables": "AC-RO-BAT",
+          "prompt": "Someone walks a rope high between two towers. Read the word.",
+          "success": "The acrobat lands with a triple flip. Ta-da!",
+          "choices": [
+            {
+              "id": "acrobat",
+              "emoji": "🤸",
+              "label": "acrobat"
+            },
+            {
+              "id": "dancer",
+              "emoji": "💃",
+              "label": "dancer"
+            },
+            {
+              "id": "clown",
+              "emoji": "🤡",
+              "label": "clown"
+            }
+          ],
+          "correct": "acrobat"
+        },
+        {
+          "word": "TRUMPET",
+          "syllables": "TRUM-PET",
+          "prompt": "The fair band asks grandpa to play the last song. Read the word.",
+          "success": "The trumpet leads, the whole square dances!",
+          "choices": [
+            {
+              "id": "trumpet",
+              "emoji": "🎺",
+              "label": "trumpet"
+            },
+            {
+              "id": "drum",
+              "emoji": "🥁",
+              "label": "drum"
+            },
+            {
+              "id": "bell",
+              "emoji": "🔔",
+              "label": "bell"
+            }
+          ],
+          "correct": "trumpet"
+        },
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "Children point at our striped friend parked by the mill. Read the word.",
+          "success": "The balloon gets a prize ribbon: fair guest of honor!",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            },
+            {
+              "id": "ferriswheel",
+              "emoji": "🎡",
+              "label": "ferris wheel"
+            }
+          ],
+          "correct": "balloon"
+        }
+      ]
+    },
+    {
+      "id": "en7-11",
+      "title": "The City Station",
+      "emoji": "🚉",
+      "character": "👮",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "The city glows warm. Tomorrow: a school full of curious kids!",
+      "tasks": [
+        {
+          "word": "STATION",
+          "syllables": "STA-TION",
+          "prompt": "We park the balloon by the big hall where trains rest. Read the word.",
+          "success": "The station echoes with happy hellos.",
+          "choices": [
+            {
+              "id": "station",
+              "emoji": "🚉",
+              "label": "station"
+            },
+            {
+              "id": "train",
+              "emoji": "🚂",
+              "label": "train"
+            },
+            {
+              "id": "bus",
+              "emoji": "🚌",
+              "label": "bus"
+            }
+          ],
+          "correct": "station"
+        },
+        {
+          "word": "OFFICER",
+          "syllables": "OF-FI-CER",
+          "prompt": "A friendly helper in a blue cap shows us the way. Read the word.",
+          "success": "The officer salutes our ladybug. Respect!",
+          "choices": [
+            {
+              "id": "officer",
+              "emoji": "👮",
+              "label": "officer"
+            },
+            {
+              "id": "detective",
+              "emoji": "🕵️",
+              "label": "detective"
+            },
+            {
+              "id": "guard",
+              "emoji": "💂",
+              "label": "guard"
+            }
+          ],
+          "correct": "officer"
+        },
+        {
+          "word": "HIGHWAY",
+          "syllables": "HIGH-WAY",
+          "prompt": "Cars stream along the wide grey river of asphalt. Read the word.",
+          "success": "The highway leads right to the chocolate factory!",
+          "choices": [
+            {
+              "id": "highway",
+              "emoji": "🛣️",
+              "label": "highway"
+            },
+            {
+              "id": "bridge",
+              "emoji": "🌉",
+              "label": "bridge"
+            },
+            {
+              "id": "river",
+              "emoji": "🏞️",
+              "label": "river"
+            }
+          ],
+          "correct": "highway"
+        },
+        {
+          "word": "FACTORY",
+          "syllables": "FAC-TO-RY",
+          "prompt": "Tall chimneys puff sweet-smelling clouds. Read the word.",
+          "success": "The factory makes cocoa for the whole city!",
+          "choices": [
+            {
+              "id": "factory",
+              "emoji": "🏭",
+              "label": "factory"
+            },
+            {
+              "id": "school",
+              "emoji": "🏫",
+              "label": "school"
+            },
+            {
+              "id": "hospital",
+              "emoji": "🏥",
+              "label": "hospital"
+            }
+          ],
+          "correct": "factory"
+        },
+        {
+          "word": "LUGGAGE",
+          "syllables": "LUG-GAGE",
+          "prompt": "Our wheeled case bumps merrily over the cobblestones. Read the word.",
+          "success": "The luggage now carries city postcards too.",
+          "choices": [
+            {
+              "id": "luggage",
+              "emoji": "🧳",
+              "label": "luggage"
+            },
+            {
+              "id": "backpack",
+              "emoji": "🎒",
+              "label": "backpack"
+            },
+            {
+              "id": "handbag",
+              "emoji": "👜",
+              "label": "handbag"
+            }
+          ],
+          "correct": "luggage"
+        },
+        {
+          "word": "PACKAGE",
+          "syllables": "PACK-AGE",
+          "prompt": "The chocolate makers get their brown parcel from grandpa's list. Read the word.",
+          "success": "The package holds rare mountain honey. Sweet trade!",
+          "choices": [
+            {
+              "id": "package",
+              "emoji": "📦",
+              "label": "package"
+            },
+            {
+              "id": "letter",
+              "emoji": "✉️",
+              "label": "letter"
+            },
+            {
+              "id": "basket",
+              "emoji": "🧺",
+              "label": "basket"
+            }
+          ],
+          "correct": "package"
+        },
+        {
+          "word": "AIRPORT",
+          "syllables": "AIR-PORT",
+          "prompt": "Beyond the fence, silver birds take off in pairs. Read the word.",
+          "success": "The airport pilots dip their wings to our balloon!",
+          "choices": [
+            {
+              "id": "airport",
+              "emoji": "🛫",
+              "label": "airport"
+            },
+            {
+              "id": "helicopter",
+              "emoji": "🚁",
+              "label": "helicopter"
+            },
+            {
+              "id": "sailboat",
+              "emoji": "⛵",
+              "label": "sailboat"
+            }
+          ],
+          "correct": "airport"
+        },
+        {
+          "word": "SCOOTER",
+          "syllables": "SCOO-TER",
+          "prompt": "The fastest way between streets: push, glide, ring the bell! Read the word.",
+          "success": "The scooter zooms - grandma wins the race!",
+          "choices": [
+            {
+              "id": "scooter",
+              "emoji": "🛴",
+              "label": "scooter"
+            },
+            {
+              "id": "skateboard",
+              "emoji": "🛹",
+              "label": "skateboard"
+            },
+            {
+              "id": "rollerskate",
+              "emoji": "🛼",
+              "label": "roller skate"
+            }
+          ],
+          "correct": "scooter"
+        },
+        {
+          "word": "BICYCLE",
+          "syllables": "BI-CY-CLE",
+          "prompt": "Two wheels, a basket and a very proud bell. Read the word.",
+          "success": "The bicycle bell rings: coming through!",
+          "choices": [
+            {
+              "id": "bicycle",
+              "emoji": "🚲",
+              "label": "bicycle"
+            },
+            {
+              "id": "wheel",
+              "emoji": "🛞",
+              "label": "wheel"
+            },
+            {
+              "id": "skateboard",
+              "emoji": "🛹",
+              "label": "skateboard"
+            }
+          ],
+          "correct": "bicycle"
+        },
+        {
+          "word": "FIREMAN",
+          "syllables": "FIRE-MAN",
+          "prompt": "A brave helper in a shiny helmet waters the flowerbeds from his hose. Read the word.",
+          "success": "The fireman lets us try on the helmet!",
+          "choices": [
+            {
+              "id": "fireman",
+              "emoji": "🧑‍🚒",
+              "label": "fireman"
+            },
+            {
+              "id": "astronaut",
+              "emoji": "🧑‍🚀",
+              "label": "astronaut"
+            },
+            {
+              "id": "mechanic",
+              "emoji": "🧑‍🔧",
+              "label": "mechanic"
+            }
+          ],
+          "correct": "fireman"
+        }
+      ]
+    },
+    {
+      "id": "en7-12",
+      "title": "The School Visit",
+      "emoji": "🏫",
+      "character": "🧑‍🏫",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "The teacher gets her present: a mountain crystal for the science shelf!",
+      "tasks": [
+        {
+          "word": "TEACHER",
+          "syllables": "TEA-CHER",
+          "prompt": "Someone with a kind smile and a pointer welcomes us to class. Read the word.",
+          "success": "The teacher's class prepared a hundred questions!",
+          "choices": [
+            {
+              "id": "teacher",
+              "emoji": "🧑‍🏫",
+              "label": "teacher"
+            },
+            {
+              "id": "doctor",
+              "emoji": "🧑‍⚕️",
+              "label": "doctor"
+            },
+            {
+              "id": "scientist",
+              "emoji": "🧑‍🔬",
+              "label": "scientist"
+            }
+          ],
+          "correct": "teacher"
+        },
+        {
+          "word": "LIBRARY",
+          "syllables": "LI-BRA-RY",
+          "prompt": "A quiet room where a thousand stories sleep on shelves. Read the word.",
+          "success": "The library smells of paper and adventures.",
+          "choices": [
+            {
+              "id": "library",
+              "emoji": "📚",
+              "label": "library"
+            },
+            {
+              "id": "school",
+              "emoji": "🏫",
+              "label": "school"
+            },
+            {
+              "id": "castle",
+              "emoji": "🏰",
+              "label": "castle"
+            }
+          ],
+          "correct": "library"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "Grandma shows the kids our travel diary. Read the word.",
+          "success": "The journal passes from desk to desk. Careful!",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "notebook",
+              "emoji": "📓",
+              "label": "notebook"
+            },
+            {
+              "id": "book",
+              "emoji": "📖",
+              "label": "book"
+            }
+          ],
+          "correct": "journal"
+        },
+        {
+          "word": "PICTURE",
+          "syllables": "PIC-TURE",
+          "prompt": "On the board hangs a photo of our balloon over the volcano. Read the word.",
+          "success": "The picture gets a place of honor in class.",
+          "choices": [
+            {
+              "id": "picture",
+              "emoji": "🖼️",
+              "label": "picture"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            },
+            {
+              "id": "map",
+              "emoji": "🗺️",
+              "label": "map"
+            }
+          ],
+          "correct": "picture"
+        },
+        {
+          "word": "PALETTE",
+          "syllables": "PAL-ETTE",
+          "prompt": "For the art lesson, everyone gets a board with paint puddles. Read the word.",
+          "success": "Palettes ready - today we paint balloons!",
+          "choices": [
+            {
+              "id": "palette",
+              "emoji": "🎨",
+              "label": "palette"
+            },
+            {
+              "id": "crayon",
+              "emoji": "🖍️",
+              "label": "crayon"
+            },
+            {
+              "id": "pencil",
+              "emoji": "✏️",
+              "label": "pencil"
+            }
+          ],
+          "correct": "palette"
+        },
+        {
+          "word": "PAINTER",
+          "syllables": "PAIN-TER",
+          "prompt": "The art teacher in a spotted apron shows how to mix sky-blue. Read the word.",
+          "success": "The painter says our balloon is very paintable.",
+          "choices": [
+            {
+              "id": "painter",
+              "emoji": "🧑‍🎨",
+              "label": "painter"
+            },
+            {
+              "id": "singer",
+              "emoji": "🧑‍🎤",
+              "label": "singer"
+            },
+            {
+              "id": "dancer",
+              "emoji": "💃",
+              "label": "dancer"
+            }
+          ],
+          "correct": "painter"
+        },
+        {
+          "word": "GLASSES",
+          "syllables": "GLAS-SES",
+          "prompt": "The smallest reader in class polishes her round frames. Read the word.",
+          "success": "With glasses on, she reads the longest word aloud!",
+          "choices": [
+            {
+              "id": "glasses",
+              "emoji": "👓",
+              "label": "glasses"
+            },
+            {
+              "id": "telescope",
+              "emoji": "🔭",
+              "label": "telescope"
+            },
+            {
+              "id": "watch",
+              "emoji": "⌚",
+              "label": "watch"
+            }
+          ],
+          "correct": "glasses"
+        },
+        {
+          "word": "PRINTER",
+          "syllables": "PRIN-TER",
+          "prompt": "The class machine prints a balloon photo for everyone. Read the word.",
+          "success": "The printer hums out thirty little balloons.",
+          "choices": [
+            {
+              "id": "printer",
+              "emoji": "🖨️",
+              "label": "printer"
+            },
+            {
+              "id": "laptop",
+              "emoji": "💻",
+              "label": "laptop"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            }
+          ],
+          "correct": "printer"
+        },
+        {
+          "word": "MONITOR",
+          "syllables": "MO-NI-TOR",
+          "prompt": "The weather screen says: sunny with friendly winds. Read the word.",
+          "success": "The monitor promises perfect flying weather.",
+          "choices": [
+            {
+              "id": "monitor",
+              "emoji": "🖥️",
+              "label": "monitor"
+            },
+            {
+              "id": "television",
+              "emoji": "📺",
+              "label": "television"
+            },
+            {
+              "id": "phone",
+              "emoji": "📱",
+              "label": "phone"
+            }
+          ],
+          "correct": "monitor"
+        },
+        {
+          "word": "SAPLING",
+          "syllables": "SAP-LING",
+          "prompt": "The class plants a little tree in the schoolyard with us. Read the word.",
+          "success": "The sapling gets a name tag: Balloon Tree.",
+          "choices": [
+            {
+              "id": "sapling",
+              "emoji": "🌱",
+              "label": "sapling"
+            },
+            {
+              "id": "flower",
+              "emoji": "🌸",
+              "label": "flower"
+            },
+            {
+              "id": "tree",
+              "emoji": "🌳",
+              "label": "tree"
+            }
+          ],
+          "correct": "sapling"
+        }
+      ]
+    },
+    {
+      "id": "en7-13",
+      "title": "The Art Studio",
+      "emoji": "🎨",
+      "character": "🧑‍🎨",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "The painting is called The Great Voyage. It will hang at the theater tonight!",
+      "tasks": [
+        {
+          "word": "PAINTER",
+          "syllables": "PAIN-TER",
+          "prompt": "The town artist invites us to his sunny attic. Read the word.",
+          "success": "The painter wants to paint our whole voyage!",
+          "choices": [
+            {
+              "id": "painter",
+              "emoji": "🧑‍🎨",
+              "label": "painter"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            },
+            {
+              "id": "farmer",
+              "emoji": "🧑‍🌾",
+              "label": "farmer"
+            }
+          ],
+          "correct": "painter"
+        },
+        {
+          "word": "PALETTE",
+          "syllables": "PAL-ETTE",
+          "prompt": "He holds a wooden board covered in color islands. Read the word.",
+          "success": "The palette has every color of our trip.",
+          "choices": [
+            {
+              "id": "palette",
+              "emoji": "🎨",
+              "label": "palette"
+            },
+            {
+              "id": "brush",
+              "emoji": "🖌️",
+              "label": "brush"
+            },
+            {
+              "id": "pencil",
+              "emoji": "✏️",
+              "label": "pencil"
+            }
+          ],
+          "correct": "palette"
+        },
+        {
+          "word": "PICTURE",
+          "syllables": "PIC-TURE",
+          "prompt": "On the easel, a white canvas slowly becomes a story. Read the word.",
+          "success": "The picture already shows the striped balloon!",
+          "choices": [
+            {
+              "id": "picture",
+              "emoji": "🖼️",
+              "label": "picture"
+            },
+            {
+              "id": "mirror",
+              "emoji": "🪞",
+              "label": "mirror"
+            },
+            {
+              "id": "window",
+              "emoji": "🪟",
+              "label": "window"
+            }
+          ],
+          "correct": "picture"
+        },
+        {
+          "word": "BLOSSOM",
+          "syllables": "BLOS-SOM",
+          "prompt": "He paints the giant jungle flower from grandma's story. Read the word.",
+          "success": "The blossom looks real enough to smell.",
+          "choices": [
+            {
+              "id": "blossom",
+              "emoji": "🌼",
+              "label": "blossom"
+            },
+            {
+              "id": "rose",
+              "emoji": "🌹",
+              "label": "rose"
+            },
+            {
+              "id": "tulip",
+              "emoji": "🌷",
+              "label": "tulip"
+            }
+          ],
+          "correct": "blossom"
+        },
+        {
+          "word": "RAINBOW",
+          "syllables": "RAIN-BOW",
+          "prompt": "Seven stripes arch over the painted valley. Read the word.",
+          "success": "The rainbow took seven tries to mix. Worth it!",
+          "choices": [
+            {
+              "id": "rainbow",
+              "emoji": "🌈",
+              "label": "rainbow"
+            },
+            {
+              "id": "sun",
+              "emoji": "☀️",
+              "label": "sun"
+            },
+            {
+              "id": "cloud",
+              "emoji": "☁️",
+              "label": "cloud"
+            }
+          ],
+          "correct": "rainbow"
+        },
+        {
+          "word": "UNICORN",
+          "syllables": "U-NI-CORN",
+          "prompt": "In the corner of the canvas, a white horse grows a golden horn. Read the word.",
+          "success": "A unicorn! The painter swears he saw one once.",
+          "choices": [
+            {
+              "id": "unicorn",
+              "emoji": "🦄",
+              "label": "unicorn"
+            },
+            {
+              "id": "horse",
+              "emoji": "🐴",
+              "label": "horse"
+            },
+            {
+              "id": "zebra",
+              "emoji": "🦓",
+              "label": "zebra"
+            }
+          ],
+          "correct": "unicorn"
+        },
+        {
+          "word": "CRYSTAL",
+          "syllables": "CRYS-TAL",
+          "prompt": "He paints the glowing cave stone from the snowy peak. Read the word.",
+          "success": "The crystal on canvas really seems to glow.",
+          "choices": [
+            {
+              "id": "crystal",
+              "emoji": "🔮",
+              "label": "crystal"
+            },
+            {
+              "id": "diamond2",
+              "emoji": "💎",
+              "label": "diamond"
+            },
+            {
+              "id": "snowflake",
+              "emoji": "❄️",
+              "label": "snowflake"
+            }
+          ],
+          "correct": "crystal"
+        },
+        {
+          "word": "DIAMOND",
+          "syllables": "DIA-MOND",
+          "prompt": "The brightest dot in the painting is the mermaid's treasure. Read the word.",
+          "success": "The diamond sparkles with one tiny white dot.",
+          "choices": [
+            {
+              "id": "diamond",
+              "emoji": "💎",
+              "label": "diamond"
+            },
+            {
+              "id": "ring",
+              "emoji": "💍",
+              "label": "ring"
+            },
+            {
+              "id": "coin",
+              "emoji": "🪙",
+              "label": "coin"
+            }
+          ],
+          "correct": "diamond"
+        },
+        {
+          "word": "SUNRISE",
+          "syllables": "SUN-RISE",
+          "prompt": "The painting begins where our voyage began: a pink morning sky. Read the word.",
+          "success": "Sunrise in paint - warm as the real one.",
+          "choices": [
+            {
+              "id": "sunrise",
+              "emoji": "🌅",
+              "label": "sunrise"
+            },
+            {
+              "id": "moon",
+              "emoji": "🌙",
+              "label": "moon"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            }
+          ],
+          "correct": "sunrise"
+        },
+        {
+          "word": "GLASSES",
+          "syllables": "GLAS-SES",
+          "prompt": "The painter wipes his round frames to check every detail. Read the word.",
+          "success": "Glasses on, he adds one more ladybug.",
+          "choices": [
+            {
+              "id": "glasses",
+              "emoji": "👓",
+              "label": "glasses"
+            },
+            {
+              "id": "hat",
+              "emoji": "👒",
+              "label": "hat"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            }
+          ],
+          "correct": "glasses"
+        }
+      ]
+    },
+    {
+      "id": "en7-14",
+      "title": "The Theater Night",
+      "emoji": "🎭",
+      "character": "🤸",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "The town claps till midnight. Our painting now hangs in the bright lobby!",
+      "tasks": [
+        {
+          "word": "THEATER",
+          "syllables": "THE-A-TER",
+          "prompt": "The building with two masks over the door glows with lights. Read the word.",
+          "success": "The theater is full - everyone came!",
+          "choices": [
+            {
+              "id": "theater",
+              "emoji": "🎭",
+              "label": "theater"
+            },
+            {
+              "id": "circus",
+              "emoji": "🎪",
+              "label": "circus"
+            },
+            {
+              "id": "cinema",
+              "emoji": "🎬",
+              "label": "cinema"
+            }
+          ],
+          "correct": "theater"
+        },
+        {
+          "word": "ACROBAT",
+          "syllables": "AC-RO-BAT",
+          "prompt": "The show opens with a triple flip under the dome. Read the word.",
+          "success": "The acrobat bows from the very top rope.",
+          "choices": [
+            {
+              "id": "acrobat",
+              "emoji": "🤸",
+              "label": "acrobat"
+            },
+            {
+              "id": "dancer",
+              "emoji": "💃",
+              "label": "dancer"
+            },
+            {
+              "id": "genie",
+              "emoji": "🧞",
+              "label": "genie"
+            }
+          ],
+          "correct": "acrobat"
+        },
+        {
+          "word": "JUGGLER",
+          "syllables": "JUG-GLER",
+          "prompt": "Now nine glowing rings spin above the stage. Read the word.",
+          "success": "The juggler catches them all behind his back!",
+          "choices": [
+            {
+              "id": "juggler",
+              "emoji": "🤹",
+              "label": "juggler"
+            },
+            {
+              "id": "clown",
+              "emoji": "🤡",
+              "label": "clown"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            }
+          ],
+          "correct": "juggler"
+        },
+        {
+          "word": "TRUMPET",
+          "syllables": "TRUM-PET",
+          "prompt": "The band starts the voyage song, and grandpa joins in. Read the word.",
+          "success": "The trumpet gets its own round of applause!",
+          "choices": [
+            {
+              "id": "trumpet",
+              "emoji": "🎺",
+              "label": "trumpet"
+            },
+            {
+              "id": "violin",
+              "emoji": "🎻",
+              "label": "violin"
+            },
+            {
+              "id": "piano",
+              "emoji": "🎹",
+              "label": "piano"
+            }
+          ],
+          "correct": "trumpet"
+        },
+        {
+          "word": "POPCORN",
+          "syllables": "POP-CORN",
+          "prompt": "The sweet white crunch travels along the rows. Read the word.",
+          "success": "Popcorn for the whole row - grandma treats!",
+          "choices": [
+            {
+              "id": "popcorn",
+              "emoji": "🍿",
+              "label": "popcorn"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            },
+            {
+              "id": "juice",
+              "emoji": "🧃",
+              "label": "juice"
+            }
+          ],
+          "correct": "popcorn"
+        },
+        {
+          "word": "CUPCAKE",
+          "syllables": "CUP-CAKE",
+          "prompt": "In the break, tiny cakes wear theater-red cherries. Read the word.",
+          "success": "The cupcake vanishes before the third bell.",
+          "choices": [
+            {
+              "id": "cupcake",
+              "emoji": "🧁",
+              "label": "cupcake"
+            },
+            {
+              "id": "cake",
+              "emoji": "🎂",
+              "label": "cake"
+            },
+            {
+              "id": "donut",
+              "emoji": "🍩",
+              "label": "donut"
+            }
+          ],
+          "correct": "cupcake"
+        },
+        {
+          "word": "UNICORN",
+          "syllables": "U-NI-CORN",
+          "prompt": "On stage, an actor in white wears a golden horn. Read the word.",
+          "success": "The unicorn on stage bows to the unicorn in the painting!",
+          "choices": [
+            {
+              "id": "unicorn",
+              "emoji": "🦄",
+              "label": "unicorn"
+            },
+            {
+              "id": "horse",
+              "emoji": "🐴",
+              "label": "horse"
+            },
+            {
+              "id": "dragon",
+              "emoji": "🐉",
+              "label": "dragon"
+            }
+          ],
+          "correct": "unicorn"
+        },
+        {
+          "word": "GLASSES",
+          "syllables": "GLAS-SES",
+          "prompt": "Grandma lifts her frames to see the highest rope. Read the word.",
+          "success": "Glasses up - she never misses a trick.",
+          "choices": [
+            {
+              "id": "glasses",
+              "emoji": "👓",
+              "label": "glasses"
+            },
+            {
+              "id": "telescope",
+              "emoji": "🔭",
+              "label": "telescope"
+            },
+            {
+              "id": "ticket",
+              "emoji": "🎫",
+              "label": "ticket"
+            }
+          ],
+          "correct": "glasses"
+        },
+        {
+          "word": "PRESENT",
+          "syllables": "PRE-SENT",
+          "prompt": "After the show we hand the acrobat her box with a bow. Read the word.",
+          "success": "The present is silver slippers - perfect for ropes!",
+          "choices": [
+            {
+              "id": "present",
+              "emoji": "🎁",
+              "label": "present"
+            },
+            {
+              "id": "ribbon",
+              "emoji": "🎀",
+              "label": "ribbon"
+            },
+            {
+              "id": "confetti",
+              "emoji": "🎊",
+              "label": "confetti"
+            }
+          ],
+          "correct": "present"
+        },
+        {
+          "word": "MERMAID",
+          "syllables": "MER-MAID",
+          "prompt": "The last act: the singer with the shiny tail from the lagoon! Read the word.",
+          "success": "The mermaid came to sing for the whole town!",
+          "choices": [
+            {
+              "id": "mermaid",
+              "emoji": "🧜",
+              "label": "mermaid"
+            },
+            {
+              "id": "fairy",
+              "emoji": "🧚",
+              "label": "fairy"
+            },
+            {
+              "id": "genie",
+              "emoji": "🧞",
+              "label": "genie"
+            }
+          ],
+          "correct": "mermaid"
+        }
+      ]
+    },
+    {
+      "id": "en7-15",
+      "title": "The Bakery Morning",
+      "emoji": "🥨",
+      "character": "👵",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "The bakery hangs a new sign: Grandma's Pancakes. Served every morning!",
+      "tasks": [
+        {
+          "word": "GRANDMA",
+          "syllables": "GRAND-MA",
+          "prompt": "Who ties an apron and takes charge of the town bakery today? Read the word.",
+          "success": "Grandma! The bakers asked for her famous recipe.",
+          "choices": [
+            {
+              "id": "grandma",
+              "emoji": "👵",
+              "label": "grandma"
+            },
+            {
+              "id": "queen",
+              "emoji": "👸",
+              "label": "queen"
+            },
+            {
+              "id": "fairy",
+              "emoji": "🧚",
+              "label": "fairy"
+            }
+          ],
+          "correct": "grandma"
+        },
+        {
+          "word": "PANCAKE",
+          "syllables": "PAN-CAKE",
+          "prompt": "Golden circles jump in the pan, thin and sweet. Read the word.",
+          "success": "A pancake tower grows by the window!",
+          "choices": [
+            {
+              "id": "pancake",
+              "emoji": "🥞",
+              "label": "pancake"
+            },
+            {
+              "id": "waffle",
+              "emoji": "🧇",
+              "label": "waffle"
+            },
+            {
+              "id": "bread",
+              "emoji": "🍞",
+              "label": "bread"
+            }
+          ],
+          "correct": "pancake"
+        },
+        {
+          "word": "PRETZEL",
+          "syllables": "PRET-ZEL",
+          "prompt": "Salty knots line up on the tray like little bows. Read the word.",
+          "success": "Pretzels! The baker knots them with one hand.",
+          "choices": [
+            {
+              "id": "pretzel",
+              "emoji": "🥨",
+              "label": "pretzel"
+            },
+            {
+              "id": "donut",
+              "emoji": "🍩",
+              "label": "donut"
+            },
+            {
+              "id": "croissant",
+              "emoji": "🥐",
+              "label": "croissant"
+            }
+          ],
+          "correct": "pretzel"
+        },
+        {
+          "word": "CUPCAKE",
+          "syllables": "CUP-CAKE",
+          "prompt": "Small cakes get cherry hats, one by one. Read the word.",
+          "success": "The cupcakes march out of the oven in rows.",
+          "choices": [
+            {
+              "id": "cupcake",
+              "emoji": "🧁",
+              "label": "cupcake"
+            },
+            {
+              "id": "cake",
+              "emoji": "🎂",
+              "label": "cake"
+            },
+            {
+              "id": "pie",
+              "emoji": "🥧",
+              "label": "pie"
+            }
+          ],
+          "correct": "cupcake"
+        },
+        {
+          "word": "BISCUIT",
+          "syllables": "BIS-CUIT",
+          "prompt": "Round crunchy suns cool on the rack. Read the word.",
+          "success": "A biscuit for everyone who helps stir!",
+          "choices": [
+            {
+              "id": "biscuit",
+              "emoji": "🍪",
+              "label": "biscuit"
+            },
+            {
+              "id": "bread",
+              "emoji": "🍞",
+              "label": "bread"
+            },
+            {
+              "id": "pie",
+              "emoji": "🥧",
+              "label": "pie"
+            }
+          ],
+          "correct": "biscuit"
+        },
+        {
+          "word": "PUDDING",
+          "syllables": "PUD-DING",
+          "prompt": "Something wobbly and caramel-topped shivers on the plate. Read the word.",
+          "success": "The pudding wobbles hello - and is gone.",
+          "choices": [
+            {
+              "id": "pudding",
+              "emoji": "🍮",
+              "label": "pudding"
+            },
+            {
+              "id": "honey",
+              "emoji": "🍯",
+              "label": "honey"
+            },
+            {
+              "id": "icecream",
+              "emoji": "🍦",
+              "label": "ice cream"
+            }
+          ],
+          "correct": "pudding"
+        },
+        {
+          "word": "OATMEAL",
+          "syllables": "OAT-MEAL",
+          "prompt": "Before the sweets: a warm bowl with berries for the crew. Read the word.",
+          "success": "Oatmeal first, says grandma. Fair enough.",
+          "choices": [
+            {
+              "id": "oatmeal",
+              "emoji": "🥣",
+              "label": "oatmeal"
+            },
+            {
+              "id": "soup",
+              "emoji": "🍲",
+              "label": "soup"
+            },
+            {
+              "id": "rice",
+              "emoji": "🍚",
+              "label": "rice"
+            }
+          ],
+          "correct": "oatmeal"
+        },
+        {
+          "word": "PUMPKIN",
+          "syllables": "PUMP-KIN",
+          "prompt": "The farmer's orange giant becomes pie filling. Read the word.",
+          "success": "Pumpkin pie - the whole street smells it!",
+          "choices": [
+            {
+              "id": "pumpkin",
+              "emoji": "🎃",
+              "label": "pumpkin"
+            },
+            {
+              "id": "melon",
+              "emoji": "🍈",
+              "label": "melon"
+            },
+            {
+              "id": "watermelon",
+              "emoji": "🍉",
+              "label": "watermelon"
+            }
+          ],
+          "correct": "pumpkin"
+        },
+        {
+          "word": "COCONUT",
+          "syllables": "CO-CO-NUT",
+          "prompt": "The hairy ball from the island adds snow to the buns. Read the word.",
+          "success": "Coconut flakes fall like warm snow.",
+          "choices": [
+            {
+              "id": "coconut",
+              "emoji": "🥥",
+              "label": "coconut"
+            },
+            {
+              "id": "pineapple",
+              "emoji": "🍍",
+              "label": "pineapple"
+            },
+            {
+              "id": "banana",
+              "emoji": "🍌",
+              "label": "banana"
+            }
+          ],
+          "correct": "coconut"
+        },
+        {
+          "word": "AVOCADO",
+          "syllables": "A-VO-CA-DO",
+          "prompt": "The greenest fruit lands on the breakfast toast. Read the word.",
+          "success": "Avocado toast - grandpa's new favorite!",
+          "choices": [
+            {
+              "id": "avocado",
+              "emoji": "🥑",
+              "label": "avocado"
+            },
+            {
+              "id": "pear",
+              "emoji": "🍐",
+              "label": "pear"
+            },
+            {
+              "id": "lemon",
+              "emoji": "🍋",
+              "label": "lemon"
+            }
+          ],
+          "correct": "avocado"
+        }
+      ]
+    },
+    {
+      "id": "en7-16",
+      "title": "The Fix-it Day",
+      "emoji": "🧺",
+      "character": "👴",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Everything is washed, fixed and packed. Two more adventures to go!",
+      "tasks": [
+        {
+          "word": "TOOLBOX",
+          "syllables": "TOOL-BOX",
+          "prompt": "Before the last flights, grandpa opens his rattling red box. Read the word.",
+          "success": "The toolbox knows every squeak of the basket.",
+          "choices": [
+            {
+              "id": "toolbox",
+              "emoji": "🧰",
+              "label": "toolbox"
+            },
+            {
+              "id": "hammer",
+              "emoji": "🔨",
+              "label": "hammer"
+            },
+            {
+              "id": "ladder",
+              "emoji": "🪜",
+              "label": "ladder"
+            }
+          ],
+          "correct": "toolbox"
+        },
+        {
+          "word": "BATTERY",
+          "syllables": "BAT-TE-RY",
+          "prompt": "The burner gets a fresh striped brick of power. Read the word.",
+          "success": "Battery full - the flame purrs like a cat.",
+          "choices": [
+            {
+              "id": "battery",
+              "emoji": "🔋",
+              "label": "battery"
+            },
+            {
+              "id": "plug",
+              "emoji": "🔌",
+              "label": "plug"
+            },
+            {
+              "id": "lamp",
+              "emoji": "💡",
+              "label": "lamp"
+            }
+          ],
+          "correct": "battery"
+        },
+        {
+          "word": "LAUNDRY",
+          "syllables": "LAUN-DRY",
+          "prompt": "Travel clothes dance in the wash and dry on the line. Read the word.",
+          "success": "The laundry smells of wind and lemon soap.",
+          "choices": [
+            {
+              "id": "laundry",
+              "emoji": "🧺",
+              "label": "laundry"
+            },
+            {
+              "id": "soap",
+              "emoji": "🧼",
+              "label": "soap"
+            },
+            {
+              "id": "bucket",
+              "emoji": "🪣",
+              "label": "bucket"
+            }
+          ],
+          "correct": "laundry"
+        },
+        {
+          "word": "BATHTUB",
+          "syllables": "BATH-TUB",
+          "prompt": "The ladybug gets a spa in a teacup, we get the big white boat. Read the word.",
+          "success": "The bathtub has captain-sized bubbles!",
+          "choices": [
+            {
+              "id": "bathtub",
+              "emoji": "🛁",
+              "label": "bathtub"
+            },
+            {
+              "id": "shower",
+              "emoji": "🚿",
+              "label": "shower"
+            },
+            {
+              "id": "soap",
+              "emoji": "🧼",
+              "label": "soap"
+            }
+          ],
+          "correct": "bathtub"
+        },
+        {
+          "word": "SLIPPER",
+          "syllables": "SLIP-PER",
+          "prompt": "After the bath, soft shoes wait by the bed. Read the word.",
+          "success": "Slippers on - the floor becomes a cloud.",
+          "choices": [
+            {
+              "id": "slipper",
+              "emoji": "🥿",
+              "label": "slipper"
+            },
+            {
+              "id": "boot",
+              "emoji": "🥾",
+              "label": "boot"
+            },
+            {
+              "id": "sock",
+              "emoji": "🧦",
+              "label": "sock"
+            }
+          ],
+          "correct": "slipper"
+        },
+        {
+          "word": "MITTENS",
+          "syllables": "MIT-TENS",
+          "prompt": "Grandma checks the warm pairs for tomorrow's high flight. Read the word.",
+          "success": "The mittens got new snowflake patterns!",
+          "choices": [
+            {
+              "id": "mittens",
+              "emoji": "🧤",
+              "label": "mittens"
+            },
+            {
+              "id": "scarf",
+              "emoji": "🧣",
+              "label": "scarf"
+            },
+            {
+              "id": "hat",
+              "emoji": "👒",
+              "label": "hat"
+            }
+          ],
+          "correct": "mittens"
+        },
+        {
+          "word": "LUGGAGE",
+          "syllables": "LUG-GAGE",
+          "prompt": "The wheeled case gets room for all our postcards. Read the word.",
+          "success": "The luggage closes - with a little sitting on it.",
+          "choices": [
+            {
+              "id": "luggage",
+              "emoji": "🧳",
+              "label": "luggage"
+            },
+            {
+              "id": "backpack",
+              "emoji": "🎒",
+              "label": "backpack"
+            },
+            {
+              "id": "handbag",
+              "emoji": "👜",
+              "label": "handbag"
+            }
+          ],
+          "correct": "luggage"
+        },
+        {
+          "word": "PRINTER",
+          "syllables": "PRIN-TER",
+          "prompt": "We print photos for the journal's last pages. Read the word.",
+          "success": "The printer delivers a warm stack of memories.",
+          "choices": [
+            {
+              "id": "printer",
+              "emoji": "🖨️",
+              "label": "printer"
+            },
+            {
+              "id": "laptop",
+              "emoji": "💻",
+              "label": "laptop"
+            },
+            {
+              "id": "phone",
+              "emoji": "📱",
+              "label": "phone"
+            }
+          ],
+          "correct": "printer"
+        },
+        {
+          "word": "COMPASS",
+          "syllables": "COM-PASS",
+          "prompt": "Grandpa polishes the needle friend till it shines. Read the word.",
+          "success": "The compass gleams - ready for the way home.",
+          "choices": [
+            {
+              "id": "compass",
+              "emoji": "🧭",
+              "label": "compass"
+            },
+            {
+              "id": "clock",
+              "emoji": "⏰",
+              "label": "clock"
+            },
+            {
+              "id": "magnet",
+              "emoji": "🧲",
+              "label": "magnet"
+            }
+          ],
+          "correct": "compass"
+        },
+        {
+          "word": "GRANDPA",
+          "syllables": "GRAND-PA",
+          "prompt": "Who hums in the workshop till every bolt is happy? Read the word.",
+          "success": "Grandpa declares the balloon better than new!",
+          "choices": [
+            {
+              "id": "grandpa",
+              "emoji": "👴",
+              "label": "grandpa"
+            },
+            {
+              "id": "cowboy",
+              "emoji": "🤠",
+              "label": "cowboy"
+            },
+            {
+              "id": "mechanic",
+              "emoji": "🧑‍🔧",
+              "label": "mechanic"
+            }
+          ],
+          "correct": "grandpa"
+        }
+      ]
+    },
+    {
+      "id": "en7-17",
+      "title": "The Animal Park",
+      "emoji": "🦒",
+      "character": "🐧",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The zookeeper gets the last-but-one present: a jar of jungle honey!",
+      "tasks": [
+        {
+          "word": "GIRAFFE",
+          "syllables": "GI-RAFFE",
+          "prompt": "The tallest neck in the park bends down to say hello. Read the word.",
+          "success": "The giraffe remembers us from the jungle news!",
+          "choices": [
+            {
+              "id": "giraffe",
+              "emoji": "🦒",
+              "label": "giraffe"
+            },
+            {
+              "id": "zebra",
+              "emoji": "🦓",
+              "label": "zebra"
+            },
+            {
+              "id": "camel",
+              "emoji": "🐫",
+              "label": "camel"
+            }
+          ],
+          "correct": "giraffe"
+        },
+        {
+          "word": "PENGUIN",
+          "syllables": "PEN-GUIN",
+          "prompt": "Little waiters in black and white slide on their bellies. Read the word.",
+          "success": "The penguins line up to see the balloon.",
+          "choices": [
+            {
+              "id": "penguin",
+              "emoji": "🐧",
+              "label": "penguin"
+            },
+            {
+              "id": "duck",
+              "emoji": "🦆",
+              "label": "duck"
+            },
+            {
+              "id": "owl",
+              "emoji": "🦉",
+              "label": "owl"
+            }
+          ],
+          "correct": "penguin"
+        },
+        {
+          "word": "GORILLA",
+          "syllables": "GO-RIL-LA",
+          "prompt": "Our drum-playing friend's cousin lives here. Read the word.",
+          "success": "The gorilla drums hello - it runs in the family!",
+          "choices": [
+            {
+              "id": "gorilla",
+              "emoji": "🦍",
+              "label": "gorilla"
+            },
+            {
+              "id": "monkey",
+              "emoji": "🐵",
+              "label": "monkey"
+            },
+            {
+              "id": "sloth",
+              "emoji": "🦥",
+              "label": "sloth"
+            }
+          ],
+          "correct": "gorilla"
+        },
+        {
+          "word": "RACCOON",
+          "syllables": "RAC-COON",
+          "prompt": "A masked fluffball washes an apple in the fountain. Read the word.",
+          "success": "The raccoon offers us the cleanest apple ever.",
+          "choices": [
+            {
+              "id": "raccoon",
+              "emoji": "🦝",
+              "label": "raccoon"
+            },
+            {
+              "id": "fox",
+              "emoji": "🦊",
+              "label": "fox"
+            },
+            {
+              "id": "badger",
+              "emoji": "🦡",
+              "label": "badger"
+            }
+          ],
+          "correct": "raccoon"
+        },
+        {
+          "word": "PEACOCK",
+          "syllables": "PEA-COCK",
+          "prompt": "The fan of blue eyes opens right in front of grandma. Read the word.",
+          "success": "The peacock competes with grandma's flowery hat.",
+          "choices": [
+            {
+              "id": "peacock",
+              "emoji": "🦚",
+              "label": "peacock"
+            },
+            {
+              "id": "parrot",
+              "emoji": "🦜",
+              "label": "parrot"
+            },
+            {
+              "id": "flamingo",
+              "emoji": "🦩",
+              "label": "flamingo"
+            }
+          ],
+          "correct": "peacock"
+        },
+        {
+          "word": "BUFFALO",
+          "syllables": "BUF-FA-LO",
+          "prompt": "The mud-pool philosopher naps in the shade. Read the word.",
+          "success": "The buffalo opens one eye: ah, the balloon folks.",
+          "choices": [
+            {
+              "id": "buffalo",
+              "emoji": "🐃",
+              "label": "buffalo"
+            },
+            {
+              "id": "cow",
+              "emoji": "🐮",
+              "label": "cow"
+            },
+            {
+              "id": "hippo",
+              "emoji": "🦛",
+              "label": "hippo"
+            }
+          ],
+          "correct": "buffalo"
+        },
+        {
+          "word": "LADYBUG",
+          "syllables": "LA-DY-BUG",
+          "prompt": "Our smallest crew member visits the insect house. Read the word.",
+          "success": "The ladybug waves to her hundred cousins.",
+          "choices": [
+            {
+              "id": "ladybug",
+              "emoji": "🐞",
+              "label": "ladybug"
+            },
+            {
+              "id": "bee",
+              "emoji": "🐝",
+              "label": "bee"
+            },
+            {
+              "id": "butterfly",
+              "emoji": "🦋",
+              "label": "butterfly"
+            }
+          ],
+          "correct": "ladybug"
+        },
+        {
+          "word": "HAMSTER",
+          "syllables": "HAM-STER",
+          "prompt": "In the petting corner, a cheek-stuffing champion trains hard. Read the word.",
+          "success": "The hamster fits one more seed. And one more.",
+          "choices": [
+            {
+              "id": "hamster",
+              "emoji": "🐹",
+              "label": "hamster"
+            },
+            {
+              "id": "mouse",
+              "emoji": "🐭",
+              "label": "mouse"
+            },
+            {
+              "id": "rabbit",
+              "emoji": "🐰",
+              "label": "rabbit"
+            }
+          ],
+          "correct": "hamster"
+        },
+        {
+          "word": "CABBAGE",
+          "syllables": "CAB-BAGE",
+          "prompt": "We help carry green heads to the rabbit house. Read the word.",
+          "success": "Cabbage for everyone - the bunnies drum their feet!",
+          "choices": [
+            {
+              "id": "cabbage",
+              "emoji": "🥬",
+              "label": "cabbage"
+            },
+            {
+              "id": "broccoli",
+              "emoji": "🥦",
+              "label": "broccoli"
+            },
+            {
+              "id": "carrot",
+              "emoji": "🥕",
+              "label": "carrot"
+            }
+          ],
+          "correct": "cabbage"
+        },
+        {
+          "word": "DOLPHIN",
+          "syllables": "DOL-PHIN",
+          "prompt": "In the big pool, an old friend jumps through a hoop. Read the word.",
+          "success": "The dolphin from the lagoon - on tour, like us!",
+          "choices": [
+            {
+              "id": "dolphin",
+              "emoji": "🐬",
+              "label": "dolphin"
+            },
+            {
+              "id": "whale",
+              "emoji": "🐳",
+              "label": "whale"
+            },
+            {
+              "id": "shark",
+              "emoji": "🦈",
+              "label": "shark"
+            }
+          ],
+          "correct": "dolphin"
+        }
+      ]
+    },
+    {
+      "id": "en7-18",
+      "title": "The Library Quest",
+      "emoji": "📚",
+      "character": "🦉",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "The last present delivered: a copy of our voyage journal for the library shelf!",
+      "tasks": [
+        {
+          "word": "LIBRARY",
+          "syllables": "LI-BRA-RY",
+          "prompt": "The grandest room in town holds a thousand sleeping stories. Read the word.",
+          "success": "The library ladder rolls like a little train.",
+          "choices": [
+            {
+              "id": "library",
+              "emoji": "📚",
+              "label": "library"
+            },
+            {
+              "id": "school",
+              "emoji": "🏫",
+              "label": "school"
+            },
+            {
+              "id": "museum",
+              "emoji": "🏛️",
+              "label": "museum"
+            }
+          ],
+          "correct": "library"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "Our diary is almost full - only one page left. Read the word.",
+          "success": "The journal saved every day of the voyage.",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "notebook",
+              "emoji": "📓",
+              "label": "notebook"
+            },
+            {
+              "id": "newspaper",
+              "emoji": "📰",
+              "label": "newspaper"
+            }
+          ],
+          "correct": "journal"
+        },
+        {
+          "word": "PICTURE",
+          "syllables": "PIC-TURE",
+          "prompt": "The librarian pins a photo of the balloon over the desk. Read the word.",
+          "success": "The picture makes every reader look up and smile.",
+          "choices": [
+            {
+              "id": "picture",
+              "emoji": "🖼️",
+              "label": "picture"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            },
+            {
+              "id": "mirror",
+              "emoji": "🪞",
+              "label": "mirror"
+            }
+          ],
+          "correct": "picture"
+        },
+        {
+          "word": "GLASSES",
+          "syllables": "GLAS-SES",
+          "prompt": "The librarian owl polishes her round frames. Read the word.",
+          "success": "Glasses on, she finds any book in a blink.",
+          "choices": [
+            {
+              "id": "glasses",
+              "emoji": "👓",
+              "label": "glasses"
+            },
+            {
+              "id": "telescope",
+              "emoji": "🔭",
+              "label": "telescope"
+            },
+            {
+              "id": "magnifier",
+              "emoji": "🔍",
+              "label": "magnifier"
+            }
+          ],
+          "correct": "glasses"
+        },
+        {
+          "word": "TEACHER",
+          "syllables": "TEA-CHER",
+          "prompt": "Look who brought the whole class to meet us! Read the word.",
+          "success": "The teacher's class waves thirty little flags.",
+          "choices": [
+            {
+              "id": "teacher",
+              "emoji": "🧑‍🏫",
+              "label": "teacher"
+            },
+            {
+              "id": "doctor",
+              "emoji": "🧑‍⚕️",
+              "label": "doctor"
+            },
+            {
+              "id": "scientist",
+              "emoji": "🧑‍🔬",
+              "label": "scientist"
+            }
+          ],
+          "correct": "teacher"
+        },
+        {
+          "word": "UNICORN",
+          "syllables": "U-NI-CORN",
+          "prompt": "In the big blue book, a horn glows on page one. Read the word.",
+          "success": "The unicorn book opens by itself. Spooky-nice!",
+          "choices": [
+            {
+              "id": "unicorn",
+              "emoji": "🦄",
+              "label": "unicorn"
+            },
+            {
+              "id": "horse",
+              "emoji": "🐴",
+              "label": "horse"
+            },
+            {
+              "id": "dragon",
+              "emoji": "🐉",
+              "label": "dragon"
+            }
+          ],
+          "correct": "unicorn"
+        },
+        {
+          "word": "MAMMOTH",
+          "syllables": "MAM-MOTH",
+          "prompt": "The shaggy giant from the snowy peak looks out of an old page. Read the word.",
+          "success": "The mammoth chapter gets grandpa's photo added!",
+          "choices": [
+            {
+              "id": "mammoth",
+              "emoji": "🦣",
+              "label": "mammoth"
+            },
+            {
+              "id": "elephant",
+              "emoji": "🐘",
+              "label": "elephant"
+            },
+            {
+              "id": "rhino",
+              "emoji": "🦏",
+              "label": "rhino"
+            }
+          ],
+          "correct": "mammoth"
+        },
+        {
+          "word": "VOLCANO",
+          "syllables": "VOL-CA-NO",
+          "prompt": "The atlas shows our sleeping smoky island. Read the word.",
+          "success": "The volcano page now has a tiny snore drawn on it.",
+          "choices": [
+            {
+              "id": "volcano",
+              "emoji": "🌋",
+              "label": "volcano"
+            },
+            {
+              "id": "mountain",
+              "emoji": "⛰️",
+              "label": "mountain"
+            },
+            {
+              "id": "fire",
+              "emoji": "🔥",
+              "label": "fire"
+            }
+          ],
+          "correct": "volcano"
+        },
+        {
+          "word": "COMPASS",
+          "syllables": "COM-PASS",
+          "prompt": "On the reading desk, our needle friend rests on the atlas. Read the word.",
+          "success": "The compass points to the shelf marked Home.",
+          "choices": [
+            {
+              "id": "compass",
+              "emoji": "🧭",
+              "label": "compass"
+            },
+            {
+              "id": "map",
+              "emoji": "🗺️",
+              "label": "map"
+            },
+            {
+              "id": "clock",
+              "emoji": "⏰",
+              "label": "clock"
+            }
+          ],
+          "correct": "compass"
+        },
+        {
+          "word": "PACKAGE",
+          "syllables": "PACK-AGE",
+          "prompt": "The very last parcel from grandpa's list is for the library. Read the word.",
+          "success": "The package holds a brand-new blank diary!",
+          "choices": [
+            {
+              "id": "package",
+              "emoji": "📦",
+              "label": "package"
+            },
+            {
+              "id": "letter",
+              "emoji": "✉️",
+              "label": "letter"
+            },
+            {
+              "id": "basket",
+              "emoji": "🧺",
+              "label": "basket"
+            }
+          ],
+          "correct": "package"
+        }
+      ]
+    },
+    {
+      "id": "en7-19",
+      "title": "The Bowling Party",
+      "emoji": "🎳",
+      "character": "🤹",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "Best party ever! Tomorrow morning, the balloon flies home.",
+      "tasks": [
+        {
+          "word": "BOWLING",
+          "syllables": "BOW-LING",
+          "prompt": "All our new friends meet where ten white pins stand in a triangle. Read the word.",
+          "success": "Bowling night! The mermaid brought her own ball.",
+          "choices": [
+            {
+              "id": "bowling",
+              "emoji": "🎳",
+              "label": "bowling"
+            },
+            {
+              "id": "billiards",
+              "emoji": "🎱",
+              "label": "billiards"
+            },
+            {
+              "id": "darts",
+              "emoji": "🎯",
+              "label": "darts"
+            }
+          ],
+          "correct": "bowling"
+        },
+        {
+          "word": "POPCORN",
+          "syllables": "POP-CORN",
+          "prompt": "The crunchy white mountain stands between the lanes. Read the word.",
+          "success": "Popcorn crumbs everywhere. Worth it.",
+          "choices": [
+            {
+              "id": "popcorn",
+              "emoji": "🍿",
+              "label": "popcorn"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            },
+            {
+              "id": "juice",
+              "emoji": "🧃",
+              "label": "juice"
+            }
+          ],
+          "correct": "popcorn"
+        },
+        {
+          "word": "PRETZEL",
+          "syllables": "PRET-ZEL",
+          "prompt": "The baker brought a basket of salty knots. Read the word.",
+          "success": "Pretzels for strikes, pretzels for misses too!",
+          "choices": [
+            {
+              "id": "pretzel",
+              "emoji": "🥨",
+              "label": "pretzel"
+            },
+            {
+              "id": "donut",
+              "emoji": "🍩",
+              "label": "donut"
+            },
+            {
+              "id": "cookie",
+              "emoji": "🍪",
+              "label": "cookie"
+            }
+          ],
+          "correct": "pretzel"
+        },
+        {
+          "word": "BURRITO",
+          "syllables": "BUR-RI-TO",
+          "prompt": "The cook rolls warm blankets of rice for everyone. Read the word.",
+          "success": "The burrito needs two hands and full attention.",
+          "choices": [
+            {
+              "id": "burrito",
+              "emoji": "🌯",
+              "label": "burrito"
+            },
+            {
+              "id": "taco",
+              "emoji": "🌮",
+              "label": "taco"
+            },
+            {
+              "id": "sandwich",
+              "emoji": "🥪",
+              "label": "sandwich"
+            }
+          ],
+          "correct": "burrito"
+        },
+        {
+          "word": "NOODLES",
+          "syllables": "NOO-DLES",
+          "prompt": "The captain slurps the longest string in the bowl. Read the word.",
+          "success": "The noodles win: the captain needs a napkin.",
+          "choices": [
+            {
+              "id": "noodles",
+              "emoji": "🍜",
+              "label": "noodles"
+            },
+            {
+              "id": "spaghetti",
+              "emoji": "🍝",
+              "label": "spaghetti"
+            },
+            {
+              "id": "soup",
+              "emoji": "🍲",
+              "label": "soup"
+            }
+          ],
+          "correct": "noodles"
+        },
+        {
+          "word": "CUPCAKE",
+          "syllables": "CUP-CAKE",
+          "prompt": "Victory sweets wait with cherry hats on. Read the word.",
+          "success": "A cupcake for every strike - grandma's rule.",
+          "choices": [
+            {
+              "id": "cupcake",
+              "emoji": "🧁",
+              "label": "cupcake"
+            },
+            {
+              "id": "cake",
+              "emoji": "🎂",
+              "label": "cake"
+            },
+            {
+              "id": "lollipop",
+              "emoji": "🍭",
+              "label": "lollipop"
+            }
+          ],
+          "correct": "cupcake"
+        },
+        {
+          "word": "JUGGLER",
+          "syllables": "JUG-GLER",
+          "prompt": "Someone juggles three bowling balls. Show-off! Read the word.",
+          "success": "The juggler bows - and drops nothing.",
+          "choices": [
+            {
+              "id": "juggler",
+              "emoji": "🤹",
+              "label": "juggler"
+            },
+            {
+              "id": "clown",
+              "emoji": "🤡",
+              "label": "clown"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            }
+          ],
+          "correct": "juggler"
+        },
+        {
+          "word": "ACROBAT",
+          "syllables": "AC-RO-BAT",
+          "prompt": "Someone rolls the ball between her feet in a handstand. Read the word.",
+          "success": "Strike! The acrobat takes an upside-down bow.",
+          "choices": [
+            {
+              "id": "acrobat",
+              "emoji": "🤸",
+              "label": "acrobat"
+            },
+            {
+              "id": "dancer",
+              "emoji": "💃",
+              "label": "dancer"
+            },
+            {
+              "id": "genie",
+              "emoji": "🧞",
+              "label": "genie"
+            }
+          ],
+          "correct": "acrobat"
+        },
+        {
+          "word": "SCOOTER",
+          "syllables": "SCOO-TER",
+          "prompt": "The fastest way to fetch more pretzels: push and glide! Read the word.",
+          "success": "The scooter delivers pretzels in record time.",
+          "choices": [
+            {
+              "id": "scooter",
+              "emoji": "🛴",
+              "label": "scooter"
+            },
+            {
+              "id": "skateboard",
+              "emoji": "🛹",
+              "label": "skateboard"
+            },
+            {
+              "id": "rollerskate",
+              "emoji": "🛼",
+              "label": "roller skate"
+            }
+          ],
+          "correct": "scooter"
+        },
+        {
+          "word": "PRESENT",
+          "syllables": "PRE-SENT",
+          "prompt": "Wait - our friends prepared a box with a bow for US! Read the word.",
+          "success": "The present is a photo of everyone, in a starry frame.",
+          "choices": [
+            {
+              "id": "present",
+              "emoji": "🎁",
+              "label": "present"
+            },
+            {
+              "id": "ribbon",
+              "emoji": "🎀",
+              "label": "ribbon"
+            },
+            {
+              "id": "confetti",
+              "emoji": "🎊",
+              "label": "confetti"
+            }
+          ],
+          "correct": "present"
+        }
+      ]
+    },
+    {
+      "id": "en7-20",
+      "title": "Welcome Home",
+      "emoji": "🏡",
+      "character": "🎈",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Home sweet home! The journal rests - but the compass still points to adventure.",
+      "tasks": [
+        {
+          "word": "BALLOON",
+          "syllables": "BAL-LOON",
+          "prompt": "One last time, the striped friend fills with warm morning air. Read the word.",
+          "success": "The balloon rises softly - it knows the way.",
+          "choices": [
+            {
+              "id": "balloon",
+              "emoji": "🎈",
+              "label": "balloon"
+            },
+            {
+              "id": "kite",
+              "emoji": "🪁",
+              "label": "kite"
+            },
+            {
+              "id": "airplane",
+              "emoji": "✈️",
+              "label": "airplane"
+            }
+          ],
+          "correct": "balloon"
+        },
+        {
+          "word": "VILLAGE",
+          "syllables": "VIL-LAGE",
+          "prompt": "Familiar rooftops appear beyond the last hill. Read the word.",
+          "success": "Our village! Even the clouds look familiar.",
+          "choices": [
+            {
+              "id": "village",
+              "emoji": "🏘️",
+              "label": "village"
+            },
+            {
+              "id": "castle",
+              "emoji": "🏰",
+              "label": "castle"
+            },
+            {
+              "id": "island",
+              "emoji": "🏝️",
+              "label": "island"
+            }
+          ],
+          "correct": "village"
+        },
+        {
+          "word": "COTTAGE",
+          "syllables": "COT-TAGE",
+          "prompt": "The little house with the garden waits with open windows. Read the word.",
+          "success": "The cottage flag - grandma's tablecloth - waves hello!",
+          "choices": [
+            {
+              "id": "cottage",
+              "emoji": "🏡",
+              "label": "cottage"
+            },
+            {
+              "id": "house",
+              "emoji": "🏠",
+              "label": "house"
+            },
+            {
+              "id": "tent",
+              "emoji": "⛺",
+              "label": "tent"
+            }
+          ],
+          "correct": "cottage"
+        },
+        {
+          "word": "GRANDMA",
+          "syllables": "GRAND-MA",
+          "prompt": "Who spots the neighbors first and waves with both hands? Read the word.",
+          "success": "Grandma promises pancakes to the whole street.",
+          "choices": [
+            {
+              "id": "grandma",
+              "emoji": "👵",
+              "label": "grandma"
+            },
+            {
+              "id": "queen",
+              "emoji": "👸",
+              "label": "queen"
+            },
+            {
+              "id": "fairy",
+              "emoji": "🧚",
+              "label": "fairy"
+            }
+          ],
+          "correct": "grandma"
+        },
+        {
+          "word": "GRANDPA",
+          "syllables": "GRAND-PA",
+          "prompt": "Who lands the balloon gently, right on the flowerbed edge? Read the word.",
+          "success": "Grandpa bows: best landing of the voyage!",
+          "choices": [
+            {
+              "id": "grandpa",
+              "emoji": "👴",
+              "label": "grandpa"
+            },
+            {
+              "id": "cowboy",
+              "emoji": "🤠",
+              "label": "cowboy"
+            },
+            {
+              "id": "wizard",
+              "emoji": "🧙",
+              "label": "wizard"
+            }
+          ],
+          "correct": "grandpa"
+        },
+        {
+          "word": "PRESENT",
+          "syllables": "PRE-SENT",
+          "prompt": "One box with a bow was hiding under the map all along - for us! Read the word.",
+          "success": "Inside: a tiny balloon charm for the journal.",
+          "choices": [
+            {
+              "id": "present",
+              "emoji": "🎁",
+              "label": "present"
+            },
+            {
+              "id": "ribbon",
+              "emoji": "🎀",
+              "label": "ribbon"
+            },
+            {
+              "id": "candy",
+              "emoji": "🍬",
+              "label": "candy"
+            }
+          ],
+          "correct": "present"
+        },
+        {
+          "word": "PICTURE",
+          "syllables": "PIC-TURE",
+          "prompt": "The neighbors bring a surprise: our voyage painted from the newspaper photos. Read the word.",
+          "success": "The picture goes over the fireplace. Perfect.",
+          "choices": [
+            {
+              "id": "picture",
+              "emoji": "🖼️",
+              "label": "picture"
+            },
+            {
+              "id": "camera",
+              "emoji": "📷",
+              "label": "camera"
+            },
+            {
+              "id": "mirror",
+              "emoji": "🪞",
+              "label": "mirror"
+            }
+          ],
+          "correct": "picture"
+        },
+        {
+          "word": "JOURNAL",
+          "syllables": "JOUR-NAL",
+          "prompt": "The diary's last page waits for the very last line. Read the word.",
+          "success": "The journal ends with: to be continued...",
+          "choices": [
+            {
+              "id": "journal",
+              "emoji": "📔",
+              "label": "journal"
+            },
+            {
+              "id": "book",
+              "emoji": "📖",
+              "label": "book"
+            },
+            {
+              "id": "notebook",
+              "emoji": "📓",
+              "label": "notebook"
+            }
+          ],
+          "correct": "journal"
+        },
+        {
+          "word": "RAINBOW",
+          "syllables": "RAIN-BOW",
+          "prompt": "As we fold the balloon, the sky hangs out seven colors. Read the word.",
+          "success": "A goodbye rainbow - see you, sky!",
+          "choices": [
+            {
+              "id": "rainbow",
+              "emoji": "🌈",
+              "label": "rainbow"
+            },
+            {
+              "id": "cloud",
+              "emoji": "☁️",
+              "label": "cloud"
+            },
+            {
+              "id": "star",
+              "emoji": "⭐",
+              "label": "star"
+            }
+          ],
+          "correct": "rainbow"
+        },
+        {
+          "word": "SUNRISE",
+          "syllables": "SUN-RISE",
+          "prompt": "Next morning paints the sky pink again. Somewhere, a new map waits. Read the word.",
+          "success": "Sunrise! Grandpa winks: ready for the next voyage?",
+          "choices": [
+            {
+              "id": "sunrise",
+              "emoji": "🌅",
+              "label": "sunrise"
+            },
+            {
+              "id": "moon",
+              "emoji": "🌙",
+              "label": "moon"
+            },
+            {
+              "id": "sun",
+              "emoji": "☀️",
+              "label": "sun"
+            }
+          ],
+          "correct": "sunrise"
+        }
+      ]
+    }
+  ]
+}
