@@ -1,0 +1,864 @@
+const OBJECTS = {
+  blueBall: {
+    name: "Blue ball",
+    emoji: "🔵",
+    shape: "round",
+    color: "blue",
+    material: "rubber",
+    size: "medium",
+    category: "toy",
+    canRoll: true,
+  },
+  coin: {
+    name: "Silver coin",
+    emoji: "🪙",
+    shape: "round",
+    color: "silver",
+    material: "metal",
+    size: "small",
+    category: "money",
+    canRoll: true,
+  },
+  redBlock: {
+    name: "Red block",
+    emoji: "🟥",
+    shape: "square",
+    color: "red",
+    material: "wood",
+    size: "small",
+    category: "toy",
+    canRoll: false,
+  },
+  spoon: {
+    name: "Silver spoon",
+    emoji: "🥄",
+    shape: "long",
+    color: "silver",
+    material: "metal",
+    size: "medium",
+    category: "kitchen",
+    canRoll: false,
+  },
+  orangeButton: {
+    name: "Orange button",
+    emoji: "🟠",
+    shape: "round",
+    color: "orange",
+    material: "plastic",
+    size: "small",
+    category: "clothing",
+    canRoll: false,
+  },
+  greenBook: {
+    name: "Green book",
+    emoji: "📗",
+    shape: "rectangle",
+    color: "green",
+    material: "paper",
+    size: "medium",
+    category: "school",
+    canRoll: false,
+  },
+  redPlate: {
+    name: "Red plate",
+    emoji: "🍽️",
+    shape: "round",
+    color: "red",
+    material: "ceramic",
+    size: "large",
+    category: "kitchen",
+    canRoll: false,
+  },
+  woodRing: {
+    name: "Wooden ring",
+    emoji: "⭕",
+    shape: "round",
+    color: "brown",
+    material: "wood",
+    size: "medium",
+    category: "toy",
+    canRoll: true,
+  },
+  steelKey: {
+    name: "Steel key",
+    emoji: "🔑",
+    shape: "long",
+    color: "gold",
+    material: "metal",
+    size: "small",
+    category: "tool",
+    canRoll: false,
+  },
+  silverRibbon: {
+    name: "Silver ribbon",
+    emoji: "🎗️",
+    shape: "wavy",
+    color: "silver",
+    material: "fabric",
+    size: "medium",
+    category: "craft",
+    canRoll: false,
+  },
+  plasticFork: {
+    name: "Plastic fork",
+    emoji: "🍴",
+    shape: "long",
+    color: "blue",
+    material: "plastic",
+    size: "medium",
+    category: "kitchen",
+    canRoll: false,
+  },
+  blueCup: {
+    name: "Blue cup",
+    emoji: "🥤",
+    shape: "cylinder",
+    color: "blue",
+    material: "plastic",
+    size: "medium",
+    category: "kitchen",
+    canRoll: false,
+  },
+  redBerry: {
+    name: "Red berry",
+    emoji: "🍓",
+    shape: "round",
+    color: "red",
+    material: "organic",
+    size: "small",
+    category: "food",
+    canRoll: false,
+  },
+  redBook: {
+    name: "Red book",
+    emoji: "📕",
+    shape: "rectangle",
+    color: "red",
+    material: "paper",
+    size: "large",
+    category: "school",
+    canRoll: false,
+  },
+  blueMarble: {
+    name: "Blue marble",
+    emoji: "🔮",
+    shape: "round",
+    color: "blue",
+    material: "glass",
+    size: "small",
+    category: "toy",
+    canRoll: true,
+  },
+  redSock: {
+    name: "Red sock",
+    emoji: "🧦",
+    shape: "irregular",
+    color: "red",
+    material: "fabric",
+    size: "small",
+    category: "clothing",
+    canRoll: false,
+  },
+  redKey: {
+    name: "Red key",
+    emoji: "🗝️",
+    shape: "long",
+    color: "red",
+    material: "metal",
+    size: "small",
+    category: "tool",
+    canRoll: false,
+  },
+  metalBall: {
+    name: "Metal ball",
+    emoji: "⚙️",
+    shape: "round",
+    color: "silver",
+    material: "metal",
+    size: "medium",
+    category: "tool",
+    canRoll: true,
+  },
+  woodStar: {
+    name: "Wooden star",
+    emoji: "⭐",
+    shape: "star",
+    color: "brown",
+    material: "wood",
+    size: "small",
+    category: "craft",
+    canRoll: false,
+  },
+  woodSpoon: {
+    name: "Wooden spoon",
+    emoji: "🥄",
+    shape: "long",
+    color: "brown",
+    material: "wood",
+    size: "medium",
+    category: "kitchen",
+    canRoll: false,
+  },
+  shoe: {
+    name: "Black shoe",
+    emoji: "👟",
+    shape: "irregular",
+    color: "black",
+    material: "fabric",
+    size: "large",
+    category: "clothing",
+    canRoll: false,
+  },
+  blueWheel: {
+    name: "Blue wheel",
+    emoji: "🛞",
+    shape: "round",
+    color: "blue",
+    material: "rubber",
+    size: "medium",
+    category: "tool",
+    canRoll: true,
+  },
+  redWheel: {
+    name: "Red wheel",
+    emoji: "🛞",
+    shape: "round",
+    color: "red",
+    material: "rubber",
+    size: "medium",
+    category: "tool",
+    canRoll: true,
+  },
+  blueBlock: {
+    name: "Blue block",
+    emoji: "🟦",
+    shape: "square",
+    color: "blue",
+    material: "wood",
+    size: "small",
+    category: "toy",
+    canRoll: false,
+  },
+  yellowBall: {
+    name: "Yellow ball",
+    emoji: "🟡",
+    shape: "round",
+    color: "yellow",
+    material: "rubber",
+    size: "medium",
+    category: "toy",
+    canRoll: true,
+  },
+};
+
+const RULES = {
+  red: {
+    icon: "🔴",
+    title: "It accepts red objects",
+    short: "red",
+    test: (object) => object.color === "red",
+  },
+  round: {
+    icon: "⭕",
+    title: "It accepts round objects",
+    short: "round",
+    test: (object) => object.shape === "round",
+  },
+  metal: {
+    icon: "🔧",
+    title: "It accepts metal objects",
+    short: "metal",
+    test: (object) => object.material === "metal",
+  },
+  small: {
+    icon: "🤏",
+    title: "It accepts small objects",
+    short: "small",
+    test: (object) => object.size === "small",
+  },
+  silver: {
+    icon: "🥈",
+    title: "It accepts silver objects",
+    short: "silver",
+    test: (object) => object.color === "silver",
+  },
+  kitchen: {
+    icon: "🍽️",
+    title: "It accepts kitchen objects",
+    short: "kitchen",
+    test: (object) => object.category === "kitchen",
+  },
+  redAndSmall: {
+    icon: "🔴 + 🤏",
+    title: "It accepts red and small objects",
+    short: "red and small",
+    test: (object) => object.color === "red" && object.size === "small",
+  },
+  nonMetal: {
+    icon: "🔧 ✖",
+    title: "It accepts non-metal objects",
+    short: "not metal",
+    test: (object) => object.material !== "metal",
+  },
+  wood: {
+    icon: "🪵",
+    title: "It accepts wooden objects",
+    short: "wooden",
+    test: (object) => object.material === "wood",
+  },
+  roundAndNotMetal: {
+    icon: "⭕ + 🔧 ✖",
+    title: "It accepts round, non-metal objects",
+    short: "round and not metal",
+    test: (object) => object.shape === "round" && object.material !== "metal",
+  },
+  long: {
+    icon: "📏",
+    title: "It accepts long objects",
+    short: "long",
+    test: (object) => object.shape === "long",
+  },
+  kitchenOrWood: {
+    icon: "🍽️ / 🪵",
+    title: "It accepts kitchen or wooden objects",
+    short: "kitchen or wooden",
+    test: (object) => object.category === "kitchen" || object.material === "wood",
+  },
+  blue: {
+    icon: "🔵",
+    title: "It accepts blue objects",
+    short: "blue",
+    test: (object) => object.color === "blue",
+  },
+  rolls: {
+    icon: "🎳",
+    title: "It accepts objects that can roll",
+    short: "can roll",
+    test: (object) => object.canRoll,
+  },
+  blueAndRolls: {
+    icon: "🔵 + 🎳",
+    title: "It accepts blue objects that can roll",
+    short: "blue and rolls",
+    test: (object) => object.color === "blue" && object.canRoll,
+  },
+};
+
+const LEVELS = [
+  {
+    title: "Find the First Rule",
+    brief: "Look at the examples. Find the bot's rule.",
+    targetRule: "round",
+    hypothesisIds: ["red", "round", "metal", "small"],
+    initialEvidence: ["blueBall", "coin", "redBlock"],
+    testObjects: ["spoon", "orangeButton", "greenBook", "redPlate", "woodRing"],
+  },
+  {
+    title: "Color or Material?",
+    brief: "Find what matters: color or material.",
+    targetRule: "metal",
+    hypothesisIds: ["silver", "metal", "kitchen", "small"],
+    initialEvidence: ["coin", "steelKey", "orangeButton", "silverRibbon"],
+    testObjects: ["spoon", "redKey", "plasticFork", "blueCup", "metalBall"],
+  },
+  {
+    title: "Two Clues",
+    brief: "This rule has two parts.",
+    targetRule: "redAndSmall",
+    hypothesisIds: ["red", "small", "round", "redAndSmall"],
+    initialEvidence: ["redBerry", "redBlock", "redBook", "blueMarble"],
+    testObjects: ["redSock", "redPlate", "orangeButton", "redKey", "greenBook"],
+  },
+  {
+    title: "Special Case",
+    brief: "Round is not enough. Find what else matters.",
+    targetRule: "roundAndNotMetal",
+    hypothesisIds: ["round", "nonMetal", "roundAndNotMetal", "wood"],
+    initialEvidence: ["blueBall", "coin", "redBlock", "woodRing"],
+    testObjects: ["metalBall", "redPlate", "woodStar", "blueWheel", "spoon"],
+  },
+  {
+    title: "Two Ways",
+    brief: "An object can fit in two different ways.",
+    targetRule: "kitchenOrWood",
+    hypothesisIds: ["kitchen", "wood", "kitchenOrWood", "long"],
+    initialEvidence: ["spoon", "redBlock", "blueBall", "shoe"],
+    testObjects: ["woodSpoon", "blueCup", "woodStar", "steelKey", "greenBook"],
+  },
+  {
+    title: "Final Rule",
+    brief: "Use color and movement together.",
+    targetRule: "blueAndRolls",
+    hypothesisIds: ["blue", "rolls", "round", "blueAndRolls"],
+    initialEvidence: ["blueWheel", "redWheel", "blueBlock", "steelKey"],
+    testObjects: ["blueBall", "blueMarble", "metalBall", "blueCup", "yellowBall"],
+  },
+];
+
+function ruleResult(ruleId, objectId) {
+  return RULES[ruleId].test(OBJECTS[objectId]);
+}
+
+function findCounterexample(level, hypothesisId, excludedIds = []) {
+  const excluded = new Set(excludedIds);
+  return [...level.testObjects, ...level.initialEvidence].find(
+    (objectId) => !excluded.has(objectId)
+      && ruleResult(level.targetRule, objectId) !== ruleResult(hypothesisId, objectId),
+  );
+}
+
+function createProofQueue(level, hypothesisId, excludedIds = []) {
+  const allObjects = [...level.testObjects, ...level.initialEvidence];
+  const counterexample = findCounterexample(level, hypothesisId, excludedIds);
+  const queue = counterexample ? [counterexample] : [];
+
+  allObjects.forEach((objectId) => {
+    if (queue.length < 3 && !queue.includes(objectId) && !excludedIds.includes(objectId)) {
+      queue.push(objectId);
+    }
+  });
+
+  allObjects.forEach((objectId) => {
+    if (queue.length < 3 && !queue.includes(objectId)) queue.push(objectId);
+  });
+
+  return queue.slice(0, 3);
+}
+
+function evaluateExperiment(level, hypothesisId, objectId, prediction) {
+  const expected = ruleResult(hypothesisId, objectId);
+  const actual = ruleResult(level.targetRule, objectId);
+  return {
+    actual,
+    expected,
+    hypothesisFits: expected === actual,
+    predictionMatches: prediction === actual,
+  };
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    OBJECTS,
+    RULES,
+    LEVELS,
+    ruleResult,
+    findCounterexample,
+    createProofQueue,
+    evaluateExperiment,
+  };
+}
+
+if (typeof document !== "undefined") {
+  const elements = {
+    missionCounter: document.querySelector("#missionCounter"),
+    progressFill: document.querySelector("#progressFill"),
+    badgeCount: document.querySelector("#badgeCount"),
+    missionLabel: document.querySelector("#missionLabel"),
+    missionTitle: document.querySelector("#missionTitle"),
+    missionBrief: document.querySelector("#missionBrief"),
+    factCount: document.querySelector("#factCount"),
+    evidenceList: document.querySelector("#evidenceList"),
+    hypothesisGrid: document.querySelector("#hypothesisGrid"),
+    objectGrid: document.querySelector("#objectGrid"),
+    testsLeft: document.querySelector("#testsLeft"),
+    selectedObject: document.querySelector("#selectedObject"),
+    experimentLabel: document.querySelector("#experimentLabel"),
+    experimentTitle: document.querySelector("#experimentTitle"),
+    experimentPrompt: document.querySelector("#experimentPrompt"),
+    feedback: document.querySelector("#feedback"),
+    feedbackText: document.querySelector("#feedbackText"),
+    proveButton: document.querySelector("#proveButton"),
+    phasePill: document.querySelector("#phasePill"),
+    notebookStatus: document.querySelector("#notebookStatus"),
+    notebookEmpty: document.querySelector("#notebookEmpty"),
+    tableWrap: document.querySelector("#tableWrap"),
+    notebookBody: document.querySelector("#notebookBody"),
+    successDialog: document.querySelector("#successDialog"),
+    badgeShelf: document.querySelector("#badgeShelf"),
+    testSection: document.querySelector("#testSection"),
+    experimentPanel: document.querySelector("#experimentPanel"),
+    successCopy: document.querySelector("#successCopy"),
+    nextButton: document.querySelector("#nextButton"),
+    soundButton: document.querySelector("#soundButton"),
+  };
+
+  let currentLevelIndex = 0;
+  let selectedHypothesisId = null;
+  let selectedObjectId = null;
+  let testedObjectIds = [];
+  let records = [];
+  let proofQueue = [];
+  let proofIndex = 0;
+  let phase = "explore";
+  let completedLevels = readCompletedLevels();
+  let soundEnabled = readSoundSetting();
+  let audioContext;
+  let focusBeforeDialog = null;
+
+  const firstIncompleteLevel = LEVELS.findIndex((_, index) => !completedLevels.has(index));
+  currentLevelIndex = firstIncompleteLevel === -1 ? 0 : firstIncompleteLevel;
+
+  function readCompletedLevels() {
+    try {
+      const saved = JSON.parse(localStorage.getItem("secretRuleLabCompletedV1"));
+      return new Set(Array.isArray(saved) ? saved : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function readSoundSetting() {
+    try {
+      return localStorage.getItem("secretRuleLabSoundV1") !== "off";
+    } catch {
+      return true;
+    }
+  }
+
+  function saveSetting(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // Private browsing modes can refuse writes. Progress stays for this session only.
+    }
+  }
+
+  function playTone(frequency, duration = 0.08) {
+    if (!soundEnabled) return;
+    audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.07, audioContext.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+  }
+
+  function isDisproved(ruleId) {
+    return records.some((record) => ruleResult(ruleId, record.objectId) !== record.result);
+  }
+
+  function setFeedback(message, tone = "neutral") {
+    elements.feedback.dataset.tone = tone;
+    elements.feedbackText.textContent = message;
+    elements.feedback.querySelector(".feedback-icon").textContent = tone === "success" ? "✓" : tone === "warning" ? "!" : "i";
+  }
+
+  function renderProgress() {
+    elements.missionCounter.textContent = `Mission ${currentLevelIndex + 1} of ${LEVELS.length}`;
+    elements.badgeCount.textContent = completedLevels.size;
+    elements.progressFill.style.width = `${(completedLevels.size / LEVELS.length) * 100}%`;
+    elements.soundButton.textContent = soundEnabled ? "♪" : "×";
+    elements.soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
+  }
+
+  function renderEvidence() {
+    const level = LEVELS[currentLevelIndex];
+    const evidenceIds = [...new Set([...level.initialEvidence, ...testedObjectIds])];
+    elements.factCount.textContent = `${evidenceIds.length} examples`;
+    elements.evidenceList.innerHTML = evidenceIds.map((objectId) => {
+      const object = OBJECTS[objectId];
+      const accepted = ruleResult(level.targetRule, objectId);
+      return `
+        <article class="evidence-item">
+          <span class="evidence-emoji" aria-hidden="true">${object.emoji}</span>
+          <span><strong>${object.name}</strong><small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small></span>
+          <span class="result-tag ${accepted ? "accepted" : "rejected"}">${accepted ? "Fits" : "Does not fit"}</span>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function renderHypotheses() {
+    const level = LEVELS[currentLevelIndex];
+    elements.hypothesisGrid.innerHTML = level.hypothesisIds.map((ruleId) => {
+      const disproved = isDisproved(ruleId);
+      return `
+      <button
+        class="hypothesis-button ${selectedHypothesisId === ruleId ? "selected" : ""} ${disproved ? "disproved" : ""}"
+        type="button"
+        data-rule="${ruleId}"
+        aria-pressed="${selectedHypothesisId === ruleId}"
+        ${phase === "proof" || disproved ? "disabled" : ""}
+      >
+        <span class="hypothesis-icon" aria-hidden="true">${RULES[ruleId].icon}</span>
+        <strong>${RULES[ruleId].short}</strong>
+        ${disproved ? '<small>Rule is out</small>' : ""}
+      </button>
+    `;
+    }).join("");
+  }
+
+  function renderObjects() {
+    const level = LEVELS[currentLevelIndex];
+    const remaining = level.testObjects.filter((objectId) => !testedObjectIds.includes(objectId));
+    elements.testsLeft.textContent = `${remaining.length} left`;
+    elements.objectGrid.innerHTML = level.testObjects.map((objectId) => {
+      const object = OBJECTS[objectId];
+      const tested = testedObjectIds.includes(objectId);
+      return `
+        <button
+          class="object-button ${selectedObjectId === objectId ? "selected" : ""}"
+          type="button"
+          data-object="${objectId}"
+          ${tested || phase === "proof" ? "disabled" : ""}
+          aria-label="Test ${object.name}${tested ? ", already tested" : ""}"
+        >
+          <span class="emoji" aria-hidden="true">${object.emoji}</span>
+          <span class="name">${object.name}</span>
+        </button>
+      `;
+    }).join("");
+  }
+
+  function renderExperiment() {
+    const objectId = phase === "proof" ? proofQueue[proofIndex] : selectedObjectId;
+    const object = objectId ? OBJECTS[objectId] : null;
+    const buttons = document.querySelectorAll("[data-prediction]");
+
+    if (!object) {
+      elements.selectedObject.innerHTML = '<span class="selected-placeholder">?</span>';
+      elements.experimentLabel.textContent = "Your guess";
+      elements.experimentTitle.textContent = "What will the bot do?";
+      elements.experimentPrompt.textContent = "Pick an object first.";
+    } else {
+      elements.selectedObject.textContent = object.emoji;
+      elements.experimentLabel.textContent = phase === "proof" ? `Proof trial ${proofIndex + 1} of 3` : "Your guess";
+      elements.experimentTitle.textContent = `Will the ${object.name.toLowerCase()} fit?`;
+      elements.experimentPrompt.textContent = "What will the bot do?";
+    }
+
+    buttons.forEach((button) => {
+      button.disabled = !object || !selectedHypothesisId;
+    });
+  }
+
+  function renderNotebook() {
+    elements.notebookStatus.textContent = records.length === 0 ? "No tests yet" : `${records.length} tests`;
+    elements.notebookEmpty.hidden = records.length > 0;
+    elements.tableWrap.hidden = records.length === 0;
+    elements.notebookBody.innerHTML = records.map((record) => {
+      return `
+        <article class="record-card ${record.hypothesisFits ? "record-supports" : "record-contradicts"}">
+          <span class="record-object" aria-hidden="true">${OBJECTS[record.objectId].emoji}</span>
+          <span class="record-line">
+            <b>${RULES[record.hypothesisId].icon}</b>
+            <small>${RULES[record.hypothesisId].short}</small>
+          </span>
+          <span class="record-step">
+            <small>Your guess</small>
+            <b aria-label="${record.prediction ? "Fits" : "Does not fit"}">${record.prediction ? "✓" : "×"}</b>
+          </span>
+          <span class="record-step">
+            <small>Bot did</small>
+            <b aria-label="${record.result ? "Fits" : "Does not fit"}">${record.result ? "✓" : "×"}</b>
+          </span>
+          <span class="record-guess-verdict ${record.predictionMatches ? "matched" : "different"}">
+            ${record.predictionMatches ? "Guess matched" : "Different result"}
+          </span>
+          <span class="record-verdict">${record.hypothesisFits ? "Rule fits" : "Rule is out"}</span>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function renderSteps() {
+    const hasHypothesis = Boolean(selectedHypothesisId);
+    const hasObject = Boolean(phase === "proof" ? proofQueue[proofIndex] : selectedObjectId);
+    elements.hypothesisGrid.closest(".research-card").dataset.step = !hasHypothesis
+      ? "1"
+      : !hasObject ? "2" : "3";
+    elements.testSection.hidden = !hasHypothesis || phase === "proof";
+    elements.experimentPanel.hidden = !hasObject;
+    elements.proveButton.hidden = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+  }
+
+  function renderBadges() {
+    elements.badgeShelf.replaceChildren();
+    LEVELS.forEach((level, index) => {
+      const badge = document.createElement("span");
+      badge.className = `badge${completedLevels.has(index) ? " earned" : ""}`;
+      badge.textContent = completedLevels.has(index) ? "◆" : "◇";
+      elements.badgeShelf.append(badge);
+    });
+  }
+
+  function render() {
+    const level = LEVELS[currentLevelIndex];
+    elements.missionLabel.textContent = `Mission ${String(currentLevelIndex + 1).padStart(2, "0")}`;
+    elements.missionTitle.textContent = level.title;
+    elements.missionBrief.textContent = level.brief;
+    elements.phasePill.textContent = phase === "proof" ? "Check rule" : "Explore";
+    elements.proveButton.disabled = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+    renderProgress();
+    renderEvidence();
+    renderHypotheses();
+    renderObjects();
+    renderExperiment();
+    renderNotebook();
+    renderSteps();
+  }
+
+  function selectHypothesis(ruleId) {
+    selectedHypothesisId = ruleId;
+    selectedObjectId = null;
+    setFeedback(`Rule: ${RULES[ruleId].short}. Now pick an object.`, "neutral");
+    render();
+  }
+
+  function selectObject(objectId) {
+    if (!selectedHypothesisId || testedObjectIds.includes(objectId)) {
+      setFeedback("Pick a rule first.", "warning");
+      return;
+    }
+
+    selectedObjectId = objectId;
+    setFeedback(`Will the ${OBJECTS[objectId].name.toLowerCase()} fit?`, "neutral");
+    render();
+  }
+
+  function addRecord(objectId, prediction, evaluation) {
+    records.unshift({
+      hypothesisId: selectedHypothesisId,
+      objectId,
+      prediction,
+      result: evaluation.actual,
+      hypothesisFits: evaluation.hypothesisFits,
+      predictionMatches: evaluation.predictionMatches,
+    });
+    if (!testedObjectIds.includes(objectId)) testedObjectIds.push(objectId);
+  }
+
+  function runPrediction(prediction) {
+    const level = LEVELS[currentLevelIndex];
+    const objectId = phase === "proof" ? proofQueue[proofIndex] : selectedObjectId;
+    if (!objectId || !selectedHypothesisId) return;
+
+    const evaluation = evaluateExperiment(level, selectedHypothesisId, objectId, prediction);
+    addRecord(objectId, prediction, evaluation);
+    selectedObjectId = null;
+
+    // The rule and the guess are judged separately: a wrong guess does not
+    // disprove a rule that the bot just agreed with.
+    if (!evaluation.hypothesisFits) {
+      phase = "explore";
+      proofQueue = [];
+      proofIndex = 0;
+      selectedHypothesisId = null;
+      setFeedback(
+        "This rule does not fit. Pick another rule.",
+        "warning",
+      );
+      playTone(190, 0.14);
+      render();
+      return;
+    }
+
+    if (!evaluation.predictionMatches) {
+      phase = "explore";
+      proofQueue = [];
+      proofIndex = 0;
+      setFeedback(
+        "The bot surprised you, but the rule still fits. Try again.",
+        "warning",
+      );
+      playTone(300);
+      render();
+      return;
+    }
+
+    playTone(520);
+    if (phase === "proof") {
+      proofIndex += 1;
+      if (proofIndex === proofQueue.length) {
+        completeLevel();
+        return;
+      }
+      setFeedback("Yes! Try the next object.", "success");
+    } else {
+      setFeedback("Your guess matched. Try one more object.", "success");
+    }
+    render();
+  }
+
+  function startProof() {
+    const level = LEVELS[currentLevelIndex];
+    phase = "proof";
+    proofIndex = 0;
+    proofQueue = createProofQueue(level, selectedHypothesisId, testedObjectIds);
+    setFeedback("Keep this rule. Guess three results.", "neutral");
+    render();
+  }
+
+  function completeLevel() {
+    completedLevels.add(currentLevelIndex);
+    saveSetting("secretRuleLabCompletedV1", JSON.stringify([...completedLevels]));
+    elements.successCopy.textContent = `The rule was: ${RULES[LEVELS[currentLevelIndex].targetRule].short}.`;
+    elements.nextButton.textContent = currentLevelIndex < LEVELS.length - 1 ? "Next mission" : "Play from the start";
+    renderBadges();
+    focusBeforeDialog = document.activeElement;
+    elements.successDialog.hidden = false;
+    elements.nextButton.focus();
+    playTone(660, 0.18);
+    window.setTimeout(() => playTone(880, 0.22), 120);
+    renderProgress();
+  }
+
+  function resetMission() {
+    selectedHypothesisId = null;
+    selectedObjectId = null;
+    testedObjectIds = [];
+    records = [];
+    proofQueue = [];
+    proofIndex = 0;
+    phase = "explore";
+    elements.successDialog.hidden = true;
+    setFeedback("Look at the bot's examples. Then pick a rule.", "neutral");
+    render();
+  }
+
+  function continueGame() {
+    if (currentLevelIndex < LEVELS.length - 1) {
+      currentLevelIndex += 1;
+    } else {
+      currentLevelIndex = 0;
+    }
+    resetMission();
+    const firstHypothesis = elements.hypothesisGrid.querySelector("button:not(:disabled)");
+    (firstHypothesis || focusBeforeDialog)?.focus();
+    focusBeforeDialog = null;
+  }
+
+  document.addEventListener("click", (event) => {
+    const hypothesisButton = event.target.closest("[data-rule]");
+    const objectButton = event.target.closest("[data-object]");
+    const predictionButton = event.target.closest("[data-prediction]");
+
+    if (hypothesisButton) selectHypothesis(hypothesisButton.dataset.rule);
+    if (objectButton) selectObject(objectButton.dataset.object);
+    if (predictionButton) runPrediction(predictionButton.dataset.prediction === "accept");
+  });
+
+  document.querySelector("#restartButton").addEventListener("click", resetMission);
+  elements.proveButton.addEventListener("click", startProof);
+  elements.nextButton.addEventListener("click", continueGame);
+  elements.soundButton.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    saveSetting("secretRuleLabSoundV1", soundEnabled ? "on" : "off");
+    renderProgress();
+    if (soundEnabled) playTone(540);
+  });
+
+  elements.successDialog.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    event.preventDefault();
+    elements.nextButton.focus();
+  });
+
+  render();
+}

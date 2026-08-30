@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#15203a" />
+    <meta
+      name="description"
+      content="A browser game about forming hypotheses, making predictions, and testing secret rules."
+    />
+    <title>Secret Rule Lab</title>
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Secret Rule Lab home">
+        <span class="brand-icon" aria-hidden="true">⚗</span>
+        <span>
+          <small>Junior Science Club</small>
+          <strong>Secret Rule Lab</strong>
+        </span>
+      </a>
+
+      <div class="mission-progress" aria-label="Mission progress">
+        <span id="missionCounter">Mission 1 of 1</span>
+        <div class="progress-track" aria-hidden="true">
+          <span id="progressFill"></span>
+        </div>
+        <strong><span id="badgeCount">0</span> badges</strong>
+      </div>
+
+      <div class="language-settings">
+        <label class="language-picker language-picker--compact">
+          <span aria-hidden="true">🌐</span>
+          <span class="language-picker-text">Language</span>
+          <select data-language-select aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+          </select>
+        </label>
+        <button class="icon-button" id="soundButton" type="button" aria-label="Turn sound off">♪</button>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="mission-card">
+        <div>
+          <p class="eyebrow" id="missionLabel">Mission 01</p>
+          <h1 id="missionTitle">Find the First Rule</h1>
+          <p id="missionBrief">
+            Look at the examples. Find the bot's rule.
+          </p>
+        </div>
+        <button class="quiet-button" id="restartButton" type="button">Restart mission</button>
+      </section>
+
+      <section class="workspace">
+        <section class="machine-card" aria-labelledby="machineTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Bot examples</p>
+              <h2 id="machineTitle">What fits?</h2>
+            </div>
+            <span class="fact-count" id="factCount">3 examples</span>
+          </div>
+
+          <div class="machine-stage" aria-hidden="true">
+            <div class="machine-face">🤖</div>
+            <div class="machine-beam"></div>
+            <div class="sort-bins">
+              <div class="sort-bin accept-bin">
+                <span>Fits</span>
+                <strong>✓</strong>
+              </div>
+              <div class="sort-bin reject-bin">
+                <span>Does not fit</span>
+                <strong>×</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="evidence-list" id="evidenceList" aria-label="Bot examples"></div>
+
+          <aside class="scientist-note">
+            <span aria-hidden="true">✎</span>
+            <p><strong>Scientist tip</strong> A surprise helps you find the rule.</p>
+          </aside>
+        </section>
+
+        <section class="research-card" aria-labelledby="researchTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Your turn</p>
+              <h2 id="researchTitle">Test your idea</h2>
+            </div>
+            <span class="step-pill" id="phasePill">Explore</span>
+          </div>
+
+          <p class="instruction" id="instructionText">
+            Look at the examples. Pick the rule you think fits.
+          </p>
+
+          <p class="step-title"><span class="step-number">1</span> Pick a rule</p>
+          <div class="hypothesis-grid" id="hypothesisGrid" aria-label="Possible rules"></div>
+
+          <div class="test-section" id="testSection" hidden>
+            <div class="section-heading compact">
+              <div>
+                <p class="step-title"><span class="step-number">2</span> Pick an object</p>
+              </div>
+              <span id="testsLeft"></span>
+            </div>
+            <div class="object-grid" id="objectGrid" aria-label="Objects available for testing"></div>
+          </div>
+
+          <section class="experiment-panel" id="experimentPanel" aria-labelledby="experimentTitle" hidden>
+            <div class="selected-object" id="selectedObject" aria-hidden="true">
+              <span class="selected-placeholder">?</span>
+            </div>
+            <div class="experiment-copy">
+              <p class="step-title"><span class="step-number">3</span> <span id="experimentLabel">Your guess</span></p>
+              <h3 id="experimentTitle">What will the bot do?</h3>
+              <p id="experimentPrompt">Pick an object first.</p>
+            </div>
+            <div class="prediction-buttons" aria-label="Your guess">
+              <button class="prediction-button accept" type="button" data-prediction="accept" disabled>
+                It fits ✓
+              </button>
+              <button class="prediction-button reject" type="button" data-prediction="reject" disabled>
+                It does not fit ×
+              </button>
+            </div>
+          </section>
+
+          <div class="feedback" id="feedback" data-tone="neutral" aria-live="polite">
+            <span class="feedback-icon" aria-hidden="true">i</span>
+            <p id="feedbackText">Look at the bot's examples. Then pick a rule.</p>
+          </div>
+
+          <button class="prove-button" id="proveButton" type="button" disabled>
+            Check my rule
+            <span aria-hidden="true">→</span>
+          </button>
+        </section>
+      </section>
+
+      <section class="notebook-card" aria-labelledby="notebookTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Test notes</p>
+            <h2 id="notebookTitle">Rule → guess → result</h2>
+          </div>
+          <span class="notebook-status" id="notebookStatus">No tests yet</span>
+        </div>
+        <div class="notebook-empty" id="notebookEmpty">
+          Your tests will appear here.
+        </div>
+        <div class="record-list" id="tableWrap" hidden>
+          <div id="notebookBody"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="dialog-backdrop" id="successDialog" hidden>
+      <section
+        class="success-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="successTitle"
+        aria-describedby="successCopy"
+      >
+        <span class="reward-icon" aria-hidden="true">◇</span>
+        <p class="eyebrow">Rule checked</p>
+        <h2 id="successTitle">Badge earned!</h2>
+        <p id="successCopy">Your rule passed every test.</p>
+        <div class="badge-shelf" id="badgeShelf" aria-label="Badges earned"></div>
+        <button class="primary-button" id="nextButton" type="button">Play again</button>
+      </section>
+    </div>
+
+    <script src="../shared/game-language.js"></script>
+    <script src="game.js?v=3"></script>
+  </body>
+</html>
