@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff8e7" />
+    <title>Garden Quest</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <main class="game-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">A tiny path-finding game</p>
+          <h1>Garden Quest</h1>
+          <p class="subtitle">Help Pip collect the tastiest harvest!</p>
+        </div>
+        <div class="language-settings">
+          <label class="language-picker">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+          <button class="sound-button" id="soundButton" type="button" aria-label="Turn sound off">
+            <span aria-hidden="true">🔊</span>
+          </button>
+        </div>
+      </header>
+
+      <nav class="level-picker" id="levelPicker" aria-label="Choose a level"></nav>
+
+      <section class="game-layout">
+        <div class="play-column">
+          <section class="scorebar" aria-label="Game status">
+            <div class="stat-card stat-score">
+              <span class="stat-icon" aria-hidden="true">⭐</span>
+              <div>
+                <span class="stat-label">Score</span>
+                <strong id="scoreValue">0</strong>
+              </div>
+            </div>
+            <div class="stat-card stat-moves">
+              <span class="stat-icon" aria-hidden="true">👣</span>
+              <div>
+                <span class="stat-label">Steps left</span>
+                <strong id="movesValue">0</strong>
+              </div>
+            </div>
+            <div class="stat-card stat-best">
+              <span class="stat-icon" aria-hidden="true">🏆</span>
+              <div>
+                <span class="stat-label">Your best</span>
+                <strong id="bestValue">—</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="board-wrap" aria-label="Game board">
+            <div class="board" id="board" role="grid" aria-label="Eight by eight garden board"></div>
+            <div class="score-pop" id="scorePop" aria-hidden="true"></div>
+          </section>
+
+          <p class="game-message" id="gameMessage" aria-live="polite">
+            Use the arrow keys or the big buttons.
+          </p>
+        </div>
+
+        <aside class="side-panel">
+          <section class="mission-card">
+            <p class="card-kicker" id="levelLabel">Level 1</p>
+            <h2 id="levelName">First steps</h2>
+            <p id="levelTip">Collect as much as you can before your steps run out.</p>
+            <div class="star-goal" aria-label="Score goals">
+              <span>⭐ <b id="goalOne">0</b></span>
+              <span>⭐⭐ <b id="goalTwo">0</b></span>
+              <span>⭐⭐⭐ <b id="goalThree">0</b></span>
+            </div>
+          </section>
+
+          <section class="controls-card" aria-label="Movement controls">
+            <h2>Move Pip</h2>
+            <div class="d-pad">
+              <button class="move-button move-up" type="button" data-direction="up" aria-label="Move up">↑</button>
+              <button class="move-button move-left" type="button" data-direction="left" aria-label="Move left">←</button>
+              <div class="d-pad-center" aria-hidden="true">🧑‍🌾</div>
+              <button class="move-button move-right" type="button" data-direction="right" aria-label="Move right">→</button>
+              <button class="move-button move-down" type="button" data-direction="down" aria-label="Move down">↓</button>
+            </div>
+            <button class="hint-button" id="hintButton" type="button">💡 Show a step</button>
+            <button class="restart-button" id="restartButton" type="button">↻ Start again</button>
+          </section>
+
+          <section class="harvest-card">
+            <h2>Harvest points</h2>
+            <div class="harvest-list">
+              <div><span aria-hidden="true">🍓</span><b>+1</b></div>
+              <div><span aria-hidden="true">🥕</span><b>+2</b></div>
+              <div><span aria-hidden="true">🍎</span><b>+3</b></div>
+              <div><span aria-hidden="true">🍆</span><b>+5</b></div>
+              <div><span aria-hidden="true">🍉</span><b>+10</b></div>
+            </div>
+            <p class="rock-note"><span aria-hidden="true">🌳</span> Trees block the path, but bumping one does not use a step.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="dialog-backdrop" id="levelDialog" hidden>
+      <section class="result-dialog" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <div class="result-confetti" aria-hidden="true">🍓 🥕 🍎</div>
+        <p class="card-kicker">Basket packed!</p>
+        <h2 id="resultTitle">Great harvest!</h2>
+        <div class="result-stars" id="resultStars" aria-label="Stars earned">⭐</div>
+        <p class="result-score">You collected <strong id="resultScore">0</strong> points.</p>
+        <p class="result-best" id="resultBest">A new best score!</p>
+        <div class="result-actions">
+          <button class="secondary-button" id="replayButton" type="button">Play again</button>
+          <button class="primary-button" id="nextButton" type="button">Next level →</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="../shared/game-language.js"></script>
+    <script src="../shared/game-sound.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

@@ -31,7 +31,13 @@
       "Take plank blocks from the tray and put them on the bright spots in the river. Five builds in a row: a bridge, a dock, a raft, steps and a base.",
       "Бери доски из запаса и ставь их на светлые клетки реки. Пять построек подряд: мост, пирс, плот, ступеньки и база."
     ],
-    ["BUILDING", "СТРОЙКА"]
+    ["BUILDING", "СТРОЙКА"],
+    ["Garden Quest", "Садовый квест"],
+    [
+      "Walk the garden, collect fruit and vegetables and plan the route before the steps run out. Ten fixed maps, three stars on each.",
+      "Ходи по саду, собирай фрукты и овощи и продумывай маршрут, пока не кончились шаги. Десять постоянных карт, на каждой три звезды."
+    ],
+    ["PUZZLE", "ГОЛОВОЛОМКА"]
   ],
   "templates": []
 }

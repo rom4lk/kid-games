@@ -29,8 +29,8 @@ the background:
 that was started with `start`, not one running in the foreground.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
-`island-discovery`, `forest-light` and `cube-island` load translations and voice content the same
-way. That does not work when a file is opened directly over `file://`.
+`island-discovery`, `forest-light`, `cube-island` and `garden-quest` load translations and voice
+content the same way. That does not work when a file is opened directly over `file://`.
 
 ## The games
 
@@ -40,10 +40,12 @@ way. That does not work when a file is opened directly over `file://`.
 | `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
 | `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
 | `cube-island/` | Cube Island | Placing plank blocks into the river to build five structures in a row | Russian, English |
+| `garden-quest/` | Garden Quest | Collecting a harvest on a fixed board within a limited number of steps | Russian, English |
 
 Details about a game loop and its deliberate design decisions are in the README of the game:
 [word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md),
-[forest-light/README.md](forest-light/README.md), [cube-island/README.md](cube-island/README.md).
+[forest-light/README.md](forest-light/README.md), [cube-island/README.md](cube-island/README.md),
+[garden-quest/README.md](garden-quest/README.md).
 
 ## Language
 
@@ -53,8 +55,8 @@ page is the one a game opens in, and a language picked inside a game is the one 
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
 next to it through the shared `shared/game-language.js`. The home page, `island-discovery`,
-`forest-light` and `cube-island` work this way; `word-quest` carries its own two-language content
-in `word-quest/content/`.
+`forest-light`, `cube-island` and `garden-quest` work this way; `word-quest` carries its own
+two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -77,6 +79,7 @@ Every game writes its progress to `localStorage` under its own key:
 | `island-discovery` | `islandDiscoveryV1` |
 | `forest-light` | `forestLightProgressV1` |
 | `cube-island` | `cubeIslandLevelsV1` |
+| `garden-quest` | `gardenQuestBestScoresV2`, `gardenQuestUnlockedV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.
