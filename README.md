@@ -51,6 +51,19 @@ Details about a game loop and its deliberate design decisions are in the README 
 [robo-route/README.md](robo-route/README.md), [garden-quest/README.md](garden-quest/README.md),
 [hypothesis-lab/README.md](hypothesis-lab/README.md).
 
+## Returning to the shelf
+
+Every game goes back to the home page on `Cmd + Shift + H`, and on `Ctrl + Shift + H` on Windows and
+Linux. The shortcut is meant for an adult: nothing on the screen announces it, so it does not become
+another button the child has to understand.
+
+The shortcut reads the physical key instead of the typed letter, so it also works on a Russian
+layout, where that key types "р". A plain `Cmd + H` is deliberately not used: macOS keeps it for
+hiding the application, and a web page never receives it.
+
+The whole shortcut is `shared/game-home.js`, and every game loads that file next to the other shared
+scripts.
+
 ## Language
 
 The home page has a language picker and opens in English by default. The choice is stored in
