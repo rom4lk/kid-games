@@ -11,8 +11,9 @@ const ITEMS = {
 const LEVELS = [
   {
     name: "First steps",
-    moves: 22,
-    goals: [10, 28, 44],
+    moves: 11,
+    goals: [10, 18, 23],
+    maxScore: 28,
     tip: "The garden is open and friendly. Try to visit the biggest treats.",
     map: [
       "f..v..a.",
@@ -27,8 +28,9 @@ const LEVELS = [
   },
   {
     name: "Little hedge",
-    moves: 19,
-    goals: [10, 22, 33],
+    moves: 12,
+    goals: [10, 16, 20],
+    maxScore: 23,
     tip: "Trees have appeared. Go around them without wasting a step.",
     map: [
       "f..#..w.",
@@ -43,8 +45,9 @@ const LEVELS = [
   },
   {
     name: "Orchard turn",
-    moves: 18,
-    goals: [10, 23, 33],
+    moves: 13,
+    goals: [10, 18, 24],
+    maxScore: 28,
     tip: "The best fruit sits on different turns. Plan which corner comes first.",
     map: [
       "..w...f.",
@@ -59,8 +62,9 @@ const LEVELS = [
   },
   {
     name: "Twisty path",
-    moves: 17,
-    goals: [10, 22, 31],
+    moves: 14,
+    goals: [10, 20, 26],
+    maxScore: 30,
     tip: "Some paths are long. Pick a side before you start walking.",
     map: [
       "w.#..f.a",
@@ -75,8 +79,9 @@ const LEVELS = [
   },
   {
     name: "Split garden",
-    moves: 16,
-    goals: [10, 18, 26],
+    moves: 15,
+    goals: [10, 18, 22],
+    maxScore: 26,
     tip: "The garden has four sides. Choose carefully when to cross the middle.",
     map: [
       "w..#..e.",
@@ -91,8 +96,9 @@ const LEVELS = [
   },
   {
     name: "Big maze",
-    moves: 15,
-    goals: [10, 21, 30],
+    moves: 16,
+    goals: [10, 21, 27],
+    maxScore: 31,
     tip: "The best prizes are far apart. A short route can win more.",
     map: [
       "w.#f.#.e",
@@ -107,8 +113,9 @@ const LEVELS = [
   },
   {
     name: "Secret passages",
-    moves: 15,
-    goals: [10, 22, 31],
+    moves: 17,
+    goals: [10, 22, 30],
+    maxScore: 34,
     tip: "Small openings connect the garden. Find the route with no backtracking.",
     map: [
       "w.#e..#w",
@@ -123,8 +130,9 @@ const LEVELS = [
   },
   {
     name: "Garden master",
-    moves: 14,
+    moves: 18,
     goals: [10, 24, 34],
+    maxScore: 38,
     tip: "Every step matters. Make your whole route before you move.",
     map: [
       "w#f..#e.",
@@ -139,8 +147,9 @@ const LEVELS = [
   },
   {
     name: "Corner hunt",
-    moves: 14,
-    goals: [10, 21, 29],
+    moves: 19,
+    goals: [10, 24, 33],
+    maxScore: 37,
     tip: "Big prizes pull in opposite directions. Compare routes before moving.",
     map: [
       "w#e..#w.",
@@ -155,9 +164,10 @@ const LEVELS = [
   },
   {
     name: "Champion route",
-    moves: 13,
-    goals: [10, 21, 29],
-    tip: "Only the sharpest route earns three stars. Test every good-looking path.",
+    moves: 20,
+    goals: [10, 24, 33],
+    maxScore: 37,
+    tip: "A perfect route earns three stars plus. Try different paths.",
     map: [
       "w#e..#w.",
       ".#.#a#..",
@@ -205,7 +215,7 @@ let soundEnabled = readSoundSetting();
 
 function readBestScores() {
   try {
-    return JSON.parse(localStorage.getItem("gardenQuestBestScoresV2")) ?? {};
+    return JSON.parse(localStorage.getItem("gardenQuestBestScoresV3")) ?? {};
   } catch {
     return {};
   }
@@ -215,7 +225,7 @@ function writeBestScore(levelIndex, value) {
   const bestScores = readBestScores();
   bestScores[levelIndex] = value;
   try {
-    localStorage.setItem("gardenQuestBestScoresV2", JSON.stringify(bestScores));
+    localStorage.setItem("gardenQuestBestScoresV3", JSON.stringify(bestScores));
   } catch {
     // Private browsing modes can refuse writes. Scores stay for this session only.
   }
@@ -285,6 +295,7 @@ function startLevel(levelIndex) {
   document.querySelector("#goalOne").textContent = level.goals[0];
   document.querySelector("#goalTwo").textContent = level.goals[1];
   document.querySelector("#goalThree").textContent = level.goals[2];
+  document.querySelector("#goalPerfect").textContent = level.maxScore;
   gameMessageElement.textContent = "Use the arrow keys or the big buttons.";
 
   renderLevelPicker();
@@ -529,13 +540,19 @@ function finishLevel() {
   const previousBest = readBestScores()[currentLevelIndex] ?? 0;
   const isNewBest = score > previousBest;
   const stars = getStars(score, level.goals);
+  const isPerfect = score >= level.maxScore;
 
   if (isNewBest) writeBestScore(currentLevelIndex, score);
   if (stars > 0) unlockLevel(currentLevelIndex + 1);
 
   document.querySelector("#resultTitle").textContent = stars > 0 ? "Great harvest!" : "Good try, Pip!";
-  document.querySelector("#resultStars").textContent = stars > 0 ? "⭐".repeat(stars) : "🌱";
-  document.querySelector("#resultStars").setAttribute("aria-label", `${stars} stars earned`);
+  document.querySelector("#resultStars").textContent = stars > 0
+    ? `${"⭐".repeat(stars)}${isPerfect ? "+" : ""}`
+    : "🌱";
+  document.querySelector("#resultStars").setAttribute(
+    "aria-label",
+    isPerfect ? "Three stars plus earned" : `${stars} stars earned`,
+  );
   document.querySelector("#resultScore").textContent = score;
   document.querySelector("#resultBest").textContent = isNewBest ? "A new best score!" : `Best score: ${previousBest}`;
 

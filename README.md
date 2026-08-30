@@ -90,7 +90,7 @@ Every game writes its progress to `localStorage` under its own key:
 | `forest-light` | `forestLightProgressV1` |
 | `cube-island` | `cubeIslandLevelsV1` |
 | `robo-route` | `roboRouteProgressV1` |
-| `garden-quest` | `gardenQuestBestScoresV2`, `gardenQuestUnlockedV1` |
+| `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when

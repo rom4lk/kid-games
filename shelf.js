@@ -7,7 +7,7 @@
     "forest-light": ["forestLightProgressV1"],
     "cube-island": ["cubeIslandLevelsV1"],
     "robo-route": ["roboRouteProgressV1"],
-    "garden-quest": ["gardenQuestUnlockedV1", "gardenQuestBestScoresV2"],
+    "garden-quest": ["gardenQuestUnlockedV1", "gardenQuestBestScoresV3"],
     "hypothesis-lab": ["secretRuleLabCompletedV1"],
   };
   const DONE_MESSAGE_MS = 2200;

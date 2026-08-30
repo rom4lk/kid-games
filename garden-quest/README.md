@@ -6,7 +6,7 @@ A simple browser game for a six-year-old. The player controls Pip the gardener, 
 
 - Every level gives a limited number of steps.
 - A fruit or vegetable is collected when Pip steps onto its cell.
-- The goal is to score as many points as possible and earn up to three stars.
+- The goal is to score as many points as possible and earn up to three stars plus.
 - Trees cannot be walked through.
 - An attempt to step into a tree or off the edge of the field does not spend a step.
 
@@ -25,15 +25,18 @@ Item values:
 Levels unlock one at a time: the next garden appears after at least one star on the current one.
 An unlocked level stays available forever.
 
-The game has ten levels. The first level has an open field and more steps. Later levels add more trees, the routes get harder and the number of available steps goes down.
+The game has ten levels. The first level has an open field and 11 steps. Every next level adds one
+step, up to 20 on the last level. Later levels add more trees and make the longer routes harder to
+plan.
 
 All the maps are fixed: the child can replay a level, remember where the items are and improve their route.
 
-The star thresholds are tuned to the exact maximum score of each map:
+The star thresholds are tuned separately for each map:
 
 - one star is easy to get if you reach at least one watermelon;
 - two stars require planning a good route in advance;
-- three stars are given only for the mathematically optimal score, which is reachable on every level.
+- three stars reward a strong route with a small margin for mistakes;
+- three stars plus require the mathematically optimal score, which is reachable on every level.
 
 ## Running
 
@@ -63,7 +66,10 @@ interface without a language switch.
 
 ## Saved scores
 
-The best score of every level is automatically saved to the browser's `localStorage` under the key `gardenQuestBestScoresV2`, and the number of the last unlocked level under the key `gardenQuestUnlockedV1`.
+The best score of every level is automatically saved to the browser's `localStorage` under the key
+`gardenQuestBestScoresV3`, and the number of the last unlocked level under the key
+`gardenQuestUnlockedV1`. The score key changed after the step limits and score goals were rebalanced,
+so scores from the previous rules do not appear as unreachable records.
 
 The saved object looks like this:
 
@@ -74,7 +80,9 @@ The saved object looks like this:
 }
 ```
 
-The object key is the level index and the value is the best score. A new score is written only when it is higher than the previous one. The number of stars is derived from the score and is not stored separately.
+The object key is the level index and the value is the best score. A new score is written only when it
+is higher than the previous one. The star or three-stars-plus result is derived from the score and is
+not stored separately.
 
 The scores are tied to the browser and the site address. They are not synchronized between devices and will be removed when site data is cleared.
 
@@ -104,5 +112,6 @@ These decisions were made on purpose and take precedence over the shared rules i
 - **Steps run out, and the level ends there.** The limited supply of steps is the foundation of the game,
   not a punishment: the map does not change, the level stays unlocked forever, and it can be restarted
   right away.
-- **Three stars are given only for the optimal route.** The third star's threshold deliberately matches the
-  mathematical maximum of the map; one and two stars stay reachable without any calculation.
+- **Three stars plus are given only for the optimal route.** Three regular stars leave a small margin
+  for mistakes. The plus marks the mathematically optimal score without making perfection necessary
+  for earning all three stars.

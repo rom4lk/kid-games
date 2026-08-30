@@ -19,9 +19,17 @@ LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
 
 
+class NoCacheRequestHandler(SimpleHTTPRequestHandler):
+    """Without this the browser keeps old game files after an update."""
+
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-cache")
+        super().end_headers()
+
+
 def serve():
     os.chdir(SERVER_PATH.parent)
-    server = ThreadingHTTPServer((BIND_HOST, PORT), SimpleHTTPRequestHandler)
+    server = ThreadingHTTPServer((BIND_HOST, PORT), NoCacheRequestHandler)
     print(f"Serving games at http://{DISPLAY_HOST}:{PORT}/", flush=True)
 
     try:
