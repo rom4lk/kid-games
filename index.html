@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7d774" />
+    <title>Games for kids</title>
+    <link rel="stylesheet" href="game-language.css" />
+    <style>
+      :root {
+        --ink: #233743;
+        --muted: #667780;
+        --paper: #fffaf0;
+        --green-dark: #307157;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 40px);
+        color: var(--ink);
+        background: linear-gradient(150deg, #fff7d8 0%, #e4f0d2 54%, #d7ecdf 100%);
+        font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+      }
+
+      header {
+        max-width: 620px;
+        margin: 0 auto 28px;
+      }
+
+      .header-top {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--green-dark);
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+      }
+
+      h1 {
+        margin: 4px 0 8px;
+        font-size: clamp(28px, 5vw, 42px);
+      }
+
+      header p {
+        max-width: 62ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .server-controls {
+        display: flex;
+        min-height: 48px;
+        margin-top: 18px;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .restart-button {
+        min-height: 48px;
+        padding: 10px 18px;
+        border: 2px solid var(--green-dark);
+        border-radius: 14px;
+        color: #ffffff;
+        background: var(--green-dark);
+        font: inherit;
+        font-size: 16px;
+        font-weight: 900;
+        cursor: pointer;
+        transition: background-color 160ms ease, color 160ms ease;
+      }
+
+      .restart-button:hover {
+        color: var(--green-dark);
+        background: var(--paper);
+      }
+
+      .restart-button:focus-visible {
+        outline: 3px solid var(--green-dark);
+        outline-offset: 3px;
+      }
+
+      .restart-button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+
+      .server-status {
+        min-height: 1.5em;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      ul {
+        display: grid;
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 0;
+        gap: 14px;
+        list-style: none;
+      }
+
+      a.card {
+        display: grid;
+        height: 100%;
+        padding: 24px 24px 26px;
+        border: 2px solid rgba(48, 113, 87, 0.16);
+        border-radius: 20px;
+        background: var(--paper);
+        box-shadow: 0 12px 30px rgba(71, 76, 57, 0.12);
+        color: inherit;
+        text-decoration: none;
+        gap: 8px;
+        align-content: start;
+        transition: transform 160ms ease, border-color 160ms ease;
+      }
+
+      a.card:hover {
+        transform: translateY(-3px);
+        border-color: var(--green-dark);
+      }
+
+      a.card:focus-visible {
+        outline: 3px solid var(--green-dark);
+        outline-offset: 3px;
+      }
+
+      .emoji {
+        font-size: 56px;
+        line-height: 1;
+      }
+
+      .card h2 {
+        margin: 4px 0 0;
+        font-size: 26px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .tag {
+        margin-top: 6px;
+        color: var(--green-dark);
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .restart-button,
+        a.card {
+          transition: none;
+        }
+
+        a.card:hover {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body data-translations="translations.json">
+    <header>
+      <div class="header-top">
+        <div>
+          <p class="eyebrow">HOME SHELF</p>
+          <h1>Games for kids</h1>
+        </div>
+        <div class="language-settings">
+          <label class="language-picker">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p>
+        A small browser game. It needs no install, no build and no internet — just open a card below.
+      </p>
+      <div class="server-controls">
+        <button class="restart-button" id="restartServer" type="button">Restart server</button>
+        <span class="server-status" id="serverStatus" role="status" aria-live="polite"></span>
+      </div>
+    </header>
+
+    <ul>
+      <li>
+        <a class="card" href="word-quest/">
+          <span class="emoji" aria-hidden="true">📖</span>
+          <h2>Living Words</h2>
+          <p>Read a word aloud and pick the matching picture. Two languages, levels by word length, story chapters of ten words.</p>
+          <span class="tag">RUSSIAN · ENGLISH · READING</span>
+        </a>
+      </li>
+    </ul>
+
+    <script src="game-language.js"></script>
+    <script>
+      const restartButton = document.querySelector("#restartServer");
+      const serverStatus = document.querySelector("#serverStatus");
+      const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+      restartButton.addEventListener("click", async () => {
+        restartButton.disabled = true;
+        restartButton.textContent = "Restarting...";
+        serverStatus.textContent = "Waiting for server...";
+
+        try {
+          const restartResponse = await fetch("/__restart", { method: "POST" });
+          if (!restartResponse.ok) {
+            throw new Error("Restart request failed");
+          }
+
+          const { serverId } = await restartResponse.json();
+          const deadline = Date.now() + 10000;
+
+          while (Date.now() < deadline) {
+            await delay(250);
+
+            try {
+              const healthResponse = await fetch(`/__health?time=${Date.now()}`, { cache: "no-store" });
+              const health = await healthResponse.json();
+              if (health.serverId !== serverId) {
+                serverStatus.textContent = "Server restarted";
+                return;
+              }
+            } catch (error) {
+              // The connection is expected to fail briefly while the server restarts.
+            }
+          }
+
+          throw new Error("Restart timed out");
+        } catch (error) {
+          serverStatus.textContent = "Restart failed";
+        } finally {
+          restartButton.disabled = false;
+          restartButton.textContent = "Restart server";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "htmlLang": "en",
+  "documentTitle": "Living Words",
+  "brand": "Living Words",
+  "loading": "Loading the game…",
+  "loadingError": "Could not load the game. Start it from a local server and refresh the page.",
+  "languages": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "start": {
+    "eyebrow": "An adventure for first readers",
+    "title": "Living Words",
+    "lead": "Every chapter is a little story made of ten words. Read each word, pick the right picture and watch the story come alive.",
+    "languageTitle": "Choose your reading language",
+    "changeLanguage": "Change the reading language",
+    "heroLetters": ["A", "B", "C"],
+    "heroWords": ["CAT", "SUN"],
+    "button": "Play"
+  },
+  "menu": {
+    "eyebrow": "Main menu",
+    "title": "Pick your words",
+    "lead": "The number tells how many letters are in each word. Every level is open - start where you like.",
+    "readerLabel": "Words read",
+    "levelNames": {
+      "3": "3 letters",
+      "4": "4 letters",
+      "5": "5 letters",
+      "6": "6 letters",
+      "7": "7 letters"
+    },
+    "levelSamples": {
+      "3": "CAT · DOG · SUN",
+      "4": "FISH · MOON · STAR",
+      "5": "TIGER · BREAD · TRAIN",
+      "6": "TURTLE · COOKIE · GUITAR",
+      "7": "PENGUIN · RAINBOW · BALLOON"
+    },
+    "progress": "{done} of {total}"
+  },
+  "chapters": {
+    "eyebrow": "Chapters",
+    "titles": {
+      "3": "3-letter words",
+      "4": "4-letter words",
+      "5": "5-letter words",
+      "6": "6-letter words",
+      "7": "7-letter words"
+    },
+    "lead": "Each chapter is a little story with ten words. Finish a chapter to open the next one.",
+    "chapterNumber": "Chapter {number}",
+    "progress": "{done} of {total}",
+    "locked": "Finish the previous chapter first",
+    "finalEyebrow": "Level complete",
+    "finalTitle": "You are a real reader!",
+    "finalText": "You have read every story on this level - all two hundred words.",
+    "replay": "Play the stories again"
+  },
+  "play": {
+    "back": "Chapters",
+    "mission": "Word {current} of {total}",
+    "readInstruction": "Read the word out loud",
+    "tapHint": "Syllables",
+    "microphone": "Say it to the mic",
+    "microphoneListening": "Listening...",
+    "microphoneDisabled": "The microphone is off in the settings",
+    "microphoneUnsupported": "This browser cannot listen to speech. You can read out loud and pick a picture.",
+    "microphonePermission": "No access to the microphone. Allow it in the browser or keep playing without it.",
+    "microphoneError": "The microphone did not catch the word. Try again or pick a picture.",
+    "heardSuccess": "I heard \"{word}\"! Now find the picture.",
+    "heardMismatch": "I heard: \"{transcript}\". Try again or pick a picture.",
+    "hint": "Show the parts",
+    "hintUsed": "Read it slowly, part by part: {syllables}",
+    "choiceInstruction": "Now find it in the pictures",
+    "wrongFirst": "Almost! Look at all the letters and try again.",
+    "wrongAgain": "Piece by piece: {syllables}. Now find the picture.",
+    "successTitle": "You did it!",
+    "next": "Next word",
+    "finish": "Finish the chapter",
+    "skip": "Another word",
+    "skipped": "We set that word aside. We will come back to it."
+  },
+  "chapter": {
+    "eyebrow": "Chapter complete",
+    "title": "The story came alive!",
+    "next": "Next chapter",
+    "final": "Back to the chapters"
+  },
+  "parent": {
+    "buttonLabel": "Open the settings for a grown-up",
+    "eyebrow": "For a grown-up",
+    "title": "Reader progress",
+    "lead": "The game checks understanding through picking a picture. The microphone adds fun but is never required. The word counters below are for the current language.",
+    "readWords": "Words read",
+    "voiceTries": "Microphone tries",
+    "helpUses": "Hints opened",
+    "microphoneLabel": "Use the microphone",
+    "microphoneHelp": "Works in a supported browser after access is allowed.",
+    "soundLabel": "Sound effects",
+    "soundHelp": "Short success sounds, no background music.",
+    "reset": "Reset all progress",
+    "resetConfirm": "Erase the chapters and the statistics for both languages? This cannot be undone.",
+    "soundOn": "Turn sounds off",
+    "soundOff": "Turn sounds on",
+    "resetConfirmYes": "Erase",
+    "resetConfirmNo": "Cancel"
+  }
+}

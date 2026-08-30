@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#271f52" />
+    <title>Living Words</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient-stars" aria-hidden="true"></div>
+
+    <main class="app-shell" id="app" aria-busy="true">
+      <header class="app-header">
+        <button class="brand-button" id="homeButton" type="button" hidden>
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span id="brandLabel"></span>
+        </button>
+
+        <div class="header-actions" id="headerActions" hidden>
+          <div class="spark-counter" aria-live="polite">
+            <span aria-hidden="true">✦</span>
+            <strong id="sparkCount">0</strong>
+          </div>
+          <button class="icon-button" id="soundButton" type="button">
+            <span aria-hidden="true">♪</span>
+          </button>
+          <button class="icon-button" id="parentButton" type="button">
+            <span aria-hidden="true">⚙</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="screen start-screen" id="startScreen" hidden>
+        <div class="start-copy">
+          <p class="eyebrow" id="startEyebrow"></p>
+          <h1 id="startTitle"></h1>
+          <p class="start-lead" id="startLead"></p>
+
+          <p class="language-title" id="languageTitle"></p>
+          <div class="language-picker" id="languagePicker">
+            <button class="language-card" id="languageEn" type="button" data-lang="en">
+              <span class="language-letters" aria-hidden="true">A B C</span>
+              <span class="language-name">English</span>
+              <span class="language-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="language-card" id="languageRu" type="button" data-lang="ru">
+              <span class="language-letters" aria-hidden="true">А Б В</span>
+              <span class="language-name">Русский</span>
+              <span class="language-check" aria-hidden="true">✓</span>
+            </button>
+          </div>
+
+          <button class="primary-button start-button" id="startButton" type="button"></button>
+        </div>
+
+        <div class="book-hero" aria-hidden="true">
+          <div class="moon-glow"></div>
+          <div class="floating-letter letter-one" id="heroLetterOne"></div>
+          <div class="floating-letter letter-two" id="heroLetterTwo"></div>
+          <div class="floating-letter letter-three" id="heroLetterThree"></div>
+          <div class="book">
+            <div class="book-page page-left"><span id="heroWordOne"></span></div>
+            <div class="book-page page-right"><span id="heroWordTwo"></span></div>
+            <div class="book-spine"></div>
+          </div>
+          <div class="guide-creature">
+            <div class="guide-ear ear-left"></div>
+            <div class="guide-ear ear-right"></div>
+            <div class="guide-face">●ᴗ●</div>
+            <div class="guide-tail"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen menu-screen" id="menuScreen" hidden>
+        <div class="map-heading">
+          <div>
+            <p class="eyebrow" id="menuEyebrow"></p>
+            <h1 id="menuTitle"></h1>
+            <p id="menuLead"></p>
+          </div>
+          <div class="menu-side">
+            <div class="reader-badge">
+              <span class="reader-avatar" aria-hidden="true">🦊</span>
+              <div>
+                <small id="readerBadgeLabel"></small>
+                <strong id="sparkTotal">0</strong>
+              </div>
+            </div>
+            <button class="language-switch" id="menuLanguageButton" type="button">
+              <span aria-hidden="true">🌐</span>
+              <span id="menuLanguageName"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="level-grid" id="levelGrid"></div>
+      </section>
+
+      <section class="screen chapters-screen" id="chaptersScreen" hidden>
+        <div class="map-heading">
+          <div>
+            <p class="eyebrow" id="chaptersEyebrow"></p>
+            <h1 id="chaptersTitle"></h1>
+            <p id="chaptersLead"></p>
+          </div>
+          <div class="reader-badge">
+            <span class="reader-avatar" aria-hidden="true">📖</span>
+            <div>
+              <small id="chaptersProgressLabel"></small>
+              <strong id="chaptersProgressValue">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-line" aria-hidden="true"></div>
+        <div class="chapter-grid" id="chapterGrid"></div>
+
+        <section class="final-banner" id="finalBanner" hidden>
+          <div class="final-medal" aria-hidden="true">✦</div>
+          <div>
+            <p class="eyebrow" id="finalEyebrow"></p>
+            <h2 id="finalTitle"></h2>
+            <p id="finalText"></p>
+          </div>
+          <button class="secondary-button" id="replayLevelButton" type="button"></button>
+        </section>
+      </section>
+
+      <section class="screen play-screen" id="playScreen" hidden>
+        <div class="play-topbar">
+          <button class="back-button" id="backButton" type="button">
+            <span aria-hidden="true">←</span>
+            <span id="backLabel"></span>
+          </button>
+          <div class="mission-progress">
+            <span id="missionLabel"></span>
+            <div class="progress-track" role="progressbar" id="missionProgress">
+              <div id="missionProgressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="adventure-scene" id="adventureScene">
+          <div class="scene-sky" aria-hidden="true">
+            <span class="scene-orb orb-one"></span>
+            <span class="scene-orb orb-two"></span>
+            <span class="scene-shape shape-one"></span>
+            <span class="scene-shape shape-two"></span>
+          </div>
+          <div class="scene-character" id="sceneCharacter" aria-hidden="true"></div>
+          <div class="story-bubble">
+            <p id="storyPrompt"></p>
+          </div>
+        </section>
+
+        <section class="reading-panel">
+          <p class="reading-instruction" id="readingInstruction"></p>
+          <button class="word-card" id="wordCard" type="button">
+            <span class="word-main" id="wordMain"></span>
+            <span class="word-syllables" id="wordSyllables" hidden></span>
+            <span class="tap-hint" id="tapHint"></span>
+          </button>
+
+          <div class="reading-actions">
+            <button class="microphone-button" id="microphoneButton" type="button">
+              <span class="microphone-icon" aria-hidden="true">●</span>
+              <span id="microphoneLabel"></span>
+            </button>
+            <button class="hint-button" id="hintButton" type="button">
+              <span class="syllable-mark" aria-hidden="true">ОО<i></i>ОО</span>
+              <span id="hintLabel"></span>
+            </button>
+            <button class="skip-button" id="skipButton" type="button">
+              <span aria-hidden="true">↷</span>
+              <span id="skipLabel"></span>
+            </button>
+          </div>
+
+          <p class="recognition-status" id="recognitionStatus" aria-live="polite"></p>
+
+          <div class="choice-area">
+            <p id="choiceInstruction"></p>
+            <div class="choice-grid" id="choiceGrid"></div>
+          </div>
+
+          <div class="success-panel" id="successPanel" hidden aria-live="polite">
+            <div class="success-icon" aria-hidden="true">✦</div>
+            <div>
+              <h2 id="successTitle"></h2>
+              <p id="successText"></p>
+            </div>
+            <button class="primary-button" id="nextButton" type="button"></button>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen chapter-screen" id="chapterScreen" hidden>
+        <div class="chapter-celebration">
+          <div class="chapter-emblem" id="chapterEmblem" aria-hidden="true"></div>
+          <p class="eyebrow" id="chapterEyebrow"></p>
+          <h1 id="chapterTitle"></h1>
+          <p id="chapterText"></p>
+          <div class="chapter-stars" aria-hidden="true">✦ ✦ ✦</div>
+          <button class="primary-button" id="chapterButton" type="button"></button>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="parent-dialog" id="parentDialog">
+      <form method="dialog" class="dialog-shell">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow" id="parentEyebrow"></p>
+            <h2 id="parentTitle"></h2>
+          </div>
+          <button class="dialog-close" id="dialogClose" type="submit" value="cancel">×</button>
+        </div>
+
+        <p class="parent-lead" id="parentLead"></p>
+
+        <div class="stats-grid">
+          <div><span id="readWordsLabel"></span><strong id="readWordsValue">0</strong></div>
+          <div><span id="voiceTriesLabel"></span><strong id="voiceTriesValue">0</strong></div>
+          <div><span id="helpUsesLabel"></span><strong id="helpUsesValue">0</strong></div>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <strong id="microphoneSettingLabel"></strong>
+            <p id="microphoneSettingHelp"></p>
+          </div>
+          <label class="switch-control">
+            <input id="microphoneSetting" type="checkbox" />
+            <span aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <strong id="soundSettingLabel"></strong>
+            <p id="soundSettingHelp"></p>
+          </div>
+          <label class="switch-control">
+            <input id="soundSetting" type="checkbox" />
+            <span aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <button class="danger-button" id="resetButton" type="button"></button>
+      </form>
+    </dialog>
+
+    <dialog class="confirm-dialog" id="resetDialog">
+      <form method="dialog">
+        <p id="resetDialogText"></p>
+        <div class="confirm-actions">
+          <button class="secondary-button" id="resetCancel" type="submit" value="cancel"></button>
+          <button class="danger-button" id="resetConfirm" type="submit" value="confirm"></button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="loading-state" id="loadingState" role="status">Loading… · Загружаем…</div>
+    <script src="game.js"></script>
+  </body>
+</html>
