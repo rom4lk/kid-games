@@ -1,0 +1,31 @@
+{
+  "pairs": [
+    ["Language", "Язык"],
+    ["Interface language", "Язык интерфейса"],
+    ["Robo Route", "Маршрут робота"],
+    ["Goal: move the parcel to the delivery station", "Цель: довезти посылку до станции"],
+    ["Turn sound off", "Выключить звук"],
+    ["Turn sound on", "Включить звук"],
+    ["Game world", "Игровой мир"],
+    ["Levels", "Уровни"],
+    ["Show a hint", "Показать подсказку"],
+    ["Next level", "Следующий уровень"],
+    ["Return to level one", "Вернуться на первый уровень"],
+    ["Build a route", "Собрать маршрут"],
+    ["Clear commands", "Убрать все команды"],
+    ["Command sequence", "Цепочка команд"],
+    ["Run commands", "Запустить команды"],
+    ["Commands", "Команды"],
+    ["Move left", "Шаг влево"],
+    ["Move right", "Шаг вправо"],
+    ["Move up", "Шаг вверх"],
+    ["Move down", "Шаг вниз"],
+    ["Pick up", "Взять"],
+    ["Put down", "Положить"]
+  ],
+  "templates": [
+    ["Level {number}", "Уровень {number}"],
+    ["{command}. Tap to remove.", "{command}. Нажми, чтобы убрать."],
+    ["Empty command slot {number}", "Пустое место для команды {number}"]
+  ]
+}

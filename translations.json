@@ -32,6 +32,12 @@
       "Бери доски из запаса и ставь их на светлые клетки реки. Пять построек подряд: мост, пирс, плот, ступеньки и база."
     ],
     ["BUILDING", "СТРОЙКА"],
+    ["Robo Route", "Маршрут робота"],
+    [
+      "Build a chain of picture commands, press play and watch the robot carry a parcel to its station. Six levels, no reading.",
+      "Собери цепочку картинок-команд, нажми пуск и смотри, как робот везет посылку на станцию. Шесть уровней, читать не нужно."
+    ],
+    ["PROGRAMMING", "ПРОГРАММИРОВАНИЕ"],
     ["Garden Quest", "Садовый квест"],
     [
       "Walk the garden, collect fruit and vegetables and plan the route before the steps run out. Ten fixed maps, three stars on each.",
