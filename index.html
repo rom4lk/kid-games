@@ -61,50 +61,6 @@
         line-height: 1.5;
       }
 
-      .server-controls {
-        display: flex;
-        min-height: 48px;
-        margin-top: 18px;
-        gap: 12px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-
-      .restart-button {
-        min-height: 48px;
-        padding: 10px 18px;
-        border: 2px solid var(--green-dark);
-        border-radius: 14px;
-        color: #ffffff;
-        background: var(--green-dark);
-        font: inherit;
-        font-size: 16px;
-        font-weight: 900;
-        cursor: pointer;
-        transition: background-color 160ms ease, color 160ms ease;
-      }
-
-      .restart-button:hover {
-        color: var(--green-dark);
-        background: var(--paper);
-      }
-
-      .restart-button:focus-visible {
-        outline: 3px solid var(--green-dark);
-        outline-offset: 3px;
-      }
-
-      .restart-button:disabled {
-        cursor: wait;
-        opacity: 0.65;
-      }
-
-      .server-status {
-        min-height: 1.5em;
-        color: var(--muted);
-        font-size: 15px;
-      }
-
       ul {
         display: grid;
         max-width: 620px;
@@ -165,7 +121,6 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .restart-button,
         a.card {
           transition: none;
         }
@@ -197,10 +152,6 @@
       <p>
         Small browser games. They need no install, no build and no internet — just open a card below.
       </p>
-      <div class="server-controls">
-        <button class="restart-button" id="restartServer" type="button">Restart server</button>
-        <span class="server-status" id="serverStatus" role="status" aria-live="polite"></span>
-      </div>
     </header>
 
     <ul>
@@ -220,51 +171,16 @@
           <span class="tag">STRATEGY</span>
         </a>
       </li>
+      <li>
+        <a class="card" href="forest-light/">
+          <span class="emoji" aria-hidden="true">🔥</span>
+          <h2>Forest Light</h2>
+          <p>Gather two branches and a stone, follow the glowing path back, and build a campfire. No reading and no way to lose.</p>
+          <span class="tag">NO READING</span>
+        </a>
+      </li>
     </ul>
 
     <script src="game-language.js"></script>
-    <script>
-      const restartButton = document.querySelector("#restartServer");
-      const serverStatus = document.querySelector("#serverStatus");
-      const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-      restartButton.addEventListener("click", async () => {
-        restartButton.disabled = true;
-        restartButton.textContent = "Restarting...";
-        serverStatus.textContent = "Waiting for server...";
-
-        try {
-          const restartResponse = await fetch("/__restart", { method: "POST" });
-          if (!restartResponse.ok) {
-            throw new Error("Restart request failed");
-          }
-
-          const { serverId } = await restartResponse.json();
-          const deadline = Date.now() + 10000;
-
-          while (Date.now() < deadline) {
-            await delay(250);
-
-            try {
-              const healthResponse = await fetch(`/__health?time=${Date.now()}`, { cache: "no-store" });
-              const health = await healthResponse.json();
-              if (health.serverId !== serverId) {
-                serverStatus.textContent = "Server restarted";
-                return;
-              }
-            } catch (error) {
-              // The connection is expected to fail briefly while the server restarts.
-            }
-          }
-
-          throw new Error("Restart timed out");
-        } catch (error) {
-          serverStatus.textContent = "Restart failed";
-        } finally {
-          restartButton.disabled = false;
-          restartButton.textContent = "Restart server";
-        }
-      });
-    </script>
   </body>
 </html>

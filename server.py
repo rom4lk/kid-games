@@ -1,68 +1,26 @@
 #!/usr/bin/env python3
 
-import json
 import os
-import secrets
 import signal
 import subprocess
 import sys
-import threading
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlsplit
 
 
 BIND_HOST = "0.0.0.0"
 DISPLAY_HOST = "127.0.0.1"
 PORT = 4173
-SERVER_ID = secrets.token_hex(8)
 SERVER_PATH = Path(__file__).resolve()
 PID_PATH = SERVER_PATH.parent / ".server.pid"
 LOG_PATH = SERVER_PATH.parent / "server.log"
 STOP_TIMEOUT = 5.0
 
 
-class GameRequestHandler(SimpleHTTPRequestHandler):
-    def do_GET(self):
-        if self.path.split("?", 1)[0] == "/__health":
-            self.send_json({"serverId": SERVER_ID})
-            return
-
-        super().do_GET()
-
-    def do_POST(self):
-        if self.path != "/__restart":
-            self.send_error(404)
-            return
-
-        origin = self.headers.get("Origin")
-        if origin and urlsplit(origin).netloc != self.headers.get("Host"):
-            self.send_error(403)
-            return
-
-        self.send_json({"serverId": SERVER_ID, "status": "restarting"})
-        threading.Thread(target=restart_server, daemon=True).start()
-
-    def send_json(self, value):
-        body = json.dumps(value).encode("utf-8")
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Cache-Control", "no-store")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
-        self.wfile.flush()
-
-
-def restart_server():
-    time.sleep(0.2)
-    os.execv(sys.executable, [sys.executable, str(SERVER_PATH)])
-
-
 def serve():
     os.chdir(SERVER_PATH.parent)
-    server = ThreadingHTTPServer((BIND_HOST, PORT), GameRequestHandler)
+    server = ThreadingHTTPServer((BIND_HOST, PORT), SimpleHTTPRequestHandler)
     print(f"Serving games at http://{DISPLAY_HOST}:{PORT}/", flush=True)
 
     try:

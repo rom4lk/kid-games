@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#183f36" />
+    <title>Forest Light</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <svg class="symbol-library" aria-hidden="true">
+      <symbol id="icon-branch" viewBox="0 0 64 64">
+        <path class="branch-main" d="M11 48C23 39 32 29 51 13" />
+        <path class="branch-tip" d="M29 33 20 21M39 25l2-13M22 40l-12-1" />
+        <path class="branch-leaf" d="M43 19c7-7 13-6 15-5-1 6-6 11-15 9z" />
+      </symbol>
+      <symbol id="icon-stone" viewBox="0 0 64 64">
+        <path class="stone-main" d="M10 46 16 25 29 13 47 19 56 39 45 51 22 53z" />
+        <path class="stone-shine" d="m22 28 9-8 9 3-8 4z" />
+      </symbol>
+      <symbol id="icon-fire" viewBox="0 0 64 64">
+        <path class="fire-outer" d="M32 6c2 13-11 15-7 28 2 6 8 10 8 10s-1-8 5-14c0 9 8 10 7 19-2 8-10 12-18 9C10 52 11 35 20 25c8-9 10-12 12-19z" />
+        <path class="fire-inner" d="M31 38c-4 5-5 11 1 14 5 2 10-2 9-7-1-4-4-5-4-10-2 4-4 4-6 3z" />
+      </symbol>
+      <symbol id="icon-hand" viewBox="0 0 64 64">
+        <path class="hand-fill" d="M24 35V14c0-5 8-5 8 0v16-20c0-5 8-5 8 0v20-15c0-5 8-5 8 0v18-10c0-5 8-5 8 0v20c0 11-8 17-19 17h-4c-7 0-12-3-16-8L8 40c-3-4 3-9 7-6z" />
+        <path class="hand-line" d="M32 30V14M40 30V10M48 33V15" />
+      </symbol>
+      <symbol id="icon-hammer" viewBox="0 0 64 64">
+        <path class="hammer-handle" d="m22 52 22-31" />
+        <path class="hammer-head" d="m28 12 8-6 20 14-7 10z" />
+      </symbol>
+      <symbol id="icon-volume" viewBox="0 0 64 64">
+        <path class="ui-icon-fill" d="M10 25h12L37 13v38L22 39H10z" />
+        <path class="ui-icon-line" d="M44 23c6 5 6 13 0 18M50 16c11 9 11 23 0 32" />
+      </symbol>
+      <symbol id="icon-volume-off" viewBox="0 0 64 64">
+        <path class="ui-icon-fill" d="M10 25h12L37 13v38L22 39H10z" />
+        <path class="ui-icon-line" d="m45 24 14 16M59 24 45 40" />
+      </symbol>
+      <symbol id="icon-hint" viewBox="0 0 64 64">
+        <path class="ui-icon-fill" d="M32 7a18 18 0 0 1 11 32c-2 2-3 4-3 6H24c0-2-1-4-3-6A18 18 0 0 1 32 7z" />
+        <path class="ui-icon-line" d="M25 51h14M28 57h8" />
+      </symbol>
+      <symbol id="icon-pause" viewBox="0 0 64 64">
+        <path class="ui-icon-fill" d="M16 12h12v40H16zM36 12h12v40H36z" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 64 64">
+        <path class="ui-icon-fill" d="m19 10 36 22-36 22z" />
+      </symbol>
+      <symbol id="icon-restart" viewBox="0 0 64 64">
+        <path class="ui-icon-line" d="M17 21a21 21 0 1 1-3 25" />
+        <path class="ui-icon-fill" d="M7 9v19h19z" />
+      </symbol>
+      <symbol id="icon-firefly" viewBox="0 0 64 64">
+        <ellipse class="firefly-wing" cx="22" cy="29" rx="12" ry="8" transform="rotate(-30 22 29)" />
+        <ellipse class="firefly-wing" cx="42" cy="29" rx="12" ry="8" transform="rotate(30 42 29)" />
+        <path class="firefly-body" d="M27 21h10l3 23-8 10-8-10z" />
+        <circle class="firefly-glow" cx="32" cy="43" r="9" />
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 64 64">
+        <path class="star-fill" d="m32 5 8 18 20 2-15 14 4 20-17-10-17 10 4-20L4 25l20-2z" />
+      </symbol>
+    </svg>
+
+    <main class="game-shell" id="game-shell">
+      <section class="world" id="world" aria-label="Forest clearing">
+        <div class="ambient-glow" aria-hidden="true"></div>
+        <div class="pond" aria-hidden="true"><span></span></div>
+
+        <div class="tree tree-one" aria-hidden="true"><span></span></div>
+        <div class="tree tree-two" aria-hidden="true"><span></span></div>
+        <div class="tree tree-three" aria-hidden="true"><span></span></div>
+        <div class="tree tree-four" aria-hidden="true"><span></span></div>
+        <div class="tree tree-five" aria-hidden="true"><span></span></div>
+        <div class="tree tree-six" aria-hidden="true"><span></span></div>
+
+        <header class="hud">
+          <div class="goal-cluster" aria-label="Goal: two branches and one stone make a campfire">
+            <div class="firefly" id="firefly" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><use href="#icon-firefly"></use></svg>
+            </div>
+            <div class="goal-bubble">
+              <span class="goal-socket" data-kind="branch"><svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg></span>
+              <span class="goal-socket" data-kind="branch"><svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg></span>
+              <span class="goal-socket" data-kind="stone"><svg viewBox="0 0 64 64"><use href="#icon-stone"></use></svg></span>
+              <span class="goal-arrow" aria-hidden="true">→</span>
+              <span class="goal-result"><svg viewBox="0 0 64 64"><use href="#icon-fire"></use></svg></span>
+            </div>
+          </div>
+
+          <div class="control-cluster">
+            <label class="language-picker language-picker--compact">
+              <span aria-hidden="true">🌐</span>
+              <span class="language-picker-text">Language</span>
+              <select data-language-select aria-label="Interface language">
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+              </select>
+            </label>
+            <button class="round-control" id="hint-button" type="button" aria-label="Repeat the hint">
+              <svg viewBox="0 0 64 64"><use href="#icon-hint"></use></svg>
+            </button>
+            <button class="round-control" id="sound-button" type="button" aria-label="Turn sound off">
+              <svg class="sound-on" viewBox="0 0 64 64"><use href="#icon-volume"></use></svg>
+              <svg class="sound-off" viewBox="0 0 64 64"><use href="#icon-volume-off"></use></svg>
+            </button>
+            <button class="round-control" id="pause-button" type="button" aria-label="Pause">
+              <svg viewBox="0 0 64 64"><use href="#icon-pause"></use></svg>
+            </button>
+          </div>
+        </header>
+
+        <button class="resource resource-branch resource-first" id="branch-first" type="button" data-kind="branch" aria-label="Branch">
+          <span class="resource-shadow"></span>
+          <svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg>
+        </button>
+        <button class="resource resource-branch resource-second" id="branch-second" type="button" data-kind="branch" aria-label="Branch" disabled>
+          <span class="resource-shadow"></span>
+          <svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg>
+        </button>
+        <button class="resource resource-stone" id="stone-first" type="button" data-kind="stone" aria-label="Stone" disabled>
+          <span class="resource-shadow"></span>
+          <svg viewBox="0 0 64 64"><use href="#icon-stone"></use></svg>
+        </button>
+
+        <div class="home-trail" id="home-trail" aria-hidden="true"></div>
+        <button class="camp" id="camp" type="button" aria-label="Return to camp" disabled>
+          <span class="camp-ring">
+            <span class="camp-target" data-kind="branch"><svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg></span>
+            <span class="camp-target" data-kind="branch"><svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg></span>
+            <span class="camp-target" data-kind="stone"><svg viewBox="0 0 64 64"><use href="#icon-stone"></use></svg></span>
+            <span class="camp-flame"><svg viewBox="0 0 64 64"><use href="#icon-fire"></use></svg></span>
+          </span>
+        </button>
+
+        <div class="player" id="player" aria-label="Forest explorer">
+          <span class="player-shadow"></span>
+          <span class="player-legs"></span>
+          <span class="player-body"></span>
+          <span class="player-pack"></span>
+          <span class="player-head"><i></i></span>
+        </div>
+
+        <div class="hint-hand is-visible" id="hint-hand" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><use href="#icon-hand"></use></svg>
+        </div>
+
+        <footer class="action-bar">
+          <div class="inventory" aria-label="Backpack with supplies">
+            <button class="inventory-slot is-missing" type="button" data-kind="branch" aria-label="Branch needed" disabled>
+              <svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg>
+            </button>
+            <button class="inventory-slot is-missing" type="button" data-kind="branch" aria-label="Branch needed" disabled>
+              <svg viewBox="0 0 64 64"><use href="#icon-branch"></use></svg>
+            </button>
+            <button class="inventory-slot is-missing" type="button" data-kind="stone" aria-label="Stone needed" disabled>
+              <svg viewBox="0 0 64 64"><use href="#icon-stone"></use></svg>
+            </button>
+          </div>
+          <button class="main-action" id="main-action" type="button" aria-label="Pick up the item" disabled>
+            <svg class="action-hand" viewBox="0 0 64 64"><use href="#icon-hand"></use></svg>
+            <svg class="action-hammer" viewBox="0 0 64 64"><use href="#icon-hammer"></use></svg>
+          </button>
+        </footer>
+
+        <div class="pause-overlay" id="pause-overlay" aria-hidden="true">
+          <div class="pause-fire" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#icon-fire"></use></svg></div>
+          <button class="resume-button" id="resume-button" type="button" aria-label="Continue">
+            <svg viewBox="0 0 64 64"><use href="#icon-play"></use></svg>
+          </button>
+        </div>
+
+        <div class="victory-overlay" id="victory-overlay" aria-hidden="true">
+          <div class="stars" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><use href="#icon-star"></use></svg>
+            <svg viewBox="0 0 64 64"><use href="#icon-star"></use></svg>
+            <svg viewBox="0 0 64 64"><use href="#icon-star"></use></svg>
+          </div>
+          <div class="victory-friends" aria-hidden="true"><span></span><i></i><b></b></div>
+          <button class="restart-button" id="restart-button" type="button" aria-label="Play again">
+            <svg viewBox="0 0 64 64"><use href="#icon-restart"></use></svg>
+          </button>
+        </div>
+
+        <div class="sr-only" id="live-status" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="../game-language.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

@@ -51,7 +51,7 @@
         <div class="goal-icon" aria-hidden="true">🎈</div>
         <div>
           <span class="goal-label">GOAL</span>
-          <strong id="goal-text">Build 3 friendly places</strong>
+          <strong id="goal-text"></strong>
         </div>
         <div class="goal-progress" id="goal-progress">0 / 3</div>
       </section>
@@ -76,7 +76,7 @@
 
           <div class="map-tip">
             <span class="tap-icon" aria-hidden="true">☝️</span>
-            <p id="status-message">Tap a neighboring tile to send the explorer on a journey!</p>
+            <p id="status-message"></p>
           </div>
 
           <button class="end-turn-button" id="end-turn-button" type="button">
@@ -148,7 +148,6 @@
                 <small>Unlocks after three buildings</small>
                 <span class="cost"><b>🍎 5</b><b>🪵 5</b><b>💡 3</b></span>
               </span>
-              <span class="build-lock" aria-hidden="true">🔒</span>
             </button>
           </div>
         </aside>
@@ -175,7 +174,7 @@
           </select>
         </label>
         <div class="difficulty-picker">
-          <button class="difficulty-card" type="button" data-difficulty="easy">
+          <button class="difficulty-card" type="button" data-difficulty="easy" data-autofocus>
             <span class="difficulty-face" aria-hidden="true">🐣</span>
             <span class="difficulty-steps" aria-hidden="true">👣👣👣</span>
             <strong>Three steps</strong>
@@ -191,6 +190,7 @@
             <strong>One step</strong>
           </button>
         </div>
+        <button class="ghost-button" id="start-cancel" type="button" hidden>Keep playing</button>
       </div>
     </div>
 
@@ -204,7 +204,7 @@
           <span>☀️ Days: <strong id="victory-turns">1</strong></span>
           <span>🗺️ Discovered: <strong id="victory-tiles">1</strong></span>
         </div>
-        <button class="primary-button" id="restart-button" type="button">Play again</button>
+        <button class="primary-button" id="restart-button" type="button" data-autofocus>Play again</button>
       </div>
     </div>
 
@@ -220,11 +220,11 @@
       <span id="message-empty">You have already visited this place. Keep exploring!</span>
       <span id="message-far">The explorer can only move to a neighboring tile.</span>
       <span id="message-no-energy">No steps left. Press New day.</span>
+      <span id="message-steps-left">Take all your steps first.</span>
       <span id="message-new-day">The city shared its supplies. You can explore the island again!</span>
       <span id="message-cannot-build">First collect the missing gifts.</span>
       <span id="message-built">Great! The city has a new friendly place.</span>
       <span id="message-festival-ready">All places are ready! Collect supplies for the big festival.</span>
-      <span id="message-festival-locked">First build the garden, workshop, and library.</span>
       <span id="message-city">You returned to Sunny!</span>
       <span id="coach-move">Tap a tile next to the explorer</span>
       <span id="coach-collect">Keep going and collect island gifts</span>

@@ -28,12 +28,9 @@ the background:
 files are ignored by git. The commands only see a server that was started with `start`, not one
 running in the foreground.
 
-The home page includes a local server restart button. The custom server keeps static file serving as
-simple as `python -m http.server` and adds only the health and restart endpoints needed by that button.
-
-A local server is required: `word-quest` loads its text and word packs through `fetch` and
-`island-discovery` loads its translations the same way, and that does not work when a file is opened
-directly over `file://`.
+A local server is required: `word-quest` loads its text and word packs through `fetch`, while
+`island-discovery` and `forest-light` load translations and voice content the same way. That does not
+work when a file is opened directly over `file://`.
 
 ## The games
 
@@ -41,9 +38,11 @@ directly over `file://`.
 | --- | --- | --- | --- |
 | `word-quest/` | Living Words | Reading a word and picking a picture, levels by word length | Russian, English |
 | `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
+| `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
 
 Details about a game loop and its deliberate design decisions are in the README of the game:
-[word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md).
+[word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md),
+[forest-light/README.md](forest-light/README.md).
 
 ## Language
 
@@ -52,8 +51,8 @@ The home page has a language picker and opens in English by default. The choice 
 page is the one a game opens in, and a language picked inside a game is the one the home page shows.
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
-next to it through the shared `game-language.js`. The home page and `island-discovery` both work this
-way; `word-quest` carries its own two-language content in `word-quest/content/`.
+next to it through the shared `game-language.js`. The home page, `island-discovery` and `forest-light`
+work this way; `word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -74,6 +73,7 @@ Every game writes its progress to `localStorage` under its own key:
 | --- | --- |
 | `word-quest` | `livingWordsProgressV2` |
 | `island-discovery` | `islandDiscoveryV1` |
+| `forest-light` | `forestLightProgressV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.

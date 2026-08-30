@@ -8,11 +8,6 @@
       "Small browser games. They need no install, no build and no internet — just open a card below.",
       "Маленькие браузерные игры. Они не требуют установки, сборки или интернета — достаточно открыть карточку ниже."
     ],
-    ["Restart server", "Перезапустить сервер"],
-    ["Restarting...", "Перезапускаем..."],
-    ["Waiting for server...", "Ждем сервер..."],
-    ["Server restarted", "Сервер перезапущен"],
-    ["Restart failed", "Не получилось перезапустить"],
     ["Living Words", "Живые слова"],
     [
       "Read a word aloud and pick the matching picture. Levels by word length, story chapters of ten words.",
@@ -24,7 +19,13 @@
       "Walk the island one step a day, gather apples, logs and ideas, build a garden, a workshop and a library, and finish with a festival.",
       "Ходи по острову шаг за шагом, собирай яблоки, бревна и идеи, построй сад, мастерскую и библиотеку и устрой праздник."
     ],
-    ["STRATEGY", "СТРАТЕГИЯ"]
+    ["STRATEGY", "СТРАТЕГИЯ"],
+    ["Forest Light", "Лесной огонек"],
+    [
+      "Gather two branches and a stone, follow the glowing path back, and build a campfire. No reading and no way to lose.",
+      "Собери две ветки и камень, вернись по светящейся дорожке и сложи костер. Читать не нужно, проиграть нельзя."
+    ],
+    ["NO READING", "БЕЗ ЧТЕНИЯ"]
   ],
   "templates": []
 }

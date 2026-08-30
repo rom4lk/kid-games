@@ -26,7 +26,8 @@ There is no separate rules dialog. The mechanics open up one at a time right on 
 ## The game loop
 
 1. The explorer takes their steps to neighboring cells.
-2. New cells give apples, logs and ideas.
+2. New cells give apples, logs and ideas. A new day starts only once every step is spent, so
+   supplies are earned by walking and not by pressing the button.
 3. The player builds a garden, a workshop and a library.
 4. Every new day the buildings produce extra resources.
 5. After three buildings the player throws a festival and wins.
@@ -34,8 +35,9 @@ There is no separate rules dialog. The mechanics open up one at a time right on 
 If resources run short, a new day always brings basic supplies. That is why a session can never reach a dead end.
 
 The session is saved to `localStorage` under the key `islandDiscoveryV1` after every move, new day and
-building. The circular arrow button starts over and asks about the difficulty again, and the note
-button next to it switches the sound off and on.
+building. The circular arrow button starts over and asks about the difficulty again — the running
+session is kept until a difficulty is picked, so "Keep playing" in that dialog gives it back
+untouched. The note button next to it switches the sound off and on.
 
 The start dialog and the main screen both provide an English or Russian interface selector. The shared
 choice is saved under `kidGamesLanguageV1`, and English is used when no choice has been saved yet. The

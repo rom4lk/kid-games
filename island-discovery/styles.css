@@ -39,7 +39,7 @@ button {
 
 .heading-actions {
   display: flex;
-  gap: 6px;
+  gap: 12px;
 }
 
 .sun {
@@ -389,7 +389,7 @@ h1 {
 }
 
 .difficulty-card strong {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .end-turn-button.is-waiting {
@@ -439,7 +439,7 @@ h1 {
 
 .map-tip p {
   margin: 0;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -467,7 +467,7 @@ h1 {
   justify-content: center;
   gap: 10px;
   padding: 13px 20px;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .end-turn-button:hover,
@@ -546,13 +546,14 @@ h1 {
 }
 
 .help-button {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   border: 2px solid #b9cdb0;
   border-radius: 50%;
   background: white;
   color: var(--green-dark);
   cursor: pointer;
+  font-size: 20px;
   font-weight: 900;
 }
 
@@ -620,7 +621,7 @@ h1 {
 }
 
 .building-copy strong {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .building-copy small {
@@ -640,7 +641,7 @@ h1 {
   padding: 3px 9px;
   border-radius: 999px;
   background: #f4f0e2;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .build-check {
@@ -728,6 +729,18 @@ h1 {
   min-width: 190px;
   padding: 14px 25px;
   font-size: 19px;
+}
+
+.ghost-button {
+  margin-top: 14px;
+  padding: 11px 22px;
+  border: 3px solid rgba(48, 113, 87, 0.25);
+  border-radius: 16px;
+  background: transparent;
+  color: var(--green-dark);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .victory-card {
@@ -874,7 +887,7 @@ h1 {
   }
 
   .game-map {
-    grid-template-columns: repeat(7, minmax(34px, 1fr));
+    grid-template-columns: repeat(6, minmax(34px, 1fr));
     gap: 4px;
   }
 

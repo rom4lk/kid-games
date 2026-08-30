@@ -13,9 +13,6 @@ const DIFFICULTIES = {
 // One mechanic at a time: walk, then gather, then build.
 const COACH_ORDER = ["move", "collect", "build", "done"];
 
-// A pause carries no meaning when motion is reduced, so it is dropped there.
-const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
-
 const TILE_DATA = {
   plain: { icon: "🍀", food: 1, wood: 0, idea: 0 },
   forest: { icon: "🌲", food: 0, wood: 2, idea: 0 },
@@ -66,8 +63,9 @@ const elements = {
   goalProgress: document.querySelector("#goal-progress"),
   endTurn: document.querySelector("#end-turn-button"),
   startModal: document.querySelector("#start-modal"),
+  startCancel: document.querySelector("#start-cancel"),
+  appShell: document.querySelector(".app-shell"),
   buildingList: document.querySelector(".building-list"),
-  festivalCard: document.querySelector(".festival-card"),
   victory: document.querySelector("#victory-modal"),
   victoryTurns: document.querySelector("#victory-turns"),
   victoryTiles: document.querySelector("#victory-tiles"),
@@ -186,6 +184,10 @@ function clearSavedGame() {
   }
 }
 
+function whole(value, fallback) {
+  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
+}
+
 function loadGame() {
   let saved;
   try {
@@ -193,7 +195,12 @@ function loadGame() {
   } catch {
     return false;
   }
-  if (!saved || !Array.isArray(saved.tiles) || saved.tiles.length !== MAP_WIDTH * MAP_HEIGHT) {
+  if (
+    !saved
+    || !Array.isArray(saved.tiles)
+    || saved.tiles.length !== MAP_WIDTH * MAP_HEIGHT
+    || !saved.tiles.every((type) => type in TILE_DATA)
+  ) {
     return false;
   }
 
@@ -205,6 +212,14 @@ function loadGame() {
   });
   if (!DIFFICULTIES[state.difficulty]) state.difficulty = "normal";
   if (!COACH_ORDER.includes(state.coach)) state.coach = "done";
+  state.food = whole(state.food, 0);
+  state.wood = whole(state.wood, 0);
+  state.idea = whole(state.idea, 0);
+  state.turn = Math.max(whole(state.turn, 1), 1);
+  state.energy = Math.min(whole(state.energy, 0), rules().energy);
+  if (!Number.isInteger(state.explorer) || state.explorer < 0 || state.explorer >= state.tiles.length) {
+    state.explorer = CITY_INDEX;
+  }
   return true;
 }
 
@@ -265,11 +280,12 @@ function moveExplorer(index) {
   if (state.energy === 0) {
     window.setTimeout(() => {
       if (!state.finished && state.energy === 0) setMessage("no-energy");
-    }, REDUCED_MOTION.matches ? 0 : 700);
+    }, 700);
   }
 }
 
 function renderMap() {
+  const hadFocus = document.activeElement?.classList.contains("map-tile");
   elements.map.replaceChildren();
 
   state.tiles.forEach((type, index) => {
@@ -301,6 +317,8 @@ function renderMap() {
 
     elements.map.append(tile);
   });
+
+  if (hadFocus) elements.map.querySelector(`[data-index="${state.explorer}"]`)?.focus();
 }
 
 function renderEnergy() {
@@ -332,21 +350,21 @@ function renderBuildings() {
   elements.buildingButtons.forEach((button) => {
     const building = button.dataset.building;
     const built = state.buildings.has(building);
-    const isFestival = building === "festival";
-    const unlocked = !isFestival || completed === 3;
 
     button.classList.toggle("built", built);
-    button.classList.toggle("ready", isFestival && unlocked && !built);
     button.disabled = built;
-    button.classList.toggle("locked", !unlocked);
     // The festival is a mechanic that only matters once, at the end.
-    if (isFestival) button.hidden = !unlocked;
+    if (building === "festival") {
+      button.hidden = completed !== 3;
+      button.classList.toggle("ready", !built);
+    }
   });
 
   elements.goalProgress.textContent = completed === 3 ? "🎪" : `${completed} / 3`;
 }
 
 function render() {
+  elements.map.classList.remove("show-reach");
   elements.food.textContent = state.food;
   elements.wood.textContent = state.wood;
   elements.idea.textContent = state.idea;
@@ -360,6 +378,10 @@ function render() {
 
 function endTurn() {
   if (state.finished) return;
+  if (state.energy > 0) {
+    setMessage("steps-left");
+    return;
+  }
   state.turn += 1;
   state.energy = rules().energy;
   state.food += rules().dailyFood + (state.buildings.has("garden") ? 1 : 0);
@@ -379,10 +401,6 @@ function build(button) {
   const building = button.dataset.building;
   const isFestival = building === "festival";
 
-  if (isFestival && standardBuildingCount() < 3) {
-    setMessage("festival-locked");
-    return;
-  }
   if (!canAfford(button)) {
     setMessage("cannot-build");
     return;
@@ -397,7 +415,7 @@ function build(button) {
     state.finished = true;
     elements.victoryTurns.textContent = state.turn;
     elements.victoryTiles.textContent = state.revealed.size;
-    elements.victory.classList.add("visible");
+    showModal(elements.victory);
     playSound("victory");
   } else {
     setMessage(standardBuildingCount() === 3 ? "festival-ready" : "built");
@@ -447,16 +465,31 @@ function startGame(difficulty) {
   state.finished = false;
   revealAround(CITY_INDEX);
   setMessage("start");
-  elements.victory.classList.remove("visible");
-  elements.startModal.classList.remove("visible");
+  hideModals();
   render();
   saveGame();
 }
 
-function askDifficulty() {
-  clearSavedGame();
+// A dialog covers the whole screen, so the board behind it must stop being
+// reachable by keyboard and the first control has to take the focus.
+function showModal(modal) {
+  elements.startModal.classList.toggle("visible", modal === elements.startModal);
+  elements.victory.classList.toggle("visible", modal === elements.victory);
+  elements.appShell.inert = true;
+  modal.querySelector("[data-autofocus]").focus();
+}
+
+function hideModals() {
+  elements.startModal.classList.remove("visible");
   elements.victory.classList.remove("visible");
-  elements.startModal.classList.add("visible");
+  elements.appShell.inert = false;
+}
+
+// The saved game is kept until a new one starts, so a restart tapped by
+// mistake is undone by "Keep playing".
+function askDifficulty() {
+  elements.startCancel.hidden = state.finished || state.tiles.length === 0;
+  showModal(elements.startModal);
 }
 
 elements.endTurn.addEventListener("click", endTurn);
@@ -467,7 +500,12 @@ document.querySelectorAll(".difficulty-card").forEach((button) => {
   button.addEventListener("click", () => startGame(button.dataset.difficulty));
 });
 document.querySelector("#restart-button").addEventListener("click", askDifficulty);
-document.querySelector("#restart-button-top").addEventListener("click", askDifficulty);
+const restartTop = document.querySelector("#restart-button-top");
+restartTop.addEventListener("click", askDifficulty);
+elements.startCancel.addEventListener("click", () => {
+  hideModals();
+  restartTop.focus();
+});
 
 const soundButton = document.querySelector("#sound-button");
 soundButton.addEventListener("click", () => {
@@ -477,10 +515,12 @@ soundButton.addEventListener("click", () => {
   if (soundEnabled) playSound("build");
 });
 
+setMessage("start");
+renderCoach();
+
 if (loadGame()) {
-  elements.startModal.classList.remove("visible");
-  setMessage("start");
+  hideModals();
   render();
 } else {
-  elements.startModal.classList.add("visible");
+  showModal(elements.startModal);
 }
