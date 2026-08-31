@@ -6,7 +6,7 @@ its check passes and the work is committed.
 | Stage | What it covers | Done |
 | --- | --- | --- |
 | 0 | Skeleton and registration | [x] |
-| 1 | Model core and tests | [ ] |
+| 1 | Model core and tests | [x] |
 | 2 | Sheet 1 painting | [ ] |
 | 3 | Strokes and sound | [ ] |
 | 4 | Smart blocks | [ ] |
@@ -21,6 +21,9 @@ its check passes and the work is committed.
 
 - Stage 0: the shell renders, the language picker flips every label, the pause opens and confirms,
   and the shelf card opens `/block-town/`. No console errors.
+- Stage 1: the block and sheet registries, painting, flood fill, progress, the unlock ladder, the
+  bridge underlay and save normalization live in `game.js` above `module.exports`; `test-game.js`
+  covers them and is green.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

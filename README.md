@@ -93,6 +93,12 @@ The Secret Rule Lab logic is checked separately:
 node hypothesis-lab/test-game.js
 ```
 
+So is the Block Town model:
+
+```bash
+node block-town/test-game.js
+```
+
 ## Saved progress
 
 Every game writes its progress to `localStorage` under its own key:
