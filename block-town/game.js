@@ -557,19 +557,40 @@ function normalizeGrid(sheet, saved) {
   return grid;
 }
 
-function normalizeUnderlay(sheet, saved, grid) {
+function normalizeUnderlay(sheet, savedBridges, grid) {
   const underlay = createSheetGrid(sheet);
-  if (!Array.isArray(saved)) return underlay;
-  const length = Math.min(saved.length, sheet.cellCount);
-  for (let index = 0; index < length; index += 1) {
+  if (!Array.isArray(savedBridges)) return underlay;
+  savedBridges.forEach((index) => {
     // Only water hides under a block, and only under a road: that is a bridge.
-    if (saved[index] === WATER_ID && isRoadBlock(grid[index])) underlay[index] = WATER_ID;
-  }
+    if (isCellIndex(sheet, index) && isRoadBlock(grid[index])) underlay[index] = WATER_ID;
+  });
   return underlay;
 }
 
 // Saved data may come from an older version, a different game or a broken
 // write. Anything unexpected turns into an empty cell instead of an error.
+// What gets written to storage. The underlay is a whole parallel array in
+// memory, but only the few bridge cells are worth keeping, so the save of five
+// finished sheets stays small.
+function serializeState(state) {
+  const bridges = {};
+  SHEETS.forEach((sheet) => {
+    bridges[sheet.id] = state.underlays[sheet.id]
+      .reduce((list, value, index) => {
+        if (value === WATER_ID) list.push(index);
+        return list;
+      }, []);
+  });
+  return {
+    currentSheet: state.currentSheet,
+    unlockedCount: state.unlockedCount,
+    grids: state.grids,
+    bridges,
+    planted: state.planted,
+    celebrated: state.celebrated,
+  };
+}
+
 // Sowing times are kept only for cells that really hold a field.
 function normalizePlanted(sheet, saved, grid) {
   const planted = {};
@@ -593,7 +614,7 @@ function normalizeSavedState(value) {
     state.grids[sheet.id] = normalizeGrid(sheet, value.grids?.[sheet.id]);
     state.underlays[sheet.id] = normalizeUnderlay(
       sheet,
-      value.underlays?.[sheet.id],
+      value.bridges?.[sheet.id],
       state.grids[sheet.id],
     );
     state.planted[sheet.id] = normalizePlanted(sheet, value.planted?.[sheet.id], state.grids[sheet.id]);
@@ -652,6 +673,7 @@ if (typeof module !== "undefined" && module.exports) {
     unlockNextSheet,
     selectSheet,
     clearSheet,
+    serializeState,
     normalizeSavedState,
   };
 }
@@ -833,7 +855,7 @@ function initializeGame() {
 
   function saveGame() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeState(state)));
     } catch {
       // The painting stays on screen even when storage refuses to keep it.
     }

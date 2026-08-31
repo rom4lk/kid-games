@@ -15,7 +15,9 @@ its check passes and the work is committed.
 | 7 | Sheets 2 and 3 | [x] |
 | 8 | Sheets 4 and 5 | [x] |
 | 9 | Accessibility, language, polish | [x] |
-| 10 | Final verification | [ ] |
+| 10 | Final verification | [x] |
+
+All eleven stages are done. `node block-town/test-game.js` is green.
 
 ## Notes
 
@@ -56,6 +58,17 @@ its check passes and the work is committed.
   opens the pause. Choosing a block, a tool or a sheet is announced in the live region. Every
   animation was walked through: only the lighthouse light keeps breathing under reduced motion,
   because it is opacity alone. All 59 visible strings have a Russian pair.
+- Stage 10: `node block-town/test-game.js` is green. On sheet 5 a stroke that crosses the whole
+  24 x 48 sheet takes about 30 ms and rewrites roughly 190 cell class lists out of 1152 — the
+  neighbours of the painted cells and nothing more. A save with all five sheets fully painted is
+  5.6 kB, after the bridges moved from a parallel array to a list of indices. At a tablet size the
+  layout has no horizontal overflow and the smallest button is 64 px. The whole loop was walked in
+  Russian with no raw keys and no console errors.
+- The design check from GAME_DESIGN.md is a list of things to watch a child do, so only the
+  affordances behind it were verified here: strokes and block switching, a visible world reaction
+  after almost every stroke, painting over as the only correction, the shimmer, the sun and the
+  mini-map for the last empty cells, and the shelf of live thumbnails to come back to. The
+  observation itself needs a real session with a child.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

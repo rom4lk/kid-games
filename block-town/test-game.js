@@ -38,6 +38,7 @@ const {
   unlockNextSheet,
   selectSheet,
   clearSheet,
+  serializeState,
   normalizeSavedState,
 } = require("./game.js");
 
@@ -587,6 +588,35 @@ function testBridgeOverWater() {
   assert.equal(state.underlays["sheet-1"][7], EMPTY_CELL);
 }
 
+function testSaveRoundTrip() {
+  const state = createGameState();
+  paintCell(state, 4, WATER_ID);
+  paintCell(state, 4, PATH_ID);
+  paintCell(state, 5, MEADOW_ID);
+
+  const saved = JSON.parse(JSON.stringify(serializeState(state)));
+  assert.deepEqual(saved.bridges["sheet-1"], [4]);
+  // The parallel underlay array never reaches storage.
+  assert.equal(saved.underlays, undefined);
+
+  const restored = normalizeSavedState(saved);
+  assert.equal(restored.underlays["sheet-1"][4], WATER_ID);
+  assert.equal(restored.underlays["sheet-1"].length, 50);
+  assert.deepEqual(restored.grids["sheet-1"], state.grids["sheet-1"]);
+
+  // A whole ladder of finished sheets still writes only a few kilobytes.
+  const full = createGameState();
+  full.unlockedCount = SHEETS.length;
+  SHEETS.forEach((sheet) => {
+    full.grids[sheet.id] = Array.from(
+      { length: sheet.cellCount },
+      (_, index) => sheet.blockIds[index % sheet.blockIds.length],
+    );
+  });
+  const bytes = JSON.stringify(serializeState(full)).length;
+  assert.equal(bytes < 8000, true, `a full save is ${bytes} bytes`);
+}
+
 function testSavedStateNormalization() {
   const empty = normalizeSavedState(null);
   assert.equal(empty.currentSheet, "sheet-1");
@@ -603,7 +633,7 @@ function testSavedStateNormalization() {
       "sheet-1": [MEADOW_ID, 999, HOUSE_ID, "water", null, PATH_ID],
       "sheet-2": [HOUSE_ID],
     },
-    underlays: { "sheet-1": [WATER_ID, WATER_ID, 0, 0, 0, WATER_ID] },
+    bridges: { "sheet-1": [0, 5, 900, "x"] },
     celebrated: { "sheet-1": true, "sheet-2": "yes" },
   });
 
@@ -668,6 +698,7 @@ testRefusedInput();
 testCompletionAndUnlockLadder();
 testFloodFill();
 testBridgeOverWater();
+testSaveRoundTrip();
 testSavedStateNormalization();
 testEverySheetCanBeFilled();
 console.log("Block Town model tests passed.");
