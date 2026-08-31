@@ -49,12 +49,47 @@ const SHEETS = [
   blockIds: BLOCKS.filter((block) => block.sheet <= index + 1).map((block) => block.id),
 }));
 
+// The four sides of a cell, as bits of one small mask.
+const MASK_NORTH = 1;
+const MASK_EAST = 2;
+const MASK_SOUTH = 4;
+const MASK_WEST = 8;
+const MASK_ALL = MASK_NORTH | MASK_EAST | MASK_SOUTH | MASK_WEST;
+
+// How a road with these connected sides draws itself.
+const ROAD_SHAPES = {
+  0: "lone",
+  [MASK_NORTH]: "end",
+  [MASK_EAST]: "end",
+  [MASK_SOUTH]: "end",
+  [MASK_WEST]: "end",
+  [MASK_NORTH | MASK_SOUTH]: "straight",
+  [MASK_EAST | MASK_WEST]: "straight",
+  [MASK_NORTH | MASK_EAST]: "turn",
+  [MASK_EAST | MASK_SOUTH]: "turn",
+  [MASK_SOUTH | MASK_WEST]: "turn",
+  [MASK_WEST | MASK_NORTH]: "turn",
+  [MASK_ALL ^ MASK_NORTH]: "tee",
+  [MASK_ALL ^ MASK_EAST]: "tee",
+  [MASK_ALL ^ MASK_SOUTH]: "tee",
+  [MASK_ALL ^ MASK_WEST]: "tee",
+  [MASK_ALL]: "cross",
+};
+
 function blockById(blockId) {
   return BLOCK_BY_ID.get(blockId) || null;
 }
 
 function isRoadBlock(blockId) {
   return blockById(blockId)?.family === "roads";
+}
+
+// Rails carry a train and roads carry a car, so the two never join up. Every
+// other road kind is one network.
+function roadGroup(blockId) {
+  const block = blockById(blockId);
+  if (block?.family !== "roads") return null;
+  return block.key === "rails" ? "rails" : "road";
 }
 
 function sheetById(sheetId) {
@@ -194,6 +229,69 @@ function floodFill(state, index, blockId) {
   return paintStroke(state, region, blockId);
 }
 
+// Which of the four neighbours answer the question, as one 4-bit mask. Cells
+// outside the sheet never count.
+function neighborMask(grid, columns, index, predicate) {
+  if (!Array.isArray(grid) || !Number.isInteger(columns) || columns <= 0) return 0;
+  if (!Number.isInteger(index) || index < 0 || index >= grid.length) return 0;
+
+  const rows = Math.floor(grid.length / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  let mask = 0;
+  if (row > 0 && predicate(grid[index - columns])) mask |= MASK_NORTH;
+  if (column < columns - 1 && predicate(grid[index + 1])) mask |= MASK_EAST;
+  if (row < rows - 1 && predicate(grid[index + columns])) mask |= MASK_SOUTH;
+  if (column > 0 && predicate(grid[index - 1])) mask |= MASK_WEST;
+  return mask;
+}
+
+// A road draws itself from the sides it connects to, and remembers whether it
+// stands on water, which makes it a bridge.
+function roadTile(grid, underlay, columns, index) {
+  const group = roadGroup(grid?.[index]);
+  if (!group) return null;
+  const mask = neighborMask(grid, columns, index, (value) => roadGroup(value) === group);
+  return {
+    mask,
+    shape: ROAD_SHAPES[mask],
+    bridge: underlay?.[index] === WATER_ID,
+  };
+}
+
+function isWaterCell(grid, underlay, index) {
+  return grid?.[index] === WATER_ID || underlay?.[index] === WATER_ID;
+}
+
+// The sides of a water cell that meet something else: those get a shore. Water
+// under a bridge still counts as water, so a lake keeps its shape.
+function waterEdges(grid, underlay, columns, index) {
+  if (!isWaterCell(grid, underlay, index)) return 0;
+  const columnsAreValid = Number.isInteger(columns) && columns > 0;
+  if (!columnsAreValid) return 0;
+
+  const rows = Math.floor(grid.length / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  let edges = 0;
+  if (row === 0 || !isWaterCell(grid, underlay, index - columns)) edges |= MASK_NORTH;
+  if (column === columns - 1 || !isWaterCell(grid, underlay, index + 1)) edges |= MASK_EAST;
+  if (row === rows - 1 || !isWaterCell(grid, underlay, index + columns)) edges |= MASK_SOUTH;
+  if (column === 0 || !isWaterCell(grid, underlay, index - 1)) edges |= MASK_WEST;
+  return edges;
+}
+
+// A lone forest cell is one small tree; inside a cluster the trees grow.
+function forestDensity(grid, columns, index) {
+  const forestId = BLOCK_BY_KEY.get("forest").id;
+  if (grid?.[index] !== forestId) return 0;
+  const mask = neighborMask(grid, columns, index, (value) => value === forestId);
+  const neighbors = [MASK_NORTH, MASK_EAST, MASK_SOUTH, MASK_WEST]
+    .filter((side) => (mask & side) !== 0).length;
+  if (neighbors === 0) return 0;
+  return neighbors < 3 ? 1 : 2;
+}
+
 function paintedCount(state, sheetId = state?.currentSheet) {
   const grid = state?.grids?.[sheetId];
   if (!Array.isArray(grid)) return 0;
@@ -294,6 +392,15 @@ if (typeof module !== "undefined" && module.exports) {
     isBlockOnSheet,
     neighborIndices,
     lineIndices,
+    MASK_NORTH,
+    MASK_EAST,
+    MASK_SOUTH,
+    MASK_WEST,
+    roadGroup,
+    neighborMask,
+    roadTile,
+    waterEdges,
+    forestDensity,
     createGameState,
     paintCell,
     paintStroke,
@@ -434,13 +541,59 @@ function initializeGame() {
     return block ? BLOCK_NAMES[block.key] : "Empty cell";
   }
 
+  const SIDE_CLASSES = [
+    [MASK_NORTH, "n"],
+    [MASK_EAST, "e"],
+    [MASK_SOUTH, "s"],
+    [MASK_WEST, "w"],
+  ];
+
+  function sideClasses(prefix, mask) {
+    return SIDE_CLASSES.filter(([side]) => (mask & side) !== 0).map(([, name]) => `${prefix}--${name}`);
+  }
+
+  // The look of a cell is nothing but class names; styles.css draws every
+  // variant. The model decides which variant this cell is.
+  function cellClasses(sheet, grid, underlay, index) {
+    const block = blockById(grid[index]);
+    if (!block) return ["cell", "is-empty"];
+
+    const classes = ["cell", `block--${block.key}`];
+    if (block.family === "roads") {
+      const tile = roadTile(grid, underlay, sheet.columns, index);
+      classes.push("cell--road", `road--${tile.shape}`, ...sideClasses("road", tile.mask));
+      if (tile.bridge) {
+        classes.push("road--bridge");
+        // The deck follows the direction the road runs in.
+        const alongRows = (tile.mask & (MASK_NORTH | MASK_SOUTH)) !== 0;
+        if (alongRows) classes.push("road--bridge-vertical");
+      }
+      return classes;
+    }
+    if (block.key === "water") {
+      return classes.concat(sideClasses("shore", waterEdges(grid, underlay, sheet.columns, index)));
+    }
+    if (block.key === "forest") {
+      classes.push(`forest--${forestDensity(grid, sheet.columns, index)}`);
+    }
+    return classes;
+  }
+
   function renderCell(index) {
     const element = cells[index];
     if (!element) return;
     const sheet = currentSheet(state);
-    const block = blockById(state.grids[sheet.id][index]);
-    element.className = block ? `cell block--${block.key}` : "cell is-empty";
-    element.setAttribute("aria-label", blockName(block?.id));
+    const grid = state.grids[sheet.id];
+    const underlay = state.underlays[sheet.id];
+    element.className = cellClasses(sheet, grid, underlay, index).join(" ");
+    element.setAttribute("aria-label", blockName(grid[index]));
+  }
+
+  // A painted cell can change the look of its four neighbours and nothing else.
+  function renderCellAndNeighbors(index) {
+    const sheet = currentSheet(state);
+    renderCell(index);
+    neighborIndices(sheet, index).forEach(renderCell);
   }
 
   function renderAllCells() {
@@ -510,7 +663,9 @@ function initializeGame() {
       button.setAttribute("role", "radio");
       button.setAttribute("aria-checked", blockId === selectedBlockId ? "true" : "false");
       button.setAttribute("aria-label", BLOCK_NAMES[block.key]);
-      button.innerHTML = `<span class="palette-swatch block--${block.key}" aria-hidden="true"></span>`;
+      // A one-cell sheet gives the swatch the same art the grid would draw.
+      const art = cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0).join(" ");
+      button.innerHTML = `<span class="palette-swatch ${art}" aria-hidden="true"></span>`;
       elements.palette.append(button);
     });
   }
@@ -536,7 +691,7 @@ function initializeGame() {
     let changed = 0;
     path.forEach((cell) => {
       if (!paintCell(state, cell, selectedBlockId)) return;
-      renderCell(cell);
+      renderCellAndNeighbors(cell);
       changed += 1;
     });
     if (changed === 0) return;

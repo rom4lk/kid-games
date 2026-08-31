@@ -8,6 +8,15 @@ const {
   isBlockOnSheet,
   neighborIndices,
   lineIndices,
+  MASK_NORTH,
+  MASK_EAST,
+  MASK_SOUTH,
+  MASK_WEST,
+  roadGroup,
+  neighborMask,
+  roadTile,
+  waterEdges,
+  forestDensity,
   createGameState,
   paintCell,
   paintStroke,
@@ -30,6 +39,12 @@ function fillSheet(state, sheetId, blockId) {
   selectSheet(state, sheetId);
   const indices = Array.from({ length: sheet.cellCount }, (_, index) => index);
   return paintStroke(state, indices, blockId);
+}
+
+// A hand-built 5 x 10 grid, written as rows of single characters.
+function buildGrid(rows) {
+  const legend = { ".": 0, "m": MEADOW_ID, "r": PATH_ID, "f": FOREST_ID, "w": WATER_ID };
+  return rows.join("").split("").map((symbol) => legend[symbol]);
 }
 
 function testRegistries() {
@@ -88,6 +103,142 @@ function testStrokeLine() {
     const columnStep = Math.abs((index % 10) - (previous % 10));
     assert.equal(rowStep <= 1 && columnStep <= 1, true);
   });
+}
+
+function testNeighborMask() {
+  const grid = buildGrid([
+    ".r........",
+    "rrr.......",
+    ".r........",
+    "..........",
+    "..........",
+  ]);
+  const isRoad = (value) => value === PATH_ID;
+  assert.equal(neighborMask(grid, 10, 11, isRoad), MASK_NORTH | MASK_EAST | MASK_SOUTH | MASK_WEST);
+  assert.equal(neighborMask(grid, 10, 1, isRoad), MASK_SOUTH);
+  assert.equal(neighborMask(grid, 10, 10, isRoad), MASK_EAST);
+  assert.equal(neighborMask(grid, 10, 12, isRoad), MASK_WEST);
+  assert.equal(neighborMask(grid, 10, 44, isRoad), 0);
+  // Nothing outside the sheet ever counts as a neighbour.
+  assert.equal(neighborMask(grid, 10, 99, isRoad), 0);
+  assert.equal(neighborMask(null, 10, 0, isRoad), 0);
+}
+
+function testRoadTile() {
+  const lone = buildGrid([
+    "r.........",
+    "..........",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadTile(lone, [], 10, 0).shape, "lone");
+  assert.equal(roadTile(lone, [], 10, 1), null);
+
+  const line = buildGrid([
+    "rrrr......",
+    "..........",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadTile(line, [], 10, 0).shape, "end");
+  assert.equal(roadTile(line, [], 10, 1).shape, "straight");
+  assert.equal(roadTile(line, [], 10, 3).shape, "end");
+  assert.equal(roadTile(line, [], 10, 1).mask, MASK_EAST | MASK_WEST);
+
+  const corner = buildGrid([
+    "rr........",
+    "r.........",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadTile(corner, [], 10, 0).shape, "turn");
+  assert.equal(roadTile(corner, [], 10, 0).mask, MASK_EAST | MASK_SOUTH);
+
+  const cross = buildGrid([
+    ".r........",
+    "rrr.......",
+    ".r........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadTile(cross, [], 10, 11).shape, "cross");
+  assert.equal(roadTile(cross, [], 10, 1).shape, "end");
+
+  const tee = buildGrid([
+    "rrr.......",
+    ".r........",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadTile(tee, [], 10, 1).shape, "tee");
+
+  // A road on top of remembered water is a bridge.
+  const underlay = new Array(50).fill(0);
+  underlay[1] = WATER_ID;
+  assert.equal(roadTile(line, underlay, 10, 1).bridge, true);
+  assert.equal(roadTile(line, underlay, 10, 2).bridge, false);
+
+  // Rails and roads are separate networks.
+  assert.equal(roadGroup(PATH_ID), "road");
+  assert.equal(roadGroup(MEADOW_ID), null);
+}
+
+function testWaterEdges() {
+  const grid = buildGrid([
+    "..........",
+    ".www......",
+    ".www......",
+    "..........",
+    "..........",
+  ]);
+  const underlay = new Array(50).fill(0);
+  // The middle of a lake has no shore at all.
+  assert.equal(waterEdges(grid, underlay, 10, 11), MASK_NORTH | MASK_WEST);
+  assert.equal(waterEdges(grid, underlay, 10, 12), MASK_NORTH);
+  assert.equal(waterEdges(grid, underlay, 10, 22), MASK_SOUTH);
+  assert.equal(waterEdges(grid, underlay, 10, 0), 0);
+
+  // A lone puddle keeps a shore on every side.
+  const puddle = buildGrid([
+    "..........",
+    "....w.....",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(waterEdges(puddle, underlay, 10, 14), MASK_NORTH | MASK_EAST | MASK_SOUTH | MASK_WEST);
+
+  // Water under a bridge still belongs to the lake.
+  const bridged = buildGrid([
+    "..........",
+    ".wrw......",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  const bridgeUnderlay = new Array(50).fill(0);
+  bridgeUnderlay[12] = WATER_ID;
+  assert.equal(waterEdges(bridged, bridgeUnderlay, 10, 11) & MASK_EAST, 0);
+  assert.equal(waterEdges(bridged, bridgeUnderlay, 10, 13) & MASK_WEST, 0);
+}
+
+function testForestDensity() {
+  const grid = buildGrid([
+    "f...ff....",
+    "....ff....",
+    "....f.....",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(forestDensity(grid, 10, 0), 0);
+  assert.equal(forestDensity(grid, 10, 5), 1);
+  assert.equal(forestDensity(grid, 10, 14), 2);
+  assert.equal(forestDensity(grid, 10, 24), 1);
+  assert.equal(forestDensity(grid, 10, 1), 0);
 }
 
 function testPaintingAndPaintOver() {
@@ -260,6 +411,10 @@ function testEverySheetCanBeFilled() {
 testRegistries();
 testNeighbors();
 testStrokeLine();
+testNeighborMask();
+testRoadTile();
+testWaterEdges();
+testForestDensity();
 testPaintingAndPaintOver();
 testRefusedInput();
 testCompletionAndUnlockLadder();

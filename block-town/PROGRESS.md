@@ -9,7 +9,7 @@ its check passes and the work is committed.
 | 1 | Model core and tests | [x] |
 | 2 | Sheet 1 painting | [x] |
 | 3 | Strokes and sound | [x] |
-| 4 | Smart blocks | [ ] |
+| 4 | Smart blocks | [x] |
 | 5 | The living world, first pass | [ ] |
 | 6 | Completion, celebration, sheet shelf | [ ] |
 | 7 | Sheets 2 and 3 | [ ] |
@@ -31,6 +31,10 @@ its check passes and the work is committed.
   pointer reports), each family has its own note throttled to one per three cells, and the shimmer
   of the unpainted cells is one animated custom property that reduced motion swaps for a dashed
   frame.
+- Stage 4: `neighborMask`, `roadTile`, `waterEdges` and `forestDensity` decide the variant, and the
+  UI only rewrites the class list of the painted cell and its four neighbours. A road loop closes its
+  corners, a road across a lake becomes a plank bridge, and water painted back over a bridge is
+  plain water again.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

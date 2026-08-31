@@ -19,6 +19,7 @@
   --forest-mark: #2f6f45;
   --water: #82c9e8;
   --water-mark: #3f9dc4;
+  --shore: #ecdcae;
 
   /* The grid geometry is the only thing the model writes into the DOM. */
   --rows: 5;
@@ -191,7 +192,19 @@ button:focus-visible,
 }
 
 .cell {
+  /* Each side of a cell can carry its own edge line: a road shows one where it
+     stops, water shows a shore where the lake ends. */
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+
   position: relative;
+  box-shadow:
+    inset var(--edge-n),
+    inset var(--edge-e),
+    inset var(--edge-s),
+    inset var(--edge-w);
   overflow: hidden;
 }
 
@@ -229,7 +242,8 @@ button:focus-visible,
 }
 
 .cell:not(.is-empty) {
-  box-shadow: inset 0 0 0 1px rgb(43 69 53 / 8%);
+  outline: 1px solid rgb(43 69 53 / 7%);
+  outline-offset: -1px;
 }
 
 /* Block art. Each family carries its own pattern and silhouette. */
@@ -247,24 +261,124 @@ button:focus-visible,
   background-repeat: repeat-x, repeat;
 }
 
+/* Roads: the surface is flat and every side the road does not continue to gets
+   a drawn edge, so turns, crossings and ends read at a glance. */
 .block--path {
-  background:
-    linear-gradient(var(--road-mark) 0 9%, transparent 9% 91%, var(--road-mark) 91% 100%),
-    var(--road);
+  background: var(--road);
 }
 
-.block--forest::before {
+.cell--road {
+  --edge-n: 0 4px 0 0 var(--road-mark);
+  --edge-e: -4px 0 0 0 var(--road-mark);
+  --edge-s: 0 -4px 0 0 var(--road-mark);
+  --edge-w: 4px 0 0 0 var(--road-mark);
+
+  /* One pale stub per connected side. Together they draw the centre line
+     through a straight, a turn, a T and a crossing alike. */
+  background-image: var(--stub-n, none), var(--stub-e, none), var(--stub-s, none), var(--stub-w, none);
+  background-position: top center, right center, bottom center, left center;
+  background-repeat: no-repeat;
+  background-size: 16% 56%, 56% 16%, 16% 56%, 56% 16%;
+}
+
+.cell--road.road--n {
+  --edge-n: 0 0 0 0 transparent;
+  --stub-n: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--e {
+  --edge-e: 0 0 0 0 transparent;
+  --stub-e: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--s {
+  --edge-s: 0 0 0 0 transparent;
+  --stub-s: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--w {
+  --edge-w: 0 0 0 0 transparent;
+  --stub-w: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+/* A road that leads nowhere yet still shows a piece of surface. */
+.cell--road.road--lone::before {
   position: absolute;
-  border-radius: 50% 50% 44% 44%;
-  background: var(--forest-mark);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 62%);
   content: "";
-  inset: 12% 18% 22%;
+  inset: 36%;
 }
 
+/* A road that stands on water is a bridge: the deck floats and the water shows
+   along its sides. */
+.cell--road.road--bridge {
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+
+  background: var(--water);
+}
+
+.cell--road.road--bridge::after {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--road) 0 30%,
+      var(--road-mark) 30% 36%,
+      var(--road) 36% 66%
+    );
+  content: "";
+  inset: 16% 0;
+}
+
+.cell--road.road--bridge.road--bridge-vertical::after {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--road) 0 30%,
+      var(--road-mark) 30% 36%,
+      var(--road) 36% 66%
+    );
+  inset: 0 16%;
+}
+
+/* Forest: a lone cell is one small tree, a cluster grows taller and denser. */
 .block--forest {
   background: var(--forest);
 }
 
+.block--forest::before {
+  position: absolute;
+  border-radius: 50% 50% 42% 42%;
+  background: var(--forest-mark);
+  content: "";
+  inset: 26% 30% 30%;
+}
+
+.block--forest.forest--1::before {
+  inset: 16% 20% 22%;
+}
+
+.block--forest.forest--2::before {
+  border-radius: 50% 50% 38% 38%;
+  background: #24583a;
+  inset: 6% 30% 34% 8%;
+}
+
+/* A second crown makes a dense wood read as a wood, not as a bigger tree. */
+.block--forest.forest--2::after {
+  position: absolute;
+  border-radius: 50% 50% 40% 40%;
+  background: var(--forest-mark);
+  content: "";
+  inset: 30% 8% 8% 42%;
+}
+
+/* Water: the wave pattern says water, and a sandy shore is drawn on every side
+   where the lake ends. */
 .block--water {
   background:
     repeating-linear-gradient(
@@ -275,6 +389,22 @@ button:focus-visible,
     ),
     var(--water);
   background-size: 100% 46%, auto;
+}
+
+.block--water.shore--n {
+  --edge-n: 0 5px 0 0 var(--shore);
+}
+
+.block--water.shore--e {
+  --edge-e: -5px 0 0 0 var(--shore);
+}
+
+.block--water.shore--s {
+  --edge-s: 0 -5px 0 0 var(--shore);
+}
+
+.block--water.shore--w {
+  --edge-w: 5px 0 0 0 var(--shore);
 }
 
 .living-layer {
