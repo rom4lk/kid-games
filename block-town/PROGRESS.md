@@ -14,7 +14,7 @@ its check passes and the work is committed.
 | 6 | Completion, celebration, sheet shelf | [x] |
 | 7 | Sheets 2 and 3 | [x] |
 | 8 | Sheets 4 and 5 | [x] |
-| 9 | Accessibility, language, polish | [ ] |
+| 9 | Accessibility, language, polish | [x] |
 | 10 | Final verification | [ ] |
 
 ## Notes
@@ -51,6 +51,11 @@ its check passes and the work is committed.
   windmill that turns beside a field and a lighthouse that blinks beside water. Big sheets open at a
   comfortable 40px cell, scroll, and carry zoom buttons, edge arrows and a mini-map whose bright
   spots are the cells still waiting. Tapping the mini-map jumps there.
+- Stage 9: the whole loop runs from the keyboard — arrows or WASD move a frame the grid points at
+  through `aria-activedescendant`, Space paints, Enter walks into the palette and back, Escape
+  opens the pause. Choosing a block, a tool or a sheet is announced in the live region. Every
+  animation was walked through: only the lighthouse light keeps breathing under reduced motion,
+  because it is opacity alone. All 59 visible strings have a Russian pair.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

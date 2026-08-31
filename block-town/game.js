@@ -806,6 +806,7 @@ function initializeGame() {
   let selectedBlockId = currentSheet(state).blockIds[0];
   let selectedTool = "brush";
   let zoomIndex = ZOOM_LEVELS.indexOf(COMFORT_CELL_SIZE);
+  let cursorIndex = 0;
   let openFamily = null;
   let fieldTimer = 0;
   let cells = [];
@@ -924,6 +925,8 @@ function initializeGame() {
     const grid = state.grids[sheet.id];
     const underlay = state.underlays[sheet.id];
     const classes = cellClasses(sheet, grid, underlay, index);
+    // Repainting a cell must not drop the keyboard frame that stands on it.
+    if (index === cursorIndex) classes.push("is-cursor");
     if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, sheet.columns, index)}`);
     if (grid[index] === FIELD_ID) classes.push(`field--${fieldStage(state, index, now)}`);
     if (windmillTurns(grid, sheet.columns, index)) classes.push("is-turning");
@@ -1056,6 +1059,7 @@ function initializeGame() {
         const index = row * sheet.columns + column;
         const cell = document.createElement("div");
         cell.className = "cell is-empty";
+        cell.id = `cell-${index}`;
         cell.setAttribute("role", "gridcell");
         cell.dataset.index = String(index);
         cells[index] = cell;
@@ -1066,6 +1070,57 @@ function initializeGame() {
 
     renderAllCells();
     fitSheet();
+    cursorIndex = Math.min(cursorIndex, sheet.cellCount - 1);
+    showCursor({ scroll: false });
+  }
+
+  // The keyboard cursor. It is the same frame the screen reader follows, so
+  // both ways of playing point at one cell.
+  function showCursor({ scroll = true } = {}) {
+    cells.forEach((cell) => cell.classList.remove("is-cursor"));
+    const cell = cells[cursorIndex];
+    if (!cell) return;
+    cell.classList.add("is-cursor");
+    elements.grid.setAttribute("aria-activedescendant", cell.id);
+    if (!scroll) return;
+    cell.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }
+
+  function moveCursor([rowStep, columnStep]) {
+    const sheet = currentSheet(state);
+    const row = Math.floor(cursorIndex / sheet.columns) + rowStep;
+    const column = (cursorIndex % sheet.columns) + columnStep;
+    if (row < 0 || row >= sheet.rows || column < 0 || column >= sheet.columns) return;
+    cursorIndex = row * sheet.columns + column;
+    showCursor();
+  }
+
+  // Arrow keys come from the key, WASD from the physical key, so the letters
+  // also work on a Russian layout.
+  function cursorStep(event) {
+    const byKey = {
+      ArrowUp: [-1, 0],
+      ArrowDown: [1, 0],
+      ArrowLeft: [0, -1],
+      ArrowRight: [0, 1],
+    };
+    const byCode = {
+      KeyW: [-1, 0],
+      KeyS: [1, 0],
+      KeyA: [0, -1],
+      KeyD: [0, 1],
+    };
+    return byKey[event.key] || byCode[event.code] || null;
+  }
+
+  function focusPalette() {
+    const open = elements.paletteKinds.hidden ? elements.palette : elements.paletteKinds;
+    const button = open.querySelector('[aria-checked="true"]') || open.querySelector("button");
+    button?.focus();
   }
 
   // The largest cell at which the whole sheet still fits the card.
@@ -1197,6 +1252,7 @@ function initializeGame() {
     chosenKind.set(blockById(blockId).family, blockId);
     closeKinds();
     renderPalette();
+    announce(BLOCK_NAMES[blockById(blockId).key]);
   }
 
   function renderTools() {
@@ -1438,6 +1494,7 @@ function initializeGame() {
     renderTools();
     renderSheetControls();
     zoomIndex = defaultZoomIndex(currentSheet(state));
+    cursorIndex = 0;
     buildSheet();
     elements.sheetScroll.scrollTo(0, 0);
     watchFields();
@@ -1446,6 +1503,8 @@ function initializeGame() {
     renderSheetShelf();
     analyzeWorld();
     saveGame();
+    announce(`Sheet ${currentSheet(state).number}`);
+    elements.grid.focus();
   }
 
   function renderSound() {
@@ -1509,6 +1568,57 @@ function initializeGame() {
   elements.grid.addEventListener("pointerup", endStroke);
   elements.grid.addEventListener("pointercancel", endStroke);
 
+  elements.grid.addEventListener("keydown", (event) => {
+    const step = cursorStep(event);
+    if (step) {
+      event.preventDefault();
+      moveCursor(step);
+      return;
+    }
+    if (event.key === " ") {
+      event.preventDefault();
+      cellsSinceSound = STROKE_SOUND_EVERY;
+      if (selectedTool === "bucket") {
+        fillFrom(cursorIndex);
+        return;
+      }
+      strokeLastIndex = -1;
+      paintTo(cursorIndex);
+      return;
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      focusPalette();
+    }
+  });
+
+  // Left and right walk along a row of buttons; Escape goes back to the sheet.
+  function bindButtonRow(container, selector) {
+    container.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        elements.grid.focus();
+        return;
+      }
+      const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key];
+      if (!step) return;
+      const buttons = [...container.querySelectorAll(selector)];
+      const position = buttons.indexOf(document.activeElement);
+      if (position < 0) return;
+      event.preventDefault();
+      buttons[(position + step + buttons.length) % buttons.length].focus();
+    });
+  }
+
+  bindButtonRow(elements.palette, ".palette-button");
+  bindButtonRow(elements.paletteKinds, ".palette-button");
+  bindButtonRow(elements.tools, ".tool-button");
+
+  // A click made with the keyboard has no pointer behind it; the focus then
+  // moves on by itself, so the player never has to hunt for it.
+  function cameFromKeyboard(event) {
+    return event.detail === 0;
+  }
+
   elements.palette.addEventListener("click", (event) => {
     const button = event.target.closest(".palette-button");
     if (!button) return;
@@ -1519,17 +1629,20 @@ function initializeGame() {
       if (group.blockIds.length > 1) {
         openFamily = family;
         renderKinds();
+        if (cameFromKeyboard(event)) focusPalette();
         return;
       }
     }
     closeKinds();
     selectBlock(Number(button.dataset.block));
+    if (cameFromKeyboard(event)) elements.grid.focus();
   });
 
   elements.paletteKinds.addEventListener("click", (event) => {
     const button = event.target.closest(".palette-button");
     if (!button) return;
     selectBlock(Number(button.dataset.block));
+    if (cameFromKeyboard(event)) elements.grid.focus();
   });
 
   elements.tools.addEventListener("click", (event) => {
@@ -1537,6 +1650,8 @@ function initializeGame() {
     if (!button) return;
     selectedTool = button.dataset.tool;
     renderTools();
+    announce(TOOL_NAMES[selectedTool]);
+    if (cameFromKeyboard(event)) elements.grid.focus();
   });
 
   elements.sound.addEventListener("click", () => {

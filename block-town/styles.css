@@ -279,6 +279,13 @@ button:focus-visible,
   outline-offset: -1px;
 }
 
+/* The keyboard frame. It is a shape, not a colour, so it reads on any block. */
+.cell.is-cursor {
+  z-index: 1;
+  outline: 4px solid var(--leaf-dark);
+  outline-offset: -4px;
+}
+
 /* Block art. Each family carries its own pattern and silhouette. */
 .block--meadow {
   background:
@@ -1475,7 +1482,8 @@ button:focus-visible,
     animation: none;
   }
 
-  /* The blades stop; the standing cross still says "windmill". */
+  /* The blades stop; the standing cross still says "windmill". The light of the
+     lighthouse is only opacity, so it keeps breathing. */
   .block--windmill.is-turning::after {
     animation: none;
   }
