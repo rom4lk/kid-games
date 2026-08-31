@@ -7,6 +7,7 @@ const {
   sheetById,
   isBlockOnSheet,
   neighborIndices,
+  lineIndices,
   createGameState,
   paintCell,
   paintStroke,
@@ -65,6 +66,28 @@ function testNeighbors() {
   assert.deepEqual(neighborIndices(sheet, 9), [19, 8]);
   assert.deepEqual(neighborIndices(sheet, 11), [1, 12, 21, 10]);
   assert.deepEqual(neighborIndices(sheet, 49), [39, 48]);
+}
+
+function testStrokeLine() {
+  const sheet = sheetById("sheet-1");
+  assert.deepEqual(lineIndices(sheet, 12, 12), [12]);
+  assert.deepEqual(lineIndices(sheet, 10, 14), [10, 11, 12, 13, 14]);
+  assert.deepEqual(lineIndices(sheet, 5, 35), [5, 15, 25, 35]);
+  assert.deepEqual(lineIndices(sheet, 0, 22), [0, 11, 22]);
+  assert.deepEqual(lineIndices(sheet, 22, 0), [22, 11, 0]);
+  assert.deepEqual(lineIndices(sheet, 0, 99), []);
+  assert.deepEqual(lineIndices(sheet, -1, 4), []);
+
+  // Every step of a line touches a cell next to the previous one.
+  const diagonal = lineIndices(sheet, 0, 49);
+  assert.equal(diagonal.at(0), 0);
+  assert.equal(diagonal.at(-1), 49);
+  diagonal.slice(1).forEach((index, position) => {
+    const previous = diagonal[position];
+    const rowStep = Math.abs(Math.floor(index / 10) - Math.floor(previous / 10));
+    const columnStep = Math.abs((index % 10) - (previous % 10));
+    assert.equal(rowStep <= 1 && columnStep <= 1, true);
+  });
 }
 
 function testPaintingAndPaintOver() {
@@ -236,6 +259,7 @@ function testEverySheetCanBeFilled() {
 
 testRegistries();
 testNeighbors();
+testStrokeLine();
 testPaintingAndPaintOver();
 testRefusedInput();
 testCompletionAndUnlockLadder();

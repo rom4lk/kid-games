@@ -8,7 +8,7 @@ its check passes and the work is committed.
 | 0 | Skeleton and registration | [x] |
 | 1 | Model core and tests | [x] |
 | 2 | Sheet 1 painting | [x] |
-| 3 | Strokes and sound | [ ] |
+| 3 | Strokes and sound | [x] |
 | 4 | Smart blocks | [ ] |
 | 5 | The living world, first pass | [ ] |
 | 6 | Completion, celebration, sheet shelf | [ ] |
@@ -27,6 +27,10 @@ its check passes and the work is committed.
 - Stage 2: sheet 1 paints cell by cell with incremental updates, the palette holds the four sheet-1
   blocks, the sun fills to 100% on the last cell, the painting survives a reload, and "new sheet"
   asks before it clears.
+- Stage 3: a captured pointer paints an unbroken line (`lineIndices` fills the cells between two
+  pointer reports), each family has its own note throttled to one per three cells, and the shimmer
+  of the unpainted cells is one animated custom property that reduced motion swaps for a dashed
+  frame.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

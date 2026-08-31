@@ -110,6 +110,37 @@ function isCellIndex(sheet, index) {
   return Boolean(sheet) && Number.isInteger(index) && index >= 0 && index < sheet.cellCount;
 }
 
+// Every cell on the straight line between two cells, both ends included. A fast
+// stroke reports far apart points, and this keeps the painted line unbroken.
+function lineIndices(sheet, fromIndex, toIndex) {
+  if (!isCellIndex(sheet, fromIndex) || !isCellIndex(sheet, toIndex)) return [];
+
+  let row = Math.floor(fromIndex / sheet.columns);
+  let column = fromIndex % sheet.columns;
+  const lastRow = Math.floor(toIndex / sheet.columns);
+  const lastColumn = toIndex % sheet.columns;
+  const deltaRow = Math.abs(lastRow - row);
+  const deltaColumn = Math.abs(lastColumn - column);
+  const stepRow = Math.sign(lastRow - row);
+  const stepColumn = Math.sign(lastColumn - column);
+  let error = deltaColumn - deltaRow;
+
+  const path = [fromIndex];
+  while (row !== lastRow || column !== lastColumn) {
+    const doubled = error * 2;
+    if (doubled > -deltaRow) {
+      error -= deltaRow;
+      column += stepColumn;
+    }
+    if (doubled < deltaColumn) {
+      error += deltaColumn;
+      row += stepRow;
+    }
+    path.push(row * sheet.columns + column);
+  }
+  return path;
+}
+
 // Paints one cell of the current sheet. Painting over is always allowed, and
 // nothing here ever throws: a refused paint simply reports no change.
 function paintCell(state, index, blockId) {
@@ -262,6 +293,7 @@ if (typeof module !== "undefined" && module.exports) {
     sheetIndex,
     isBlockOnSheet,
     neighborIndices,
+    lineIndices,
     createGameState,
     paintCell,
     paintStroke,
@@ -279,6 +311,20 @@ if (typeof module !== "undefined" && module.exports) {
 const MIN_CELL_SIZE = 22;
 const MAX_CELL_SIZE = 92;
 const SAVE_DELAY_MS = 250;
+
+// A stroke should sound like a tune, not a rattle, so only every few painted
+// cells gets a note.
+const STROKE_SOUND_EVERY = 3;
+
+// Each family has its own short note: a tap for a road, a plop for water, a
+// rustle for the meadow and the wood, a knock for a house, a ding for decor.
+const FAMILY_SOUNDS = {
+  roads: [[300, 0, 0.06, "square"]],
+  nature: [[430, 0, 0.08, "triangle"], [540, 0.05, 0.07, "triangle"]],
+  water: [[250, 0, 0.14, "sine", 150]],
+  buildings: [[200, 0, 0.06, "square"], [155, 0.06, 0.09, "square"]],
+  decor: [[660, 0, 0.09, "sine"], [880, 0.07, 0.11, "sine"]],
+};
 
 function initializeGame() {
   const elements = {
@@ -327,6 +373,9 @@ function initializeGame() {
   let saveTimer = 0;
   let soundEnabled = loadSoundPreference();
   let paused = false;
+  let strokeActive = false;
+  let strokeLastIndex = -1;
+  let cellsSinceSound = STROKE_SOUND_EVERY;
 
   function loadGame() {
     try {
@@ -364,6 +413,13 @@ function initializeGame() {
     } catch {
       // Sound stays available for the current session only.
     }
+  }
+
+  function playSound(family) {
+    if (!soundEnabled) return;
+    (FAMILY_SOUNDS[family] || []).forEach(([frequency, delay, duration, wave, bendTo]) => {
+      window.GameSound?.tone({ frequency, delay, duration, wave, bendTo, volume: 0.05 });
+    });
   }
 
   function announce(message) {
@@ -468,18 +524,45 @@ function initializeGame() {
     });
   }
 
-  function paintAt(index) {
-    if (!paintCell(state, index, selectedBlockId)) return;
-    renderCell(index);
+  // Paints from the last cell of the stroke up to this one, so no cell between
+  // two pointer reports is skipped.
+  function paintTo(index) {
+    const sheet = currentSheet(state);
+    const path = strokeLastIndex < 0
+      ? [index]
+      : lineIndices(sheet, strokeLastIndex, index).slice(1);
+    strokeLastIndex = index;
+
+    let changed = 0;
+    path.forEach((cell) => {
+      if (!paintCell(state, cell, selectedBlockId)) return;
+      renderCell(cell);
+      changed += 1;
+    });
+    if (changed === 0) return;
+
     renderProgress();
     scheduleSave();
+
+    cellsSinceSound += changed;
+    if (cellsSinceSound < STROKE_SOUND_EVERY) return;
+    cellsSinceSound = 0;
+    playSound(blockById(selectedBlockId)?.family);
   }
 
-  function cellIndexFromEvent(event) {
-    const cell = event.target.closest?.(".cell");
-    if (!cell) return -1;
-    const index = Number(cell.dataset.index);
-    return Number.isInteger(index) ? index : -1;
+  // The cell under a point is found by arithmetic on the grid rectangle: during
+  // a stroke the pointer is captured and no longer reports a cell element.
+  function cellIndexFromPoint(clientX, clientY) {
+    const sheet = currentSheet(state);
+    const box = elements.grid.getBoundingClientRect();
+    const width = elements.grid.clientWidth;
+    const height = elements.grid.clientHeight;
+    if (width <= 0 || height <= 0) return -1;
+
+    const column = Math.floor(((clientX - box.left - elements.grid.clientLeft) / width) * sheet.columns);
+    const row = Math.floor(((clientY - box.top - elements.grid.clientTop) / height) * sheet.rows);
+    if (row < 0 || row >= sheet.rows || column < 0 || column >= sheet.columns) return -1;
+    return row * sheet.columns + column;
   }
 
   function renderSound() {
@@ -506,12 +589,36 @@ function initializeGame() {
     elements.pause.focus();
   }
 
+  function endStroke(event) {
+    if (!strokeActive) return;
+    strokeActive = false;
+    strokeLastIndex = -1;
+    if (elements.grid.hasPointerCapture(event.pointerId)) {
+      elements.grid.releasePointerCapture(event.pointerId);
+    }
+  }
+
   elements.grid.addEventListener("pointerdown", (event) => {
-    const index = cellIndexFromEvent(event);
+    const index = cellIndexFromPoint(event.clientX, event.clientY);
     if (index < 0) return;
     event.preventDefault();
-    paintAt(index);
+    elements.grid.setPointerCapture(event.pointerId);
+    strokeActive = true;
+    strokeLastIndex = -1;
+    // The first cell of a stroke always sounds.
+    cellsSinceSound = STROKE_SOUND_EVERY;
+    paintTo(index);
   });
+
+  elements.grid.addEventListener("pointermove", (event) => {
+    if (!strokeActive) return;
+    const index = cellIndexFromPoint(event.clientX, event.clientY);
+    if (index < 0 || index === strokeLastIndex) return;
+    paintTo(index);
+  });
+
+  elements.grid.addEventListener("pointerup", endStroke);
+  elements.grid.addEventListener("pointercancel", endStroke);
 
   elements.palette.addEventListener("click", (event) => {
     const button = event.target.closest(".palette-button");

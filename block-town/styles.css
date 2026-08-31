@@ -195,12 +195,37 @@ button:focus-visible,
   overflow: hidden;
 }
 
+/* One animated custom property drives the shimmer of every unpainted cell, so
+   a sheet of a thousand cells still runs a single animation. */
+@property --empty-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fffdf4;
+}
+
+.sheet-grid {
+  --empty-tint: var(--paper);
+
+  animation: paper-shimmer 2800ms ease-in-out infinite;
+}
+
+@keyframes paper-shimmer {
+  0%,
+  100% {
+    --empty-tint: #fffdf4;
+  }
+
+  50% {
+    --empty-tint: #fbf0cd;
+  }
+}
+
 /* An unpainted cell keeps the squared-paper look. */
 .cell.is-empty {
   background:
     linear-gradient(var(--paper-line) 0 1px, transparent 1px 100%),
     linear-gradient(90deg, var(--paper-line) 0 1px, transparent 1px 100%),
-    var(--paper);
+    var(--empty-tint);
 }
 
 .cell:not(.is-empty) {
@@ -400,5 +425,18 @@ button:focus-visible,
   .progress-sun-fill,
   .palette-button {
     transition-duration: 20ms;
+  }
+
+  /* No pulsing: the unpainted cells keep a dashed frame instead. */
+  .sheet-grid {
+    animation: none;
+  }
+
+  .cell.is-empty::after {
+    position: absolute;
+    border: 2px dashed rgb(90 162 95 / 42%);
+    border-radius: 4px;
+    content: "";
+    inset: 3px;
   }
 }
