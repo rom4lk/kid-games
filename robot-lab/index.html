@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101b32" />
+    <title>Robot Lab</title>
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <main class="game-shell">
+      <header class="hero">
+        <div class="brand-mark" aria-hidden="true">
+          <span class="brand-eye"></span>
+          <span class="brand-eye"></span>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Logic mission</p>
+          <h1>Robot Lab</h1>
+          <p class="subtitle">Build a program. Power up the bot.</p>
+        </div>
+        <div class="language-settings">
+          <label class="language-picker language-picker--compact">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+          <button class="icon-button" id="soundButton" type="button" aria-label="Turn sound off">
+            <span aria-hidden="true">♪</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="status-strip" aria-label="Mission status">
+        <div class="status-item">
+          <span class="status-label">Mission</span>
+          <strong id="missionNumber">01 / 08</strong>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Program</span>
+          <strong><span id="commandCount">0</span> / <span id="commandLimit">5</span></strong>
+        </div>
+        <div class="status-item status-progress">
+          <span class="status-label">Robot built</span>
+          <strong><span id="partCount">0</span> / 8 parts</strong>
+        </div>
+      </section>
+
+      <section class="game-layout">
+        <section class="play-panel">
+          <div class="mission-heading">
+            <div>
+              <p class="panel-kicker" id="missionLabel">Mission 01</p>
+              <h2 id="missionTitle">First Charge</h2>
+            </div>
+            <div class="par-badge" title="Shortest known program">
+              <span>Best</span>
+              <strong id="parValue">3</strong>
+            </div>
+          </div>
+          <p class="mission-copy" id="missionCopy">Reach the battery. The robot is already facing the right way.</p>
+
+          <div class="board-frame" id="boardFrame">
+            <div class="board" id="board" role="grid" aria-label="Five by five robot lab"></div>
+          </div>
+
+          <div class="legend" aria-label="Board legend">
+            <span><i class="legend-swatch legend-battery"></i>Battery</span>
+            <span><i class="legend-swatch legend-wall"></i>Wall</span>
+            <span id="switchLegend"><i class="legend-swatch legend-switch"></i>Switch opens the door with the same shape</span>
+          </div>
+        </section>
+
+        <section class="program-panel" aria-label="Program builder">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">Program builder</p>
+              <h2>Your commands</h2>
+            </div>
+            <button class="text-button" id="clearButton" type="button">Clear all</button>
+          </div>
+
+          <div class="command-palette" id="commandPalette" aria-label="Available commands">
+            <button class="command-button command-forward" type="button" data-command="forward">
+              <span class="command-symbol" aria-hidden="true">↑</span>
+              <span>Forward</span>
+              <kbd>F</kbd>
+            </button>
+            <button class="command-button command-left" type="button" data-command="left">
+              <span class="command-symbol" aria-hidden="true">↶</span>
+              <span>Turn left</span>
+              <kbd>L</kbd>
+            </button>
+            <button class="command-button command-right" type="button" data-command="right">
+              <span class="command-symbol" aria-hidden="true">↷</span>
+              <span>Turn right</span>
+              <kbd>R</kbd>
+            </button>
+            <button class="command-button command-press" type="button" data-command="press">
+              <span class="command-symbol" aria-hidden="true">●</span>
+              <span>Press</span>
+              <kbd>P</kbd>
+            </button>
+            <button class="command-button command-repeat" type="button" data-command="repeat">
+              <span class="command-symbol" aria-hidden="true">×2</span>
+              <span>Repeat two</span>
+              <kbd>X</kbd>
+            </button>
+          </div>
+
+          <div class="program-window">
+            <div class="program-list" id="programList" aria-label="Current program"></div>
+            <p class="empty-program" id="emptyProgram">Tap a command to start building.</p>
+          </div>
+
+          <div class="program-actions">
+            <button class="undo-button" id="undoButton" type="button">
+              <span aria-hidden="true">↩</span> Undo
+            </button>
+            <button class="run-button" id="runButton" type="button">
+              <span class="run-icon" aria-hidden="true">▶</span>
+              Run program
+            </button>
+          </div>
+
+          <div class="message-box" id="messageBox" aria-live="polite">
+            <span class="message-light" aria-hidden="true"></span>
+            <p id="gameMessage">Add three Forward commands, then press Run.</p>
+          </div>
+
+          <button class="hint-button" id="hintButton" type="button">Need a hint?</button>
+        </section>
+
+        <aside class="side-panel">
+          <section class="level-card">
+            <div class="panel-heading compact">
+              <div>
+                <p class="panel-kicker">Mission map</p>
+                <h2>Levels</h2>
+              </div>
+            </div>
+            <nav class="level-grid" id="levelGrid" aria-label="Choose a mission"></nav>
+          </section>
+
+          <section class="blueprint-card">
+            <p class="panel-kicker">Your creation</p>
+            <h2>Build-a-bot</h2>
+            <div class="blueprint-robot" id="blueprintRobot" aria-label="Robot build progress">
+              <div class="blueprint-antenna part" data-part="7"></div>
+              <div class="blueprint-head part" data-part="1"><i></i><i></i></div>
+              <div class="blueprint-ear blueprint-ear-left part" data-part="2"></div>
+              <div class="blueprint-ear blueprint-ear-right part" data-part="3"></div>
+              <div class="blueprint-body part" data-part="4"></div>
+              <div class="blueprint-arm blueprint-arm-left part" data-part="5"></div>
+              <div class="blueprint-arm blueprint-arm-right part" data-part="6"></div>
+              <div class="blueprint-tracks part" data-part="8"></div>
+            </div>
+            <p class="blueprint-copy">Complete missions to assemble your lab robot.</p>
+          </section>
+
+          <section class="how-card">
+            <p class="panel-kicker">How it works</p>
+            <ol>
+              <li><span>1</span>Look at the board.</li>
+              <li><span>2</span>Build the whole program.</li>
+              <li><span>3</span>Run, spot the bug, improve.</li>
+            </ol>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="dialog-backdrop" id="resultDialog" hidden>
+      <section class="result-dialog" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <div class="result-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="panel-kicker">Mission complete</p>
+        <h2 id="resultTitle">Battery secured!</h2>
+        <div class="result-stars" id="resultStars" aria-label="Three stars">★★★</div>
+        <p id="resultCopy">A new robot part is ready.</p>
+        <div class="part-reward" id="partReward" aria-hidden="true">+1</div>
+        <div class="result-actions">
+          <button class="secondary-button" id="replayButton" type="button">Replay</button>
+          <button class="primary-button" id="nextButton" type="button">Next mission <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+    </div>
+
+    <script src="../shared/game-language.js"></script>
+    <script src="../shared/game-home.js"></script>
+    <script src="game.js?v=3"></script>
+  </body>
+</html>
