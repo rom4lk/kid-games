@@ -23,6 +23,13 @@
   --house-mark: #8f4b34;
   --field: #d8c057;
   --field-mark: #a3862f;
+  --soil: #b98c5c;
+  --shoot: #7fc06a;
+  --flowers: #e78cbb;
+  --sand: #f0dfae;
+  --sand-mark: #cfb277;
+  --asphalt: #9aa2a6;
+  --asphalt-mark: #5f6a70;
   --shore: #ecdcae;
   --sheet-border: 2px;
 
@@ -419,8 +426,54 @@ button:focus-visible,
   left: 39%;
 }
 
-/* A field: ploughed rows across the whole cell. */
+/* The door and its doorstep turn toward the street. */
+.block--house.door--n::after {
+  border-radius: 0 0 30% 30%;
+  top: 14%;
+  bottom: auto;
+}
+
+.block--house.door--e::after {
+  width: 30%;
+  height: 22%;
+  border-radius: 0 30% 30% 0;
+  right: 14%;
+  bottom: 39%;
+  left: auto;
+}
+
+.block--house.door--w::after {
+  width: 30%;
+  height: 22%;
+  border-radius: 30% 0 0 30%;
+  bottom: 39%;
+  left: 14%;
+}
+
+/* A field grows: bare soil, then shoots, then ripe ears. */
 .block--field {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--soil) 0 66%,
+      color-mix(in srgb, var(--soil) 76%, #000) 66% 100%
+    ),
+    var(--soil);
+  background-size: 100% 34%, auto;
+}
+
+.block--field.field--1 {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--soil) 0 58%,
+      var(--shoot) 58% 100%
+    ),
+    var(--soil);
+  background-size: 100% 34%, auto;
+}
+
+.block--field.field--2 {
   background:
     repeating-linear-gradient(
       180deg,
@@ -428,7 +481,55 @@ button:focus-visible,
       var(--field-mark) 62% 100%
     ),
     var(--field);
-  background-size: 100% 34%, auto;
+  background-size: 100% 26%, auto;
+}
+
+/* Flowers: bright heads scattered over the grass. */
+.block--flowers {
+  background:
+    radial-gradient(circle at 28% 34%, var(--flowers) 0 15%, transparent 15%),
+    radial-gradient(circle at 68% 30%, #fff3a8 0 13%, transparent 13%),
+    radial-gradient(circle at 44% 70%, var(--flowers) 0 14%, transparent 14%),
+    radial-gradient(circle at 78% 72%, #f4f0ff 0 12%, transparent 12%),
+    var(--meadow);
+}
+
+/* Sand: pale grains, no plants at all. */
+.block--sand {
+  background:
+    radial-gradient(circle at 24% 30%, var(--sand-mark) 0 8%, transparent 8%),
+    radial-gradient(circle at 66% 24%, var(--sand-mark) 0 7%, transparent 7%),
+    radial-gradient(circle at 38% 68%, var(--sand-mark) 0 7%, transparent 7%),
+    radial-gradient(circle at 76% 66%, var(--sand-mark) 0 8%, transparent 8%),
+    var(--sand);
+}
+
+/* Asphalt is a road too: the same edges and centre line, a darker surface. */
+.block--asphalt {
+  background: var(--asphalt);
+}
+
+.cell--road.block--asphalt {
+  --edge-n: 0 4px 0 0 var(--asphalt-mark);
+  --edge-e: -4px 0 0 0 var(--asphalt-mark);
+  --edge-s: 0 -4px 0 0 var(--asphalt-mark);
+  --edge-w: 4px 0 0 0 var(--asphalt-mark);
+}
+
+.cell--road.block--asphalt.road--n {
+  --edge-n: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--e {
+  --edge-e: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--s {
+  --edge-s: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--w {
+  --edge-w: 0 0 0 0 transparent;
 }
 
 /* Water: the wave pattern says water, and a sandy shore is drawn on every side
@@ -565,12 +666,77 @@ button:focus-visible,
   flex-wrap: wrap;
 }
 
+.palette-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .palette,
+.palette-kinds,
 .tools {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+/* The kinds of one family: a short row above the family buttons. */
+.palette-kinds {
+  padding: 6px 8px;
+  border: 3px solid rgb(47 111 69 / 18%);
+  border-radius: 22px;
+  background: rgb(255 255 255 / 78%);
+}
+
+.tool-button {
+  display: flex;
+  width: 68px;
+  height: 68px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 18%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.tool-button[aria-checked="true"] {
+  border-color: var(--leaf-dark);
+  transform: scale(1.08);
+}
+
+.tool-mark {
+  display: block;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  background: var(--meadow);
+}
+
+.tool--brush .tool-mark {
+  width: 18px;
+  height: 18px;
+}
+
+.tool--wide .tool-mark {
+  width: 34px;
+  height: 34px;
+  background:
+    linear-gradient(90deg, transparent 0 47%, var(--ink) 47% 53%, transparent 53% 100%),
+    linear-gradient(180deg, transparent 0 47%, var(--ink) 47% 53%, transparent 53% 100%),
+    var(--meadow);
+}
+
+/* The bucket pours a whole area at once. */
+.tool--bucket .tool-mark {
+  width: 30px;
+  height: 26px;
+  border-radius: 4px 4px 40% 40%;
+  background: var(--water);
 }
 
 .palette-button {
@@ -835,7 +1001,8 @@ button:focus-visible,
   }
 
   .progress-sun-fill,
-  .palette-button {
+  .palette-button,
+  .tool-button {
     transition-duration: 20ms;
   }
 

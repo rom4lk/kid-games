@@ -12,7 +12,7 @@ its check passes and the work is committed.
 | 4 | Smart blocks | [x] |
 | 5 | The living world, first pass | [x] |
 | 6 | Completion, celebration, sheet shelf | [x] |
-| 7 | Sheets 2 and 3 | [ ] |
+| 7 | Sheets 2 and 3 | [x] |
 | 8 | Sheets 4 and 5 | [ ] |
 | 9 | Accessibility, language, polish | [ ] |
 | 10 | Final verification | [ ] |
@@ -43,6 +43,10 @@ its check passes and the work is committed.
   completion (`celebrated`), the next sheet unlocks, and the pause holds a shelf of live canvas
   thumbnails. Both sheets keep their paintings across a reload. House and field art was added here
   as well, so the newly reachable sheet 2 has no invisible blocks.
+- Stage 7: houses turn their door toward the street, fields go from soil to shoots to ears on an
+  injected clock, flowers, sand and asphalt joined the palette, and from sheet 3 the palette groups
+  its blocks by family with a kinds row. The wide brush paints 2x2 and clips at the edges. The fill
+  bucket was wired here too, since sheets 4 and 5 already list it as a tool.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

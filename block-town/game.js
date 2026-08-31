@@ -29,9 +29,16 @@ const BLOCKS = [
   { id: 20, key: "fountain", family: "decor", sheet: 5 },
 ];
 
+// How long a field needs before it shows shoots and then ripe ears. The model
+// never reads the clock itself: the time is always passed in.
+const FIELD_SHOOT_MS = 20000;
+const FIELD_RIPE_MS = 60000;
+
 const BLOCK_BY_ID = new Map(BLOCKS.map((block) => [block.id, block]));
 const BLOCK_BY_KEY = new Map(BLOCKS.map((block) => [block.key, block]));
 const WATER_ID = BLOCK_BY_KEY.get("water").id;
+const FIELD_ID = BLOCK_BY_KEY.get("field").id;
+const HOUSE_ID = BLOCK_BY_KEY.get("house").id;
 
 // The ladder of sheets. Sizes and tools are data, so shrinking a sheet after a
 // test with a child never touches the code around them.
@@ -114,11 +121,15 @@ function createGameState() {
     unlockedCount: 1,
     grids: {},
     underlays: {},
+    // Only the cells that hold a field are listed here, by the moment they
+    // were sown, so the saved state stays small.
+    planted: {},
     celebrated: {},
   };
   SHEETS.forEach((sheet) => {
     state.grids[sheet.id] = createSheetGrid(sheet);
     state.underlays[sheet.id] = createSheetGrid(sheet);
+    state.planted[sheet.id] = {};
     state.celebrated[sheet.id] = false;
   });
   return state;
@@ -183,7 +194,7 @@ function lineIndices(sheet, fromIndex, toIndex) {
 
 // Paints one cell of the current sheet. Painting over is always allowed, and
 // nothing here ever throws: a refused paint simply reports no change.
-function paintCell(state, index, blockId) {
+function paintCell(state, index, blockId, now = 0) {
   const sheet = currentSheet(state);
   if (!isCellIndex(sheet, index) || !isBlockOnSheet(sheet, blockId)) return false;
 
@@ -199,17 +210,42 @@ function paintCell(state, index, blockId) {
   if (grid[index] === blockId && underlay[index] === nextUnderlay) return false;
   grid[index] = blockId;
   underlay[index] = nextUnderlay;
+
+  const planted = state.planted[sheet.id];
+  if (blockId === FIELD_ID) planted[index] = now;
+  else delete planted[index];
   return true;
 }
 
-function paintStroke(state, indices, blockId) {
+function paintStroke(state, indices, blockId, now = 0) {
   if (!Array.isArray(indices)) return 0;
-  return indices.reduce((changed, index) => changed + (paintCell(state, index, blockId) ? 1 : 0), 0);
+  return indices.reduce(
+    (changed, index) => changed + (paintCell(state, index, blockId, now) ? 1 : 0),
+    0,
+  );
+}
+
+// The cells one press of the brush covers. The wide brush paints a square and
+// simply loses the part that falls off the sheet.
+function brushCells(sheet, index, size = 1) {
+  if (!isCellIndex(sheet, index) || !Number.isInteger(size) || size < 1) return [];
+  const row = Math.floor(index / sheet.columns);
+  const column = index % sheet.columns;
+  const cells = [];
+  for (let rowStep = 0; rowStep < size; rowStep += 1) {
+    for (let columnStep = 0; columnStep < size; columnStep += 1) {
+      const nextRow = row + rowStep;
+      const nextColumn = column + columnStep;
+      if (nextRow >= sheet.rows || nextColumn >= sheet.columns) continue;
+      cells.push(nextRow * sheet.columns + nextColumn);
+    }
+  }
+  return cells;
 }
 
 // Fills the connected region that shares the value of the tapped cell, so the
 // bucket works on an empty area and on a finished lake alike.
-function floodFill(state, index, blockId) {
+function floodFill(state, index, blockId, now = 0) {
   const sheet = currentSheet(state);
   if (!isCellIndex(sheet, index) || !isBlockOnSheet(sheet, blockId)) return 0;
 
@@ -231,7 +267,7 @@ function floodFill(state, index, blockId) {
       queue.push(neighbor);
     });
   }
-  return paintStroke(state, region, blockId);
+  return paintStroke(state, region, blockId, now);
 }
 
 // Which of the four neighbours answer the question, as one 4-bit mask. Cells
@@ -284,6 +320,31 @@ function waterEdges(grid, underlay, columns, index) {
   if (row === rows - 1 || !isWaterCell(grid, underlay, index + columns)) edges |= MASK_SOUTH;
   if (column === 0 || !isWaterCell(grid, underlay, index - 1)) edges |= MASK_WEST;
   return edges;
+}
+
+// A house turns its door toward the nearest street. Facing the reader is the
+// friendliest default when no road has been painted yet.
+const DOOR_SIDES = [
+  [MASK_SOUTH, "s"],
+  [MASK_EAST, "e"],
+  [MASK_WEST, "w"],
+  [MASK_NORTH, "n"],
+];
+
+function houseDoor(grid, columns, index) {
+  if (grid?.[index] !== HOUSE_ID) return null;
+  const mask = neighborMask(grid, columns, index, (value) => roadGroup(value) === "road");
+  return DOOR_SIDES.find(([side]) => (mask & side) !== 0)?.[1] ?? "s";
+}
+
+// Bare soil, then shoots, then ripe ears. The caller passes the current time.
+function fieldStage(state, index, now = 0) {
+  const sheet = currentSheet(state);
+  if (!sheet || state.grids[sheet.id]?.[index] !== FIELD_ID) return -1;
+  const sown = state.planted[sheet.id]?.[index];
+  const age = now - (Number.isFinite(sown) ? sown : 0);
+  if (age < FIELD_SHOOT_MS) return 0;
+  return age < FIELD_RIPE_MS ? 1 : 2;
 }
 
 // A lone forest cell is one small tree; inside a cluster the trees grow.
@@ -455,6 +516,7 @@ function clearSheet(state, sheetId = state?.currentSheet) {
   if (!state || !sheet) return false;
   state.grids[sheet.id] = createSheetGrid(sheet);
   state.underlays[sheet.id] = createSheetGrid(sheet);
+  state.planted[sheet.id] = {};
   state.celebrated[sheet.id] = false;
   return true;
 }
@@ -483,6 +545,18 @@ function normalizeUnderlay(sheet, saved, grid) {
 
 // Saved data may come from an older version, a different game or a broken
 // write. Anything unexpected turns into an empty cell instead of an error.
+// Sowing times are kept only for cells that really hold a field.
+function normalizePlanted(sheet, saved, grid) {
+  const planted = {};
+  if (!saved || typeof saved !== "object") return planted;
+  Object.entries(saved).forEach(([key, time]) => {
+    const index = Number(key);
+    if (!isCellIndex(sheet, index) || grid[index] !== FIELD_ID) return;
+    if (Number.isFinite(time)) planted[index] = time;
+  });
+  return planted;
+}
+
 function normalizeSavedState(value) {
   const state = createGameState();
   if (!value || typeof value !== "object") return state;
@@ -497,6 +571,7 @@ function normalizeSavedState(value) {
       value.underlays?.[sheet.id],
       state.grids[sheet.id],
     );
+    state.planted[sheet.id] = normalizePlanted(sheet, value.planted?.[sheet.id], state.grids[sheet.id]);
     state.celebrated[sheet.id] = value.celebrated?.[sheet.id] === true;
   });
 
@@ -539,7 +614,12 @@ if (typeof module !== "undefined" && module.exports) {
     createGameState,
     paintCell,
     paintStroke,
+    brushCells,
     floodFill,
+    houseDoor,
+    fieldStage,
+    FIELD_SHOOT_MS,
+    FIELD_RIPE_MS,
     paintedCount,
     isSheetComplete,
     unlockNextSheet,
@@ -595,6 +675,14 @@ const BLOCK_COLORS = {
   fountain: "#7fd3d0",
 };
 const THUMBNAIL_EMPTY = "#fffdf4";
+
+// From this sheet on the palette groups its blocks by family, and the families
+// always keep the same order and the same places.
+const GROUPED_FROM_SHEET = 3;
+const FAMILY_ORDER = ["nature", "roads", "water", "buildings", "decor"];
+const TOOL_SIZES = { brush: 1, wide: 2 };
+// Fields ripen slowly, so the sheet is looked over only now and then.
+const FIELD_TICK_MS = 4000;
 const CONFETTI_COUNT = 16;
 
 const FAMILY_SOUNDS = {
@@ -619,6 +707,8 @@ function initializeGame() {
     shelf: document.querySelector("#shelf-button"),
     shelfBack: document.querySelector("#shelf-back-button"),
     palette: document.querySelector("#palette"),
+    paletteKinds: document.querySelector("#palette-kinds"),
+    tools: document.querySelector("#tools"),
     progressPanel: document.querySelector("#progress-panel"),
     sunFill: document.querySelector("#progress-sun-fill"),
     status: document.querySelector("#status"),
@@ -629,6 +719,20 @@ function initializeGame() {
     clear: document.querySelector("#clear-button"),
     confirmClear: document.querySelector("#confirm-clear-button"),
     cancelClear: document.querySelector("#cancel-clear-button"),
+  };
+
+  const FAMILY_NAMES = {
+    nature: "Nature",
+    roads: "Roads",
+    water: "Water",
+    buildings: "Houses",
+    decor: "Decorations",
+  };
+
+  const TOOL_NAMES = {
+    brush: "Brush",
+    wide: "Wide brush",
+    bucket: "Fill",
   };
 
   const BLOCK_NAMES = {
@@ -656,6 +760,9 @@ function initializeGame() {
 
   let state = loadGame();
   let selectedBlockId = currentSheet(state).blockIds[0];
+  let selectedTool = "brush";
+  let openFamily = null;
+  let fieldTimer = 0;
   let cells = [];
   let saveTimer = 0;
   let soundEnabled = loadSoundPreference();
@@ -765,25 +872,41 @@ function initializeGame() {
     return classes;
   }
 
-  function renderCell(index) {
+  function renderCell(index, now = Date.now()) {
     const element = cells[index];
     if (!element) return;
     const sheet = currentSheet(state);
     const grid = state.grids[sheet.id];
     const underlay = state.underlays[sheet.id];
-    element.className = cellClasses(sheet, grid, underlay, index).join(" ");
+    const classes = cellClasses(sheet, grid, underlay, index);
+    if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, sheet.columns, index)}`);
+    if (grid[index] === FIELD_ID) classes.push(`field--${fieldStage(state, index, now)}`);
+    element.className = classes.join(" ");
     element.setAttribute("aria-label", blockName(grid[index]));
   }
 
   // A painted cell can change the look of its four neighbours and nothing else.
-  function renderCellAndNeighbors(index) {
+  function renderCellAndNeighbors(index, now = Date.now()) {
     const sheet = currentSheet(state);
-    renderCell(index);
-    neighborIndices(sheet, index).forEach(renderCell);
+    renderCell(index, now);
+    neighborIndices(sheet, index).forEach((neighbor) => renderCell(neighbor, now));
   }
 
   function renderAllCells() {
-    for (let index = 0; index < cells.length; index += 1) renderCell(index);
+    const now = Date.now();
+    for (let index = 0; index < cells.length; index += 1) renderCell(index, now);
+  }
+
+  // Fields ripen while the sheet is open, so they are looked over on a slow
+  // timer instead of being redrawn on every paint.
+  function watchFields() {
+    window.clearInterval(fieldTimer);
+    const sheet = currentSheet(state);
+    if (!isBlockOnSheet(sheet, FIELD_ID)) return;
+    fieldTimer = window.setInterval(() => {
+      const now = Date.now();
+      Object.keys(state.planted[sheet.id]).forEach((key) => renderCell(Number(key), now));
+    }, FIELD_TICK_MS);
   }
 
   // One pixel per cell. The sheet shelf and, later, the mini-map both read the
@@ -875,31 +998,117 @@ function initializeGame() {
     elements.stage.style.setProperty("--cell-size", `${fitted}px`);
   }
 
+  function blockButton(blockId, { checked, family }) {
+    const block = blockById(blockId);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "palette-button";
+    button.dataset.block = String(blockId);
+    if (family) button.dataset.family = family;
+    button.setAttribute("role", "radio");
+    button.setAttribute("aria-checked", checked ? "true" : "false");
+    button.setAttribute("aria-label", family ? FAMILY_NAMES[family] : BLOCK_NAMES[block.key]);
+    // A one-cell sheet gives the swatch the same art the grid would draw.
+    const art = cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
+    // On a button a field is shown ripe: that is what the block is for.
+    if (blockId === FIELD_ID) art.push("field--2");
+    button.innerHTML = `<span class="palette-swatch ${art.join(" ")}" aria-hidden="true"></span>`;
+    return button;
+  }
+
+  function familiesOnSheet(sheet) {
+    return FAMILY_ORDER
+      .map((family) => ({
+        family,
+        blockIds: sheet.blockIds.filter((blockId) => blockById(blockId).family === family),
+      }))
+      .filter((group) => group.blockIds.length > 0);
+  }
+
+  // Which kind of a family is on its button. It stays what the child chose
+  // last, so a familiar picture never moves or changes on its own.
+  const chosenKind = new Map();
+
+  function kindOf(group) {
+    const chosen = chosenKind.get(group.family);
+    return group.blockIds.includes(chosen) ? chosen : group.blockIds[0];
+  }
+
   function renderPalette() {
     const sheet = currentSheet(state);
+    const grouped = sheet.number >= GROUPED_FROM_SHEET;
     elements.palette.textContent = "";
-    sheet.blockIds.forEach((blockId) => {
-      const block = blockById(blockId);
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "palette-button";
-      button.dataset.block = String(blockId);
-      button.setAttribute("role", "radio");
-      button.setAttribute("aria-checked", blockId === selectedBlockId ? "true" : "false");
-      button.setAttribute("aria-label", BLOCK_NAMES[block.key]);
-      // A one-cell sheet gives the swatch the same art the grid would draw.
-      const art = cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0).join(" ");
-      button.innerHTML = `<span class="palette-swatch ${art}" aria-hidden="true"></span>`;
-      elements.palette.append(button);
+
+    if (!grouped) {
+      sheet.blockIds.forEach((blockId) => {
+        elements.palette.append(blockButton(blockId, { checked: blockId === selectedBlockId }));
+      });
+      closeKinds();
+      return;
+    }
+
+    familiesOnSheet(sheet).forEach((group) => {
+      const kind = kindOf(group);
+      const checked = group.blockIds.includes(selectedBlockId);
+      elements.palette.append(blockButton(checked ? selectedBlockId : kind, {
+        checked,
+        family: group.family,
+      }));
+    });
+    renderKinds();
+  }
+
+  function closeKinds() {
+    openFamily = null;
+    elements.paletteKinds.hidden = true;
+    elements.paletteKinds.textContent = "";
+  }
+
+  // Tapping a family opens a short row with its kinds, and tapping a kind
+  // chooses it and closes the row again.
+  function renderKinds() {
+    const sheet = currentSheet(state);
+    const group = familiesOnSheet(sheet).find((entry) => entry.family === openFamily);
+    if (!group || group.blockIds.length < 2) {
+      closeKinds();
+      return;
+    }
+    elements.paletteKinds.hidden = false;
+    elements.paletteKinds.textContent = "";
+    group.blockIds.forEach((blockId) => {
+      elements.paletteKinds.append(blockButton(blockId, { checked: blockId === selectedBlockId }));
     });
   }
 
   function selectBlock(blockId) {
     if (!isBlockOnSheet(currentSheet(state), blockId)) return;
     selectedBlockId = blockId;
-    elements.palette.querySelectorAll(".palette-button").forEach((button) => {
-      const active = Number(button.dataset.block) === blockId;
-      button.setAttribute("aria-checked", active ? "true" : "false");
+    chosenKind.set(blockById(blockId).family, blockId);
+    closeKinds();
+    renderPalette();
+  }
+
+  function renderTools() {
+    const sheet = currentSheet(state);
+    if (sheet.tools.length < 2) {
+      elements.tools.hidden = true;
+      elements.tools.textContent = "";
+      selectedTool = "brush";
+      return;
+    }
+    elements.tools.hidden = false;
+    elements.tools.textContent = "";
+    if (!sheet.tools.includes(selectedTool)) selectedTool = sheet.tools[0];
+    sheet.tools.forEach((tool) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `tool-button tool--${tool}`;
+      button.dataset.tool = tool;
+      button.setAttribute("role", "radio");
+      button.setAttribute("aria-checked", tool === selectedTool ? "true" : "false");
+      button.setAttribute("aria-label", TOOL_NAMES[tool]);
+      button.innerHTML = '<span class="tool-mark" aria-hidden="true"></span>';
+      elements.tools.append(button);
     });
   }
 
@@ -912,14 +1121,27 @@ function initializeGame() {
       : lineIndices(sheet, strokeLastIndex, index).slice(1);
     strokeLastIndex = index;
 
+    const size = TOOL_SIZES[selectedTool] ?? 1;
+    const now = Date.now();
     let changed = 0;
-    path.forEach((cell) => {
-      if (!paintCell(state, cell, selectedBlockId)) return;
-      renderCellAndNeighbors(cell);
+    path.flatMap((cell) => brushCells(sheet, cell, size)).forEach((cell) => {
+      if (!paintCell(state, cell, selectedBlockId, now)) return;
+      renderCellAndNeighbors(cell, now);
       changed += 1;
     });
-    if (changed === 0) return;
+    afterPainting(changed);
+  }
 
+  // The bucket is a single tap: it fills the whole area the cell belongs to.
+  function fillFrom(index) {
+    const changed = floodFill(state, index, selectedBlockId, Date.now());
+    if (changed === 0) return;
+    renderAllCells();
+    afterPainting(changed);
+  }
+
+  function afterPainting(changed) {
+    if (changed === 0) return;
     renderProgress();
     scheduleSave();
     scheduleAnalysis();
@@ -1100,7 +1322,9 @@ function initializeGame() {
     if (!selectSheet(state, sheetId)) return;
     closeCelebration();
     renderPalette();
+    renderTools();
     buildSheet();
+    watchFields();
     renderProgress();
     renderEvening();
     renderSheetShelf();
@@ -1146,6 +1370,11 @@ function initializeGame() {
     const index = cellIndexFromPoint(event.clientX, event.clientY);
     if (index < 0) return;
     event.preventDefault();
+    if (selectedTool === "bucket") {
+      cellsSinceSound = STROKE_SOUND_EVERY;
+      fillFrom(index);
+      return;
+    }
     elements.grid.setPointerCapture(event.pointerId);
     strokeActive = true;
     strokeLastIndex = -1;
@@ -1167,7 +1396,31 @@ function initializeGame() {
   elements.palette.addEventListener("click", (event) => {
     const button = event.target.closest(".palette-button");
     if (!button) return;
+    const family = button.dataset.family;
+    // A family with several kinds opens its row; a single kind is chosen at once.
+    if (family && family !== openFamily) {
+      const group = familiesOnSheet(currentSheet(state)).find((entry) => entry.family === family);
+      if (group.blockIds.length > 1) {
+        openFamily = family;
+        renderKinds();
+        return;
+      }
+    }
+    closeKinds();
     selectBlock(Number(button.dataset.block));
+  });
+
+  elements.paletteKinds.addEventListener("click", (event) => {
+    const button = event.target.closest(".palette-button");
+    if (!button) return;
+    selectBlock(Number(button.dataset.block));
+  });
+
+  elements.tools.addEventListener("click", (event) => {
+    const button = event.target.closest(".tool-button");
+    if (!button) return;
+    selectedTool = button.dataset.tool;
+    renderTools();
   });
 
   elements.sound.addEventListener("click", () => {
@@ -1253,7 +1506,9 @@ function initializeGame() {
 
   renderSound();
   renderPalette();
+  renderTools();
   buildSheet();
+  watchFields();
   renderProgress();
   renderEvening();
   renderSheetShelf();

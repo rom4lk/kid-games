@@ -25,7 +25,12 @@ const {
   createGameState,
   paintCell,
   paintStroke,
+  brushCells,
   floodFill,
+  houseDoor,
+  fieldStage,
+  FIELD_SHOOT_MS,
+  FIELD_RIPE_MS,
   paintedCount,
   isSheetComplete,
   unlockNextSheet,
@@ -38,6 +43,7 @@ const PATH_ID = BLOCKS.find((block) => block.key === "path").id;
 const MEADOW_ID = BLOCKS.find((block) => block.key === "meadow").id;
 const FOREST_ID = BLOCKS.find((block) => block.key === "forest").id;
 const HOUSE_ID = BLOCKS.find((block) => block.key === "house").id;
+const FIELD_ID = BLOCKS.find((block) => block.key === "field").id;
 
 function fillSheet(state, sheetId, blockId) {
   const sheet = sheetById(sheetId);
@@ -48,7 +54,14 @@ function fillSheet(state, sheetId, blockId) {
 
 // A hand-built 5 x 10 grid, written as rows of single characters.
 function buildGrid(rows) {
-  const legend = { ".": 0, "m": MEADOW_ID, "r": PATH_ID, "f": FOREST_ID, "w": WATER_ID };
+  const legend = {
+    ".": 0,
+    "m": MEADOW_ID,
+    "r": PATH_ID,
+    "f": FOREST_ID,
+    "w": WATER_ID,
+    "h": HOUSE_ID,
+  };
   return rows.join("").split("").map((symbol) => legend[symbol]);
 }
 
@@ -343,6 +356,71 @@ function testLakesAndForests() {
   assert.equal(joined[0].size, 5);
 }
 
+function testHouseDoor() {
+  const grid = buildGrid([
+    "h.rh......",
+    "..........",
+    ".r........",
+    ".h........",
+    "..........",
+  ]);
+  // With no street at all the door faces the reader.
+  assert.equal(houseDoor(grid, 10, 0), "s");
+  // A road to the west turns the door west.
+  assert.equal(houseDoor(grid, 10, 3), "w");
+  // A road to the north turns the door north.
+  assert.equal(houseDoor(grid, 10, 31), "n");
+  assert.equal(houseDoor(grid, 10, 1), null);
+
+  // The street below wins over the street above: the door faces the reader.
+  const between = buildGrid([
+    "r.........",
+    "h.........",
+    "r.........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(houseDoor(between, 10, 10), "s");
+}
+
+function testFieldStages() {
+  const state = createGameState();
+  selectSheet(state, "sheet-1");
+  state.unlockedCount = 2;
+  selectSheet(state, "sheet-2");
+
+  assert.equal(paintCell(state, 5, FIELD_ID, 1000), true);
+  assert.equal(state.planted["sheet-2"][5], 1000);
+  assert.equal(fieldStage(state, 5, 1000), 0);
+  assert.equal(fieldStage(state, 5, 1000 + FIELD_SHOOT_MS - 1), 0);
+  assert.equal(fieldStage(state, 5, 1000 + FIELD_SHOOT_MS), 1);
+  assert.equal(fieldStage(state, 5, 1000 + FIELD_RIPE_MS), 2);
+  assert.equal(fieldStage(state, 5, 1000 + FIELD_RIPE_MS * 5), 2);
+  // A cell that holds no field has no stage.
+  assert.equal(fieldStage(state, 6, 5000), -1);
+
+  // Painting over a field forgets when it was sown; sowing again starts over.
+  assert.equal(paintCell(state, 5, MEADOW_ID, 2000), true);
+  assert.equal(state.planted["sheet-2"][5], undefined);
+  assert.equal(paintCell(state, 5, FIELD_ID, 90000), true);
+  assert.equal(fieldStage(state, 5, 90000), 0);
+
+  assert.equal(clearSheet(state, "sheet-2"), true);
+  assert.deepEqual(state.planted["sheet-2"], {});
+}
+
+function testWideBrush() {
+  const sheet = sheetById("sheet-1");
+  assert.deepEqual(brushCells(sheet, 0, 1), [0]);
+  assert.deepEqual(brushCells(sheet, 11, 2), [11, 12, 21, 22]);
+  // The square is clipped where the sheet ends.
+  assert.deepEqual(brushCells(sheet, 9, 2), [9, 19]);
+  assert.deepEqual(brushCells(sheet, 45, 2), [45, 46]);
+  assert.deepEqual(brushCells(sheet, 49, 2), [49]);
+  assert.deepEqual(brushCells(sheet, 99, 2), []);
+  assert.deepEqual(brushCells(sheet, 0, 0), []);
+}
+
 function testPaintingAndPaintOver() {
   const state = createGameState();
   assert.equal(paintCell(state, 0, MEADOW_ID), true);
@@ -462,6 +540,7 @@ function testSavedStateNormalization() {
   const restored = normalizeSavedState({
     currentSheet: "sheet-2",
     unlockedCount: 2,
+    planted: { "sheet-2": { 0: 4200, 1: 900, 7: "soon" } },
     grids: {
       // Too short, and with an unknown id, a locked block and junk inside it.
       "sheet-1": [MEADOW_ID, 999, HOUSE_ID, "water", null, PATH_ID],
@@ -484,6 +563,8 @@ function testSavedStateNormalization() {
   assert.equal(restored.underlays["sheet-1"][0], EMPTY_CELL);
   assert.equal(restored.underlays["sheet-1"][5], WATER_ID);
   assert.equal(restored.grids["sheet-2"][0], HOUSE_ID);
+  // A sowing time survives only where a field really stands.
+  assert.deepEqual(restored.planted["sheet-2"], {});
   assert.equal(restored.celebrated["sheet-1"], true);
   assert.equal(restored.celebrated["sheet-2"], false);
   assert.equal(restored.currentSheet, "sheet-2");
@@ -520,6 +601,9 @@ testForestDensity();
 testConnectedComponents();
 testRoadPaths();
 testLakesAndForests();
+testHouseDoor();
+testFieldStages();
+testWideBrush();
 testPaintingAndPaintOver();
 testRefusedInput();
 testCompletionAndUnlockLadder();

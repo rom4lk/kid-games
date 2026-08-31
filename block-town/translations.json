@@ -30,7 +30,20 @@
     ["The sheet is full", "Лист закрашен"],
     ["The whole sheet is painted!", "Весь лист закрашен!"],
     ["Open the next sheet", "Открыть следующий лист"],
-    ["Stay on this sheet", "Остаться на этом листе"]
+    ["Stay on this sheet", "Остаться на этом листе"],
+    ["House", "Дом"],
+    ["Field", "Поле"],
+    ["Flowers", "Цветы"],
+    ["Sand", "Песок"],
+    ["Asphalt road", "Асфальт"],
+    ["Nature", "Природа"],
+    ["Roads", "Дороги"],
+    ["Houses", "Дома"],
+    ["Decorations", "Украшения"],
+    ["Kinds of block", "Виды блока"],
+    ["Brush", "Кисть"],
+    ["Wide brush", "Широкая кисть"],
+    ["Fill", "Заливка"]
   ],
   "templates": [
     ["Painted {painted} cells of {total}", "Закрашено клеток: {painted} из {total}"],
