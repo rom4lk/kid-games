@@ -7,7 +7,7 @@ its check passes and the work is committed.
 | --- | --- | --- |
 | 0 | Skeleton and registration | [x] |
 | 1 | Model core and tests | [x] |
-| 2 | Sheet 1 painting | [ ] |
+| 2 | Sheet 1 painting | [x] |
 | 3 | Strokes and sound | [ ] |
 | 4 | Smart blocks | [ ] |
 | 5 | The living world, first pass | [ ] |
@@ -24,6 +24,9 @@ its check passes and the work is committed.
 - Stage 1: the block and sheet registries, painting, flood fill, progress, the unlock ladder, the
   bridge underlay and save normalization live in `game.js` above `module.exports`; `test-game.js`
   covers them and is green.
+- Stage 2: sheet 1 paints cell by cell with incremental updates, the palette holds the four sheet-1
+  blocks, the sun fills to 100% on the last cell, the painting survives a reload, and "new sheet"
+  asks before it clears.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

@@ -275,9 +275,18 @@ if (typeof module !== "undefined" && module.exports) {
   };
 }
 
+// The sheet is fitted to the card, never scaled below a comfortable finger size.
+const MIN_CELL_SIZE = 22;
+const MAX_CELL_SIZE = 92;
+const SAVE_DELAY_MS = 250;
+
 function initializeGame() {
   const elements = {
+    card: document.querySelector(".sheet-card"),
+    stage: document.querySelector("#sheet-stage"),
     grid: document.querySelector("#sheet-grid"),
+    palette: document.querySelector("#palette"),
+    progressPanel: document.querySelector("#progress-panel"),
     sunFill: document.querySelector("#progress-sun-fill"),
     status: document.querySelector("#status"),
     sound: document.querySelector("#sound-button"),
@@ -289,8 +298,57 @@ function initializeGame() {
     cancelClear: document.querySelector("#cancel-clear-button"),
   };
 
+  const BLOCK_NAMES = {
+    meadow: "Meadow",
+    path: "Road",
+    forest: "Forest",
+    water: "Water",
+    house: "House",
+    field: "Field",
+    flowers: "Flowers",
+    sand: "Sand",
+    asphalt: "Asphalt road",
+    rails: "Rails",
+    tower: "Tower",
+    farm: "Farm",
+    mountain: "Mountain",
+    windmill: "Windmill",
+    lighthouse: "Lighthouse",
+    castle: "Castle",
+    playground: "Playground",
+    lantern: "Lantern",
+    bench: "Bench",
+    fountain: "Fountain",
+  };
+
+  let state = loadGame();
+  let selectedBlockId = currentSheet(state).blockIds[0];
+  let cells = [];
+  let saveTimer = 0;
   let soundEnabled = loadSoundPreference();
   let paused = false;
+
+  function loadGame() {
+    try {
+      return normalizeSavedState(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+    } catch {
+      return createGameState();
+    }
+  }
+
+  function saveGame() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // The painting stays on screen even when storage refuses to keep it.
+    }
+  }
+
+  // Strokes paint many cells in a row, so the write waits for the stroke to end.
+  function scheduleSave() {
+    window.clearTimeout(saveTimer);
+    saveTimer = window.setTimeout(saveGame, SAVE_DELAY_MS);
+  }
 
   function loadSoundPreference() {
     try {
@@ -308,14 +366,130 @@ function initializeGame() {
     }
   }
 
+  function announce(message) {
+    elements.status.textContent = "";
+    window.requestAnimationFrame(() => {
+      elements.status.textContent = message;
+    });
+  }
+
+  function blockName(blockId) {
+    const block = blockById(blockId);
+    return block ? BLOCK_NAMES[block.key] : "Empty cell";
+  }
+
+  function renderCell(index) {
+    const element = cells[index];
+    if (!element) return;
+    const sheet = currentSheet(state);
+    const block = blockById(state.grids[sheet.id][index]);
+    element.className = block ? `cell block--${block.key}` : "cell is-empty";
+    element.setAttribute("aria-label", blockName(block?.id));
+  }
+
+  function renderAllCells() {
+    for (let index = 0; index < cells.length; index += 1) renderCell(index);
+  }
+
+  function renderProgress() {
+    const sheet = currentSheet(state);
+    const painted = paintedCount(state);
+    const share = Math.round((painted / sheet.cellCount) * 100);
+    elements.sunFill.style.height = `${share}%`;
+    elements.progressPanel.setAttribute(
+      "aria-label",
+      `Painted ${painted} cells of ${sheet.cellCount}`,
+    );
+  }
+
+  // The sheet is rebuilt only when the sheet itself changes; a paint touches
+  // one cell element, never the whole grid.
+  function buildSheet() {
+    const sheet = currentSheet(state);
+    elements.stage.style.setProperty("--rows", String(sheet.rows));
+    elements.stage.style.setProperty("--columns", String(sheet.columns));
+    elements.grid.textContent = "";
+    cells = new Array(sheet.cellCount);
+
+    for (let row = 0; row < sheet.rows; row += 1) {
+      const rowElement = document.createElement("div");
+      rowElement.className = "sheet-row";
+      rowElement.setAttribute("role", "row");
+      for (let column = 0; column < sheet.columns; column += 1) {
+        const index = row * sheet.columns + column;
+        const cell = document.createElement("div");
+        cell.className = "cell is-empty";
+        cell.setAttribute("role", "gridcell");
+        cell.dataset.index = String(index);
+        cells[index] = cell;
+        rowElement.append(cell);
+      }
+      elements.grid.append(rowElement);
+    }
+
+    renderAllCells();
+    fitSheet();
+  }
+
+  function fitSheet() {
+    const sheet = currentSheet(state);
+    const style = window.getComputedStyle(elements.card);
+    const box = elements.card.getBoundingClientRect();
+    const width = box.width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    const height = box.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+    const size = Math.floor(Math.min(width / sheet.columns, height / sheet.rows));
+    const fitted = Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, size));
+    elements.stage.style.setProperty("--cell-size", `${fitted}px`);
+  }
+
+  function renderPalette() {
+    const sheet = currentSheet(state);
+    elements.palette.textContent = "";
+    sheet.blockIds.forEach((blockId) => {
+      const block = blockById(blockId);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "palette-button";
+      button.dataset.block = String(blockId);
+      button.setAttribute("role", "radio");
+      button.setAttribute("aria-checked", blockId === selectedBlockId ? "true" : "false");
+      button.setAttribute("aria-label", BLOCK_NAMES[block.key]);
+      button.innerHTML = `<span class="palette-swatch block--${block.key}" aria-hidden="true"></span>`;
+      elements.palette.append(button);
+    });
+  }
+
+  function selectBlock(blockId) {
+    if (!isBlockOnSheet(currentSheet(state), blockId)) return;
+    selectedBlockId = blockId;
+    elements.palette.querySelectorAll(".palette-button").forEach((button) => {
+      const active = Number(button.dataset.block) === blockId;
+      button.setAttribute("aria-checked", active ? "true" : "false");
+    });
+  }
+
+  function paintAt(index) {
+    if (!paintCell(state, index, selectedBlockId)) return;
+    renderCell(index);
+    renderProgress();
+    scheduleSave();
+  }
+
+  function cellIndexFromEvent(event) {
+    const cell = event.target.closest?.(".cell");
+    if (!cell) return -1;
+    const index = Number(cell.dataset.index);
+    return Number.isInteger(index) ? index : -1;
+  }
+
   function renderSound() {
     elements.sound.classList.toggle("is-off", !soundEnabled);
     elements.sound.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
   }
 
-  function showPauseState(state) {
+  function showPauseState(name) {
     elements.pauseOverlay.querySelectorAll("[data-state]").forEach((section) => {
-      section.hidden = section.dataset.state !== state;
+      section.hidden = section.dataset.state !== name;
     });
   }
 
@@ -331,6 +505,19 @@ function initializeGame() {
     elements.pauseOverlay.hidden = true;
     elements.pause.focus();
   }
+
+  elements.grid.addEventListener("pointerdown", (event) => {
+    const index = cellIndexFromEvent(event);
+    if (index < 0) return;
+    event.preventDefault();
+    paintAt(index);
+  });
+
+  elements.palette.addEventListener("click", (event) => {
+    const button = event.target.closest(".palette-button");
+    if (!button) return;
+    selectBlock(Number(button.dataset.block));
+  });
 
   elements.sound.addEventListener("click", () => {
     soundEnabled = !soundEnabled;
@@ -355,8 +542,14 @@ function initializeGame() {
     elements.clear.focus();
   });
 
-  // Clearing needs a painting to clear; the sheet arrives in the next stage.
-  elements.confirmClear.addEventListener("click", closePause);
+  elements.confirmClear.addEventListener("click", () => {
+    clearSheet(state);
+    renderAllCells();
+    renderProgress();
+    saveGame();
+    closePause();
+    announce("The sheet is empty again.");
+  });
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
@@ -364,7 +557,12 @@ function initializeGame() {
     else openPause();
   });
 
+  window.addEventListener("resize", fitSheet);
+
   renderSound();
+  renderPalette();
+  buildSheet();
+  renderProgress();
 }
 
 if (typeof document !== "undefined") {

@@ -18,7 +18,15 @@
     ["Start a new sheet", "Начать новый лист"],
     ["Clear this sheet and start it again?", "Стереть этот лист и начать заново?"],
     ["Yes, start a new sheet", "Да, начать новый лист"],
-    ["No, keep the painting", "Нет, оставить рисунок"]
+    ["No, keep the painting", "Нет, оставить рисунок"],
+    ["Meadow", "Луг"],
+    ["Road", "Дорога"],
+    ["Forest", "Лес"],
+    ["Water", "Вода"],
+    ["Empty cell", "Пустая клетка"],
+    ["The sheet is empty again.", "Лист снова пустой."]
   ],
-  "templates": []
+  "templates": [
+    ["Painted {painted} cells of {total}", "Закрашено клеток: {painted} из {total}"]
+  ]
 }
