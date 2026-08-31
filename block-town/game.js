@@ -570,6 +570,33 @@ const SPRITE_KINDS = [
   { kind: "bird", minCells: 6, stepMs: 900 },
 ];
 
+// The thumbnail and the mini-map draw one pixel per cell, so every block needs
+// one flat color next to its full art in styles.css.
+const BLOCK_COLORS = {
+  meadow: "#a9dc88",
+  path: "#e2d2ab",
+  forest: "#4f9b5f",
+  water: "#82c9e8",
+  house: "#e58f6a",
+  field: "#d8c057",
+  flowers: "#e78cbb",
+  sand: "#f0dfae",
+  asphalt: "#9aa2a6",
+  rails: "#8b7a63",
+  tower: "#b58bd0",
+  farm: "#c97f52",
+  mountain: "#9d9a92",
+  windmill: "#efe3c4",
+  lighthouse: "#e5645f",
+  castle: "#b9b3a6",
+  playground: "#f2a63e",
+  lantern: "#ffd45c",
+  bench: "#c09a6a",
+  fountain: "#7fd3d0",
+};
+const THUMBNAIL_EMPTY = "#fffdf4";
+const CONFETTI_COUNT = 16;
+
 const FAMILY_SOUNDS = {
   roads: [[300, 0, 0.06, "square"]],
   nature: [[430, 0, 0.08, "triangle"], [540, 0.05, 0.07, "triangle"]],
@@ -584,6 +611,13 @@ function initializeGame() {
     stage: document.querySelector("#sheet-stage"),
     grid: document.querySelector("#sheet-grid"),
     living: document.querySelector("#living-layer"),
+    celebration: document.querySelector("#celebration"),
+    confetti: document.querySelector("#confetti"),
+    nextSheet: document.querySelector("#next-sheet-button"),
+    stay: document.querySelector("#stay-button"),
+    sheetShelf: document.querySelector("#sheet-shelf"),
+    shelf: document.querySelector("#shelf-button"),
+    shelfBack: document.querySelector("#shelf-back-button"),
     palette: document.querySelector("#palette"),
     progressPanel: document.querySelector("#progress-panel"),
     sunFill: document.querySelector("#progress-sun-fill"),
@@ -752,6 +786,44 @@ function initializeGame() {
     for (let index = 0; index < cells.length; index += 1) renderCell(index);
   }
 
+  // One pixel per cell. The sheet shelf and, later, the mini-map both read the
+  // model through this and nothing else.
+  function drawThumbnail(canvas, sheet) {
+    canvas.width = sheet.columns;
+    canvas.height = sheet.rows;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.fillStyle = THUMBNAIL_EMPTY;
+    context.fillRect(0, 0, sheet.columns, sheet.rows);
+    state.grids[sheet.id].forEach((value, index) => {
+      const block = blockById(value);
+      if (!block) return;
+      context.fillStyle = BLOCK_COLORS[block.key];
+      context.fillRect(index % sheet.columns, Math.floor(index / sheet.columns), 1, 1);
+    });
+  }
+
+  function renderSheetShelf() {
+    elements.shelf.hidden = state.unlockedCount < 2;
+    elements.sheetShelf.textContent = "";
+    SHEETS.slice(0, state.unlockedCount).forEach((sheet) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "sheet-choice";
+      button.dataset.sheet = sheet.id;
+      button.setAttribute("role", "listitem");
+      button.setAttribute("aria-current", sheet.id === state.currentSheet ? "true" : "false");
+      button.setAttribute("aria-label", `Sheet ${sheet.number}`);
+      // A bigger sheet gets a bigger picture, so the ladder is visible.
+      button.style.setProperty("--thumb-width", `${52 + sheet.number * 14}px`);
+      const canvas = document.createElement("canvas");
+      canvas.className = "sheet-thumbnail";
+      button.append(canvas);
+      elements.sheetShelf.append(button);
+      drawThumbnail(canvas, sheet);
+    });
+  }
+
   function renderProgress() {
     const sheet = currentSheet(state);
     const painted = paintedCount(state);
@@ -851,6 +923,7 @@ function initializeGame() {
     renderProgress();
     scheduleSave();
     scheduleAnalysis();
+    checkCompletion();
 
     cellsSinceSound += changed;
     if (cellsSinceSound < STROKE_SOUND_EVERY) return;
@@ -967,6 +1040,74 @@ function initializeGame() {
     analysisTimer = window.setTimeout(analyzeWorld, ANALYSIS_DELAY_MS);
   }
 
+  function playCelebrationSound() {
+    if (!soundEnabled) return;
+    [[392, 0, 0.16], [523, 0.14, 0.18], [659, 0.3, 0.22], [784, 0.48, 0.34]]
+      .forEach(([frequency, delay, duration]) => {
+        window.GameSound?.tone({ frequency, delay, duration, volume: 0.05 });
+      });
+  }
+
+  function fillConfetti() {
+    elements.confetti.textContent = "";
+    for (let piece = 0; piece < CONFETTI_COUNT; piece += 1) {
+      const flake = document.createElement("span");
+      flake.style.setProperty("--left", `${(piece + 0.5) * (100 / CONFETTI_COUNT)}%`);
+      flake.style.setProperty("--delay", `${(piece % 5) * 220}ms`);
+      flake.style.setProperty("--drift", `${piece % 2 === 0 ? 1 : -1}`);
+      // Where the piece rests when motion is switched off.
+      flake.style.setProperty("--top", `${10 + (piece % 5) * 17}%`);
+      elements.confetti.append(flake);
+    }
+  }
+
+  // Evening light stays on a finished sheet; the confetti and the card come
+  // only the first time it is finished.
+  function renderEvening() {
+    elements.stage.classList.toggle("is-evening", isSheetComplete(state));
+  }
+
+  function openCelebration(hasNextSheet) {
+    fillConfetti();
+    elements.celebration.hidden = false;
+    elements.nextSheet.hidden = !hasNextSheet;
+    playCelebrationSound();
+    (hasNextSheet ? elements.nextSheet : elements.stay).focus();
+    announce("The whole sheet is painted!");
+  }
+
+  function closeCelebration() {
+    elements.celebration.hidden = true;
+    elements.confetti.textContent = "";
+  }
+
+  function checkCompletion() {
+    renderEvening();
+    if (!isSheetComplete(state)) return;
+
+    const sheet = currentSheet(state);
+    const unlocked = unlockNextSheet(state);
+    const hasNextSheet = sheetIndex(sheet.id) + 1 < state.unlockedCount;
+    if (unlocked) renderSheetShelf();
+    if (state.celebrated[sheet.id]) return;
+
+    state.celebrated[sheet.id] = true;
+    saveGame();
+    openCelebration(hasNextSheet);
+  }
+
+  function openSheet(sheetId) {
+    if (!selectSheet(state, sheetId)) return;
+    closeCelebration();
+    renderPalette();
+    buildSheet();
+    renderProgress();
+    renderEvening();
+    renderSheetShelf();
+    analyzeWorld();
+    saveGame();
+  }
+
   function renderSound() {
     elements.sound.classList.toggle("is-off", !soundEnabled);
     elements.sound.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
@@ -980,6 +1121,7 @@ function initializeGame() {
 
   function openPause() {
     paused = true;
+    renderSheetShelf();
     elements.pauseOverlay.hidden = false;
     showPauseState("menu");
     elements.resume.focus();
@@ -1055,14 +1197,46 @@ function initializeGame() {
     clearSheet(state);
     renderAllCells();
     renderProgress();
+    renderEvening();
     analyzeWorld();
     saveGame();
     closePause();
     announce("The sheet is empty again.");
   });
 
+  elements.shelf.addEventListener("click", () => {
+    showPauseState("sheets");
+    elements.shelfBack.focus();
+  });
+
+  elements.shelfBack.addEventListener("click", () => {
+    showPauseState("menu");
+    elements.shelf.focus();
+  });
+
+  elements.sheetShelf.addEventListener("click", (event) => {
+    const button = event.target.closest(".sheet-choice");
+    if (!button) return;
+    openSheet(button.dataset.sheet);
+    closePause();
+  });
+
+  elements.nextSheet.addEventListener("click", () => {
+    const next = SHEETS[sheetIndex(state.currentSheet) + 1];
+    if (next) openSheet(next.id);
+  });
+
+  elements.stay.addEventListener("click", () => {
+    closeCelebration();
+    elements.pause.focus();
+  });
+
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+    if (!elements.celebration.hidden) {
+      closeCelebration();
+      return;
+    }
     if (paused) closePause();
     else openPause();
   });
@@ -1081,6 +1255,8 @@ function initializeGame() {
   renderPalette();
   buildSheet();
   renderProgress();
+  renderEvening();
+  renderSheetShelf();
   analyzeWorld();
 }
 

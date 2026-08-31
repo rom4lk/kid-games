@@ -44,6 +44,22 @@
             <div class="living-layer" id="living-layer" aria-hidden="true"></div>
           </div>
         </div>
+        <div class="celebration" id="celebration" hidden>
+          <div class="confetti" id="confetti" aria-hidden="true"></div>
+          <div class="celebration-card" role="dialog" aria-modal="true" aria-label="The sheet is full">
+            <span class="celebration-sun" aria-hidden="true"></span>
+            <p class="celebration-text">The whole sheet is painted!</p>
+            <div class="celebration-actions">
+              <button class="pause-action confirm-button" id="next-sheet-button" type="button" aria-label="Open the next sheet">
+                <span aria-hidden="true">▶</span>
+              </button>
+              <button class="pause-action" id="stay-button" type="button" aria-label="Stay on this sheet">
+                <span aria-hidden="true">✓</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="screen-reader-status" id="status" role="status" aria-live="polite"></div>
       </section>
 
@@ -59,8 +75,17 @@
           <button class="pause-action resume-button" id="resume-button" type="button" aria-label="Back to the sheet">
             <span aria-hidden="true">▶</span>
           </button>
+          <button class="pause-action shelf-button" id="shelf-button" type="button" aria-label="Choose a sheet" hidden>
+            <span class="shelf-icon" aria-hidden="true"></span>
+          </button>
           <button class="pause-action clear-button" id="clear-button" type="button" aria-label="Start a new sheet">
             <span aria-hidden="true">🗋</span>
+          </button>
+        </div>
+        <div class="pause-actions pause-actions--shelf" data-state="sheets" hidden>
+          <div class="sheet-shelf" id="sheet-shelf" role="list"></div>
+          <button class="pause-action" id="shelf-back-button" type="button" aria-label="Back to the pause menu">
+            <span aria-hidden="true">↩</span>
           </button>
         </div>
         <div class="pause-actions" data-state="confirm" hidden>

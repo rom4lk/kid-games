@@ -11,7 +11,7 @@ its check passes and the work is committed.
 | 3 | Strokes and sound | [x] |
 | 4 | Smart blocks | [x] |
 | 5 | The living world, first pass | [x] |
-| 6 | Completion, celebration, sheet shelf | [ ] |
+| 6 | Completion, celebration, sheet shelf | [x] |
 | 7 | Sheets 2 and 3 | [ ] |
 | 8 | Sheets 4 and 5 | [ ] |
 | 9 | Accessibility, language, polish | [ ] |
@@ -39,6 +39,10 @@ its check passes and the work is committed.
   sprites driven by a single animation frame loop. A car takes a road of three cells or more, a duck
   a lake of four, birds a wood of six. Breaking a road mid-drive moves the car onto what is left
   without an error.
+- Stage 6: a finished sheet keeps its evening light, the confetti and the card come once per fresh
+  completion (`celebrated`), the next sheet unlocks, and the pause holds a shelf of live canvas
+  thumbnails. Both sheets keep their paintings across a reload. House and field art was added here
+  as well, so the newly reachable sheet 2 has no invisible blocks.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.

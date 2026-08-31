@@ -24,9 +24,16 @@
     ["Forest", "Лес"],
     ["Water", "Вода"],
     ["Empty cell", "Пустая клетка"],
-    ["The sheet is empty again.", "Лист снова пустой."]
+    ["The sheet is empty again.", "Лист снова пустой."],
+    ["Choose a sheet", "Выбрать лист"],
+    ["Back to the pause menu", "Назад в меню паузы"],
+    ["The sheet is full", "Лист закрашен"],
+    ["The whole sheet is painted!", "Весь лист закрашен!"],
+    ["Open the next sheet", "Открыть следующий лист"],
+    ["Stay on this sheet", "Остаться на этом листе"]
   ],
   "templates": [
-    ["Painted {painted} cells of {total}", "Закрашено клеток: {painted} из {total}"]
+    ["Painted {painted} cells of {total}", "Закрашено клеток: {painted} из {total}"],
+    ["Sheet {number}", "Лист {number}"]
   ]
 }
