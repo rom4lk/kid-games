@@ -11,6 +11,7 @@ const {
   isHungry,
   isDark,
   findNode,
+  harvestVerb,
   isNodeReachable,
   collectItem,
   beginHarvest,
@@ -93,6 +94,9 @@ function testGatheringVerbs() {
   assert.equal(tapHarvest(state), "collected");
 
   assert.deepEqual(state.collectedCounts, { branch: 1, stone: 1, berry: 1 });
+  assert.equal(harvestVerb(findNode(state, "branch-second")), "pick");
+  assert.equal(harvestVerb(findNode(state, "stone-slope-a")), "dig");
+  assert.equal(harvestVerb(findNode(state, "bush-low-a")), "shake");
   assert.equal(state.harvest, null);
   assert.equal(beginHarvest(state, "branch-first"), false, "a taken branch cannot be taken again");
   assert.equal(beginHarvest(state, "stone-slope-a"), false, "another clearing is out of reach");
@@ -192,6 +196,7 @@ function testEmergencyBerry() {
   assert.notEqual(gift, null);
   assert.equal(gift.glade, state.glade);
   assert.equal(gift.taps, 1, "the emergency berry is picked up with one press");
+  assert.equal(harvestVerb(gift), "pick", "a berry on the ground is lifted, not shaken");
   assert.equal(leaveEmergencyBerry(state, 50, 60), null, "one berry is enough");
 
   gather(state, gift.id);

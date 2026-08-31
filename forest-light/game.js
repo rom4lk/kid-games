@@ -38,7 +38,15 @@ const LAYOUT = Object.freeze([
 // A branch is lifted with one press, a stone is dug out with two, a bush is
 // shaken three times. No holding and no double taps.
 const HARVEST_TAPS = Object.freeze({ branch: 1, stone: 2, berry: 3 });
-const VERB_BY_KIND = Object.freeze({ branch: "pick", stone: "dig", berry: "shake" });
+
+// The verb follows the shape of the object, not the kind of the resource: a
+// bush is shaken, a stone is dug out, and anything lying on the ground - a
+// branch or the berry the firefly left - is simply picked up.
+function harvestVerb(node) {
+  if (node.bush) return "shake";
+  if (node.kind === "stone") return "dig";
+  return "pick";
+}
 
 const BACKPACK_SIZE = 6;
 const FULLNESS_MARKS = 3;
@@ -163,7 +171,13 @@ function beginHarvest(state, nodeId) {
   if (state.backpack.length >= BACKPACK_SIZE) return false;
   if (node.kind === "stone" && isHungry(state)) return false;
 
-  state.harvest = { nodeId, kind: node.kind, taps: 0, required: harvestTaps(node) };
+  state.harvest = {
+    nodeId,
+    kind: node.kind,
+    verb: harvestVerb(node),
+    taps: 0,
+    required: harvestTaps(node),
+  };
   return true;
 }
 
@@ -776,6 +790,7 @@ function startGame() {
 
   function renderInventory() {
     const rest = state.phase === "building" ? remainingParts(state) : [];
+    const feedIndex = isHungry(state) ? firstBerrySlotIndex() : -1;
     inventorySlots.forEach((slot, index) => {
       const item = state.backpack[index];
       const icon = item ? (item.kind === "berry" ? "berry" : item.kind) : "pocket";
@@ -787,7 +802,10 @@ function startGame() {
       const canFeed = Boolean(item) && item.kind === "berry"
         && state.phase === "explore" && state.fullness < FULLNESS_MARKS;
       slot.classList.toggle("is-next", canPlace);
-      slot.classList.toggle("is-feed", canFeed);
+      // Only an empty meter is allowed to call the player, and only through one
+      // berry. Feeding a hero who is merely peckish stays possible, but it
+      // never competes with the goal for attention.
+      slot.classList.toggle("is-feed", canFeed && index === feedIndex);
       slot.disabled = !canPlace && !canFeed;
 
       if (!item) {
@@ -856,7 +874,7 @@ function startGame() {
   function renderAction() {
     const verb = state.phase === "ready"
       ? "light"
-      : state.harvest ? VERB_BY_KIND[state.harvest.kind] : null;
+      : state.harvest ? state.harvest.verb : null;
 
     action.dataset.verb = verb || "none";
     action.disabled = !verb || paused;
@@ -1215,7 +1233,7 @@ function startGame() {
       || activeElement === document.body
       || activeElement?.classList.contains("resource")
     );
-    if (event.code === "Space" && shouldRunContextAction && !action.disabled) {
+    if ((event.code === "Space" || event.key === " ") && shouldRunContextAction && !action.disabled) {
       event.preventDefault();
       handleMainAction();
       return;
@@ -1233,7 +1251,9 @@ function startGame() {
       ArrowRight: [4, 0],
       KeyD: [4, 0],
     };
-    const step = steps[event.code];
+    // Some browsers and remote keyboards leave `code` empty; `key` still names
+    // the arrow, and falling back keeps walking available.
+    const step = steps[event.code] || steps[event.key];
     if (!step) return;
     event.preventDefault();
 
@@ -1272,6 +1292,7 @@ if (typeof module !== "undefined" && module.exports) {
     GLADES,
     LAYOUT,
     HARVEST_TAPS,
+    harvestVerb,
     BACKPACK_SIZE,
     FULLNESS_MARKS,
     DAYLIGHT_STEPS,

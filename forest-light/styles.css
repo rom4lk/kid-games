@@ -387,8 +387,8 @@ button:focus-visible {
 }
 
 .pond {
-  left: 43%;
-  top: 20%;
+  left: 10%;
+  top: 22%;
   width: 112px;
   height: 64px;
   border: 6px solid rgba(45, 106, 90, 0.28);
@@ -493,8 +493,8 @@ button:focus-visible {
   background: radial-gradient(
     circle var(--light-radius) at var(--light-x) var(--light-y),
     rgba(11, 27, 42, 0) 0%,
-    rgba(11, 27, 42, 0.12) 62%,
-    rgba(9, 23, 38, 0.84) 100%
+    rgba(11, 27, 42, 0.1) 62%,
+    rgba(9, 23, 38, 0.62) 100%
   );
   transition: opacity 700ms ease, --light-radius 700ms ease;
 }
@@ -607,6 +607,7 @@ button:focus-visible {
 .control-cluster,
 .meter-cluster {
   display: flex;
+  min-width: 0;
   align-items: center;
   pointer-events: auto;
 }
@@ -931,8 +932,8 @@ button:focus-visible {
   width: 104px;
   padding: 8px 6px 10px;
   border-radius: 24px;
-  background: rgba(255, 247, 214, 0.14);
-  box-shadow: inset 0 0 0 5px rgba(133, 148, 134, 0.5);
+  background: rgba(252, 249, 222, 0.4);
+  box-shadow: inset 0 0 0 5px rgba(120, 136, 122, 0.7), 0 10px 20px rgba(24, 65, 50, 0.18);
   transition: box-shadow 220ms ease, background 300ms ease, transform 220ms ease;
 }
 
@@ -1573,6 +1574,49 @@ button:focus-visible {
   }
 }
 
+/* Below this width the goal bubble and the controls no longer share a row, so
+   the header stacks: controls, then the meters, then the current goal. */
+@media (max-width: 620px) {
+  .hud {
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+  }
+
+  .control-cluster {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .meter-cluster {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .goal-cluster {
+    grid-column: 1 / 3;
+    grid-row: 3;
+    justify-self: start;
+    align-self: start;
+  }
+
+  /* The globe next to the language list is decoration, and dropping it keeps
+     the three round controls at their full size on a narrow screen. */
+  .control-cluster {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .control-cluster .language-picker {
+    padding-left: 5px;
+  }
+
+  .control-cluster .language-picker > span[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 @media (max-width: 700px) {
   .game-shell {
     width: 100%;
@@ -1652,14 +1696,14 @@ button:focus-visible {
   .tree-six { right: -8%; }
 
   .pond {
-    left: 40%;
+    left: 6%;
     top: 24%;
     width: 91px;
     height: 54px;
   }
 
   .camp-spots {
-    top: 22%;
+    top: 27%;
     gap: 8px;
   }
 
@@ -1804,5 +1848,23 @@ button:focus-visible {
   .resource.is-worked .resource-crumbs,
   .resource.is-worked .resource-crumbs i {
     animation-duration: 1ms;
+  }
+
+  /* Sitting down, the gathering pips and the parts dropping into a silhouette
+     all carry meaning through scaling. They become instant, and the state stays
+     readable as a filled pip, a colored socket and a lowered pose. */
+  .player-legs,
+  .player-body,
+  .player-pack,
+  .player-head,
+  .player-bubble,
+  .action-pip,
+  .build-result,
+  .build-socket,
+  .goal-socket,
+  .goal-result,
+  .sun-mark,
+  .resource {
+    transition-duration: 1ms;
   }
 }
