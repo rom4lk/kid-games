@@ -173,18 +173,30 @@ A chapter can be replayed, and one of two patterns can be chosen for the item. T
 
 The first chapter is enough to test the idea:
 
-- one map of roughly 12 × 8 screen cells;
-- the hero, the firefly, the empty campfire circle, sticks, stones and trees;
+- a map of three hand-built clearings — the berry hollow, the camp and the stone slope — that scrolls when the hero walks off the side of the screen;
+- the hero, the firefly, the camp silhouettes, sticks, stones, berry bushes and trees;
 - moving to a point and one contextual button;
+- three gathering verbs on that button: a stick is picked up with one press, a stone is dug out with two, a bush is shaken three times, with a visible count of the presses;
 - two visible sticks in different directions, so that after the tutorial the child picks the next route themselves;
-- a backpack with three shaped slots for the current recipe;
-- a campfire recipe of two sticks and a stone;
-- the glowing path home, choosing the camp on the player's own and a separate assembly of the campfire from three large parts;
+- a shared backpack of six slots that shows the kind of every resource instead of a position in one recipe;
+- three recipes standing side by side at the camp: the campfire of two sticks and a stone as the chapter goal, and the torch and the berry bowl as bonuses that change the camp;
+- bushes that grow back on every return to the camp, and stones that run out on a clearing and send the player to the neighbouring one;
+- the glowing way home, choosing the camp on the player's own and a separate assembly of every item from its large parts;
 - sound, voice hints and a separate sound-off button;
 - a working pause and voice repeat, the hint machine at 8 and 16 seconds and a record of the help level for every action;
 - saving the completed chapter.
 
-The prototype does not include the fullness meter, the sun's path, the tent, rain, the bridge, decoration choices, the free mode or the remaining chapters. The first chapter is a short 4–6 minute tutorial, not a full play session.
+### The long evening
+
+The fullness meter and the sun's path are part of the prototype, but they stay switched off on the very first run: the tutorial still shows one goal, the gathering and the build, and nothing else. The long evening opens on the next run, once `completions` in the saved progress reaches one, and it adds three things at the same time:
+
+- the sun's four marks, which move only after a useful action and stop on the last one to wait for the player;
+- a circle of light that narrows with every mark and puts the far resources to sleep until a torch or the campfire is lit;
+- the three berry marks of fullness, an empty meter that sits the hero down, and the emergency berry the firefly leaves nearby.
+
+Both modes are complete and can be finished; the tutorial is a short 4–6 minute run, and the long evening is the fuller version of the same chapter.
+
+The prototype does not include the tent, rain, the bridge, decoration choices, the free mode or the remaining chapters.
 
 ## How to test the prototype with a child
 
