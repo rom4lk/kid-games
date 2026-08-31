@@ -13,6 +13,11 @@ const {
   MASK_SOUTH,
   MASK_WEST,
   roadGroup,
+  connectedComponents,
+  roadPaths,
+  railPaths,
+  lakes,
+  forestClusters,
   neighborMask,
   roadTile,
   waterEdges,
@@ -241,6 +246,103 @@ function testForestDensity() {
   assert.equal(forestDensity(grid, 10, 1), 0);
 }
 
+function assertContinuous(path, loop) {
+  const steps = loop ? path.length : path.length - 1;
+  for (let position = 0; position < steps; position += 1) {
+    const from = path[position];
+    const to = path[(position + 1) % path.length];
+    const rowStep = Math.abs(Math.floor(to / 10) - Math.floor(from / 10));
+    const columnStep = Math.abs((to % 10) - (from % 10));
+    assert.equal(rowStep + columnStep, 1, `${from} does not touch ${to}`);
+  }
+}
+
+function testConnectedComponents() {
+  const grid = buildGrid([
+    "ff...f....",
+    "f.........",
+    "..........",
+    "....ww....",
+    "..........",
+  ]);
+  const forests = connectedComponents(grid, 10, [FOREST_ID]);
+  assert.equal(forests.length, 2);
+  assert.deepEqual(forests[0], [0, 1, 10]);
+  assert.deepEqual(forests[1], [5]);
+  assert.deepEqual(connectedComponents(grid, 10, [WATER_ID]), [[34, 35]]);
+  assert.deepEqual(connectedComponents(null, 10, [FOREST_ID]), []);
+}
+
+function testRoadPaths() {
+  const loop = buildGrid([
+    "..........",
+    ".rrr......",
+    ".r.r......",
+    ".rrr......",
+    "..........",
+  ]);
+  const loopRoads = roadPaths(loop, 10);
+  assert.equal(loopRoads.length, 1);
+  assert.equal(loopRoads[0].loop, true);
+  assert.equal(loopRoads[0].path.length, 8);
+  assertContinuous(loopRoads[0].path, true);
+
+  const branch = buildGrid([
+    "rrrr......",
+    "..r.......",
+    "..r.......",
+    "..........",
+    "....r.....",
+  ]);
+  const roads = roadPaths(branch, 10);
+  assert.equal(roads.length, 2);
+  const [big, lone] = roads.sort((left, right) => right.cells.length - left.cells.length);
+  assert.equal(big.loop, false);
+  assert.equal(lone.cells.length, 1);
+  assert.deepEqual(lone.path, [44]);
+  // A branching road is still walked without a single jump.
+  assert.equal(new Set(big.path).size, big.cells.length);
+  assertContinuous(big.path, true);
+
+  // Rails are a separate network and no road path picks them up.
+  assert.deepEqual(railPaths(loop, 10), []);
+}
+
+function testLakesAndForests() {
+  const grid = buildGrid([
+    "www.......",
+    "..........",
+    ".....wwwww",
+    "..........",
+    "fffff.f...",
+    ]);
+  const underlay = new Array(50).fill(0);
+  const found = lakes(grid, underlay, 10).sort((left, right) => right.size - left.size);
+  assert.equal(found.length, 2);
+  assert.deepEqual(found.map((lake) => lake.size), [5, 3]);
+  // Only the lake of four or more cells is big enough for a duck.
+  assert.equal(found.filter((lake) => lake.size >= 4).length, 1);
+
+  const clusters = forestClusters(grid, 10).sort((left, right) => right.size - left.size);
+  assert.deepEqual(clusters.map((cluster) => cluster.size), [5, 1]);
+  assert.equal(clusters.filter((cluster) => cluster.size >= 6).length, 0);
+  assertContinuous(clusters[0].path, true);
+
+  // A bridge keeps the lake underneath in one piece.
+  const split = buildGrid([
+    "..........",
+    "wwrww.....",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  const bridgeUnderlay = new Array(50).fill(0);
+  bridgeUnderlay[12] = WATER_ID;
+  const joined = lakes(split, bridgeUnderlay, 10);
+  assert.equal(joined.length, 1);
+  assert.equal(joined[0].size, 5);
+}
+
 function testPaintingAndPaintOver() {
   const state = createGameState();
   assert.equal(paintCell(state, 0, MEADOW_ID), true);
@@ -415,6 +517,9 @@ testNeighborMask();
 testRoadTile();
 testWaterEdges();
 testForestDensity();
+testConnectedComponents();
+testRoadPaths();
+testLakesAndForests();
 testPaintingAndPaintOver();
 testRefusedInput();
 testCompletionAndUnlockLadder();

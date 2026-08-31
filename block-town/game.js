@@ -130,15 +130,20 @@ function currentSheet(state) {
 
 // The four neighbours in a fixed north, east, south, west order, without
 // wrapping around the edges of the sheet.
-function neighborIndices(sheet, index) {
-  const row = Math.floor(index / sheet.columns);
-  const column = index % sheet.columns;
+function gridNeighbors(cellCount, columns, index) {
+  const rows = Math.floor(cellCount / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
   const neighbors = [];
-  if (row > 0) neighbors.push(index - sheet.columns);
-  if (column < sheet.columns - 1) neighbors.push(index + 1);
-  if (row < sheet.rows - 1) neighbors.push(index + sheet.columns);
+  if (row > 0) neighbors.push(index - columns);
+  if (column < columns - 1) neighbors.push(index + 1);
+  if (row < rows - 1) neighbors.push(index + columns);
   if (column > 0) neighbors.push(index - 1);
   return neighbors;
+}
+
+function neighborIndices(sheet, index) {
+  return gridNeighbors(sheet.cellCount, sheet.columns, index);
 }
 
 function isCellIndex(sheet, index) {
@@ -292,6 +297,130 @@ function forestDensity(grid, columns, index) {
   return neighbors < 3 ? 1 : 2;
 }
 
+// Every group of touching cells that holds one of the wanted blocks.
+function connectedComponents(grid, columns, ids) {
+  if (!Array.isArray(grid) || !Number.isInteger(columns) || columns <= 0) return [];
+  const wanted = new Set(Array.isArray(ids) ? ids : [ids]);
+  const seen = new Set();
+  const components = [];
+
+  grid.forEach((value, start) => {
+    if (!wanted.has(value) || seen.has(start)) return;
+    const cells = [];
+    const queue = [start];
+    seen.add(start);
+    while (queue.length > 0) {
+      const index = queue.pop();
+      cells.push(index);
+      gridNeighbors(grid.length, columns, index).forEach((neighbor) => {
+        if (seen.has(neighbor) || !wanted.has(grid[neighbor])) return;
+        seen.add(neighbor);
+        queue.push(neighbor);
+      });
+    }
+    cells.sort((left, right) => left - right);
+    components.push(cells);
+  });
+
+  return components;
+}
+
+function buildAdjacency(cells, cellCount, columns) {
+  const members = new Set(cells);
+  const adjacency = new Map();
+  cells.forEach((index) => {
+    adjacency.set(index, gridNeighbors(cellCount, columns, index).filter((n) => members.has(n)));
+  });
+  return adjacency;
+}
+
+// A ring of cells where every cell has exactly two neighbours.
+function isClosedLoop(cells, adjacency) {
+  if (cells.length < 4) return false;
+  return cells.every((index) => adjacency.get(index).length === 2);
+}
+
+function loopOrder(cells, adjacency) {
+  const start = cells[0];
+  const order = [start];
+  let previous = -1;
+  let current = start;
+  while (true) {
+    const next = adjacency.get(current).find((neighbor) => neighbor !== previous);
+    if (next === undefined || next === start) break;
+    order.push(next);
+    previous = current;
+    current = next;
+  }
+  return order;
+}
+
+// A continuous walk that covers every cell of the component and comes back:
+// where the walk cannot go on it steps back the way it came, so two cells next
+// to each other in the result are always next to each other on the sheet.
+function walkOrder(cells, adjacency) {
+  const start = cells.reduce(
+    (best, index) => (adjacency.get(index).length < adjacency.get(best).length ? index : best),
+    cells[0],
+  );
+  const visited = new Set([start]);
+  const walk = [start];
+  const stack = [start];
+
+  while (stack.length > 0) {
+    const current = stack[stack.length - 1];
+    const next = adjacency.get(current).find((neighbor) => !visited.has(neighbor));
+    if (next === undefined) {
+      stack.pop();
+      if (stack.length > 0) walk.push(stack[stack.length - 1]);
+      continue;
+    }
+    visited.add(next);
+    stack.push(next);
+    walk.push(next);
+  }
+
+  // The walk ends where it started; keeping both would be a step in place.
+  if (walk.length > 1 && walk.at(-1) === walk[0]) walk.pop();
+  return walk;
+}
+
+function componentTrack(cells, cellCount, columns) {
+  const adjacency = buildAdjacency(cells, cellCount, columns);
+  const loop = isClosedLoop(cells, adjacency);
+  return {
+    cells,
+    loop,
+    path: loop ? loopOrder(cells, adjacency) : walkOrder(cells, adjacency),
+  };
+}
+
+// One walkable track per connected road network. Rails are their own group, so
+// a car never drives onto a railway.
+function roadPaths(grid, columns, group = "road") {
+  const ids = BLOCKS.filter((block) => roadGroup(block.id) === group).map((block) => block.id);
+  return connectedComponents(grid, columns, ids)
+    .map((cells) => componentTrack(cells, grid.length, columns));
+}
+
+function railPaths(grid, columns) {
+  return roadPaths(grid, columns, "rails");
+}
+
+// Water under a bridge belongs to the lake, so a bridge never splits it in two.
+function lakes(grid, underlay, columns) {
+  if (!Array.isArray(grid)) return [];
+  const water = grid.map((value, index) => (isWaterCell(grid, underlay, index) ? WATER_ID : EMPTY_CELL));
+  return connectedComponents(water, columns, [WATER_ID])
+    .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
+}
+
+function forestClusters(grid, columns) {
+  const forestId = BLOCK_BY_KEY.get("forest").id;
+  return connectedComponents(grid, columns, [forestId])
+    .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
+}
+
 function paintedCount(state, sheetId = state?.currentSheet) {
   const grid = state?.grids?.[sheetId];
   if (!Array.isArray(grid)) return 0;
@@ -397,6 +526,12 @@ if (typeof module !== "undefined" && module.exports) {
     MASK_SOUTH,
     MASK_WEST,
     roadGroup,
+    gridNeighbors,
+    connectedComponents,
+    roadPaths,
+    railPaths,
+    lakes,
+    forestClusters,
     neighborMask,
     roadTile,
     waterEdges,
@@ -425,6 +560,16 @@ const STROKE_SOUND_EVERY = 3;
 
 // Each family has its own short note: a tap for a road, a plop for water, a
 // rustle for the meadow and the wood, a knock for a house, a ding for decor.
+// The living world. Each creature needs a painting big enough to hold it, and
+// the sheet never shows more than a few of one kind.
+const ANALYSIS_DELAY_MS = 320;
+const MAX_SPRITES_PER_KIND = 3;
+const SPRITE_KINDS = [
+  { kind: "car", minCells: 3, stepMs: 620 },
+  { kind: "duck", minCells: 4, stepMs: 1500 },
+  { kind: "bird", minCells: 6, stepMs: 900 },
+];
+
 const FAMILY_SOUNDS = {
   roads: [[300, 0, 0.06, "square"]],
   nature: [[430, 0, 0.08, "triangle"], [540, 0.05, 0.07, "triangle"]],
@@ -438,6 +583,7 @@ function initializeGame() {
     card: document.querySelector(".sheet-card"),
     stage: document.querySelector("#sheet-stage"),
     grid: document.querySelector("#sheet-grid"),
+    living: document.querySelector("#living-layer"),
     palette: document.querySelector("#palette"),
     progressPanel: document.querySelector("#progress-panel"),
     sunFill: document.querySelector("#progress-sun-fill"),
@@ -483,6 +629,12 @@ function initializeGame() {
   let strokeActive = false;
   let strokeLastIndex = -1;
   let cellsSinceSound = STROKE_SOUND_EVERY;
+  let sprites = [];
+  let analysisTimer = 0;
+  let driverHandle = 0;
+
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let reduceMotion = motionQuery.matches;
 
   function loadGame() {
     try {
@@ -698,6 +850,7 @@ function initializeGame() {
 
     renderProgress();
     scheduleSave();
+    scheduleAnalysis();
 
     cellsSinceSound += changed;
     if (cellsSinceSound < STROKE_SOUND_EVERY) return;
@@ -718,6 +871,100 @@ function initializeGame() {
     const row = Math.floor(((clientY - box.top - elements.grid.clientTop) / height) * sheet.rows);
     if (row < 0 || row >= sheet.rows || column < 0 || column >= sheet.columns) return -1;
     return row * sheet.columns + column;
+  }
+
+  function cellSizePx() {
+    const sheet = currentSheet(state);
+    return elements.grid.clientWidth / sheet.columns;
+  }
+
+  function createSprite(kind, track) {
+    const element = document.createElement("span");
+    element.className = `sprite sprite--${kind}`;
+    // The inner element carries the drawing, so it can be mirrored without
+    // disturbing the position of the sprite.
+    element.innerHTML = "<i></i>";
+    elements.living.append(element);
+    return { element, path: track.path, stepMs: kindStep(kind), phase: Math.random() };
+  }
+
+  function kindStep(kind) {
+    return SPRITE_KINDS.find((entry) => entry.kind === kind)?.stepMs ?? 800;
+  }
+
+  function placeSprite(sprite, position, size) {
+    const columns = currentSheet(state).columns;
+    const step = Math.floor(position);
+    const from = sprite.path[step % sprite.path.length];
+    const to = sprite.path[(step + 1) % sprite.path.length];
+    const share = position - step;
+    const fromColumn = from % columns;
+    const toColumn = to % columns;
+    const x = (fromColumn + (toColumn - fromColumn) * share) * size;
+    const fromRow = Math.floor(from / columns);
+    const y = (fromRow + (Math.floor(to / columns) - fromRow) * share) * size;
+    sprite.element.style.transform = `translate(${x}px, ${y}px)`;
+    // Creatures look the way they travel.
+    if (toColumn !== fromColumn) {
+      sprite.element.classList.toggle("is-mirrored", toColumn < fromColumn);
+    }
+  }
+
+  // Under reduced motion the creatures keep their place on the sheet: present,
+  // but never travelling.
+  function parkSprites() {
+    const size = cellSizePx();
+    sprites.forEach((sprite) => placeSprite(sprite, 0, size));
+  }
+
+  function driveSprites(timestamp) {
+    driverHandle = 0;
+    const size = cellSizePx();
+    sprites.forEach((sprite) => {
+      placeSprite(sprite, timestamp / sprite.stepMs + sprite.phase * sprite.path.length, size);
+    });
+    if (sprites.length > 0) driverHandle = window.requestAnimationFrame(driveSprites);
+  }
+
+  function startDriver() {
+    if (driverHandle) {
+      window.cancelAnimationFrame(driverHandle);
+      driverHandle = 0;
+    }
+    if (sprites.length === 0) return;
+    if (reduceMotion) {
+      parkSprites();
+      return;
+    }
+    driverHandle = window.requestAnimationFrame(driveSprites);
+  }
+
+  function tracksFor(kind, sheet, grid, underlay) {
+    if (kind === "car") return roadPaths(grid, sheet.columns);
+    if (kind === "duck") return lakes(grid, underlay, sheet.columns);
+    return forestClusters(grid, sheet.columns);
+  }
+
+  // The world is read once a stroke has settled, never cell by cell.
+  function analyzeWorld() {
+    const sheet = currentSheet(state);
+    const grid = state.grids[sheet.id];
+    const underlay = state.underlays[sheet.id];
+
+    elements.living.textContent = "";
+    sprites = SPRITE_KINDS.flatMap(({ kind, minCells }) =>
+      tracksFor(kind, sheet, grid, underlay)
+        .filter((track) => track.cells.length >= minCells)
+        .sort((left, right) => right.cells.length - left.cells.length)
+        .slice(0, MAX_SPRITES_PER_KIND)
+        .map((track) => createSprite(kind, track)));
+
+    startDriver();
+  }
+
+  function scheduleAnalysis() {
+    window.clearTimeout(analysisTimer);
+    analysisTimer = window.setTimeout(analyzeWorld, ANALYSIS_DELAY_MS);
   }
 
   function renderSound() {
@@ -808,6 +1055,7 @@ function initializeGame() {
     clearSheet(state);
     renderAllCells();
     renderProgress();
+    analyzeWorld();
     saveGame();
     closePause();
     announce("The sheet is empty again.");
@@ -819,12 +1067,21 @@ function initializeGame() {
     else openPause();
   });
 
-  window.addEventListener("resize", fitSheet);
+  window.addEventListener("resize", () => {
+    fitSheet();
+    if (reduceMotion) parkSprites();
+  });
+
+  motionQuery.addEventListener("change", (event) => {
+    reduceMotion = event.matches;
+    startDriver();
+  });
 
   renderSound();
   renderPalette();
   buildSheet();
   renderProgress();
+  analyzeWorld();
 }
 
 if (typeof document !== "undefined") {

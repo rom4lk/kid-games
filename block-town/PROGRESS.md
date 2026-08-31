@@ -10,7 +10,7 @@ its check passes and the work is committed.
 | 2 | Sheet 1 painting | [x] |
 | 3 | Strokes and sound | [x] |
 | 4 | Smart blocks | [x] |
-| 5 | The living world, first pass | [ ] |
+| 5 | The living world, first pass | [x] |
 | 6 | Completion, celebration, sheet shelf | [ ] |
 | 7 | Sheets 2 and 3 | [ ] |
 | 8 | Sheets 4 and 5 | [ ] |
@@ -35,6 +35,13 @@ its check passes and the work is committed.
   UI only rewrites the class list of the painted cell and its four neighbours. A road loop closes its
   corners, a road across a lake becomes a plank bridge, and water painted back over a bridge is
   plain water again.
+- Stage 5: `connectedComponents`, `roadPaths`, `lakes` and `forestClusters` feed one overlay of
+  sprites driven by a single animation frame loop. A car takes a road of three cells or more, a duck
+  a lake of four, birds a wood of six. Breaking a road mid-drive moves the car onto what is left
+  without an error.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.
+- The Browser pane in this session is never displayed, so `document.hidden` stays true and
+  `requestAnimationFrame` is paused. Sprite motion was checked by shimming `requestAnimationFrame`
+  with timers inside the page; nothing in the game was changed for it.

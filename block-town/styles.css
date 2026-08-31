@@ -20,6 +20,7 @@
   --water: #82c9e8;
   --water-mark: #3f9dc4;
   --shore: #ecdcae;
+  --sheet-border: 2px;
 
   /* The grid geometry is the only thing the model writes into the DOM. */
   --rows: 5;
@@ -179,7 +180,7 @@ button:focus-visible,
   display: grid;
   grid-template-rows: repeat(var(--rows), var(--cell-size));
   grid-template-columns: repeat(var(--columns), var(--cell-size));
-  border: 2px solid var(--paper-line);
+  border: var(--sheet-border) solid var(--paper-line);
   border-radius: 10px;
   background: var(--paper);
   overflow: hidden;
@@ -407,11 +408,99 @@ button:focus-visible,
   --edge-w: 5px 0 0 0 var(--shore);
 }
 
+/* The creatures live above the sheet and never take a tap away from it. */
 .living-layer {
   position: absolute;
   z-index: 2;
-  inset: 0;
+  inset: var(--sheet-border);
   pointer-events: none;
+}
+
+.sprite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cell-size);
+  height: var(--cell-size);
+}
+
+.sprite > i {
+  position: absolute;
+  display: block;
+  inset: 0;
+}
+
+.sprite.is-mirrored > i {
+  transform: scaleX(-1);
+}
+
+/* A little car with a window. */
+.sprite--car > i::before {
+  position: absolute;
+  border-radius: 38% 38% 24% 24%;
+  background: #e2685f;
+  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
+  content: "";
+  inset: 30% 14%;
+}
+
+/* Two windows, so the shape reads as a car and not as a red dot. */
+.sprite--car > i::after {
+  position: absolute;
+  background:
+    linear-gradient(
+      90deg,
+      #fff6dc 0 42%,
+      transparent 42% 58%,
+      #fff6dc 58% 100%
+    );
+  content: "";
+  inset: 38% 26% 48%;
+}
+
+/* A duck: a round body and a head with a beak. */
+.sprite--duck > i::before {
+  position: absolute;
+  border-radius: 50% 50% 46% 46%;
+  background: #ffd45c;
+  content: "";
+  inset: 44% 28% 24%;
+}
+
+.sprite--duck > i::after {
+  position: absolute;
+  top: 24%;
+  left: 48%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50% 50% 46% 46%;
+  background:
+    radial-gradient(circle at 74% 56%, #f08c48 0 22%, transparent 22%),
+    radial-gradient(circle at 40% 42%, #3a4a3f 0 14%, transparent 14%),
+    #ffd45c;
+  content: "";
+}
+
+/* Birds are two small wings over the wood. */
+.sprite--bird > i::before,
+.sprite--bird > i::after {
+  position: absolute;
+  top: 34%;
+  width: 22%;
+  height: 11%;
+  border-radius: 40%;
+  background: #4a6076;
+  content: "";
+}
+
+.sprite--bird > i::before {
+  left: 26%;
+  transform: rotate(-22deg);
+}
+
+.sprite--bird > i::after {
+  left: 48%;
+  transform: rotate(22deg);
 }
 
 /* Palette and tools stay well above the 64px minimum. */
