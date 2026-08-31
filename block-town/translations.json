@@ -1,0 +1,24 @@
+{
+  "pairs": [
+    ["Language", "Язык"],
+    ["Interface language", "Язык интерфейса"],
+    ["Block Town", "Городок из клеток"],
+    ["Painted part of the sheet", "Закрашенная часть листа"],
+    ["Game controls", "Управление игрой"],
+    ["Turn sound off", "Выключить звук"],
+    ["Turn sound on", "Включить звук"],
+    ["Open the pause menu", "Открыть меню паузы"],
+    ["Sheet of squared paper", "Лист в клетку"],
+    ["Sheet. Arrow keys move the frame, Space paints the chosen block.", "Лист. Стрелки двигают рамку, Пробел красит выбранный блок."],
+    ["Blocks and tools", "Блоки и инструменты"],
+    ["Blocks", "Блоки"],
+    ["Tools", "Инструменты"],
+    ["Pause menu", "Меню паузы"],
+    ["Back to the sheet", "Вернуться к листу"],
+    ["Start a new sheet", "Начать новый лист"],
+    ["Clear this sheet and start it again?", "Стереть этот лист и начать заново?"],
+    ["Yes, start a new sheet", "Да, начать новый лист"],
+    ["No, keep the painting", "Нет, оставить рисунок"]
+  ],
+  "templates": []
+}

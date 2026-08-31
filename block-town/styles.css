@@ -1,0 +1,266 @@
+:root {
+  --ink: #2b4535;
+  --ink-soft: #5c7566;
+  --paper: #fffdf4;
+  --paper-line: #d9e6cf;
+  --sky: #cfe9f3;
+  --leaf: #4f9b5f;
+  --leaf-dark: #2f6f45;
+  --sun: #ffd45c;
+  --shadow: 0 10px 26px rgb(43 69 53 / 14%);
+
+  /* The grid geometry is the only thing the model writes into the DOM. */
+  --rows: 5;
+  --columns: 10;
+  --cell-size: 56px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: linear-gradient(160deg, #eaf6e3 0%, #dcf0ea 52%, #cfe6f2 100%);
+  font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+.sheet-grid:focus-visible {
+  outline: 4px solid var(--leaf-dark);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.game-shell {
+  display: flex;
+  width: min(1120px, calc(100% - 24px));
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: clamp(12px, 2vw, 22px) 0;
+  gap: clamp(10px, 1.6vw, 18px);
+}
+
+/* Topbar: the progress sun for the child, the quiet controls for an adult. */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.progress-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-sun {
+  position: relative;
+  display: block;
+  width: 58px;
+  height: 58px;
+  border: 4px solid #e7b93c;
+  border-radius: 50%;
+  background: #fff6dc;
+  overflow: hidden;
+}
+
+.progress-sun-fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0%;
+  background: var(--sun);
+  transition: height 220ms ease;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.round-button {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 22%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.round-button.is-off {
+  color: var(--ink-soft);
+  background: #eef2ec;
+}
+
+.pause-icon {
+  display: block;
+  width: 20px;
+  height: 24px;
+  border-right: 7px solid currentColor;
+  border-left: 7px solid currentColor;
+}
+
+/* The sheet itself. */
+.sheet-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(10px, 1.6vw, 20px);
+  border: 3px solid rgb(47 111 69 / 16%);
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.sheet-scroll {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.sheet-stage {
+  position: relative;
+}
+
+.sheet-grid {
+  display: grid;
+  grid-template-rows: repeat(var(--rows), var(--cell-size));
+  grid-template-columns: repeat(var(--columns), var(--cell-size));
+  border: 2px solid var(--paper-line);
+  border-radius: 10px;
+  background: var(--paper);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.living-layer {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Palette and tools stay well above the 64px minimum. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.palette,
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.screen-reader-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Pause. */
+.pause-overlay {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  padding: 20px;
+  background: rgb(28 48 36 / 52%);
+}
+
+.pause-card {
+  display: flex;
+  min-width: min(420px, 100%);
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 26px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  gap: 16px;
+}
+
+.pause-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pause-question {
+  width: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  text-align: center;
+}
+
+.pause-action {
+  display: flex;
+  width: 88px;
+  height: 88px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 22%);
+  border-radius: 24px;
+  background: #fff;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.pause-action.resume-button,
+.pause-action.confirm-button {
+  border-color: var(--leaf);
+  color: var(--leaf-dark);
+}
+
+.pause-action.clear-button,
+.pause-action.cancel-button {
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-sun-fill {
+    transition-duration: 20ms;
+  }
+}
