@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#bfe3a8" />
+    <title>Block Town</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <main class="game-shell" id="game-shell">
+      <header class="topbar">
+        <section class="progress-panel" id="progress-panel" aria-label="Painted part of the sheet">
+          <span class="progress-sun" aria-hidden="true">
+            <span class="progress-sun-fill" id="progress-sun-fill"></span>
+            <span class="progress-sun-face"></span>
+          </span>
+        </section>
+
+        <div class="top-actions" aria-label="Game controls">
+          <label class="language-picker language-picker--compact">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+          <button class="round-button" id="sound-button" type="button" aria-label="Turn sound off">
+            <span class="sound-icon" aria-hidden="true">♪</span>
+          </button>
+          <button class="round-button" id="pause-button" type="button" aria-label="Open the pause menu">
+            <span class="pause-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <section class="sheet-card" aria-label="Sheet of squared paper">
+        <div class="zoom-buttons" id="zoom-buttons" hidden>
+          <button class="round-button" id="zoom-in" type="button" aria-label="Make the cells bigger">
+            <span aria-hidden="true">+</span>
+          </button>
+          <button class="round-button" id="zoom-out" type="button" aria-label="Make the cells smaller">
+            <span aria-hidden="true">−</span>
+          </button>
+        </div>
+
+        <div class="edge-arrows" id="edge-arrows" hidden>
+          <button class="edge-arrow edge-arrow--up" type="button" data-pan="up" aria-label="Move up">
+            <span aria-hidden="true">▲</span>
+          </button>
+          <button class="edge-arrow edge-arrow--down" type="button" data-pan="down" aria-label="Move down">
+            <span aria-hidden="true">▼</span>
+          </button>
+          <button class="edge-arrow edge-arrow--left" type="button" data-pan="left" aria-label="Move left">
+            <span aria-hidden="true">◀</span>
+          </button>
+          <button class="edge-arrow edge-arrow--right" type="button" data-pan="right" aria-label="Move right">
+            <span aria-hidden="true">▶</span>
+          </button>
+        </div>
+
+        <button class="minimap" id="minimap" type="button" aria-label="Whole sheet. Tap a spot to jump there." hidden>
+          <canvas class="minimap-canvas" id="minimap-canvas"></canvas>
+          <span class="minimap-view" id="minimap-view" aria-hidden="true"></span>
+        </button>
+
+        <div class="sheet-scroll" id="sheet-scroll">
+          <div class="sheet-stage" id="sheet-stage">
+            <div class="sheet-grid" id="sheet-grid" role="grid" tabindex="0"
+              aria-label="Sheet. Arrow keys move the frame, Space paints the chosen block."></div>
+            <div class="living-layer" id="living-layer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="celebration" id="celebration" hidden>
+          <div class="confetti" id="confetti" aria-hidden="true"></div>
+          <div class="celebration-card" role="dialog" aria-modal="true" aria-label="The sheet is full">
+            <span class="celebration-sun" aria-hidden="true"></span>
+            <p class="celebration-text">The whole sheet is painted!</p>
+            <div class="celebration-actions">
+              <button class="pause-action confirm-button" id="next-sheet-button" type="button" aria-label="Open the next sheet">
+                <span aria-hidden="true">▶</span>
+              </button>
+              <button class="pause-action" id="stay-button" type="button" aria-label="Stay on this sheet">
+                <span aria-hidden="true">✓</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-reader-status" id="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="toolbar" aria-label="Blocks and tools">
+        <div class="palette-area">
+          <div class="palette-kinds" id="palette-kinds" role="radiogroup" aria-label="Kinds of block" hidden></div>
+          <div class="palette" id="palette" role="radiogroup" aria-label="Blocks"></div>
+        </div>
+        <div class="tools" id="tools" role="radiogroup" aria-label="Tools"></div>
+      </section>
+    </main>
+
+    <div class="pause-overlay" id="pause-overlay" role="dialog" aria-modal="true" aria-label="Pause menu" hidden>
+      <div class="pause-card">
+        <div class="pause-actions" data-state="menu">
+          <button class="pause-action resume-button" id="resume-button" type="button" aria-label="Back to the sheet">
+            <span aria-hidden="true">▶</span>
+          </button>
+          <button class="pause-action shelf-button" id="shelf-button" type="button" aria-label="Choose a sheet" hidden>
+            <span class="shelf-icon" aria-hidden="true"></span>
+          </button>
+          <button class="pause-action clear-button" id="clear-button" type="button" aria-label="Start a new sheet">
+            <span aria-hidden="true">🗋</span>
+          </button>
+        </div>
+        <div class="pause-actions pause-actions--shelf" data-state="sheets" hidden>
+          <div class="sheet-shelf" id="sheet-shelf" role="list"></div>
+          <button class="pause-action" id="shelf-back-button" type="button" aria-label="Back to the pause menu">
+            <span aria-hidden="true">↩</span>
+          </button>
+        </div>
+        <div class="pause-actions" data-state="confirm" hidden>
+          <p class="pause-question">Clear this sheet and start it again?</p>
+          <button class="pause-action confirm-button" id="confirm-clear-button" type="button" aria-label="Yes, start a new sheet">
+            <span aria-hidden="true">✓</span>
+          </button>
+          <button class="pause-action cancel-button" id="cancel-clear-button" type="button" aria-label="No, keep the painting">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../shared/game-language.js"></script>
+    <script src="../shared/game-home.js"></script>
+    <script src="../shared/game-sound.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

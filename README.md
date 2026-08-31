@@ -29,8 +29,8 @@ the background:
 that was started with `start`, not one running in the foreground.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
-`island-discovery`, `forest-light`, `cube-island`, `robo-route`, `garden-quest` and
-`hypothesis-lab` load translations or other content the same way. That does not work when a file is
+`island-discovery`, `forest-light`, `cube-island`, `robo-route`, `garden-quest`, `hypothesis-lab`
+and `block-town` load translations or other content the same way. That does not work when a file is
 opened directly over `file://`.
 
 ## The games
@@ -44,12 +44,13 @@ opened directly over `file://`.
 | `robo-route/` | Robo Route | Building a route out of picture commands and running it | Russian, English |
 | `garden-quest/` | Garden Quest | Collecting a harvest on a fixed board within a limited number of steps | Russian, English |
 | `hypothesis-lab/` | Secret Rule Lab | Forming a hypothesis, predicting a result and testing a secret sorting rule | Russian, English |
+| `block-town/` | Block Town | Painting a town on squared paper, where roads, water and houses connect themselves | Russian, English |
 
 Details about a game loop and its deliberate design decisions are in the README of the game:
 [word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md),
 [forest-light/README.md](forest-light/README.md), [cube-island/README.md](cube-island/README.md),
 [robo-route/README.md](robo-route/README.md), [garden-quest/README.md](garden-quest/README.md),
-[hypothesis-lab/README.md](hypothesis-lab/README.md).
+[hypothesis-lab/README.md](hypothesis-lab/README.md), [block-town/README.md](block-town/README.md).
 
 ## Returning to the shelf
 
@@ -72,8 +73,8 @@ page is the one a game opens in, and a language picked inside a game is the one 
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
 next to it through the shared `shared/game-language.js`. The home page, `island-discovery`,
-`forest-light`, `cube-island`, `robo-route`, `garden-quest` and `hypothesis-lab` work this way;
-`word-quest` carries its own two-language content in `word-quest/content/`.
+`forest-light`, `cube-island`, `robo-route`, `garden-quest`, `hypothesis-lab` and `block-town` work
+this way; `word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -92,6 +93,12 @@ The Secret Rule Lab logic is checked separately:
 node hypothesis-lab/test-game.js
 ```
 
+So is the Block Town model:
+
+```bash
+node block-town/test-game.js
+```
+
 ## Saved progress
 
 Every game writes its progress to `localStorage` under its own key:
@@ -105,6 +112,7 @@ Every game writes its progress to `localStorage` under its own key:
 | `robo-route` | `roboRouteProgressV1` |
 | `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
+| `block-town` | `blockTownSheetsV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.

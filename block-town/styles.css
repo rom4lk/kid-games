@@ -1,0 +1,1502 @@
+:root {
+  --ink: #2b4535;
+  --ink-soft: #5c7566;
+  --paper: #fffdf4;
+  --paper-line: #d9e6cf;
+  --sky: #cfe9f3;
+  --leaf: #4f9b5f;
+  --leaf-dark: #2f6f45;
+  --sun: #ffd45c;
+  --shadow: 0 10px 26px rgb(43 69 53 / 14%);
+
+  /* Block colors. Every block also carries a pattern, so the color alone never
+     has to be read. */
+  --meadow: #a9dc88;
+  --meadow-mark: #5aa25f;
+  --road: #e2d2ab;
+  --road-mark: #b09a68;
+  --forest: #74b97b;
+  --forest-mark: #2f6f45;
+  --water: #82c9e8;
+  --water-mark: #3f9dc4;
+  --house: #e58f6a;
+  --house-mark: #8f4b34;
+  --field: #d8c057;
+  --field-mark: #a3862f;
+  --soil: #b98c5c;
+  --shoot: #7fc06a;
+  --flowers: #e78cbb;
+  --sand: #f0dfae;
+  --sand-mark: #cfb277;
+  --asphalt: #9aa2a6;
+  --asphalt-mark: #5f6a70;
+  --rail-bed: #cbb79a;
+  --rail-mark: #5b4a34;
+  --stone: #b9b3a6;
+  --stone-mark: #6f6a60;
+  --brick: #c97f52;
+  --brick-mark: #7e4a2c;
+  --lamp: #ffe9a8;
+  --shore: #ecdcae;
+  --sheet-border: 2px;
+
+  /* The grid geometry is the only thing the model writes into the DOM. */
+  --rows: 5;
+  --columns: 10;
+  --cell-size: 56px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: linear-gradient(160deg, #eaf6e3 0%, #dcf0ea 52%, #cfe6f2 100%);
+  font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+.sheet-grid:focus-visible {
+  outline: 4px solid var(--leaf-dark);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.game-shell {
+  display: flex;
+  width: min(1120px, calc(100% - 24px));
+  height: 100vh;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: clamp(12px, 2vw, 22px) 0;
+  gap: clamp(10px, 1.6vw, 18px);
+}
+
+/* Topbar: the progress sun for the child, the quiet controls for an adult. */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.progress-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-sun {
+  position: relative;
+  display: block;
+  width: 62px;
+  height: 62px;
+  border: 4px solid #e7b93c;
+  border-radius: 50%;
+  background: #fff6dc;
+  overflow: hidden;
+}
+
+.progress-sun-fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0%;
+  background: var(--sun);
+  transition: height 220ms ease;
+}
+
+/* The face keeps the sun readable when the fill is still low. */
+.progress-sun-face {
+  position: absolute;
+  top: 38%;
+  left: 26%;
+  width: 48%;
+  height: 22%;
+  border-bottom: 3px solid #b98d21;
+  border-radius: 0 0 60% 60%;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.round-button {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 22%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.round-button.is-off {
+  color: var(--ink-soft);
+  background: #eef2ec;
+}
+
+.pause-icon {
+  display: block;
+  width: 20px;
+  height: 24px;
+  border-right: 7px solid currentColor;
+  border-left: 7px solid currentColor;
+}
+
+/* The sheet itself. */
+.sheet-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: clamp(10px, 1.6vw, 20px);
+  border: 3px solid rgb(47 111 69 / 16%);
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.sheet-scroll {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
+
+/* The stage is exactly as wide as the grid, so a sheet larger than the card
+   scrolls instead of being cut off. */
+.sheet-stage {
+  position: relative;
+  width: max-content;
+}
+
+/* Evening light stays on a sheet that has been finished. */
+.sheet-stage.is-evening::before {
+  position: absolute;
+  z-index: 3;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgb(255 168 96 / 26%), rgb(96 84 168 / 26%));
+  content: "";
+  inset: 0;
+  pointer-events: none;
+}
+
+.sheet-grid {
+  display: grid;
+  grid-template-rows: repeat(var(--rows), var(--cell-size));
+  grid-template-columns: repeat(var(--columns), var(--cell-size));
+  border: var(--sheet-border) solid var(--paper-line);
+  border-radius: 10px;
+  background: var(--paper);
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* The rows exist for screen readers; the grid itself does the layout. */
+.sheet-row {
+  display: contents;
+}
+
+.cell {
+  /* Each side of a cell can carry its own edge line: a road shows one where it
+     stops, water shows a shore where the lake ends. */
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+
+  position: relative;
+  box-shadow:
+    inset var(--edge-n),
+    inset var(--edge-e),
+    inset var(--edge-s),
+    inset var(--edge-w);
+  overflow: hidden;
+}
+
+/* One animated custom property drives the shimmer of every unpainted cell, so
+   a sheet of a thousand cells still runs a single animation. */
+@property --empty-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fffdf4;
+}
+
+.sheet-grid {
+  --empty-tint: var(--paper);
+
+  animation: paper-shimmer 2800ms ease-in-out infinite;
+}
+
+@keyframes paper-shimmer {
+  0%,
+  100% {
+    --empty-tint: #fffdf4;
+  }
+
+  50% {
+    --empty-tint: #fbf0cd;
+  }
+}
+
+/* An unpainted cell keeps the squared-paper look. */
+.cell.is-empty {
+  background:
+    linear-gradient(var(--paper-line) 0 1px, transparent 1px 100%),
+    linear-gradient(90deg, var(--paper-line) 0 1px, transparent 1px 100%),
+    var(--empty-tint);
+}
+
+.cell:not(.is-empty) {
+  outline: 1px solid rgb(43 69 53 / 7%);
+  outline-offset: -1px;
+}
+
+/* The keyboard frame. It is a shape, not a colour, so it reads on any block. */
+.cell.is-cursor {
+  z-index: 1;
+  outline: 4px solid var(--leaf-dark);
+  outline-offset: -4px;
+}
+
+/* Block art. Each family carries its own pattern and silhouette. */
+.block--meadow {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 32%,
+      var(--meadow-mark) 32% 36%,
+      transparent 36% 100%
+    ),
+    var(--meadow);
+  background-size: 50% 42%, auto;
+  background-position: center 62%, center;
+  background-repeat: repeat-x, repeat;
+}
+
+/* Roads: the surface is flat and every side the road does not continue to gets
+   a drawn edge, so turns, crossings and ends read at a glance. */
+.block--path {
+  background: var(--road);
+}
+
+.cell--road {
+  --edge-n: 0 4px 0 0 var(--road-mark);
+  --edge-e: -4px 0 0 0 var(--road-mark);
+  --edge-s: 0 -4px 0 0 var(--road-mark);
+  --edge-w: 4px 0 0 0 var(--road-mark);
+
+  /* One pale stub per connected side. Together they draw the centre line
+     through a straight, a turn, a T and a crossing alike. */
+  background-image: var(--stub-n, none), var(--stub-e, none), var(--stub-s, none), var(--stub-w, none);
+  background-position: top center, right center, bottom center, left center;
+  background-repeat: no-repeat;
+  background-size: 16% 56%, 56% 16%, 16% 56%, 56% 16%;
+}
+
+.cell--road.road--n {
+  --edge-n: 0 0 0 0 transparent;
+  --stub-n: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--e {
+  --edge-e: 0 0 0 0 transparent;
+  --stub-e: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--s {
+  --edge-s: 0 0 0 0 transparent;
+  --stub-s: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+.cell--road.road--w {
+  --edge-w: 0 0 0 0 transparent;
+  --stub-w: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+}
+
+/* A road that leads nowhere yet still shows a piece of surface. */
+.cell--road.road--lone::before {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 62%);
+  content: "";
+  inset: 36%;
+}
+
+/* A road that stands on water is a bridge: the deck floats and the water shows
+   along its sides. */
+.cell--road.road--bridge {
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+
+  background: var(--water);
+}
+
+.cell--road.road--bridge::after {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--road) 0 30%,
+      var(--road-mark) 30% 36%,
+      var(--road) 36% 66%
+    );
+  content: "";
+  inset: 16% 0;
+}
+
+.cell--road.road--bridge.road--bridge-vertical::after {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--road) 0 30%,
+      var(--road-mark) 30% 36%,
+      var(--road) 36% 66%
+    );
+  inset: 0 16%;
+}
+
+/* Forest: a lone cell is one small tree, a cluster grows taller and denser. */
+.block--forest {
+  background: var(--forest);
+}
+
+.block--forest::before {
+  position: absolute;
+  border-radius: 50% 50% 42% 42%;
+  background: var(--forest-mark);
+  content: "";
+  inset: 26% 30% 30%;
+}
+
+.block--forest.forest--1::before {
+  inset: 16% 20% 22%;
+}
+
+.block--forest.forest--2::before {
+  border-radius: 50% 50% 38% 38%;
+  background: #24583a;
+  inset: 6% 30% 34% 8%;
+}
+
+/* A second crown makes a dense wood read as a wood, not as a bigger tree. */
+.block--forest.forest--2::after {
+  position: absolute;
+  border-radius: 50% 50% 40% 40%;
+  background: var(--forest-mark);
+  content: "";
+  inset: 30% 8% 8% 42%;
+}
+
+/* A house: walls, a roof and a door, so it reads as a building at any size. */
+.block--house {
+  background: var(--meadow);
+}
+
+.block--house::before {
+  position: absolute;
+  border-radius: 12% 12% 6% 6%;
+  background:
+    linear-gradient(var(--house-mark) 0 26%, transparent 26% 100%),
+    var(--house);
+  content: "";
+  inset: 22% 18% 14%;
+}
+
+.block--house::after {
+  position: absolute;
+  width: 22%;
+  height: 30%;
+  border-radius: 30% 30% 0 0;
+  background: var(--house-mark);
+  content: "";
+  bottom: 14%;
+  left: 39%;
+}
+
+/* The door and its doorstep turn toward the street. */
+.block--house.door--n::after {
+  border-radius: 0 0 30% 30%;
+  top: 14%;
+  bottom: auto;
+}
+
+.block--house.door--e::after {
+  width: 30%;
+  height: 22%;
+  border-radius: 0 30% 30% 0;
+  right: 14%;
+  bottom: 39%;
+  left: auto;
+}
+
+.block--house.door--w::after {
+  width: 30%;
+  height: 22%;
+  border-radius: 30% 0 0 30%;
+  bottom: 39%;
+  left: 14%;
+}
+
+/* A field grows: bare soil, then shoots, then ripe ears. */
+.block--field {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--soil) 0 66%,
+      color-mix(in srgb, var(--soil) 76%, #000) 66% 100%
+    ),
+    var(--soil);
+  background-size: 100% 34%, auto;
+}
+
+.block--field.field--1 {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--soil) 0 58%,
+      var(--shoot) 58% 100%
+    ),
+    var(--soil);
+  background-size: 100% 34%, auto;
+}
+
+.block--field.field--2 {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--field) 0 62%,
+      var(--field-mark) 62% 100%
+    ),
+    var(--field);
+  background-size: 100% 26%, auto;
+}
+
+/* Flowers: bright heads scattered over the grass. */
+.block--flowers {
+  background:
+    radial-gradient(circle at 28% 34%, var(--flowers) 0 15%, transparent 15%),
+    radial-gradient(circle at 68% 30%, #fff3a8 0 13%, transparent 13%),
+    radial-gradient(circle at 44% 70%, var(--flowers) 0 14%, transparent 14%),
+    radial-gradient(circle at 78% 72%, #f4f0ff 0 12%, transparent 12%),
+    var(--meadow);
+}
+
+/* Sand: pale grains, no plants at all. */
+.block--sand {
+  background:
+    radial-gradient(circle at 24% 30%, var(--sand-mark) 0 8%, transparent 8%),
+    radial-gradient(circle at 66% 24%, var(--sand-mark) 0 7%, transparent 7%),
+    radial-gradient(circle at 38% 68%, var(--sand-mark) 0 7%, transparent 7%),
+    radial-gradient(circle at 76% 66%, var(--sand-mark) 0 8%, transparent 8%),
+    var(--sand);
+}
+
+/* Asphalt is a road too: the same edges and centre line, a darker surface. */
+.block--asphalt {
+  background: var(--asphalt);
+}
+
+.cell--road.block--asphalt {
+  --edge-n: 0 4px 0 0 var(--asphalt-mark);
+  --edge-e: -4px 0 0 0 var(--asphalt-mark);
+  --edge-s: 0 -4px 0 0 var(--asphalt-mark);
+  --edge-w: 4px 0 0 0 var(--asphalt-mark);
+}
+
+.cell--road.block--asphalt.road--n {
+  --edge-n: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--e {
+  --edge-e: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--s {
+  --edge-s: 0 0 0 0 transparent;
+}
+
+.cell--road.block--asphalt.road--w {
+  --edge-w: 0 0 0 0 transparent;
+}
+
+/* Rails: a bed with sleepers and a dark line running along the track. */
+.block--rails {
+  background: var(--rail-bed);
+}
+
+.cell--road.block--rails {
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+}
+
+.cell--road.block--rails.road--n {
+  --stub-n: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--e {
+  --stub-e: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--s {
+  --stub-s: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--w {
+  --stub-w: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.block--rails::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 22%,
+      var(--rail-mark) 22% 32%,
+      transparent 32% 54%
+    );
+  content: "";
+  inset: 28% 0;
+  opacity: 0.62;
+}
+
+/* A tower: tall, narrow and topped with a roof. */
+.block--tower {
+  background: var(--meadow);
+}
+
+.block--tower::before {
+  position: absolute;
+  border-radius: 20% 20% 6% 6%;
+  background: linear-gradient(#b58bd0 0 100%);
+  content: "";
+  inset: 10% 32% 6%;
+}
+
+.block--tower::after {
+  position: absolute;
+  bottom: 10%;
+  left: 40%;
+  width: 20%;
+  height: 22%;
+  border-radius: 40% 40% 0 0;
+  background: var(--stone-mark);
+  content: "";
+}
+
+/* A farm: a wide barn with a gate. */
+.block--farm {
+  background: var(--meadow);
+}
+
+.block--farm::before {
+  position: absolute;
+  border-radius: 34% 34% 6% 6%;
+  background: linear-gradient(var(--brick-mark) 0 30%, var(--brick) 30% 100%);
+  content: "";
+  inset: 24% 10% 12%;
+}
+
+.block--farm::after {
+  position: absolute;
+  bottom: 12%;
+  left: 38%;
+  width: 24%;
+  height: 30%;
+  border-radius: 4px 4px 0 0;
+  background: var(--lamp);
+  content: "";
+}
+
+/* A mountain: a grey peak with snow on top. */
+.block--mountain {
+  background: var(--meadow);
+}
+
+.block--mountain::before {
+  position: absolute;
+  background: linear-gradient(#f4f6f8 0 22%, var(--stone) 22% 100%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  content: "";
+  inset: 8% 4% 10%;
+}
+
+/* A windmill turns only when a field is next to it. */
+.block--windmill {
+  background: var(--meadow);
+}
+
+.block--windmill::before {
+  position: absolute;
+  border-radius: 30% 30% 6% 6%;
+  background: #efe3c4;
+  box-shadow: inset 0 0 0 2px rgb(111 106 96 / 30%);
+  content: "";
+  inset: 26% 34% 8%;
+}
+
+.block--windmill::after {
+  position: absolute;
+  top: 6%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  background:
+    linear-gradient(90deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%),
+    linear-gradient(180deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%);
+  content: "";
+}
+
+.block--windmill.is-turning::after {
+  animation: windmill-turn 5200ms linear infinite;
+}
+
+@keyframes windmill-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A lighthouse blinks only when it stands by the water. */
+.block--lighthouse {
+  background: var(--sand);
+}
+
+.block--lighthouse::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #f6f2ea 0 26%,
+      #e5645f 26% 52%
+    );
+  clip-path: polygon(30% 0, 70% 0, 84% 100%, 16% 100%);
+  content: "";
+  inset: 20% 26% 8%;
+}
+
+.block--lighthouse::after {
+  position: absolute;
+  top: 8%;
+  left: 36%;
+  width: 28%;
+  height: 20%;
+  border-radius: 40%;
+  background: var(--lamp);
+  box-shadow: 0 0 0 3px rgb(255 233 168 / 55%);
+  content: "";
+}
+
+.block--lighthouse.is-blinking::after {
+  animation: lamp-blink 2400ms ease-in-out infinite;
+}
+
+@keyframes lamp-blink {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* A castle: thick walls with battlements and a gate. */
+.block--castle {
+  background: var(--meadow);
+}
+
+.block--castle::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--stone) 0 22%,
+      transparent 22% 34%
+    ),
+    linear-gradient(transparent 0 26%, var(--stone) 26% 100%);
+  content: "";
+  inset: 14% 8% 8%;
+}
+
+.block--castle::after {
+  position: absolute;
+  bottom: 8%;
+  left: 40%;
+  width: 20%;
+  height: 34%;
+  border-radius: 40% 40% 0 0;
+  background: var(--stone-mark);
+  content: "";
+}
+
+/* A playground: a slide and a ball. */
+.block--playground {
+  background: var(--sand);
+}
+
+.block--playground::before {
+  position: absolute;
+  background: linear-gradient(#f2a63e 0 100%);
+  clip-path: polygon(0 100%, 70% 20%, 86% 20%, 26% 100%);
+  content: "";
+  inset: 16% 10% 14%;
+}
+
+.block--playground::after {
+  position: absolute;
+  bottom: 16%;
+  left: 60%;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: #6fb7e8;
+  content: "";
+}
+
+/* Decorations: a lantern, a bench and a fountain. */
+.block--lantern {
+  background: var(--meadow);
+}
+
+.block--lantern::before {
+  position: absolute;
+  top: 16%;
+  left: 40%;
+  width: 20%;
+  height: 26%;
+  border-radius: 30%;
+  background: var(--lamp);
+  content: "";
+}
+
+.block--lantern::after {
+  position: absolute;
+  bottom: 14%;
+  left: 46%;
+  width: 8%;
+  height: 42%;
+  background: var(--stone-mark);
+  content: "";
+}
+
+.block--bench {
+  background: var(--meadow);
+}
+
+.block--bench::before {
+  position: absolute;
+  border-radius: 4px;
+  background: linear-gradient(#c09a6a 0 46%, transparent 46% 60%, #c09a6a 60% 100%);
+  content: "";
+  inset: 34% 18% 34%;
+}
+
+.block--bench::after {
+  position: absolute;
+  bottom: 22%;
+  left: 24%;
+  width: 52%;
+  height: 14%;
+  background:
+    linear-gradient(90deg, #8f7448 0 14%, transparent 14% 86%, #8f7448 86% 100%);
+  content: "";
+}
+
+.block--fountain {
+  background: var(--sand);
+}
+
+.block--fountain::before {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--water);
+  box-shadow: inset 0 0 0 3px #7fd3d0;
+  content: "";
+  inset: 20%;
+}
+
+.block--fountain::after {
+  position: absolute;
+  top: 12%;
+  left: 46%;
+  width: 8%;
+  height: 34%;
+  border-radius: 4px;
+  background: #d8f2f1;
+  content: "";
+}
+
+/* Evening: the windows and the lanterns come on. */
+.sheet-stage.is-evening .block--house::before {
+  background:
+    radial-gradient(circle at 32% 56%, var(--lamp) 0 11%, transparent 11%),
+    radial-gradient(circle at 68% 56%, var(--lamp) 0 11%, transparent 11%),
+    linear-gradient(var(--house-mark) 0 26%, transparent 26% 100%),
+    var(--house);
+}
+
+.sheet-stage.is-evening .block--lantern::before,
+.sheet-stage.is-evening .block--lighthouse::after {
+  box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
+}
+
+/* Water: the wave pattern says water, and a sandy shore is drawn on every side
+   where the lake ends. */
+.block--water {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 44%,
+      var(--water-mark) 44% 56%,
+      transparent 56% 100%
+    ),
+    var(--water);
+  background-size: 100% 46%, auto;
+}
+
+.block--water.shore--n {
+  --edge-n: 0 5px 0 0 var(--shore);
+}
+
+.block--water.shore--e {
+  --edge-e: -5px 0 0 0 var(--shore);
+}
+
+.block--water.shore--s {
+  --edge-s: 0 -5px 0 0 var(--shore);
+}
+
+.block--water.shore--w {
+  --edge-w: 5px 0 0 0 var(--shore);
+}
+
+/* The creatures live above the sheet and never take a tap away from it. */
+.living-layer {
+  position: absolute;
+  z-index: 2;
+  inset: var(--sheet-border);
+  pointer-events: none;
+}
+
+.sprite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cell-size);
+  height: var(--cell-size);
+}
+
+.sprite > i {
+  position: absolute;
+  display: block;
+  inset: 0;
+}
+
+.sprite.is-mirrored > i {
+  transform: scaleX(-1);
+}
+
+/* A little car with a window. */
+.sprite--car > i::before {
+  position: absolute;
+  border-radius: 38% 38% 24% 24%;
+  background: #e2685f;
+  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
+  content: "";
+  inset: 30% 14%;
+}
+
+/* Two windows, so the shape reads as a car and not as a red dot. */
+.sprite--car > i::after {
+  position: absolute;
+  background:
+    linear-gradient(
+      90deg,
+      #fff6dc 0 42%,
+      transparent 42% 58%,
+      #fff6dc 58% 100%
+    );
+  content: "";
+  inset: 38% 26% 48%;
+}
+
+/* A duck: a round body and a head with a beak. */
+.sprite--duck > i::before {
+  position: absolute;
+  border-radius: 50% 50% 46% 46%;
+  background: #ffd45c;
+  content: "";
+  inset: 44% 28% 24%;
+}
+
+.sprite--duck > i::after {
+  position: absolute;
+  top: 24%;
+  left: 48%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50% 50% 46% 46%;
+  background:
+    radial-gradient(circle at 74% 56%, #f08c48 0 22%, transparent 22%),
+    radial-gradient(circle at 40% 42%, #3a4a3f 0 14%, transparent 14%),
+    #ffd45c;
+  content: "";
+}
+
+/* A train: a dark engine with a chimney. */
+.sprite--train > i::before {
+  position: absolute;
+  border-radius: 30% 30% 22% 22%;
+  background: #4a6076;
+  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
+  content: "";
+  inset: 32% 10%;
+}
+
+.sprite--train > i::after {
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 16%;
+  height: 22%;
+  border-radius: 20%;
+  background: #4a6076;
+  box-shadow: 34% 0 0 0 transparent;
+  content: "";
+}
+
+/* A boat: a hull and a small sail. */
+.sprite--boat > i::before {
+  position: absolute;
+  border-radius: 0 0 46% 46%;
+  background: #d2703f;
+  content: "";
+  inset: 56% 18% 22%;
+}
+
+.sprite--boat > i::after {
+  position: absolute;
+  bottom: 44%;
+  left: 40%;
+  width: 34%;
+  height: 34%;
+  background: #fff6dc;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  content: "";
+}
+
+/* Birds are two small wings over the wood. */
+.sprite--bird > i::before,
+.sprite--bird > i::after {
+  position: absolute;
+  top: 34%;
+  width: 22%;
+  height: 11%;
+  border-radius: 40%;
+  background: #4a6076;
+  content: "";
+}
+
+.sprite--bird > i::before {
+  left: 26%;
+  transform: rotate(-22deg);
+}
+
+.sprite--bird > i::after {
+  left: 48%;
+  transform: rotate(22deg);
+}
+
+/* Palette and tools stay well above the 64px minimum. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.palette-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.palette,
+.palette-kinds,
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* The kinds of one family: a short row above the family buttons. */
+.palette-kinds {
+  padding: 6px 8px;
+  border: 3px solid rgb(47 111 69 / 18%);
+  border-radius: 22px;
+  background: rgb(255 255 255 / 78%);
+}
+
+.tool-button {
+  display: flex;
+  width: 68px;
+  height: 68px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 18%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.tool-button[aria-checked="true"] {
+  border-color: var(--leaf-dark);
+  transform: scale(1.08);
+}
+
+.tool-mark {
+  display: block;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  background: var(--meadow);
+}
+
+.tool--brush .tool-mark {
+  width: 18px;
+  height: 18px;
+}
+
+.tool--wide .tool-mark {
+  width: 34px;
+  height: 34px;
+  background:
+    linear-gradient(90deg, transparent 0 47%, var(--ink) 47% 53%, transparent 53% 100%),
+    linear-gradient(180deg, transparent 0 47%, var(--ink) 47% 53%, transparent 53% 100%),
+    var(--meadow);
+}
+
+/* The bucket pours a whole area at once. */
+.tool--bucket .tool-mark {
+  width: 30px;
+  height: 26px;
+  border-radius: 4px 4px 40% 40%;
+  background: var(--water);
+}
+
+.palette-button {
+  position: relative;
+  display: flex;
+  width: 76px;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 18%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.palette-button[aria-checked="true"] {
+  border-color: var(--leaf-dark);
+  transform: scale(1.08);
+}
+
+/* The chosen block is framed, larger and marked, never colored alone. */
+.palette-button[aria-checked="true"]::after {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--leaf-dark);
+  color: #fff;
+  content: "✓";
+  font-size: 17px;
+}
+
+.palette-swatch {
+  display: block;
+  width: 54px;
+  height: 54px;
+  border: 2px solid rgb(43 69 53 / 14%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.screen-reader-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Pause. */
+.pause-overlay {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  padding: 20px;
+  background: rgb(28 48 36 / 52%);
+}
+
+.pause-card {
+  display: flex;
+  min-width: min(420px, 100%);
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 26px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  gap: 16px;
+}
+
+.pause-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pause-question {
+  width: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  text-align: center;
+}
+
+.pause-action {
+  display: flex;
+  width: 88px;
+  height: 88px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 22%);
+  border-radius: 24px;
+  background: #fff;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.pause-action.resume-button,
+.pause-action.confirm-button {
+  border-color: var(--leaf);
+  color: var(--leaf-dark);
+}
+
+.pause-action.clear-button,
+.pause-action.cancel-button {
+  color: var(--ink-soft);
+}
+
+/* Zoom, edge arrows and the mini-map: only the big sheets need them. */
+.zoom-buttons {
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edge-arrows {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.edge-arrow {
+  position: absolute;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 20%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 88%);
+  color: var(--ink);
+  font-size: 20px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.edge-arrow--up {
+  top: 8px;
+  left: 50%;
+  margin-left: -32px;
+}
+
+.edge-arrow--down {
+  bottom: 8px;
+  left: 50%;
+  margin-left: -32px;
+}
+
+.edge-arrow--left {
+  top: 50%;
+  left: 8px;
+  margin-top: -32px;
+}
+
+.edge-arrow--right {
+  top: 50%;
+  right: 8px;
+  margin-top: -32px;
+}
+
+.minimap {
+  position: absolute;
+  z-index: 5;
+  right: 10px;
+  bottom: 10px;
+  width: 168px;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 24%);
+  border-radius: 10px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.minimap-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.minimap-view {
+  position: absolute;
+  border: 3px solid var(--leaf-dark);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* The finished sheet: soft confetti and one large picture button. */
+.celebration {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  padding: 16px;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti span {
+  position: absolute;
+  top: -8%;
+  left: var(--left);
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--sun);
+  animation: confetti-fall 3600ms linear var(--delay) infinite;
+}
+
+.confetti span:nth-child(3n) {
+  background: #8ec8f0;
+}
+
+.confetti span:nth-child(3n + 1) {
+  border-radius: 50%;
+  background: #ef9ac0;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.9;
+    transform: translateY(70vh) translateX(calc(var(--drift) * 26px)) rotate(220deg);
+  }
+}
+
+.celebration-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 26px;
+  border: 4px solid var(--sun);
+  border-radius: 26px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  gap: 14px;
+}
+
+.celebration-sun {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 60%, #ffe9a8 0 44%, var(--sun) 44% 100%);
+  box-shadow: 0 0 0 8px rgb(255 212 92 / 28%);
+}
+
+.celebration-text {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: 24px;
+  text-align: center;
+}
+
+.celebration-actions {
+  display: flex;
+  gap: 14px;
+}
+
+/* The shelf of sheets: one live picture of each unlocked painting. */
+.pause-actions--shelf {
+  flex-direction: column;
+}
+
+.sheet-shelf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sheet-choice {
+  display: flex;
+  min-width: 64px;
+  min-height: 64px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: 4px solid rgb(47 111 69 / 20%);
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.sheet-choice[aria-current="true"] {
+  border-color: var(--leaf-dark);
+}
+
+.sheet-thumbnail {
+  display: block;
+  width: var(--thumb-width, 64px);
+  height: calc(var(--thumb-width, 64px) / 2);
+  border-radius: 6px;
+  background: var(--paper);
+  image-rendering: pixelated;
+}
+
+.shelf-icon {
+  display: block;
+  width: 40px;
+  height: 30px;
+  border: 4px solid currentcolor;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, transparent 0 46%, currentcolor 46% 54%, transparent 54% 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No falling confetti: the pieces simply lie on the finished sheet. */
+  .confetti span {
+    top: var(--top);
+    animation: none;
+  }
+
+  .progress-sun-fill,
+  .palette-button,
+  .tool-button {
+    transition-duration: 20ms;
+  }
+
+  /* No pulsing: the unpainted cells keep a dashed frame instead. */
+  .sheet-grid {
+    animation: none;
+  }
+
+  /* The blades stop; the standing cross still says "windmill". The light of the
+     lighthouse is only opacity, so it keeps breathing. */
+  .block--windmill.is-turning::after {
+    animation: none;
+  }
+
+  .cell.is-empty::after {
+    position: absolute;
+    border: 2px dashed rgb(90 162 95 / 42%);
+    border-radius: 4px;
+    content: "";
+    inset: 3px;
+  }
+}
