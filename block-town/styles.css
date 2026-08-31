@@ -30,6 +30,13 @@
   --sand-mark: #cfb277;
   --asphalt: #9aa2a6;
   --asphalt-mark: #5f6a70;
+  --rail-bed: #cbb79a;
+  --rail-mark: #5b4a34;
+  --stone: #b9b3a6;
+  --stone-mark: #6f6a60;
+  --brick: #c97f52;
+  --brick-mark: #7e4a2c;
+  --lamp: #ffe9a8;
   --shore: #ecdcae;
   --sheet-border: 2px;
 
@@ -183,8 +190,11 @@ button:focus-visible,
   overflow: auto;
 }
 
+/* The stage is exactly as wide as the grid, so a sheet larger than the card
+   scrolls instead of being cut off. */
 .sheet-stage {
   position: relative;
+  width: max-content;
 }
 
 /* Evening light stays on a sheet that has been finished. */
@@ -532,6 +542,330 @@ button:focus-visible,
   --edge-w: 0 0 0 0 transparent;
 }
 
+/* Rails: a bed with sleepers and a dark line running along the track. */
+.block--rails {
+  background: var(--rail-bed);
+}
+
+.cell--road.block--rails {
+  --edge-n: 0 0 0 0 transparent;
+  --edge-e: 0 0 0 0 transparent;
+  --edge-s: 0 0 0 0 transparent;
+  --edge-w: 0 0 0 0 transparent;
+}
+
+.cell--road.block--rails.road--n {
+  --stub-n: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--e {
+  --stub-e: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--s {
+  --stub-s: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.cell--road.block--rails.road--w {
+  --stub-w: linear-gradient(var(--rail-mark), var(--rail-mark));
+}
+
+.block--rails::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 22%,
+      var(--rail-mark) 22% 32%,
+      transparent 32% 54%
+    );
+  content: "";
+  inset: 28% 0;
+  opacity: 0.62;
+}
+
+/* A tower: tall, narrow and topped with a roof. */
+.block--tower {
+  background: var(--meadow);
+}
+
+.block--tower::before {
+  position: absolute;
+  border-radius: 20% 20% 6% 6%;
+  background: linear-gradient(#b58bd0 0 100%);
+  content: "";
+  inset: 10% 32% 6%;
+}
+
+.block--tower::after {
+  position: absolute;
+  bottom: 10%;
+  left: 40%;
+  width: 20%;
+  height: 22%;
+  border-radius: 40% 40% 0 0;
+  background: var(--stone-mark);
+  content: "";
+}
+
+/* A farm: a wide barn with a gate. */
+.block--farm {
+  background: var(--meadow);
+}
+
+.block--farm::before {
+  position: absolute;
+  border-radius: 34% 34% 6% 6%;
+  background: linear-gradient(var(--brick-mark) 0 30%, var(--brick) 30% 100%);
+  content: "";
+  inset: 24% 10% 12%;
+}
+
+.block--farm::after {
+  position: absolute;
+  bottom: 12%;
+  left: 38%;
+  width: 24%;
+  height: 30%;
+  border-radius: 4px 4px 0 0;
+  background: var(--lamp);
+  content: "";
+}
+
+/* A mountain: a grey peak with snow on top. */
+.block--mountain {
+  background: var(--meadow);
+}
+
+.block--mountain::before {
+  position: absolute;
+  background: linear-gradient(#f4f6f8 0 22%, var(--stone) 22% 100%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  content: "";
+  inset: 8% 4% 10%;
+}
+
+/* A windmill turns only when a field is next to it. */
+.block--windmill {
+  background: var(--meadow);
+}
+
+.block--windmill::before {
+  position: absolute;
+  border-radius: 30% 30% 6% 6%;
+  background: #efe3c4;
+  box-shadow: inset 0 0 0 2px rgb(111 106 96 / 30%);
+  content: "";
+  inset: 26% 34% 8%;
+}
+
+.block--windmill::after {
+  position: absolute;
+  top: 6%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  background:
+    linear-gradient(90deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%),
+    linear-gradient(180deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%);
+  content: "";
+}
+
+.block--windmill.is-turning::after {
+  animation: windmill-turn 5200ms linear infinite;
+}
+
+@keyframes windmill-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A lighthouse blinks only when it stands by the water. */
+.block--lighthouse {
+  background: var(--sand);
+}
+
+.block--lighthouse::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #f6f2ea 0 26%,
+      #e5645f 26% 52%
+    );
+  clip-path: polygon(30% 0, 70% 0, 84% 100%, 16% 100%);
+  content: "";
+  inset: 20% 26% 8%;
+}
+
+.block--lighthouse::after {
+  position: absolute;
+  top: 8%;
+  left: 36%;
+  width: 28%;
+  height: 20%;
+  border-radius: 40%;
+  background: var(--lamp);
+  box-shadow: 0 0 0 3px rgb(255 233 168 / 55%);
+  content: "";
+}
+
+.block--lighthouse.is-blinking::after {
+  animation: lamp-blink 2400ms ease-in-out infinite;
+}
+
+@keyframes lamp-blink {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* A castle: thick walls with battlements and a gate. */
+.block--castle {
+  background: var(--meadow);
+}
+
+.block--castle::before {
+  position: absolute;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--stone) 0 22%,
+      transparent 22% 34%
+    ),
+    linear-gradient(transparent 0 26%, var(--stone) 26% 100%);
+  content: "";
+  inset: 14% 8% 8%;
+}
+
+.block--castle::after {
+  position: absolute;
+  bottom: 8%;
+  left: 40%;
+  width: 20%;
+  height: 34%;
+  border-radius: 40% 40% 0 0;
+  background: var(--stone-mark);
+  content: "";
+}
+
+/* A playground: a slide and a ball. */
+.block--playground {
+  background: var(--sand);
+}
+
+.block--playground::before {
+  position: absolute;
+  background: linear-gradient(#f2a63e 0 100%);
+  clip-path: polygon(0 100%, 70% 20%, 86% 20%, 26% 100%);
+  content: "";
+  inset: 16% 10% 14%;
+}
+
+.block--playground::after {
+  position: absolute;
+  bottom: 16%;
+  left: 60%;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: #6fb7e8;
+  content: "";
+}
+
+/* Decorations: a lantern, a bench and a fountain. */
+.block--lantern {
+  background: var(--meadow);
+}
+
+.block--lantern::before {
+  position: absolute;
+  top: 16%;
+  left: 40%;
+  width: 20%;
+  height: 26%;
+  border-radius: 30%;
+  background: var(--lamp);
+  content: "";
+}
+
+.block--lantern::after {
+  position: absolute;
+  bottom: 14%;
+  left: 46%;
+  width: 8%;
+  height: 42%;
+  background: var(--stone-mark);
+  content: "";
+}
+
+.block--bench {
+  background: var(--meadow);
+}
+
+.block--bench::before {
+  position: absolute;
+  border-radius: 4px;
+  background: linear-gradient(#c09a6a 0 46%, transparent 46% 60%, #c09a6a 60% 100%);
+  content: "";
+  inset: 34% 18% 34%;
+}
+
+.block--bench::after {
+  position: absolute;
+  bottom: 22%;
+  left: 24%;
+  width: 52%;
+  height: 14%;
+  background:
+    linear-gradient(90deg, #8f7448 0 14%, transparent 14% 86%, #8f7448 86% 100%);
+  content: "";
+}
+
+.block--fountain {
+  background: var(--sand);
+}
+
+.block--fountain::before {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--water);
+  box-shadow: inset 0 0 0 3px #7fd3d0;
+  content: "";
+  inset: 20%;
+}
+
+.block--fountain::after {
+  position: absolute;
+  top: 12%;
+  left: 46%;
+  width: 8%;
+  height: 34%;
+  border-radius: 4px;
+  background: #d8f2f1;
+  content: "";
+}
+
+/* Evening: the windows and the lanterns come on. */
+.sheet-stage.is-evening .block--house::before {
+  background:
+    radial-gradient(circle at 32% 56%, var(--lamp) 0 11%, transparent 11%),
+    radial-gradient(circle at 68% 56%, var(--lamp) 0 11%, transparent 11%),
+    linear-gradient(var(--house-mark) 0 26%, transparent 26% 100%),
+    var(--house);
+}
+
+.sheet-stage.is-evening .block--lantern::before,
+.sheet-stage.is-evening .block--lighthouse::after {
+  box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
+}
+
 /* Water: the wave pattern says water, and a sandy shore is drawn on every side
    where the lake ends. */
 .block--water {
@@ -632,6 +966,48 @@ button:focus-visible,
     radial-gradient(circle at 74% 56%, #f08c48 0 22%, transparent 22%),
     radial-gradient(circle at 40% 42%, #3a4a3f 0 14%, transparent 14%),
     #ffd45c;
+  content: "";
+}
+
+/* A train: a dark engine with a chimney. */
+.sprite--train > i::before {
+  position: absolute;
+  border-radius: 30% 30% 22% 22%;
+  background: #4a6076;
+  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
+  content: "";
+  inset: 32% 10%;
+}
+
+.sprite--train > i::after {
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 16%;
+  height: 22%;
+  border-radius: 20%;
+  background: #4a6076;
+  box-shadow: 34% 0 0 0 transparent;
+  content: "";
+}
+
+/* A boat: a hull and a small sail. */
+.sprite--boat > i::before {
+  position: absolute;
+  border-radius: 0 0 46% 46%;
+  background: #d2703f;
+  content: "";
+  inset: 56% 18% 22%;
+}
+
+.sprite--boat > i::after {
+  position: absolute;
+  bottom: 44%;
+  left: 40%;
+  width: 34%;
+  height: 34%;
+  background: #fff6dc;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
   content: "";
 }
 
@@ -859,6 +1235,94 @@ button:focus-visible,
   color: var(--ink-soft);
 }
 
+/* Zoom, edge arrows and the mini-map: only the big sheets need them. */
+.zoom-buttons {
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edge-arrows {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.edge-arrow {
+  position: absolute;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 20%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 88%);
+  color: var(--ink);
+  font-size: 20px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.edge-arrow--up {
+  top: 8px;
+  left: 50%;
+  margin-left: -32px;
+}
+
+.edge-arrow--down {
+  bottom: 8px;
+  left: 50%;
+  margin-left: -32px;
+}
+
+.edge-arrow--left {
+  top: 50%;
+  left: 8px;
+  margin-top: -32px;
+}
+
+.edge-arrow--right {
+  top: 50%;
+  right: 8px;
+  margin-top: -32px;
+}
+
+.minimap {
+  position: absolute;
+  z-index: 5;
+  right: 10px;
+  bottom: 10px;
+  width: 168px;
+  padding: 0;
+  border: 3px solid rgb(47 111 69 / 24%);
+  border-radius: 10px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.minimap-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.minimap-view {
+  position: absolute;
+  border: 3px solid var(--leaf-dark);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
 /* The finished sheet: soft confetti and one large picture button. */
 .celebration {
   position: absolute;
@@ -1008,6 +1472,11 @@ button:focus-visible,
 
   /* No pulsing: the unpainted cells keep a dashed frame instead. */
   .sheet-grid {
+    animation: none;
+  }
+
+  /* The blades stop; the standing cross still says "windmill". */
+  .block--windmill.is-turning::after {
     animation: none;
   }
 

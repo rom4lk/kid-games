@@ -39,6 +39,8 @@ const BLOCK_BY_KEY = new Map(BLOCKS.map((block) => [block.key, block]));
 const WATER_ID = BLOCK_BY_KEY.get("water").id;
 const FIELD_ID = BLOCK_BY_KEY.get("field").id;
 const HOUSE_ID = BLOCK_BY_KEY.get("house").id;
+const WINDMILL_ID = BLOCK_BY_KEY.get("windmill").id;
+const LIGHTHOUSE_ID = BLOCK_BY_KEY.get("lighthouse").id;
 
 // The ladder of sheets. Sizes and tools are data, so shrinking a sheet after a
 // test with a child never touches the code around them.
@@ -46,8 +48,10 @@ const SHEETS = [
   { id: "sheet-1", rows: 5, columns: 10, tools: ["brush"] },
   { id: "sheet-2", rows: 8, columns: 16, tools: ["brush"] },
   { id: "sheet-3", rows: 12, columns: 24, tools: ["brush", "wide"] },
-  { id: "sheet-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket"] },
-  { id: "sheet-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket"] },
+  // A big sheet no longer fits the screen: it opens zoomed in and brings the
+  // zoom buttons, the edge arrows and the mini-map with it.
+  { id: "sheet-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket"], big: true },
+  { id: "sheet-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket"], big: true },
 ].map((sheet, index) => ({
   ...sheet,
   number: index + 1,
@@ -347,6 +351,27 @@ function fieldStage(state, index, now = 0) {
   return age < FIELD_RIPE_MS ? 1 : 2;
 }
 
+// A windmill only turns when there is a field to work for.
+function windmillTurns(grid, columns, index) {
+  if (grid?.[index] !== WINDMILL_ID) return false;
+  return neighborMask(grid, columns, index, (value) => value === FIELD_ID) !== 0;
+}
+
+// A lighthouse only blinks when it stands by the water.
+function lighthouseBlinks(grid, underlay, columns, index) {
+  if (grid?.[index] !== LIGHTHOUSE_ID) return false;
+  const rows = Math.floor(grid.length / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  const sides = [
+    row > 0 ? index - columns : -1,
+    column < columns - 1 ? index + 1 : -1,
+    row < rows - 1 ? index + columns : -1,
+    column > 0 ? index - 1 : -1,
+  ];
+  return sides.some((side) => side >= 0 && isWaterCell(grid, underlay, side));
+}
+
 // A lone forest cell is one small tree; inside a cluster the trees grow.
 function forestDensity(grid, columns, index) {
   const forestId = BLOCK_BY_KEY.get("forest").id;
@@ -611,6 +636,8 @@ if (typeof module !== "undefined" && module.exports) {
     roadTile,
     waterEdges,
     forestDensity,
+    windmillTurns,
+    lighthouseBlinks,
     createGameState,
     paintCell,
     paintStroke,
@@ -632,6 +659,12 @@ if (typeof module !== "undefined" && module.exports) {
 // The sheet is fitted to the card, never scaled below a comfortable finger size.
 const MIN_CELL_SIZE = 22;
 const MAX_CELL_SIZE = 92;
+
+// The steps of the zoom on a big sheet, and the smallest cell that still feels
+// comfortable under a finger.
+const ZOOM_LEVELS = [24, 32, 40, 54, 72];
+const COMFORT_CELL_SIZE = 40;
+const PAN_SHARE = 0.6;
 const SAVE_DELAY_MS = 250;
 
 // A stroke should sound like a tune, not a rattle, so only every few painted
@@ -646,7 +679,9 @@ const ANALYSIS_DELAY_MS = 320;
 const MAX_SPRITES_PER_KIND = 3;
 const SPRITE_KINDS = [
   { kind: "car", minCells: 3, stepMs: 620 },
+  { kind: "train", minCells: 3, stepMs: 520 },
   { kind: "duck", minCells: 4, stepMs: 1500 },
+  { kind: "boat", minCells: 10, stepMs: 1900 },
   { kind: "bird", minCells: 6, stepMs: 900 },
 ];
 
@@ -675,6 +710,7 @@ const BLOCK_COLORS = {
   fountain: "#7fd3d0",
 };
 const THUMBNAIL_EMPTY = "#fffdf4";
+const MINIMAP_EMPTY = "#ffd45c";
 
 // From this sheet on the palette groups its blocks by family, and the families
 // always keep the same order and the same places.
@@ -704,6 +740,14 @@ function initializeGame() {
     nextSheet: document.querySelector("#next-sheet-button"),
     stay: document.querySelector("#stay-button"),
     sheetShelf: document.querySelector("#sheet-shelf"),
+    sheetScroll: document.querySelector("#sheet-scroll"),
+    zoomButtons: document.querySelector("#zoom-buttons"),
+    zoomIn: document.querySelector("#zoom-in"),
+    zoomOut: document.querySelector("#zoom-out"),
+    edgeArrows: document.querySelector("#edge-arrows"),
+    minimap: document.querySelector("#minimap"),
+    minimapCanvas: document.querySelector("#minimap-canvas"),
+    minimapView: document.querySelector("#minimap-view"),
     shelf: document.querySelector("#shelf-button"),
     shelfBack: document.querySelector("#shelf-back-button"),
     palette: document.querySelector("#palette"),
@@ -761,6 +805,7 @@ function initializeGame() {
   let state = loadGame();
   let selectedBlockId = currentSheet(state).blockIds[0];
   let selectedTool = "brush";
+  let zoomIndex = ZOOM_LEVELS.indexOf(COMFORT_CELL_SIZE);
   let openFamily = null;
   let fieldTimer = 0;
   let cells = [];
@@ -881,6 +926,8 @@ function initializeGame() {
     const classes = cellClasses(sheet, grid, underlay, index);
     if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, sheet.columns, index)}`);
     if (grid[index] === FIELD_ID) classes.push(`field--${fieldStage(state, index, now)}`);
+    if (windmillTurns(grid, sheet.columns, index)) classes.push("is-turning");
+    if (lighthouseBlinks(grid, underlay, sheet.columns, index)) classes.push("is-blinking");
     element.className = classes.join(" ");
     element.setAttribute("aria-label", blockName(grid[index]));
   }
@@ -911,12 +958,14 @@ function initializeGame() {
 
   // One pixel per cell. The sheet shelf and, later, the mini-map both read the
   // model through this and nothing else.
-  function drawThumbnail(canvas, sheet) {
+  function drawThumbnail(canvas, sheet, { markEmpty = false } = {}) {
     canvas.width = sheet.columns;
     canvas.height = sheet.rows;
     const context = canvas.getContext("2d");
     if (!context) return;
-    context.fillStyle = THUMBNAIL_EMPTY;
+    // On the mini-map the cells still waiting are the bright ones, so the last
+    // empty corner is easy to find.
+    context.fillStyle = markEmpty ? MINIMAP_EMPTY : THUMBNAIL_EMPTY;
     context.fillRect(0, 0, sheet.columns, sheet.rows);
     state.grids[sheet.id].forEach((value, index) => {
       const block = blockById(value);
@@ -924,6 +973,38 @@ function initializeGame() {
       context.fillStyle = BLOCK_COLORS[block.key];
       context.fillRect(index % sheet.columns, Math.floor(index / sheet.columns), 1, 1);
     });
+  }
+
+  // The mini-map shows the whole sheet and where the window on it sits.
+  function updateMinimapView() {
+    const scroll = elements.sheetScroll;
+    if (!currentSheet(state).big || scroll.scrollWidth === 0) return;
+    const view = elements.minimapView.style;
+    view.left = `${(scroll.scrollLeft / scroll.scrollWidth) * 100}%`;
+    view.top = `${(scroll.scrollTop / scroll.scrollHeight) * 100}%`;
+    view.width = `${Math.min(100, (scroll.clientWidth / scroll.scrollWidth) * 100)}%`;
+    view.height = `${Math.min(100, (scroll.clientHeight / scroll.scrollHeight) * 100)}%`;
+  }
+
+  function drawMinimap() {
+    const sheet = currentSheet(state);
+    if (!sheet.big) return;
+    drawThumbnail(elements.minimapCanvas, sheet, { markEmpty: true });
+    updateMinimapView();
+  }
+
+  function panBy(direction) {
+    const scroll = elements.sheetScroll;
+    const behavior = reduceMotion ? "auto" : "smooth";
+    const stepX = scroll.clientWidth * PAN_SHARE;
+    const stepY = scroll.clientHeight * PAN_SHARE;
+    const moves = {
+      up: { top: -stepY },
+      down: { top: stepY },
+      left: { left: -stepX },
+      right: { left: stepX },
+    };
+    scroll.scrollBy({ ...moves[direction], behavior });
   }
 
   function renderSheetShelf() {
@@ -987,15 +1068,45 @@ function initializeGame() {
     fitSheet();
   }
 
-  function fitSheet() {
-    const sheet = currentSheet(state);
+  // The largest cell at which the whole sheet still fits the card.
+  function fitCellSize(sheet) {
     const style = window.getComputedStyle(elements.card);
     const box = elements.card.getBoundingClientRect();
     const width = box.width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
     const height = box.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
     const size = Math.floor(Math.min(width / sheet.columns, height / sheet.rows));
-    const fitted = Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, size));
-    elements.stage.style.setProperty("--cell-size", `${fitted}px`);
+    return Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, size));
+  }
+
+  // A big sheet opens at a comfortable cell size even when that means scrolling.
+  function defaultZoomIndex(sheet) {
+    const fit = fitCellSize(sheet);
+    const fitting = ZOOM_LEVELS.filter((size) => size <= fit);
+    const best = fitting.length > 0 ? fitting[fitting.length - 1] : ZOOM_LEVELS[0];
+    return ZOOM_LEVELS.indexOf(Math.max(best, COMFORT_CELL_SIZE));
+  }
+
+  function fitSheet() {
+    const sheet = currentSheet(state);
+    const size = sheet.big ? ZOOM_LEVELS[zoomIndex] : fitCellSize(sheet);
+    elements.stage.style.setProperty("--cell-size", `${size}px`);
+    elements.zoomIn.disabled = zoomIndex >= ZOOM_LEVELS.length - 1;
+    elements.zoomOut.disabled = zoomIndex <= 0;
+    updateMinimapView();
+  }
+
+  function renderSheetControls() {
+    const big = currentSheet(state).big === true;
+    elements.zoomButtons.hidden = !big;
+    elements.edgeArrows.hidden = !big;
+    elements.minimap.hidden = !big;
+  }
+
+  function setZoom(step) {
+    const next = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, zoomIndex + step));
+    if (next === zoomIndex) return;
+    zoomIndex = next;
+    fitSheet();
   }
 
   function blockButton(blockId, { checked, family }) {
@@ -1236,7 +1347,8 @@ function initializeGame() {
 
   function tracksFor(kind, sheet, grid, underlay) {
     if (kind === "car") return roadPaths(grid, sheet.columns);
-    if (kind === "duck") return lakes(grid, underlay, sheet.columns);
+    if (kind === "train") return railPaths(grid, sheet.columns);
+    if (kind === "duck" || kind === "boat") return lakes(grid, underlay, sheet.columns);
     return forestClusters(grid, sheet.columns);
   }
 
@@ -1255,6 +1367,7 @@ function initializeGame() {
         .map((track) => createSprite(kind, track)));
 
     startDriver();
+    drawMinimap();
   }
 
   function scheduleAnalysis() {
@@ -1323,7 +1436,10 @@ function initializeGame() {
     closeCelebration();
     renderPalette();
     renderTools();
+    renderSheetControls();
+    zoomIndex = defaultZoomIndex(currentSheet(state));
     buildSheet();
+    elements.sheetScroll.scrollTo(0, 0);
     watchFields();
     renderProgress();
     renderEvening();
@@ -1494,6 +1610,25 @@ function initializeGame() {
     else openPause();
   });
 
+  elements.zoomIn.addEventListener("click", () => setZoom(1));
+  elements.zoomOut.addEventListener("click", () => setZoom(-1));
+
+  elements.edgeArrows.addEventListener("click", (event) => {
+    const direction = event.target.closest("[data-pan]")?.dataset.pan;
+    if (direction) panBy(direction);
+  });
+
+  elements.sheetScroll.addEventListener("scroll", updateMinimapView);
+
+  elements.minimap.addEventListener("click", (event) => {
+    const box = elements.minimapCanvas.getBoundingClientRect();
+    const scroll = elements.sheetScroll;
+    const acrossShare = (event.clientX - box.left) / box.width;
+    const downShare = (event.clientY - box.top) / box.height;
+    scroll.scrollLeft = acrossShare * scroll.scrollWidth - scroll.clientWidth / 2;
+    scroll.scrollTop = downShare * scroll.scrollHeight - scroll.clientHeight / 2;
+  });
+
   window.addEventListener("resize", () => {
     fitSheet();
     if (reduceMotion) parkSprites();
@@ -1507,6 +1642,8 @@ function initializeGame() {
   renderSound();
   renderPalette();
   renderTools();
+  renderSheetControls();
+  zoomIndex = defaultZoomIndex(currentSheet(state));
   buildSheet();
   watchFields();
   renderProgress();

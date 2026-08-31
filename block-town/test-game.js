@@ -22,6 +22,8 @@ const {
   roadTile,
   waterEdges,
   forestDensity,
+  windmillTurns,
+  lighthouseBlinks,
   createGameState,
   paintCell,
   paintStroke,
@@ -44,6 +46,9 @@ const MEADOW_ID = BLOCKS.find((block) => block.key === "meadow").id;
 const FOREST_ID = BLOCKS.find((block) => block.key === "forest").id;
 const HOUSE_ID = BLOCKS.find((block) => block.key === "house").id;
 const FIELD_ID = BLOCKS.find((block) => block.key === "field").id;
+const RAILS_ID = BLOCKS.find((block) => block.key === "rails").id;
+const WINDMILL_ID = BLOCKS.find((block) => block.key === "windmill").id;
+const LIGHTHOUSE_ID = BLOCKS.find((block) => block.key === "lighthouse").id;
 
 function fillSheet(state, sheetId, blockId) {
   const sheet = sheetById(sheetId);
@@ -421,6 +426,58 @@ function testWideBrush() {
   assert.deepEqual(brushCells(sheet, 0, 0), []);
 }
 
+function testRailPathsAndBigBucket() {
+  const state = createGameState();
+  state.unlockedCount = SHEETS.length;
+  selectSheet(state, "sheet-5");
+  const sheet = sheetById("sheet-5");
+  const grid = state.grids[sheet.id];
+
+  // A railway line across the sheet, with a road crossing it.
+  const railRow = 4;
+  const rail = Array.from({ length: 20 }, (_, step) => railRow * sheet.columns + 3 + step);
+  assert.equal(paintStroke(state, rail, RAILS_ID), 20);
+  const road = Array.from({ length: 6 }, (_, step) => (railRow - 3 + step) * sheet.columns + 8);
+  paintStroke(state, road.filter((index) => index !== rail[5]), PATH_ID);
+
+  const rails = railPaths(grid, sheet.columns);
+  assert.equal(rails.length, 1);
+  assert.equal(rails[0].cells.length, 20);
+  assert.equal(rails[0].loop, false);
+  // The road never joins the railway, so the train and the car stay apart.
+  const roads = roadPaths(grid, sheet.columns);
+  assert.equal(roads.every((track) => !track.cells.some((cell) => rail.includes(cell))), true);
+
+  // The bucket fills the rest of the sheet in one go.
+  const painted = paintedCount(state);
+  const filled = floodFill(state, sheet.cellCount - 1, MEADOW_ID);
+  assert.equal(filled, sheet.cellCount - painted);
+  assert.equal(isSheetComplete(state), true);
+}
+
+function testWindmillAndLighthouse() {
+  const columns = 10;
+  const grid = new Array(50).fill(0);
+  const underlay = new Array(50).fill(0);
+  grid[11] = WINDMILL_ID;
+  grid[31] = WINDMILL_ID;
+  grid[21] = FIELD_ID;
+  assert.equal(windmillTurns(grid, columns, 11), true);
+  assert.equal(windmillTurns(grid, columns, 31), true);
+  grid[21] = MEADOW_ID;
+  assert.equal(windmillTurns(grid, columns, 11), false);
+  assert.equal(windmillTurns(grid, columns, 12), false);
+
+  grid[5] = LIGHTHOUSE_ID;
+  assert.equal(lighthouseBlinks(grid, underlay, columns, 5), false);
+  grid[6] = WATER_ID;
+  assert.equal(lighthouseBlinks(grid, underlay, columns, 5), true);
+  // Water hidden under a bridge still counts as the sea.
+  grid[6] = PATH_ID;
+  underlay[6] = WATER_ID;
+  assert.equal(lighthouseBlinks(grid, underlay, columns, 5), true);
+}
+
 function testPaintingAndPaintOver() {
   const state = createGameState();
   assert.equal(paintCell(state, 0, MEADOW_ID), true);
@@ -604,6 +661,8 @@ testLakesAndForests();
 testHouseDoor();
 testFieldStages();
 testWideBrush();
+testRailPathsAndBigBucket();
+testWindmillAndLighthouse();
 testPaintingAndPaintOver();
 testRefusedInput();
 testCompletionAndUnlockLadder();

@@ -13,7 +13,7 @@ its check passes and the work is committed.
 | 5 | The living world, first pass | [x] |
 | 6 | Completion, celebration, sheet shelf | [x] |
 | 7 | Sheets 2 and 3 | [x] |
-| 8 | Sheets 4 and 5 | [ ] |
+| 8 | Sheets 4 and 5 | [x] |
 | 9 | Accessibility, language, polish | [ ] |
 | 10 | Final verification | [ ] |
 
@@ -47,9 +47,15 @@ its check passes and the work is committed.
   injected clock, flowers, sand and asphalt joined the palette, and from sheet 3 the palette groups
   its blocks by family with a kinds row. The wide brush paints 2x2 and clips at the edges. The fill
   bucket was wired here too, since sheets 4 and 5 already list it as a tool.
+- Stage 8: rails with a train, the remaining buildings and decorations, a boat on a big lake, a
+  windmill that turns beside a field and a lighthouse that blinks beside water. Big sheets open at a
+  comfortable 40px cell, scroll, and carry zoom buttons, edge arrows and a mini-map whose bright
+  spots are the cells still waiting. Tapping the mini-map jumps there.
 - Browser checks in this environment are run against a plain static server started on port 4183
   (`python3 -m http.server`), because the repository server on 4173 serves the main checkout rather
   than this worktree.
 - The Browser pane in this session is never displayed, so `document.hidden` stays true and
   `requestAnimationFrame` is paused. Sprite motion was checked by shimming `requestAnimationFrame`
-  with timers inside the page; nothing in the game was changed for it.
+  with timers inside the page; nothing in the game was changed for it. For the same reason
+  `scrollBy({ behavior: "smooth" })` does not move in this pane; the edge arrows were checked by
+  reading the values they pass to it.

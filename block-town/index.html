@@ -37,6 +37,35 @@
       </header>
 
       <section class="sheet-card" aria-label="Sheet of squared paper">
+        <div class="zoom-buttons" id="zoom-buttons" hidden>
+          <button class="round-button" id="zoom-in" type="button" aria-label="Make the cells bigger">
+            <span aria-hidden="true">+</span>
+          </button>
+          <button class="round-button" id="zoom-out" type="button" aria-label="Make the cells smaller">
+            <span aria-hidden="true">−</span>
+          </button>
+        </div>
+
+        <div class="edge-arrows" id="edge-arrows" hidden>
+          <button class="edge-arrow edge-arrow--up" type="button" data-pan="up" aria-label="Move up">
+            <span aria-hidden="true">▲</span>
+          </button>
+          <button class="edge-arrow edge-arrow--down" type="button" data-pan="down" aria-label="Move down">
+            <span aria-hidden="true">▼</span>
+          </button>
+          <button class="edge-arrow edge-arrow--left" type="button" data-pan="left" aria-label="Move left">
+            <span aria-hidden="true">◀</span>
+          </button>
+          <button class="edge-arrow edge-arrow--right" type="button" data-pan="right" aria-label="Move right">
+            <span aria-hidden="true">▶</span>
+          </button>
+        </div>
+
+        <button class="minimap" id="minimap" type="button" aria-label="Whole sheet. Tap a spot to jump there." hidden>
+          <canvas class="minimap-canvas" id="minimap-canvas"></canvas>
+          <span class="minimap-view" id="minimap-view" aria-hidden="true"></span>
+        </button>
+
         <div class="sheet-scroll" id="sheet-scroll">
           <div class="sheet-stage" id="sheet-stage">
             <div class="sheet-grid" id="sheet-grid" role="grid" tabindex="0"
