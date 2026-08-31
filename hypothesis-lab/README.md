@@ -38,7 +38,7 @@ No library installation and no build step are required.
 ## Logic check
 
 ```bash
-node hypothesis-lab/test-game.js
+node test-game.js
 ```
 
 The test checks that all the objects and rules are present, that the initial positive and negative

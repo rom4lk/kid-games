@@ -1,162 +1,149 @@
-# Concept: "Cube Island"
+# Cube Island Game Design
 
-A short, gentle game for a child of about six, inspired by Minecraft. The player gathers large blocks, turns them into new materials and builds useful things in a small cubic world.
+## Product promise
 
-The player's main fantasy: "I take parts of the world myself and build something real out of them."
+Cube Island is a calm construction game for a child around age six. It borrows Minecraft's useful
+fantasy of changing a block world, but removes survival, combat, camera control, recipes, item loss,
+and endless exploration. Every build solves a recognizable problem: cross water, protect a camp,
+repair a road, light a path, or connect a town.
 
-## What we keep from Minecraft
+After one demonstration, the child should be able to choose a material, choose a large cell, place a
+block, correct a mistake, and understand the world's reaction without adult explanation.
 
-| We keep | We simplify or remove |
-| --- | --- |
-| A world of blocks that can be taken and placed | Small hand-built islands instead of an endless random world |
-| The "find → mine → craft → build" loop | One current goal and one recipe instead of a long item list |
-| A free choice of where and in what order to build | Only a few large available cells in the first chapter |
-| A build immediately changes the world and opens a path | No destruction of important builds and no irreversible mistakes |
-| Tools unlock new materials | No more than one new tool or material per chapter |
-| Exploring and coming back to a familiar place | No dark labyrinths, no need to memorize the way, no huge distances |
-| A garden, animals and simple machines | No combat, weapons, monsters, death, hunger or lost items |
-| A creative mode after the tutorial | No complex inventory, no rare resources, no hidden recipes |
+## Core loop
 
-The adaptation keeps not the look of Minecraft but its main action: the player takes a part of the world, transforms it and uses it to change the space in a meaningful way.
+1. The goal panel presents the current real-world task with a diagram or functional symbol.
+2. The player chooses one of four stable material slots.
+3. The player chooses a large world cell.
+4. One contextual button offers Place, Place up, Take, or Check.
+5. The world, task card, count, and available inventory update immediately.
+6. Completed tasks stay in the world and unlock the next task.
+7. The finished construction produces a visible result and opens the next level.
 
-## Who it is for and why
+An incorrect action never spends a block, removes progress, restarts a task, or creates a defeat
+state. Before level completion, removal always returns the exact top material to the hotbar.
 
-- Age: about 6 years old.
-- After one short demonstration by an adult, the child plays on their own.
-- The required path is clear from the shape of the blocks, the goal pictures and the world's reaction; reading is not required.
-- One chapter takes 5–8 minutes.
-- The main emotions: curiosity, calm experimenting and pride in a build that works.
+## Campaign structure
 
-## The main game loop
+The campaign contains exactly 25 sequential levels in five chapters.
 
-The loop as it is built now:
+| Chapter | Location | New design focus |
+| --- | --- | --- |
+| 1. River | Grass banks and water | Guided wood building becomes functional route building |
+| 2. Snow | Snow and thin ice | Stone support, material choice, dependencies, symmetry |
+| 3. Canyon | Rock floors and gaps | Protected space, height, supports, guard edges, route width |
+| 4. Night Island | Dark grass and water | Glow cubes, transmission, coverage, line of sight, layers |
+| 5. Night Island Town | A larger connected settlement | Networks and combinations of every familiar rule |
 
-1. The goal panel shows a picture of the finished structure, and the river lights up the cells it needs.
-2. The player picks a lit cell, and the big button offers to place a block.
-3. The block appears in the cell and one slot of the tray empties.
-4. A block in a wrong place can be picked again and taken back into the tray.
-5. Once every lit cell is filled, the structure is finished, the island celebrates and the next level opens.
+Fields grow from 7 × 3 to 12 × 8. A level has one to three ordered tasks and introduces one documented
+complication. A new mechanic first appears in a safe example and later returns in combinations.
 
-The planned loop adds the two steps in front of it: the player picks a tree, the hero walks up to it on
-their own, a big hand button turns the wood cube into a resource and a recipe turns the resource into
-planks. The full "found it → made a material → built → saw the result" loop should fit into the first
-chapter.
+## Materials
 
-## The screen and the controls
+The hotbar always uses this order: Wood, Stone, Glass, Glow.
 
-The world is shown from above at a slight angle. The camera is fixed, so the child does not have to move, rotate the view and pick a block all at once.
+| Material | Visual identity | Functional identity |
+| --- | --- | --- |
+| Wood | Horizontal grain and plank seams | Walkable and allowed across configured spans |
+| Stone | Speckles, heavy border, dark side | Strong support that blocks light |
+| Glass | Hollow center, frame, diagonal shine | Safety wall that transmits light |
+| Glow | Diamond center, corner points, halo | Supported light source with a configured radius |
 
-- A tap or a click on an object selects a target, and then the hero walks to it on their own.
-- One big contextual button performs the available action: mine, craft or place.
-- When building, the player first picks a large picture of a block and then an available cell of the world.
-- Dragging, holding, double taps and precise aiming are not used.
-- On the keyboard the arrow keys or `WASD` work, the choice is `Enter` or `Space`, and cancel is `Escape`.
-- Interactive areas are at least 64 × 64 px and are clearly separated from each other.
+Unavailable materials remain visible and locked. Empty materials remain visible with a zero count.
+Shape, texture, label, position, and state communicate identity; color is supplementary.
 
-Only the world, the picture of the current goal, three large resource slots, the contextual button, the hint, the sound and the pause are on the screen at the same time.
+## Building rules
 
-## Freedom of building
+- Stone needs solid terrain, a foundation anchor, or another stone block.
+- Glass needs solid ground, a supporting block, or an explicitly allowed guard-edge position.
+- Glow cubes need support and can be required at the top of a structure or behind glass.
+- Wood uses each level's supported-span rule and may cross water or gaps only when the level permits.
+- A cell holds a stack of zero to three blocks. The whole cell remains the pointer target.
+- The active objective controls the current build zone. Later objective cells remain locked.
+- Protected and access cells show a persistent refusal symbol when they must stay empty.
 
-**Built now.** Every level has a blueprint: a fixed set of cells in the river is lit up, and the level is
-finished once a block stands in each of them. The order of the placements does not matter and a block
-can be taken back at any time, but a cell outside the blueprint is refused. The game therefore checks a
-prepared answer, not the function of the build.
+The rules return a reason before any state changes. The interface maps that reason to a static icon,
+short accessible label, and gentle sound.
 
-**Planned.** Checking the result instead of the blueprint: several possible rows for the bridge, success
-decided by a connected path between the banks, and in the later chapters any structure that meets a
-clear condition — it gives a path, covers the friend with a roof or brings water to a garden bed. This
-is the first thing to widen, see [The main risk](#the-main-risk).
+## Task validation
 
-**Planned.** A calm playground after a chapter, with an unlimited supply of the already familiar blocks
-and no required goal, where the work can be freely rebuilt.
+Level data refers to reusable validator ids and never embeds level-specific completion functions.
+The validator library covers:
 
-## Mining and crafting
+- exact targets and shape matching;
+- connected and minimum-width routes;
+- supported spans, foundations, stack patterns, and enclosures;
+- glass guard edges, protected clear space, and symmetry;
+- light coverage, line of sight, and protected lights;
+- material zones, shared budgets, and composite rules.
 
-Planned; none of it is built yet. The current build has no mining and no recipes: the plank blocks are
-already in the tray at the start of a level, and the trees on the bank are scenery.
+Functional tasks accept alternate builds when they meet the same requirement. For example, Mill Path
+accepts any connected row through its build zone. Picture-copy tasks remain exact when recognizing the
+shape is the intended challenge.
 
-- The required resource is visible in the world before the action starts.
-- One meaningful press is enough to mine; repeated fast tapping is not required.
-- A resource takes a slot with the same shape as the picture in the recipe.
-- At any moment only the recipe of the current goal is available, with one, two or three components.
-- A new item appears through a short, visible transformation: a wood cube unfolds into a stack of planks.
-- A tool does not break and does not disappear.
-- Ordinary resources are restored after a chapter is finished, so the world cannot be driven into a dead end.
+## Light
 
-## Mistakes and help
+Every glow block starts a deterministic orthogonal light search. Empty cells and glass transmit the
+remaining range, wood adds attenuation, and stone stops propagation. Rendering and completion use the
+same light map. Static dark, dim, and lit states remain understandable when animation is disabled.
 
-- An unsuitable cell shows a sign of support or of an obstacle; the block gently returns to the chosen slot.
-- A mistake does not spend a resource, does not destroy previous blocks and does not reset progress.
-- If the build does not work yet, the friend shows the needed direction and the edge of the unfinished path gets a visible outline.
-- After 8 seconds with no useful action the helper points only at the next object.
-- After another 8 seconds a single example gesture appears. The helper never mines or places a block for the child.
-- Any correct arrangement of blocks is accepted, even if it differs from the example.
+## Interface and controls
 
-## A safe world
+The screen keeps one dominant instruction and one large contextual action. The goal panel contains:
 
-- No health, hunger, combat, weapons, monsters, lava, falling into the void or death.
-- Water does no harm: the hero stops at the edge and shows that a path is needed.
-- The evening arrives only after the goal is finished and works as a short reward, not as a timer.
-- Items cannot be lost, a finished important build cannot be broken and the hero cannot be locked in.
-- Pause is available with one press, and progress is saved after every finished build.
+- chapter, location, and level count;
+- one large current instruction;
+- one to three compact objective cards;
+- a blueprint or a functional-route symbol;
+- numerical progress.
 
-## Chapters
+Only the current task uses full contrast. Completed tasks show a checkmark; future dependent tasks show
+a lock. The world is always shown in full, with no panning, pinch zoom, camera rotation, or narrow block
+face targeting.
 
-Planned. The current build has five short levels inside the first chapter instead — a bridge, a dock, a
-raft, river steps and a river base — and none of the later chapters exist.
+Mouse and touch select a hotbar slot and a cell. Keyboard controls are arrow keys or `WASD`, `Enter`,
+`Space`, number keys `1`–`4`, and `Escape`. Focus moves to the next-level control after completion and
+returns to the world when the next level opens.
 
-| Chapter | New idea | One goal | Reward |
-| --- | --- | --- | --- |
-| 1. A friend across the river | Mining, turning wood into planks, placing blocks | Build any continuous bridge | The friend comes to the first island |
-| 2. A house in the rain | Stone and the support condition | Put up walls and a roof over the friend | A warm lantern lights up in the house |
-| 3. The cubic garden | Soil, seeds and water | Bring water to three garden beds | Big flowers and vegetables grow |
-| 4. The bright mine | A pickaxe and a new layer of material | Find three visible crystals | The crystals light up the square |
-| 5. The festival of islands | The familiar blocks again | Connect three islands and decorate the square | All the friends gather together |
+## Help and accessibility
 
-Every chapter introduces only one new idea. Familiar actions keep the same pictures, shapes and element positions.
+- Manual and automatic hints identify only one next useful cell or action.
+- Meaning never depends on color, motion, or sound alone.
+- Refusal icons remain visible long enough to inspect and remain static under reduced motion.
+- Material, terrain, landmark, stack height, task state, count, and action have accessible names.
+- The English and Russian interfaces use the same layout and shared language preference.
+- Decorative cloud, character, celebration, and hint motion stops or becomes nearly instant under
+  `prefers-reduced-motion`.
 
-## Visual language and sound
+## Persistence and safety
 
-- Blocks have different silhouettes, surface patterns and pictograms; color is never used as the only marker.
-- A cell available for building shows a static outline of a matching shape.
-- A selected block gets a frame and a large checkmark.
-- Mining, crafting and placing have different short sounds, but every state is clear without sound.
-- The style is friendly: rounded edges, clear faces on the characters, calm light and no harsh flashes.
-- Under `prefers-reduced-motion` the movement and flight of items become nearly instant, while the outlines, checkmarks and opacity changes remain.
+The versioned V2 save stores the current level, normalized stacks, inventory, objective state,
+selection, completed levels, and celebration state. Completion is always recomputed from the level
+rules when a save is loaded. Unknown ids, excessive stacks, impossible inventory, foreign cells, and
+malformed JSON cannot create a dead end.
 
-## What is built
-
-- one screen with two banks, a three-column river and trees as scenery on the left bank;
-- five levels in a row — a bridge, a dock, a raft, river steps and a river base — each with its own
-  blueprint of three to five lit cells;
-- a tray that holds exactly the blocks the current blueprint still needs;
-- picking a cell and one contextual button that places a block or takes it back;
-- the friend on the far bank on the two levels where the build makes a crossing;
-- hints on demand, sound, pause, restart and saving the current level with the blocks in it;
-- the English and Russian interface through the shared language switcher.
-
-Not built: mining, recipes, the free playground, the connectivity check, the later chapters, a large
-inventory, changing weather, redstone, multiplayer and random map generation.
+The old five-level save unlocks the equivalent point in the new campaign but does not import obsolete
+cell layouts. The V2 save is written before the old key is removed. Restarting the campaign preserves
+the shared sound and language preferences.
 
 ## Testing with a child
 
-The adult shows once how to pick a lit cell and press the big button. After that they do not explain the actions and record the help level.
+An adult demonstrates selecting one marked cell and pressing the action button once. After that, record
+whether the child can:
 
-The build is ready to grow if the child:
+1. repeat the select-and-place loop without explanation;
+2. choose a newly introduced material from its stable slot;
+3. understand and correct a refused placement;
+4. distinguish the current task from completed and locked tasks;
+5. complete a functional route without copying one hidden answer;
+6. take back a block and reuse it;
+7. finish several levels without trying to drag or rotate the world.
 
-1. Puts the next block into a lit cell on their own.
-2. Understands from the goal picture what is being built.
-3. Finishes a level without waiting for the hint.
-4. Tries again right away after choosing a wrong cell, without getting upset.
-5. Takes a block back and puts it somewhere else at least once.
-6. Finishes several levels in a row without reading and without spoken help from an adult.
+Three repeated unavailable selections, more than eight seconds without identifying an action, or an
+attempt to move the camera is treated as an interface problem rather than player failure.
 
-Separately, note the moments where the child does not understand the next step for more than 8 seconds, picks an unavailable cell three times or tries to rotate the camera and drag the character.
+## Out of scope
 
-## The main risk
-
-Simplifying too much can turn Minecraft into a linear puzzle. The current build has gone exactly that
-way: the lit blueprint tells the child where every block goes, so the game asks them to repeat an
-answer rather than to invent a build. The next step is therefore to widen the freedom of placement —
-several valid rows and a check of the function of the build — and only after that to add new resources
-and recipes.
+Mining, crafting, procedural maps, combat, health, hunger, tools that break, multiplayer, redstone,
+camera movement, and free-build mode are not part of this campaign. They should be reconsidered only
+after the 25-level building loop is tested successfully with children.

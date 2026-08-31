@@ -492,7 +492,6 @@ if (typeof document !== "undefined") {
   let phase = "explore";
   let completedLevels = readCompletedLevels();
   let soundEnabled = readSoundSetting();
-  let audioContext;
   let focusBeforeDialog = null;
 
   const firstIncompleteLevel = LEVELS.findIndex((_, index) => !completedLevels.has(index));
@@ -525,18 +524,7 @@ if (typeof document !== "undefined") {
 
   function playTone(frequency, duration = 0.08) {
     if (!soundEnabled) return;
-    audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.07, audioContext.currentTime + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration);
+    window.GameSound?.tone({ frequency, duration, volume: 0.07 });
   }
 
   function isDisproved(ruleId) {
