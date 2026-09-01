@@ -1,32 +1,34 @@
-const STORAGE_KEY = "blockTownSheetsV1";
+const STORAGE_KEY = "blockTownWorldsV1";
+const BLOCKS_KEY = "blockTownBlocksV1";
 const SOUND_KEY = "blockTownSoundV1";
 
 // A cell holds a small block id; 0 means the cell is still unpainted.
 const EMPTY_CELL = 0;
 
-// One row per block: the id stored in a grid, the family that shapes its
-// behaviour and its art, and the sheet number that hands it to the player.
+// One row per block: the id stored in a grid and the family that shapes its
+// behaviour and its art. Which blocks a child may paint with is decided by an
+// adult on the shelf page, not by the game.
 const BLOCKS = [
-  { id: 1, key: "meadow", family: "nature", sheet: 1 },
-  { id: 2, key: "path", family: "roads", sheet: 1 },
-  { id: 3, key: "forest", family: "nature", sheet: 1 },
-  { id: 4, key: "water", family: "water", sheet: 1 },
-  { id: 5, key: "house", family: "buildings", sheet: 2 },
-  { id: 6, key: "field", family: "nature", sheet: 2 },
-  { id: 7, key: "flowers", family: "nature", sheet: 3 },
-  { id: 8, key: "sand", family: "nature", sheet: 3 },
-  { id: 9, key: "asphalt", family: "roads", sheet: 3 },
-  { id: 10, key: "rails", family: "roads", sheet: 4 },
-  { id: 11, key: "tower", family: "buildings", sheet: 4 },
-  { id: 12, key: "farm", family: "buildings", sheet: 4 },
-  { id: 13, key: "mountain", family: "nature", sheet: 5 },
-  { id: 14, key: "windmill", family: "buildings", sheet: 5 },
-  { id: 15, key: "lighthouse", family: "buildings", sheet: 5 },
-  { id: 16, key: "castle", family: "buildings", sheet: 5 },
-  { id: 17, key: "playground", family: "decor", sheet: 5 },
-  { id: 18, key: "lantern", family: "decor", sheet: 5 },
-  { id: 19, key: "bench", family: "decor", sheet: 5 },
-  { id: 20, key: "fountain", family: "decor", sheet: 5 },
+  { id: 1, key: "meadow", family: "nature" },
+  { id: 2, key: "path", family: "roads" },
+  { id: 3, key: "forest", family: "nature" },
+  { id: 4, key: "water", family: "water" },
+  { id: 5, key: "house", family: "buildings" },
+  { id: 6, key: "field", family: "nature" },
+  { id: 7, key: "flowers", family: "nature" },
+  { id: 8, key: "sand", family: "nature" },
+  { id: 9, key: "asphalt", family: "roads" },
+  { id: 10, key: "rails", family: "roads" },
+  { id: 11, key: "tower", family: "buildings" },
+  { id: 12, key: "farm", family: "buildings" },
+  { id: 13, key: "mountain", family: "nature" },
+  { id: 14, key: "windmill", family: "buildings" },
+  { id: 15, key: "lighthouse", family: "buildings" },
+  { id: 16, key: "castle", family: "buildings" },
+  { id: 17, key: "playground", family: "decor" },
+  { id: 18, key: "lantern", family: "decor" },
+  { id: 19, key: "bench", family: "decor" },
+  { id: 20, key: "fountain", family: "decor" },
 ];
 
 // How long a field needs before it shows shoots and then ripe ears. The model
@@ -42,22 +44,28 @@ const HOUSE_ID = BLOCK_BY_KEY.get("house").id;
 const WINDMILL_ID = BLOCK_BY_KEY.get("windmill").id;
 const LIGHTHOUSE_ID = BLOCK_BY_KEY.get("lighthouse").id;
 
-// The ladder of sheets. Sizes and tools are data, so shrinking a sheet after a
-// test with a child never touches the code around them.
-const SHEETS = [
-  { id: "sheet-1", rows: 5, columns: 10, tools: ["brush"] },
-  { id: "sheet-2", rows: 8, columns: 16, tools: ["brush"] },
-  { id: "sheet-3", rows: 12, columns: 24, tools: ["brush", "wide"] },
-  // A big sheet no longer fits the screen: it opens zoomed in and brings the
+// The blocks every child starts with. An adult adds more from the shelf page,
+// and a block once added is never taken away.
+const DEFAULT_BLOCK_KEYS = ["forest", "water", "path"];
+// Kept in the order of the block table, the same order the palette shows.
+const DEFAULT_BLOCK_IDS = BLOCKS
+  .filter((block) => DEFAULT_BLOCK_KEYS.includes(block.key))
+  .map((block) => block.id);
+
+// The sizes a new world can have. Sizes and tools are data, so shrinking a
+// world after a test with a child never touches the code around them.
+const WORLD_SIZES = [
+  { id: "size-1", rows: 5, columns: 10, tools: ["brush"] },
+  { id: "size-2", rows: 8, columns: 16, tools: ["brush"] },
+  { id: "size-3", rows: 12, columns: 24, tools: ["brush", "wide"] },
+  // A big world no longer fits the screen: it opens zoomed in and brings the
   // zoom buttons, the edge arrows and the mini-map with it.
-  { id: "sheet-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket"], big: true },
-  { id: "sheet-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket"], big: true },
-].map((sheet, index) => ({
-  ...sheet,
+  { id: "size-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket"], big: true },
+  { id: "size-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket"], big: true },
+].map((size, index) => ({
+  ...size,
   number: index + 1,
-  cellCount: sheet.rows * sheet.columns,
-  // Every block stays available once it has been introduced.
-  blockIds: BLOCKS.filter((block) => block.sheet <= index + 1).map((block) => block.id),
+  cellCount: size.rows * size.columns,
 }));
 
 // The four sides of a cell, as bits of one small mask.
@@ -103,48 +111,99 @@ function roadGroup(blockId) {
   return block.key === "rails" ? "rails" : "road";
 }
 
-function sheetById(sheetId) {
-  return SHEETS.find((sheet) => sheet.id === sheetId) || null;
+function worldSizeById(sizeId) {
+  return WORLD_SIZES.find((size) => size.id === sizeId) || null;
 }
 
-function sheetIndex(sheetId) {
-  return SHEETS.findIndex((sheet) => sheet.id === sheetId);
+function worldSize(world) {
+  return worldSizeById(world?.sizeId);
 }
 
-function isBlockOnSheet(sheet, blockId) {
-  return Boolean(sheet) && sheet.blockIds.includes(blockId);
+// Garbage, a missing setting and an old list all give the same answer: the
+// known ids that were saved, plus the three blocks every world starts with.
+function normalizeEnabledBlocks(saved) {
+  const enabled = new Set(DEFAULT_BLOCK_IDS);
+  if (Array.isArray(saved)) {
+    saved.forEach((blockId) => {
+      if (BLOCK_BY_ID.has(blockId)) enabled.add(blockId);
+    });
+  }
+  return BLOCKS.filter((block) => enabled.has(block.id)).map((block) => block.id);
 }
 
-function createSheetGrid(sheet) {
-  return new Array(sheet.cellCount).fill(EMPTY_CELL);
+function isBlockEnabled(state, blockId) {
+  return Array.isArray(state?.enabledBlockIds) && state.enabledBlockIds.includes(blockId);
 }
 
-function createGameState() {
-  const state = {
-    currentSheet: SHEETS[0].id,
-    unlockedCount: 1,
-    grids: {},
-    underlays: {},
+function createGrid(size) {
+  return new Array(size.cellCount).fill(EMPTY_CELL);
+}
+
+// Worlds are told apart by the moment they were made, so the order on the
+// shelf never changes; the suffix keeps two worlds made in the same
+// millisecond apart.
+function newWorldId(now) {
+  const stamp = Number.isFinite(now) ? Math.floor(now) : 0;
+  return `w-${stamp.toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createGameState(enabledBlockIds) {
+  return {
+    currentWorldId: null,
+    worlds: [],
+    // Not part of the save: an adult keeps this list on the shelf page.
+    enabledBlockIds: normalizeEnabledBlocks(enabledBlockIds),
+  };
+}
+
+function worldById(state, worldId) {
+  return state?.worlds?.find((world) => world.id === worldId) || null;
+}
+
+function currentWorld(state) {
+  return worldById(state, state?.currentWorldId);
+}
+
+// A new world goes to the end of the shelf and opens at once.
+function createWorld(state, sizeId, now = 0) {
+  const size = worldSizeById(sizeId);
+  if (!state || !Array.isArray(state.worlds) || !size) return null;
+  const world = {
+    id: newWorldId(now),
+    sizeId: size.id,
+    grid: createGrid(size),
+    underlay: createGrid(size),
     // Only the cells that hold a field are listed here, by the moment they
     // were sown, so the saved state stays small.
     planted: {},
-    celebrated: {},
+    celebrated: false,
+    createdAt: Number.isFinite(now) ? now : 0,
   };
-  SHEETS.forEach((sheet) => {
-    state.grids[sheet.id] = createSheetGrid(sheet);
-    state.underlays[sheet.id] = createSheetGrid(sheet);
-    state.planted[sheet.id] = {};
-    state.celebrated[sheet.id] = false;
-  });
-  return state;
+  state.worlds.push(world);
+  state.currentWorldId = world.id;
+  return world;
 }
 
-function currentSheet(state) {
-  return sheetById(state?.currentSheet);
+// Deleting the open world opens the first one that is left; deleting the last
+// world leaves an empty shelf.
+function deleteWorld(state, worldId) {
+  const index = state?.worlds?.findIndex((world) => world.id === worldId) ?? -1;
+  if (index < 0) return false;
+  state.worlds.splice(index, 1);
+  if (state.currentWorldId === worldId) {
+    state.currentWorldId = state.worlds[0]?.id ?? null;
+  }
+  return true;
+}
+
+function selectWorld(state, worldId) {
+  if (!worldById(state, worldId)) return false;
+  state.currentWorldId = worldId;
+  return true;
 }
 
 // The four neighbours in a fixed north, east, south, west order, without
-// wrapping around the edges of the sheet.
+// wrapping around the edges of the world.
 function gridNeighbors(cellCount, columns, index) {
   const rows = Math.floor(cellCount / columns);
   const row = Math.floor(index / columns);
@@ -157,23 +216,23 @@ function gridNeighbors(cellCount, columns, index) {
   return neighbors;
 }
 
-function neighborIndices(sheet, index) {
-  return gridNeighbors(sheet.cellCount, sheet.columns, index);
+function neighborIndices(size, index) {
+  return gridNeighbors(size.cellCount, size.columns, index);
 }
 
-function isCellIndex(sheet, index) {
-  return Boolean(sheet) && Number.isInteger(index) && index >= 0 && index < sheet.cellCount;
+function isCellIndex(size, index) {
+  return Boolean(size) && Number.isInteger(index) && index >= 0 && index < size.cellCount;
 }
 
 // Every cell on the straight line between two cells, both ends included. A fast
 // stroke reports far apart points, and this keeps the painted line unbroken.
-function lineIndices(sheet, fromIndex, toIndex) {
-  if (!isCellIndex(sheet, fromIndex) || !isCellIndex(sheet, toIndex)) return [];
+function lineIndices(size, fromIndex, toIndex) {
+  if (!isCellIndex(size, fromIndex) || !isCellIndex(size, toIndex)) return [];
 
-  let row = Math.floor(fromIndex / sheet.columns);
-  let column = fromIndex % sheet.columns;
-  const lastRow = Math.floor(toIndex / sheet.columns);
-  const lastColumn = toIndex % sheet.columns;
+  let row = Math.floor(fromIndex / size.columns);
+  let column = fromIndex % size.columns;
+  const lastRow = Math.floor(toIndex / size.columns);
+  const lastColumn = toIndex % size.columns;
   const deltaRow = Math.abs(lastRow - row);
   const deltaColumn = Math.abs(lastColumn - column);
   const stepRow = Math.sign(lastRow - row);
@@ -191,19 +250,19 @@ function lineIndices(sheet, fromIndex, toIndex) {
       error += deltaColumn;
       row += stepRow;
     }
-    path.push(row * sheet.columns + column);
+    path.push(row * size.columns + column);
   }
   return path;
 }
 
-// Paints one cell of the current sheet. Painting over is always allowed, and
+// Paints one cell of the open world. Painting over is always allowed, and
 // nothing here ever throws: a refused paint simply reports no change.
 function paintCell(state, index, blockId, now = 0) {
-  const sheet = currentSheet(state);
-  if (!isCellIndex(sheet, index) || !isBlockOnSheet(sheet, blockId)) return false;
+  const world = currentWorld(state);
+  const size = worldSize(world);
+  if (!isCellIndex(size, index) || !isBlockEnabled(state, blockId)) return false;
 
-  const grid = state.grids[sheet.id];
-  const underlay = state.underlays[sheet.id];
+  const { grid, underlay } = world;
   if (!Array.isArray(grid) || !Array.isArray(underlay)) return false;
 
   // A road painted onto water becomes a bridge: the water waits underneath and
@@ -215,9 +274,8 @@ function paintCell(state, index, blockId, now = 0) {
   grid[index] = blockId;
   underlay[index] = nextUnderlay;
 
-  const planted = state.planted[sheet.id];
-  if (blockId === FIELD_ID) planted[index] = now;
-  else delete planted[index];
+  if (blockId === FIELD_ID) world.planted[index] = now;
+  else delete world.planted[index];
   return true;
 }
 
@@ -230,18 +288,18 @@ function paintStroke(state, indices, blockId, now = 0) {
 }
 
 // The cells one press of the brush covers. The wide brush paints a square and
-// simply loses the part that falls off the sheet.
-function brushCells(sheet, index, size = 1) {
-  if (!isCellIndex(sheet, index) || !Number.isInteger(size) || size < 1) return [];
-  const row = Math.floor(index / sheet.columns);
-  const column = index % sheet.columns;
+// simply loses the part that falls off the world.
+function brushCells(size, index, span = 1) {
+  if (!isCellIndex(size, index) || !Number.isInteger(span) || span < 1) return [];
+  const row = Math.floor(index / size.columns);
+  const column = index % size.columns;
   const cells = [];
-  for (let rowStep = 0; rowStep < size; rowStep += 1) {
-    for (let columnStep = 0; columnStep < size; columnStep += 1) {
+  for (let rowStep = 0; rowStep < span; rowStep += 1) {
+    for (let columnStep = 0; columnStep < span; columnStep += 1) {
       const nextRow = row + rowStep;
       const nextColumn = column + columnStep;
-      if (nextRow >= sheet.rows || nextColumn >= sheet.columns) continue;
-      cells.push(nextRow * sheet.columns + nextColumn);
+      if (nextRow >= size.rows || nextColumn >= size.columns) continue;
+      cells.push(nextRow * size.columns + nextColumn);
     }
   }
   return cells;
@@ -250,10 +308,11 @@ function brushCells(sheet, index, size = 1) {
 // Fills the connected region that shares the value of the tapped cell, so the
 // bucket works on an empty area and on a finished lake alike.
 function floodFill(state, index, blockId, now = 0) {
-  const sheet = currentSheet(state);
-  if (!isCellIndex(sheet, index) || !isBlockOnSheet(sheet, blockId)) return 0;
+  const world = currentWorld(state);
+  const size = worldSize(world);
+  if (!isCellIndex(size, index) || !isBlockEnabled(state, blockId)) return 0;
 
-  const grid = state.grids[sheet.id];
+  const { grid } = world;
   if (!Array.isArray(grid)) return 0;
 
   const target = grid[index];
@@ -265,7 +324,7 @@ function floodFill(state, index, blockId, now = 0) {
   while (queue.length > 0) {
     const cell = queue.pop();
     region.push(cell);
-    neighborIndices(sheet, cell).forEach((neighbor) => {
+    neighborIndices(size, cell).forEach((neighbor) => {
       if (seen.has(neighbor) || grid[neighbor] !== target) return;
       seen.add(neighbor);
       queue.push(neighbor);
@@ -275,7 +334,7 @@ function floodFill(state, index, blockId, now = 0) {
 }
 
 // Which of the four neighbours answer the question, as one 4-bit mask. Cells
-// outside the sheet never count.
+// outside the world never count.
 function neighborMask(grid, columns, index, predicate) {
   if (!Array.isArray(grid) || !Number.isInteger(columns) || columns <= 0) return 0;
   if (!Number.isInteger(index) || index < 0 || index >= grid.length) return 0;
@@ -343,9 +402,9 @@ function houseDoor(grid, columns, index) {
 
 // Bare soil, then shoots, then ripe ears. The caller passes the current time.
 function fieldStage(state, index, now = 0) {
-  const sheet = currentSheet(state);
-  if (!sheet || state.grids[sheet.id]?.[index] !== FIELD_ID) return -1;
-  const sown = state.planted[sheet.id]?.[index];
+  const world = currentWorld(state);
+  if (!world || world.grid?.[index] !== FIELD_ID) return -1;
+  const sown = world.planted?.[index];
   const age = now - (Number.isFinite(sown) ? sown : 0);
   if (age < FIELD_SHOOT_MS) return 0;
   return age < FIELD_RIPE_MS ? 1 : 2;
@@ -443,7 +502,7 @@ function loopOrder(cells, adjacency) {
 
 // A continuous walk that covers every cell of the component and comes back:
 // where the walk cannot go on it steps back the way it came, so two cells next
-// to each other in the result are always next to each other on the sheet.
+// to each other in the result are always next to each other on the world.
 function walkOrder(cells, adjacency) {
   const start = cells.reduce(
     (best, index) => (adjacency.get(index).length < adjacency.get(best).length ? index : best),
@@ -507,139 +566,139 @@ function forestClusters(grid, columns) {
     .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
 }
 
-function paintedCount(state, sheetId = state?.currentSheet) {
-  const grid = state?.grids?.[sheetId];
+function paintedCount(state, worldId = state?.currentWorldId) {
+  const grid = worldById(state, worldId)?.grid;
   if (!Array.isArray(grid)) return 0;
   return grid.reduce((count, value) => count + (value !== EMPTY_CELL ? 1 : 0), 0);
 }
 
-function isSheetComplete(state, sheetId = state?.currentSheet) {
-  const sheet = sheetById(sheetId);
-  if (!sheet) return false;
-  return paintedCount(state, sheet.id) === sheet.cellCount;
+function isWorldComplete(state, worldId = state?.currentWorldId) {
+  const world = worldById(state, worldId);
+  const size = worldSize(world);
+  if (!size) return false;
+  return paintedCount(state, world.id) === size.cellCount;
 }
 
-// The next sheet appears only once the current one has no holes left.
-function unlockNextSheet(state) {
-  const index = sheetIndex(state?.currentSheet);
-  if (index < 0 || !isSheetComplete(state, state.currentSheet)) return false;
-  if (index + 1 >= SHEETS.length || state.unlockedCount > index + 1) return false;
-  state.unlockedCount = index + 2;
+// The only reset in the game. It clears one world and never touches the others.
+function clearWorld(state, worldId = state?.currentWorldId) {
+  const world = worldById(state, worldId);
+  const size = worldSize(world);
+  if (!size) return false;
+  world.grid = createGrid(size);
+  world.underlay = createGrid(size);
+  world.planted = {};
+  world.celebrated = false;
   return true;
 }
 
-function selectSheet(state, sheetId) {
-  const index = sheetIndex(sheetId);
-  if (!state || index < 0 || index >= state.unlockedCount) return false;
-  state.currentSheet = sheetId;
-  return true;
-}
-
-// The only reset in the game. It clears one sheet and never touches the others.
-function clearSheet(state, sheetId = state?.currentSheet) {
-  const sheet = sheetById(sheetId);
-  if (!state || !sheet) return false;
-  state.grids[sheet.id] = createSheetGrid(sheet);
-  state.underlays[sheet.id] = createSheetGrid(sheet);
-  state.planted[sheet.id] = {};
-  state.celebrated[sheet.id] = false;
-  return true;
-}
-
-function normalizeGrid(sheet, saved) {
-  const grid = createSheetGrid(sheet);
+function normalizeGrid(size, saved) {
+  const grid = createGrid(size);
   if (!Array.isArray(saved)) return grid;
-  const length = Math.min(saved.length, sheet.cellCount);
+  const length = Math.min(saved.length, size.cellCount);
   for (let index = 0; index < length; index += 1) {
-    // Unknown ids and blocks the sheet does not offer become empty cells.
-    if (isBlockOnSheet(sheet, saved[index])) grid[index] = saved[index];
+    // Unknown ids and anything that is not a block become empty cells.
+    if (BLOCK_BY_ID.has(saved[index])) grid[index] = saved[index];
   }
   return grid;
 }
 
-function normalizeUnderlay(sheet, savedBridges, grid) {
-  const underlay = createSheetGrid(sheet);
+function normalizeUnderlay(size, savedBridges, grid) {
+  const underlay = createGrid(size);
   if (!Array.isArray(savedBridges)) return underlay;
   savedBridges.forEach((index) => {
     // Only water hides under a block, and only under a road: that is a bridge.
-    if (isCellIndex(sheet, index) && isRoadBlock(grid[index])) underlay[index] = WATER_ID;
+    if (isCellIndex(size, index) && isRoadBlock(grid[index])) underlay[index] = WATER_ID;
   });
   return underlay;
 }
 
-// Saved data may come from an older version, a different game or a broken
-// write. Anything unexpected turns into an empty cell instead of an error.
-// What gets written to storage. The underlay is a whole parallel array in
-// memory, but only the few bridge cells are worth keeping, so the save of five
-// finished sheets stays small.
-function serializeState(state) {
-  const bridges = {};
-  SHEETS.forEach((sheet) => {
-    bridges[sheet.id] = state.underlays[sheet.id]
-      .reduce((list, value, index) => {
-        if (value === WATER_ID) list.push(index);
-        return list;
-      }, []);
-  });
-  return {
-    currentSheet: state.currentSheet,
-    unlockedCount: state.unlockedCount,
-    grids: state.grids,
-    bridges,
-    planted: state.planted,
-    celebrated: state.celebrated,
-  };
-}
-
 // Sowing times are kept only for cells that really hold a field.
-function normalizePlanted(sheet, saved, grid) {
+function normalizePlanted(size, saved, grid) {
   const planted = {};
   if (!saved || typeof saved !== "object") return planted;
   Object.entries(saved).forEach(([key, time]) => {
     const index = Number(key);
-    if (!isCellIndex(sheet, index) || grid[index] !== FIELD_ID) return;
+    if (!isCellIndex(size, index) || grid[index] !== FIELD_ID) return;
     if (Number.isFinite(time)) planted[index] = time;
   });
   return planted;
 }
 
-function normalizeSavedState(value) {
-  const state = createGameState();
-  if (!value || typeof value !== "object") return state;
+// What gets written to storage. The underlay is a whole parallel array in
+// memory, but only the few bridge cells are worth keeping, so the save of a
+// shelf full of worlds stays small.
+function serializeState(state) {
+  return {
+    currentWorldId: state.currentWorldId,
+    worlds: state.worlds.map((world) => ({
+      id: world.id,
+      sizeId: world.sizeId,
+      grid: world.grid,
+      bridges: world.underlay.reduce((list, value, index) => {
+        if (value === WATER_ID) list.push(index);
+        return list;
+      }, []),
+      planted: world.planted,
+      celebrated: world.celebrated,
+      createdAt: world.createdAt,
+    })),
+  };
+}
 
-  const unlockedCount = Number.isInteger(value.unlockedCount) ? value.unlockedCount : 1;
-  state.unlockedCount = Math.max(1, Math.min(SHEETS.length, unlockedCount));
+// Saved data may come from an older version, a different game or a broken
+// write. A world that cannot be read is dropped, and anything unexpected
+// inside a readable world turns into an empty cell instead of an error.
+function normalizeSavedWorld(saved) {
+  if (!saved || typeof saved !== "object") return null;
+  if (typeof saved.id !== "string" || saved.id === "") return null;
+  const size = worldSizeById(saved.sizeId);
+  if (!size || !Array.isArray(saved.grid)) return null;
 
-  SHEETS.forEach((sheet) => {
-    state.grids[sheet.id] = normalizeGrid(sheet, value.grids?.[sheet.id]);
-    state.underlays[sheet.id] = normalizeUnderlay(
-      sheet,
-      value.bridges?.[sheet.id],
-      state.grids[sheet.id],
-    );
-    state.planted[sheet.id] = normalizePlanted(sheet, value.planted?.[sheet.id], state.grids[sheet.id]);
-    state.celebrated[sheet.id] = value.celebrated?.[sheet.id] === true;
+  const grid = normalizeGrid(size, saved.grid);
+  return {
+    id: saved.id,
+    sizeId: size.id,
+    grid,
+    underlay: normalizeUnderlay(size, saved.bridges, grid),
+    planted: normalizePlanted(size, saved.planted, grid),
+    celebrated: saved.celebrated === true,
+    createdAt: Number.isFinite(saved.createdAt) ? saved.createdAt : 0,
+  };
+}
+
+function normalizeSavedState(value, enabledBlockIds) {
+  const state = createGameState(enabledBlockIds);
+  if (!value || typeof value !== "object" || !Array.isArray(value.worlds)) return state;
+
+  const seen = new Set();
+  value.worlds.forEach((saved) => {
+    const world = normalizeSavedWorld(saved);
+    if (!world || seen.has(world.id)) return;
+    seen.add(world.id);
+    state.worlds.push(world);
   });
 
-  const index = sheetIndex(value.currentSheet);
-  const unlocked = index >= 0 && index < state.unlockedCount;
-  state.currentSheet = unlocked ? value.currentSheet : SHEETS[0].id;
+  const open = worldById(state, value.currentWorldId);
+  state.currentWorldId = open ? open.id : (state.worlds[0]?.id ?? null);
   return state;
 }
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     STORAGE_KEY,
+    BLOCKS_KEY,
     SOUND_KEY,
     EMPTY_CELL,
     WATER_ID,
     BLOCKS,
-    SHEETS,
+    WORLD_SIZES,
+    DEFAULT_BLOCK_IDS,
     blockById,
     isRoadBlock,
-    sheetById,
-    sheetIndex,
-    isBlockOnSheet,
+    worldSizeById,
+    worldSize,
+    normalizeEnabledBlocks,
+    isBlockEnabled,
     neighborIndices,
     lineIndices,
     MASK_NORTH,
@@ -660,6 +719,11 @@ if (typeof module !== "undefined" && module.exports) {
     windmillTurns,
     lighthouseBlinks,
     createGameState,
+    createWorld,
+    deleteWorld,
+    selectWorld,
+    worldById,
+    currentWorld,
     paintCell,
     paintStroke,
     brushCells,
@@ -669,14 +733,13 @@ if (typeof module !== "undefined" && module.exports) {
     FIELD_SHOOT_MS,
     FIELD_RIPE_MS,
     paintedCount,
-    isSheetComplete,
-    unlockNextSheet,
-    selectSheet,
-    clearSheet,
+    isWorldComplete,
+    clearWorld,
     serializeState,
     normalizeSavedState,
   };
 }
+
 
 // The sheet is fitted to the card, never scaled below a comfortable finger size.
 const MIN_CELL_SIZE = 22;
