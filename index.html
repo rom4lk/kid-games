@@ -249,6 +249,60 @@
         font-weight: 800;
       }
 
+      /* The list of Block Town blocks needs two columns to stay readable. */
+      .settings-panel--blocks {
+        width: min(400px, calc(100vw - 24px));
+      }
+
+      .settings-blocks {
+        display: grid;
+        max-height: min(52vh, 380px);
+        margin-bottom: 10px;
+        gap: 6px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow-y: auto;
+      }
+
+      .settings-panel .settings-chip {
+        display: flex;
+        min-height: 40px;
+        align-items: center;
+        padding: 6px 8px;
+        gap: 8px;
+        text-align: left;
+      }
+
+      .settings-blocks button + button {
+        margin-top: 0;
+      }
+
+      /* An enabled block keeps its place, marked by a tick as well as by the
+         pressed look, and no longer answers a tap. */
+      .settings-chip[aria-pressed="true"] {
+        border-color: rgba(48, 113, 87, 0.45);
+        background: #eef7f1;
+        cursor: default;
+      }
+
+      .settings-chip-swatch {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        border: 1px solid rgba(35, 55, 67, 0.2);
+        border-radius: 5px;
+      }
+
+      .settings-chip-name {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .settings-chip-mark {
+        color: var(--green-dark);
+        font-weight: 900;
+      }
+
       /* Nine cards fit as a 3 by 3 shelf when the screen is tall enough.
          Smaller windows keep the plain scrolling shelf above. */
       @media (min-width: 860px) and (min-height: 700px) {
