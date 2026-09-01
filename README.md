@@ -122,7 +122,7 @@ Every game writes its progress to `localStorage` under its own key:
 | `robot-lab` | `robotLabCompletedV1` |
 | `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
-| `block-town` | `blockTownSheetsV1` |
+| `block-town` | `blockTownWorldsV1` |
 
 Progress is tied to the browser and the address, is not synchronized between devices and is erased when
 site data is cleared.
@@ -130,6 +130,10 @@ site data is cleared.
 Every card on the home page has a settings button in its corner: it opens a small panel for an adult
 that resets the progress of that game after a confirmation. The reset removes only the keys listed
 above, so the sound and language settings stay as they were.
+
+The Block Town panel holds one more screen, "Blocks": a list of all twenty blocks, where an adult
+adds the ones the child may paint with. That choice lives under `blockTownBlocksV1`, is written only
+by the home page, and a reset of progress keeps it — like sound and language, it is a setting.
 
 ## Shared principles
 

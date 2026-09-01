@@ -1164,13 +1164,18 @@ function initializeGame() {
       drawThumbnail(canvas, world);
     });
 
+    // The plus is a card of the shelf like the others, but a button must stay
+    // a button: the list role belongs to the wrapper.
+    const addCard = document.createElement("div");
+    addCard.className = "world-card";
+    addCard.setAttribute("role", "listitem");
     const add = document.createElement("button");
     add.type = "button";
     add.className = "world-new";
-    add.setAttribute("role", "listitem");
     add.setAttribute("aria-label", "New world");
     add.innerHTML = '<span aria-hidden="true">+</span>';
-    elements.worldShelf.append(add);
+    addCard.append(add);
+    elements.worldShelf.append(addCard);
   }
 
   function renderProgress() {
