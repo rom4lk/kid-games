@@ -1983,6 +1983,20 @@ function initializeGame() {
     startDriver();
   });
 
+  // An adult enables blocks on the shelf page, in another tab. The storage
+  // event brings the new list here, so the palette never waits for a reload.
+  // A cleared storage reports no key at all, and that counts as a change too.
+  window.addEventListener("storage", (event) => {
+    if (event.key !== null && event.key !== BLOCKS_KEY) return;
+    state.enabledBlockIds = loadEnabledBlocks();
+    // Blocks are never taken away, but a cleared setting can still leave the
+    // chosen block behind; the palette then falls back to its first block.
+    if (!isBlockEnabled(state, selectedBlockId)) selectedBlockId = state.enabledBlockIds[0];
+    closeKinds();
+    renderPalette();
+    watchFields();
+  });
+
   renderSound();
   renderPalette();
   renderTools();
