@@ -11,7 +11,7 @@
   <body data-translations="translations.json">
     <main class="game-shell" id="game-shell">
       <header class="topbar">
-        <section class="progress-panel" id="progress-panel" aria-label="Painted part of the sheet">
+        <section class="progress-panel" id="progress-panel" aria-label="Painted part of the world">
           <span class="progress-sun" aria-hidden="true">
             <span class="progress-sun-fill" id="progress-sun-fill"></span>
             <span class="progress-sun-face"></span>
@@ -61,7 +61,7 @@
           </button>
         </div>
 
-        <button class="minimap" id="minimap" type="button" aria-label="Whole sheet. Tap a spot to jump there." hidden>
+        <button class="minimap" id="minimap" type="button" aria-label="Whole world. Tap a spot to jump there." hidden>
           <canvas class="minimap-canvas" id="minimap-canvas"></canvas>
           <span class="minimap-view" id="minimap-view" aria-hidden="true"></span>
         </button>
@@ -69,20 +69,17 @@
         <div class="sheet-scroll" id="sheet-scroll">
           <div class="sheet-stage" id="sheet-stage">
             <div class="sheet-grid" id="sheet-grid" role="grid" tabindex="0"
-              aria-label="Sheet. Arrow keys move the frame, Space paints the chosen block."></div>
+              aria-label="World. Arrow keys move the frame, Space paints the chosen block."></div>
             <div class="living-layer" id="living-layer" aria-hidden="true"></div>
           </div>
         </div>
         <div class="celebration" id="celebration" hidden>
           <div class="confetti" id="confetti" aria-hidden="true"></div>
-          <div class="celebration-card" role="dialog" aria-modal="true" aria-label="The sheet is full">
+          <div class="celebration-card" role="dialog" aria-modal="true" aria-label="The world is full">
             <span class="celebration-sun" aria-hidden="true"></span>
-            <p class="celebration-text">The whole sheet is painted!</p>
+            <p class="celebration-text">The whole world is painted!</p>
             <div class="celebration-actions">
-              <button class="pause-action confirm-button" id="next-sheet-button" type="button" aria-label="Open the next sheet">
-                <span aria-hidden="true">▶</span>
-              </button>
-              <button class="pause-action" id="stay-button" type="button" aria-label="Stay on this sheet">
+              <button class="pause-action confirm-button" id="stay-button" type="button" aria-label="Stay in this world">
                 <span aria-hidden="true">✓</span>
               </button>
             </div>
@@ -104,28 +101,59 @@
     <div class="pause-overlay" id="pause-overlay" role="dialog" aria-modal="true" aria-label="Pause menu" hidden>
       <div class="pause-card">
         <div class="pause-actions" data-state="menu">
-          <button class="pause-action resume-button" id="resume-button" type="button" aria-label="Back to the sheet">
+          <button class="pause-action resume-button" id="resume-button" type="button" aria-label="Back to the world">
             <span aria-hidden="true">▶</span>
           </button>
-          <button class="pause-action shelf-button" id="shelf-button" type="button" aria-label="Choose a sheet" hidden>
+          <button class="pause-action shelf-button" id="shelf-button" type="button" aria-label="Choose a world">
             <span class="shelf-icon" aria-hidden="true"></span>
           </button>
-          <button class="pause-action clear-button" id="clear-button" type="button" aria-label="Start a new sheet">
+          <button class="pause-action clear-button" id="clear-button" type="button" aria-label="Clear this world">
             <span aria-hidden="true">🗋</span>
           </button>
         </div>
-        <div class="pause-actions pause-actions--shelf" data-state="sheets" hidden>
-          <div class="sheet-shelf" id="sheet-shelf" role="list"></div>
-          <button class="pause-action" id="shelf-back-button" type="button" aria-label="Back to the pause menu">
+        <div class="pause-actions pause-actions--shelf" data-state="worlds" hidden>
+          <div class="world-shelf" id="world-shelf" role="list" aria-label="Worlds"></div>
+          <button class="pause-action" id="worlds-back-button" type="button" aria-label="Back to the pause menu">
+            <span aria-hidden="true">↩</span>
+          </button>
+        </div>
+        <div class="pause-actions pause-actions--shelf" data-state="sizes" hidden>
+          <div class="size-picker" id="size-picker" role="list" aria-label="Size of the new world">
+            <button class="size-choice" type="button" data-size="size-1" role="listitem" aria-label="Small world">
+              <span class="size-mark" aria-hidden="true"></span>
+            </button>
+            <button class="size-choice" type="button" data-size="size-2" role="listitem" aria-label="Medium world">
+              <span class="size-mark" aria-hidden="true"></span>
+            </button>
+            <button class="size-choice" type="button" data-size="size-3" role="listitem" aria-label="Large world">
+              <span class="size-mark" aria-hidden="true"></span>
+            </button>
+            <button class="size-choice" type="button" data-size="size-4" role="listitem" aria-label="Very large world">
+              <span class="size-mark" aria-hidden="true"></span>
+            </button>
+            <button class="size-choice" type="button" data-size="size-5" role="listitem" aria-label="Huge world">
+              <span class="size-mark" aria-hidden="true"></span>
+            </button>
+          </div>
+          <button class="pause-action" id="sizes-back-button" type="button" aria-label="Back to the worlds">
             <span aria-hidden="true">↩</span>
           </button>
         </div>
         <div class="pause-actions" data-state="confirm" hidden>
-          <p class="pause-question">Clear this sheet and start it again?</p>
-          <button class="pause-action confirm-button" id="confirm-clear-button" type="button" aria-label="Yes, start a new sheet">
+          <p class="pause-question">Clear this world and start it again?</p>
+          <button class="pause-action confirm-button" id="confirm-clear-button" type="button" aria-label="Yes, clear the world">
             <span aria-hidden="true">✓</span>
           </button>
           <button class="pause-action cancel-button" id="cancel-clear-button" type="button" aria-label="No, keep the painting">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <div class="pause-actions" data-state="delete" hidden>
+          <p class="pause-question">Delete this world?</p>
+          <button class="pause-action confirm-button" id="confirm-delete-button" type="button" aria-label="Yes, delete it">
+            <span aria-hidden="true">✓</span>
+          </button>
+          <button class="pause-action cancel-button" id="cancel-delete-button" type="button" aria-label="No, keep the world">
             <span aria-hidden="true">✕</span>
           </button>
         </div>

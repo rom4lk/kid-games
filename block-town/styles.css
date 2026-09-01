@@ -1419,20 +1419,31 @@ button:focus-visible,
   gap: 14px;
 }
 
-/* The shelf of sheets: one live picture of each unlocked painting. */
+/* The shelf of worlds: one live picture of every painting the child has made. */
 .pause-actions--shelf {
   flex-direction: column;
 }
 
-.sheet-shelf {
+.world-shelf {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
+  max-height: min(46vh, 360px);
+  overflow-y: auto;
 }
 
-.sheet-choice {
+/* The picture and the cross are two separate targets, one above the other, so
+   a finger that means "open" never lands on "delete". */
+.world-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.world-choice {
   display: flex;
   min-width: 64px;
   min-height: 64px;
@@ -1445,11 +1456,11 @@ button:focus-visible,
   cursor: pointer;
 }
 
-.sheet-choice[aria-current="true"] {
+.world-choice[aria-current="true"] {
   border-color: var(--leaf-dark);
 }
 
-.sheet-thumbnail {
+.world-thumbnail {
   display: block;
   width: var(--thumb-width, 64px);
   height: calc(var(--thumb-width, 64px) / 2);
@@ -1457,6 +1468,89 @@ button:focus-visible,
   background: var(--paper);
   image-rendering: pixelated;
 }
+
+.world-delete {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid rgb(176 58 46 / 34%);
+  border-radius: 50%;
+  background: #fff;
+  color: #b03a2e;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.world-delete:hover {
+  border-color: #b03a2e;
+  background: #fdf1ef;
+}
+
+/* The big plus that opens the size picker. */
+.world-new {
+  display: flex;
+  width: 78px;
+  height: 78px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px dashed rgb(47 111 69 / 34%);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--leaf-dark);
+  font-size: 44px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* The five sizes are told apart by the picture alone: a growing rectangle of
+   squared paper, drawn with the same cells the world is painted on. */
+.size-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.size-choice {
+  display: flex;
+  width: 96px;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 4px solid rgb(47 111 69 / 22%);
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.size-choice:hover {
+  border-color: var(--leaf-dark);
+}
+
+.size-mark {
+  display: block;
+  width: calc(var(--size-share) * 76px);
+  height: calc(var(--size-share) * 38px);
+  border: 2px solid var(--leaf-dark);
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 7px, rgb(47 111 69 / 30%) 7px 8px),
+    repeating-linear-gradient(180deg, transparent 0 7px, rgb(47 111 69 / 30%) 7px 8px),
+    var(--paper);
+}
+
+.size-choice[data-size="size-1"] .size-mark { --size-share: 0.32; }
+.size-choice[data-size="size-2"] .size-mark { --size-share: 0.49; }
+.size-choice[data-size="size-3"] .size-mark { --size-share: 0.66; }
+.size-choice[data-size="size-4"] .size-mark { --size-share: 0.83; }
+.size-choice[data-size="size-5"] .size-mark { --size-share: 1; }
 
 .shelf-icon {
   display: block;

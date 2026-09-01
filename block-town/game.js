@@ -740,12 +740,12 @@ if (typeof module !== "undefined" && module.exports) {
   };
 }
 
-
-// The sheet is fitted to the card, never scaled below a comfortable finger size.
+// The sheet of paper is fitted to the card, never scaled below a comfortable
+// finger size.
 const MIN_CELL_SIZE = 22;
 const MAX_CELL_SIZE = 92;
 
-// The steps of the zoom on a big sheet, and the smallest cell that still feels
+// The steps of the zoom on a big world, and the smallest cell that still feels
 // comfortable under a finger.
 const ZOOM_LEVELS = [24, 32, 40, 54, 72];
 const COMFORT_CELL_SIZE = 40;
@@ -759,7 +759,7 @@ const STROKE_SOUND_EVERY = 3;
 // Each family has its own short note: a tap for a road, a plop for water, a
 // rustle for the meadow and the wood, a knock for a house, a ding for decor.
 // The living world. Each creature needs a painting big enough to hold it, and
-// the sheet never shows more than a few of one kind.
+// the world never shows more than a few of one kind.
 const ANALYSIS_DELAY_MS = 320;
 const MAX_SPRITES_PER_KIND = 3;
 const SPRITE_KINDS = [
@@ -797,12 +797,12 @@ const BLOCK_COLORS = {
 const THUMBNAIL_EMPTY = "#fffdf4";
 const MINIMAP_EMPTY = "#ffd45c";
 
-// From this sheet on the palette groups its blocks by family, and the families
-// always keep the same order and the same places.
-const GROUPED_FROM_SHEET = 3;
+// Past this many enabled blocks the palette groups them by family, and the
+// families always keep the same order and the same places.
+const GROUPED_FROM_COUNT = 8;
 const FAMILY_ORDER = ["nature", "roads", "water", "buildings", "decor"];
 const TOOL_SIZES = { brush: 1, wide: 2 };
-// Fields ripen slowly, so the sheet is looked over only now and then.
+// Fields ripen slowly, so the world is looked over only now and then.
 const FIELD_TICK_MS = 4000;
 const CONFETTI_COUNT = 16;
 
@@ -822,9 +822,9 @@ function initializeGame() {
     living: document.querySelector("#living-layer"),
     celebration: document.querySelector("#celebration"),
     confetti: document.querySelector("#confetti"),
-    nextSheet: document.querySelector("#next-sheet-button"),
     stay: document.querySelector("#stay-button"),
-    sheetShelf: document.querySelector("#sheet-shelf"),
+    worldShelf: document.querySelector("#world-shelf"),
+    sizePicker: document.querySelector("#size-picker"),
     sheetScroll: document.querySelector("#sheet-scroll"),
     zoomButtons: document.querySelector("#zoom-buttons"),
     zoomIn: document.querySelector("#zoom-in"),
@@ -834,7 +834,8 @@ function initializeGame() {
     minimapCanvas: document.querySelector("#minimap-canvas"),
     minimapView: document.querySelector("#minimap-view"),
     shelf: document.querySelector("#shelf-button"),
-    shelfBack: document.querySelector("#shelf-back-button"),
+    worldsBack: document.querySelector("#worlds-back-button"),
+    sizesBack: document.querySelector("#sizes-back-button"),
     palette: document.querySelector("#palette"),
     paletteKinds: document.querySelector("#palette-kinds"),
     tools: document.querySelector("#tools"),
@@ -848,6 +849,8 @@ function initializeGame() {
     clear: document.querySelector("#clear-button"),
     confirmClear: document.querySelector("#confirm-clear-button"),
     cancelClear: document.querySelector("#cancel-clear-button"),
+    confirmDelete: document.querySelector("#confirm-delete-button"),
+    cancelDelete: document.querySelector("#cancel-delete-button"),
   };
 
   const FAMILY_NAMES = {
@@ -888,7 +891,8 @@ function initializeGame() {
   };
 
   let state = loadGame();
-  let selectedBlockId = currentSheet(state).blockIds[0];
+  ensureWorld();
+  let selectedBlockId = state.enabledBlockIds[0];
   let selectedTool = "brush";
   let zoomIndex = ZOOM_LEVELS.indexOf(COMFORT_CELL_SIZE);
   let cursorIndex = 0;
@@ -898,6 +902,8 @@ function initializeGame() {
   let saveTimer = 0;
   let soundEnabled = loadSoundPreference();
   let paused = false;
+  let pauseState = "menu";
+  let pendingDeleteId = null;
   let strokeActive = false;
   let strokeLastIndex = -1;
   let cellsSinceSound = STROKE_SOUND_EVERY;
@@ -908,12 +914,35 @@ function initializeGame() {
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   let reduceMotion = motionQuery.matches;
 
+  // Which blocks a child may paint with is an adult's setting, kept by the
+  // shelf page and only read here.
+  function loadEnabledBlocks() {
+    try {
+      return normalizeEnabledBlocks(JSON.parse(localStorage.getItem(BLOCKS_KEY)));
+    } catch {
+      return normalizeEnabledBlocks(null);
+    }
+  }
+
   function loadGame() {
     try {
-      return normalizeSavedState(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return normalizeSavedState(saved, loadEnabledBlocks());
     } catch {
-      return createGameState();
+      return createGameState(loadEnabledBlocks());
     }
+  }
+
+  // There is always an open world, so the first tap is always a painted cell.
+  function ensureWorld() {
+    if (currentWorld(state)) return false;
+    createWorld(state, WORLD_SIZES[0].id, Date.now());
+    saveGame();
+    return true;
+  }
+
+  function openSize() {
+    return worldSize(currentWorld(state));
   }
 
   function saveGame() {
@@ -965,6 +994,12 @@ function initializeGame() {
     return block ? BLOCK_NAMES[block.key] : "Empty cell";
   }
 
+  // Worlds are told apart by their pictures, so a number is only for the
+  // screen reader and never shown.
+  function worldNumber(worldId) {
+    return state.worlds.findIndex((world) => world.id === worldId) + 1;
+  }
+
   const SIDE_CLASSES = [
     [MASK_NORTH, "n"],
     [MASK_EAST, "e"],
@@ -978,13 +1013,13 @@ function initializeGame() {
 
   // The look of a cell is nothing but class names; styles.css draws every
   // variant. The model decides which variant this cell is.
-  function cellClasses(sheet, grid, underlay, index) {
+  function cellClasses(size, grid, underlay, index) {
     const block = blockById(grid[index]);
     if (!block) return ["cell", "is-empty"];
 
     const classes = ["cell", `block--${block.key}`];
     if (block.family === "roads") {
-      const tile = roadTile(grid, underlay, sheet.columns, index);
+      const tile = roadTile(grid, underlay, size.columns, index);
       classes.push("cell--road", `road--${tile.shape}`, ...sideClasses("road", tile.mask));
       if (tile.bridge) {
         classes.push("road--bridge");
@@ -995,10 +1030,10 @@ function initializeGame() {
       return classes;
     }
     if (block.key === "water") {
-      return classes.concat(sideClasses("shore", waterEdges(grid, underlay, sheet.columns, index)));
+      return classes.concat(sideClasses("shore", waterEdges(grid, underlay, size.columns, index)));
     }
     if (block.key === "forest") {
-      classes.push(`forest--${forestDensity(grid, sheet.columns, index)}`);
+      classes.push(`forest--${forestDensity(grid, size.columns, index)}`);
     }
     return classes;
   }
@@ -1006,25 +1041,24 @@ function initializeGame() {
   function renderCell(index, now = Date.now()) {
     const element = cells[index];
     if (!element) return;
-    const sheet = currentSheet(state);
-    const grid = state.grids[sheet.id];
-    const underlay = state.underlays[sheet.id];
-    const classes = cellClasses(sheet, grid, underlay, index);
+    const world = currentWorld(state);
+    const size = worldSize(world);
+    const { grid, underlay } = world;
+    const classes = cellClasses(size, grid, underlay, index);
     // Repainting a cell must not drop the keyboard frame that stands on it.
     if (index === cursorIndex) classes.push("is-cursor");
-    if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, sheet.columns, index)}`);
+    if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, size.columns, index)}`);
     if (grid[index] === FIELD_ID) classes.push(`field--${fieldStage(state, index, now)}`);
-    if (windmillTurns(grid, sheet.columns, index)) classes.push("is-turning");
-    if (lighthouseBlinks(grid, underlay, sheet.columns, index)) classes.push("is-blinking");
+    if (windmillTurns(grid, size.columns, index)) classes.push("is-turning");
+    if (lighthouseBlinks(grid, underlay, size.columns, index)) classes.push("is-blinking");
     element.className = classes.join(" ");
     element.setAttribute("aria-label", blockName(grid[index]));
   }
 
   // A painted cell can change the look of its four neighbours and nothing else.
   function renderCellAndNeighbors(index, now = Date.now()) {
-    const sheet = currentSheet(state);
     renderCell(index, now);
-    neighborIndices(sheet, index).forEach((neighbor) => renderCell(neighbor, now));
+    neighborIndices(openSize(), index).forEach((neighbor) => renderCell(neighbor, now));
   }
 
   function renderAllCells() {
@@ -1032,41 +1066,43 @@ function initializeGame() {
     for (let index = 0; index < cells.length; index += 1) renderCell(index, now);
   }
 
-  // Fields ripen while the sheet is open, so they are looked over on a slow
+  // Fields ripen while the world is open, so they are looked over on a slow
   // timer instead of being redrawn on every paint.
   function watchFields() {
     window.clearInterval(fieldTimer);
-    const sheet = currentSheet(state);
-    if (!isBlockOnSheet(sheet, FIELD_ID)) return;
+    if (!isBlockEnabled(state, FIELD_ID)) return;
+    const world = currentWorld(state);
     fieldTimer = window.setInterval(() => {
       const now = Date.now();
-      Object.keys(state.planted[sheet.id]).forEach((key) => renderCell(Number(key), now));
+      Object.keys(world.planted).forEach((key) => renderCell(Number(key), now));
     }, FIELD_TICK_MS);
   }
 
-  // One pixel per cell. The sheet shelf and, later, the mini-map both read the
+  // One pixel per cell. The shelf of worlds and the mini-map both read the
   // model through this and nothing else.
-  function drawThumbnail(canvas, sheet, { markEmpty = false } = {}) {
-    canvas.width = sheet.columns;
-    canvas.height = sheet.rows;
+  function drawThumbnail(canvas, world, { markEmpty = false } = {}) {
+    const size = worldSize(world);
+    if (!size) return;
+    canvas.width = size.columns;
+    canvas.height = size.rows;
     const context = canvas.getContext("2d");
     if (!context) return;
     // On the mini-map the cells still waiting are the bright ones, so the last
     // empty corner is easy to find.
     context.fillStyle = markEmpty ? MINIMAP_EMPTY : THUMBNAIL_EMPTY;
-    context.fillRect(0, 0, sheet.columns, sheet.rows);
-    state.grids[sheet.id].forEach((value, index) => {
+    context.fillRect(0, 0, size.columns, size.rows);
+    world.grid.forEach((value, index) => {
       const block = blockById(value);
       if (!block) return;
       context.fillStyle = BLOCK_COLORS[block.key];
-      context.fillRect(index % sheet.columns, Math.floor(index / sheet.columns), 1, 1);
+      context.fillRect(index % size.columns, Math.floor(index / size.columns), 1, 1);
     });
   }
 
-  // The mini-map shows the whole sheet and where the window on it sits.
+  // The mini-map shows the whole world and where the window on it sits.
   function updateMinimapView() {
     const scroll = elements.sheetScroll;
-    if (!currentSheet(state).big || scroll.scrollWidth === 0) return;
+    if (!openSize().big || scroll.scrollWidth === 0) return;
     const view = elements.minimapView.style;
     view.left = `${(scroll.scrollLeft / scroll.scrollWidth) * 100}%`;
     view.top = `${(scroll.scrollTop / scroll.scrollHeight) * 100}%`;
@@ -1075,9 +1111,8 @@ function initializeGame() {
   }
 
   function drawMinimap() {
-    const sheet = currentSheet(state);
-    if (!sheet.big) return;
-    drawThumbnail(elements.minimapCanvas, sheet, { markEmpty: true });
+    if (!openSize().big) return;
+    drawThumbnail(elements.minimapCanvas, currentWorld(state), { markEmpty: true });
     updateMinimapView();
   }
 
@@ -1095,53 +1130,75 @@ function initializeGame() {
     scroll.scrollBy({ ...moves[direction], behavior });
   }
 
-  function renderSheetShelf() {
-    elements.shelf.hidden = state.unlockedCount < 2;
-    elements.sheetShelf.textContent = "";
-    SHEETS.slice(0, state.unlockedCount).forEach((sheet) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "sheet-choice";
-      button.dataset.sheet = sheet.id;
-      button.setAttribute("role", "listitem");
-      button.setAttribute("aria-current", sheet.id === state.currentSheet ? "true" : "false");
-      button.setAttribute("aria-label", `Sheet ${sheet.number}`);
-      // A bigger sheet gets a bigger picture, so the ladder is visible.
-      button.style.setProperty("--thumb-width", `${52 + sheet.number * 14}px`);
+  // One live picture per world, in the order the worlds were made, and a big
+  // plus at the end for a new one.
+  function renderWorldShelf() {
+    elements.worldShelf.textContent = "";
+    state.worlds.forEach((world, index) => {
+      const size = worldSize(world);
+      const card = document.createElement("div");
+      card.className = "world-card";
+      card.setAttribute("role", "listitem");
+
+      const open = document.createElement("button");
+      open.type = "button";
+      open.className = "world-choice";
+      open.dataset.world = world.id;
+      open.setAttribute("aria-current", world.id === state.currentWorldId ? "true" : "false");
+      open.setAttribute("aria-label", `World ${index + 1}`);
+      // A bigger world gets a bigger picture, so the sizes are easy to tell apart.
+      open.style.setProperty("--thumb-width", `${52 + size.number * 14}px`);
       const canvas = document.createElement("canvas");
-      canvas.className = "sheet-thumbnail";
-      button.append(canvas);
-      elements.sheetShelf.append(button);
-      drawThumbnail(canvas, sheet);
+      canvas.className = "world-thumbnail";
+      open.append(canvas);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "world-delete";
+      remove.dataset.delete = world.id;
+      remove.setAttribute("aria-label", `Delete world ${index + 1}`);
+      remove.innerHTML = '<span aria-hidden="true">✕</span>';
+
+      card.append(open, remove);
+      elements.worldShelf.append(card);
+      drawThumbnail(canvas, world);
     });
+
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "world-new";
+    add.setAttribute("role", "listitem");
+    add.setAttribute("aria-label", "New world");
+    add.innerHTML = '<span aria-hidden="true">+</span>';
+    elements.worldShelf.append(add);
   }
 
   function renderProgress() {
-    const sheet = currentSheet(state);
+    const size = openSize();
     const painted = paintedCount(state);
-    const share = Math.round((painted / sheet.cellCount) * 100);
+    const share = Math.round((painted / size.cellCount) * 100);
     elements.sunFill.style.height = `${share}%`;
     elements.progressPanel.setAttribute(
       "aria-label",
-      `Painted ${painted} cells of ${sheet.cellCount}`,
+      `Painted ${painted} cells of ${size.cellCount}`,
     );
   }
 
-  // The sheet is rebuilt only when the sheet itself changes; a paint touches
-  // one cell element, never the whole grid.
+  // The sheet is rebuilt only when the open world changes; a paint touches one
+  // cell element, never the whole grid.
   function buildSheet() {
-    const sheet = currentSheet(state);
-    elements.stage.style.setProperty("--rows", String(sheet.rows));
-    elements.stage.style.setProperty("--columns", String(sheet.columns));
+    const size = openSize();
+    elements.stage.style.setProperty("--rows", String(size.rows));
+    elements.stage.style.setProperty("--columns", String(size.columns));
     elements.grid.textContent = "";
-    cells = new Array(sheet.cellCount);
+    cells = new Array(size.cellCount);
 
-    for (let row = 0; row < sheet.rows; row += 1) {
+    for (let row = 0; row < size.rows; row += 1) {
       const rowElement = document.createElement("div");
       rowElement.className = "sheet-row";
       rowElement.setAttribute("role", "row");
-      for (let column = 0; column < sheet.columns; column += 1) {
-        const index = row * sheet.columns + column;
+      for (let column = 0; column < size.columns; column += 1) {
+        const index = row * size.columns + column;
         const cell = document.createElement("div");
         cell.className = "cell is-empty";
         cell.id = `cell-${index}`;
@@ -1155,7 +1212,7 @@ function initializeGame() {
 
     renderAllCells();
     fitSheet();
-    cursorIndex = Math.min(cursorIndex, sheet.cellCount - 1);
+    cursorIndex = Math.min(cursorIndex, size.cellCount - 1);
     showCursor({ scroll: false });
   }
 
@@ -1176,11 +1233,11 @@ function initializeGame() {
   }
 
   function moveCursor([rowStep, columnStep]) {
-    const sheet = currentSheet(state);
-    const row = Math.floor(cursorIndex / sheet.columns) + rowStep;
-    const column = (cursorIndex % sheet.columns) + columnStep;
-    if (row < 0 || row >= sheet.rows || column < 0 || column >= sheet.columns) return;
-    cursorIndex = row * sheet.columns + column;
+    const size = openSize();
+    const row = Math.floor(cursorIndex / size.columns) + rowStep;
+    const column = (cursorIndex % size.columns) + columnStep;
+    if (row < 0 || row >= size.rows || column < 0 || column >= size.columns) return;
+    cursorIndex = row * size.columns + column;
     showCursor();
   }
 
@@ -1208,35 +1265,35 @@ function initializeGame() {
     button?.focus();
   }
 
-  // The largest cell at which the whole sheet still fits the card.
-  function fitCellSize(sheet) {
+  // The largest cell at which the whole world still fits the card.
+  function fitCellSize(size) {
     const style = window.getComputedStyle(elements.card);
     const box = elements.card.getBoundingClientRect();
     const width = box.width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
     const height = box.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
-    const size = Math.floor(Math.min(width / sheet.columns, height / sheet.rows));
-    return Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, size));
+    const cell = Math.floor(Math.min(width / size.columns, height / size.rows));
+    return Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, cell));
   }
 
-  // A big sheet opens at a comfortable cell size even when that means scrolling.
-  function defaultZoomIndex(sheet) {
-    const fit = fitCellSize(sheet);
-    const fitting = ZOOM_LEVELS.filter((size) => size <= fit);
+  // A big world opens at a comfortable cell size even when that means scrolling.
+  function defaultZoomIndex(size) {
+    const fit = fitCellSize(size);
+    const fitting = ZOOM_LEVELS.filter((cell) => cell <= fit);
     const best = fitting.length > 0 ? fitting[fitting.length - 1] : ZOOM_LEVELS[0];
     return ZOOM_LEVELS.indexOf(Math.max(best, COMFORT_CELL_SIZE));
   }
 
   function fitSheet() {
-    const sheet = currentSheet(state);
-    const size = sheet.big ? ZOOM_LEVELS[zoomIndex] : fitCellSize(sheet);
-    elements.stage.style.setProperty("--cell-size", `${size}px`);
+    const size = openSize();
+    const cell = size.big ? ZOOM_LEVELS[zoomIndex] : fitCellSize(size);
+    elements.stage.style.setProperty("--cell-size", `${cell}px`);
     elements.zoomIn.disabled = zoomIndex >= ZOOM_LEVELS.length - 1;
     elements.zoomOut.disabled = zoomIndex <= 0;
     updateMinimapView();
   }
 
   function renderSheetControls() {
-    const big = currentSheet(state).big === true;
+    const big = openSize().big === true;
     elements.zoomButtons.hidden = !big;
     elements.edgeArrows.hidden = !big;
     elements.minimap.hidden = !big;
@@ -1259,7 +1316,7 @@ function initializeGame() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", checked ? "true" : "false");
     button.setAttribute("aria-label", family ? FAMILY_NAMES[family] : BLOCK_NAMES[block.key]);
-    // A one-cell sheet gives the swatch the same art the grid would draw.
+    // A one-cell world gives the swatch the same art the grid would draw.
     const art = cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
     // On a button a field is shown ripe: that is what the block is for.
     if (blockId === FIELD_ID) art.push("field--2");
@@ -1267,11 +1324,11 @@ function initializeGame() {
     return button;
   }
 
-  function familiesOnSheet(sheet) {
+  function enabledFamilies() {
     return FAMILY_ORDER
       .map((family) => ({
         family,
-        blockIds: sheet.blockIds.filter((blockId) => blockById(blockId).family === family),
+        blockIds: state.enabledBlockIds.filter((blockId) => blockById(blockId).family === family),
       }))
       .filter((group) => group.blockIds.length > 0);
   }
@@ -1285,20 +1342,20 @@ function initializeGame() {
     return group.blockIds.includes(chosen) ? chosen : group.blockIds[0];
   }
 
+  // A short palette shows every block at once; a long one is folded into
+  // families, so the row never grows past what a child can scan.
   function renderPalette() {
-    const sheet = currentSheet(state);
-    const grouped = sheet.number >= GROUPED_FROM_SHEET;
     elements.palette.textContent = "";
 
-    if (!grouped) {
-      sheet.blockIds.forEach((blockId) => {
+    if (state.enabledBlockIds.length <= GROUPED_FROM_COUNT) {
+      state.enabledBlockIds.forEach((blockId) => {
         elements.palette.append(blockButton(blockId, { checked: blockId === selectedBlockId }));
       });
       closeKinds();
       return;
     }
 
-    familiesOnSheet(sheet).forEach((group) => {
+    enabledFamilies().forEach((group) => {
       const kind = kindOf(group);
       const checked = group.blockIds.includes(selectedBlockId);
       elements.palette.append(blockButton(checked ? selectedBlockId : kind, {
@@ -1318,8 +1375,7 @@ function initializeGame() {
   // Tapping a family opens a short row with its kinds, and tapping a kind
   // chooses it and closes the row again.
   function renderKinds() {
-    const sheet = currentSheet(state);
-    const group = familiesOnSheet(sheet).find((entry) => entry.family === openFamily);
+    const group = enabledFamilies().find((entry) => entry.family === openFamily);
     if (!group || group.blockIds.length < 2) {
       closeKinds();
       return;
@@ -1332,7 +1388,7 @@ function initializeGame() {
   }
 
   function selectBlock(blockId) {
-    if (!isBlockOnSheet(currentSheet(state), blockId)) return;
+    if (!isBlockEnabled(state, blockId)) return;
     selectedBlockId = blockId;
     chosenKind.set(blockById(blockId).family, blockId);
     closeKinds();
@@ -1340,9 +1396,11 @@ function initializeGame() {
     announce(BLOCK_NAMES[blockById(blockId).key]);
   }
 
+  // Small worlds get the brush alone, a medium one adds the wide brush and a
+  // big one the bucket: the size of the world decides.
   function renderTools() {
-    const sheet = currentSheet(state);
-    if (sheet.tools.length < 2) {
+    const tools = openSize().tools;
+    if (tools.length < 2) {
       elements.tools.hidden = true;
       elements.tools.textContent = "";
       selectedTool = "brush";
@@ -1350,8 +1408,8 @@ function initializeGame() {
     }
     elements.tools.hidden = false;
     elements.tools.textContent = "";
-    if (!sheet.tools.includes(selectedTool)) selectedTool = sheet.tools[0];
-    sheet.tools.forEach((tool) => {
+    if (!tools.includes(selectedTool)) selectedTool = tools[0];
+    tools.forEach((tool) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = `tool-button tool--${tool}`;
@@ -1367,16 +1425,16 @@ function initializeGame() {
   // Paints from the last cell of the stroke up to this one, so no cell between
   // two pointer reports is skipped.
   function paintTo(index) {
-    const sheet = currentSheet(state);
+    const size = openSize();
     const path = strokeLastIndex < 0
       ? [index]
-      : lineIndices(sheet, strokeLastIndex, index).slice(1);
+      : lineIndices(size, strokeLastIndex, index).slice(1);
     strokeLastIndex = index;
 
-    const size = TOOL_SIZES[selectedTool] ?? 1;
+    const span = TOOL_SIZES[selectedTool] ?? 1;
     const now = Date.now();
     let changed = 0;
-    path.flatMap((cell) => brushCells(sheet, cell, size)).forEach((cell) => {
+    path.flatMap((cell) => brushCells(size, cell, span)).forEach((cell) => {
       if (!paintCell(state, cell, selectedBlockId, now)) return;
       renderCellAndNeighbors(cell, now);
       changed += 1;
@@ -1408,21 +1466,20 @@ function initializeGame() {
   // The cell under a point is found by arithmetic on the grid rectangle: during
   // a stroke the pointer is captured and no longer reports a cell element.
   function cellIndexFromPoint(clientX, clientY) {
-    const sheet = currentSheet(state);
+    const size = openSize();
     const box = elements.grid.getBoundingClientRect();
     const width = elements.grid.clientWidth;
     const height = elements.grid.clientHeight;
     if (width <= 0 || height <= 0) return -1;
 
-    const column = Math.floor(((clientX - box.left - elements.grid.clientLeft) / width) * sheet.columns);
-    const row = Math.floor(((clientY - box.top - elements.grid.clientTop) / height) * sheet.rows);
-    if (row < 0 || row >= sheet.rows || column < 0 || column >= sheet.columns) return -1;
-    return row * sheet.columns + column;
+    const column = Math.floor(((clientX - box.left - elements.grid.clientLeft) / width) * size.columns);
+    const row = Math.floor(((clientY - box.top - elements.grid.clientTop) / height) * size.rows);
+    if (row < 0 || row >= size.rows || column < 0 || column >= size.columns) return -1;
+    return row * size.columns + column;
   }
 
   function cellSizePx() {
-    const sheet = currentSheet(state);
-    return elements.grid.clientWidth / sheet.columns;
+    return elements.grid.clientWidth / openSize().columns;
   }
 
   function createSprite(kind, track) {
@@ -1440,7 +1497,7 @@ function initializeGame() {
   }
 
   function placeSprite(sprite, position, size) {
-    const columns = currentSheet(state).columns;
+    const columns = openSize().columns;
     const step = Math.floor(position);
     const from = sprite.path[step % sprite.path.length];
     const to = sprite.path[(step + 1) % sprite.path.length];
@@ -1486,22 +1543,21 @@ function initializeGame() {
     driverHandle = window.requestAnimationFrame(driveSprites);
   }
 
-  function tracksFor(kind, sheet, grid, underlay) {
-    if (kind === "car") return roadPaths(grid, sheet.columns);
-    if (kind === "train") return railPaths(grid, sheet.columns);
-    if (kind === "duck" || kind === "boat") return lakes(grid, underlay, sheet.columns);
-    return forestClusters(grid, sheet.columns);
+  function tracksFor(kind, size, grid, underlay) {
+    if (kind === "car") return roadPaths(grid, size.columns);
+    if (kind === "train") return railPaths(grid, size.columns);
+    if (kind === "duck" || kind === "boat") return lakes(grid, underlay, size.columns);
+    return forestClusters(grid, size.columns);
   }
 
   // The world is read once a stroke has settled, never cell by cell.
   function analyzeWorld() {
-    const sheet = currentSheet(state);
-    const grid = state.grids[sheet.id];
-    const underlay = state.underlays[sheet.id];
+    const world = currentWorld(state);
+    const size = worldSize(world);
 
     elements.living.textContent = "";
     sprites = SPRITE_KINDS.flatMap(({ kind, minCells }) =>
-      tracksFor(kind, sheet, grid, underlay)
+      tracksFor(kind, size, world.grid, world.underlay)
         .filter((track) => track.cells.length >= minCells)
         .sort((left, right) => right.cells.length - left.cells.length)
         .slice(0, MAX_SPRITES_PER_KIND)
@@ -1537,19 +1593,18 @@ function initializeGame() {
     }
   }
 
-  // Evening light stays on a finished sheet; the confetti and the card come
+  // Evening light stays on a finished world; the confetti and the card come
   // only the first time it is finished.
   function renderEvening() {
-    elements.stage.classList.toggle("is-evening", isSheetComplete(state));
+    elements.stage.classList.toggle("is-evening", isWorldComplete(state));
   }
 
-  function openCelebration(hasNextSheet) {
+  function openCelebration() {
     fillConfetti();
     elements.celebration.hidden = false;
-    elements.nextSheet.hidden = !hasNextSheet;
     playCelebrationSound();
-    (hasNextSheet ? elements.nextSheet : elements.stay).focus();
-    announce("The whole sheet is painted!");
+    elements.stay.focus();
+    announce("The whole world is painted!");
   }
 
   function closeCelebration() {
@@ -1559,37 +1614,71 @@ function initializeGame() {
 
   function checkCompletion() {
     renderEvening();
-    if (!isSheetComplete(state)) return;
+    if (!isWorldComplete(state)) return;
+    const world = currentWorld(state);
+    if (world.celebrated) return;
 
-    const sheet = currentSheet(state);
-    const unlocked = unlockNextSheet(state);
-    const hasNextSheet = sheetIndex(sheet.id) + 1 < state.unlockedCount;
-    if (unlocked) renderSheetShelf();
-    if (state.celebrated[sheet.id]) return;
-
-    state.celebrated[sheet.id] = true;
+    world.celebrated = true;
     saveGame();
-    openCelebration(hasNextSheet);
+    openCelebration();
   }
 
-  function openSheet(sheetId) {
-    if (!selectSheet(state, sheetId)) return;
+  function openWorldById(worldId) {
+    if (!selectWorld(state, worldId)) return;
     closeCelebration();
     renderPalette();
     renderTools();
     renderSheetControls();
-    zoomIndex = defaultZoomIndex(currentSheet(state));
+    zoomIndex = defaultZoomIndex(openSize());
     cursorIndex = 0;
     buildSheet();
     elements.sheetScroll.scrollTo(0, 0);
     watchFields();
     renderProgress();
     renderEvening();
-    renderSheetShelf();
+    renderWorldShelf();
     analyzeWorld();
     saveGame();
-    announce(`Sheet ${currentSheet(state).number}`);
+    announce(`World ${worldNumber(worldId)}`);
     elements.grid.focus();
+  }
+
+  // A size picked in the picker becomes a world at once, and the child lands
+  // straight in it.
+  function createAndOpenWorld(sizeId) {
+    const world = createWorld(state, sizeId, Date.now());
+    if (!world) return;
+    saveGame();
+    openWorldById(world.id);
+    closePause({ restoreFocus: false });
+    announce("A new world.");
+  }
+
+  // Deleting the open world opens the next one; deleting the last world
+  // leaves a fresh small world, so there is always something to paint.
+  function deleteWorldAndContinue(worldId) {
+    const wasOpen = state.currentWorldId === worldId;
+    if (!deleteWorld(state, worldId)) return;
+    saveGame();
+
+    if (state.worlds.length === 0) {
+      createWorld(state, WORLD_SIZES[0].id, Date.now());
+      saveGame();
+      openWorldById(state.currentWorldId);
+      closePause({ restoreFocus: false });
+      announce("The world is deleted. Here is a new one.");
+      return;
+    }
+    if (wasOpen) {
+      openWorldById(state.currentWorldId);
+      closePause({ restoreFocus: false });
+      announce("The world is deleted.");
+      return;
+    }
+    renderWorldShelf();
+    showPauseState("worlds");
+    (elements.worldShelf.querySelector("button") ?? elements.worldsBack).focus();
+    announce("The world is deleted.");
   }
 
   function renderSound() {
@@ -1598,6 +1687,7 @@ function initializeGame() {
   }
 
   function showPauseState(name) {
+    pauseState = name;
     elements.pauseOverlay.querySelectorAll("[data-state]").forEach((section) => {
       section.hidden = section.dataset.state !== name;
     });
@@ -1605,16 +1695,20 @@ function initializeGame() {
 
   function openPause() {
     paused = true;
-    renderSheetShelf();
+    renderWorldShelf();
     elements.pauseOverlay.hidden = false;
     showPauseState("menu");
     elements.resume.focus();
   }
 
-  function closePause() {
+  // Opening a world already puts the focus on the sheet, so the pause closes
+  // behind it without taking the focus back.
+  function closePause({ restoreFocus = true } = {}) {
     paused = false;
+    pendingDeleteId = null;
     elements.pauseOverlay.hidden = true;
-    elements.pause.focus();
+    showPauseState("menu");
+    if (restoreFocus) elements.pause.focus();
   }
 
   function endStroke(event) {
@@ -1677,11 +1771,12 @@ function initializeGame() {
     }
   });
 
-  // Left and right walk along a row of buttons; Escape goes back to the sheet.
+  // Left and right walk along a row of buttons; Escape goes back to the sheet,
+  // or, inside the pause, one step back through the pause screens.
   function bindButtonRow(container, selector) {
     container.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        elements.grid.focus();
+        if (elements.pauseOverlay.hidden) elements.grid.focus();
         return;
       }
       const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key];
@@ -1697,6 +1792,8 @@ function initializeGame() {
   bindButtonRow(elements.palette, ".palette-button");
   bindButtonRow(elements.paletteKinds, ".palette-button");
   bindButtonRow(elements.tools, ".tool-button");
+  bindButtonRow(elements.worldShelf, ".world-choice, .world-delete, .world-new");
+  bindButtonRow(elements.sizePicker, ".size-choice");
 
   // A click made with the keyboard has no pointer behind it; the focus then
   // moves on by itself, so the player never has to hunt for it.
@@ -1710,7 +1807,7 @@ function initializeGame() {
     const family = button.dataset.family;
     // A family with several kinds opens its row; a single kind is chosen at once.
     if (family && family !== openFamily) {
-      const group = familiesOnSheet(currentSheet(state)).find((entry) => entry.family === family);
+      const group = enabledFamilies().find((entry) => entry.family === family);
       if (group.blockIds.length > 1) {
         openFamily = family;
         renderKinds();
@@ -1750,7 +1847,7 @@ function initializeGame() {
     else openPause();
   });
 
-  elements.resume.addEventListener("click", closePause);
+  elements.resume.addEventListener("click", () => closePause());
 
   elements.clear.addEventListener("click", () => {
     showPauseState("confirm");
@@ -1763,36 +1860,67 @@ function initializeGame() {
   });
 
   elements.confirmClear.addEventListener("click", () => {
-    clearSheet(state);
+    clearWorld(state);
     renderAllCells();
     renderProgress();
     renderEvening();
     analyzeWorld();
     saveGame();
     closePause();
-    announce("The sheet is empty again.");
+    announce("The world is empty again.");
   });
 
   elements.shelf.addEventListener("click", () => {
-    showPauseState("sheets");
-    elements.shelfBack.focus();
+    renderWorldShelf();
+    showPauseState("worlds");
+    elements.worldsBack.focus();
   });
 
-  elements.shelfBack.addEventListener("click", () => {
+  elements.worldsBack.addEventListener("click", () => {
     showPauseState("menu");
     elements.shelf.focus();
   });
 
-  elements.sheetShelf.addEventListener("click", (event) => {
-    const button = event.target.closest(".sheet-choice");
-    if (!button) return;
-    openSheet(button.dataset.sheet);
-    closePause();
+  elements.sizesBack.addEventListener("click", () => {
+    showPauseState("worlds");
+    elements.worldsBack.focus();
   });
 
-  elements.nextSheet.addEventListener("click", () => {
-    const next = SHEETS[sheetIndex(state.currentSheet) + 1];
-    if (next) openSheet(next.id);
+  elements.worldShelf.addEventListener("click", (event) => {
+    const remove = event.target.closest(".world-delete");
+    if (remove) {
+      pendingDeleteId = remove.dataset.delete;
+      showPauseState("delete");
+      elements.cancelDelete.focus();
+      return;
+    }
+    if (event.target.closest(".world-new")) {
+      showPauseState("sizes");
+      elements.sizePicker.querySelector(".size-choice")?.focus();
+      return;
+    }
+    const open = event.target.closest(".world-choice");
+    if (!open) return;
+    openWorldById(open.dataset.world);
+    closePause({ restoreFocus: false });
+  });
+
+  elements.sizePicker.addEventListener("click", (event) => {
+    const button = event.target.closest(".size-choice");
+    if (!button) return;
+    createAndOpenWorld(button.dataset.size);
+  });
+
+  elements.cancelDelete.addEventListener("click", () => {
+    pendingDeleteId = null;
+    showPauseState("worlds");
+    elements.worldsBack.focus();
+  });
+
+  elements.confirmDelete.addEventListener("click", () => {
+    const worldId = pendingDeleteId;
+    pendingDeleteId = null;
+    if (worldId) deleteWorldAndContinue(worldId);
   });
 
   elements.stay.addEventListener("click", () => {
@@ -1800,14 +1928,30 @@ function initializeGame() {
     elements.pause.focus();
   });
 
+  // Escape walks back: out of the celebration, one pause screen back, and at
+  // last out of the pause itself.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     if (!elements.celebration.hidden) {
       closeCelebration();
       return;
     }
-    if (paused) closePause();
-    else openPause();
+    if (!paused) {
+      openPause();
+      return;
+    }
+    if (pauseState === "sizes" || pauseState === "delete") {
+      pendingDeleteId = null;
+      showPauseState("worlds");
+      elements.worldsBack.focus();
+      return;
+    }
+    if (pauseState === "worlds" || pauseState === "confirm") {
+      showPauseState("menu");
+      elements.resume.focus();
+      return;
+    }
+    closePause();
   });
 
   elements.zoomIn.addEventListener("click", () => setZoom(1));
@@ -1843,12 +1987,12 @@ function initializeGame() {
   renderPalette();
   renderTools();
   renderSheetControls();
-  zoomIndex = defaultZoomIndex(currentSheet(state));
+  zoomIndex = defaultZoomIndex(openSize());
   buildSheet();
   watchFields();
   renderProgress();
   renderEvening();
-  renderSheetShelf();
+  renderWorldShelf();
   analyzeWorld();
 }
 
