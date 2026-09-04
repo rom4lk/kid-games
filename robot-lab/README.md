@@ -55,7 +55,9 @@ The `Repeat Two` card repeats the last two executed actions. For example, the pr
 
 ## Checking the solutions
 
-Every level stores a short reference solution. It can be checked from the root of the project with:
+Every level stores a short reference solution. A breadth-first search over the game state also confirms
+that each level's `par` equals the true minimum number of cards needed to win, not just the length of the
+reference solution. Both can be checked from the root of the project with:
 
 ```bash
 node robot-lab/test-game.js

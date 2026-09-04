@@ -278,6 +278,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 if (typeof document !== "undefined") {
   const elements = {
+    gameShell: document.querySelector(".game-shell"),
     board: document.querySelector("#board"),
     boardFrame: document.querySelector("#boardFrame"),
     missionNumber: document.querySelector("#missionNumber"),
@@ -311,7 +312,6 @@ if (typeof document !== "undefined") {
   let runVersion = 0;
   let resultTimer = 0;
   let soundEnabled = readSoundSetting();
-  let audioContext;
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function readCompletedLevels() {
@@ -358,18 +358,7 @@ if (typeof document !== "undefined") {
 
   function playTone(frequency, duration = 0.09, type = "sine") {
     if (!soundEnabled) return;
-    audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    oscillator.type = type;
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.09, audioContext.currentTime + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration);
+    window.GameSound?.tone({ frequency, duration, wave: type, volume: 0.09 });
   }
 
   function playSuccessSound() {
@@ -455,10 +444,15 @@ if (typeof document !== "undefined") {
   }
 
   // The two actions a "Repeat two" card will copy, so the child can see what it
-  // means instead of reading about it.
+  // means instead of reading about it. When the card right before it is itself
+  // a repeat, both copied actions collapse onto that one card's source index,
+  // so trace through it to the two concrete cards it copied instead.
   function repeatSourceIndexes(repeatIndex) {
     const expanded = expandProgram(program.slice(0, repeatIndex));
-    return [...new Set(expanded.slice(-2).map((entry) => entry.sourceIndex))];
+    const directSources = [...new Set(expanded.slice(-2).map((entry) => entry.sourceIndex))];
+    return [...new Set(directSources.flatMap((index) => (
+      program[index] === "repeat" ? repeatSourceIndexes(index) : [index]
+    )))];
   }
 
   function renderProgram(activeSourceIndex = -1, errorSourceIndex = -1) {
@@ -500,7 +494,7 @@ if (typeof document !== "undefined") {
       const stateLabel = complete ? "Complete" : unlocked ? "Open" : "Locked";
       return `
         <button class="level-button ${index === currentLevelIndex ? "active" : ""} ${complete ? "complete" : ""}"
-          type="button" data-level="${index}" ${unlocked ? "" : "disabled"}
+          type="button" data-level="${index}" ${unlocked && !running ? "" : "disabled"}
           aria-label="Mission ${index + 1}: ${level.title}. ${stateLabel}">
           <span>${String(index + 1).padStart(2, "0")}</span>
           <i aria-hidden="true">${complete ? "✓" : unlocked ? "" : "•"}</i>
@@ -536,13 +530,15 @@ if (typeof document !== "undefined") {
 
   function startLevel(index) {
     if (!isLevelUnlocked(index)) return;
+    running = false;
+    runVersion += 1;
     currentLevelIndex = index;
     program = [];
     levelState = createLevelState(LEVELS[index]);
-    running = false;
-    runVersion += 1;
     window.clearTimeout(resultTimer);
     elements.resultDialog.hidden = true;
+    elements.gameShell.inert = false;
+    elements.partReward.setAttribute("aria-hidden", "true");
 
     const level = LEVELS[index];
     elements.missionNumber.textContent = `${String(index + 1).padStart(2, "0")} / ${String(LEVELS.length).padStart(2, "0")}`;
@@ -563,7 +559,13 @@ if (typeof document !== "undefined") {
 
   function addCommand(command) {
     const level = LEVELS[currentLevelIndex];
-    if (running || program.length >= level.limit || !level.available.includes(command)) return;
+    if (running) return;
+    if (!level.available.includes(command)) {
+      setMessage("This mission does not use that command yet.", "warning");
+      playTone(180, 0.12, "square");
+      return;
+    }
+    if (program.length >= level.limit) return;
     if (command === "repeat" && expandProgram(program).length < 2) {
       setMessage("Repeat Two needs at least two earlier actions.", "warning");
       playTone(180, 0.12, "square");
@@ -643,27 +645,32 @@ if (typeof document !== "undefined") {
     const level = LEVELS[currentLevelIndex];
     const currentRun = ++runVersion;
     running = true;
-    levelState = createLevelState(level);
+    const state = createLevelState(level);
+    levelState = state;
     elements.boardFrame.classList.remove("board-error");
     setMessage("Program running...", "running");
     renderBoard();
     renderProgram();
     renderAvailableCommands();
+    renderLevels();
     await delay(300);
+    if (currentRun !== runVersion) return;
 
     for (const step of expandProgram(program)) {
-      if (currentRun !== runVersion) return;
       renderProgram(step.sourceIndex);
       playTone(step.command === "forward" ? 260 : 340, 0.05, "square");
       await delay(220);
+      if (currentRun !== runVersion) return;
 
-      const result = applyCommand(level, levelState, step.command);
+      const result = applyCommand(level, state, step.command);
+      levelState = state;
       renderBoard();
 
       if (!result.ok) {
         running = false;
         renderProgram(-1, step.sourceIndex);
         renderAvailableCommands();
+        renderLevels();
         setMessage(`${result.reason} Fix the highlighted command.`, "error");
         elements.boardFrame.classList.add("board-error");
         showBlockedStep(step.command);
@@ -673,8 +680,9 @@ if (typeof document !== "undefined") {
 
       showStepEvent(result.event);
       await delay(330);
+      if (currentRun !== runVersion) return;
 
-      if (isLevelComplete(level, levelState)) {
+      if (isLevelComplete(level, state)) {
         finishLevel();
         return;
       }
@@ -683,7 +691,8 @@ if (typeof document !== "undefined") {
     running = false;
     renderProgram();
     renderAvailableCommands();
-    const remaining = getBatteryOrders(level).length - levelState.collected.size;
+    renderLevels();
+    const remaining = getBatteryOrders(level).length - state.collected.size;
     setMessage(`Program ended. ${remaining} ${remaining === 1 ? "battery is" : "batteries are"} still waiting.`, "warning");
   }
 
@@ -718,6 +727,7 @@ if (typeof document !== "undefined") {
     const resultDelay = getMotionDelay(350, reducedMotionQuery.matches);
     resultTimer = window.setTimeout(() => {
       elements.resultDialog.hidden = false;
+      elements.gameShell.inert = true;
       elements.nextButton.focus();
     }, resultDelay);
   }
@@ -784,6 +794,10 @@ if (typeof document !== "undefined") {
   document.addEventListener("keydown", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     if (!elements.resultDialog.hidden) return;
+    // A focused control (Undo, Clear, a mission tile...) has its own Enter/Backspace
+    // behavior, so the game shortcuts must not hijack it.
+    if (event.target.closest?.("button, select, input, textarea, a[href], [tabindex]")) return;
+
     const keyboardCommands = {
       KeyF: "forward",
       KeyL: "left",
@@ -792,9 +806,38 @@ if (typeof document !== "undefined") {
       KeyX: "repeat",
     };
     const command = keyboardCommands[event.code];
-    if (command) addCommand(command);
+    if (command) {
+      addCommand(command);
+      return;
+    }
     if (event.key === "Enter") runProgram();
-    if (event.key === "Backspace" && program.length > 0) removeCommand(program.length - 1);
+    if (event.key === "Backspace") {
+      event.preventDefault();
+      if (program.length > 0) removeCommand(program.length - 1);
+    }
+  });
+
+  // The win dialog traps focus and closes on Escape, and the board behind it
+  // is marked inert so Tab and the screen reader cannot reach it while it is open.
+  document.addEventListener("keydown", (event) => {
+    if (elements.resultDialog.hidden) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      startLevel(currentLevelIndex);
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = [...elements.resultDialog.querySelectorAll("button")];
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   startLevel(0);
