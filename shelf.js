@@ -5,7 +5,6 @@
     "word-quest": ["livingWordsProgressV2"],
     "island-discovery": ["islandDiscoveryV1"],
     "forest-light": ["forestLightProgressV1"],
-    "cube-island": ["cubeIslandLevelsV1"],
     "robo-route": ["roboRouteProgressV1"],
     "robot-lab": ["robotLabCompletedV1"],
     "garden-quest": ["gardenQuestUnlockedV1", "gardenQuestBestScoresV3"],

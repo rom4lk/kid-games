@@ -11,8 +11,8 @@ The player's main fantasy: "I paint a whole world myself, and it comes alive und
 
 ## Inspiration
 
-The game grew out of the Minecraft adaptation work in `cube-island/`, but its closest relative is
-Townscaper: no goals, and the joy comes from the world reacting beautifully to every placed block.
+The game draws on Minecraft's block-by-block construction, but its closest relative is Townscaper:
+no goals, and the joy comes from the world reacting beautifully to every placed block.
 
 | We keep | We leave out |
 | --- | --- |
