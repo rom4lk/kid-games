@@ -39,7 +39,8 @@ last world leaves a fresh small one in its place.
 
 The first three sizes fit the screen whole. The two big ones open at a comfortable cell size and
 scroll; two zoom buttons, four big edge arrows and a mini-map carry the movement around them. On the
-mini-map the cells still waiting are the bright ones.
+mini-map the cells still waiting carry a checker, so a hole is told from a block by its pattern and
+not by its color.
 
 ## The palette an adult sets
 
@@ -83,7 +84,8 @@ full, evening falls and the windows and lanterns come on.
   "clear this world", behind a confirmation. `Escape` then walks back one pause screen at a time.
 - Keyboard: the arrow keys or `WASD` move the frame, `Space` paints, `Enter` steps into the palette
   and the left and right arrows walk along it, `Escape` returns to the sheet. The shelf of worlds
-  and the size picker are walked with the same left and right arrows.
+  and the size picker are walked with the same left and right arrows. The mini-map has no spot to
+  point at from the keyboard, so pressing it takes the frame to the first cell still waiting.
 
 The child's path needs no reading: the palette, the tools and the pause are pictures.
 
@@ -95,15 +97,18 @@ node block-town/test-game.js
 
 The test covers the block and size registries, making, opening and deleting worlds, painting and
 painting over, a block an adult has not enabled, refused input, the stroke line filler, the autotile
-helpers, the world analysis, the house door, the field stages, the wide brush, rail paths, the
-bucket on a full world, the compact save and the normalization of a damaged save.
+helpers, the world analysis, the order of a walked track and of a closed loop, the house door, the
+field stages, the wide brush, rail paths, the bucket on a full world, the size of a full save and
+the normalization of a damaged save.
 
 ## Saving
 
 - `blockTownWorldsV1` holds every world — its size, painting, bridges and sown fields — and which
-  world is open. A shelf with one world of every size painted full is under nine kilobytes, so the
-  number of worlds needs no cap. The old `blockTownSheetsV1` save of the level ladder is neither
-  read nor migrated.
+  world is open. A shelf with one world of every size painted full is under eight kilobytes, and
+  under twenty-seven even when every one of those cells is a field, so the number of worlds needs no
+  cap. Only a field keeps the moment it was sown, and it keeps it in whole seconds counted from the
+  first sowing of its world; a save still holding full millisecond epochs is read as it stands. The
+  old `blockTownSheetsV1` save of the level ladder is neither read nor migrated.
 - `blockTownBlocksV1` holds the blocks an adult has enabled. It is written by the shelf page only,
   and "Reset progress" keeps it: like sound and language, it is a setting, not progress.
 - `blockTownSoundV1` holds the sound choice.

@@ -81,7 +81,10 @@ button:focus-visible,
 .game-shell {
   display: flex;
   width: min(1120px, calc(100% - 24px));
+  /* The dynamic unit keeps the toolbar out from under the browser chrome; the
+     plain one is there for a browser that does not know it. */
   height: 100vh;
+  height: 100dvh;
   flex-direction: column;
   margin: 0 auto;
   padding: clamp(12px, 2vw, 22px) 0;
@@ -216,7 +219,12 @@ button:focus-visible,
   border-radius: 10px;
   background: var(--paper);
   overflow: hidden;
+  /* A stroke is a drag across the paper: no scrolling, no selected text and no
+     callout when a finger rests on a cell for a moment. */
   touch-action: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 /* The rows exist for screen readers; the grid itself does the layout. */
@@ -1580,10 +1588,16 @@ button:focus-visible,
     animation: none;
   }
 
-  /* The blades stop; the standing cross still says "windmill". The light of the
-     lighthouse is only opacity, so it keeps breathing. */
+  /* The blades stop; the standing cross still says "windmill". */
   .block--windmill.is-turning::after {
     animation: none;
+  }
+
+  /* A decorative loop stops completely, opacity or not. The lamp stays full
+     bright instead, so a lighthouse by the water is still lit. */
+  .block--lighthouse.is-blinking::after {
+    animation: none;
+    opacity: 1;
   }
 
   .cell.is-empty::after {

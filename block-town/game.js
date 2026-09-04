@@ -40,6 +40,7 @@ const BLOCK_BY_ID = new Map(BLOCKS.map((block) => [block.id, block]));
 const BLOCK_BY_KEY = new Map(BLOCKS.map((block) => [block.key, block]));
 const WATER_ID = BLOCK_BY_KEY.get("water").id;
 const FIELD_ID = BLOCK_BY_KEY.get("field").id;
+const FOREST_ID = BLOCK_BY_KEY.get("forest").id;
 const HOUSE_ID = BLOCK_BY_KEY.get("house").id;
 const WINDMILL_ID = BLOCK_BY_KEY.get("windmill").id;
 const LIGHTHOUSE_ID = BLOCK_BY_KEY.get("lighthouse").id;
@@ -334,7 +335,8 @@ function floodFill(state, index, blockId, now = 0) {
 }
 
 // Which of the four neighbours answer the question, as one 4-bit mask. Cells
-// outside the world never count.
+// outside the world never count. The predicate gets the value of the neighbour
+// and its index, so a question about the water under a bridge can be asked too.
 function neighborMask(grid, columns, index, predicate) {
   if (!Array.isArray(grid) || !Number.isInteger(columns) || columns <= 0) return 0;
   if (!Number.isInteger(index) || index < 0 || index >= grid.length) return 0;
@@ -342,11 +344,15 @@ function neighborMask(grid, columns, index, predicate) {
   const rows = Math.floor(grid.length / columns);
   const row = Math.floor(index / columns);
   const column = index % columns;
+  const north = index - columns;
+  const east = index + 1;
+  const south = index + columns;
+  const west = index - 1;
   let mask = 0;
-  if (row > 0 && predicate(grid[index - columns])) mask |= MASK_NORTH;
-  if (column < columns - 1 && predicate(grid[index + 1])) mask |= MASK_EAST;
-  if (row < rows - 1 && predicate(grid[index + columns])) mask |= MASK_SOUTH;
-  if (column > 0 && predicate(grid[index - 1])) mask |= MASK_WEST;
+  if (row > 0 && predicate(grid[north], north)) mask |= MASK_NORTH;
+  if (column < columns - 1 && predicate(grid[east], east)) mask |= MASK_EAST;
+  if (row < rows - 1 && predicate(grid[south], south)) mask |= MASK_SOUTH;
+  if (column > 0 && predicate(grid[west], west)) mask |= MASK_WEST;
   return mask;
 }
 
@@ -416,26 +422,23 @@ function windmillTurns(grid, columns, index) {
   return neighborMask(grid, columns, index, (value) => value === FIELD_ID) !== 0;
 }
 
-// A lighthouse only blinks when it stands by the water.
+// A lighthouse only blinks when it stands by the water. Water under a bridge
+// still counts, so the neighbour is asked about by its index.
 function lighthouseBlinks(grid, underlay, columns, index) {
   if (grid?.[index] !== LIGHTHOUSE_ID) return false;
-  const rows = Math.floor(grid.length / columns);
-  const row = Math.floor(index / columns);
-  const column = index % columns;
-  const sides = [
-    row > 0 ? index - columns : -1,
-    column < columns - 1 ? index + 1 : -1,
-    row < rows - 1 ? index + columns : -1,
-    column > 0 ? index - 1 : -1,
-  ];
-  return sides.some((side) => side >= 0 && isWaterCell(grid, underlay, side));
+  const mask = neighborMask(
+    grid,
+    columns,
+    index,
+    (value, side) => isWaterCell(grid, underlay, side),
+  );
+  return mask !== 0;
 }
 
 // A lone forest cell is one small tree; inside a cluster the trees grow.
 function forestDensity(grid, columns, index) {
-  const forestId = BLOCK_BY_KEY.get("forest").id;
-  if (grid?.[index] !== forestId) return 0;
-  const mask = neighborMask(grid, columns, index, (value) => value === forestId);
+  if (grid?.[index] !== FOREST_ID) return 0;
+  const mask = neighborMask(grid, columns, index, (value) => value === FOREST_ID);
   const neighbors = [MASK_NORTH, MASK_EAST, MASK_SOUTH, MASK_WEST]
     .filter((side) => (mask & side) !== 0).length;
   if (neighbors === 0) return 0;
@@ -561,8 +564,7 @@ function lakes(grid, underlay, columns) {
 }
 
 function forestClusters(grid, columns) {
-  const forestId = BLOCK_BY_KEY.get("forest").id;
-  return connectedComponents(grid, columns, [forestId])
+  return connectedComponents(grid, columns, [FOREST_ID])
     .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
 }
 
@@ -613,15 +615,44 @@ function normalizeUnderlay(size, savedBridges, grid) {
 }
 
 // Sowing times are kept only for cells that really hold a field.
-function normalizePlanted(size, saved, grid) {
+//
+// A save may hold them in either of two shapes. The one written today counts
+// whole seconds from `plantedBase`, which is what keeps a world full of fields
+// small; an older save holds a full epoch in milliseconds and has no base at
+// all. A time from the future cannot be real: a clock that moved, or a damaged
+// write. A field sown in the future would never ripen, so the cell loses its
+// time and simply shows as grown.
+function normalizePlanted(size, saved, grid, base, now) {
   const planted = {};
   if (!saved || typeof saved !== "object") return planted;
-  Object.entries(saved).forEach(([key, time]) => {
+  const offset = Number.isFinite(base) ? base * 1000 : 0;
+  const seconds = Number.isFinite(base);
+  Object.entries(saved).forEach(([key, value]) => {
     const index = Number(key);
     if (!isCellIndex(size, index) || grid[index] !== FIELD_ID) return;
-    if (Number.isFinite(time)) planted[index] = time;
+    if (!Number.isFinite(value)) return;
+    const time = seconds ? offset + value * 1000 : value;
+    if (time > now) return;
+    planted[index] = time;
   });
   return planted;
+}
+
+// The sowing times of one world, counted in whole seconds from the moment the
+// first of them was sown. A full epoch in milliseconds costs thirteen digits
+// per sown cell; a delta in seconds costs a handful.
+function plantedBase(planted) {
+  const times = Object.values(planted).filter((time) => Number.isFinite(time));
+  return times.length === 0 ? 0 : Math.floor(Math.min(...times) / 1000);
+}
+
+function serializePlanted(planted, base) {
+  const compact = {};
+  Object.entries(planted).forEach(([index, time]) => {
+    if (!Number.isFinite(time)) return;
+    compact[index] = Math.floor((time - base * 1000) / 1000);
+  });
+  return compact;
 }
 
 // What gets written to storage. The underlay is a whole parallel array in
@@ -630,25 +661,29 @@ function normalizePlanted(size, saved, grid) {
 function serializeState(state) {
   return {
     currentWorldId: state.currentWorldId,
-    worlds: state.worlds.map((world) => ({
-      id: world.id,
-      sizeId: world.sizeId,
-      grid: world.grid,
-      bridges: world.underlay.reduce((list, value, index) => {
-        if (value === WATER_ID) list.push(index);
-        return list;
-      }, []),
-      planted: world.planted,
-      celebrated: world.celebrated,
-      createdAt: world.createdAt,
-    })),
+    worlds: state.worlds.map((world) => {
+      const base = plantedBase(world.planted);
+      return {
+        id: world.id,
+        sizeId: world.sizeId,
+        grid: world.grid,
+        bridges: world.underlay.reduce((list, value, index) => {
+          if (value === WATER_ID) list.push(index);
+          return list;
+        }, []),
+        plantedBase: base,
+        planted: serializePlanted(world.planted, base),
+        celebrated: world.celebrated,
+        createdAt: world.createdAt,
+      };
+    }),
   };
 }
 
 // Saved data may come from an older version, a different game or a broken
 // write. A world that cannot be read is dropped, and anything unexpected
 // inside a readable world turns into an empty cell instead of an error.
-function normalizeSavedWorld(saved) {
+function normalizeSavedWorld(saved, now) {
   if (!saved || typeof saved !== "object") return null;
   if (typeof saved.id !== "string" || saved.id === "") return null;
   const size = worldSizeById(saved.sizeId);
@@ -660,19 +695,22 @@ function normalizeSavedWorld(saved) {
     sizeId: size.id,
     grid,
     underlay: normalizeUnderlay(size, saved.bridges, grid),
-    planted: normalizePlanted(size, saved.planted, grid),
+    planted: normalizePlanted(size, saved.planted, grid, saved.plantedBase, now),
     celebrated: saved.celebrated === true,
     createdAt: Number.isFinite(saved.createdAt) ? saved.createdAt : 0,
   };
 }
 
-function normalizeSavedState(value, enabledBlockIds) {
+// `now` tells a sowing time in the past from one in the future. It is the one
+// place the reading of a save needs the clock, so it is passed in like every
+// other time in the model.
+function normalizeSavedState(value, enabledBlockIds, now = Date.now()) {
   const state = createGameState(enabledBlockIds);
   if (!value || typeof value !== "object" || !Array.isArray(value.worlds)) return state;
 
   const seen = new Set();
   value.worlds.forEach((saved) => {
-    const world = normalizeSavedWorld(saved);
+    const world = normalizeSavedWorld(saved, now);
     if (!world || seen.has(world.id)) return;
     seen.add(world.id);
     state.worlds.push(world);
@@ -762,13 +800,23 @@ const STROKE_SOUND_EVERY = 3;
 // the world never shows more than a few of one kind.
 const ANALYSIS_DELAY_MS = 320;
 const MAX_SPRITES_PER_KIND = 3;
+// `source` is the reading of the world a creature needs. Two kinds may share
+// one, and then that reading is done once: the duck and the boat both live on
+// the lakes.
 const SPRITE_KINDS = [
-  { kind: "car", minCells: 3, stepMs: 620 },
-  { kind: "train", minCells: 3, stepMs: 520 },
-  { kind: "duck", minCells: 4, stepMs: 1500 },
-  { kind: "boat", minCells: 10, stepMs: 1900 },
-  { kind: "bird", minCells: 6, stepMs: 900 },
+  { kind: "car", source: "roads", minCells: 3, stepMs: 620 },
+  { kind: "train", source: "rails", minCells: 3, stepMs: 520 },
+  { kind: "duck", source: "lakes", minCells: 4, stepMs: 1500 },
+  { kind: "boat", source: "lakes", minCells: 10, stepMs: 1900 },
+  { kind: "bird", source: "woods", minCells: 6, stepMs: 900 },
 ];
+
+const TRACK_SOURCES = {
+  roads: (size, grid) => roadPaths(grid, size.columns),
+  rails: (size, grid) => railPaths(grid, size.columns),
+  lakes: (size, grid, underlay) => lakes(grid, underlay, size.columns),
+  woods: (size, grid) => forestClusters(grid, size.columns),
+};
 
 // The thumbnail and the mini-map draw one pixel per cell, so every block needs
 // one flat color next to its full art in styles.css.
@@ -795,7 +843,12 @@ const BLOCK_COLORS = {
   fountain: "#7fd3d0",
 };
 const THUMBNAIL_EMPTY = "#fffdf4";
-const MINIMAP_EMPTY = "#ffd45c";
+// On the mini-map a cell still waiting is not a color but a checker of these
+// two tones, drawn four pixels to the cell. No block can look like that, so a
+// lantern is never read as a hole and the mark never rests on color alone.
+const MINIMAP_EMPTY = "#fff3cd";
+const MINIMAP_EMPTY_MARK = "#d98f2b";
+const MINIMAP_SCALE = 2;
 
 // Past this many enabled blocks the palette groups them by family, and the
 // families always keep the same order and the same places.
@@ -896,6 +949,8 @@ function initializeGame() {
   let selectedTool = "brush";
   let zoomIndex = ZOOM_LEVELS.indexOf(COMFORT_CELL_SIZE);
   let cursorIndex = 0;
+  // Where the frame is drawn now, so moving it clears one cell instead of all.
+  let cursorShownIndex = -1;
   let openFamily = null;
   let fieldTimer = 0;
   let cells = [];
@@ -982,10 +1037,23 @@ function initializeGame() {
     });
   }
 
+  // Two announcements can land in the same frame: opening a world names it and
+  // the caller then says why it opened. They are joined into one sentence, so
+  // the second never overwrites the first. Clearing the node first is what
+  // makes a reader say an unchanged message again.
+  let pendingAnnouncement = "";
+
   function announce(message) {
+    const first = pendingAnnouncement === "";
+    const before = pendingAnnouncement.endsWith(".")
+      ? pendingAnnouncement
+      : `${pendingAnnouncement}.`;
+    pendingAnnouncement = first ? message : `${before} ${message}`;
     elements.status.textContent = "";
+    if (!first) return;
     window.requestAnimationFrame(() => {
-      elements.status.textContent = message;
+      elements.status.textContent = pendingAnnouncement;
+      pendingAnnouncement = "";
     });
   }
 
@@ -1078,24 +1146,35 @@ function initializeGame() {
     }, FIELD_TICK_MS);
   }
 
-  // One pixel per cell. The shelf of worlds and the mini-map both read the
-  // model through this and nothing else.
+  // One pixel per cell on the shelf, four on the mini-map: a cell still waiting
+  // needs room for its checker there. The canvas is scaled up by the stylesheet
+  // with `image-rendering: pixelated`, so the pattern stays sharp. The shelf of
+  // worlds and the mini-map both read the model through this and nothing else.
   function drawThumbnail(canvas, world, { markEmpty = false } = {}) {
     const size = worldSize(world);
     if (!size) return;
-    canvas.width = size.columns;
-    canvas.height = size.rows;
+    const scale = markEmpty ? MINIMAP_SCALE : 1;
+    canvas.width = size.columns * scale;
+    canvas.height = size.rows * scale;
     const context = canvas.getContext("2d");
     if (!context) return;
-    // On the mini-map the cells still waiting are the bright ones, so the last
-    // empty corner is easy to find.
     context.fillStyle = markEmpty ? MINIMAP_EMPTY : THUMBNAIL_EMPTY;
-    context.fillRect(0, 0, size.columns, size.rows);
+    context.fillRect(0, 0, canvas.width, canvas.height);
     world.grid.forEach((value, index) => {
+      const left = (index % size.columns) * scale;
+      const top = Math.floor(index / size.columns) * scale;
       const block = blockById(value);
-      if (!block) return;
-      context.fillStyle = BLOCK_COLORS[block.key];
-      context.fillRect(index % size.columns, Math.floor(index / size.columns), 1, 1);
+      if (block) {
+        context.fillStyle = BLOCK_COLORS[block.key];
+        context.fillRect(left, top, scale, scale);
+        return;
+      }
+      // On the mini-map the cells still waiting carry a checker, so the last
+      // empty corner is easy to find by its pattern alone.
+      if (!markEmpty) return;
+      context.fillStyle = MINIMAP_EMPTY_MARK;
+      context.fillRect(left, top, 1, 1);
+      context.fillRect(left + 1, top + 1, 1, 1);
     });
   }
 
@@ -1197,6 +1276,8 @@ function initializeGame() {
     elements.stage.style.setProperty("--columns", String(size.columns));
     elements.grid.textContent = "";
     cells = new Array(size.cellCount);
+    // A fresh sheet carries the frame nowhere yet.
+    cursorShownIndex = -1;
 
     for (let row = 0; row < size.rows; row += 1) {
       const rowElement = document.createElement("div");
@@ -1222,11 +1303,13 @@ function initializeGame() {
   }
 
   // The keyboard cursor. It is the same frame the screen reader follows, so
-  // both ways of playing point at one cell.
+  // both ways of playing point at one cell. Only the cell that had the frame is
+  // touched: clearing the whole world would be a thousand class writes per key.
   function showCursor({ scroll = true } = {}) {
-    cells.forEach((cell) => cell.classList.remove("is-cursor"));
     const cell = cells[cursorIndex];
     if (!cell) return;
+    cells[cursorShownIndex]?.classList.remove("is-cursor");
+    cursorShownIndex = cursorIndex;
     cell.classList.add("is-cursor");
     elements.grid.setAttribute("aria-activedescendant", cell.id);
     if (!scroll) return;
@@ -1487,14 +1570,14 @@ function initializeGame() {
     return elements.grid.clientWidth / openSize().columns;
   }
 
-  function createSprite(kind, track) {
+  function createSprite(kind, track, key) {
     const element = document.createElement("span");
     element.className = `sprite sprite--${kind}`;
     // The inner element carries the drawing, so it can be mirrored without
     // disturbing the position of the sprite.
     element.innerHTML = "<i></i>";
     elements.living.append(element);
-    return { element, path: track.path, stepMs: kindStep(kind), phase: Math.random() };
+    return { key, element, path: track.path, stepMs: kindStep(kind), phase: Math.random() };
   }
 
   function kindStep(kind) {
@@ -1535,12 +1618,18 @@ function initializeGame() {
     if (sprites.length > 0) driverHandle = window.requestAnimationFrame(driveSprites);
   }
 
+  // Behind the pause and behind the celebration card the sheet is covered, so
+  // there is nothing to animate and the frame loop stops.
+  function spritesAreWatched() {
+    return !paused && elements.celebration.hidden;
+  }
+
   function startDriver() {
     if (driverHandle) {
       window.cancelAnimationFrame(driverHandle);
       driverHandle = 0;
     }
-    if (sprites.length === 0) return;
+    if (sprites.length === 0 || !spritesAreWatched()) return;
     if (reduceMotion) {
       parkSprites();
       return;
@@ -1548,25 +1637,45 @@ function initializeGame() {
     driverHandle = window.requestAnimationFrame(driveSprites);
   }
 
-  function tracksFor(kind, size, grid, underlay) {
-    if (kind === "car") return roadPaths(grid, size.columns);
-    if (kind === "train") return railPaths(grid, size.columns);
-    if (kind === "duck" || kind === "boat") return lakes(grid, underlay, size.columns);
-    return forestClusters(grid, size.columns);
+  // Every reading the creatures of this world need, each one done once.
+  function readTracks(size, grid, underlay) {
+    const found = new Map();
+    SPRITE_KINDS.forEach(({ source }) => {
+      if (found.has(source)) return;
+      found.set(source, TRACK_SOURCES[source](size, grid, underlay));
+    });
+    return found;
+  }
+
+  // The same kind travelling the same cells is the same creature, so a stroke
+  // somewhere else on the sheet leaves it alone instead of putting a new one in
+  // a new random place.
+  function trackKey(kind, track) {
+    return `${kind}:${track.path.join(",")}`;
   }
 
   // The world is read once a stroke has settled, never cell by cell.
   function analyzeWorld() {
     const world = currentWorld(state);
     const size = worldSize(world);
+    const tracks = readTracks(size, world.grid, world.underlay);
+    const alive = new Map(sprites.map((sprite) => [sprite.key, sprite]));
 
-    elements.living.textContent = "";
-    sprites = SPRITE_KINDS.flatMap(({ kind, minCells }) =>
-      tracksFor(kind, size, world.grid, world.underlay)
+    sprites = SPRITE_KINDS.flatMap(({ kind, source, minCells }) =>
+      tracks.get(source)
         .filter((track) => track.cells.length >= minCells)
         .sort((left, right) => right.cells.length - left.cells.length)
         .slice(0, MAX_SPRITES_PER_KIND)
-        .map((track) => createSprite(kind, track)));
+        .map((track) => {
+          const key = trackKey(kind, track);
+          const kept = alive.get(key);
+          if (!kept) return createSprite(kind, track, key);
+          alive.delete(key);
+          return kept;
+        }));
+
+    // Whatever is left over travelled a track the world no longer holds.
+    alive.forEach((sprite) => sprite.element.remove());
 
     startDriver();
     drawMinimap();
@@ -1607,6 +1716,7 @@ function initializeGame() {
   function openCelebration() {
     fillConfetti();
     elements.celebration.hidden = false;
+    startDriver();
     playCelebrationSound();
     elements.stay.focus();
     announce("The whole world is painted!");
@@ -1615,6 +1725,7 @@ function initializeGame() {
   function closeCelebration() {
     elements.celebration.hidden = true;
     elements.confetti.textContent = "";
+    startDriver();
   }
 
   function checkCompletion() {
@@ -1700,6 +1811,7 @@ function initializeGame() {
 
   function openPause() {
     paused = true;
+    startDriver();
     renderWorldShelf();
     elements.pauseOverlay.hidden = false;
     showPauseState("menu");
@@ -1710,6 +1822,7 @@ function initializeGame() {
   // behind it without taking the focus back.
   function closePause({ restoreFocus = true } = {}) {
     paused = false;
+    startDriver();
     pendingDeleteId = null;
     elements.pauseOverlay.hidden = true;
     showPauseState("menu");
@@ -1781,7 +1894,12 @@ function initializeGame() {
   function bindButtonRow(container, selector) {
     container.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        if (elements.pauseOverlay.hidden) elements.grid.focus();
+        // Inside the pause the document listener walks one screen back. On the
+        // sheet the row hands the focus to the world, and the event stops here
+        // so the same press does not open the pause behind it.
+        if (!elements.pauseOverlay.hidden) return;
+        event.stopPropagation();
+        elements.grid.focus();
         return;
       }
       const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key];
@@ -1970,6 +2088,18 @@ function initializeGame() {
   elements.sheetScroll.addEventListener("scroll", updateMinimapView);
 
   elements.minimap.addEventListener("click", (event) => {
+    // A click from the keyboard names no spot on the map, and the corner it
+    // would report is not where anybody wants to go. The mini-map marks the
+    // cells still waiting, so from the keyboard it takes the frame to the first
+    // of them, ready to be painted.
+    if (cameFromKeyboard(event)) {
+      const waiting = currentWorld(state).grid.indexOf(EMPTY_CELL);
+      if (waiting < 0) return;
+      cursorIndex = waiting;
+      elements.grid.focus();
+      showCursor();
+      return;
+    }
     const box = elements.minimapCanvas.getBoundingClientRect();
     const scroll = elements.sheetScroll;
     const acrossShare = (event.clientX - box.left) / box.width;

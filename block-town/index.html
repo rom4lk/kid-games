@@ -75,7 +75,9 @@
         </div>
         <div class="celebration" id="celebration" hidden>
           <div class="confetti" id="confetti" aria-hidden="true"></div>
-          <div class="celebration-card" role="dialog" aria-modal="true" aria-label="The world is full">
+          <!-- Not aria-modal: the card sits inside the sheet and the palette,
+               the tools and the top bar behind it stay usable. -->
+          <div class="celebration-card" role="dialog" aria-label="The world is full">
             <span class="celebration-sun" aria-hidden="true"></span>
             <p class="celebration-text">The whole world is painted!</p>
             <div class="celebration-actions">

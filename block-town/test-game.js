@@ -277,15 +277,54 @@ function testForestDensity() {
   assert.equal(forestDensity(grid, 10, 1), 0);
 }
 
-function assertContinuous(path, loop) {
+// Two cells next to each other in a path must be next to each other on the
+// world. With `loop` the wrap from the last cell back to the first is checked
+// too: the sprite loop takes that step like any other.
+function assertContinuous(path, loop, columns = 10) {
   const steps = loop ? path.length : path.length - 1;
   for (let position = 0; position < steps; position += 1) {
     const from = path[position];
     const to = path[(position + 1) % path.length];
-    const rowStep = Math.abs(Math.floor(to / 10) - Math.floor(from / 10));
-    const columnStep = Math.abs((to % 10) - (from % 10));
+    const rowStep = Math.abs(Math.floor(to / columns) - Math.floor(from / columns));
+    const columnStep = Math.abs((to % columns) - (from % columns));
     assert.equal(rowStep + columnStep, 1, `${from} does not touch ${to}`);
   }
+}
+
+// The two ways a track is ordered, on shapes big enough to be interesting.
+function testWalkAndLoopOrder() {
+  // A ring of sixteen cells, far bigger than the smallest one that closes.
+  const ring = buildGrid([
+    ".rrrrrr...",
+    ".r....r...",
+    ".r....r...",
+    ".rrrrrr...",
+    "..........",
+  ]);
+  const [loop] = roadPaths(ring, 10);
+  assert.equal(loop.loop, true);
+  assert.equal(loop.cells.length, 16);
+  // The ring is walked once round: every cell, each of them once.
+  assert.equal(loop.path.length, 16);
+  assert.deepEqual([...loop.path].sort((left, right) => left - right), loop.cells);
+  assertContinuous(loop.path, true);
+
+  // A comb: three teeth on a spine, so the walk has to step back down a tooth
+  // before it can go on to the next one.
+  const comb = buildGrid([
+    ".r.r.r....",
+    ".r.r.r....",
+    ".rrrrr....",
+    "..........",
+    "..........",
+  ]);
+  const [walk] = roadPaths(comb, 10);
+  assert.equal(walk.loop, false);
+  // Every cell of the comb is reached; stepping back over one is allowed.
+  assert.deepEqual(new Set(walk.path), new Set(walk.cells));
+  // The walk never stands still, and it comes back next to where it started.
+  assert.notEqual(walk.path.at(-1), walk.path[0]);
+  assertContinuous(walk.path, true);
 }
 
 function testConnectedComponents() {
@@ -693,23 +732,43 @@ function testSaveRoundTrip() {
   restored.worlds.forEach((world, index) => {
     assert.deepEqual(world.grid, state.worlds[index].grid);
     assert.deepEqual(world.underlay, state.worlds[index].underlay);
-    assert.deepEqual(world.planted, state.worlds[index].planted);
+    // Sowing times reach storage in whole seconds, so they come back rounded
+    // down to the second. A field ripens over twenty, so nothing is lost.
+    assert.deepEqual(world.planted, secondsOnly(state.worlds[index].planted));
     assert.equal(world.celebrated, state.worlds[index].celebrated);
     assert.equal(world.sizeId, state.worlds[index].sizeId);
     assert.equal(world.createdAt, state.worlds[index].createdAt);
   });
 
-  // A shelf of finished worlds still writes only a few kilobytes.
-  const full = createGameState(ALL_BLOCK_IDS);
-  WORLD_SIZES.forEach((size, index) => {
-    const world = createWorld(full, size.id, index);
-    world.grid = Array.from(
-      { length: size.cellCount },
-      (_, cell) => ALL_BLOCK_IDS[cell % ALL_BLOCK_IDS.length],
-    );
+  // A shelf of finished worlds still writes only a few kilobytes. The worlds
+  // are painted through paintCell, so the sowing times are counted in too.
+  const mixed = fullShelfBytes((cell) => ALL_BLOCK_IDS[cell % ALL_BLOCK_IDS.length]);
+  assert.equal(mixed < 8000, true, `a full shelf is ${mixed} bytes`);
+
+  // Only a field keeps the moment it was sown, so a shelf of nothing but
+  // fields is the largest save the game can write.
+  const fields = fullShelfBytes(() => FIELD_ID);
+  assert.equal(fields < 28000, true, `a shelf of fields is ${fields} bytes`);
+}
+
+function secondsOnly(planted) {
+  return Object.fromEntries(
+    Object.entries(planted).map(([index, time]) => [index, Math.floor(time / 1000) * 1000]),
+  );
+}
+
+// One world of every size, painted cell by cell a second apart, the way a save
+// really grows.
+function fullShelfBytes(blockFor) {
+  const shelf = createGameState(ALL_BLOCK_IDS);
+  const start = Date.now();
+  WORLD_SIZES.forEach((size) => {
+    createWorld(shelf, size.id, start);
+    for (let cell = 0; cell < size.cellCount; cell += 1) {
+      paintCell(shelf, cell, blockFor(cell), start + cell * 1000);
+    }
   });
-  const bytes = JSON.stringify(serializeState(full)).length;
-  assert.equal(bytes < 9000, true, `a full save is ${bytes} bytes`);
+  return JSON.stringify(serializeState(shelf)).length;
 }
 
 function testSavedStateNormalization() {
@@ -770,6 +829,37 @@ function testSavedStateNormalization() {
   assert.equal(oversized.worlds[0].grid.length, 50);
   assert.equal(paintedCount(oversized, "w-big"), 50);
 
+  // A save written before the sowing times were shrunk holds a full epoch in
+  // milliseconds and no base at all. It is still read exactly as it stands.
+  const millisecondEpoch = 1700000000000;
+  const older = normalizeSavedState({
+    worlds: [{
+      id: "w-old",
+      sizeId: "size-1",
+      grid: [FIELD_ID, FIELD_ID],
+      planted: { 0: millisecondEpoch, 1: millisecondEpoch - 30000 },
+    }],
+  }, ALL_BLOCK_IDS, millisecondEpoch + 1000);
+  assert.deepEqual(older.worlds[0].planted, {
+    0: millisecondEpoch,
+    1: millisecondEpoch - 30000,
+  });
+
+  // A sowing time in the future cannot be real: a clock that moved, or a
+  // damaged write. A field sown in the future would never ripen, so the time is
+  // dropped and the field simply shows as grown.
+  const ahead = normalizeSavedState({
+    worlds: [{
+      id: "w-ahead",
+      sizeId: "size-1",
+      grid: [FIELD_ID, FIELD_ID],
+      plantedBase: 1700,
+      planted: { 0: 0, 1: 900 },
+    }],
+  }, ALL_BLOCK_IDS, 1700500);
+  assert.deepEqual(ahead.worlds[0].planted, { 0: 1700000 });
+  assert.equal(fieldStage(ahead, 1, 1700500), 2);
+
   // The old ladder save is never read: it holds no worlds at all.
   const ladder = normalizeSavedState({
     currentSheet: "sheet-2",
@@ -799,6 +889,7 @@ testWaterEdges();
 testForestDensity();
 testConnectedComponents();
 testRoadPaths();
+testWalkAndLoopOrder();
 testLakesAndForests();
 testHouseDoor();
 testFieldStages();
