@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A lone water cell: a round pond in its own ring of sand. -->
+  <rect width="64" height="64" fill="#ecdcae"/>
+  <rect x="8" y="8" width="48" height="48" rx="18" fill="#82c9e8"/>
+  <rect x="8" y="8" width="48" height="48" rx="18" fill="none" stroke="#3f9dc4" stroke-opacity=".35" stroke-width="2"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
+    <path d="M18 28q6-6 12 0t12 0"/>
+    <path d="M26 42q5-5 10 0"/>
+  </g>
+</svg>

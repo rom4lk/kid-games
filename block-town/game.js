@@ -76,6 +76,20 @@ const MASK_SOUTH = 4;
 const MASK_WEST = 8;
 const MASK_ALL = MASK_NORTH | MASK_EAST | MASK_SOUTH | MASK_WEST;
 
+// The four corners of a cell, as bits of one small mask. A corner is named
+// after the diagonal neighbour it points at.
+const CORNER_NE = 1;
+const CORNER_SE = 2;
+const CORNER_SW = 4;
+const CORNER_NW = 8;
+// Each corner with the two sides that meet there.
+const CORNER_SIDES = [
+  [CORNER_NE, MASK_NORTH, MASK_EAST],
+  [CORNER_SE, MASK_SOUTH, MASK_EAST],
+  [CORNER_SW, MASK_SOUTH, MASK_WEST],
+  [CORNER_NW, MASK_NORTH, MASK_WEST],
+];
+
 // How a road with these connected sides draws itself.
 const ROAD_SHAPES = {
   0: "lone",
@@ -358,6 +372,49 @@ function neighborMask(grid, columns, index, predicate) {
 
 // A road draws itself from the sides it connects to, and remembers whether it
 // stands on water, which makes it a bridge.
+// The diagonal neighbours that satisfy the predicate, as corner bits.
+function diagonalMask(grid, columns, index, predicate) {
+  if (!Array.isArray(grid) || !Number.isInteger(columns) || columns <= 0) return 0;
+  if (!Number.isInteger(index) || index < 0 || index >= grid.length) return 0;
+
+  const rows = Math.floor(grid.length / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  const north = row > 0;
+  const south = row < rows - 1;
+  const east = column < columns - 1;
+  const west = column > 0;
+  const test = (diagonal) => predicate(grid[diagonal], diagonal);
+  let mask = 0;
+  if (north && east && test(index - columns + 1)) mask |= CORNER_NE;
+  if (south && east && test(index + columns + 1)) mask |= CORNER_SE;
+  if (south && west && test(index + columns - 1)) mask |= CORNER_SW;
+  if (north && west && test(index - columns - 1)) mask |= CORNER_NW;
+  return mask;
+}
+
+// The corners where both sides match and the diagonal between them either
+// matches too (the cell is part of a 2 x 2 block there) or does not (the
+// corner is an inside corner of the shape).
+function quadrantMask(sides, diagonals, diagonalMatches) {
+  return CORNER_SIDES.reduce((mask, [corner, first, second]) => {
+    const bothSides = (sides & first) !== 0 && (sides & second) !== 0;
+    const diagonal = (diagonals & corner) !== 0;
+    return bothSides && diagonal === diagonalMatches ? mask | corner : mask;
+  }, 0);
+}
+
+// A road cell that belongs to a 2 x 2 block of road is part of a paved
+// square: it shows a paved surface instead of a centre line.
+function roadPlaza(grid, columns, index) {
+  const group = roadGroup(grid?.[index]);
+  if (!group) return false;
+  const same = (value) => roadGroup(value) === group;
+  const sides = neighborMask(grid, columns, index, same);
+  const diagonals = diagonalMask(grid, columns, index, same);
+  return quadrantMask(sides, diagonals, true) !== 0;
+}
+
 function roadTile(grid, underlay, columns, index) {
   const group = roadGroup(grid?.[index]);
   if (!group) return null;
@@ -366,6 +423,7 @@ function roadTile(grid, underlay, columns, index) {
     mask,
     shape: ROAD_SHAPES[mask],
     bridge: underlay?.[index] === WATER_ID,
+    plaza: roadPlaza(grid, columns, index),
   };
 }
 
@@ -389,6 +447,17 @@ function waterEdges(grid, underlay, columns, index) {
   if (row === rows - 1 || !isWaterCell(grid, underlay, index + columns)) edges |= MASK_SOUTH;
   if (column === 0 || !isWaterCell(grid, underlay, index - 1)) edges |= MASK_WEST;
   return edges;
+}
+
+// The inside corners of a lake: two water sides meet at a corner whose
+// diagonal is land, so the shore there needs a rounded fillet. Water under a
+// bridge still counts as water.
+function waterInnerCorners(grid, underlay, columns, index) {
+  if (!isWaterCell(grid, underlay, index)) return 0;
+  const water = (value, cell) => isWaterCell(grid, underlay, cell);
+  const sides = neighborMask(grid, columns, index, water);
+  const diagonals = diagonalMask(grid, columns, index, water);
+  return quadrantMask(sides, diagonals, false);
 }
 
 // A house turns its door toward the nearest street. Facing the reader is the
@@ -743,6 +812,10 @@ if (typeof module !== "undefined" && module.exports) {
     MASK_EAST,
     MASK_SOUTH,
     MASK_WEST,
+    CORNER_NE,
+    CORNER_SE,
+    CORNER_SW,
+    CORNER_NW,
     roadGroup,
     gridNeighbors,
     connectedComponents,
@@ -751,8 +824,11 @@ if (typeof module !== "undefined" && module.exports) {
     lakes,
     forestClusters,
     neighborMask,
+    diagonalMask,
     roadTile,
+    roadPlaza,
     waterEdges,
+    waterInnerCorners,
     forestDensity,
     windmillTurns,
     lighthouseBlinks,
@@ -1074,9 +1150,19 @@ function initializeGame() {
     [MASK_SOUTH, "s"],
     [MASK_WEST, "w"],
   ];
+  const CORNER_CLASSES = [
+    [CORNER_NE, "ne"],
+    [CORNER_SE, "se"],
+    [CORNER_SW, "sw"],
+    [CORNER_NW, "nw"],
+  ];
 
   function sideClasses(prefix, mask) {
     return SIDE_CLASSES.filter(([side]) => (mask & side) !== 0).map(([, name]) => `${prefix}--${name}`);
+  }
+
+  function cornerClasses(prefix, mask) {
+    return CORNER_CLASSES.filter(([corner]) => (mask & corner) !== 0).map(([, name]) => `${prefix}--${name}`);
   }
 
   // The look of a cell is nothing but class names; styles.css draws every
@@ -1089,6 +1175,7 @@ function initializeGame() {
     if (block.family === "roads") {
       const tile = roadTile(grid, underlay, size.columns, index);
       classes.push("cell--road", `road--${tile.shape}`, ...sideClasses("road", tile.mask));
+      if (tile.plaza) classes.push("road--plaza");
       if (tile.bridge) {
         classes.push("road--bridge");
         // The deck follows the direction the road runs in.
@@ -1098,7 +1185,10 @@ function initializeGame() {
       return classes;
     }
     if (block.key === "water") {
-      return classes.concat(sideClasses("shore", waterEdges(grid, underlay, size.columns, index)));
+      return classes.concat(
+        sideClasses("shore", waterEdges(grid, underlay, size.columns, index)),
+        cornerClasses("inner", waterInnerCorners(grid, underlay, size.columns, index)),
+      );
     }
     if (block.key === "forest") {
       classes.push(`forest--${forestDensity(grid, size.columns, index)}`);

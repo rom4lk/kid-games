@@ -312,9 +312,10 @@ button:focus-visible,
 
 /* Roads. Every kind is assembled from pieces in art/, listed top layer first:
    a turntable under a junction of rails, a rounded corner where two drawn
-   edges meet, an edge on every side the road stops at, and a piece of centre
-   line or of track toward every side it continues to. The switching by
-   neighbour is shared; which pictures fill the slots is each kind's choice. */
+   edges meet, an edge on every side the road stops at, a piece of centre line
+   or of track toward every side it continues to, and the paving of a square.
+   The switching by neighbour is shared; which pictures fill the slots is each
+   kind's choice. */
 .cell--road {
   --road-surface: var(--road);
   --art-edge-n: none;
@@ -330,6 +331,7 @@ button:focus-visible,
   --art-line-s: none;
   --art-line-w: none;
   --road-hub: none;
+  --road-paving: none;
   --road-corner-nw: none;
   --road-corner-ne: none;
   --road-corner-se: none;
@@ -357,7 +359,8 @@ button:focus-visible,
     var(--road-line-n),
     var(--road-line-e),
     var(--road-line-s),
-    var(--road-line-w);
+    var(--road-line-w),
+    var(--road-paving);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -399,8 +402,9 @@ button:focus-visible,
   --road-corner-nw: var(--art-corner-nw);
 }
 
-/* The path and the asphalt: a T and a crossing keep a clean surface, so a
-   paved square reads as a square and not as a window frame. */
+/* The path and the asphalt: a T and a crossing keep a clean surface, and a
+   cell inside a 2 x 2 block of road is paved, so a square reads as a square
+   and not as a window frame. */
 .cell--road.block--path {
   --road-surface: var(--road);
   --art-edge-n: url("art/path-edge-n.svg");
@@ -435,12 +439,22 @@ button:focus-visible,
 
 .cell--road.block--path.road--tee,
 .cell--road.block--path.road--cross,
+.cell--road.block--path.road--plaza,
 .cell--road.block--asphalt.road--tee,
-.cell--road.block--asphalt.road--cross {
+.cell--road.block--asphalt.road--cross,
+.cell--road.block--asphalt.road--plaza {
   --road-line-n: none;
   --road-line-e: none;
   --road-line-s: none;
   --road-line-w: none;
+}
+
+.cell--road.block--path.road--plaza {
+  --road-paving: url("art/path-paving.svg");
+}
+
+.cell--road.block--asphalt.road--plaza {
+  --road-paving: url("art/asphalt-paving.svg");
 }
 
 /* Rails have no drawn edges: the track itself runs toward every connected
@@ -672,12 +686,17 @@ button:focus-visible,
   box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
 }
 
-/* Water, from the SVG pictures in art/: a sandy shore is laid on every side
-   where the lake ends, and where two shores meet the corner is rounded, so a
-   lone cell is a round pond and a lake keeps a soft outline. Cells alternate
-   two wave layouts, so a big lake never reads as a stamp. The pieces are
-   listed top layer first. */
+/* Water, from the SVG pictures in art/: a sandy shore of one width is laid on
+   every side where the lake ends. Where two shores meet the bend is softened,
+   and where the lake bends the other way the shore wraps round the tip of the
+   land as a quarter circle, so the shoreline reads as one line of one width.
+   Cells alternate two wave layouts, so a big lake never reads as a stamp. The
+   pieces are listed top layer first. */
 .block--water {
+  --shore-inner-ne: none;
+  --shore-inner-se: none;
+  --shore-inner-sw: none;
+  --shore-inner-nw: none;
   --shore-n: none;
   --shore-e: none;
   --shore-s: none;
@@ -690,6 +709,10 @@ button:focus-visible,
 
   background-color: var(--water);
   background-image:
+    var(--shore-inner-ne),
+    var(--shore-inner-se),
+    var(--shore-inner-sw),
+    var(--shore-inner-nw),
     var(--shore-nw),
     var(--shore-ne),
     var(--shore-se),
@@ -738,6 +761,36 @@ button:focus-visible,
 
 .block--water.shore--w.shore--n {
   --shore-nw: url("art/water-shore-nw.svg");
+}
+
+/* A lone cell is a round pond in its own ring of sand, one picture instead of
+   four shores and four corners. */
+.block--water.shore--n.shore--e.shore--s.shore--w {
+  --shore-n: none;
+  --shore-e: none;
+  --shore-s: none;
+  --shore-w: none;
+  --shore-nw: none;
+  --shore-ne: none;
+  --shore-se: none;
+  --shore-sw: none;
+  --water-art: url("art/water-pond.svg");
+}
+
+.block--water.inner--ne {
+  --shore-inner-ne: url("art/water-inner-ne.svg");
+}
+
+.block--water.inner--se {
+  --shore-inner-se: url("art/water-inner-se.svg");
+}
+
+.block--water.inner--sw {
+  --shore-inner-sw: url("art/water-inner-sw.svg");
+}
+
+.block--water.inner--nw {
+  --shore-inner-nw: url("art/water-inner-nw.svg");
 }
 
 /* The creatures live above the sheet and never take a tap away from it. */

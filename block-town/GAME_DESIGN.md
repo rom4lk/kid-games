@@ -88,8 +88,9 @@ Autotiling is the heart of the game: it makes any child's painting look right wi
 to learn.
 
 - A road looks at its four neighbours and draws itself as a straight, a turn, a crossing or an end.
-- Water cells merge: an edge next to land becomes a shore, a big patch reads as a lake, a long line
-  as a river. A road painted across water turns into a bridge by itself.
+- Water cells merge: an edge next to land becomes a shore with rounded corners, a big patch reads
+  as a lake, a long line as a river. A road painted across water turns into a bridge by itself.
+- Road painted two cells wide or more becomes a paved square instead of a tangle of centre lines.
 - A lone forest cell is one tree; a cluster grows denser and taller trees inside.
 - A house next to a road turns its door and a doorstep path toward the street.
 - A field sprouts over time: bare soil, green shoots, ripe ears.

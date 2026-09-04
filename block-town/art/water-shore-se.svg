@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Where two shores meet the corner of the lake is rounded; drawn on top of the shores. -->
+  <!-- Where two shores meet the shore keeps its width and its inner edge is softened; drawn on top of the shores. -->
   <g transform="rotate(180 32 32)">
-  <path d="M0 0H28V8A20 20 0 0 0 8 28H0Z" fill="#ecdcae"/>
-  <path d="M28 8A20 20 0 0 0 8 28" fill="none" stroke="#3f9dc4" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M0 0H16V8A8 8 0 0 0 8 16H0Z" fill="#ecdcae"/>
+  <path d="M16 8A8 8 0 0 0 8 16" fill="none" stroke="#3f9dc4" stroke-opacity=".35" stroke-width="2"/>
   </g>
 </svg>

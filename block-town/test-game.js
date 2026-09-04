@@ -23,7 +23,13 @@ const {
   forestClusters,
   neighborMask,
   roadTile,
+  roadPlaza,
   waterEdges,
+  waterInnerCorners,
+  CORNER_NE,
+  CORNER_SE,
+  CORNER_SW,
+  CORNER_NW,
   forestDensity,
   windmillTurns,
   lighthouseBlinks,
@@ -182,6 +188,7 @@ function testRoadTile() {
   assert.equal(roadTile(line, [], 10, 1).shape, "straight");
   assert.equal(roadTile(line, [], 10, 3).shape, "end");
   assert.equal(roadTile(line, [], 10, 1).mask, MASK_EAST | MASK_WEST);
+  assert.equal(roadTile(line, [], 10, 1).plaza, false);
 
   const corner = buildGrid([
     "rr........",
@@ -260,6 +267,89 @@ function testWaterEdges() {
   bridgeUnderlay[12] = WATER_ID;
   assert.equal(waterEdges(bridged, bridgeUnderlay, 10, 11) & MASK_EAST, 0);
   assert.equal(waterEdges(bridged, bridgeUnderlay, 10, 13) & MASK_WEST, 0);
+}
+
+function testWaterInnerCorners() {
+  // Where the lake bends, the cell at the bend gets an inside corner toward
+  // the land in the diagonal; a straight shore and a lone puddle get none.
+  const bend = buildGrid([
+    "..........",
+    ".ww.......",
+    ".www......",
+    ".www......",
+    "..........",
+  ]);
+  const underlay = new Array(50).fill(0);
+  assert.equal(waterInnerCorners(bend, underlay, 10, 22), CORNER_NE);
+  assert.equal(waterInnerCorners(bend, underlay, 10, 11), 0);
+  assert.equal(waterInnerCorners(bend, underlay, 10, 23), 0);
+  assert.equal(waterInnerCorners(bend, underlay, 10, 32), 0);
+  assert.equal(waterInnerCorners(bend, underlay, 10, 0), 0);
+
+  // A hole in the middle of a lake gives all four cells around it a corner.
+  const ring = buildGrid([
+    "..........",
+    ".www......",
+    ".w.w......",
+    ".www......",
+    "..........",
+  ]);
+  assert.equal(waterInnerCorners(ring, underlay, 10, 11), CORNER_SE);
+  assert.equal(waterInnerCorners(ring, underlay, 10, 13), CORNER_SW);
+  assert.equal(waterInnerCorners(ring, underlay, 10, 31), CORNER_NE);
+  assert.equal(waterInnerCorners(ring, underlay, 10, 33), CORNER_NW);
+
+  // A bridge in the diagonal is still water, so the bend stays smooth.
+  const bridged = buildGrid([
+    "..........",
+    ".wr.......",
+    ".www......",
+    "..........",
+    "..........",
+  ]);
+  const bridgeUnderlay = new Array(50).fill(0);
+  bridgeUnderlay[12] = WATER_ID;
+  assert.equal(waterInnerCorners(bridged, bridgeUnderlay, 10, 21), 0);
+  assert.equal(waterInnerCorners(bridged, underlay, 10, 21), CORNER_NE);
+}
+
+function testRoadPlaza() {
+  // Every cell of a 2 x 2 block of road is part of a square; the tail that
+  // hangs off it is not, and neither is a plain line.
+  const square = buildGrid([
+    "..........",
+    ".rr.......",
+    ".rr.......",
+    ".r........",
+    "..........",
+  ]);
+  [11, 12, 21, 22].forEach((index) => assert.equal(roadPlaza(square, 10, index), true));
+  assert.equal(roadPlaza(square, 10, 31), false);
+  assert.equal(roadPlaza(square, 10, 0), false);
+  assert.equal(roadTile(square, [], 10, 11).plaza, true);
+  assert.equal(roadTile(square, [], 10, 31).plaza, false);
+
+  const line = buildGrid([
+    "..........",
+    ".rrrr.....",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadPlaza(line, 10, 12), false);
+
+  // Rails next to a path are another network: no square across the two.
+  const mixed = buildGrid([
+    "..........",
+    ".rr.......",
+    ".rr.......",
+    "..........",
+    "..........",
+  ]);
+  mixed[21] = RAILS_ID;
+  mixed[22] = RAILS_ID;
+  assert.equal(roadPlaza(mixed, 10, 11), false);
+  assert.equal(roadPlaza(mixed, 10, 21), false);
 }
 
 function testForestDensity() {
@@ -886,6 +976,8 @@ testStrokeLine();
 testNeighborMask();
 testRoadTile();
 testWaterEdges();
+testWaterInnerCorners();
+testRoadPlaza();
 testForestDensity();
 testConnectedComponents();
 testRoadPaths();

@@ -56,7 +56,10 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
 - A road becomes a straight, a turn, a T, a crossing or an end.
 - A road painted across water becomes a bridge, and painting water back over it gives the water
   back. The lake underneath stays one lake.
-- Water draws a shore on every side where it meets something else.
+- Water draws a shore on every side where it meets something else, rounds the corners of a lake
+  and puts a fillet in every inside corner where the lake bends.
+- Road painted two cells wide or more becomes a paved square: the centre line stops and the paving
+  shows, so a plaza reads as a plaza and not as a frame of lines.
 - A lone forest cell is one small tree; inside a cluster the trees grow taller and denser.
 - A house turns its door toward the street next to it.
 - A field goes from bare soil to green shoots to ripe ears while the world is open.
@@ -95,9 +98,9 @@ node block-town/test-game.js
 
 The test covers the block and size registries, making, opening and deleting worlds, painting and
 painting over, a block an adult has not enabled, refused input, the stroke line filler, the autotile
-helpers, the world analysis, the order of a walked track and of a closed loop, the house door, the
-field stages, the wide brush, rail paths, the bucket on a full world, the size of a full save and
-the normalization of a damaged save.
+helpers, the inside corners of a lake, the paved square, the world analysis, the order of a walked
+track and of a closed loop, the house door, the field stages, the wide brush, rail paths, the bucket
+on a full world, the size of a full save and the normalization of a damaged save.
 
 ## Saving
 
