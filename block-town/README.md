@@ -6,9 +6,7 @@ answers every stroke: roads join into crossings, water merges into a lake with s
 its door toward the street, a little car sets off along a finished road. There are no tasks, no
 timers and no wrong moves. The only goal is to fill the world, and the reward is a town that lives.
 
-The full design is in [GAME_DESIGN.md](GAME_DESIGN.md), the original build order in
-[IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md), the rework into worlds in
-[WORLDS_PLAN.md](WORLDS_PLAN.md) and the state of the work in [PROGRESS.md](PROGRESS.md).
+The full design is in [GAME_DESIGN.md](GAME_DESIGN.md).
 
 ## Running
 
