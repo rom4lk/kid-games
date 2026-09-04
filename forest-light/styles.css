@@ -4,6 +4,14 @@
   background: #102f2b;
 }
 
+/* Registering the light radius lets the dusk close in smoothly instead of
+   snapping between the four marks of the sun. */
+@property --light-radius {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 4000px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -81,12 +89,81 @@ button:focus-visible {
   opacity: 0.75;
 }
 
+.berry-fill {
+  fill: #8c4fa8;
+  stroke: #4d2660;
+  stroke-width: 3;
+}
+
+.berry-shine {
+  fill: #e6c8f2;
+  stroke: none;
+  opacity: 0.85;
+}
+
+.berry-stem {
+  fill: none;
+  stroke: #4f8c3f;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.bush-leaves {
+  fill: #4f9b4e;
+  stroke: #2f6b3a;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.bush-stem {
+  fill: none;
+  stroke: #6c4a2c;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
 .fire-outer {
   fill: #ff8b38;
 }
 
 .fire-inner {
   fill: #ffe27b;
+}
+
+.torch-handle {
+  fill: none;
+  stroke: #7a4428;
+  stroke-linecap: round;
+  stroke-width: 10;
+}
+
+.torch-cup {
+  fill: #9c6640;
+  stroke: #5d3620;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.bowl-body {
+  fill: #b58a5c;
+  stroke: #6d4527;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.bowl-rim {
+  fill: none;
+  stroke: #6d4527;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.pocket-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
 }
 
 .hand-fill {
@@ -103,6 +180,34 @@ button:focus-visible {
   stroke-width: 2.5;
 }
 
+.shake-arc {
+  fill: none;
+  stroke: #2f6b52;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.shovel-handle {
+  fill: none;
+  stroke: #7a4428;
+  stroke-linecap: round;
+  stroke-width: 9;
+}
+
+.shovel-grip {
+  fill: #9c6640;
+  stroke: #5d3620;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.shovel-blade {
+  fill: #66756f;
+  stroke: #354a47;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
 .hammer-handle {
   fill: none;
   stroke: #77462a;
@@ -115,6 +220,42 @@ button:focus-visible {
   stroke: #354a47;
   stroke-linejoin: round;
   stroke-width: 3;
+}
+
+.sun-fill {
+  fill: #ffc93c;
+  stroke: #a9741a;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.sun-ray {
+  fill: none;
+  stroke: #a9741a;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.moon-fill {
+  fill: #cfd9ef;
+  stroke: #5b6a8a;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.moon-star {
+  fill: #f4e79a;
+}
+
+.tent-body {
+  fill: #d9a35a;
+  stroke: #7a4a25;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.tent-door {
+  fill: #7a4a25;
 }
 
 .ui-icon-fill {
@@ -151,32 +292,57 @@ button:focus-visible {
   --surface: rgba(250, 247, 215, 0.94);
   --ink: #173c34;
   --glow: #ffdc68;
+  --glade-index: 1;
+  --light-x: 47%;
+  --light-y: 62%;
+  --light-radius: 4000px;
   position: relative;
   height: clamp(620px, calc(100dvh - 32px), 760px);
   min-height: 620px;
   overflow: hidden;
   border: 3px solid rgba(234, 248, 216, 0.16);
   border-radius: 34px;
-  background:
-    radial-gradient(circle at 48% 48%, rgba(255, 226, 119, 0.16), transparent 25%),
-    radial-gradient(ellipse at 19% 77%, rgba(25, 84, 67, 0.48) 0 15%, transparent 15.5%),
-    linear-gradient(155deg, #9fc87a 0 9%, #6eaa64 9% 53%, #548e5b 100%);
   box-shadow: 0 24px 70px rgba(3, 19, 18, 0.42);
   isolation: isolate;
-  transition: background 700ms ease, border-color 700ms ease;
 }
 
-.world::before,
-.world::after {
+/* The four marks of the sun. Each one pulls the visible circle in, and the
+   fourth one waits for the player instead of running out. */
+.world[data-daylight="2"] { --light-radius: min(680px, 92vw); }
+.world[data-daylight="3"] { --light-radius: min(390px, 62vw); }
+.world[data-daylight="4"] { --light-radius: min(260px, 46vw); }
+
+.world.has-torch,
+.world.is-evening {
+  --light-radius: min(760px, 96vw);
+}
+
+.world-map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  width: 300%;
+  transform: translateX(calc(var(--glade-index) * -33.3333%));
+  transition: transform 620ms cubic-bezier(0.24, 0.7, 0.3, 1);
+}
+
+.glade {
+  position: relative;
+  flex: 0 0 33.3333%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 48% 48%, rgba(255, 226, 119, 0.16), transparent 25%),
+    linear-gradient(155deg, #9fc87a 0 9%, #6eaa64 9% 53%, #548e5b 100%);
+  transition: filter 700ms ease;
+}
+
+.glade::before {
   content: "";
   position: absolute;
   inset: 8% 0 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.world::before {
   opacity: 0.48;
+  pointer-events: none;
   background-image:
     radial-gradient(circle, #d6ed9e 0 2px, transparent 3px),
     radial-gradient(circle, #487b50 0 2px, transparent 3px),
@@ -185,46 +351,44 @@ button:focus-visible {
   background-size: 57px 57px, 72px 72px, 91px 91px;
 }
 
-.world::after {
-  opacity: 0;
+/* Each clearing keeps its own ground so the three screens are told apart by
+   shape and texture, not only by the resources standing on them. */
+.glade[data-glade="berries"] {
   background:
-    radial-gradient(circle at 18% 22%, #fff0a6 0 2px, transparent 3px),
-    radial-gradient(circle at 65% 18%, #fff0a6 0 2px, transparent 3px),
-    radial-gradient(circle at 82% 36%, #fff0a6 0 2px, transparent 3px),
-    linear-gradient(rgba(24, 43, 62, 0.62), rgba(17, 46, 46, 0.76));
-  transition: opacity 900ms ease;
+    radial-gradient(ellipse at 50% 76%, rgba(96, 60, 128, 0.2) 0 26%, transparent 27%),
+    linear-gradient(155deg, #93bd7a 0 9%, #63a05f 9% 53%, #4b8757 100%);
 }
 
-.world.is-evening {
-  border-color: rgba(255, 226, 119, 0.38);
+.glade[data-glade="stones"] {
   background:
-    radial-gradient(circle at 84% 70%, rgba(255, 184, 71, 0.28), transparent 19%),
-    radial-gradient(ellipse at 19% 77%, rgba(18, 47, 51, 0.62) 0 15%, transparent 15.5%),
-    linear-gradient(155deg, #687b91 0 9%, #4f776d 9% 53%, #315b55 100%);
+    radial-gradient(ellipse at 62% 22%, rgba(120, 135, 128, 0.32) 0 24%, transparent 25%),
+    linear-gradient(155deg, #a8bb90 0 9%, #7ea378 9% 53%, #5f8a70 100%);
 }
 
-.world.is-evening::after {
-  opacity: 1;
-}
-
-.ambient-glow {
+.glade-decor,
+.glade-resources {
   position: absolute;
-  z-index: 0;
-  left: 48%;
-  top: 52%;
-  width: 42%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 229, 132, 0.18), transparent 69%);
-  transform: translate(-50%, -50%);
+  inset: 0;
+}
+
+.glade-decor {
+  z-index: 1;
   pointer-events: none;
 }
 
+.glade-resources {
+  z-index: 6;
+}
+
+.hollow,
+.slope,
 .pond {
   position: absolute;
-  z-index: 1;
-  left: 43%;
-  top: 24%;
+}
+
+.pond {
+  left: 10%;
+  top: 22%;
   width: 112px;
   height: 64px;
   border: 6px solid rgba(45, 106, 90, 0.28);
@@ -232,7 +396,6 @@ button:focus-visible {
   background: linear-gradient(155deg, #73c7c3, #3d9a9a);
   box-shadow: inset 8px 8px 18px rgba(219, 255, 234, 0.3);
   transform: rotate(-7deg);
-  pointer-events: none;
 }
 
 .pond span {
@@ -245,12 +408,29 @@ button:focus-visible {
   background: rgba(226, 255, 246, 0.55);
 }
 
+.hollow {
+  left: 12%;
+  right: 12%;
+  bottom: 6%;
+  height: 34%;
+  border-top: 7px dashed rgba(78, 47, 104, 0.28);
+  border-radius: 50% 50% 0 0;
+}
+
+.slope {
+  left: 8%;
+  right: 8%;
+  top: 14%;
+  height: 30%;
+  border-bottom: 9px solid rgba(96, 112, 106, 0.4);
+  border-radius: 0 0 50% 50%;
+}
+
 .tree {
   position: absolute;
-  z-index: 2;
+  display: block;
   width: 94px;
   height: 134px;
-  pointer-events: none;
   filter: drop-shadow(0 13px 8px rgba(22, 62, 49, 0.28));
 }
 
@@ -295,12 +475,120 @@ button:focus-visible {
   background: linear-gradient(90deg, #6d432d, #9c6640);
 }
 
-.tree-one { left: -27px; top: 20%; transform: scale(1.28); }
-.tree-two { right: -31px; top: 16%; transform: scale(1.18); }
-.tree-three { left: 8%; bottom: -39px; transform: scale(1.05); }
-.tree-four { right: 26%; top: 19%; transform: scale(0.78); opacity: 0.92; }
-.tree-five { left: 28%; top: 13%; transform: scale(0.72); opacity: 0.9; }
-.tree-six { right: 8%; bottom: -51px; transform: scale(1.05); }
+.tree-one { left: -27px; top: 18%; transform: scale(1.28); }
+.tree-two { right: -31px; top: 14%; transform: scale(1.18); }
+.tree-three { left: 6%; bottom: -39px; transform: scale(1.05); }
+.tree-four { right: 24%; top: 16%; transform: scale(0.78); opacity: 0.92; }
+.tree-five { left: 26%; top: 11%; transform: scale(0.72); opacity: 0.9; }
+.tree-six { right: 6%; bottom: -51px; transform: scale(1.05); }
+
+/* The dusk closes in around the hero. Everything outside the circle stays
+   visible but sleeps, and the light comes back with a torch or the campfire. */
+.night-veil {
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle var(--light-radius) at var(--light-x) var(--light-y),
+    rgba(11, 27, 42, 0) 0%,
+    rgba(11, 27, 42, 0.1) 62%,
+    rgba(9, 23, 38, 0.62) 100%
+  );
+  transition: opacity 700ms ease, --light-radius 700ms ease;
+}
+
+.world.is-long-evening .night-veil {
+  opacity: 1;
+}
+
+.world.is-long-evening[data-daylight="3"] .glade,
+.world.is-long-evening[data-daylight="4"] .glade {
+  filter: saturate(0.82) brightness(0.9);
+}
+
+.world.is-evening .glade {
+  filter: none;
+  background:
+    radial-gradient(circle at 50% 62%, rgba(255, 184, 71, 0.24), transparent 24%),
+    linear-gradient(155deg, #687b91 0 9%, #4f776d 9% 53%, #315b55 100%);
+}
+
+.world.is-evening {
+  border-color: rgba(255, 226, 119, 0.38);
+}
+
+.world.is-evening .night-veil {
+  opacity: 1;
+  background: radial-gradient(
+    circle var(--light-radius) at var(--light-x) var(--light-y),
+    rgba(20, 40, 62, 0) 0%,
+    rgba(18, 38, 60, 0.2) 60%,
+    rgba(14, 32, 52, 0.62) 100%
+  );
+}
+
+/* Two large tabs sit on the sides of the screen. The one that leads back to
+   the camp always shows the tent, so the way home is never a guess. */
+.glade-edge {
+  position: absolute;
+  z-index: 14;
+  top: 30%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 2px;
+  width: 66px;
+  height: 40%;
+  padding: 4px;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgba(24, 65, 50, 0.28);
+  transition: transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+}
+
+.glade-edge[hidden] {
+  display: none;
+}
+
+.glade-edge-left {
+  left: 0;
+  border-radius: 0 22px 22px 0;
+}
+
+.glade-edge-right {
+  right: 0;
+  border-radius: 22px 0 0 22px;
+}
+
+.glade-edge svg {
+  display: block;
+  width: 34px;
+  height: 34px;
+}
+
+.glade-edge-icon svg {
+  width: 44px;
+  height: 44px;
+}
+
+.glade-edge-right .glade-edge-arrow {
+  transform: rotate(180deg);
+}
+
+.glade-edge.is-home {
+  box-shadow: 0 0 0 5px var(--glow), 0 8px 20px rgba(24, 65, 50, 0.28);
+}
+
+.glade-edge:disabled {
+  opacity: 0.4;
+}
+
+.glade-edge:not(:disabled):hover,
+.glade-edge.is-hint-target {
+  box-shadow: 0 0 0 7px rgba(255, 238, 153, 0.92), 0 12px 25px rgba(27, 70, 53, 0.26);
+}
 
 .hud {
   position: absolute;
@@ -308,22 +596,114 @@ button:focus-visible {
   top: 18px;
   left: 18px;
   right: 18px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 10px;
   pointer-events: none;
 }
 
 .goal-cluster,
-.control-cluster {
+.control-cluster,
+.meter-cluster {
   display: flex;
+  min-width: 0;
   align-items: center;
   pointer-events: auto;
 }
 
 .goal-cluster {
   gap: 2px;
+}
+
+.meter-cluster {
+  justify-self: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgba(24, 65, 50, 0.26);
+}
+
+/* The pressure meters belong to the long evening. The tutorial run never
+   shows them, exactly as the chapter design asks. */
+.world:not(.is-long-evening) .meter-cluster {
+  display: none;
+}
+
+.sun-path,
+.fullness {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sun-path {
+  position: relative;
+  padding: 2px 4px;
+}
+
+/* The arc under the marks says "path", so the sun's progress is readable as a
+   position and not only as a picture. */
+.sun-path::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 8px;
+  height: 26px;
+  border-top: 4px dotted rgba(23, 60, 52, 0.35);
+  border-radius: 50% 50% 0 0;
+}
+
+.sun-mark,
+.fullness-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+}
+
+.sun-mark svg,
+.fullness-mark svg {
+  width: 26px;
+  height: 26px;
+}
+
+.sun-mark {
+  opacity: 0.3;
+  filter: grayscale(1);
+  transform: scale(0.72);
+  transition: opacity 300ms ease, filter 300ms ease, transform 300ms ease;
+}
+
+.sun-mark.is-past {
+  opacity: 0.55;
+  filter: grayscale(0.6);
+  transform: scale(0.8) translateY(3px);
+}
+
+.sun-mark.is-current {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(255, 205, 80, 0.8));
+  transform: scale(1.18);
+}
+
+.fullness-mark svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* A spent berry mark becomes an empty ring: the meter is readable without
+   telling the two states apart by color. */
+.fullness-mark.is-spent {
+  border: 4px dashed rgba(23, 60, 52, 0.42);
+  border-radius: 50%;
+}
+
+.fullness-mark.is-spent svg {
+  display: none;
 }
 
 .firefly {
@@ -354,14 +734,14 @@ button:focus-visible {
 .goal-result {
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
 }
 
 .goal-socket svg,
 .goal-result svg {
-  width: 54px;
-  height: 54px;
+  width: 48px;
+  height: 48px;
 }
 
 .goal-socket {
@@ -378,7 +758,7 @@ button:focus-visible {
 
 .goal-arrow {
   color: var(--ink);
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   opacity: 0.75;
 }
@@ -446,6 +826,7 @@ button:focus-visible {
   place-items: center;
   width: 76px;
   height: 76px;
+  margin: -38px 0 0 -38px;
   padding: 4px;
   border-radius: 50%;
   background: rgba(247, 246, 207, 0.12);
@@ -470,9 +851,48 @@ button:focus-visible {
   background: rgba(27, 70, 53, 0.25);
 }
 
-.resource:disabled:not(.is-collected) {
-  opacity: 0.4;
+.resource-crumbs {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.resource-crumbs i {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #8c4fa8;
+}
+
+.resource.is-worked .resource-crumbs {
+  opacity: 1;
+  animation: crumbs 340ms ease-out;
+}
+
+.resource.is-worked .resource-crumbs i:nth-child(1) { animation: crumb-a 340ms ease-out; }
+.resource.is-worked .resource-crumbs i:nth-child(2) { animation: crumb-b 340ms ease-out; }
+.resource.is-worked .resource-crumbs i:nth-child(3) { animation: crumb-c 340ms ease-out; }
+
+.resource.is-worked svg {
+  animation: worked 320ms ease-in-out;
+}
+
+.resource:disabled:not(.is-collected):not(.is-asleep) {
+  opacity: 0.45;
   filter: grayscale(1);
+}
+
+/* A far resource that the dusk put to sleep keeps its picture but gets a
+   dashed ring, so the reason is a shape and not a shade. */
+.resource.is-asleep {
+  opacity: 0.42;
+  filter: grayscale(0.9);
+  box-shadow: inset 0 0 0 4px rgba(226, 240, 255, 0.75);
+  transform: scale(0.88);
 }
 
 .resource:not(:disabled):hover,
@@ -482,127 +902,143 @@ button:focus-visible {
   box-shadow: 0 0 0 7px rgba(255, 238, 153, 0.92), 0 12px 25px rgba(27, 70, 53, 0.26);
 }
 
-.resource.is-unlocked {
-  animation: unlock 420ms ease-out;
-}
-
 .resource.is-collected {
   opacity: 0;
   pointer-events: none;
   transform: scale(0.25);
 }
 
-.resource-first { left: 28%; top: 45%; }
-.resource-second { right: 23%; top: 57%; }
-.resource-stone { right: 14%; top: 31%; }
+.resource.is-gift {
+  animation: unlock 420ms ease-out;
+}
 
-.camp {
+.camp-spots {
   position: absolute;
-  z-index: 6;
-  right: 7%;
-  bottom: 17%;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  top: 20%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 34px);
+}
+
+.build-spot {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 104px;
+  padding: 8px 6px 10px;
+  border-radius: 24px;
+  background: rgba(252, 249, 222, 0.4);
+  box-shadow: inset 0 0 0 5px rgba(120, 136, 122, 0.7), 0 10px 20px rgba(24, 65, 50, 0.18);
+  transition: box-shadow 220ms ease, background 300ms ease, transform 220ms ease;
+}
+
+.build-result {
   display: grid;
   place-items: center;
-  width: 122px;
-  height: 122px;
-  border-radius: 50%;
-  background: rgba(255, 225, 117, 0.09);
-  opacity: 1;
-  transition: transform 220ms ease, box-shadow 220ms ease, background 600ms ease;
-}
-
-.camp:disabled {
-  opacity: 1;
-}
-
-.camp-ring {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 86px;
-  height: 70px;
-  border: 12px dotted #859486;
-  border-radius: 50%;
-  background: rgba(58, 79, 65, 0.08);
-}
-
-.camp-target {
-  width: 25px;
-  height: 25px;
-  margin: 0 -2px;
-  opacity: 0.22;
+  width: 64px;
+  height: 64px;
+  opacity: 0.35;
   filter: grayscale(1);
-  transition: opacity 220ms ease, filter 220ms ease, transform 220ms ease;
+  transition: opacity 260ms ease, filter 260ms ease, transform 260ms ease;
 }
 
-.camp-target svg,
-.camp-flame svg {
+.build-result svg {
   width: 100%;
   height: 100%;
 }
 
-.camp-target.is-placed {
+.build-sockets {
+  display: flex;
+  gap: 3px;
+}
+
+.build-socket {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  opacity: 0.28;
+  filter: grayscale(1);
+  transition: opacity 220ms ease, filter 220ms ease, transform 220ms ease;
+}
+
+.build-socket svg {
+  width: 100%;
+  height: 100%;
+}
+
+.build-socket.is-placed {
   opacity: 1;
   filter: none;
   transform: translateY(-2px);
 }
 
-.camp-flame {
+.build-badge {
   position: absolute;
+  right: -8px;
+  top: -8px;
   display: none;
-  width: 72px;
-  height: 72px;
-  filter: drop-shadow(0 0 15px #ffb43e);
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 5px 0 #c7983d;
 }
 
-.world.is-returning .camp {
-  box-shadow: 0 0 0 8px #fff0a6, 0 0 34px var(--glow);
+.build-badge svg {
+  width: 28px;
+  height: 28px;
+}
+
+.build-spot.is-ready {
+  box-shadow: inset 0 0 0 5px var(--glow), 0 0 26px rgba(255, 220, 104, 0.6);
   animation: pulse 1.25s ease-in-out infinite;
 }
 
-.world.is-evening .camp {
-  background: rgba(255, 190, 64, 0.22);
-  box-shadow: 0 0 48px rgba(255, 174, 54, 0.74);
+.build-spot.is-ready .build-badge,
+.build-spot.is-active .build-badge {
+  display: grid;
 }
 
-.world.is-evening .camp-ring {
-  border-color: #6f776f;
+.build-spot.is-active {
+  box-shadow: inset 0 0 0 5px var(--glow);
+  background: rgba(255, 233, 160, 0.28);
 }
 
-.world.is-evening .camp-target {
+.build-spot.is-done {
+  box-shadow: inset 0 0 0 5px rgba(255, 205, 96, 0.85);
+  background: rgba(255, 226, 141, 0.24);
+}
+
+.build-spot.is-done .build-result {
+  opacity: 1;
+  filter: drop-shadow(0 0 12px rgba(255, 176, 60, 0.75));
+  transform: scale(1.08);
+}
+
+.build-spot.is-done .build-sockets {
   display: none;
 }
 
-.world.is-evening .camp-flame {
-  display: block;
+.world.is-evening .build-spot-goal .build-result {
   animation: flame 850ms ease-in-out infinite;
 }
 
-.home-trail {
-  position: absolute;
-  z-index: 3;
-  left: 51%;
-  top: 54%;
-  width: 35%;
-  height: 19%;
-  border-bottom: 8px dotted var(--glow);
-  border-radius: 50%;
-  opacity: 0;
-  filter: drop-shadow(0 0 6px var(--glow));
-  transform: rotate(10deg);
-  pointer-events: none;
-  transition: opacity 220ms ease;
-}
-
-.world.is-returning .home-trail {
-  opacity: 1;
-  animation: trail 1.2s ease-in-out infinite;
+.world.is-evening .build-spot-goal {
+  background: rgba(255, 190, 64, 0.22);
+  box-shadow: inset 0 0 0 5px rgba(255, 205, 96, 0.9), 0 0 48px rgba(255, 174, 54, 0.74);
 }
 
 .player {
   --player-x: 47%;
-  --player-y: 55%;
+  --player-y: 62%;
+  --walk-ms: 560ms;
   position: absolute;
   z-index: 11;
   left: var(--player-x);
@@ -610,7 +1046,7 @@ button:focus-visible {
   width: 62px;
   height: 92px;
   transform: translate(-50%, -50%);
-  transition: left 520ms cubic-bezier(0.2, 0.74, 0.28, 1), top 520ms cubic-bezier(0.2, 0.74, 0.28, 1);
+  transition: left var(--walk-ms) cubic-bezier(0.2, 0.74, 0.28, 1), top var(--walk-ms) cubic-bezier(0.2, 0.74, 0.28, 1);
   pointer-events: none;
 }
 
@@ -633,6 +1069,7 @@ button:focus-visible {
   border-left: 8px solid #384f60;
   border-right: 8px solid #384f60;
   border-radius: 4px;
+  transition: height 260ms ease;
 }
 
 .player-body {
@@ -644,6 +1081,7 @@ button:focus-visible {
   border-radius: 15px 15px 8px 8px;
   background: linear-gradient(90deg, #f0a340, #f7c85c);
   box-shadow: inset -7px 0 rgba(130, 75, 35, 0.13);
+  transition: bottom 260ms ease;
 }
 
 .player-pack {
@@ -655,6 +1093,7 @@ button:focus-visible {
   height: 31px;
   border-radius: 11px 5px 8px 11px;
   background: #795039;
+  transition: bottom 260ms ease;
 }
 
 .player-head {
@@ -668,6 +1107,7 @@ button:focus-visible {
   border-radius: 50%;
   background: #f4b867;
   box-shadow: 0 4px 0 rgba(71, 55, 36, 0.13);
+  transition: top 260ms ease;
 }
 
 .player-head::before {
@@ -712,6 +1152,52 @@ button:focus-visible {
   left: 16px;
 }
 
+.player-bubble {
+  position: absolute;
+  left: 44px;
+  top: -22px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50% 50% 50% 6px;
+  background: var(--surface);
+  box-shadow: 0 6px 14px rgba(24, 65, 50, 0.28);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.player-bubble svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* An empty fullness meter sits the hero down and puts a berry in a bubble.
+   Nothing is lost and nothing ends: the hero waits to be fed. */
+.world.is-hungry .player-bubble,
+.world.is-refusing .player-bubble {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.world.is-hungry .player-legs {
+  height: 12px;
+}
+
+.world.is-hungry .player-body,
+.world.is-hungry .player-pack {
+  bottom: 12px;
+}
+
+.world.is-hungry .player-head {
+  top: 18px;
+}
+
+.world.is-refusing .player {
+  animation: nudge 340ms ease-in-out;
+}
+
 .hint-hand {
   position: absolute;
   z-index: 18;
@@ -739,19 +1225,19 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 18px;
   pointer-events: none;
 }
 
 .inventory,
-.main-action {
+.action-column {
   pointer-events: auto;
 }
 
 .inventory {
   display: grid;
-  grid-template-columns: repeat(3, 72px);
-  gap: 7px;
+  grid-template-columns: repeat(6, 68px);
+  gap: 6px;
   padding: 8px;
   border-radius: 24px;
 }
@@ -759,8 +1245,8 @@ button:focus-visible {
 .inventory-slot {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   border-radius: 17px;
   color: var(--ink);
   background: rgba(28, 70, 58, 0.1);
@@ -769,17 +1255,16 @@ button:focus-visible {
 }
 
 .inventory-slot svg {
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 54px;
 }
 
 .inventory-slot:disabled {
   opacity: 1;
 }
 
-.inventory-slot.is-missing {
-  opacity: 0.26;
-  filter: grayscale(1);
+.inventory-slot.is-empty {
+  opacity: 0.28;
 }
 
 .inventory-slot.is-filled {
@@ -787,14 +1272,42 @@ button:focus-visible {
   animation: pop 280ms ease-out;
 }
 
-.inventory-slot.is-next {
+.inventory-slot.is-next,
+.inventory-slot.is-feed {
   box-shadow: 0 0 0 6px #fff0a6, 0 0 24px var(--glow);
   animation: pulse 1.2s ease-in-out infinite;
 }
 
-.inventory-slot.is-placed {
-  opacity: 0.12;
-  filter: grayscale(1);
+.action-column {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+/* The gathering counter is a row of pips: two for the stone, three for the
+   bush. A finished press fills its pip in and grows it. */
+.action-progress {
+  display: flex;
+  gap: 6px;
+  min-height: 18px;
+}
+
+.action-pip {
+  width: 16px;
+  height: 16px;
+  border: 4px solid #f7f2c8;
+  border-radius: 50%;
+  background: rgba(23, 60, 52, 0.28);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.action-pip[hidden] {
+  display: none;
+}
+
+.action-pip.is-done {
+  background: var(--glow);
+  transform: scale(1.28);
 }
 
 .main-action {
@@ -807,16 +1320,22 @@ button:focus-visible {
   color: var(--ink);
   background: var(--glow);
   box-shadow: 0 9px 0 #c7983d, 0 12px 23px rgba(30, 68, 51, 0.28);
-  transition: opacity 180ms ease, filter 180ms ease, transform 150ms ease, visibility 0s;
+  transition: opacity 180ms ease, filter 180ms ease, transform 150ms ease;
 }
 
-.main-action svg {
+.main-action .action-icon {
+  grid-area: 1 / 1;
+  display: none;
   width: 55px;
   height: 55px;
 }
 
-.main-action .action-hammer {
-  display: none;
+.main-action[data-verb="none"] .action-pick,
+.main-action[data-verb="pick"] .action-pick,
+.main-action[data-verb="shake"] .action-shake,
+.main-action[data-verb="dig"] .action-dig,
+.main-action[data-verb="light"] .action-light {
+  display: block;
 }
 
 .main-action:disabled {
@@ -825,24 +1344,12 @@ button:focus-visible {
   box-shadow: none;
 }
 
-.world.is-returning .main-action,
-.world.is-building:not(.is-ready) .main-action {
-  visibility: hidden;
-}
-
-.world.is-ready .main-action {
+.main-action[data-verb="light"] {
   animation: pulse 1.05s ease-in-out infinite;
 }
 
-.world.is-ready .action-hand {
-  display: none;
-}
-
-.world.is-ready .action-hammer {
-  display: block;
-}
-
-.world.is-evening .action-bar {
+.world.is-evening .action-bar,
+.world.is-evening .glade-edge {
   opacity: 0;
   pointer-events: none;
   transition: opacity 500ms ease;
@@ -990,17 +1497,12 @@ button:focus-visible {
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-@keyframes trail {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 1; }
+  50% { transform: scale(1.06); }
 }
 
 @keyframes flame {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-3px) scale(1.05, 0.97); }
+  0%, 100% { transform: translateY(0) scale(1.08); }
+  50% { transform: translateY(-3px) scale(1.14, 1.04); }
 }
 
 @keyframes unlock {
@@ -1013,6 +1515,106 @@ button:focus-visible {
   0% { transform: scale(0.55); }
   75% { transform: scale(1.12); }
   100% { transform: scale(1); }
+}
+
+@keyframes worked {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-9deg); }
+  70% { transform: rotate(9deg); }
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translate(-50%, -50%); }
+  35% { transform: translate(calc(-50% - 7px), -50%); }
+  70% { transform: translate(calc(-50% + 7px), -50%); }
+}
+
+@keyframes crumbs {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes crumb-a {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-24px, 22px); }
+}
+
+@keyframes crumb-b {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(2px, 28px); }
+}
+
+@keyframes crumb-c {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(23px, 20px); }
+}
+
+@media (max-width: 900px) {
+  .hud {
+    grid-template-columns: 1fr auto;
+  }
+
+  .control-cluster {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .meter-cluster {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .goal-cluster {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: start;
+  }
+}
+
+/* Below this width the goal bubble and the controls no longer share a row, so
+   the header stacks: controls, then the meters, then the current goal. */
+@media (max-width: 620px) {
+  .hud {
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+  }
+
+  .control-cluster {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .meter-cluster {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .goal-cluster {
+    grid-column: 1 / 3;
+    grid-row: 3;
+    justify-self: start;
+    align-self: start;
+  }
+
+  /* The globe next to the language list is decoration, and dropping it keeps
+     the three round controls at their full size on a narrow screen. */
+  .control-cluster {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .control-cluster .language-picker {
+    padding-left: 5px;
+  }
+
+  .control-cluster .language-picker > span[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 @media (max-width: 700px) {
@@ -1040,64 +1642,91 @@ button:focus-visible {
   }
 
   .goal-bubble {
-    min-height: 64px;
+    min-height: 60px;
     padding: 5px 8px;
   }
 
   .goal-socket,
   .goal-result {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
 
   .goal-socket svg,
   .goal-result svg {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
   }
 
   .goal-arrow {
-    font-size: 26px;
+    font-size: 24px;
   }
 
-  .round-control {
-    width: 64px;
-    height: 64px;
+  .meter-cluster {
+    padding: 4px 7px;
   }
 
-  .tree-one { left: -49px; top: 23%; }
-  .tree-two { right: -49px; top: 21%; }
+  .sun-mark,
+  .fullness-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .glade-edge {
+    width: 56px;
+    height: 34%;
+    top: 33%;
+  }
+
+  .glade-edge svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .glade-edge-icon svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .tree-one { left: -49px; top: 21%; }
+  .tree-two { right: -49px; top: 19%; }
   .tree-three { left: 1%; }
-  .tree-four { right: 18%; top: 24%; }
-  .tree-five { left: 24%; top: 18%; }
+  .tree-four { right: 16%; top: 22%; }
+  .tree-five { left: 22%; top: 16%; }
   .tree-six { right: -8%; }
 
   .pond {
-    left: 40%;
-    top: 28%;
+    left: 6%;
+    top: 24%;
     width: 91px;
     height: 54px;
   }
 
-  .resource-first { left: 18%; top: 43%; }
-  .resource-second { right: 14%; top: 58%; }
-  .resource-stone { right: 8%; top: 36%; }
-
-  .camp {
-    right: 1%;
-    bottom: 19%;
+  .camp-spots {
+    top: 27%;
+    gap: 8px;
   }
 
-  .hint-hand {
-    left: 18%;
-    top: 36%;
+  .build-spot {
+    width: 92px;
+    padding: 6px 4px 8px;
+  }
+
+  .build-result {
+    width: 54px;
+    height: 54px;
+  }
+
+  .build-socket {
+    width: 22px;
+    height: 22px;
   }
 
   .action-bar {
     left: 7px;
     right: 7px;
     bottom: 9px;
-    gap: 7px;
+    gap: 9px;
   }
 
   .inventory {
@@ -1113,8 +1742,8 @@ button:focus-visible {
   }
 
   .inventory-slot svg {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
   }
 
   .main-action {
@@ -1123,55 +1752,43 @@ button:focus-visible {
     flex-basis: 70px;
   }
 
-  .main-action svg {
+  .main-action .action-icon {
     width: 48px;
     height: 48px;
   }
 }
 
 @media (max-width: 430px) {
-  .hud {
-    display: grid;
-    grid-template-columns: 1fr auto;
-  }
-
-  .goal-cluster {
-    grid-column: 1 / 3;
-    grid-row: 2;
-    justify-self: start;
-    margin-top: -1px;
-  }
-
-  .control-cluster {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
   .goal-bubble {
-    min-height: 60px;
+    min-height: 56px;
   }
 
   .goal-socket,
   .goal-result {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
 
   .goal-socket svg,
   .goal-result svg {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
   }
 
-  .resource-first { top: 45%; }
-  .resource-stone { top: 38%; }
+  .camp-spots {
+    gap: 5px;
+  }
+
+  .build-spot {
+    width: 84px;
+  }
 }
 
 @media (max-width: 340px) {
   .action-bar {
     left: 1px;
     right: 1px;
-    gap: 3px;
+    gap: 4px;
   }
 
   .inventory {
@@ -1192,38 +1809,62 @@ button:focus-visible {
   }
 
   /* Decorative loops carry no meaning, so they stop entirely. */
-  .firefly,
-  .world.is-evening .camp-flame {
+  .firefly {
     animation: none;
   }
 
   /* Movement that carries meaning becomes instant, but the state it announced
      stays readable as a static ring. */
-  .player {
+  .player,
+  .world-map {
     transition-duration: 1ms;
   }
 
-  .world.is-returning .camp,
+  .night-veil {
+    transition: opacity 260ms ease;
+  }
+
+  .build-spot.is-ready,
   .inventory-slot.is-next,
-  .world.is-ready .main-action,
-  .hint-hand.is-visible {
+  .inventory-slot.is-feed,
+  .main-action[data-verb="light"],
+  .world.is-evening .build-spot-goal .build-result,
+  .hint-hand.is-visible,
+  .world.is-refusing .player,
+  .resource.is-worked svg {
     animation: none;
   }
 
-  .world.is-returning .camp,
+  .build-spot.is-ready,
   .inventory-slot.is-next,
-  .world.is-ready .main-action {
+  .inventory-slot.is-feed,
+  .main-action[data-verb="light"] {
     outline: 5px solid var(--glow);
     outline-offset: 3px;
   }
 
-  .world.is-returning .home-trail {
-    animation: none;
-    opacity: 0.85;
+  .resource.is-gift,
+  .inventory-slot.is-filled,
+  .resource.is-worked .resource-crumbs,
+  .resource.is-worked .resource-crumbs i {
+    animation-duration: 1ms;
   }
 
-  .resource.is-unlocked,
-  .inventory-slot.is-filled {
-    animation-duration: 1ms;
+  /* Sitting down, the gathering pips and the parts dropping into a silhouette
+     all carry meaning through scaling. They become instant, and the state stays
+     readable as a filled pip, a colored socket and a lowered pose. */
+  .player-legs,
+  .player-body,
+  .player-pack,
+  .player-head,
+  .player-bubble,
+  .action-pip,
+  .build-result,
+  .build-socket,
+  .goal-socket,
+  .goal-result,
+  .sun-mark,
+  .resource {
+    transition-duration: 1ms;
   }
 }

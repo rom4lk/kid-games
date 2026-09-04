@@ -1,8 +1,10 @@
 {
   "findFirstBranch": "Let us find the nearby branch.",
-  "collect": "Pick up the item.",
+  "collect": "Press the big button.",
   "findMore": "Let us find another branch and a stone.",
+  "travel": "Let us walk to the next clearing.",
   "goHome": "Let us return to the campfire spot.",
   "build": "Put the item into the matching spot.",
+  "hungry": "The hero is hungry. Give them a berry.",
   "light": "Light the campfire."
 }
