@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Water, layout b: the same surface, the waves elsewhere. -->
+  <rect width="64" height="64" fill="#82c9e8"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
+    <path d="M24 14q6-6 12 0t12 0"/>
+    <path d="M8 38q6-6 12 0t12 0"/>
+    <path d="M38 54q5-5 10 0"/>
+  </g>
+</svg>

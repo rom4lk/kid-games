@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Flowers, layout a: bright heads on the grass. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <path d="M34 30l-3-6M34 30v-7M34 30l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12 44l-3-6M12 44v-7M12 44l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="18" cy="20" r="4.5" fill="#e78cbb"/>
+  <circle cx="18" cy="20" r="1.8" fill="#fff3a8"/>
+  <circle cx="44" cy="16" r="4.5" fill="#fff3a8"/>
+  <circle cx="44" cy="16" r="1.8" fill="#e78cbb"/>
+  <circle cx="30" cy="48" r="4.5" fill="#e78cbb"/>
+  <circle cx="30" cy="48" r="1.8" fill="#fff3a8"/>
+  <circle cx="52" cy="46" r="4.5" fill="#f7f2ff"/>
+  <circle cx="52" cy="46" r="1.8" fill="#fff3a8"/>
+</svg>

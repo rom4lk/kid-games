@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Where two edges meet the corner is rounded; the surface square hides the straight edges underneath. -->
+  <g transform="rotate(180 32 32)">
+  <rect width="17" height="17" fill="#9aa2a6"/>
+  <path d="M17 5A12 12 0 0 0 5 17" fill="none" stroke="#5f6a70" stroke-width="4"/>
+  </g>
+</svg>

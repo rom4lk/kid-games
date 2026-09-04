@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Field with green shoots along the furrows. -->
+  <rect width="64" height="64" fill="#b98c5c"/>
+  <path d="M0 8h64" stroke="#9a7248" stroke-width="3"/>
+  <path d="M0 24h64" stroke="#9a7248" stroke-width="3"/>
+  <path d="M0 40h64" stroke="#9a7248" stroke-width="3"/>
+  <path d="M0 56h64" stroke="#9a7248" stroke-width="3"/>
+  <path d="M8 6l-2-5M8 6l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 6l-2-5M24 6l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M40 6l-2-5M40 6l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M56 6l-2-5M56 6l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 22l-2-5M16 22l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M32 22l-2-5M32 22l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M48 22l-2-5M48 22l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 38l-2-5M8 38l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 38l-2-5M24 38l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M40 38l-2-5M40 38l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M56 38l-2-5M56 38l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 54l-2-5M16 54l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M32 54l-2-5M32 54l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M48 54l-2-5M48 54l2-5" fill="none" stroke="#7fc06a" stroke-width="2" stroke-linecap="round"/>
+</svg>

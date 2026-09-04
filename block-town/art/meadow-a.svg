@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Meadow, layout a: calm grass with a few tufts. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <path d="M16 24l-3-6M16 24v-7M16 24l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M44 20l-3-6M44 20v-7M44 20l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M28 46l-3-6M28 46v-7M28 46l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M52 50l-3-6M52 50v-7M52 50l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+</svg>

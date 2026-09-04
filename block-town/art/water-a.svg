@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Water, layout a: the surface with two waves. -->
+  <rect width="64" height="64" fill="#82c9e8"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
+    <path d="M10 22q6-6 12 0t12 0"/>
+    <path d="M26 44q6-6 12 0t12 0"/>
+  </g>
+</svg>

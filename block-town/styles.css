@@ -9,35 +9,18 @@
   --sun: #ffd45c;
   --shadow: 0 10px 26px rgb(43 69 53 / 14%);
 
-  /* Block colors. Every block also carries a pattern, so the color alone never
-     has to be read. */
+  /* The flat color under every block's picture, and the road deck of a
+     bridge. The pictures themselves are the SVG files in art/. */
   --meadow: #a9dc88;
-  --meadow-mark: #5aa25f;
   --road: #e2d2ab;
   --road-mark: #b09a68;
   --forest: #74b97b;
-  --forest-mark: #2f6f45;
   --water: #82c9e8;
-  --water-mark: #3f9dc4;
-  --house: #e58f6a;
-  --house-mark: #8f4b34;
-  --field: #d8c057;
-  --field-mark: #a3862f;
   --soil: #b98c5c;
-  --shoot: #7fc06a;
-  --flowers: #e78cbb;
   --sand: #f0dfae;
-  --sand-mark: #cfb277;
   --asphalt: #9aa2a6;
-  --asphalt-mark: #5f6a70;
   --rail-bed: #cbb79a;
-  --rail-mark: #5b4a34;
-  --stone: #b9b3a6;
-  --stone-mark: #6f6a60;
-  --brick: #c97f52;
-  --brick-mark: #7e4a2c;
   --lamp: #ffe9a8;
-  --shore: #ecdcae;
   --sheet-border: 2px;
 
   /* The grid geometry is the only thing the model writes into the DOM. */
@@ -233,19 +216,7 @@ button:focus-visible,
 }
 
 .cell {
-  /* Each side of a cell can carry its own edge line: a road shows one where it
-     stops, water shows a shore where the lake ends. */
-  --edge-n: 0 0 0 0 transparent;
-  --edge-e: 0 0 0 0 transparent;
-  --edge-s: 0 0 0 0 transparent;
-  --edge-w: 0 0 0 0 transparent;
-
   position: relative;
-  box-shadow:
-    inset var(--edge-n),
-    inset var(--edge-e),
-    inset var(--edge-s),
-    inset var(--edge-w);
   overflow: hidden;
 }
 
@@ -282,11 +253,6 @@ button:focus-visible,
     var(--empty-tint);
 }
 
-.cell:not(.is-empty) {
-  outline: 1px solid rgb(43 69 53 / 7%);
-  outline-offset: -1px;
-}
-
 /* The keyboard frame. It is a shape, not a colour, so it reads on any block. */
 .cell.is-cursor {
   z-index: 1;
@@ -294,79 +260,215 @@ button:focus-visible,
   outline-offset: -4px;
 }
 
-/* Block art. Each family carries its own pattern and silhouette. */
+/* Block art. Every block is drawn from the SVG pictures in art/, layered and
+   scaled to the cell by the rules below; the flat color underneath is the one
+   the mini-map uses. The ground blocks alternate two layouts of their picture
+   like a checkerboard, so a meadow or a beach never reads as a stamp. */
 .block--meadow {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 32%,
-      var(--meadow-mark) 32% 36%,
-      transparent 36% 100%
-    ),
-    var(--meadow);
-  background-size: 50% 42%, auto;
-  background-position: center 62%, center;
-  background-repeat: repeat-x, repeat;
+  background: url("art/meadow-a.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
-/* Roads: the surface is flat and every side the road does not continue to gets
-   a drawn edge, so turns, crossings and ends read at a glance. */
-.block--path {
-  background: var(--road);
+.block--meadow.tile--b {
+  background-image: url("art/meadow-b.svg");
 }
 
+.block--flowers {
+  background: url("art/flowers-a.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--flowers.tile--b {
+  background-image: url("art/flowers-b.svg");
+}
+
+.block--sand {
+  background: url("art/sand-a.svg") center / 100% 100% no-repeat var(--sand);
+}
+
+.block--sand.tile--b {
+  background-image: url("art/sand-b.svg");
+}
+
+.block--mountain {
+  background: url("art/mountain-a.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--mountain.tile--b {
+  background-image: url("art/mountain-b.svg");
+}
+
+/* A field grows: bare soil, then shoots, then ripe ears. The furrows sit at
+   the same heights in every picture, so they run on into the next cell. */
+.block--field {
+  background: url("art/field-0.svg") center / 100% 100% no-repeat var(--soil);
+}
+
+.block--field.field--1 {
+  background-image: url("art/field-1.svg");
+}
+
+.block--field.field--2 {
+  background-image: url("art/field-2.svg");
+}
+
+/* Roads. Every kind is assembled from pieces in art/, listed top layer first:
+   a turntable under a junction of rails, a rounded corner where two drawn
+   edges meet, an edge on every side the road stops at, and a piece of centre
+   line or of track toward every side it continues to. The switching by
+   neighbour is shared; which pictures fill the slots is each kind's choice. */
 .cell--road {
-  --edge-n: 0 4px 0 0 var(--road-mark);
-  --edge-e: -4px 0 0 0 var(--road-mark);
-  --edge-s: 0 -4px 0 0 var(--road-mark);
-  --edge-w: 4px 0 0 0 var(--road-mark);
+  --road-surface: var(--road);
+  --art-edge-n: none;
+  --art-edge-e: none;
+  --art-edge-s: none;
+  --art-edge-w: none;
+  --art-corner-nw: none;
+  --art-corner-ne: none;
+  --art-corner-se: none;
+  --art-corner-sw: none;
+  --art-line-n: none;
+  --art-line-e: none;
+  --art-line-s: none;
+  --art-line-w: none;
+  --road-hub: none;
+  --road-corner-nw: none;
+  --road-corner-ne: none;
+  --road-corner-se: none;
+  --road-corner-sw: none;
+  --road-edge-n: var(--art-edge-n);
+  --road-edge-e: var(--art-edge-e);
+  --road-edge-s: var(--art-edge-s);
+  --road-edge-w: var(--art-edge-w);
+  --road-line-n: none;
+  --road-line-e: none;
+  --road-line-s: none;
+  --road-line-w: none;
 
-  /* One pale stub per connected side. Together they draw the centre line
-     through a straight, a turn, a T and a crossing alike. */
-  background-image: var(--stub-n, none), var(--stub-e, none), var(--stub-s, none), var(--stub-w, none);
-  background-position: top center, right center, bottom center, left center;
+  background-color: var(--road-surface);
+  background-image:
+    var(--road-hub),
+    var(--road-corner-nw),
+    var(--road-corner-ne),
+    var(--road-corner-se),
+    var(--road-corner-sw),
+    var(--road-edge-n),
+    var(--road-edge-e),
+    var(--road-edge-s),
+    var(--road-edge-w),
+    var(--road-line-n),
+    var(--road-line-e),
+    var(--road-line-s),
+    var(--road-line-w);
+  background-position: center;
   background-repeat: no-repeat;
-  background-size: 16% 56%, 56% 16%, 16% 56%, 56% 16%;
+  background-size: 100% 100%;
 }
 
 .cell--road.road--n {
-  --edge-n: 0 0 0 0 transparent;
-  --stub-n: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+  --road-edge-n: none;
+  --road-line-n: var(--art-line-n);
 }
 
 .cell--road.road--e {
-  --edge-e: 0 0 0 0 transparent;
-  --stub-e: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+  --road-edge-e: none;
+  --road-line-e: var(--art-line-e);
 }
 
 .cell--road.road--s {
-  --edge-s: 0 0 0 0 transparent;
-  --stub-s: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+  --road-edge-s: none;
+  --road-line-s: var(--art-line-s);
 }
 
 .cell--road.road--w {
-  --edge-w: 0 0 0 0 transparent;
-  --stub-w: linear-gradient(rgb(255 255 255 / 62%), rgb(255 255 255 / 62%));
+  --road-edge-w: none;
+  --road-line-w: var(--art-line-w);
 }
 
-/* A road that leads nowhere yet still shows a piece of surface. */
-.cell--road.road--lone::before {
-  position: absolute;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 62%);
-  content: "";
-  inset: 36%;
+.cell--road:not(.road--n):not(.road--e) {
+  --road-corner-ne: var(--art-corner-ne);
+}
+
+.cell--road:not(.road--e):not(.road--s) {
+  --road-corner-se: var(--art-corner-se);
+}
+
+.cell--road:not(.road--s):not(.road--w) {
+  --road-corner-sw: var(--art-corner-sw);
+}
+
+.cell--road:not(.road--w):not(.road--n) {
+  --road-corner-nw: var(--art-corner-nw);
+}
+
+/* The path and the asphalt: a T and a crossing keep a clean surface, so a
+   paved square reads as a square and not as a window frame. */
+.cell--road.block--path {
+  --road-surface: var(--road);
+  --art-edge-n: url("art/path-edge-n.svg");
+  --art-edge-e: url("art/path-edge-e.svg");
+  --art-edge-s: url("art/path-edge-s.svg");
+  --art-edge-w: url("art/path-edge-w.svg");
+  --art-corner-nw: url("art/path-corner-nw.svg");
+  --art-corner-ne: url("art/path-corner-ne.svg");
+  --art-corner-se: url("art/path-corner-se.svg");
+  --art-corner-sw: url("art/path-corner-sw.svg");
+  --art-line-n: url("art/path-line-n.svg");
+  --art-line-e: url("art/path-line-e.svg");
+  --art-line-s: url("art/path-line-s.svg");
+  --art-line-w: url("art/path-line-w.svg");
+}
+
+.cell--road.block--asphalt {
+  --road-surface: var(--asphalt);
+  --art-edge-n: url("art/asphalt-edge-n.svg");
+  --art-edge-e: url("art/asphalt-edge-e.svg");
+  --art-edge-s: url("art/asphalt-edge-s.svg");
+  --art-edge-w: url("art/asphalt-edge-w.svg");
+  --art-corner-nw: url("art/asphalt-corner-nw.svg");
+  --art-corner-ne: url("art/asphalt-corner-ne.svg");
+  --art-corner-se: url("art/asphalt-corner-se.svg");
+  --art-corner-sw: url("art/asphalt-corner-sw.svg");
+  --art-line-n: url("art/asphalt-line-n.svg");
+  --art-line-e: url("art/asphalt-line-e.svg");
+  --art-line-s: url("art/asphalt-line-s.svg");
+  --art-line-w: url("art/asphalt-line-w.svg");
+}
+
+.cell--road.block--path.road--tee,
+.cell--road.block--path.road--cross,
+.cell--road.block--asphalt.road--tee,
+.cell--road.block--asphalt.road--cross {
+  --road-line-n: none;
+  --road-line-e: none;
+  --road-line-s: none;
+  --road-line-w: none;
+}
+
+/* Rails have no drawn edges: the track itself runs toward every connected
+   side. A lone piece still shows a short track, and a turn or a junction hides
+   the joins of its pieces under a turntable. */
+.cell--road.block--rails {
+  --road-surface: var(--rail-bed);
+  --art-line-n: url("art/rails-stub-n.svg");
+  --art-line-e: url("art/rails-stub-e.svg");
+  --art-line-s: url("art/rails-stub-s.svg");
+  --art-line-w: url("art/rails-stub-w.svg");
+}
+
+.cell--road.block--rails.road--lone {
+  --road-line-e: var(--art-line-e);
+  --road-line-w: var(--art-line-w);
+}
+
+.cell--road.block--rails.road--turn,
+.cell--road.block--rails.road--tee,
+.cell--road.block--rails.road--cross {
+  --road-hub: url("art/rails-hub.svg");
 }
 
 /* A road that stands on water is a bridge: the deck floats and the water shows
    along its sides. */
 .cell--road.road--bridge {
-  --edge-n: 0 0 0 0 transparent;
-  --edge-e: 0 0 0 0 transparent;
-  --edge-s: 0 0 0 0 transparent;
-  --edge-w: 0 0 0 0 transparent;
-
-  background: var(--water);
+  background: url("art/water-a.svg") center / 100% 100% no-repeat var(--water);
 }
 
 .cell--road.road--bridge::after {
@@ -393,296 +495,94 @@ button:focus-visible,
   inset: 0 16%;
 }
 
-/* Forest: a lone cell is one small tree, a cluster grows taller and denser. */
+/* Forest, from the SVG pictures in art/: a lone cell is one big tree; with
+   one or two forest neighbours it is a tree in a row; with three or four it
+   is a piece of a dense canopy whose crowns are cut by the cell edge, so the
+   neighbours join into one wood. Cells alternate two layouts of every
+   picture, so a wood never reads as a stamp. */
 .block--forest {
-  background: var(--forest);
+  background: url("art/forest-lone.svg") center / 100% 100% no-repeat var(--forest);
 }
 
-.block--forest::before {
-  position: absolute;
-  border-radius: 50% 50% 42% 42%;
-  background: var(--forest-mark);
-  content: "";
-  inset: 26% 30% 30%;
+.block--forest.forest--1 {
+  background-image: url("art/forest-row-a.svg");
 }
 
-.block--forest.forest--1::before {
-  inset: 16% 20% 22%;
+.block--forest.forest--1.tile--b {
+  background-image: url("art/forest-row-b.svg");
 }
 
-.block--forest.forest--2::before {
-  border-radius: 50% 50% 38% 38%;
-  background: #24583a;
-  inset: 6% 30% 34% 8%;
+.block--forest.forest--2 {
+  background-image: url("art/forest-dense-a.svg");
 }
 
-/* A second crown makes a dense wood read as a wood, not as a bigger tree. */
-.block--forest.forest--2::after {
-  position: absolute;
-  border-radius: 50% 50% 40% 40%;
-  background: var(--forest-mark);
-  content: "";
-  inset: 30% 8% 8% 42%;
+.block--forest.forest--2.tile--b {
+  background-image: url("art/forest-dense-b.svg");
 }
 
-/* A house: walls, a roof and a door, so it reads as a building at any size. */
+/* Buildings and decorations are one picture from art/ each, on their ground.
+   What moves or lights up — the windows, the sails, the lamps — is a
+   pseudo-element the game can animate, laid over the picture. */
 .block--house {
-  background: var(--meadow);
+  background: url("art/house-s.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+/* The doorstep path turns toward the street. */
+.block--house.door--n {
+  background-image: url("art/house-n.svg");
+}
+
+.block--house.door--e {
+  background-image: url("art/house-e.svg");
+}
+
+.block--house.door--w {
+  background-image: url("art/house-w.svg");
+}
+
+/* The two windows, in the same place in every house picture; in the evening
+   they light up. */
+.block--house::before,
+.block--house::after {
+  position: absolute;
+  top: 54.7%;
+  width: 14%;
+  height: 14%;
+  border-radius: 1px;
+  background: transparent;
+  content: "";
+  transition: background-color 900ms ease;
 }
 
 .block--house::before {
-  position: absolute;
-  border-radius: 12% 12% 6% 6%;
-  background:
-    linear-gradient(var(--house-mark) 0 26%, transparent 26% 100%),
-    var(--house);
-  content: "";
-  inset: 22% 18% 14%;
+  left: 26.6%;
 }
 
 .block--house::after {
-  position: absolute;
-  width: 22%;
-  height: 30%;
-  border-radius: 30% 30% 0 0;
-  background: var(--house-mark);
-  content: "";
-  bottom: 14%;
-  left: 39%;
+  left: 59.4%;
 }
 
-/* The door and its doorstep turn toward the street. */
-.block--house.door--n::after {
-  border-radius: 0 0 30% 30%;
-  top: 14%;
-  bottom: auto;
-}
-
-.block--house.door--e::after {
-  width: 30%;
-  height: 22%;
-  border-radius: 0 30% 30% 0;
-  right: 14%;
-  bottom: 39%;
-  left: auto;
-}
-
-.block--house.door--w::after {
-  width: 30%;
-  height: 22%;
-  border-radius: 30% 0 0 30%;
-  bottom: 39%;
-  left: 14%;
-}
-
-/* A field grows: bare soil, then shoots, then ripe ears. */
-.block--field {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      var(--soil) 0 66%,
-      color-mix(in srgb, var(--soil) 76%, #000) 66% 100%
-    ),
-    var(--soil);
-  background-size: 100% 34%, auto;
-}
-
-.block--field.field--1 {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      var(--soil) 0 58%,
-      var(--shoot) 58% 100%
-    ),
-    var(--soil);
-  background-size: 100% 34%, auto;
-}
-
-.block--field.field--2 {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      var(--field) 0 62%,
-      var(--field-mark) 62% 100%
-    ),
-    var(--field);
-  background-size: 100% 26%, auto;
-}
-
-/* Flowers: bright heads scattered over the grass. */
-.block--flowers {
-  background:
-    radial-gradient(circle at 28% 34%, var(--flowers) 0 15%, transparent 15%),
-    radial-gradient(circle at 68% 30%, #fff3a8 0 13%, transparent 13%),
-    radial-gradient(circle at 44% 70%, var(--flowers) 0 14%, transparent 14%),
-    radial-gradient(circle at 78% 72%, #f4f0ff 0 12%, transparent 12%),
-    var(--meadow);
-}
-
-/* Sand: pale grains, no plants at all. */
-.block--sand {
-  background:
-    radial-gradient(circle at 24% 30%, var(--sand-mark) 0 8%, transparent 8%),
-    radial-gradient(circle at 66% 24%, var(--sand-mark) 0 7%, transparent 7%),
-    radial-gradient(circle at 38% 68%, var(--sand-mark) 0 7%, transparent 7%),
-    radial-gradient(circle at 76% 66%, var(--sand-mark) 0 8%, transparent 8%),
-    var(--sand);
-}
-
-/* Asphalt is a road too: the same edges and centre line, a darker surface. */
-.block--asphalt {
-  background: var(--asphalt);
-}
-
-.cell--road.block--asphalt {
-  --edge-n: 0 4px 0 0 var(--asphalt-mark);
-  --edge-e: -4px 0 0 0 var(--asphalt-mark);
-  --edge-s: 0 -4px 0 0 var(--asphalt-mark);
-  --edge-w: 4px 0 0 0 var(--asphalt-mark);
-}
-
-.cell--road.block--asphalt.road--n {
-  --edge-n: 0 0 0 0 transparent;
-}
-
-.cell--road.block--asphalt.road--e {
-  --edge-e: 0 0 0 0 transparent;
-}
-
-.cell--road.block--asphalt.road--s {
-  --edge-s: 0 0 0 0 transparent;
-}
-
-.cell--road.block--asphalt.road--w {
-  --edge-w: 0 0 0 0 transparent;
-}
-
-/* Rails: a bed with sleepers and a dark line running along the track. */
-.block--rails {
-  background: var(--rail-bed);
-}
-
-.cell--road.block--rails {
-  --edge-n: 0 0 0 0 transparent;
-  --edge-e: 0 0 0 0 transparent;
-  --edge-s: 0 0 0 0 transparent;
-  --edge-w: 0 0 0 0 transparent;
-}
-
-.cell--road.block--rails.road--n {
-  --stub-n: linear-gradient(var(--rail-mark), var(--rail-mark));
-}
-
-.cell--road.block--rails.road--e {
-  --stub-e: linear-gradient(var(--rail-mark), var(--rail-mark));
-}
-
-.cell--road.block--rails.road--s {
-  --stub-s: linear-gradient(var(--rail-mark), var(--rail-mark));
-}
-
-.cell--road.block--rails.road--w {
-  --stub-w: linear-gradient(var(--rail-mark), var(--rail-mark));
-}
-
-.block--rails::before {
-  position: absolute;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 22%,
-      var(--rail-mark) 22% 32%,
-      transparent 32% 54%
-    );
-  content: "";
-  inset: 28% 0;
-  opacity: 0.62;
-}
-
-/* A tower: tall, narrow and topped with a roof. */
 .block--tower {
-  background: var(--meadow);
+  background: url("art/tower.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
-.block--tower::before {
-  position: absolute;
-  border-radius: 20% 20% 6% 6%;
-  background: linear-gradient(#b58bd0 0 100%);
-  content: "";
-  inset: 10% 32% 6%;
-}
-
-.block--tower::after {
-  position: absolute;
-  bottom: 10%;
-  left: 40%;
-  width: 20%;
-  height: 22%;
-  border-radius: 40% 40% 0 0;
-  background: var(--stone-mark);
-  content: "";
-}
-
-/* A farm: a wide barn with a gate. */
 .block--farm {
-  background: var(--meadow);
+  background: url("art/farm.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
-.block--farm::before {
-  position: absolute;
-  border-radius: 34% 34% 6% 6%;
-  background: linear-gradient(var(--brick-mark) 0 30%, var(--brick) 30% 100%);
-  content: "";
-  inset: 24% 10% 12%;
-}
-
-.block--farm::after {
-  position: absolute;
-  bottom: 12%;
-  left: 38%;
-  width: 24%;
-  height: 30%;
-  border-radius: 4px 4px 0 0;
-  background: var(--lamp);
-  content: "";
-}
-
-/* A mountain: a grey peak with snow on top. */
-.block--mountain {
-  background: var(--meadow);
-}
-
-.block--mountain::before {
-  position: absolute;
-  background: linear-gradient(#f4f6f8 0 22%, var(--stone) 22% 100%);
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  content: "";
-  inset: 8% 4% 10%;
-}
-
-/* A windmill turns only when a field is next to it. */
+/* A windmill turns only when a field is next to it. The sails are a picture
+   of their own, centred on the hub of the tower so they can rotate. */
 .block--windmill {
-  background: var(--meadow);
-}
-
-.block--windmill::before {
-  position: absolute;
-  border-radius: 30% 30% 6% 6%;
-  background: #efe3c4;
-  box-shadow: inset 0 0 0 2px rgb(111 106 96 / 30%);
-  content: "";
-  inset: 26% 34% 8%;
+  background: url("art/windmill.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
 .block--windmill::after {
   position: absolute;
-  top: 6%;
-  left: 22%;
-  width: 56%;
-  height: 56%;
-  background:
-    linear-gradient(90deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%),
-    linear-gradient(180deg, transparent 0 44%, var(--stone-mark) 44% 56%, transparent 56% 100%);
+  top: 4.4%;
+  left: 20%;
+  width: 60%;
+  height: 60%;
+  background: url("art/windmill-sails.svg") center / 100% 100% no-repeat;
   content: "";
 }
 
@@ -696,31 +596,19 @@ button:focus-visible,
   }
 }
 
-/* A lighthouse blinks only when it stands by the water. */
+/* A lighthouse blinks only when it stands by the water. The lamp is drawn
+   here, inside the lamp room of the picture. */
 .block--lighthouse {
-  background: var(--sand);
-}
-
-.block--lighthouse::before {
-  position: absolute;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      #f6f2ea 0 26%,
-      #e5645f 26% 52%
-    );
-  clip-path: polygon(30% 0, 70% 0, 84% 100%, 16% 100%);
-  content: "";
-  inset: 20% 26% 8%;
+  background: url("art/lighthouse.svg") center / 100% 100% no-repeat var(--sand);
 }
 
 .block--lighthouse::after {
   position: absolute;
-  top: 8%;
-  left: 36%;
-  width: 28%;
-  height: 20%;
-  border-radius: 40%;
+  top: 14%;
+  left: 40.6%;
+  width: 18.8%;
+  height: 11%;
+  border-radius: 2px;
   background: var(--lamp);
   box-shadow: 0 0 0 3px rgb(255 233 168 / 55%);
   content: "";
@@ -741,139 +629,42 @@ button:focus-visible,
   }
 }
 
-/* A castle: thick walls with battlements and a gate. */
 .block--castle {
-  background: var(--meadow);
+  background: url("art/castle.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
-.block--castle::before {
-  position: absolute;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      var(--stone) 0 22%,
-      transparent 22% 34%
-    ),
-    linear-gradient(transparent 0 26%, var(--stone) 26% 100%);
-  content: "";
-  inset: 14% 8% 8%;
-}
-
-.block--castle::after {
-  position: absolute;
-  bottom: 8%;
-  left: 40%;
-  width: 20%;
-  height: 34%;
-  border-radius: 40% 40% 0 0;
-  background: var(--stone-mark);
-  content: "";
-}
-
-/* A playground: a slide and a ball. */
 .block--playground {
-  background: var(--sand);
+  background: url("art/playground.svg") center / 100% 100% no-repeat var(--sand);
 }
 
-.block--playground::before {
-  position: absolute;
-  background: linear-gradient(#f2a63e 0 100%);
-  clip-path: polygon(0 100%, 70% 20%, 86% 20%, 26% 100%);
-  content: "";
-  inset: 16% 10% 14%;
-}
-
-.block--playground::after {
-  position: absolute;
-  bottom: 16%;
-  left: 60%;
-  width: 26%;
-  height: 26%;
-  border-radius: 50%;
-  background: #6fb7e8;
-  content: "";
-}
-
-/* Decorations: a lantern, a bench and a fountain. */
+/* A lantern: the frame around its lamp is drawn here, so the evening can
+   put a glow around it. */
 .block--lantern {
-  background: var(--meadow);
+  background: url("art/lantern.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
 .block--lantern::before {
   position: absolute;
-  top: 16%;
-  left: 40%;
-  width: 20%;
-  height: 26%;
-  border-radius: 30%;
-  background: var(--lamp);
-  content: "";
-}
-
-.block--lantern::after {
-  position: absolute;
-  bottom: 14%;
-  left: 46%;
-  width: 8%;
-  height: 42%;
-  background: var(--stone-mark);
+  top: 20%;
+  left: 33%;
+  width: 34%;
+  height: 24%;
+  border-radius: 40%;
   content: "";
 }
 
 .block--bench {
-  background: var(--meadow);
-}
-
-.block--bench::before {
-  position: absolute;
-  border-radius: 4px;
-  background: linear-gradient(#c09a6a 0 46%, transparent 46% 60%, #c09a6a 60% 100%);
-  content: "";
-  inset: 34% 18% 34%;
-}
-
-.block--bench::after {
-  position: absolute;
-  bottom: 22%;
-  left: 24%;
-  width: 52%;
-  height: 14%;
-  background:
-    linear-gradient(90deg, #8f7448 0 14%, transparent 14% 86%, #8f7448 86% 100%);
-  content: "";
+  background: url("art/bench.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
 .block--fountain {
-  background: var(--sand);
-}
-
-.block--fountain::before {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--water);
-  box-shadow: inset 0 0 0 3px #7fd3d0;
-  content: "";
-  inset: 20%;
-}
-
-.block--fountain::after {
-  position: absolute;
-  top: 12%;
-  left: 46%;
-  width: 8%;
-  height: 34%;
-  border-radius: 4px;
-  background: #d8f2f1;
-  content: "";
+  background: url("art/fountain.svg") center / 100% 100% no-repeat var(--sand);
 }
 
 /* Evening: the windows and the lanterns come on. */
-.sheet-stage.is-evening .block--house::before {
-  background:
-    radial-gradient(circle at 32% 56%, var(--lamp) 0 11%, transparent 11%),
-    radial-gradient(circle at 68% 56%, var(--lamp) 0 11%, transparent 11%),
-    linear-gradient(var(--house-mark) 0 26%, transparent 26% 100%),
-    var(--house);
+.sheet-stage.is-evening .block--house::before,
+.sheet-stage.is-evening .block--house::after {
+  background: var(--lamp);
 }
 
 .sheet-stage.is-evening .block--lantern::before,
@@ -881,34 +672,72 @@ button:focus-visible,
   box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
 }
 
-/* Water: the wave pattern says water, and a sandy shore is drawn on every side
-   where the lake ends. */
+/* Water, from the SVG pictures in art/: a sandy shore is laid on every side
+   where the lake ends, and where two shores meet the corner is rounded, so a
+   lone cell is a round pond and a lake keeps a soft outline. Cells alternate
+   two wave layouts, so a big lake never reads as a stamp. The pieces are
+   listed top layer first. */
 .block--water {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      transparent 0 44%,
-      var(--water-mark) 44% 56%,
-      transparent 56% 100%
-    ),
-    var(--water);
-  background-size: 100% 46%, auto;
+  --shore-n: none;
+  --shore-e: none;
+  --shore-s: none;
+  --shore-w: none;
+  --shore-nw: none;
+  --shore-ne: none;
+  --shore-se: none;
+  --shore-sw: none;
+  --water-art: url("art/water-a.svg");
+
+  background-color: var(--water);
+  background-image:
+    var(--shore-nw),
+    var(--shore-ne),
+    var(--shore-se),
+    var(--shore-sw),
+    var(--shore-n),
+    var(--shore-e),
+    var(--shore-s),
+    var(--shore-w),
+    var(--water-art);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.block--water.tile--b {
+  --water-art: url("art/water-b.svg");
 }
 
 .block--water.shore--n {
-  --edge-n: 0 5px 0 0 var(--shore);
+  --shore-n: url("art/water-shore-n.svg");
 }
 
 .block--water.shore--e {
-  --edge-e: -5px 0 0 0 var(--shore);
+  --shore-e: url("art/water-shore-e.svg");
 }
 
 .block--water.shore--s {
-  --edge-s: 0 -5px 0 0 var(--shore);
+  --shore-s: url("art/water-shore-s.svg");
 }
 
 .block--water.shore--w {
-  --edge-w: 5px 0 0 0 var(--shore);
+  --shore-w: url("art/water-shore-w.svg");
+}
+
+.block--water.shore--n.shore--e {
+  --shore-ne: url("art/water-shore-ne.svg");
+}
+
+.block--water.shore--e.shore--s {
+  --shore-se: url("art/water-shore-se.svg");
+}
+
+.block--water.shore--s.shore--w {
+  --shore-sw: url("art/water-shore-sw.svg");
+}
+
+.block--water.shore--w.shore--n {
+  --shore-nw: url("art/water-shore-nw.svg");
 }
 
 /* The creatures live above the sheet and never take a tap away from it. */

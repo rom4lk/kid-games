@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A sandy shore along one side of a water cell; drawn on top of the water. -->
+  <g transform="rotate(90 32 32)">
+  <rect width="64" height="8" fill="#ecdcae"/>
+  <path d="M0 8h64" fill="none" stroke="#3f9dc4" stroke-opacity=".35" stroke-width="2"/>
+  </g>
+</svg>

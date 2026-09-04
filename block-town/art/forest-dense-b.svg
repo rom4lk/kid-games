@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Dense wood, layout b: the mirror of layout a. -->
+  <rect width="64" height="64" fill="#3f8a55"/>
+  <circle cx="46" cy="18" r="20" fill="#2f6f45"/>
+  <circle cx="14" cy="50" r="22" fill="#2f6f45"/>
+  <circle cx="44" cy="14" r="13" fill="#4f9b5f"/>
+  <circle cx="12" cy="46" r="14" fill="#4f9b5f"/>
+  <circle cx="16" cy="12" r="8" fill="#5fae6c"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A tower: tall and narrow, with a pointed roof and a flag. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="32" cy="58" rx="14" ry="3" fill="#2b4535" fill-opacity=".14"/>
+  <rect x="23" y="18" width="18" height="38" rx="2" fill="#b58bd0"/>
+  <rect x="36" y="18" width="5" height="38" fill="#8a63a8"/>
+  <path d="M18 20L32 4l14 16z" fill="#8a63a8"/>
+  <path d="M32 4V0" stroke="#6f6a60" stroke-width="2"/>
+  <path d="M32 0h8l-3 3 3 3h-8z" fill="#e5645f"/>
+  <rect x="29" y="27" width="6" height="8" rx="3" fill="#cfe9f3" stroke="#8a63a8" stroke-width="1.5"/>
+  <path d="M28 56v-8q0-4 4-4t4 4v8z" fill="#8a63a8"/>
+</svg>

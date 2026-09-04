@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Mountain, layout a: one grey peak with a snow cap. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <path d="M6 56L30 8l26 48z" fill="#b9b3a6"/>
+  <path d="M30 8l26 48H30z" fill="#a19c91"/>
+  <path d="M30 8l8 16-4-2-4 4-4-4-4 2z" fill="#f4f6f8"/>
+</svg>

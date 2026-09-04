@@ -116,7 +116,12 @@ the normalization of a damaged save.
 
 - `index.html` holds the accessible structure of the sheet, the palette, the mini-map and the pause
   with its shelf of worlds, size picker and two confirmations.
-- `styles.css` draws every block, creature and celebration without external images.
+- `styles.css` lays out every block from the pictures in `art/` and draws the creatures and the
+  celebration. What a block does on its own — the sails of a windmill, the lamp of a lighthouse,
+  the windows of a house in the evening — is a pseudo-element the stylesheet animates.
+- `art/` holds the SVG pictures, one file per piece: a shore, a rounded corner, a dashed centre
+  line, a tree, a whole house. Each is a 64 x 64 drawing that `styles.css` layers and scales to the
+  cell; the pieces that only differ by their side are the same drawing turned.
 - `game.js` holds the pure model above `module.exports` and the interface below it.
 - `translations.json` holds the English and Russian interface text.
 - `test-game.js` checks the model in Node.js.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A windmill's tower and cap; the sails are drawn by the game so they can turn. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="32" cy="58" rx="14" ry="3" fill="#2b4535" fill-opacity=".14"/>
+  <path d="M25 22h14l4 34H21z" fill="#efe3c4" stroke="#8f7448" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M21 23Q32 10 43 23z" fill="#c25a44"/>
+  <rect x="29" y="44" width="6" height="12" rx="3" fill="#8f4b34"/>
+  <rect x="29" y="30" width="6" height="7" rx="3" fill="#cfe9f3" stroke="#8f7448" stroke-width="1.5"/>
+</svg>

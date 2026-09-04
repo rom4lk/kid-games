@@ -1113,6 +1113,9 @@ function initializeGame() {
     const size = worldSize(world);
     const { grid, underlay } = world;
     const classes = cellClasses(size, grid, underlay, index);
+    // Cells alternate two layouts of the same art like a checkerboard, so a
+    // wood or a lake never reads as a stamp of one picture.
+    if (tileIsAlternate(size.columns, index)) classes.push("tile--b");
     // Repainting a cell must not drop the keyboard frame that stands on it.
     if (index === cursorIndex) classes.push("is-cursor");
     if (grid[index] === HOUSE_ID) classes.push(`door--${houseDoor(grid, size.columns, index)}`);
@@ -1121,6 +1124,11 @@ function initializeGame() {
     if (lighthouseBlinks(grid, underlay, size.columns, index)) classes.push("is-blinking");
     element.className = classes.join(" ");
     element.setAttribute("aria-label", blockName(grid[index]));
+  }
+
+  function tileIsAlternate(columns, index) {
+    const row = Math.floor(index / columns);
+    return (row + (index % columns)) % 2 === 1;
   }
 
   // A painted cell can change the look of its four neighbours and nothing else.
@@ -1404,8 +1412,11 @@ function initializeGame() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", checked ? "true" : "false");
     button.setAttribute("aria-label", family ? FAMILY_NAMES[family] : BLOCK_NAMES[block.key]);
-    // A one-cell world gives the swatch the same art the grid would draw.
-    const art = cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
+    // A one-cell world gives the swatch the same art the grid would draw. A
+    // road is shown as the middle of a straight row: that is what it is for.
+    const art = block.family === "roads"
+      ? cellClasses({ columns: 3 }, [blockId, blockId, blockId], [EMPTY_CELL, EMPTY_CELL, EMPTY_CELL], 1)
+      : cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
     // On a button a field is shown ripe: that is what the block is for.
     if (blockId === FIELD_ID) art.push("field--2");
     button.innerHTML = `<span class="palette-swatch ${art.join(" ")}" aria-hidden="true"></span>`;

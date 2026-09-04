@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A house whose doorstep path leads down, toward the reader or a street below. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="32" cy="58" rx="22" ry="3" fill="#2b4535" fill-opacity=".14"/>
+  <rect x="28" y="54" width="8" height="10" rx="2" fill="#e2d2ab"/>
+  <rect x="41" y="10" width="6" height="14" fill="#8f4b34"/>
+  <rect x="14" y="30" width="36" height="26" rx="2" fill="#f2c9a8"/>
+  <path d="M8 32L32 8l24 24z" fill="#c25a44"/>
+  <rect x="17" y="35" width="9" height="9" rx="1.5" fill="#cfe9f3" stroke="#8f4b34" stroke-width="2"/>
+  <rect x="38" y="35" width="9" height="9" rx="1.5" fill="#cfe9f3" stroke="#8f4b34" stroke-width="2"/>
+  <path d="M27 56V47q0-5 5-5t5 5v9z" fill="#8f4b34"/>
+</svg>

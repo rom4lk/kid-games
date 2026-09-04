@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A lantern on a post; the evening glow is drawn by the game. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <rect x="30" y="26" width="4" height="30" fill="#6f6a60"/>
+  <rect x="24" y="52" width="16" height="5" rx="2.5" fill="#6f6a60"/>
+  <path d="M24 13h16l3 15H21z" fill="#ffe9a8" stroke="#6f6a60" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M22 13h20l-2-4H24z" fill="#6f6a60"/>
+</svg>

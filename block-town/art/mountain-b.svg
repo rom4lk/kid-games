@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Mountain, layout b: the peak to the right, a smaller one before it. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <path d="M2 56L18 28l12 20z" fill="#a19c91"/>
+  <path d="M14 56L36 10l24 46z" fill="#b9b3a6"/>
+  <path d="M36 10l24 46H36z" fill="#a19c91"/>
+  <path d="M36 10l7 15-4-2-3 4-4-4-4 2z" fill="#f4f6f8"/>
+</svg>

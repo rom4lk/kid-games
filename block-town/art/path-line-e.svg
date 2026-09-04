@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The dashed centre line from the middle of the cell toward a side the path continues to. -->
+  <g transform="rotate(90 32 32)">
+  <path d="M32 6v14M32 25v7" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

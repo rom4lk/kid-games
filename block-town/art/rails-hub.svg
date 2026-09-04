@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A turntable under a turn or a junction: it hides where the pieces of track meet. -->
+  <circle cx="32" cy="32" r="11" fill="#8b7a63"/>
+  <circle cx="32" cy="32" r="8" fill="#a89377"/>
+  <circle cx="32" cy="32" r="2.5" fill="#5b4a34"/>
+</svg>

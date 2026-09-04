@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Meadow, layout b: the same grass, the tufts elsewhere. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <path d="M22 16l-3-6M22 16v-7M22 16l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M50 32l-3-6M50 32v-7M50 32l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 52l-3-6M14 52v-7M14 52l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M40 56l-3-6M40 56v-7M40 56l3-6" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+</svg>

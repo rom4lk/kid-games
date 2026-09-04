@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The drawn edge on a side the road stops at. -->
+  <g transform="rotate(180 32 32)">
+  <path d="M0 5h64" fill="none" stroke="#5f6a70" stroke-width="4"/>
+  </g>
+</svg>

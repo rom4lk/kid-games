@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A piece of track from the middle of the cell toward a side the rails continue to. -->
+  <g transform="rotate(270 32 32)">
+  <rect x="18" y="0" width="28" height="4" rx="1" fill="#8b7a63"/>
+  <rect x="18" y="12" width="28" height="4" rx="1" fill="#8b7a63"/>
+  <rect x="18" y="24" width="28" height="4" rx="1" fill="#8b7a63"/>
+  <path d="M24 0v32M40 0v32" stroke="#5b4a34" stroke-width="3"/>
+  </g>
+</svg>
