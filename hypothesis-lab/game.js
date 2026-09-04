@@ -530,7 +530,7 @@ if (typeof document !== "undefined") {
     phasePill: document.querySelector("#phasePill"),
     notebookStatus: document.querySelector("#notebookStatus"),
     notebookEmpty: document.querySelector("#notebookEmpty"),
-    tableWrap: document.querySelector("#tableWrap"),
+    recordList: document.querySelector("#recordList"),
     notebookBody: document.querySelector("#notebookBody"),
     successDialog: document.querySelector("#successDialog"),
     badgeShelf: document.querySelector("#badgeShelf"),
@@ -539,6 +539,11 @@ if (typeof document !== "undefined") {
     successCopy: document.querySelector("#successCopy"),
     nextButton: document.querySelector("#nextButton"),
     soundButton: document.querySelector("#soundButton"),
+    restartButton: document.querySelector("#restartButton"),
+    instructionText: document.querySelector("#instructionText"),
+    gameShell: document.querySelector("#gameShell"),
+    topbar: document.querySelector("#topbar"),
+    successTitle: document.querySelector("#successTitle"),
   };
 
   let currentLevelIndex = 0;
@@ -552,6 +557,7 @@ if (typeof document !== "undefined") {
   let completedLevels = readCompletedLevels();
   let soundEnabled = readSoundSetting();
   let focusBeforeDialog = null;
+  let showingCompletionSummary = false;
 
   const firstIncompleteLevel = LEVELS.findIndex((_, index) => !completedLevels.has(index));
   currentLevelIndex = firstIncompleteLevel === -1 ? 0 : firstIncompleteLevel;
@@ -662,7 +668,11 @@ if (typeof document !== "undefined") {
       return `
         <article class="evidence-item">
           <span class="evidence-emoji" aria-hidden="true">${object.emoji}</span>
-          <span><strong>${object.name}</strong><small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small></span>
+          <span class="evidence-copy">
+            <strong>${object.name}</strong>
+            <small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small>
+            ${renderAttributeStrip(object)}
+          </span>
           <span class="result-tag ${accepted ? "accepted" : "rejected"}">${accepted ? "Fits" : "Does not fit"}</span>
         </article>
       `;
@@ -679,6 +689,8 @@ if (typeof document !== "undefined") {
         type="button"
         data-rule="${ruleId}"
         aria-pressed="${selectedHypothesisId === ruleId}"
+        aria-label="${RULES[ruleId].title}"
+        title="${RULES[ruleId].title}"
         ${phase === "proof" || disproved ? "disabled" : ""}
       >
         <span class="hypothesis-icon" aria-hidden="true">${RULES[ruleId].icon}</span>
@@ -698,14 +710,17 @@ if (typeof document !== "undefined") {
       const tested = testedObjectIds.includes(objectId);
       return `
         <button
-          class="object-button ${selectedObjectId === objectId ? "selected" : ""}"
+          class="object-button ${selectedObjectId === objectId ? "selected" : ""} ${tested ? "tested" : ""}"
           type="button"
           data-object="${objectId}"
           ${tested || phase === "proof" ? "disabled" : ""}
+          aria-pressed="${selectedObjectId === objectId}"
           aria-label="Test ${object.name}${tested ? ", already tested" : ""}"
         >
           <span class="emoji" aria-hidden="true">${object.emoji}</span>
           <span class="name">${object.name}</span>
+          ${renderAttributeStrip(object)}
+          ${tested ? '<span class="tested-mark" aria-hidden="true">✓</span>' : ""}
         </button>
       `;
     }).join("");
@@ -723,9 +738,15 @@ if (typeof document !== "undefined") {
       elements.experimentPrompt.textContent = "Pick an object first.";
     } else {
       elements.selectedObject.textContent = object.emoji;
-      elements.experimentLabel.textContent = phase === "proof" ? `Proof trial ${proofIndex + 1} of 3` : "Your guess";
+      elements.experimentLabel.textContent = phase === "proof"
+        ? `Proof trial ${proofIndex + 1} of ${proofQueue.length}`
+        : "Your guess";
       elements.experimentTitle.textContent = `Will the ${object.name.toLowerCase()} fit?`;
-      elements.experimentPrompt.textContent = "What will the bot do?";
+      const isKnown = phase === "proof"
+        && (LEVELS[currentLevelIndex].initialEvidence.includes(objectId) || testedObjectIds.includes(objectId));
+      elements.experimentPrompt.textContent = isKnown
+        ? "You know this one. Say it again."
+        : "What will the bot do?";
     }
 
     buttons.forEach((button) => {
@@ -734,9 +755,9 @@ if (typeof document !== "undefined") {
   }
 
   function renderNotebook() {
-    elements.notebookStatus.textContent = records.length === 0 ? "No tests yet" : `${records.length} tests`;
+    elements.notebookStatus.textContent = records.length === 0 ? "No tests yet" : `Tests: ${records.length}`;
     elements.notebookEmpty.hidden = records.length > 0;
-    elements.tableWrap.hidden = records.length === 0;
+    elements.recordList.hidden = records.length === 0;
     elements.notebookBody.innerHTML = records.map((record) => {
       return `
         <article class="record-card ${record.hypothesisFits ? "record-supports" : "record-contradicts"}">
@@ -770,7 +791,20 @@ if (typeof document !== "undefined") {
       : !hasObject ? "2" : "3";
     elements.testSection.hidden = !hasHypothesis || phase === "proof";
     elements.experimentPanel.hidden = !hasObject;
-    elements.proveButton.hidden = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+    elements.proveButton.hidden = !canProve();
+    if (!hasHypothesis) {
+      elements.instructionText.textContent = "Look at the examples. Pick the rule you think fits.";
+    } else if (phase === "proof") {
+      elements.instructionText.textContent = "Keep this rule. Guess what the bot will do.";
+    } else if (hasObject) {
+      elements.instructionText.textContent = "Guess what the bot will do.";
+    } else {
+      elements.instructionText.textContent = "Pick an object to test your rule.";
+    }
+  }
+
+  function canProve() {
+    return phase !== "proof" && Boolean(selectedHypothesisId) && testedObjectIds.length >= 2;
   }
 
   function renderBadges() {
@@ -784,12 +818,13 @@ if (typeof document !== "undefined") {
   }
 
   function render() {
+    const focusSelector = activeFocusSelector();
     const level = LEVELS[currentLevelIndex];
     elements.missionLabel.textContent = `Mission ${String(currentLevelIndex + 1).padStart(2, "0")}`;
     elements.missionTitle.textContent = level.title;
     elements.missionBrief.textContent = level.brief;
     elements.phasePill.textContent = phase === "proof" ? "Check rule" : "Explore";
-    elements.proveButton.disabled = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+    elements.proveButton.disabled = !canProve();
     renderProgress();
     renderEvidence();
     renderHypotheses();
@@ -797,6 +832,7 @@ if (typeof document !== "undefined") {
     renderExperiment();
     renderNotebook();
     renderSteps();
+    restoreFocus(focusSelector);
   }
 
   function selectHypothesis(ruleId) {
@@ -896,15 +932,40 @@ if (typeof document !== "undefined") {
   function completeLevel() {
     completedLevels.add(currentLevelIndex);
     saveSetting("secretRuleLabCompletedV1", JSON.stringify([...completedLevels]));
+    elements.successTitle.textContent = "Badge earned!";
     elements.successCopy.textContent = `The rule was: ${RULES[LEVELS[currentLevelIndex].targetRule].short}.`;
     elements.nextButton.textContent = currentLevelIndex < LEVELS.length - 1 ? "Next mission" : "Play from the start";
+    showingCompletionSummary = false;
+    render();
+    openSuccessDialog();
+    playTone(660, 0.18);
+    window.setTimeout(() => playTone(880, 0.22), 120);
+  }
+
+  function setGameInert(value) {
+    elements.topbar.inert = value;
+    elements.gameShell.inert = value;
+  }
+
+  function openSuccessDialog() {
     renderBadges();
     focusBeforeDialog = document.activeElement;
     elements.successDialog.hidden = false;
+    setGameInert(true);
     elements.nextButton.focus();
-    playTone(660, 0.18);
-    window.setTimeout(() => playTone(880, 0.22), 120);
-    renderProgress();
+  }
+
+  function closeSuccessDialog() {
+    elements.successDialog.hidden = true;
+    setGameInert(false);
+  }
+
+  function showCompletionSummary() {
+    showingCompletionSummary = true;
+    elements.successTitle.textContent = "All rules checked!";
+    elements.successCopy.textContent = "You earned every badge.";
+    elements.nextButton.textContent = "Play from the start";
+    openSuccessDialog();
   }
 
   function resetMission() {
@@ -915,13 +976,18 @@ if (typeof document !== "undefined") {
     proofQueue = [];
     proofIndex = 0;
     phase = "explore";
-    elements.successDialog.hidden = true;
+    closeSuccessDialog();
     setFeedback("Look at the bot's examples. Then pick a rule.", "neutral");
     render();
   }
 
   function continueGame() {
-    if (currentLevelIndex < LEVELS.length - 1) {
+    const startsNewRun = showingCompletionSummary || completedLevels.size === LEVELS.length;
+    if (startsNewRun) {
+      completedLevels.clear();
+      saveSetting("secretRuleLabCompletedV1", "[]");
+      currentLevelIndex = 0;
+    } else if (currentLevelIndex < LEVELS.length - 1) {
       currentLevelIndex += 1;
     } else {
       currentLevelIndex = 0;
@@ -930,6 +996,7 @@ if (typeof document !== "undefined") {
     const firstHypothesis = elements.hypothesisGrid.querySelector("button:not(:disabled)");
     (firstHypothesis || focusBeforeDialog)?.focus();
     focusBeforeDialog = null;
+    showingCompletionSummary = false;
   }
 
   document.addEventListener("click", (event) => {
@@ -942,7 +1009,7 @@ if (typeof document !== "undefined") {
     if (predictionButton) runPrediction(predictionButton.dataset.prediction === "accept");
   });
 
-  document.querySelector("#restartButton").addEventListener("click", resetMission);
+  elements.restartButton.addEventListener("click", resetMission);
   elements.proveButton.addEventListener("click", startProof);
   elements.nextButton.addEventListener("click", continueGame);
   elements.soundButton.addEventListener("click", () => {
@@ -953,10 +1020,16 @@ if (typeof document !== "undefined") {
   });
 
   elements.successDialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      continueGame();
+      return;
+    }
     if (event.key !== "Tab") return;
     event.preventDefault();
     elements.nextButton.focus();
   });
 
   render();
+  if (firstIncompleteLevel === -1) showCompletionSummary();
 }

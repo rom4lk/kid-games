@@ -57,7 +57,7 @@ a:focus-visible {
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.45;
+  opacity: 0.65;
 }
 
 h1,
@@ -188,8 +188,8 @@ p {
 
 .eyebrow {
   margin-bottom: 5px;
-  color: var(--blue);
-  font-size: 0.95rem;
+  color: #365fae;
+  font-size: 1rem;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -342,7 +342,7 @@ p {
 
 .evidence-item {
   display: grid;
-  grid-template-columns: 42px 1fr auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -379,9 +379,30 @@ p {
 .result-tag {
   padding: 6px 9px;
   border-radius: 999px;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 900;
+  white-space: nowrap;
   text-transform: uppercase;
+}
+
+.attribute-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.attribute-icon {
+  display: inline-grid;
+  min-width: 25px;
+  height: 25px;
+  padding: 0 2px;
+  border: 1px solid #d7dce7;
+  border-radius: 7px;
+  background: #f7f8fb;
+  font-size: 0.9rem;
+  line-height: 1;
+  place-items: center;
 }
 
 .result-tag.accepted {
@@ -481,7 +502,7 @@ p {
   border-style: dashed;
   background: #f4f5f8;
   cursor: not-allowed;
-  opacity: 0.62;
+  opacity: 1;
 }
 
 .hypothesis-button.disproved:hover {
@@ -500,6 +521,10 @@ p {
 
 .hypothesis-button strong {
   font-size: 1.5rem;
+}
+
+.hypothesis-button strong::first-letter {
+  text-transform: uppercase;
 }
 
 .hypothesis-button small {
@@ -529,8 +554,9 @@ p {
 }
 
 .object-button {
+  position: relative;
   min-width: 0;
-  min-height: 112px;
+  min-height: 132px;
   padding: 8px 4px;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -549,7 +575,7 @@ p {
 .object-button .emoji {
   display: block;
   margin-bottom: 3px;
-  font-size: 1.65rem;
+  font-size: 2.1rem;
 }
 
 .object-button .name {
@@ -557,6 +583,34 @@ p {
   font-size: 1.25rem;
   font-weight: 850;
   line-height: 1.15;
+}
+
+.object-button .attribute-strip {
+  justify-content: center;
+}
+
+.object-button:disabled {
+  opacity: 0.78;
+}
+
+.object-button.tested {
+  border-style: dashed;
+  opacity: 1;
+}
+
+.tested-mark {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: white;
+  background: #2c6f52;
+  font-size: 1rem;
+  font-weight: 900;
+  place-items: center;
 }
 
 .experiment-panel {
@@ -606,7 +660,7 @@ p {
 
 .prediction-button {
   min-width: 120px;
-  min-height: 39px;
+  min-height: 58px;
   padding: 0 11px;
   border: 0;
   border-radius: 11px;
@@ -709,41 +763,6 @@ p {
   text-align: center;
 }
 
-.table-wrap {
-  overflow-x: auto;
-  margin-top: 14px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-th,
-td {
-  padding: 11px 10px;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-}
-
-th {
-  color: var(--muted);
-  font-size: 0.95rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.meaning-supports {
-  color: #217d69;
-  font-weight: 850;
-}
-
-.meaning-contradicts {
-  color: #b34842;
-  font-weight: 850;
-}
-
 .dialog-backdrop {
   position: fixed;
   inset: 0;
@@ -799,24 +818,9 @@ th {
   .workspace {
     grid-template-columns: 1fr;
   }
-
-  .machine-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .machine-card > .section-heading,
-  .machine-card > .scientist-note {
-    grid-column: 1 / -1;
-  }
-
-  .machine-stage {
-    margin: 0;
-  }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
   .topbar {
     flex-wrap: wrap;
     gap: 12px;
@@ -883,11 +887,6 @@ th {
 .hypothesis-icon {
   font-size: 1.7rem;
   line-height: 1.1;
-}
-
-.hypothesis-button strong {
-  font-size: 1.5rem;
-  text-transform: capitalize;
 }
 
 .step-title {
@@ -1019,19 +1018,6 @@ th {
   color: #e2a72a;
 }
 
-.prediction-button {
-  min-height: 58px;
-  font-size: 1.25rem;
-}
-
-.object-button {
-  min-height: 112px;
-}
-
-.object-button .emoji {
-  font-size: 2.1rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1042,5 +1028,9 @@ th {
   .prediction-button,
   .progress-track span {
     transition-duration: 1ms;
+  }
+
+  .hypothesis-button:hover {
+    transform: none;
   }
 }
