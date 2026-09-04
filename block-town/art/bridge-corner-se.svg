@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Where two railings of a bridge meet the deck is rounded; drawn on top of the sides. -->
+  <g transform="rotate(180 32 32)">
+  <path d="M0 0H18V10A8 8 0 0 0 10 18H0Z" fill="#82c9e8"/>
+  <path d="M18 10A8 8 0 0 0 10 18" fill="none" stroke="#b09a68" stroke-width="4"/>
+  </g>
+</svg>

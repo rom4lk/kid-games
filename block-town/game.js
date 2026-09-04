@@ -404,15 +404,30 @@ function quadrantMask(sides, diagonals, diagonalMatches) {
   }, 0);
 }
 
+// The sides and the diagonals of a road cell that hold the same network.
+function roadNeighborhood(grid, columns, index) {
+  const group = roadGroup(grid?.[index]);
+  if (!group) return null;
+  const same = (value) => roadGroup(value) === group;
+  return {
+    sides: neighborMask(grid, columns, index, same),
+    diagonals: diagonalMask(grid, columns, index, same),
+  };
+}
+
 // A road cell that belongs to a 2 x 2 block of road is part of a paved
 // square: it shows a paved surface instead of a centre line.
 function roadPlaza(grid, columns, index) {
-  const group = roadGroup(grid?.[index]);
-  if (!group) return false;
-  const same = (value) => roadGroup(value) === group;
-  const sides = neighborMask(grid, columns, index, same);
-  const diagonals = diagonalMask(grid, columns, index, same);
-  return quadrantMask(sides, diagonals, true) !== 0;
+  const around = roadNeighborhood(grid, columns, index);
+  return around !== null && quadrantMask(around.sides, around.diagonals, true) !== 0;
+}
+
+// The inside corners of a road: two road sides meet at a corner whose
+// diagonal is not road, so the drawn edges of the two neighbours end there
+// and a fillet has to join them.
+function roadInnerCorners(grid, columns, index) {
+  const around = roadNeighborhood(grid, columns, index);
+  return around === null ? 0 : quadrantMask(around.sides, around.diagonals, false);
 }
 
 function roadTile(grid, underlay, columns, index) {
@@ -424,6 +439,7 @@ function roadTile(grid, underlay, columns, index) {
     shape: ROAD_SHAPES[mask],
     bridge: underlay?.[index] === WATER_ID,
     plaza: roadPlaza(grid, columns, index),
+    inner: roadInnerCorners(grid, columns, index),
   };
 }
 
@@ -827,6 +843,7 @@ if (typeof module !== "undefined" && module.exports) {
     diagonalMask,
     roadTile,
     roadPlaza,
+    roadInnerCorners,
     waterEdges,
     waterInnerCorners,
     forestDensity,
@@ -1174,14 +1191,14 @@ function initializeGame() {
     const classes = ["cell", `block--${block.key}`];
     if (block.family === "roads") {
       const tile = roadTile(grid, underlay, size.columns, index);
-      classes.push("cell--road", `road--${tile.shape}`, ...sideClasses("road", tile.mask));
+      classes.push(
+        "cell--road",
+        `road--${tile.shape}`,
+        ...sideClasses("road", tile.mask),
+        ...cornerClasses("inner", tile.inner),
+      );
       if (tile.plaza) classes.push("road--plaza");
-      if (tile.bridge) {
-        classes.push("road--bridge");
-        // The deck follows the direction the road runs in.
-        const alongRows = (tile.mask & (MASK_NORTH | MASK_SOUTH)) !== 0;
-        if (alongRows) classes.push("road--bridge-vertical");
-      }
+      if (tile.bridge) classes.push("road--bridge");
       return classes;
     }
     if (block.key === "water") {

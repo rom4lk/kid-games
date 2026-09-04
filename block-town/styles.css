@@ -9,11 +9,10 @@
   --sun: #ffd45c;
   --shadow: 0 10px 26px rgb(43 69 53 / 14%);
 
-  /* The flat color under every block's picture, and the road deck of a
-     bridge. The pictures themselves are the SVG files in art/. */
+  /* The flat color under every block's picture. The pictures themselves are
+     the SVG files in art/. */
   --meadow: #a9dc88;
   --road: #e2d2ab;
-  --road-mark: #b09a68;
   --forest: #74b97b;
   --water: #82c9e8;
   --soil: #b98c5c;
@@ -311,10 +310,11 @@ button:focus-visible,
 }
 
 /* Roads. Every kind is assembled from pieces in art/, listed top layer first:
-   a turntable under a junction of rails, a rounded corner where two drawn
-   edges meet, an edge on every side the road stops at, a piece of centre line
-   or of track toward every side it continues to, and the paving of a square.
-   The switching by neighbour is shared; which pictures fill the slots is each
+   a turntable under a junction of rails, a fillet in every inside corner where
+   the edges of two neighbours meet, a rounded corner where two drawn edges
+   meet, an edge on every side the road stops at, a piece of centre line or of
+   track toward every side it continues to, and the paving of a square. The
+   switching by neighbour is shared; which pictures fill the slots is each
    kind's choice. */
 .cell--road {
   --road-surface: var(--road);
@@ -330,8 +330,16 @@ button:focus-visible,
   --art-line-e: none;
   --art-line-s: none;
   --art-line-w: none;
+  --art-inner-nw: none;
+  --art-inner-ne: none;
+  --art-inner-se: none;
+  --art-inner-sw: none;
   --road-hub: none;
   --road-paving: none;
+  --road-inner-nw: none;
+  --road-inner-ne: none;
+  --road-inner-se: none;
+  --road-inner-sw: none;
   --road-corner-nw: none;
   --road-corner-ne: none;
   --road-corner-se: none;
@@ -348,6 +356,10 @@ button:focus-visible,
   background-color: var(--road-surface);
   background-image:
     var(--road-hub),
+    var(--road-inner-nw),
+    var(--road-inner-ne),
+    var(--road-inner-se),
+    var(--road-inner-sw),
     var(--road-corner-nw),
     var(--road-corner-ne),
     var(--road-corner-se),
@@ -402,6 +414,22 @@ button:focus-visible,
   --road-corner-nw: var(--art-corner-nw);
 }
 
+.cell--road.inner--nw {
+  --road-inner-nw: var(--art-inner-nw);
+}
+
+.cell--road.inner--ne {
+  --road-inner-ne: var(--art-inner-ne);
+}
+
+.cell--road.inner--se {
+  --road-inner-se: var(--art-inner-se);
+}
+
+.cell--road.inner--sw {
+  --road-inner-sw: var(--art-inner-sw);
+}
+
 /* The path and the asphalt: a T and a crossing keep a clean surface, and a
    cell inside a 2 x 2 block of road is paved, so a square reads as a square
    and not as a window frame. */
@@ -419,6 +447,10 @@ button:focus-visible,
   --art-line-e: url("art/path-line-e.svg");
   --art-line-s: url("art/path-line-s.svg");
   --art-line-w: url("art/path-line-w.svg");
+  --art-inner-nw: url("art/path-inner-nw.svg");
+  --art-inner-ne: url("art/path-inner-ne.svg");
+  --art-inner-se: url("art/path-inner-se.svg");
+  --art-inner-sw: url("art/path-inner-sw.svg");
 }
 
 .cell--road.block--asphalt {
@@ -435,6 +467,10 @@ button:focus-visible,
   --art-line-e: url("art/asphalt-line-e.svg");
   --art-line-s: url("art/asphalt-line-s.svg");
   --art-line-w: url("art/asphalt-line-w.svg");
+  --art-inner-nw: url("art/asphalt-inner-nw.svg");
+  --art-inner-ne: url("art/asphalt-inner-ne.svg");
+  --art-inner-se: url("art/asphalt-inner-se.svg");
+  --art-inner-sw: url("art/asphalt-inner-sw.svg");
 }
 
 .cell--road.block--path.road--tee,
@@ -479,34 +515,18 @@ button:focus-visible,
   --road-hub: url("art/rails-hub.svg");
 }
 
-/* A road that stands on water is a bridge: the deck floats and the water shows
-   along its sides. */
+/* A road that stands on water is a bridge: the same road, and on every side
+   it stops at the water shows behind a wooden railing instead of a drawn edge.
+   Inside a paved square or a crossing nothing stops, so nothing shows. */
 .cell--road.road--bridge {
-  background: url("art/water-a.svg") center / 100% 100% no-repeat var(--water);
-}
-
-.cell--road.road--bridge::after {
-  position: absolute;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      var(--road) 0 30%,
-      var(--road-mark) 30% 36%,
-      var(--road) 36% 66%
-    );
-  content: "";
-  inset: 16% 0;
-}
-
-.cell--road.road--bridge.road--bridge-vertical::after {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      var(--road) 0 30%,
-      var(--road-mark) 30% 36%,
-      var(--road) 36% 66%
-    );
-  inset: 0 16%;
+  --art-edge-n: url("art/bridge-side-n.svg");
+  --art-edge-e: url("art/bridge-side-e.svg");
+  --art-edge-s: url("art/bridge-side-s.svg");
+  --art-edge-w: url("art/bridge-side-w.svg");
+  --art-corner-nw: url("art/bridge-corner-nw.svg");
+  --art-corner-ne: url("art/bridge-corner-ne.svg");
+  --art-corner-se: url("art/bridge-corner-se.svg");
+  --art-corner-sw: url("art/bridge-corner-sw.svg");
 }
 
 /* Forest, from the SVG pictures in art/: a lone cell is one big tree; with

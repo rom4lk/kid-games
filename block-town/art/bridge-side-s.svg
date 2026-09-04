@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A bridge: the water shows along a side the road stops at, behind the railing. -->
+  <g transform="rotate(180 32 32)">
+  <rect width="64" height="10" fill="#82c9e8"/>
+  <path d="M0 10h64" fill="none" stroke="#b09a68" stroke-width="4"/>
+  </g>
+</svg>

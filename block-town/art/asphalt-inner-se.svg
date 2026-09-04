@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- An inside corner of the road: the drawn edges of the two neighbours meet here and the fillet joins them. -->
+  <g transform="rotate(180 32 32)">
+  <path d="M0 5A5 5 0 0 1 5 0" fill="none" stroke="#5f6a70" stroke-width="4"/>
+  </g>
+</svg>

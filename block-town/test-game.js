@@ -24,6 +24,7 @@ const {
   neighborMask,
   roadTile,
   roadPlaza,
+  roadInnerCorners,
   waterEdges,
   waterInnerCorners,
   CORNER_NE,
@@ -350,6 +351,34 @@ function testRoadPlaza() {
   mixed[22] = RAILS_ID;
   assert.equal(roadPlaza(mixed, 10, 11), false);
   assert.equal(roadPlaza(mixed, 10, 21), false);
+}
+
+function testRoadInnerCorners() {
+  // A T of single roads has an inside corner on each side of the branch; a
+  // straight line and a lone cell have none.
+  const tee = buildGrid([
+    "..........",
+    "..r.......",
+    ".rrr......",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadInnerCorners(tee, 10, 22), CORNER_NE | CORNER_NW);
+  assert.equal(roadInnerCorners(tee, 10, 12), 0);
+  assert.equal(roadInnerCorners(tee, 10, 21), 0);
+  assert.equal(roadTile(tee, [], 10, 22).inner, CORNER_NE | CORNER_NW);
+
+  // Where a line joins a square, the cell at the join fills its corner.
+  const join = buildGrid([
+    "..........",
+    "...rr.....",
+    ".rrrr.....",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(roadInnerCorners(join, 10, 23), CORNER_NW);
+  assert.equal(roadInnerCorners(join, 10, 24), 0);
+  assert.equal(roadInnerCorners(join, 10, 0), 0);
 }
 
 function testForestDensity() {
@@ -978,6 +1007,7 @@ testRoadTile();
 testWaterEdges();
 testWaterInnerCorners();
 testRoadPlaza();
+testRoadInnerCorners();
 testForestDensity();
 testConnectedComponents();
 testRoadPaths();
