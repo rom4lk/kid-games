@@ -18,7 +18,7 @@
         </button>
 
         <div class="header-actions" id="headerActions" hidden>
-          <div class="spark-counter" aria-live="polite">
+          <div class="spark-counter">
             <span aria-hidden="true">✦</span>
             <strong id="sparkCount">0</strong>
           </div>
@@ -34,7 +34,7 @@
       <section class="screen start-screen" id="startScreen" hidden>
         <div class="start-copy">
           <p class="eyebrow" id="startEyebrow"></p>
-          <h1 id="startTitle"></h1>
+          <h1 id="startTitle" tabindex="-1"></h1>
           <p class="start-lead" id="startLead"></p>
 
           <p class="language-title" id="languageTitle"></p>
@@ -77,7 +77,7 @@
         <div class="map-heading">
           <div>
             <p class="eyebrow" id="menuEyebrow"></p>
-            <h1 id="menuTitle"></h1>
+            <h1 id="menuTitle" tabindex="-1"></h1>
             <p id="menuLead"></p>
           </div>
           <div class="menu-side">
@@ -102,7 +102,7 @@
         <div class="map-heading">
           <div>
             <p class="eyebrow" id="chaptersEyebrow"></p>
-            <h1 id="chaptersTitle"></h1>
+            <h1 id="chaptersTitle" tabindex="-1"></h1>
             <p id="chaptersLead"></p>
           </div>
           <div class="reader-badge">
@@ -128,7 +128,7 @@
         </section>
       </section>
 
-      <section class="screen play-screen" id="playScreen" hidden>
+      <section class="screen play-screen" id="playScreen" tabindex="-1" hidden>
         <div class="play-topbar">
           <button class="back-button" id="backButton" type="button">
             <span aria-hidden="true">←</span>
@@ -178,6 +178,7 @@
             </button>
           </div>
 
+          <p class="microphone-note" id="microphoneNote" hidden></p>
           <p class="recognition-status" id="recognitionStatus" aria-live="polite"></p>
 
           <div class="choice-area">
@@ -206,7 +207,7 @@
         <div class="chapter-celebration">
           <div class="chapter-emblem" id="chapterEmblem" aria-hidden="true"></div>
           <p class="eyebrow" id="chapterEyebrow"></p>
-          <h1 id="chapterTitle"></h1>
+          <h1 id="chapterTitle" tabindex="-1"></h1>
           <p id="chapterText"></p>
           <div class="chapter-stars" aria-hidden="true">✦ ✦ ✦</div>
           <button class="primary-button" id="chapterButton" type="button"></button>
@@ -268,8 +269,14 @@
       </form>
     </dialog>
 
-    <div class="loading-state" id="loadingState" role="status">Loading… · Загружаем…</div>
+    <div class="loading-state" id="loadingState" role="status">
+      <p id="loadingText">Loading… · Загружаем…</p>
+      <button class="secondary-button" id="loadingRetryButton" type="button" hidden>
+        Try again · Попробовать еще раз
+      </button>
+    </div>
     <script src="../shared/game-home.js"></script>
+    <script src="../shared/game-sound.js"></script>
     <script src="game.js"></script>
   </body>
 </html>

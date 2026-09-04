@@ -4,6 +4,7 @@
   "brand": "Living Words",
   "loading": "Loading the game…",
   "loadingError": "Could not load the game. Start it from a local server and refresh the page.",
+  "loadingRetry": "Try again",
   "languages": {
     "en": "English",
     "ru": "Русский"
@@ -73,6 +74,7 @@
     "hint": "Show the parts",
     "hintUsed": "Read it slowly, part by part: {syllables}",
     "choiceInstruction": "Now find it in the pictures",
+    "choiceLabel": "Picture {number}",
     "wrongFirst": "Almost! Look at all the letters and try again.",
     "wrongAgain": "Piece by piece: {syllables}. Now find the picture.",
     "successTitle": "You did it!",

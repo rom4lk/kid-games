@@ -175,7 +175,7 @@ input:focus-visible {
 .eyebrow {
   margin: 0 0 7px;
   color: var(--mint);
-  font-size: 0.76rem;
+  font-size: 0.95rem;
   font-weight: 900;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -530,7 +530,7 @@ h1 {
 
 .reader-badge small {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -720,7 +720,7 @@ h1 {
 .world-number {
   margin-bottom: 5px;
   color: var(--mint);
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   font-weight: 900;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -1087,43 +1087,15 @@ h1 {
   opacity: 0.48;
 }
 
-/* The reason the button is off, shown only while pointing at it. */
-.microphone-button {
-  position: relative;
-}
-
-.microphone-button[data-tooltip]:hover,
-.microphone-button[data-tooltip]:focus-visible {
-  z-index: 30;
-}
-
-.microphone-button[data-tooltip]::before {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  z-index: 30;
-  width: max-content;
-  max-width: 260px;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #271f52;
-  color: var(--mint);
-  content: attr(data-tooltip);
+/* Why the microphone is off: real text, reachable on touch and by a reader. */
+.microphone-note {
+  max-width: 520px;
+  margin: 0 auto 10px;
+  color: var(--muted);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
   text-align: center;
-  white-space: normal;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-50%);
-  transition: opacity 0.15s ease;
-}
-
-.microphone-button[data-tooltip]:hover::before,
-.microphone-button[data-tooltip]:focus-visible::before {
-  opacity: 1;
 }
 
 .microphone-icon {
@@ -1209,17 +1181,9 @@ h1 {
   border-radius: 10px;
   color: #2f2750;
   background: #fff9e9;
-  font-size: 0.78rem;
+  font-size: 1.25rem;
   font-weight: 900;
-  opacity: 0;
-  transform: translateX(-50%) translateY(5px);
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
-.choice-button.correct .choice-label,
-.choice-button.reveal .choice-label {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%);
 }
 
 .success-panel {
@@ -1392,7 +1356,7 @@ h1 {
 
 .stats-grid span {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   font-weight: 800;
 }
 
@@ -1468,10 +1432,18 @@ h1 {
   inset: 0;
   z-index: 20;
   display: grid;
+  padding: 20px;
   color: var(--muted);
   background: var(--night);
-  place-items: center;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
   font-weight: 800;
+  text-align: center;
+}
+
+.loading-state p {
+  margin: 0;
 }
 
 .loading-state.error {
@@ -1543,6 +1515,17 @@ h1 {
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+/* The reduced-motion replacement for the arriving screens and panels:
+   the same fade with no travel. */
+@keyframes fade-arrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -1777,14 +1760,14 @@ h1 {
   }
 
   /* Ambient scenery stops; nothing depends on it. */
-  .ambient-stars,
-  .floating-letter,
-  .moon-glow,
-  .scene-orb,
-  .scene-shape,
-  .guide-creature,
-  .chapter-stars {
+  .floating-letter {
     animation: none;
+  }
+
+  /* Screens and the success panel keep their opacity fade but stop moving. */
+  .screen,
+  .success-panel {
+    animation-name: fade-arrive;
   }
 
   /* A wrong or right pick still has to announce itself, just without the

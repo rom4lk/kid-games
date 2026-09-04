@@ -136,6 +136,9 @@ def validate_pack(language, letters):
 
     chapter_ids = set()
     word_counts: dict[str, int] = {}
+    unsplit_words = 0
+    split_words = 0
+    letter_split_words = 0
 
     for chapter_index, chapter in enumerate(chapters):
         where = f"{file_name}: chapter {chapter_index + 1}"
@@ -163,9 +166,37 @@ def validate_pack(language, letters):
             word = task.get("word")
             if word:
                 word_counts[word] = word_counts.get(word, 0) + 1
+                syllables = task.get("syllables") or ""
+                if syllables == word:
+                    unsplit_words += 1
+                elif "-" in syllables:
+                    split_words += 1
+                    if all(len(part) == 1 for part in syllables.split("-")):
+                        letter_split_words += 1
 
     max_repeat = max(word_counts.values(), default=0)
     print(f"{file_name}: {len(word_counts)} unique words, max repeats per word: {max_repeat}")
+
+    # Content quality signals. Warnings only: the packs are playable as they
+    # are, but these weaken the hint mechanic or the promises in the texts.
+    total_words = sum(word_counts.values())
+    if unsplit_words:
+        warnings.append(
+            f"{file_name}: {unsplit_words} of {total_words} tasks have syllables identical to the"
+            " word, so the parts hint changes nothing visually while still counting a help use"
+        )
+    if word_counts and len(word_counts) < total_words:
+        top_word, top_count = max(word_counts.items(), key=lambda item: item[1])
+        warnings.append(
+            f"{file_name}: only {len(word_counts)} unique words across {total_words} tasks"
+            f' (most repeated: "{top_word}" x{top_count}), while the README and the completion'
+            f" text promise {total_words} words per level"
+        )
+    if split_words and split_words == letter_split_words:
+        warnings.append(
+            f"{file_name}: every split is letter by letter, not by syllables, while the UI"
+            " labels the parts the same way as in the syllable packs"
+        )
 
 
 validate_ui()

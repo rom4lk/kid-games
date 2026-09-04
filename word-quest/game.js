@@ -1,5 +1,7 @@
 const STORAGE_KEY = "livingWordsProgressV2";
-// The shelf and every game share one language choice under this key.
+// The shelf and every game share one language choice under this key. The shared
+// game-language.js module is not used here: it translates a static DOM through
+// translations.json, while this game renders every string from ui.<lang>.json.
 const LANGUAGE_KEY = "kidGamesLanguageV1";
 const SUPPORTED_LANGUAGES = ["en", "ru"];
 
@@ -49,6 +51,9 @@ let currentPack;
 let currentLetters = LEVELS.en[0];
 let currentChapterIndex = 0;
 let currentTaskIndex = 0;
+// Bumped on every rendered task, so an await started on an older task or on a
+// screen that has since been left can notice and bail out.
+let taskGeneration = 0;
 let currentAttemptCount = 0;
 let currentHintUsed = false;
 let currentTaskSolved = false;
@@ -57,7 +62,6 @@ let recognition;
 let recognitionStartTimer;
 let recognitionAnswered = false;
 let microphoneRequested = false;
-let audioContext;
 let speakTimer;
 
 function readState() {
@@ -108,17 +112,27 @@ async function fetchJson(path) {
   return response.json();
 }
 
-async function getUi(language) {
+// Both caches hold the promise, not the resolved value, so concurrent calls
+// share one request. A failed request is evicted so a retry can fetch again.
+function getUi(language) {
   if (!uiCache.has(language)) {
-    uiCache.set(language, await fetchJson(`content/ui.${language}.json`));
+    const request = fetchJson(`content/ui.${language}.json`).catch((error) => {
+      uiCache.delete(language);
+      throw error;
+    });
+    uiCache.set(language, request);
   }
   return uiCache.get(language);
 }
 
-async function getPack(language, letters) {
+function getPack(language, letters) {
   const key = `${language}-${letters}`;
   if (!packCache.has(key)) {
-    packCache.set(key, await fetchJson(`content/words.${language}.${letters}.json`));
+    const request = fetchJson(`content/words.${language}.${letters}.json`).catch((error) => {
+      packCache.delete(key);
+      throw error;
+    });
+    packCache.set(key, request);
   }
   return packCache.get(key);
 }
@@ -134,6 +148,12 @@ function setText(id, value) {
   elements[id].textContent = value;
 }
 
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: reducedMotionQuery.matches ? "auto" : "smooth" });
+}
+
 function showScreen(target) {
   stopSpeaking();
   screens.forEach((screen) => {
@@ -143,12 +163,18 @@ function showScreen(target) {
   const isStart = target === elements.startScreen;
   elements.homeButton.hidden = isStart;
   elements.headerActions.hidden = isStart;
-  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  // The pressed button just went hidden with its old screen; without a new
+  // focus target the keyboard tab order would restart from the page top.
+  const heading = target.querySelector('[tabindex="-1"]');
+  (heading || target).focus({ preventScroll: true });
+  scrollToTop();
 }
 
 function showLoading() {
   elements.loadingState.classList.remove("error");
-  elements.loadingState.textContent = ui ? ui.loading : elements.loadingState.textContent;
+  setText("loadingText", ui ? ui.loading : elements.loadingText.textContent);
+  elements.loadingRetryButton.hidden = true;
   elements.loadingState.hidden = false;
 }
 
@@ -158,7 +184,9 @@ function hideLoading() {
 
 function showLoadingError(error) {
   elements.loadingState.classList.add("error");
-  elements.loadingState.textContent = ui?.loadingError || error.message;
+  setText("loadingText", ui?.loadingError || error.message);
+  if (ui) setText("loadingRetryButton", ui.loadingRetry);
+  elements.loadingRetryButton.hidden = false;
   elements.loadingState.hidden = false;
 }
 
@@ -291,7 +319,9 @@ function levelKey(letters) {
 function getChapterProgress(letters, chapterIndex) {
   const level = state.completed[levelKey(letters)];
   const value = Number(level?.[chapterIndex] || 0);
-  return Math.min(value, WORDS_PER_CHAPTER);
+  // A corrupted stored value must not reach the progress bars as NaN.
+  if (!Number.isFinite(value)) return 0;
+  return Math.min(Math.max(value, 0), WORDS_PER_CHAPTER);
 }
 
 function setChapterProgress(letters, chapterIndex, value) {
@@ -325,8 +355,9 @@ function getLanguageWordCount() {
 }
 
 function renderHeader() {
-  setText("sparkCount", getLanguageWordCount());
-  setText("sparkTotal", getLanguageWordCount());
+  const wordCount = getLanguageWordCount();
+  setText("sparkCount", wordCount);
+  setText("sparkTotal", wordCount);
   updateSoundControls();
 }
 
@@ -461,7 +492,9 @@ function solvedPrefixLength() {
 
 function nextUnsolvedTaskIndex(fromIndex) {
   const chapter = currentPack.chapters[currentChapterIndex];
-  for (let step = 1; step <= chapter.tasks.length; step += 1) {
+  // The loop never lands back on fromIndex: when the current word is the only
+  // unsolved one there is nothing to skip to, and the answer is -1.
+  for (let step = 1; step < chapter.tasks.length; step += 1) {
     const index = (fromIndex + step) % chapter.tasks.length;
     if (!solvedTaskIndexes.has(index)) return index;
   }
@@ -476,7 +509,7 @@ function skipTask() {
   renderTask();
   setText("recognitionStatus", ui.play.skipped);
   playTone("hint");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  scrollToTop();
 }
 
 function renderTask() {
@@ -484,6 +517,7 @@ function renderTask() {
   stopSpeaking();
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
+  taskGeneration += 1;
   currentAttemptCount = 0;
   currentHintUsed = false;
   currentTaskSolved = false;
@@ -506,27 +540,24 @@ function renderTask() {
   elements.wordCard.classList.remove("show-syllables");
   elements.wordSyllables.hidden = true;
   elements.successPanel.hidden = true;
-  elements.skipButton.disabled = false;
+  elements.skipButton.disabled = nextUnsolvedTaskIndex(currentTaskIndex) === -1;
   elements.choiceGrid.hidden = false;
   elements.choiceGrid.innerHTML = "";
 
-  const progress = ((currentTaskIndex + 1) / chapter.tasks.length) * 100;
-  elements.missionProgress.setAttribute("aria-valuemin", "0");
-  elements.missionProgress.setAttribute("aria-valuemax", String(chapter.tasks.length));
-  elements.missionProgress.setAttribute("aria-valuenow", String(currentTaskIndex + 1));
-  elements.missionProgressFill.style.width = `${progress}%`;
+  renderMissionProgress(chapter);
 
-  shuffle([...task.choices]).forEach((choice) => {
+  shuffle([...task.choices]).forEach((choice, choiceIndex) => {
     const button = document.createElement("button");
     button.className = "choice-button";
     button.type = "button";
     button.dataset.choice = choice.id;
-    button.setAttribute("aria-label", choice.label);
-    button.innerHTML = `
-      <span aria-hidden="true">${choice.emoji}</span>
-      <span class="choice-label">${choice.label}</span>
-    `;
-    button.addEventListener("click", () => handleChoice(button, choice.id));
+    // The caption must not reach the DOM or the accessible name before the
+    // correct answer, so a screen reader or find-in-page cannot reveal it.
+    button.setAttribute("aria-label", fillTemplate(ui.play.choiceLabel, {
+      number: choiceIndex + 1,
+    }));
+    button.innerHTML = `<span aria-hidden="true">${choice.emoji}</span>`;
+    button.addEventListener("click", () => handleChoice(button, choice));
     elements.choiceGrid.appendChild(button);
   });
 
@@ -534,6 +565,17 @@ function renderTask() {
   setText("nextButton", isLastTask ? ui.play.finish : ui.play.next);
   configureMicrophoneButton();
   renderHeader();
+}
+
+// The bar shows how many words are solved, not how far the child has jumped:
+// skipping ahead must not move it.
+function renderMissionProgress(chapter) {
+  const solved = solvedTaskIndexes.size;
+  elements.missionProgress.setAttribute("aria-label", ui.menu.readerLabel);
+  elements.missionProgress.setAttribute("aria-valuemin", "0");
+  elements.missionProgress.setAttribute("aria-valuemax", String(chapter.tasks.length));
+  elements.missionProgress.setAttribute("aria-valuenow", String(solved));
+  elements.missionProgressFill.style.width = `${(solved / chapter.tasks.length) * 100}%`;
 }
 
 function shuffle(values) {
@@ -562,12 +604,12 @@ function revealHint() {
   playTone("hint");
 }
 
-function handleChoice(button, choiceId) {
+function handleChoice(button, choice) {
   if (currentTaskSolved) return;
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
 
-  if (choiceId !== task.correct) {
+  if (choice.id !== task.correct) {
     currentAttemptCount += 1;
     state.stats.wrongChoices += 1;
     saveState();
@@ -593,11 +635,18 @@ function handleChoice(button, choiceId) {
   elements.skipButton.disabled = true;
   stopRecognition();
   button.classList.add("correct");
+  // Only now may the caption appear: in the DOM and in the accessible name.
+  const caption = document.createElement("span");
+  caption.className = "choice-label";
+  caption.textContent = choice.label;
+  button.appendChild(caption);
+  button.setAttribute("aria-label", choice.label);
   elements.choiceGrid.querySelectorAll("button").forEach((choiceButton) => {
     choiceButton.disabled = true;
   });
 
   solvedTaskIndexes.add(currentTaskIndex);
+  renderMissionProgress(chapter);
   setChapterProgress(
     currentLetters,
     currentChapterIndex,
@@ -628,7 +677,7 @@ function advanceTask() {
   if (nextIndex !== -1) {
     currentTaskIndex = nextIndex;
     renderTask();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
     return;
   }
 
@@ -676,13 +725,13 @@ function configureMicrophoneButton() {
   elements.microphoneButton.classList.remove("active");
   setText("microphoneLabel", enabled ? ui.play.microphone : ui.play.microphoneDisabled);
 
-  // The explanation appears as a tooltip over the dead button, not as a
-  // permanent line under the word.
-  if (enabled && !supported) {
-    elements.microphoneButton.dataset.tooltip = ui.play.microphoneUnsupported;
-  } else {
-    delete elements.microphoneButton.dataset.tooltip;
+  // A disabled button cannot be hovered on a tablet, focused, or read by a
+  // screen reader, so the explanation is a real line of text under the actions.
+  const showNote = enabled && !supported;
+  if (showNote) {
+    setText("microphoneNote", ui.play.microphoneUnsupported);
   }
+  elements.microphoneNote.hidden = !showNote;
 }
 
 function speechLocale() {
@@ -736,6 +785,7 @@ async function startRecognition() {
   if (microphoneRequested) return;
 
   const task = currentTaskOf();
+  const generation = taskGeneration;
   showListeningButton();
   microphoneRequested = true;
   const allowed = await requestMicrophoneAccess();
@@ -747,9 +797,14 @@ async function startRecognition() {
     return;
   }
 
-  // Asking for access takes as long as the child needs to answer the browser,
-  // so the word on the screen can already be a different one.
-  if (recognition || currentTaskSolved || currentTaskOf() !== task) {
+  // Asking for access takes as long as the child needs to answer the browser;
+  // by then the play screen can be left entirely or show a different word.
+  if (
+    recognition
+    || currentTaskSolved
+    || elements.playScreen.hidden
+    || generation !== taskGeneration
+  ) {
     resetMicrophoneButton();
     return;
   }
@@ -940,50 +995,24 @@ function updateSoundControls() {
   elements.soundSetting.checked = state.settings.sound;
 }
 
+// The audio wiring lives in shared/game-sound.js; this game only keeps its own
+// note vocabulary.
+const TONES = {
+  start: { frequency: 440, duration: 0.16 },
+  hint: { frequency: 520, duration: 0.12 },
+  wrong: { frequency: 190, duration: 0.12, wave: "triangle" },
+  success: { frequency: 660, duration: 0.28, bendTo: 990 },
+  voice: { frequency: 780, duration: 0.2 },
+  chapter: { frequency: 520, duration: 0.42, bendTo: 780 },
+};
+
 function playTone(type) {
   if (!state.settings.sound) return;
 
   try {
-    audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
-    const now = audioContext.currentTime;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    const frequencies = {
-      start: 440,
-      hint: 520,
-      wrong: 190,
-      success: 660,
-      voice: 780,
-      chapter: 520,
-    };
-    const durations = {
-      wrong: 0.12,
-      hint: 0.12,
-      start: 0.16,
-      success: 0.28,
-      voice: 0.2,
-      chapter: 0.42,
-    };
-    const duration = durations[type] || 0.16;
-
-    oscillator.type = type === "wrong" ? "triangle" : "sine";
-    oscillator.frequency.setValueAtTime(frequencies[type] || 440, now);
-
-    if (type === "success" || type === "chapter") {
-      oscillator.frequency.exponentialRampToValueAtTime((frequencies[type] || 440) * 1.5, now + duration);
-    }
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.11, now + 0.025);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-    oscillator.start(now);
-    oscillator.stop(now + duration + 0.02);
+    window.GameSound.tone(TONES[type] || TONES.start);
   } catch {
-    state.settings.sound = false;
-    saveState();
-    updateSoundControls();
+    // A refused AudioContext mutes this one tone; the setting stays untouched.
   }
 }
 
@@ -1009,6 +1038,9 @@ async function applyReset() {
 }
 
 async function initialize() {
+  // Bound before anything can fail, so the error overlay always offers a way out.
+  elements.loadingRetryButton.addEventListener("click", () => window.location.reload());
+
   try {
     const sharedLanguage = readSharedLanguage();
     // A language picked on the shelf wins over the one saved with the progress.

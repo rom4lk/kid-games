@@ -63,8 +63,7 @@ The progress is saved to `localStorage` under the key `livingWordsProgressV2`. I
 - the number of microphone attempts, opened hints and wrong choices;
 - the microphone and sound settings.
 
-The old key `livingWordsProgressV1` is removed on start. The data can be reset from the panel for an
-adult, which erases the progress for both languages.
+The data can be reset from the panel for an adult, which erases the progress for both languages.
 
 ## Structure
 
