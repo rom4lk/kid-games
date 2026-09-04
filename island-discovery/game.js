@@ -2,6 +2,8 @@ const MAP_WIDTH = 6;
 const MAP_HEIGHT = 4;
 const CITY_INDEX = 14;
 const STORAGE_KEY = "islandDiscoveryV1";
+const SOUND_KEY = "islandDiscoverySoundV1";
+const RESOURCE_ORDER = ["food", "wood", "idea"];
 
 // Difficulty is one visible thing: how far the explorer walks each day.
 const DIFFICULTIES = {
@@ -12,9 +14,6 @@ const DIFFICULTIES = {
 
 // One mechanic at a time: walk, then gather, then build.
 const COACH_ORDER = ["move", "collect", "build", "done"];
-
-// A pause carries no meaning when motion is reduced, so it is dropped there.
-const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const STANDARD_BUILDINGS = ["garden", "workshop", "library"];
 const BUILDINGS = [...STANDARD_BUILDINGS, "festival"];
@@ -76,6 +75,7 @@ const elements = {
   victoryTurns: document.querySelector("#victory-turns"),
   victoryTiles: document.querySelector("#victory-tiles"),
   buildingButtons: [...document.querySelectorAll(".building-card")],
+  energyText: document.querySelector("#energy-text"),
   resources: {
     food: document.querySelector(".food-resource"),
     wood: document.querySelector(".wood-resource"),
@@ -83,7 +83,15 @@ const elements = {
   },
 };
 
-let soundEnabled = true;
+function loadSoundPreference() {
+  try {
+    return localStorage.getItem(SOUND_KEY) !== "off";
+  } catch {
+    return true;
+  }
+}
+
+let soundEnabled = loadSoundPreference();
 
 function readText(id) {
   return document.querySelector(`#${id}`).textContent.trim();
@@ -275,8 +283,20 @@ function refuseTile(index) {
   requestAnimationFrame(() => elements.map.classList.add("show-reach"));
 }
 
+// The same world reaction as refuseTile(), for a card or button instead of a tile.
+function shakeRefusal(element) {
+  element.classList.remove("refuse-shake");
+  requestAnimationFrame(() => element.classList.add("refuse-shake"));
+  window.setTimeout(() => element.classList.remove("refuse-shake"), 500);
+}
+
 function moveExplorer(index) {
   if (state.finished) return;
+  if (index === state.explorer) {
+    elements.map.classList.remove("show-reach");
+    requestAnimationFrame(() => elements.map.classList.add("show-reach"));
+    return;
+  }
   if (!isAdjacent(state.explorer, index)) {
     setMessage("far");
     refuseTile(index);
@@ -300,7 +320,7 @@ function moveExplorer(index) {
   if (state.energy === 0) {
     window.setTimeout(() => {
       if (!state.finished && state.energy === 0) setMessage("no-energy");
-    }, REDUCED_MOTION.matches ? 0 : 700);
+    }, 1800);
   }
 }
 
@@ -311,10 +331,21 @@ function renderMap() {
   state.tiles.forEach((type, index) => {
     const tile = document.createElement("button");
     const isRevealed = state.revealed.has(index);
+    const isExplorer = state.explorer === index;
+    const isCollected = state.collected.has(index);
+    const isReachable = isRevealed && !isExplorer && state.energy > 0 && isAdjacent(state.explorer, index);
     tile.type = "button";
     tile.className = "map-tile";
     tile.dataset.index = index;
-    tile.setAttribute("aria-label", readText(`tile-${isRevealed ? type : "hidden"}`));
+
+    const terrain = readText(`tile-${isRevealed ? type : "hidden"}`);
+    let stateKey = null;
+    if (isExplorer) stateKey = "tile-state-explorer";
+    else if (isCollected && isReachable) stateKey = "tile-state-collected-reachable";
+    else if (isCollected) stateKey = "tile-state-collected";
+    else if (isReachable) stateKey = "tile-state-reachable";
+    const label = stateKey ? readText(stateKey).replace("{terrain}", terrain) : terrain;
+    tile.setAttribute("aria-label", label);
 
     if (!isRevealed) {
       tile.classList.add("hidden");
@@ -325,15 +356,9 @@ function renderMap() {
       tile.addEventListener("click", () => moveExplorer(index));
     }
 
-    if (state.collected.has(index)) tile.classList.add("collected");
-    if (state.explorer === index) tile.classList.add("explorer");
-    if (
-      isRevealed
-      && state.energy > 0
-      && isAdjacent(state.explorer, index)
-    ) {
-      tile.classList.add("reachable");
-    }
+    if (isCollected) tile.classList.add("collected");
+    if (isExplorer) tile.classList.add("explorer");
+    if (isReachable) tile.classList.add("reachable");
 
     elements.map.append(tile);
   });
@@ -348,6 +373,7 @@ function renderEnergy() {
     pip.className = `energy-pip${index >= state.energy ? " used" : ""}`;
     elements.energy.append(pip);
   }
+  elements.energyText.textContent = `${state.energy} of ${rules().energy} steps left`;
 }
 
 function canAfford(button) {
@@ -368,14 +394,24 @@ function renderBuildings() {
   elements.buildingButtons.forEach((button) => {
     const building = button.dataset.building;
     const built = state.buildings.has(building);
+    const affordable = canAfford(button);
 
     button.classList.toggle("built", built);
+    button.classList.toggle("unaffordable", !built && !affordable);
     button.disabled = built;
     // The festival is a mechanic that only matters once, at the end.
     if (building === "festival") {
       button.hidden = completed !== 3;
       button.classList.toggle("ready", !built);
     }
+
+    const costEntries = RESOURCE_ORDER
+      .map((resource) => ({ resource, amount: Number(button.dataset[resource]) }))
+      .filter((entry) => entry.amount > 0);
+    [...button.querySelectorAll(".cost b")].forEach((pill, index) => {
+      const entry = costEntries[index];
+      pill.classList.toggle("short", !built && Boolean(entry) && state[entry.resource] < entry.amount);
+    });
   });
 
   elements.goalProgress.textContent = completed === 3 ? "🎪" : `${completed} / 3`;
@@ -398,6 +434,7 @@ function endTurn() {
   if (state.finished) return;
   if (state.energy > 0) {
     setMessage("steps-left");
+    shakeRefusal(elements.endTurn);
     return;
   }
   state.turn += 1;
@@ -421,6 +458,7 @@ function build(button) {
 
   if (!canAfford(button)) {
     setMessage("cannot-build");
+    shakeRefusal(button);
     return;
   }
 
@@ -514,19 +552,27 @@ elements.startCancel.addEventListener("click", () => {
 });
 
 const soundButton = document.querySelector("#sound-button");
+soundButton.textContent = soundEnabled ? "♪" : "×";
+soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
 soundButton.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
+  try {
+    localStorage.setItem(SOUND_KEY, soundEnabled ? "on" : "off");
+  } catch {
+    // Private browsing modes can refuse writes. The choice stays for this session only.
+  }
   soundButton.textContent = soundEnabled ? "♪" : "×";
   soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
   if (soundEnabled) playSound("build");
 });
 
-setMessage("start");
 renderCoach();
 
 if (loadGame()) {
+  setMessage(state.energy > 0 ? "start" : "no-energy");
   hideModals();
   render();
 } else {
+  setMessage("start");
   showModal(elements.startModal);
 }

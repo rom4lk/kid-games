@@ -72,5 +72,11 @@
     ["city", "город"],
     ["unexplored land", "неизведанная земля"]
   ],
-  "templates": []
+  "templates": [
+    ["{count} of {total} steps left", "Осталось шагов: {count} из {total}"],
+    ["{terrain}, explorer here, collected", "{terrain}, здесь исследователь, собрано"],
+    ["{terrain}, collected, reachable", "{terrain}, собрано, можно пойти"],
+    ["{terrain}, collected", "{terrain}, собрано"],
+    ["{terrain}, reachable", "{terrain}, можно пойти"]
+  ]
 }

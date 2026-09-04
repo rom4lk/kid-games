@@ -63,9 +63,10 @@
               <span class="turn-label">DAY</span>
               <strong id="turn-count">1</strong>
             </div>
-            <div class="energy" aria-label="Explorer steps">
+            <div class="energy">
               <span>STEPS</span>
               <div id="energy-pips" class="energy-pips" aria-hidden="true"></div>
+              <span id="energy-text" class="sr-only"></span>
             </div>
           </div>
 
@@ -76,7 +77,7 @@
 
           <div class="map-tip">
             <span class="tap-icon" aria-hidden="true">☝️</span>
-            <p id="status-message"></p>
+            <p id="status-message" role="status" aria-live="polite"></p>
           </div>
 
           <button class="end-turn-button" id="end-turn-button" type="button">
@@ -239,6 +240,10 @@
       <span id="tile-village">village</span>
       <span id="tile-city">city</span>
       <span id="tile-hidden">unexplored land</span>
+      <span id="tile-state-explorer">{terrain}, explorer here, collected</span>
+      <span id="tile-state-collected">{terrain}, collected</span>
+      <span id="tile-state-collected-reachable">{terrain}, collected, reachable</span>
+      <span id="tile-state-reachable">{terrain}, reachable</span>
     </div>
 
     <script src="../shared/game-language.js"></script>

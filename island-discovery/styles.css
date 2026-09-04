@@ -183,7 +183,7 @@ h1 {
   border-radius: 999px;
   background: var(--green);
   color: white;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 900;
 }
 
@@ -300,7 +300,7 @@ h1 {
 
 .map-tile.hidden::before {
   content: "?";
-  color: rgba(255, 255, 255, 0.42);
+  color: var(--ink);
   font-size: 23px;
   font-weight: 900;
 }
@@ -338,6 +338,17 @@ h1 {
   0%, 100% { transform: translateY(0); }
   30% { transform: translateY(3px) scale(0.95); }
   65% { transform: translateY(0) scale(1.02); }
+}
+
+/* The same world reaction as a refused tile, for a card or button. */
+.refuse-shake {
+  animation: refuse-shake 320ms ease;
+}
+
+@keyframes refuse-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
 }
 
 .game-map.show-reach .map-tile.reachable,
@@ -601,6 +612,12 @@ h1 {
   opacity: 1;
 }
 
+/* Missing gifts are shown, not hidden: the card still answers a tap. */
+.building-card.unaffordable {
+  border-style: dashed;
+  border-color: var(--orange);
+}
+
 .building-icon {
   display: grid;
   width: 48px;
@@ -626,7 +643,7 @@ h1 {
 
 .building-copy small {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.25;
 }
 
@@ -638,10 +655,32 @@ h1 {
 }
 
 .cost b {
+  position: relative;
   padding: 3px 9px;
   border-radius: 999px;
   background: #f4f0e2;
   font-size: 20px;
+}
+
+/* The missing pill is marked by shape and a badge, not by color alone. */
+.cost b.short {
+  border: 2px dashed var(--orange);
+}
+
+.cost b.short::after {
+  content: "!";
+  position: absolute;
+  top: -7px;
+  right: -5px;
+  display: grid;
+  width: 15px;
+  height: 15px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .build-check {
@@ -864,7 +903,7 @@ h1 {
 
   .resource strong {
     min-width: 13px;
-    font-size: 15px;
+    font-size: 20px;
   }
 
   .goal-card {
@@ -968,5 +1007,27 @@ h1 {
     animation: none;
     outline: 4px solid var(--yellow);
     outline-offset: 3px;
+  }
+
+  /* A refused card or button still answers with an outline, without the shake. */
+  .refuse-shake {
+    animation: none;
+    outline: 4px solid var(--orange);
+    outline-offset: 3px;
+  }
+
+  .map-tile:hover:not(.hidden) {
+    transform: none;
+  }
+
+  .building-card:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .end-turn-button:hover,
+  .end-turn-button:active,
+  .primary-button:hover,
+  .primary-button:active {
+    transform: none;
   }
 }
