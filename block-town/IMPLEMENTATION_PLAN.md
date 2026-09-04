@@ -6,7 +6,7 @@ The shared rules in [../GAME_DESIGN.md](../GAME_DESIGN.md) apply to every stage.
 
 ## File layout
 
-The game follows the repository conventions set by `cube-island/`:
+The game follows the repository conventions for standalone games:
 
 | File | Role |
 | --- | --- |
@@ -55,8 +55,8 @@ Served by the root server: `python3 server.py`, then `http://127.0.0.1:4173/bloc
 
 - **DOM grid, incremental rendering.** One `<div role="grid">` of cell elements built once per
   sheet. A paint updates only the touched cell and its four neighbors (their autotile classes may
-  change). No full re-render on paint; full rebuild only on sheet switch. 1152 DOM cells are fine —
-  `cube-island` already rebuilds a grid per action, this game must not.
+  change). No full re-render on paint; full rebuild only on sheet switch. Rebuilding all 1152 DOM
+  cells per action would not scale.
 - **Cell appearance is classes only**: `cell block--road road--ne road--bridge` etc.; `styles.css`
   draws every variant. No inline styles except grid sizing custom properties
   (`--rows`, `--columns`, `--cell-size`).
@@ -197,8 +197,7 @@ the keyboard only and reads sensibly with a screen reader; both languages show n
 
 - DOM + CSS art, no image files, no `<canvas>` for the world itself (canvas only for the
   mini-map/thumbnails), matching the rest of the repository.
-- Incremental cell updates; the full-rebuild-on-render pattern of `cube-island` does not scale to
-  1152 cells and must not be copied.
+- Incremental cell updates; a full-rebuild-on-render pattern does not scale to 1152 cells.
 - No undo stack and no eraser anywhere — paint-over is the only correction, "new sheet" is the only
   reset and always confirms.
 - One shared model/UI file `game.js` with `module.exports`, mirroring the other games, so the Node
