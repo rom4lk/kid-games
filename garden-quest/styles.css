@@ -138,12 +138,13 @@ h1 {
   border-radius: 12px;
   background: #e9eadf;
   place-items: center;
+  font-size: 1.25rem;
   font-weight: 900;
 }
 
 .level-button small {
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 800;
   line-height: 1.1;
   text-align: left;
@@ -154,9 +155,19 @@ h1 {
   background: #fff;
 }
 
+/* The current garden is marked by a round badge and an arrow, not by colour. */
 .level-button.active span {
+  border-radius: 50%;
   color: #fff;
   background: var(--green);
+}
+
+.level-button.active::after {
+  content: "▶";
+  margin-left: auto;
+  color: var(--green-dark);
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .game-layout {
@@ -210,9 +221,9 @@ h1 {
 
 .stat-label {
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
@@ -223,7 +234,6 @@ h1 {
 
 .board-wrap {
   position: relative;
-  overflow: hidden;
   width: 100%;
   padding: 12px;
   border: 3px solid rgba(76, 105, 67, 0.12);
@@ -239,8 +249,13 @@ h1 {
   aspect-ratio: 1;
   border: 3px solid #618354;
   border-radius: 18px;
-  grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
+}
+
+.board-row {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(8, 1fr);
 }
 
 .cell {
@@ -349,7 +364,7 @@ h1 {
 .controls-card h2,
 .harvest-card h2 {
   margin-bottom: 8px;
-  font-size: 1.24rem;
+  font-size: 1.25rem;
 }
 
 .mission-card > p:not(.card-kicker) {
@@ -370,7 +385,7 @@ h1 {
   padding: 7px 3px;
   border-radius: 10px;
   background: #fff5cc;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 800;
   text-align: center;
   white-space: nowrap;
@@ -446,11 +461,12 @@ h1 {
 .restart-button,
 .secondary-button,
 .primary-button {
-  min-height: 46px;
+  min-height: 52px;
   padding: 10px 18px;
   border: 0;
   border-radius: 15px;
   cursor: pointer;
+  font-size: 1.25rem;
   font-weight: 900;
 }
 
@@ -458,6 +474,60 @@ h1 {
   width: 100%;
   color: var(--green-dark);
   background: #e6f2e6;
+}
+
+.hint-button {
+  width: 100%;
+  min-height: 52px;
+  margin-bottom: 8px;
+  border: 0;
+  border-radius: 15px;
+  background: #ffe9a8;
+  box-shadow: 0 4px 0 #e0c268;
+  color: #6a4f11;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.hint-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #e0c268;
+}
+
+.move-button.hinted {
+  animation: hint-pulse 900ms ease-in-out infinite;
+}
+
+.cell.hinted::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: 4;
+  border: 4px solid #f5a623;
+  border-radius: 9px;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); }
+  50% { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); }
+}
+
+/* A tree refuses the step where it stands; the fence bumps the whole board. */
+.cell.wobble {
+  animation: tree-wobble 320ms ease;
+}
+
+@keyframes tree-wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-7deg); }
+  60% { transform: rotate(6deg); }
+}
+
+.level-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .harvest-list {
@@ -482,7 +552,7 @@ h1 {
 }
 
 .harvest-list b {
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .rock-note {
@@ -546,6 +616,7 @@ h1 {
 .result-score {
   margin-bottom: 5px;
   color: var(--muted);
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
@@ -631,9 +702,12 @@ h1 {
 }
 
 @media (max-width: 650px) {
+  /* The reserved space at the bottom has to match the height of the fixed
+     control bar below: padding + d-pad + gap + button row. */
   .game-shell {
     width: min(100% - 20px, 580px);
     padding-top: 17px;
+    padding-bottom: 260px;
   }
 
   .hero {
@@ -682,10 +756,6 @@ h1 {
     font-size: 1.25rem;
   }
 
-  .stat-label {
-    font-size: 1rem;
-  }
-
   .stat-card strong {
     font-size: 1.25rem;
   }
@@ -717,10 +787,6 @@ h1 {
     padding: 16px;
   }
 
-  .game-shell {
-    padding-bottom: 210px;
-  }
-
   /* The d-pad follows the board instead of sitting a screen below it. */
   .controls-card {
     position: fixed;
@@ -728,10 +794,13 @@ h1 {
     right: 0;
     bottom: 0;
     left: 0;
+    display: grid;
     padding: 8px 12px 12px;
     border-radius: 20px 20px 0 0;
     background: rgba(255, 255, 255, 0.97);
     box-shadow: 0 -6px 24px rgba(64, 74, 55, 0.18);
+    gap: 6px;
+    grid-template-areas: "pad pad" "hint restart";
   }
 
   .controls-card h2 {
@@ -746,15 +815,8 @@ h1 {
 
   .hint-button,
   .restart-button {
-    min-height: 44px;
+    min-height: 48px;
     margin-bottom: 0;
-    font-size: 1rem;
-  }
-
-  .controls-card {
-    display: grid;
-    grid-template-areas: "pad pad" "hint restart";
-    gap: 6px;
   }
 
   .controls-card .d-pad { grid-area: pad; }
@@ -766,58 +828,18 @@ h1 {
   }
 }
 
-.hint-button {
-  width: 100%;
-  min-height: 50px;
-  margin-bottom: 8px;
-  border: 0;
-  border-radius: 15px;
-  background: #ffe9a8;
-  box-shadow: 0 4px 0 #e0c268;
-  color: #6a4f11;
-  cursor: pointer;
-  font: inherit;
-  font-size: 1rem;
-  font-weight: 800;
-}
 
-.hint-button:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #e0c268;
-}
-
-.move-button.hinted {
-  animation: hint-pulse 900ms ease-in-out infinite;
-}
-
-.cell.hinted::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  z-index: 4;
-  border: 4px solid #f5a623;
-  border-radius: 9px;
-}
-
-@keyframes hint-pulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); }
-  50% { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); }
-}
-
-/* A tree refuses the step where it stands; the fence bumps the whole board. */
-.cell.wobble {
-  animation: tree-wobble 320ms ease;
-}
-
-@keyframes tree-wobble {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-7deg); }
-  60% { transform: rotate(6deg); }
-}
-
-.level-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
+/* The same "+N" without the flight: it still appears and still leaves. */
+@keyframes score-fade {
+  0% {
+    opacity: 0;
+  }
+  15%, 70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -827,8 +849,7 @@ h1 {
 
   /* Feedback keeps its meaning as a static ring instead of a movement. */
   .cell.wobble,
-  .move-button.hinted,
-  .score-pop.show {
+  .move-button.hinted {
     animation: none;
   }
 
@@ -842,7 +863,28 @@ h1 {
     outline-offset: -4px;
   }
 
+  /* Only the opacity is animated, so the badge still clears itself. */
   .score-pop.show {
-    opacity: 1;
+    animation: score-fade 900ms ease-out;
+  }
+
+  /* Arriving on a square and opening the dialog stop travelling and scaling;
+     the moved piece and the dialog itself are the signs of the new state. */
+  .cell.player .piece,
+  .result-dialog {
+    animation: none;
+  }
+
+  .sound-button,
+  .level-button,
+  .move-button {
+    transition-property: color, border-color, background, filter, opacity;
+  }
+
+  .sound-button:hover,
+  .level-button:hover,
+  .move-button:active,
+  .hint-button:active {
+    transform: none;
   }
 }

@@ -188,8 +188,14 @@ const DIRECTIONS = {
   right: { row: 0, column: 1 },
 };
 
+const BEST_KEY = "gardenQuestBestScoresV3";
 const UNLOCK_KEY = "gardenQuestUnlockedV1";
 const SOUND_KEY = "gardenQuestSoundV1";
+
+// The result dialog waits for the last step to be seen. Reduced motion keeps the
+// pause, but shortens it to almost nothing.
+const FINISH_DELAY = 340;
+const FINISH_DELAY_REDUCED = 20;
 
 const prefersReducedMotion = window.matchMedia
   ? window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -207,42 +213,52 @@ const soundButton = document.querySelector("#soundButton");
 
 let currentLevelIndex = 0;
 let boardState = [];
+let cellElements = [];
 let playerPosition = { row: 0, column: 0 };
 let score = 0;
 let movesLeft = 0;
 let gameFinished = false;
+let finishTimer = 0;
+let bestScores = readBestScores();
+let unlockedLevel = readUnlockedLevel();
 let soundEnabled = readSoundSetting();
 
+// Saved progress is read once and kept in memory, so a move never waits for
+// localStorage.
 function readBestScores() {
   try {
-    return JSON.parse(localStorage.getItem("gardenQuestBestScoresV3")) ?? {};
+    return JSON.parse(localStorage.getItem(BEST_KEY)) ?? {};
   } catch {
     return {};
   }
 }
 
 function writeBestScore(levelIndex, value) {
-  const bestScores = readBestScores();
   bestScores[levelIndex] = value;
   try {
-    localStorage.setItem("gardenQuestBestScoresV3", JSON.stringify(bestScores));
+    localStorage.setItem(BEST_KEY, JSON.stringify(bestScores));
   } catch {
     // Private browsing modes can refuse writes. Scores stay for this session only.
   }
 }
 
+// A stored value outside the level range would leave every garden locked, so it
+// is clamped from both sides.
 function readUnlockedLevel() {
   try {
-    return Math.min(Number(localStorage.getItem(UNLOCK_KEY)) || 0, LEVELS.length - 1);
+    const saved = Number(localStorage.getItem(UNLOCK_KEY)) || 0;
+    return Math.min(Math.max(saved, 0), LEVELS.length - 1);
   } catch {
     return 0;
   }
 }
 
 function unlockLevel(levelIndex) {
-  if (levelIndex <= readUnlockedLevel()) return;
+  const opened = Math.min(levelIndex, LEVELS.length - 1);
+  if (opened <= unlockedLevel) return;
+  unlockedLevel = opened;
   try {
-    localStorage.setItem(UNLOCK_KEY, String(Math.min(levelIndex, LEVELS.length - 1)));
+    localStorage.setItem(UNLOCK_KEY, String(opened));
   } catch {
     // Private browsing modes can refuse writes. Levels stay open for this session only.
   }
@@ -250,11 +266,12 @@ function unlockLevel(levelIndex) {
 
 // Gardens open one at a time so the newest one is always the current goal.
 function renderLevelPicker() {
-  const unlocked = readUnlockedLevel();
   levelPickerElement.innerHTML = LEVELS.map((level, index) => {
-    const open = index <= unlocked;
+    const open = index <= unlockedLevel;
+    const current = index === currentLevelIndex;
     return `
-      <button class="level-button" type="button" data-level="${index}" ${open ? "" : "disabled"}
+      <button class="level-button${current ? " active" : ""}" type="button" data-level="${index}"
+        ${open ? "" : "disabled"} aria-current="${current ? "true" : "false"}"
         aria-label="Level ${index + 1}: ${open ? level.name : "locked"}">
         <span>${open ? index + 1 : "🔒"}</span>
         <small>${open ? level.name : "Locked"}</small>
@@ -268,26 +285,48 @@ function renderLevelPicker() {
 }
 
 function createBoardState(level) {
-  return level.map.map((row, rowIndex) =>
+  let start = { row: 0, column: 0 };
+  const board = level.map.map((row, rowIndex) =>
     [...row].map((symbol, columnIndex) => {
       if (symbol === "p") {
-        playerPosition = { row: rowIndex, column: columnIndex };
+        start = { row: rowIndex, column: columnIndex };
         return ".";
       }
       return symbol;
     }),
   );
+  return { board, start };
+}
+
+// One point reads badly in English, and the Russian text needs its own form too.
+function pointsLabel(value) {
+  return value === 1 ? "1 point" : `${value} points`;
+}
+
+// A hint arrow and a bumped tree both stay on screen until something changes.
+function clearFeedback() {
+  document.querySelectorAll(".move-button.hinted").forEach((button) => {
+    button.classList.remove("hinted");
+  });
+  boardElement.querySelectorAll(".hinted, .wobble").forEach((cell) => {
+    cell.classList.remove("hinted", "wobble");
+  });
 }
 
 function startLevel(levelIndex) {
-  if (levelIndex > readUnlockedLevel()) return;
+  if (levelIndex > unlockedLevel) return;
+  // A level can be restarted inside the pause before the result dialog.
+  window.clearTimeout(finishTimer);
   currentLevelIndex = levelIndex;
   const level = LEVELS[currentLevelIndex];
-  boardState = createBoardState(level);
+  const { board, start } = createBoardState(level);
+  boardState = board;
+  playerPosition = start;
   score = 0;
   movesLeft = level.moves;
   gameFinished = false;
   levelDialogElement.hidden = true;
+  clearFeedback();
 
   document.querySelector("#levelLabel").textContent = `Level ${currentLevelIndex + 1}`;
   document.querySelector("#levelName").textContent = level.name;
@@ -299,59 +338,75 @@ function startLevel(levelIndex) {
   gameMessageElement.textContent = "Use the arrow keys or the big buttons.";
 
   renderLevelPicker();
-  document.querySelectorAll(".level-button").forEach((button, index) => {
-    button.classList.toggle("active", index === currentLevelIndex);
-    button.setAttribute("aria-current", index === currentLevelIndex ? "true" : "false");
-  });
-
   updateStats();
   renderBoard();
 }
 
-function renderBoard() {
+// Rows are real grid rows, so the board is a valid grid for a screen reader.
+function buildBoard() {
   const fragment = document.createDocumentFragment();
-  boardElement.innerHTML = "";
 
   for (let row = 0; row < BOARD_SIZE; row += 1) {
+    const rowElement = document.createElement("div");
+    const cells = [];
+    rowElement.className = "board-row";
+    rowElement.setAttribute("role", "row");
+
     for (let column = 0; column < BOARD_SIZE; column += 1) {
       const cell = document.createElement("div");
-      const symbol = boardState[row][column];
-      const isPlayer = row === playerPosition.row && column === playerPosition.column;
-      const shade = (row + column) % 2 === 0 ? "light" : "dark";
-
-      cell.className = `cell ${shade}`;
       cell.setAttribute("role", "gridcell");
       cell.dataset.row = row;
       cell.dataset.column = column;
+      rowElement.appendChild(cell);
+      cells.push(cell);
+    }
+
+    cellElements.push(cells);
+    fragment.appendChild(rowElement);
+  }
+
+  boardElement.appendChild(fragment);
+}
+
+// The squares are updated in place: a move rewrites the two squares that
+// changed instead of all sixty-four, so the reading position stays on the board.
+function renderBoard() {
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let column = 0; column < BOARD_SIZE; column += 1) {
+      const cell = cellElements[row][column];
+      const symbol = boardState[row][column];
+      const isPlayer = row === playerPosition.row && column === playerPosition.column;
+      const shade = (row + column) % 2 === 0 ? "light" : "dark";
+      const item = ITEMS[symbol];
+      const piece = isPlayer ? "player" : symbol === "#" ? "rock" : item ? symbol : "empty";
+      const className = `cell ${shade}${isPlayer ? " player" : ""}${symbol === "#" ? " rock" : ""}`;
+
+      if (cell.className !== className) cell.className = className;
+      if (cell.dataset.piece === piece) continue;
+      cell.dataset.piece = piece;
 
       if (isPlayer) {
-        cell.classList.add("player");
         cell.setAttribute("aria-label", "Pip the gardener");
         cell.innerHTML = '<span class="piece" aria-hidden="true">🧑‍🌾</span>';
       } else if (symbol === "#") {
-        cell.classList.add("rock");
         cell.setAttribute("aria-label", "Tree, path blocked");
         cell.innerHTML = '<span class="piece" aria-hidden="true">🌳</span>';
-      } else if (ITEMS[symbol]) {
-        const item = ITEMS[symbol];
-        cell.setAttribute("aria-label", `${item.name}, ${item.value} points`);
+      } else if (item) {
+        cell.setAttribute("aria-label", `${item.name}, ${pointsLabel(item.value)}`);
         cell.innerHTML = `
           <span class="piece" aria-hidden="true">${item.icon}</span>
           <span class="point-badge" aria-hidden="true">${item.value}</span>
         `;
       } else {
         cell.setAttribute("aria-label", "Empty garden square");
+        cell.innerHTML = "";
       }
-
-      fragment.appendChild(cell);
     }
   }
-
-  boardElement.appendChild(fragment);
 }
 
 function updateStats() {
-  const bestScore = readBestScores()[currentLevelIndex];
+  const bestScore = bestScores[currentLevelIndex];
   scoreElement.textContent = score;
   movesElement.textContent = movesLeft;
   bestElement.textContent = bestScore === undefined ? "—" : bestScore;
@@ -380,9 +435,7 @@ function movePlayer(directionName) {
     return;
   }
 
-  document.querySelectorAll(".move-button.hinted, .cell.hinted").forEach((element) => {
-    element.classList.remove("hinted");
-  });
+  clearFeedback();
   playerPosition = nextPosition;
   movesLeft -= 1;
   const collectedSymbol = boardState[nextPosition.row][nextPosition.column];
@@ -397,9 +450,10 @@ function movePlayer(directionName) {
   updateStats();
   renderBoard();
 
-  if (movesLeft === 0 || countRemainingItems() === 0) {
+  if (movesLeft === 0) {
     gameFinished = true;
-    window.setTimeout(finishLevel, 340);
+    const delay = prefersReducedMotion.matches ? FINISH_DELAY_REDUCED : FINISH_DELAY;
+    finishTimer = window.setTimeout(finishLevel, delay);
   }
 }
 
@@ -407,17 +461,18 @@ function collectItem(symbol, position) {
   const item = ITEMS[symbol];
   score += item.value;
   boardState[position.row][position.column] = ".";
-  gameMessageElement.textContent = `${item.icon} Great! ${item.name} is worth ${item.value} points.`;
+  gameMessageElement.textContent = item.value === 1
+    ? `${item.icon} Great! ${item.name} is worth 1 point.`
+    : `${item.icon} Great! ${item.name} is worth ${item.value} points.`;
   showScorePop(item.value, position);
   playCollectSound(item.value);
 }
 
 function shakeTree(position) {
-  const cell = boardElement.querySelector(
-    `[data-row="${position.row}"][data-column="${position.column}"]`,
-  );
+  const cell = cellElements[position.row]?.[position.column];
   if (!cell) return;
-  cell.classList.remove("wobble");
+  // Only the tree that was just bumped carries the mark.
+  boardElement.querySelectorAll(".wobble").forEach((other) => other.classList.remove("wobble"));
   void cell.offsetWidth;
   cell.classList.add("wobble");
 }
@@ -429,10 +484,6 @@ function isInsideBoard(position) {
     position.column >= 0 &&
     position.column < BOARD_SIZE
   );
-}
-
-function countRemainingItems() {
-  return boardState.flat().filter((symbol) => ITEMS[symbol]).length;
 }
 
 function showScorePop(value, position) {
@@ -492,13 +543,7 @@ function findHintStep() {
 function showHint() {
   if (gameFinished) return;
   const hint = findHintStep();
-
-  document.querySelectorAll(".move-button.hinted").forEach((button) => {
-    button.classList.remove("hinted");
-  });
-  boardElement.querySelectorAll(".cell.hinted").forEach((cell) => {
-    cell.classList.remove("hinted");
-  });
+  clearFeedback();
 
   if (!hint) {
     gameMessageElement.textContent = "No prize is close enough. Start again when you like.";
@@ -507,10 +552,7 @@ function showHint() {
   }
 
   document.querySelector(`.move-button[data-direction="${hint.first}"]`).classList.add("hinted");
-  const cell = boardElement.querySelector(
-    `[data-row="${hint.target.row}"][data-column="${hint.target.column}"]`,
-  );
-  if (cell) cell.classList.add("hinted");
+  cellElements[hint.target.row][hint.target.column].classList.add("hinted");
   gameMessageElement.textContent = "Try this way first.";
   playTone(560, 0.1, "sine", 0.03);
 }
@@ -535,10 +577,17 @@ function getStars(value, goals) {
   return 0;
 }
 
+// The next garden opens only after a star, so the button has to say what it
+// really does.
+function nextLevelIndex() {
+  const nextIndex = (currentLevelIndex + 1) % LEVELS.length;
+  return nextIndex <= unlockedLevel ? nextIndex : currentLevelIndex;
+}
+
 function finishLevel() {
   const level = LEVELS[currentLevelIndex];
-  const previousBest = readBestScores()[currentLevelIndex] ?? 0;
-  const isNewBest = score > previousBest;
+  const previousBest = bestScores[currentLevelIndex];
+  const isNewBest = score > (previousBest ?? 0);
   const stars = getStars(score, level.goals);
   const isPerfect = score >= level.maxScore;
 
@@ -554,10 +603,17 @@ function finishLevel() {
     isPerfect ? "Three stars plus earned" : `${stars} stars earned`,
   );
   document.querySelector("#resultScore").textContent = score;
-  document.querySelector("#resultBest").textContent = isNewBest ? "A new best score!" : `Best score: ${previousBest}`;
+  // Nothing is shown before a level has a saved best, so "Best score: 0" cannot
+  // appear on a first attempt.
+  document.querySelector("#resultBest").textContent = isNewBest
+    ? "A new best score!"
+    : previousBest === undefined ? "" : `Best score: ${previousBest}`;
 
   const nextButton = document.querySelector("#nextButton");
-  if (currentLevelIndex === LEVELS.length - 1) {
+  const nextIndex = nextLevelIndex();
+  if (nextIndex === currentLevelIndex) {
+    nextButton.textContent = "Try again";
+  } else if (nextIndex === 0) {
     nextButton.textContent = "Level 1 →";
   } else {
     nextButton.textContent = "Next level →";
@@ -614,10 +670,7 @@ document.querySelectorAll(".move-button").forEach((button) => {
 document.querySelector("#hintButton").addEventListener("click", showHint);
 document.querySelector("#restartButton").addEventListener("click", () => startLevel(currentLevelIndex));
 document.querySelector("#replayButton").addEventListener("click", () => startLevel(currentLevelIndex));
-document.querySelector("#nextButton").addEventListener("click", () => {
-  const nextIndex = (currentLevelIndex + 1) % LEVELS.length;
-  startLevel(nextIndex <= readUnlockedLevel() ? nextIndex : currentLevelIndex);
-});
+document.querySelector("#nextButton").addEventListener("click", () => startLevel(nextLevelIndex()));
 
 soundButton.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
@@ -627,6 +680,13 @@ soundButton.addEventListener("click", () => {
 });
 
 window.addEventListener("keydown", (event) => {
+  // Browser and system shortcuts keep their meaning, and a focused control keeps
+  // its own arrow keys — otherwise the language picker cannot be used.
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  if (!levelDialogElement.hidden) return;
+  const focused = document.activeElement;
+  if (focused && ["SELECT", "INPUT", "TEXTAREA"].includes(focused.tagName)) return;
+
   const keyDirections = {
     ArrowUp: "up",
     ArrowDown: "down",
@@ -645,6 +705,6 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+buildBoard();
 renderSoundButton();
-renderLevelPicker();
 startLevel(0);

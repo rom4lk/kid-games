@@ -56,6 +56,7 @@
     ["points.", "очков."],
     ["A new best score!", "Новый рекорд!"],
     ["Play again", "Играть еще раз"],
+    ["Try again", "Попробовать снова"],
     ["Next level →", "Следующий уровень →"],
     ["Level 1 →", "Уровень 1 →"],
     ["Locked", "Закрыто"],
@@ -79,7 +80,9 @@
     ["Level {number}: {name}", "Уровень {number}: {name}"],
     ["Level {number}", "Уровень {number}"],
     ["{name}, {value} points", "{name}, очков: {value}"],
+    ["{name}, 1 point", "{name}, 1 очко"],
     ["{icon} Great! {name} is worth {value} points.", "{icon} Отлично! {name} дает очков: {value}."],
+    ["{icon} Great! {name} is worth 1 point.", "{icon} Отлично! {name} дает 1 очко."],
     ["{stars} stars earned", "Получено звезд: {stars}"],
     ["Best score: {score}", "Рекорд: {score}"]
   ]
