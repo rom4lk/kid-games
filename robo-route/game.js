@@ -58,6 +58,39 @@ const levels = [
     commands: ["left", "pick", "right", "drop", "up", "down"],
     solution: ["right", "right", "pick", "up", "right", "right", "up", "drop"],
   },
+  {
+    robot: { x: 0, y: 2 },
+    parcel: { x: 0, y: 2 },
+    station: { x: 5, y: 1 },
+    obstacles: [],
+    button: { x: 2, y: 2 },
+    gate: { x: 3, y: 2 },
+    gateInitiallyOpen: false,
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["pick", "right", "right", "right", "right", "right", "up", "drop"],
+  },
+  {
+    robot: { x: 0, y: 1 },
+    parcel: { x: 0, y: 1 },
+    station: { x: 5, y: 1 },
+    obstacles: [],
+    button: { x: 2, y: 0 },
+    gate: { x: 3, y: 1 },
+    gateInitiallyOpen: false,
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["pick", "right", "right", "up", "down", "right", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 2, y: 2 },
+    parcel: { x: 2, y: 1 },
+    station: { x: 5, y: 1 },
+    obstacles: [],
+    button: { x: 1, y: 2 },
+    gate: { x: 3, y: 1 },
+    gateInitiallyOpen: false,
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["left", "right", "up", "pick", "right", "right", "right", "drop"],
+  },
 ];
 
 const commandIcons = {
@@ -123,6 +156,7 @@ const STORAGE_KEY = "roboRouteProgressV1";
 const SOUND_KEY = "roboRouteSoundV1";
 const SPARE_SLOTS = 2;
 const IDLE_HINT_DELAY = 12000;
+const ORIGINAL_LEVEL_COUNT = 6;
 
 function copyPosition(position) {
   return { x: position.x, y: position.y };
@@ -136,10 +170,33 @@ function slotCount(level) {
   return level.solution.length + SPARE_SLOTS;
 }
 
-function isBlockedOn(level, position) {
+function isBlockedOn(level, position, gateOpen = Boolean(level.gateInitiallyOpen)) {
   const outsideGrid = position.x < 0 || position.x > 5 || position.y < 0 || position.y > 2;
   const hitsObstacle = level.obstacles.some((obstacle) => positionsMatch(position, obstacle));
-  return outsideGrid || hitsObstacle;
+  const hitsClosedGate = Boolean(
+    level.gate && !gateOpen && positionsMatch(position, level.gate),
+  );
+  return outsideGrid || hitsObstacle || hitsClosedGate;
+}
+
+function normalizeProgress(saved) {
+  if (!saved || typeof saved !== "object") {
+    return { maxUnlockedLevel: 0, completedLevels: [] };
+  }
+
+  const completedLevels = Array.isArray(saved.completedLevels) ? saved.completedLevels : [];
+  const completedOriginalLevels = Array.from(
+    { length: ORIGINAL_LEVEL_COUNT },
+    (_, index) => index,
+  ).every((index) => completedLevels.includes(index));
+  const savedMaximum = Math.min(Number(saved.maxUnlockedLevel) || 0, levels.length - 1);
+
+  return {
+    maxUnlockedLevel: completedOriginalLevels
+      ? Math.max(savedMaximum, ORIGINAL_LEVEL_COUNT)
+      : savedMaximum,
+    completedLevels,
+  };
 }
 
 // Replays a program without animation so hints can read the real world state
@@ -149,17 +206,26 @@ function simulate(level, commands) {
   let parcelPosition = copyPosition(level.parcel);
   let carrying = false;
   let delivered = false;
+  let gateOpen = Boolean(level.gateInitiallyOpen);
 
   for (let index = 0; index < commands.length; index += 1) {
     const command = commands[index];
     const movement = movements[command];
-    const fail = { failedAt: index, robotPosition, carrying, delivered };
+    const fail = {
+      failedAt: index,
+      robotPosition,
+      parcelPosition,
+      carrying,
+      delivered,
+      gateOpen,
+    };
 
     if (movement) {
       const next = { x: robotPosition.x + movement.x, y: robotPosition.y + movement.y };
-      if (isBlockedOn(level, next)) return fail;
+      if (isBlockedOn(level, next, gateOpen)) return fail;
       robotPosition = next;
       if (carrying) parcelPosition = copyPosition(next);
+      if (level.button && positionsMatch(robotPosition, level.button)) gateOpen = true;
     } else if (command === "pick") {
       if (carrying || !positionsMatch(parcelPosition, robotPosition)) return fail;
       carrying = true;
@@ -170,16 +236,24 @@ function simulate(level, commands) {
     }
   }
 
-  return { failedAt: -1, robotPosition, carrying, delivered };
+  return { failedAt: -1, robotPosition, parcelPosition, carrying, delivered, gateOpen };
 }
 
 // Breadth-first search for the first command of a shortest finish from here,
 // so any legal route the child invented gets a useful next step.
 function nextHelpfulCommand(level, from) {
   if (from.delivered) return null;
-  const keyOf = (position, carrying) => `${position.x},${position.y},${carrying ? 1 : 0}`;
-  const queue = [{ position: from.robotPosition, carrying: from.carrying, first: null }];
-  const seen = new Set([keyOf(from.robotPosition, from.carrying)]);
+  const initialGateOpen = from.gateOpen ?? Boolean(level.gateInitiallyOpen);
+  const keyOf = (position, carrying, gateOpen) => (
+    `${position.x},${position.y},${carrying ? 1 : 0},${gateOpen ? 1 : 0}`
+  );
+  const queue = [{
+    position: from.robotPosition,
+    carrying: from.carrying,
+    gateOpen: initialGateOpen,
+    first: null,
+  }];
+  const seen = new Set([keyOf(from.robotPosition, from.carrying, initialGateOpen)]);
 
   while (queue.length > 0) {
     const node = queue.shift();
@@ -187,6 +261,7 @@ function nextHelpfulCommand(level, from) {
     for (const command of level.commands) {
       let position = node.position;
       let carrying = node.carrying;
+      let gateOpen = node.gateOpen;
 
       if (command === "pick") {
         if (carrying || !positionsMatch(position, level.parcel)) continue;
@@ -197,14 +272,15 @@ function nextHelpfulCommand(level, from) {
       } else {
         const movement = movements[command];
         const next = { x: position.x + movement.x, y: position.y + movement.y };
-        if (isBlockedOn(level, next)) continue;
+        if (isBlockedOn(level, next, gateOpen)) continue;
         position = next;
+        if (level.button && positionsMatch(position, level.button)) gateOpen = true;
       }
 
-      const key = keyOf(position, carrying);
+      const key = keyOf(position, carrying, gateOpen);
       if (seen.has(key)) continue;
       seen.add(key);
-      queue.push({ position, carrying, first: node.first ?? command });
+      queue.push({ position, carrying, gateOpen, first: node.first ?? command });
     }
   }
 
@@ -216,10 +292,12 @@ if (typeof module !== "undefined" && module.exports) {
     levels,
     movements,
     SPARE_SLOTS,
+    ORIGINAL_LEVEL_COUNT,
     copyPosition,
     positionsMatch,
     slotCount,
     isBlockedOn,
+    normalizeProgress,
     simulate,
     nextHelpfulCommand,
   };
@@ -239,11 +317,7 @@ if (typeof document !== "undefined") {
   function readProgress() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!saved || typeof saved !== "object") return { maxUnlockedLevel: 0, completedLevels: [] };
-      return {
-        maxUnlockedLevel: Math.min(Number(saved.maxUnlockedLevel) || 0, levels.length - 1),
-        completedLevels: Array.isArray(saved.completedLevels) ? saved.completedLevels : [],
-      };
+      return normalizeProgress(saved);
     } catch {
       return { maxUnlockedLevel: 0, completedLevels: [] };
     }
@@ -268,6 +342,7 @@ if (typeof document !== "undefined") {
     parcelPosition: { x: 1, y: 1 },
     carrying: false,
     delivered: false,
+    gateOpen: false,
     running: false,
     soundOn: readSoundSetting(),
   };
@@ -276,6 +351,8 @@ if (typeof document !== "undefined") {
   const parcel = document.querySelector("#parcel");
   const station = document.querySelector(".delivery-station");
   const obstacles = document.querySelector("#obstacles");
+  const floorButtons = document.querySelector("#floorButtons");
+  const gates = document.querySelector("#gates");
   const levelProgress = document.querySelector("#levelProgress");
   const programStrip = document.querySelector("#programStrip");
   const commandPalette = document.querySelector("#commandPalette");
@@ -334,10 +411,15 @@ if (typeof document !== "undefined") {
     return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
   }
 
-  function setGridPosition(element, position) {
+  function setGridPosition(element, position, zIndex = 3 + position.y * 3) {
     element.style.setProperty("--x", position.x);
     element.style.setProperty("--y", position.y);
-    element.style.zIndex = String(3 + position.y * 3);
+    element.style.zIndex = String(zIndex);
+  }
+
+  function updateGateMechanic() {
+    floorButtons.firstElementChild?.classList.toggle("is-pressed", state.gateOpen);
+    gates.firstElementChild?.classList.toggle("is-open", state.gateOpen);
   }
 
   function updateWorld() {
@@ -347,6 +429,7 @@ if (typeof document !== "undefined") {
     robot.classList.toggle("is-carrying", state.carrying);
     parcel.classList.toggle("is-hidden", state.carrying || state.delivered);
     stationLight.classList.toggle("is-active", state.delivered);
+    updateGateMechanic();
   }
 
   function renderObstacles() {
@@ -357,6 +440,44 @@ if (typeof document !== "undefined") {
       setGridPosition(obstacle, position);
       obstacles.append(obstacle);
     });
+  }
+
+  function renderGateMechanic() {
+    const level = currentLevel();
+    floorButtons.replaceChildren();
+    gates.replaceChildren();
+
+    if (level.button) {
+      const button = document.createElement("span");
+      button.className = "floor-button";
+      button.innerHTML = `
+        <span class="button-base"></span>
+        <span class="button-plate">
+          <svg viewBox="0 0 64 64">
+            <path d="M29 54c-9-1-13-8-9-16l8-17c2-5 10-5 12 1l6 18c2 8-6 15-17 14Z" />
+            <circle cx="22" cy="17" r="5" />
+            <circle cx="31" cy="11" r="5" />
+            <circle cx="41" cy="12" r="4.5" />
+            <circle cx="49" cy="18" r="4" />
+          </svg>
+        </span>`;
+      setGridPosition(button, level.button, 2);
+      floorButtons.append(button);
+    }
+
+    if (level.gate) {
+      const gate = document.createElement("span");
+      gate.className = "gate";
+      gate.innerHTML = `
+        <span class="gate-opening">
+          <span class="gate-panel"><span class="gate-lock">×</span></span>
+        </span>
+        <span class="gate-frame"></span>`;
+      setGridPosition(gate, level.gate, 5 + level.gate.y * 3);
+      gates.append(gate);
+    }
+
+    updateGateMechanic();
   }
 
   function renderLevelProgress() {
@@ -387,7 +508,10 @@ if (typeof document !== "undefined") {
     state.parcelPosition = copyPosition(currentLevel().parcel);
     state.carrying = false;
     state.delivered = false;
+    state.gateOpen = Boolean(currentLevel().gateInitiallyOpen);
     robot.classList.remove("is-confused", "is-stepping");
+    gates.firstElementChild?.classList.remove("is-opening", "is-blocked");
+    floorButtons.firstElementChild?.classList.remove("is-activating");
     updateWorld();
   }
 
@@ -515,8 +639,41 @@ if (typeof document !== "undefined") {
     robot.classList.remove("is-stepping");
   }
 
+  async function activateGateIfNeeded() {
+    const level = currentLevel();
+    if (
+      state.gateOpen
+      || !level.button
+      || !positionsMatch(state.robotPosition, level.button)
+    ) {
+      return;
+    }
+
+    state.gateOpen = true;
+    const button = floorButtons.firstElementChild;
+    const gate = gates.firstElementChild;
+    button?.classList.add("is-activating");
+    gate?.classList.add("is-opening");
+    updateGateMechanic();
+    playTone(420, 0.12, "triangle", 0.07);
+    playTone(680, 0.18, "sine", 0.07, 0.1);
+    await wait(paceOf(430));
+    button?.classList.remove("is-activating");
+    gate?.classList.remove("is-opening");
+  }
+
   function isBlocked(position) {
-    return isBlockedOn(currentLevel(), position);
+    return isBlockedOn(currentLevel(), position, state.gateOpen);
+  }
+
+  function showBlockedGate(position) {
+    const level = currentLevel();
+    if (!level.gate || state.gateOpen || !positionsMatch(position, level.gate)) return;
+    const gate = gates.firstElementChild;
+    if (!gate) return;
+    gate.classList.remove("is-blocked");
+    void gate.offsetWidth;
+    gate.classList.add("is-blocked");
   }
 
   async function executeCommand(command) {
@@ -526,10 +683,14 @@ if (typeof document !== "undefined") {
         x: state.robotPosition.x + movement.x,
         y: state.robotPosition.y + movement.y,
       };
-      if (isBlocked(nextPosition)) return false;
+      if (isBlocked(nextPosition)) {
+        showBlockedGate(nextPosition);
+        return false;
+      }
       state.robotPosition = nextPosition;
       if (state.carrying) state.parcelPosition = copyPosition(nextPosition);
       await animateStep();
+      await activateGateIfNeeded();
       return true;
     }
 
@@ -665,6 +826,7 @@ if (typeof document !== "undefined") {
     clearHints();
     renderAvailableCommands();
     renderObstacles();
+    renderGateMechanic();
     resetWorld();
     renderProgram();
     renderLevelProgress();

@@ -1,6 +1,6 @@
 # Robo Route
 
-An interactive, no-reading-required game prototype inspired by the programming loop of Human Resource Machine. A child builds a sequence from large picture commands and helps a friendly delivery robot move a parcel to its station across six levels.
+An interactive, no-reading-required game prototype inspired by the programming loop of Human Resource Machine. A child builds a sequence from large picture commands and helps a friendly delivery robot move a parcel to its station across nine levels.
 
 ## Run locally
 
@@ -22,7 +22,7 @@ Then open `http://127.0.0.1:4173/robo-route/`. A local server is required: the g
 - Tap the eraser or home icon to reset.
 - Tap an unlocked dot on the field to revisit that level.
 
-The first two levels use horizontal movement. Later levels introduce up and down commands, turns, and an obstacle that the robot must avoid.
+The first two levels use horizontal movement. Later levels introduce up and down commands, turns, and an obstacle that the robot must avoid. The final three levels add a floor button that permanently opens one gate for the current run. The robot activates it by stepping on it; the button is not a UI control and adds no new command card.
 
 The visible child-facing interface contains no written instructions. The only visible words belong to
 the language picker in the top corner, which is addressed to an adult; everything the child touches is
@@ -39,15 +39,18 @@ English in the HTML, and the Russian version comes from `translations.json` thro
 
 The route is judged by simulating it, not by comparing it against a stored answer. Any legal route
 that gets the parcel to the station wins, and the light bulb solves the board from wherever the robot
-currently stands, so a child who invents their own path still gets a useful next step. A slot is only
-marked wrong when that command physically cannot run. Each level gives two spare slots beyond the
-shortest solution, so one wasted step does not make the level unfinishable.
+currently stands, including the current gate state, so a child who invents their own path still gets a
+useful next step. A closed gate blocks its cell; after the robot reaches the floor button, that gate
+stays open until the run ends. A slot is only marked wrong when that command physically cannot run.
+Each level gives two spare slots beyond the shortest solution, so one wasted step does not make the
+level unfinishable.
 
 ## Progress
 
 Unlocked and completed levels are stored in `localStorage` under `roboRouteProgressV1`, and the game
 reopens on the first unfinished level. The sound switch is stored separately under `roboRouteSoundV1`,
-so a muted game stays muted after a reload.
+so a muted game stays muted after a reload. A saved game with all six original levels completed
+automatically unlocks the first gate level without changing its completion or sound records.
 
 ## Tests
 
@@ -57,15 +60,17 @@ The level data, the route simulation and the hint solver need no browser and are
 node robo-route/test-game.js
 ```
 
-The tests confirm that every stored solution wins, that an invented detour wins too, that an
-impossible command is reported at the right position, and that following the light bulb alone
-finishes every level within the available slots.
+The tests confirm that every stored solution wins, that the original six levels are unchanged, that
+an invented detour wins too, that obstacles and closed gates report impossible commands at the right
+position, that buttons open gates while a parcel is carried, that gate state resets between runs, that
+old progress unlocks the first new level, and that following the light bulb alone finishes every level
+within the available slots.
 
 ## Files
 
 - `index.html` contains the game scene and icon artwork.
-- `styles.css` contains the responsive visual system and animations.
-- `game.js` contains the six levels, command queue, grid simulation, hints, sound, and feedback. The
+- `styles.css` contains the responsive visual system, gate states, and animations.
+- `game.js` contains the nine levels, command queue, grid simulation, hints, sound, and feedback. The
   part that needs no browser is exported for the tests; the rest runs inside a `document` guard.
 - `translations.json` contains the Russian version of every label.
 - `test-game.js` contains the logic tests.

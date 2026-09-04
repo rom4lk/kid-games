@@ -2,12 +2,76 @@ const assert = require("node:assert/strict");
 const {
   levels,
   SPARE_SLOTS,
+  ORIGINAL_LEVEL_COUNT,
   positionsMatch,
   slotCount,
   isBlockedOn,
+  normalizeProgress,
   simulate,
   nextHelpfulCommand,
 } = require("./game.js");
+
+const originalLevels = [
+  {
+    robot: { x: 1, y: 1 },
+    parcel: { x: 1, y: 1 },
+    station: { x: 4, y: 1 },
+    obstacles: [],
+    commands: ["pick", "right", "drop"],
+    solution: ["pick", "right", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 2, y: 1 },
+    parcel: { x: 1, y: 1 },
+    station: { x: 5, y: 1 },
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop"],
+    solution: ["left", "pick", "right", "right", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 1, y: 2 },
+    parcel: { x: 1, y: 1 },
+    station: { x: 4, y: 1 },
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up"],
+    solution: ["up", "pick", "right", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 0, y: 2 },
+    parcel: { x: 2, y: 2 },
+    station: { x: 4, y: 0 },
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up"],
+    solution: ["right", "right", "pick", "up", "up", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 4, y: 2 },
+    parcel: { x: 4, y: 0 },
+    station: { x: 0, y: 2 },
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: [
+      "up",
+      "up",
+      "pick",
+      "left",
+      "left",
+      "left",
+      "left",
+      "down",
+      "down",
+      "drop",
+    ],
+  },
+  {
+    robot: { x: 0, y: 2 },
+    parcel: { x: 2, y: 2 },
+    station: { x: 4, y: 0 },
+    obstacles: [{ x: 3, y: 2 }],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["right", "right", "pick", "up", "right", "right", "up", "drop"],
+  },
+];
 
 function testReferenceSolutions() {
   levels.forEach((level, index) => {
@@ -59,6 +123,57 @@ function testObstacleBlocksOnlyItsCell() {
   assert.equal(isBlockedOn(level, { x: 2, y: 3 }), true, "the grid ends at y = 2");
 }
 
+function testOriginalLevelsRemainUnchanged() {
+  assert.equal(ORIGINAL_LEVEL_COUNT, originalLevels.length);
+  assert.deepEqual(levels.slice(0, ORIGINAL_LEVEL_COUNT), originalLevels);
+}
+
+function testClosedAndOpenGateBlocking() {
+  const level = levels[7];
+  assert.equal(isBlockedOn(level, level.gate, false), true, "a closed gate blocks its cell");
+  assert.equal(isBlockedOn(level, level.gate, true), false, "an open gate allows entry");
+  assert.equal(isBlockedOn(level, { x: 3, y: 0 }, false), false, "nearby cells stay open");
+}
+
+function testButtonOpensGatePermanentlyForRun() {
+  const level = levels[6];
+  const onButton = simulate(level, ["pick", "right", "right"]);
+  assert.equal(onButton.failedAt, -1);
+  assert.equal(onButton.carrying, true, "the button works while the parcel is carried");
+  assert.equal(onButton.gateOpen, true, "stepping on the button opens the gate");
+  assert.ok(positionsMatch(onButton.parcelPosition, level.button));
+
+  const afterGate = simulate(level, ["pick", "right", "right", "right", "right"]);
+  assert.equal(afterGate.failedAt, -1);
+  assert.equal(afterGate.gateOpen, true, "the gate stays open after later commands");
+
+  const freshRun = simulate(level, []);
+  assert.equal(freshRun.gateOpen, false, "a new simulation restores the initial gate state");
+}
+
+function testClosedGateReportsCommandIndex() {
+  const outcome = simulate(levels[7], ["right", "right", "right"]);
+  assert.equal(outcome.failedAt, 2);
+  assert.equal(outcome.gateOpen, false);
+  assert.ok(positionsMatch(outcome.robotPosition, { x: 2, y: 1 }));
+}
+
+function testCompletedOriginalProgressUnlocksNewLevel() {
+  const saved = {
+    maxUnlockedLevel: ORIGINAL_LEVEL_COUNT - 1,
+    completedLevels: [0, 1, 2, 3, 4, 5],
+  };
+  const migrated = normalizeProgress(saved);
+  assert.equal(migrated.maxUnlockedLevel, ORIGINAL_LEVEL_COUNT);
+  assert.deepEqual(migrated.completedLevels, saved.completedLevels);
+
+  const incomplete = normalizeProgress({
+    maxUnlockedLevel: ORIGINAL_LEVEL_COUNT - 1,
+    completedLevels: [0, 1, 2, 3, 4],
+  });
+  assert.equal(incomplete.maxUnlockedLevel, ORIGINAL_LEVEL_COUNT - 1);
+}
+
 // The lamp solves the board from where the robot stands, so following it alone
 // finishes every level inside the available slots.
 function testHintFinishesEveryLevel() {
@@ -101,6 +216,11 @@ const tests = [
   testDetourWins,
   testImpossibleCommands,
   testObstacleBlocksOnlyItsCell,
+  testOriginalLevelsRemainUnchanged,
+  testClosedAndOpenGateBlocking,
+  testButtonOpensGatePermanentlyForRun,
+  testClosedGateReportsCommandIndex,
+  testCompletedOriginalProgressUnlocksNewLevel,
   testHintFinishesEveryLevel,
   testHintAfterAWanderingStart,
   testDeliveredBoardAsksForNothing,
