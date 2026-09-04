@@ -80,7 +80,7 @@ const OBJECTS = {
     canRoll: true,
   },
   steelKey: {
-    name: "Steel key",
+    name: "Gold key",
     emoji: "🔑",
     shape: "long",
     color: "gold",
@@ -191,7 +191,7 @@ const OBJECTS = {
   },
   woodSpoon: {
     name: "Wooden spoon",
-    emoji: "🥄",
+    emoji: "🪵🥄",
     shape: "long",
     color: "brown",
     material: "wood",
@@ -211,7 +211,7 @@ const OBJECTS = {
   },
   blueWheel: {
     name: "Blue wheel",
-    emoji: "🛞",
+    emoji: "🔵🛞",
     shape: "round",
     color: "blue",
     material: "rubber",
@@ -221,7 +221,7 @@ const OBJECTS = {
   },
   redWheel: {
     name: "Red wheel",
-    emoji: "🛞",
+    emoji: "🔴🛞",
     shape: "round",
     color: "red",
     material: "rubber",
@@ -250,6 +250,49 @@ const OBJECTS = {
     canRoll: true,
   },
 };
+
+const ATTRIBUTE_ICONS = {
+  color: {
+    blue: "🔵", silver: "⚪", red: "🔴", orange: "🟠", green: "🟢",
+    brown: "🟤", gold: "🥇", black: "⚫", yellow: "🟡",
+  },
+  shape: {
+    round: "⭕", square: "◼", long: "↔️", wavy: "〰️", rectangle: "▭",
+    irregular: "✳️", star: "⭐", cylinder: "🥫",
+  },
+  material: {
+    rubber: "🛞", metal: "⚙️", wood: "🪵", plastic: "🧴", paper: "📄",
+    ceramic: "🏺", fabric: "🧵", organic: "🌱", glass: "💎",
+  },
+  size: { small: "🤏", medium: "✋", large: "🙌" },
+  category: {
+    toy: "🧸", money: "🪙", kitchen: "🍽️", clothing: "👕",
+    school: "📚", tool: "🛠️", craft: "✂️", food: "🍎",
+  },
+  canRoll: { true: "🎳", false: "⛔" },
+};
+
+function getObjectAttributes(object) {
+  return [
+    { label: "Color", value: object.color, icon: ATTRIBUTE_ICONS.color[object.color] },
+    { label: "Shape", value: object.shape, icon: ATTRIBUTE_ICONS.shape[object.shape] },
+    { label: "Material", value: object.material, icon: ATTRIBUTE_ICONS.material[object.material] },
+    { label: "Size", value: object.size, icon: ATTRIBUTE_ICONS.size[object.size] },
+    { label: "Category", value: object.category, icon: ATTRIBUTE_ICONS.category[object.category] },
+    {
+      label: "Movement",
+      value: object.canRoll ? "can roll" : "cannot roll",
+      icon: ATTRIBUTE_ICONS.canRoll[object.canRoll],
+    },
+  ];
+}
+
+function getObjectAccessibleLabel(object, tested = false) {
+  const attributes = getObjectAttributes(object)
+    .map((attribute) => `${attribute.label}: ${attribute.value}`)
+    .join(". ");
+  return `Test ${object.name}${tested ? ", already tested" : ""}. ${attributes}.`;
+}
 
 const RULES = {
   red: {
@@ -334,7 +377,7 @@ const RULES = {
     icon: "🎳",
     title: "It accepts objects that can roll",
     short: "can roll",
-    test: (object) => object.canRoll,
+    test: (object) => Boolean(object.canRoll),
   },
   blueAndRolls: {
     icon: "🔵 + 🎳",
@@ -350,48 +393,48 @@ const LEVELS = [
     brief: "Look at the examples. Find the bot's rule.",
     targetRule: "round",
     hypothesisIds: ["red", "round", "metal", "small"],
-    initialEvidence: ["blueBall", "coin", "redBlock"],
-    testObjects: ["spoon", "orangeButton", "greenBook", "redPlate", "woodRing"],
+    initialEvidence: ["coin", "redBlock", "greenBook"],
+    testObjects: ["spoon", "orangeButton", "blueBall", "redPlate", "woodRing"],
   },
   {
     title: "Color or Material?",
     brief: "Find what matters: color or material.",
     targetRule: "metal",
     hypothesisIds: ["silver", "metal", "kitchen", "small"],
-    initialEvidence: ["coin", "steelKey", "orangeButton", "silverRibbon"],
-    testObjects: ["spoon", "redKey", "plasticFork", "blueCup", "metalBall"],
+    initialEvidence: ["coin", "steelKey", "silverRibbon", "redKey"],
+    testObjects: ["spoon", "orangeButton", "plasticFork", "blueCup", "metalBall"],
   },
   {
     title: "Two Clues",
     brief: "This rule has two parts.",
     targetRule: "redAndSmall",
     hypothesisIds: ["red", "small", "round", "redAndSmall"],
-    initialEvidence: ["redBerry", "redBlock", "redBook", "blueMarble"],
-    testObjects: ["redSock", "redPlate", "orangeButton", "redKey", "greenBook"],
+    initialEvidence: ["redBerry", "redBlock", "redBook", "redPlate"],
+    testObjects: ["redSock", "blueMarble", "orangeButton", "redKey", "greenBook"],
   },
   {
     title: "Special Case",
     brief: "Round is not enough. Find what else matters.",
     targetRule: "roundAndNotMetal",
     hypothesisIds: ["round", "nonMetal", "roundAndNotMetal", "wood"],
-    initialEvidence: ["blueBall", "coin", "redBlock", "woodRing"],
-    testObjects: ["metalBall", "redPlate", "woodStar", "blueWheel", "spoon"],
+    initialEvidence: ["blueBall", "coin", "woodRing", "redPlate"],
+    testObjects: ["metalBall", "redBlock", "woodStar", "blueWheel", "spoon"],
   },
   {
     title: "Two Ways",
     brief: "An object can fit in two different ways.",
     targetRule: "kitchenOrWood",
     hypothesisIds: ["kitchen", "wood", "kitchenOrWood", "long"],
-    initialEvidence: ["spoon", "redBlock", "blueBall", "shoe"],
-    testObjects: ["woodSpoon", "blueCup", "woodStar", "steelKey", "greenBook"],
+    initialEvidence: ["spoon", "blueBall", "shoe", "blueCup"],
+    testObjects: ["woodSpoon", "redBlock", "woodStar", "steelKey", "greenBook"],
   },
   {
     title: "Final Rule",
     brief: "Use color and movement together.",
     targetRule: "blueAndRolls",
     hypothesisIds: ["blue", "rolls", "round", "blueAndRolls"],
-    initialEvidence: ["blueWheel", "redWheel", "blueBlock", "steelKey"],
-    testObjects: ["blueBall", "blueMarble", "metalBall", "blueCup", "yellowBall"],
+    initialEvidence: ["blueWheel", "redWheel", "steelKey", "yellowBall"],
+    testObjects: ["blueBall", "blueMarble", "metalBall", "blueCup", "blueBlock"],
   },
 ];
 
@@ -409,11 +452,12 @@ function findCounterexample(level, hypothesisId, excludedIds = []) {
 
 function createProofQueue(level, hypothesisId, excludedIds = []) {
   const allObjects = [...level.testObjects, ...level.initialEvidence];
-  const counterexample = findCounterexample(level, hypothesisId, excludedIds);
+  const knownIds = [...new Set([...level.initialEvidence, ...excludedIds])];
+  const counterexample = findCounterexample(level, hypothesisId, knownIds);
   const queue = counterexample ? [counterexample] : [];
 
-  allObjects.forEach((objectId) => {
-    if (queue.length < 3 && !queue.includes(objectId) && !excludedIds.includes(objectId)) {
+  level.testObjects.forEach((objectId) => {
+    if (queue.length < 3 && !queue.includes(objectId) && !knownIds.includes(objectId)) {
       queue.push(objectId);
     }
   });
@@ -423,6 +467,24 @@ function createProofQueue(level, hypothesisId, excludedIds = []) {
   });
 
   return queue.slice(0, 3);
+}
+
+function isRuleDisproved(level, ruleId, records = []) {
+  const evidence = [
+    ...level.initialEvidence.map((objectId) => ({
+      objectId,
+      result: ruleResult(level.targetRule, objectId),
+    })),
+    ...records,
+  ];
+  return evidence.some((record) => ruleResult(ruleId, record.objectId) !== record.result);
+}
+
+function sanitizeCompletedLevels(saved) {
+  if (!Array.isArray(saved)) return new Set();
+  return new Set(saved.filter(
+    (index) => Number.isInteger(index) && index >= 0 && index < LEVELS.length,
+  ));
 }
 
 function evaluateExperiment(level, hypothesisId, objectId, prediction) {
@@ -439,11 +501,16 @@ function evaluateExperiment(level, hypothesisId, objectId, prediction) {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     OBJECTS,
+    ATTRIBUTE_ICONS,
     RULES,
     LEVELS,
     ruleResult,
     findCounterexample,
     createProofQueue,
+    isRuleDisproved,
+    sanitizeCompletedLevels,
+    getObjectAttributes,
+    getObjectAccessibleLabel,
     evaluateExperiment,
   };
 }
@@ -471,7 +538,7 @@ if (typeof document !== "undefined") {
     phasePill: document.querySelector("#phasePill"),
     notebookStatus: document.querySelector("#notebookStatus"),
     notebookEmpty: document.querySelector("#notebookEmpty"),
-    tableWrap: document.querySelector("#tableWrap"),
+    recordList: document.querySelector("#recordList"),
     notebookBody: document.querySelector("#notebookBody"),
     successDialog: document.querySelector("#successDialog"),
     badgeShelf: document.querySelector("#badgeShelf"),
@@ -480,6 +547,11 @@ if (typeof document !== "undefined") {
     successCopy: document.querySelector("#successCopy"),
     nextButton: document.querySelector("#nextButton"),
     soundButton: document.querySelector("#soundButton"),
+    restartButton: document.querySelector("#restartButton"),
+    instructionText: document.querySelector("#instructionText"),
+    gameShell: document.querySelector("#gameShell"),
+    topbar: document.querySelector("#topbar"),
+    successTitle: document.querySelector("#successTitle"),
   };
 
   let currentLevelIndex = 0;
@@ -493,6 +565,7 @@ if (typeof document !== "undefined") {
   let completedLevels = readCompletedLevels();
   let soundEnabled = readSoundSetting();
   let focusBeforeDialog = null;
+  let showingCompletionSummary = false;
 
   const firstIncompleteLevel = LEVELS.findIndex((_, index) => !completedLevels.has(index));
   currentLevelIndex = firstIncompleteLevel === -1 ? 0 : firstIncompleteLevel;
@@ -500,7 +573,7 @@ if (typeof document !== "undefined") {
   function readCompletedLevels() {
     try {
       const saved = JSON.parse(localStorage.getItem("secretRuleLabCompletedV1"));
-      return new Set(Array.isArray(saved) ? saved : []);
+      return sanitizeCompletedLevels(saved);
     } catch {
       return new Set();
     }
@@ -528,7 +601,55 @@ if (typeof document !== "undefined") {
   }
 
   function isDisproved(ruleId) {
-    return records.some((record) => ruleResult(ruleId, record.objectId) !== record.result);
+    return isRuleDisproved(LEVELS[currentLevelIndex], ruleId, records);
+  }
+
+  function renderAttributeStrip(object) {
+    return `
+      <span class="attribute-strip">
+        ${getObjectAttributes(object).map((attribute) => `
+          <span
+            class="attribute-icon"
+            role="img"
+            aria-label="${attribute.label}: ${attribute.value}"
+            title="${attribute.label}: ${attribute.value}"
+          >${attribute.icon}</span>
+        `).join("")}
+      </span>
+    `;
+  }
+
+  function activeFocusSelector() {
+    const active = document.activeElement;
+    if (!(active instanceof HTMLElement)) return null;
+    if (active.dataset.rule) return `[data-rule="${active.dataset.rule}"]`;
+    if (active.dataset.object) return `[data-object="${active.dataset.object}"]`;
+    if (active.dataset.prediction) return `[data-prediction="${active.dataset.prediction}"]`;
+    return active.id ? `#${active.id}` : null;
+  }
+
+  function canReceiveFocus(element) {
+    return element && !element.disabled && !element.closest("[hidden]") && !element.closest("[inert]");
+  }
+
+  function focusNextAction() {
+    let next;
+    if (!selectedHypothesisId) {
+      next = elements.hypothesisGrid.querySelector("button:not(:disabled)");
+    } else if (phase === "proof" || selectedObjectId) {
+      next = elements.experimentPanel.querySelector("button:not(:disabled)");
+    } else {
+      next = elements.objectGrid.querySelector("button:not(:disabled)")
+        || (!elements.proveButton.hidden ? elements.proveButton : null);
+    }
+    next?.focus();
+  }
+
+  function restoreFocus(selector) {
+    if (!selector) return;
+    const target = document.querySelector(selector);
+    if (canReceiveFocus(target)) target.focus();
+    else focusNextAction();
   }
 
   function setFeedback(message, tone = "neutral") {
@@ -555,7 +676,11 @@ if (typeof document !== "undefined") {
       return `
         <article class="evidence-item">
           <span class="evidence-emoji" aria-hidden="true">${object.emoji}</span>
-          <span><strong>${object.name}</strong><small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small></span>
+          <span class="evidence-copy">
+            <strong>${object.name}</strong>
+            <small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small>
+            ${renderAttributeStrip(object)}
+          </span>
           <span class="result-tag ${accepted ? "accepted" : "rejected"}">${accepted ? "Fits" : "Does not fit"}</span>
         </article>
       `;
@@ -572,6 +697,7 @@ if (typeof document !== "undefined") {
         type="button"
         data-rule="${ruleId}"
         aria-pressed="${selectedHypothesisId === ruleId}"
+        title="${RULES[ruleId].title}"
         ${phase === "proof" || disproved ? "disabled" : ""}
       >
         <span class="hypothesis-icon" aria-hidden="true">${RULES[ruleId].icon}</span>
@@ -591,14 +717,17 @@ if (typeof document !== "undefined") {
       const tested = testedObjectIds.includes(objectId);
       return `
         <button
-          class="object-button ${selectedObjectId === objectId ? "selected" : ""}"
+          class="object-button ${selectedObjectId === objectId ? "selected" : ""} ${tested ? "tested" : ""}"
           type="button"
           data-object="${objectId}"
           ${tested || phase === "proof" ? "disabled" : ""}
-          aria-label="Test ${object.name}${tested ? ", already tested" : ""}"
+          aria-pressed="${selectedObjectId === objectId}"
+          aria-label="${getObjectAccessibleLabel(object, tested)}"
         >
           <span class="emoji" aria-hidden="true">${object.emoji}</span>
           <span class="name">${object.name}</span>
+          ${renderAttributeStrip(object)}
+          ${tested ? '<span class="tested-mark" aria-hidden="true">✓</span>' : ""}
         </button>
       `;
     }).join("");
@@ -616,9 +745,15 @@ if (typeof document !== "undefined") {
       elements.experimentPrompt.textContent = "Pick an object first.";
     } else {
       elements.selectedObject.textContent = object.emoji;
-      elements.experimentLabel.textContent = phase === "proof" ? `Proof trial ${proofIndex + 1} of 3` : "Your guess";
+      elements.experimentLabel.textContent = phase === "proof"
+        ? `Proof trial ${proofIndex + 1} of ${proofQueue.length}`
+        : "Your guess";
       elements.experimentTitle.textContent = `Will the ${object.name.toLowerCase()} fit?`;
-      elements.experimentPrompt.textContent = "What will the bot do?";
+      const isKnown = phase === "proof"
+        && (LEVELS[currentLevelIndex].initialEvidence.includes(objectId) || testedObjectIds.includes(objectId));
+      elements.experimentPrompt.textContent = isKnown
+        ? "You know this one. Say it again."
+        : "What will the bot do?";
     }
 
     buttons.forEach((button) => {
@@ -627,9 +762,9 @@ if (typeof document !== "undefined") {
   }
 
   function renderNotebook() {
-    elements.notebookStatus.textContent = records.length === 0 ? "No tests yet" : `${records.length} tests`;
+    elements.notebookStatus.textContent = records.length === 0 ? "No tests yet" : `Tests: ${records.length}`;
     elements.notebookEmpty.hidden = records.length > 0;
-    elements.tableWrap.hidden = records.length === 0;
+    elements.recordList.hidden = records.length === 0;
     elements.notebookBody.innerHTML = records.map((record) => {
       return `
         <article class="record-card ${record.hypothesisFits ? "record-supports" : "record-contradicts"}">
@@ -663,7 +798,20 @@ if (typeof document !== "undefined") {
       : !hasObject ? "2" : "3";
     elements.testSection.hidden = !hasHypothesis || phase === "proof";
     elements.experimentPanel.hidden = !hasObject;
-    elements.proveButton.hidden = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+    elements.proveButton.hidden = !canProve();
+    if (!hasHypothesis) {
+      elements.instructionText.textContent = "Look at the examples. Pick the rule you think fits.";
+    } else if (phase === "proof") {
+      elements.instructionText.textContent = "Keep this rule. Guess what the bot will do.";
+    } else if (hasObject) {
+      elements.instructionText.textContent = "Guess what the bot will do.";
+    } else {
+      elements.instructionText.textContent = "Pick an object to test your rule.";
+    }
+  }
+
+  function canProve() {
+    return phase !== "proof" && Boolean(selectedHypothesisId) && testedObjectIds.length >= 2;
   }
 
   function renderBadges() {
@@ -677,12 +825,13 @@ if (typeof document !== "undefined") {
   }
 
   function render() {
+    const focusSelector = activeFocusSelector();
     const level = LEVELS[currentLevelIndex];
     elements.missionLabel.textContent = `Mission ${String(currentLevelIndex + 1).padStart(2, "0")}`;
     elements.missionTitle.textContent = level.title;
     elements.missionBrief.textContent = level.brief;
     elements.phasePill.textContent = phase === "proof" ? "Check rule" : "Explore";
-    elements.proveButton.disabled = phase === "proof" || !selectedHypothesisId || testedObjectIds.length < 2;
+    elements.proveButton.disabled = !canProve();
     renderProgress();
     renderEvidence();
     renderHypotheses();
@@ -690,6 +839,7 @@ if (typeof document !== "undefined") {
     renderExperiment();
     renderNotebook();
     renderSteps();
+    restoreFocus(focusSelector);
   }
 
   function selectHypothesis(ruleId) {
@@ -700,8 +850,12 @@ if (typeof document !== "undefined") {
   }
 
   function selectObject(objectId) {
-    if (!selectedHypothesisId || testedObjectIds.includes(objectId)) {
+    if (!selectedHypothesisId) {
       setFeedback("Pick a rule first.", "warning");
+      return;
+    }
+    if (testedObjectIds.includes(objectId)) {
+      setFeedback("You already tested this object.", "warning");
       return;
     }
 
@@ -748,11 +902,10 @@ if (typeof document !== "undefined") {
     }
 
     if (!evaluation.predictionMatches) {
-      phase = "explore";
-      proofQueue = [];
-      proofIndex = 0;
       setFeedback(
-        "The bot surprised you, but the rule still fits. Try again.",
+        phase === "proof"
+          ? "The bot surprised you, but the rule still fits. Try this trial again."
+          : "The bot surprised you, but the rule still fits. Pick another object.",
         "warning",
       );
       playTone(300);
@@ -786,15 +939,40 @@ if (typeof document !== "undefined") {
   function completeLevel() {
     completedLevels.add(currentLevelIndex);
     saveSetting("secretRuleLabCompletedV1", JSON.stringify([...completedLevels]));
+    elements.successTitle.textContent = "Badge earned!";
     elements.successCopy.textContent = `The rule was: ${RULES[LEVELS[currentLevelIndex].targetRule].short}.`;
     elements.nextButton.textContent = currentLevelIndex < LEVELS.length - 1 ? "Next mission" : "Play from the start";
+    showingCompletionSummary = false;
+    render();
+    openSuccessDialog();
+    playTone(660, 0.18);
+    window.setTimeout(() => playTone(880, 0.22), 120);
+  }
+
+  function setGameInert(value) {
+    elements.topbar.inert = value;
+    elements.gameShell.inert = value;
+  }
+
+  function openSuccessDialog() {
     renderBadges();
     focusBeforeDialog = document.activeElement;
     elements.successDialog.hidden = false;
+    setGameInert(true);
     elements.nextButton.focus();
-    playTone(660, 0.18);
-    window.setTimeout(() => playTone(880, 0.22), 120);
-    renderProgress();
+  }
+
+  function closeSuccessDialog() {
+    elements.successDialog.hidden = true;
+    setGameInert(false);
+  }
+
+  function showCompletionSummary() {
+    showingCompletionSummary = true;
+    elements.successTitle.textContent = "All rules checked!";
+    elements.successCopy.textContent = "You earned every badge.";
+    elements.nextButton.textContent = "Play from the start";
+    openSuccessDialog();
   }
 
   function resetMission() {
@@ -805,13 +983,18 @@ if (typeof document !== "undefined") {
     proofQueue = [];
     proofIndex = 0;
     phase = "explore";
-    elements.successDialog.hidden = true;
+    closeSuccessDialog();
     setFeedback("Look at the bot's examples. Then pick a rule.", "neutral");
     render();
   }
 
   function continueGame() {
-    if (currentLevelIndex < LEVELS.length - 1) {
+    const startsNewRun = showingCompletionSummary || completedLevels.size === LEVELS.length;
+    if (startsNewRun) {
+      completedLevels.clear();
+      saveSetting("secretRuleLabCompletedV1", "[]");
+      currentLevelIndex = 0;
+    } else if (currentLevelIndex < LEVELS.length - 1) {
       currentLevelIndex += 1;
     } else {
       currentLevelIndex = 0;
@@ -820,6 +1003,18 @@ if (typeof document !== "undefined") {
     const firstHypothesis = elements.hypothesisGrid.querySelector("button:not(:disabled)");
     (firstHypothesis || focusBeforeDialog)?.focus();
     focusBeforeDialog = null;
+    showingCompletionSummary = false;
+  }
+
+  function dismissSuccessDialog() {
+    if (!showingCompletionSummary && completedLevels.size < LEVELS.length) {
+      continueGame();
+      return;
+    }
+    closeSuccessDialog();
+    focusBeforeDialog?.focus();
+    focusBeforeDialog = null;
+    showingCompletionSummary = false;
   }
 
   document.addEventListener("click", (event) => {
@@ -832,7 +1027,7 @@ if (typeof document !== "undefined") {
     if (predictionButton) runPrediction(predictionButton.dataset.prediction === "accept");
   });
 
-  document.querySelector("#restartButton").addEventListener("click", resetMission);
+  elements.restartButton.addEventListener("click", resetMission);
   elements.proveButton.addEventListener("click", startProof);
   elements.nextButton.addEventListener("click", continueGame);
   elements.soundButton.addEventListener("click", () => {
@@ -843,10 +1038,16 @@ if (typeof document !== "undefined") {
   });
 
   elements.successDialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      dismissSuccessDialog();
+      return;
+    }
     if (event.key !== "Tab") return;
     event.preventDefault();
     elements.nextButton.focus();
   });
 
   render();
+  if (firstIncompleteLevel === -1) showCompletionSummary();
 }

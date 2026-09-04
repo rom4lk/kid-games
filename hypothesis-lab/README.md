@@ -5,7 +5,7 @@ A browser game about scientific thinking. The player studies examples of a sorti
 ## What is in the game
 
 - six missions with gradually harder rules;
-- rules with a single property, with `and` and `or` connectives and with an exception;
+- rules with a single property, with `and` and `or` connectives and with a negation;
 - a required prediction before every experiment;
 - any prediction is accepted: a mismatch with the selected rule is shown as the result of the experiment
   rather than as an input error, and the rule itself is not crossed out because of it;
@@ -41,9 +41,9 @@ No library installation and no build step are required.
 node test-game.js
 ```
 
-The test checks that all the objects and rules are present, that the initial positive and negative
-examples are there, that every wrong hypothesis has a counterexample, and that a prediction result is
-kept separate from the result of testing a hypothesis.
+The test checks the object attributes and mission balance, tries every subset of tested objects to
+ensure a wrong hypothesis cannot pass the proof, verifies that proof queues prefer unseen objects,
+and keeps a prediction result separate from the result of testing a hypothesis.
 
 ## Deliberate decisions
 

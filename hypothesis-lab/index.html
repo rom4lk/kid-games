@@ -9,11 +9,11 @@
       content="A browser game about forming hypotheses, making predictions, and testing secret rules."
     />
     <title>Secret Rule Lab</title>
-    <link rel="stylesheet" href="styles.css?v=3" />
-    <link rel="stylesheet" href="../shared/game-language.css" />
+    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="../shared/game-language.css?v=1" />
   </head>
   <body data-translations="translations.json">
-    <header class="topbar">
+    <header class="topbar" id="topbar">
       <a class="brand" href="./" aria-label="Secret Rule Lab home">
         <span class="brand-icon" aria-hidden="true">⚗</span>
         <span>
@@ -43,7 +43,7 @@
       </div>
     </header>
 
-    <main class="game-shell">
+    <main class="game-shell" id="gameShell">
       <section class="mission-card">
         <div>
           <p class="eyebrow" id="missionLabel">Mission 01</p>
@@ -80,7 +80,7 @@
             </div>
           </div>
 
-          <div class="evidence-list" id="evidenceList" aria-label="Bot examples"></div>
+          <div class="evidence-list" id="evidenceList" role="group" aria-label="Bot examples"></div>
 
           <aside class="scientist-note">
             <span aria-hidden="true">✎</span>
@@ -102,7 +102,7 @@
           </p>
 
           <p class="step-title"><span class="step-number">1</span> Pick a rule</p>
-          <div class="hypothesis-grid" id="hypothesisGrid" aria-label="Possible rules"></div>
+          <div class="hypothesis-grid" id="hypothesisGrid" role="group" aria-label="Possible rules"></div>
 
           <div class="test-section" id="testSection" hidden>
             <div class="section-heading compact">
@@ -111,7 +111,7 @@
               </div>
               <span id="testsLeft"></span>
             </div>
-            <div class="object-grid" id="objectGrid" aria-label="Objects available for testing"></div>
+            <div class="object-grid" id="objectGrid" role="group" aria-label="Objects available for testing"></div>
           </div>
 
           <section class="experiment-panel" id="experimentPanel" aria-labelledby="experimentTitle" hidden>
@@ -123,7 +123,7 @@
               <h3 id="experimentTitle">What will the bot do?</h3>
               <p id="experimentPrompt">Pick an object first.</p>
             </div>
-            <div class="prediction-buttons" aria-label="Your guess">
+            <div class="prediction-buttons" role="group" aria-label="Your guess">
               <button class="prediction-button accept" type="button" data-prediction="accept" disabled>
                 It fits ✓
               </button>
@@ -156,7 +156,7 @@
         <div class="notebook-empty" id="notebookEmpty">
           Your tests will appear here.
         </div>
-        <div class="record-list" id="tableWrap" hidden>
+        <div class="record-list" id="recordList" hidden>
           <div id="notebookBody"></div>
         </div>
       </section>
@@ -179,9 +179,9 @@
       </section>
     </div>
 
-    <script src="../shared/game-language.js"></script>
-    <script src="../shared/game-home.js"></script>
-    <script src="../shared/game-sound.js"></script>
-    <script src="game.js?v=3"></script>
+    <script src="../shared/game-language.js?v=1"></script>
+    <script src="../shared/game-home.js?v=1"></script>
+    <script src="../shared/game-sound.js?v=1"></script>
+    <script src="game.js?v=5"></script>
   </body>
 </html>
