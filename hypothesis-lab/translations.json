@@ -204,6 +204,8 @@
     ["{count} left", "Осталось: {count}"],
     ["Test {name}, already tested", "Проверить: {name}, уже проверено"],
     ["Test {name}", "Проверить: {name}"],
+    ["Test {name}, already tested. {color}. {shape}. {material}. {size}. {category}. {movement}.", "Проверить: {name}, уже проверено. {color}. {shape}. {material}. {size}. {category}. {movement}."],
+    ["Test {name}. {color}. {shape}. {material}. {size}. {category}. {movement}.", "Проверить: {name}. {color}. {shape}. {material}. {size}. {category}. {movement}."],
     ["Proof trial {number} of {total}", "Проверка {number} из {total}"],
     ["Will the {name} fit?", "Предмет «{name}» подойдет?"],
     ["Tests: {count}", "Опытов: {count}"],

@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const {
   LEVELS,
   OBJECTS,
+  ATTRIBUTE_ICONS,
   RULES,
   ruleResult,
   findCounterexample,
@@ -9,6 +10,7 @@ const {
   isRuleDisproved,
   sanitizeCompletedLevels,
   getObjectAttributes,
+  getObjectAccessibleLabel,
   evaluateExperiment,
 } = require("./game.js");
 
@@ -19,6 +21,15 @@ function subsets(values) {
 }
 
 assert.equal(LEVELS.length, 6);
+assert.notEqual(ATTRIBUTE_ICONS.shape.long, ATTRIBUTE_ICONS.size.medium);
+assert.notEqual(ATTRIBUTE_ICONS.color.gold, ATTRIBUTE_ICONS.color.yellow);
+
+const accessibleObjectLabel = getObjectAccessibleLabel(OBJECTS.redBerry);
+assert.match(accessibleObjectLabel, /^Test Red berry\./);
+getObjectAttributes(OBJECTS.redBerry).forEach(({ label, value }) => {
+  assert.ok(accessibleObjectLabel.includes(`${label}: ${value}`));
+});
+assert.match(getObjectAccessibleLabel(OBJECTS.redBerry, true), /already tested/);
 
 LEVELS.forEach((level, levelIndex) => {
   assert.ok(RULES[level.targetRule], `Level ${levelIndex + 1} must have a target rule`);

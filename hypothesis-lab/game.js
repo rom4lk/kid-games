@@ -254,7 +254,7 @@ const OBJECTS = {
 const ATTRIBUTE_ICONS = {
   color: {
     blue: "🔵", silver: "⚪", red: "🔴", orange: "🟠", green: "🟢",
-    brown: "🟤", gold: "🟡", black: "⚫", yellow: "🟡",
+    brown: "🟤", gold: "🥇", black: "⚫", yellow: "🟡",
   },
   shape: {
     round: "⭕", square: "◼", long: "↔️", wavy: "〰️", rectangle: "▭",
@@ -264,7 +264,7 @@ const ATTRIBUTE_ICONS = {
     rubber: "🛞", metal: "⚙️", wood: "🪵", plastic: "🧴", paper: "📄",
     ceramic: "🏺", fabric: "🧵", organic: "🌱", glass: "💎",
   },
-  size: { small: "🤏", medium: "↔️", large: "🙌" },
+  size: { small: "🤏", medium: "✋", large: "🙌" },
   category: {
     toy: "🧸", money: "🪙", kitchen: "🍽️", clothing: "👕",
     school: "📚", tool: "🛠️", craft: "✂️", food: "🍎",
@@ -285,6 +285,13 @@ function getObjectAttributes(object) {
       icon: ATTRIBUTE_ICONS.canRoll[object.canRoll],
     },
   ];
+}
+
+function getObjectAccessibleLabel(object, tested = false) {
+  const attributes = getObjectAttributes(object)
+    .map((attribute) => `${attribute.label}: ${attribute.value}`)
+    .join(". ");
+  return `Test ${object.name}${tested ? ", already tested" : ""}. ${attributes}.`;
 }
 
 const RULES = {
@@ -503,6 +510,7 @@ if (typeof module !== "undefined" && module.exports) {
     isRuleDisproved,
     sanitizeCompletedLevels,
     getObjectAttributes,
+    getObjectAccessibleLabel,
     evaluateExperiment,
   };
 }
@@ -689,7 +697,6 @@ if (typeof document !== "undefined") {
         type="button"
         data-rule="${ruleId}"
         aria-pressed="${selectedHypothesisId === ruleId}"
-        aria-label="${RULES[ruleId].title}"
         title="${RULES[ruleId].title}"
         ${phase === "proof" || disproved ? "disabled" : ""}
       >
@@ -715,7 +722,7 @@ if (typeof document !== "undefined") {
           data-object="${objectId}"
           ${tested || phase === "proof" ? "disabled" : ""}
           aria-pressed="${selectedObjectId === objectId}"
-          aria-label="Test ${object.name}${tested ? ", already tested" : ""}"
+          aria-label="${getObjectAccessibleLabel(object, tested)}"
         >
           <span class="emoji" aria-hidden="true">${object.emoji}</span>
           <span class="name">${object.name}</span>
@@ -999,6 +1006,17 @@ if (typeof document !== "undefined") {
     showingCompletionSummary = false;
   }
 
+  function dismissSuccessDialog() {
+    if (!showingCompletionSummary && completedLevels.size < LEVELS.length) {
+      continueGame();
+      return;
+    }
+    closeSuccessDialog();
+    focusBeforeDialog?.focus();
+    focusBeforeDialog = null;
+    showingCompletionSummary = false;
+  }
+
   document.addEventListener("click", (event) => {
     const hypothesisButton = event.target.closest("[data-rule]");
     const objectButton = event.target.closest("[data-object]");
@@ -1022,7 +1040,7 @@ if (typeof document !== "undefined") {
   elements.successDialog.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       event.preventDefault();
-      continueGame();
+      dismissSuccessDialog();
       return;
     }
     if (event.key !== "Tab") return;
