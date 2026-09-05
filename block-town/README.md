@@ -47,7 +47,9 @@ the shelf page: the gear on the Block Town card opens the settings panel, and it
 lists all twenty blocks. Tapping one adds it for good; a block can never be taken away, which is
 what keeps every saved world paintable. Past eight enabled blocks the palette folds into families,
 and a family button opens a short row of its kinds. Enabling a block in one tab reaches an open game
-in another without a reload.
+in another without a reload. The child can also open the lock button at the end of the palette,
+read a word aloud and have an adult confirm it; the matching block appears and returns to the world
+already selected.
 
 ## Smart blocks
 
@@ -78,6 +80,8 @@ full, evening falls and the windows and lanterns come on.
 - Tap a cell to paint it, or drag to paint a whole stroke. Painting over is the only correction —
   there is no eraser and no undo.
 - The palette holds the blocks. Past eight of them a family button opens a short row of its kinds.
+- The lock button after the palette opens the optional words screen. `Escape` returns from a word
+  card to the word list, then from the list to the world.
 - The tools appear when there is more than one: the brush, the wide brush (2 x 2) and the fill
   bucket. Which of them a world offers follows its size.
 - The sun beside the sheet fills up as cells are painted, and unpainted cells shimmer.
@@ -88,7 +92,8 @@ full, evening falls and the windows and lanterns come on.
   and the size picker are walked with the same left and right arrows. The mini-map has no spot to
   point at from the keyboard, so pressing it takes the frame to the first cell still waiting.
 
-The child's path needs no reading: the palette, the tools and the pause are pictures.
+The painting path needs no reading: the palette, the tools and the pause are pictures. Reading is
+used only in the optional words screen with an adult.
 
 ## Logic check
 
@@ -96,11 +101,12 @@ The child's path needs no reading: the palette, the tools and the pause are pict
 node block-town/test-game.js
 ```
 
-The test covers the block and size registries, making, opening and deleting worlds, painting and
-painting over, a block an adult has not enabled, refused input, the stroke line filler, the autotile
-helpers, the inside corners of a lake, the paved square, the world analysis, the order of a walked
-track and of a closed loop, the house door, the field stages, the wide brush, rail paths, the bucket
-on a full world, the size of a full save and the normalization of a damaged save.
+The test covers the block and size registries, enabling blocks and listing locked blocks, making,
+opening and deleting worlds, painting and painting over, a block an adult has not enabled, refused
+input, the stroke line filler, the autotile helpers, the inside corners of a lake, the paved square,
+the world analysis, the order of a walked track and of a closed loop, the house door, the field
+stages, the wide brush, rail paths, the bucket on a full world, the size of a full save and the
+normalization of a damaged save.
 
 ## Saving
 
@@ -110,15 +116,16 @@ on a full world, the size of a full save and the normalization of a damaged save
   cap. Only a field keeps the moment it was sown, and it keeps it in whole seconds counted from the
   first sowing of its world; a save still holding full millisecond epochs is read as it stands. The
   old `blockTownSheetsV1` save of the level ladder is neither read nor migrated.
-- `blockTownBlocksV1` holds the blocks an adult has enabled. It is written by the shelf page only,
-  and "Reset progress" keeps it: like sound and language, it is a setting, not progress.
+- `blockTownBlocksV1` holds the blocks an adult has enabled. It is written by the shelf page and by
+  the words screen, and "Reset progress" keeps it: like sound and language, it is a setting, not
+  progress.
 - `blockTownSoundV1` holds the sound choice.
 - `kidGamesLanguageV1` holds the shared English or Russian interface choice used by every localized game.
 
 ## Files
 
-- `index.html` holds the accessible structure of the sheet, the palette, the mini-map and the pause
-  with its shelf of worlds, size picker and two confirmations.
+- `index.html` holds the accessible structure of the sheet, the palette, the words overlay and the
+  mini-map, plus the pause with its shelf of worlds, size picker and two confirmations.
 - `styles.css` lays out every block from the pictures in `art/` and draws the creatures and the
   celebration. What a block does on its own — the sails of a windmill, the lamp of a lighthouse,
   the windows of a house in the evening — is a pseudo-element the stylesheet animates.

@@ -126,8 +126,9 @@ that resets the progress of that game after a confirmation. The reset removes on
 above, so the sound and language settings stay as they were.
 
 The Block Town panel holds one more screen, "Blocks": a list of all twenty blocks, where an adult
-adds the ones the child may paint with. That choice lives under `blockTownBlocksV1`, is written only
-by the home page, and a reset of progress keeps it — like sound and language, it is a setting.
+adds the ones the child may paint with. That choice lives under `blockTownBlocksV1`, is written by
+the home page and by the words screen inside the game, and a reset of progress keeps it — like sound
+and language, it is a setting.
 
 ## Shared principles
 

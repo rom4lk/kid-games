@@ -146,6 +146,18 @@ function normalizeEnabledBlocks(saved) {
   return BLOCKS.filter((block) => enabled.has(block.id)).map((block) => block.id);
 }
 
+function enableBlock(state, blockId) {
+  if (!BLOCK_BY_ID.has(blockId) || !Array.isArray(state?.enabledBlockIds)) return false;
+  if (state.enabledBlockIds.includes(blockId)) return false;
+  state.enabledBlockIds = normalizeEnabledBlocks([...state.enabledBlockIds, blockId]);
+  return true;
+}
+
+function lockedBlockIds(state) {
+  const enabled = new Set(state?.enabledBlockIds);
+  return BLOCKS.filter((block) => !enabled.has(block.id)).map((block) => block.id);
+}
+
 function isBlockEnabled(state, blockId) {
   return Array.isArray(state?.enabledBlockIds) && state.enabledBlockIds.includes(blockId);
 }
@@ -821,6 +833,8 @@ if (typeof module !== "undefined" && module.exports) {
     worldSizeById,
     worldSize,
     normalizeEnabledBlocks,
+    enableBlock,
+    lockedBlockIds,
     isBlockEnabled,
     neighborIndices,
     lineIndices,
@@ -984,6 +998,16 @@ function initializeGame() {
     sizesBack: document.querySelector("#sizes-back-button"),
     palette: document.querySelector("#palette"),
     paletteKinds: document.querySelector("#palette-kinds"),
+    wordsButton: document.querySelector("#words-button"),
+    wordsOverlay: document.querySelector("#words-overlay"),
+    wordList: document.querySelector("#word-list"),
+    wordsClose: document.querySelector("#words-close-button"),
+    wordReveal: document.querySelector("#word-reveal"),
+    wordBig: document.querySelector("#word-big"),
+    wordListen: document.querySelector("#word-listen-button"),
+    wordBack: document.querySelector("#word-back-button"),
+    wordDone: document.querySelector("#word-done-button"),
+    wordConfirm: document.querySelector("#word-confirm-button"),
     tools: document.querySelector("#tools"),
     progressPanel: document.querySelector("#progress-panel"),
     sunFill: document.querySelector("#progress-sun-fill"),
@@ -1036,6 +1060,11 @@ function initializeGame() {
     fountain: "Fountain",
   };
 
+  const BLOCK_WORDS = {
+    ...BLOCK_NAMES,
+    asphalt: "Asphalt",
+  };
+
   let state = loadGame();
   ensureWorld();
   let selectedBlockId = state.enabledBlockIds[0];
@@ -1051,6 +1080,10 @@ function initializeGame() {
   let soundEnabled = loadSoundPreference();
   let paused = false;
   let pauseState = "menu";
+  let wordsOpen = false;
+  let wordsState = "list";
+  let cardBlockId = null;
+  let speakTimer = 0;
   let pendingDeleteId = null;
   let strokeActive = false;
   let strokeLastIndex = -1;
@@ -1062,8 +1095,8 @@ function initializeGame() {
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   let reduceMotion = motionQuery.matches;
 
-  // Which blocks a child may paint with is an adult's setting, kept by the
-  // shelf page and only read here.
+  // Which blocks a child may paint with is a setting shared by the shelf page
+  // and the reading screen in the game.
   function loadEnabledBlocks() {
     try {
       return normalizeEnabledBlocks(JSON.parse(localStorage.getItem(BLOCKS_KEY)));
@@ -1101,6 +1134,14 @@ function initializeGame() {
     }
   }
 
+  function saveEnabledBlocks() {
+    try {
+      localStorage.setItem(BLOCKS_KEY, JSON.stringify(state.enabledBlockIds));
+    } catch {
+      // The opened block stays available for the current session only.
+    }
+  }
+
   // Strokes paint many cells in a row, so the write waits for the stroke to end.
   function scheduleSave() {
     window.clearTimeout(saveTimer);
@@ -1130,6 +1171,30 @@ function initializeGame() {
     });
   }
 
+  function canSpeak() {
+    return soundEnabled && "speechSynthesis" in window;
+  }
+
+  function speechLocale() {
+    return GameLanguage.getLanguage() === "ru" ? "ru-RU" : "en-US";
+  }
+
+  function stopSpeaking() {
+    window.clearTimeout(speakTimer);
+    speakTimer = 0;
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  }
+
+  function speakWord(text) {
+    stopSpeaking();
+    if (!canSpeak()) return;
+    const locale = speechLocale();
+    const utterance = new SpeechSynthesisUtterance(text.toLocaleLowerCase(locale));
+    utterance.lang = locale;
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
   // Two announcements can land in the same frame: opening a world names it and
   // the caller then says why it opened. They are joined into one sentence, so
   // the second never overwrites the first. Clearing the node first is what
@@ -1153,6 +1218,15 @@ function initializeGame() {
   function blockName(blockId) {
     const block = blockById(blockId);
     return block ? BLOCK_NAMES[block.key] : "Empty cell";
+  }
+
+  function wordFor(blockId) {
+    const block = blockById(blockId);
+    return block ? GameLanguage.translate(BLOCK_WORDS[block.key]) : "";
+  }
+
+  function fillTemplate(template, values) {
+    return template.replace(/\{([a-zA-Z][a-zA-Z0-9]*)\}/g, (_, name) => values[name] ?? "");
   }
 
   // Worlds are told apart by their pictures, so a number is only for the
@@ -1509,6 +1583,21 @@ function initializeGame() {
     fitSheet();
   }
 
+  function blockSwatch(blockId) {
+    const block = blockById(blockId);
+    // A one-cell world gives the swatch the same art the grid would draw. A
+    // road is shown as the middle of a straight row: that is what it is for.
+    const art = block.family === "roads"
+      ? cellClasses({ columns: 3 }, [blockId, blockId, blockId], [EMPTY_CELL, EMPTY_CELL, EMPTY_CELL], 1)
+      : cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
+    // On a button a field is shown ripe: that is what the block is for.
+    if (blockId === FIELD_ID) art.push("field--2");
+    const swatch = document.createElement("span");
+    swatch.className = `palette-swatch ${art.join(" ")}`;
+    swatch.setAttribute("aria-hidden", "true");
+    return swatch;
+  }
+
   function blockButton(blockId, { checked, family }) {
     const block = blockById(blockId);
     const button = document.createElement("button");
@@ -1519,14 +1608,7 @@ function initializeGame() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", checked ? "true" : "false");
     button.setAttribute("aria-label", family ? FAMILY_NAMES[family] : BLOCK_NAMES[block.key]);
-    // A one-cell world gives the swatch the same art the grid would draw. A
-    // road is shown as the middle of a straight row: that is what it is for.
-    const art = block.family === "roads"
-      ? cellClasses({ columns: 3 }, [blockId, blockId, blockId], [EMPTY_CELL, EMPTY_CELL, EMPTY_CELL], 1)
-      : cellClasses({ columns: 1 }, [blockId], [EMPTY_CELL], 0);
-    // On a button a field is shown ripe: that is what the block is for.
-    if (blockId === FIELD_ID) art.push("field--2");
-    button.innerHTML = `<span class="palette-swatch ${art.join(" ")}" aria-hidden="true"></span>`;
+    button.append(blockSwatch(blockId));
     return button;
   }
 
@@ -1600,6 +1682,123 @@ function initializeGame() {
     closeKinds();
     renderPalette();
     announce(BLOCK_NAMES[blockById(blockId).key]);
+  }
+
+  function sortedWordBlockIds() {
+    const tableOrder = new Map(BLOCKS.map((block, index) => [block.id, index]));
+    return BLOCKS
+      .map((block) => block.id)
+      .sort((left, right) => (
+        wordFor(left).length - wordFor(right).length
+        || tableOrder.get(left) - tableOrder.get(right)
+      ));
+  }
+
+  function renderWordsButton() {
+    elements.wordsButton.hidden = lockedBlockIds(state).length === 0;
+  }
+
+  function showWordsState(name) {
+    wordsState = name;
+    elements.wordsOverlay.querySelectorAll("[data-state]").forEach((section) => {
+      section.hidden = section.dataset.state !== name;
+    });
+  }
+
+  function renderWordList() {
+    elements.wordList.textContent = "";
+    sortedWordBlockIds().forEach((blockId) => {
+      const button = document.createElement("button");
+      const open = isBlockEnabled(state, blockId);
+      button.type = "button";
+      button.className = "word-button";
+      button.dataset.block = String(blockId);
+      if (open) {
+        button.dataset.open = "true";
+        button.append(blockSwatch(blockId));
+      }
+      const word = document.createElement("span");
+      word.className = "word-text";
+      word.textContent = wordFor(blockId);
+      button.append(word);
+      elements.wordList.append(button);
+    });
+  }
+
+  function renderWordAudio() {
+    const revealed = wordsState === "card" && isBlockEnabled(state, cardBlockId);
+    elements.wordListen.hidden = !revealed || !canSpeak();
+  }
+
+  function openWordCard(blockId, { revealed = false } = {}) {
+    if (!blockById(blockId)) return;
+    cardBlockId = blockId;
+    elements.wordBig.textContent = wordFor(blockId);
+    elements.wordReveal.textContent = "";
+    elements.wordReveal.classList.remove("word-reveal--in");
+    showWordsState("card");
+    if (revealed) elements.wordReveal.append(blockSwatch(blockId));
+    elements.wordConfirm.hidden = revealed;
+    elements.wordDone.hidden = !revealed;
+    renderWordAudio();
+    elements.wordBack.focus();
+  }
+
+  function openWords() {
+    wordsOpen = true;
+    showWordsState("list");
+    renderWordList();
+    elements.wordsOverlay.hidden = false;
+    startDriver();
+    const firstLocked = elements.wordList.querySelector(".word-button:not([data-open='true'])");
+    (firstLocked ?? elements.wordsClose).focus();
+  }
+
+  function backToWords() {
+    stopSpeaking();
+    const previousBlockId = cardBlockId;
+    showWordsState("list");
+    renderWordList();
+    const previous = elements.wordList.querySelector(`[data-block="${previousBlockId}"]`);
+    (previous ?? elements.wordsClose).focus();
+  }
+
+  function closeWords() {
+    wordsOpen = false;
+    stopSpeaking();
+    elements.wordsOverlay.hidden = true;
+    startDriver();
+    (elements.wordsButton.hidden ? elements.grid : elements.wordsButton).focus();
+  }
+
+  function confirmWord() {
+    const blockId = cardBlockId;
+    const block = blockById(blockId);
+    if (!block || !enableBlock(state, blockId)) return;
+
+    saveEnabledBlocks();
+    elements.wordReveal.textContent = "";
+    elements.wordReveal.append(blockSwatch(blockId));
+    elements.wordReveal.classList.add("word-reveal--in");
+    playSound(block.family);
+    stopSpeaking();
+    if (canSpeak()) {
+      speakTimer = window.setTimeout(() => speakWord(wordFor(blockId)), reduceMotion ? 0 : 400);
+    }
+    elements.wordConfirm.hidden = true;
+    elements.wordDone.hidden = false;
+    renderWordAudio();
+    announce(fillTemplate(GameLanguage.translate("Opened: {word}"), { word: wordFor(blockId) }));
+    renderPalette();
+    renderWordsButton();
+    watchFields();
+  }
+
+  function finishWord() {
+    const blockId = cardBlockId;
+    closeWords();
+    selectBlock(blockId);
+    elements.grid.focus();
   }
 
   // Small worlds get the brush alone, a medium one adds the wide brush and a
@@ -1736,10 +1935,10 @@ function initializeGame() {
     if (sprites.length > 0) driverHandle = window.requestAnimationFrame(driveSprites);
   }
 
-  // Behind the pause and behind the celebration card the sheet is covered, so
+  // Behind the pause, words and celebration card the sheet is covered, so
   // there is nothing to animate and the frame loop stops.
   function spritesAreWatched() {
-    return !paused && elements.celebration.hidden;
+    return !paused && !wordsOpen && elements.celebration.hidden;
   }
 
   function startDriver() {
@@ -2068,6 +2267,21 @@ function initializeGame() {
     if (cameFromKeyboard(event)) elements.grid.focus();
   });
 
+  elements.wordsButton.addEventListener("click", openWords);
+
+  elements.wordList.addEventListener("click", (event) => {
+    const button = event.target.closest(".word-button");
+    if (!button) return;
+    const blockId = Number(button.dataset.block);
+    openWordCard(blockId, { revealed: isBlockEnabled(state, blockId) });
+  });
+
+  elements.wordsClose.addEventListener("click", closeWords);
+  elements.wordBack.addEventListener("click", backToWords);
+  elements.wordConfirm.addEventListener("click", confirmWord);
+  elements.wordDone.addEventListener("click", finishWord);
+  elements.wordListen.addEventListener("click", () => speakWord(wordFor(cardBlockId)));
+
   elements.tools.addEventListener("click", (event) => {
     const button = event.target.closest(".tool-button");
     if (!button) return;
@@ -2079,8 +2293,10 @@ function initializeGame() {
 
   elements.sound.addEventListener("click", () => {
     soundEnabled = !soundEnabled;
+    if (!soundEnabled) stopSpeaking();
     saveSoundPreference();
     renderSound();
+    renderWordAudio();
   });
 
   elements.pause.addEventListener("click", () => {
@@ -2173,6 +2389,11 @@ function initializeGame() {
   // last out of the pause itself.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+    if (wordsOpen) {
+      if (wordsState === "card") backToWords();
+      else closeWords();
+      return;
+    }
     if (!elements.celebration.hidden) {
       closeCelebration();
       return;
@@ -2236,6 +2457,19 @@ function initializeGame() {
     startDriver();
   });
 
+  function refreshWordsLanguage() {
+    if (!wordsOpen) return;
+    if (wordsState === "list") {
+      renderWordList();
+      return;
+    }
+    elements.wordBig.textContent = wordFor(cardBlockId);
+    renderWordAudio();
+  }
+
+  GameLanguage.onChange(refreshWordsLanguage);
+  GameLanguage.ready.then(refreshWordsLanguage);
+
   // An adult enables blocks on the shelf page, in another tab. The storage
   // event brings the new list here, so the palette never waits for a reload.
   // A cleared storage reports no key at all, and that counts as a change too.
@@ -2247,11 +2481,14 @@ function initializeGame() {
     if (!isBlockEnabled(state, selectedBlockId)) selectedBlockId = state.enabledBlockIds[0];
     closeKinds();
     renderPalette();
+    renderWordsButton();
+    if (wordsOpen && wordsState === "list") renderWordList();
     watchFields();
   });
 
   renderSound();
   renderPalette();
+  renderWordsButton();
   renderTools();
   renderSheetControls();
   zoomIndex = defaultZoomIndex(openSize());

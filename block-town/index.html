@@ -95,6 +95,10 @@
         <div class="palette-area">
           <div class="palette-kinds" id="palette-kinds" role="radiogroup" aria-label="Kinds of block" hidden></div>
           <div class="palette" id="palette" role="radiogroup" aria-label="Blocks"></div>
+          <button class="palette-button palette-button--words" id="words-button" type="button"
+            aria-label="New blocks" hidden>
+            <span class="words-lock" aria-hidden="true"></span>
+          </button>
         </div>
         <div class="tools" id="tools" role="radiogroup" aria-label="Tools"></div>
       </section>
@@ -158,6 +162,35 @@
           <button class="pause-action cancel-button" id="cancel-delete-button" type="button" aria-label="No, keep the world">
             <span aria-hidden="true">✕</span>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pause-overlay words-overlay" id="words-overlay" role="dialog" aria-modal="true"
+      aria-label="Words. Read a word to open its block." hidden>
+      <div class="pause-card words-card">
+        <div class="pause-actions words-list-state" data-state="list">
+          <div class="word-list" id="word-list" role="list"></div>
+          <button class="pause-action" id="words-close-button" type="button" aria-label="Back to the world">
+            <span aria-hidden="true">↩</span>
+          </button>
+        </div>
+        <div class="pause-actions words-card-state" data-state="card" hidden>
+          <div class="word-reveal" id="word-reveal" aria-hidden="true"></div>
+          <p class="word-big" id="word-big"></p>
+          <button class="round-button" id="word-listen-button" type="button" aria-label="Listen to the word" hidden>
+            <span aria-hidden="true">🔊</span>
+          </button>
+          <div class="word-actions">
+            <button class="pause-action cancel-button" id="word-back-button" type="button" aria-label="Back to the words">
+              <span aria-hidden="true">↩</span>
+            </button>
+            <button class="pause-action confirm-button" id="word-done-button" type="button"
+              aria-label="To the world with the new block" hidden>
+              <span aria-hidden="true">▶</span>
+            </button>
+          </div>
+          <button class="adult-confirm" id="word-confirm-button" type="button">Read correctly — open the block</button>
         </div>
       </div>
     </div>

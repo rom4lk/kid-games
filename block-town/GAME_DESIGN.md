@@ -26,7 +26,8 @@ no goals, and the joy comes from the world reacting beautifully to every placed 
 
 - Age: about 6 years old.
 - After one short demonstration by an adult, the child paints on their own.
-- No reading is required anywhere on the child's path; the palette and the tools are pictures.
+- The painting path requires no reading; the palette and the tools are pictures. The optional words
+  screen is a reading activity shared with an adult.
 - A small world takes about 5 minutes; the big worlds are made to be returned to across many days.
 - The main emotions: calm, ownership ("my town") and curiosity — "what happens if I paint this here?"
 
@@ -81,6 +82,21 @@ kind). Familiar blocks keep the same pictures and the same positions in the pale
 | Decorations | lantern, bench, fountain, playground | |
 
 Twenty blocks in all — never all at once unless an adult decides the child is ready for them.
+
+## Words that open blocks
+
+The child can also add blocks from inside the game. A lock button at the end of the palette opens a
+list of words, ordered from shortest to longest and then by the block-table order. Forest, water and
+road start open and carry their pictures, so the list demonstrates what reading a word will do.
+
+The child taps a locked word and reads it aloud. A small adult-styled control confirms the reading;
+the card then reveals the block picture, plays its family sound, speaks the word when sound is on and
+offers a large button back to the world. The new block is already selected, so the next tap paints
+it. Open words remain in the list as a picture dictionary.
+
+This optional path deliberately needs an adult at the table, unlike the independent painting loop.
+The confirmation is visually separated as 15 px adult text so it does not look like the child's
+next main action.
 
 ## Smart blocks
 

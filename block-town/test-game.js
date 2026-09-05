@@ -8,6 +8,8 @@ const {
   worldSizeById,
   worldSize,
   normalizeEnabledBlocks,
+  enableBlock,
+  lockedBlockIds,
   isBlockEnabled,
   neighborIndices,
   lineIndices,
@@ -718,10 +720,28 @@ function testEnabledBlocks() {
   assert.equal(floodFill(state, 0, HOUSE_ID), 0);
   assert.equal(paintedCount(state), 0);
 
-  // Enabling it makes the very same paint work.
-  state.enabledBlockIds = normalizeEnabledBlocks([HOUSE_ID]);
+  // Enabling it makes the very same paint work and keeps table order.
+  assert.equal(enableBlock(state, HOUSE_ID), true);
+  assert.deepEqual(
+    state.enabledBlockIds,
+    [...state.enabledBlockIds].sort((left, right) => left - right),
+  );
+  const enabledOnce = [...state.enabledBlockIds];
+  assert.equal(enableBlock(state, HOUSE_ID), false);
+  assert.deepEqual(state.enabledBlockIds, enabledOnce);
+  assert.equal(enableBlock(state, 999), false);
+  assert.deepEqual(state.enabledBlockIds, enabledOnce);
   assert.equal(paintCell(state, 0, HOUSE_ID), true);
   assert.equal(paintedCount(state), 1);
+
+  const fresh = createGameState(null);
+  const locked = lockedBlockIds(fresh);
+  assert.equal(locked.length, 17);
+  DEFAULT_BLOCK_IDS.forEach((blockId) => {
+    assert.equal(locked.includes(blockId), false);
+  });
+  BLOCKS.forEach((block) => enableBlock(fresh, block.id));
+  assert.deepEqual(lockedBlockIds(fresh), []);
 }
 
 function testPaintingAndPaintOver() {

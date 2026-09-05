@@ -51,6 +51,7 @@
     ["Flowers", "Цветы"],
     ["Sand", "Песок"],
     ["Asphalt road", "Асфальт"],
+    ["Asphalt", "Асфальт"],
     ["Rails", "Рельсы"],
     ["Tower", "Башня"],
     ["Farm", "Ферма"],
@@ -75,11 +76,18 @@
     ["Move down", "Сдвинуть вниз"],
     ["Move left", "Сдвинуть влево"],
     ["Move right", "Сдвинуть вправо"],
-    ["Whole world. Tap a spot to jump there.", "Весь мир. Нажми на место, чтобы перейти туда."]
+    ["Whole world. Tap a spot to jump there.", "Весь мир. Нажми на место, чтобы перейти туда."],
+    ["New blocks", "Новые блоки"],
+    ["Words. Read a word to open its block.", "Слова. Прочитай слово, чтобы открыть блок."],
+    ["Back to the words", "Назад к словам"],
+    ["Read correctly — open the block", "Прочитано верно — открыть блок"],
+    ["Listen to the word", "Послушать слово"],
+    ["To the world with the new block", "В мир с новым блоком"]
   ],
   "templates": [
     ["Painted {painted} cells of {total}", "Закрашено клеток: {painted} из {total}"],
     ["World {number}", "Мир {number}"],
-    ["Delete world {number}", "Удалить мир {number}"]
+    ["Delete world {number}", "Удалить мир {number}"],
+    ["Opened: {word}", "Открыто: {word}"]
   ]
 }
