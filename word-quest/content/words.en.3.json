@@ -1343,9 +1343,9 @@
               "label": "plate"
             },
             {
-              "id": "jug",
-              "emoji": "🏺",
-              "label": "jug"
+              "id": "salt",
+              "emoji": "🧂",
+              "label": "salt"
             }
           ],
           "correct": "pot"
