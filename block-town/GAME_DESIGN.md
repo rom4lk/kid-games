@@ -66,8 +66,9 @@ the last world leaves a fresh small one, so the game is never empty.
 
 Progression is the adult's job now. Every world starts with three blocks — forest, water and road —
 and an adult adds more from the shelf page: the gear on the Block Town card opens a list of all
-twenty blocks, and tapping one adds it to the palette for good. Nothing can be taken away, which is
-also the integrity guarantee: no saved world can point at a block the game no longer offers.
+twenty blocks, and tapping one adds it to the palette. A block cannot be removed one by one; the only
+way back is a button on the same list that returns the palette to the three starting blocks. Painted
+worlds keep every cell after that, so nothing a child has built is lost — the palette only narrows.
 
 Blocks are grouped into families. Up to eight enabled blocks the palette is a flat row of big
 buttons; past that a family button opens a short row of its kinds (tap the family, then tap the

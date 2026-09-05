@@ -1198,7 +1198,9 @@ button:focus-visible,
   display: grid;
   width: 100%;
   min-height: 0;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* Wide enough for the longest word next to its picture, so no word is
+     ever cut off. */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
   overflow-y: auto;
 }
@@ -1206,6 +1208,7 @@ button:focus-visible,
 .word-button {
   display: flex;
   min-height: 64px;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   padding: 6px 14px;
@@ -1213,9 +1216,9 @@ button:focus-visible,
   border-radius: 18px;
   background: var(--paper);
   color: var(--ink);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   cursor: pointer;
   gap: 12px;

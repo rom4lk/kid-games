@@ -63,13 +63,22 @@
     return BLOCK_TOWN_BLOCKS.filter((block) => enabled.has(block.id)).map((block) => block.id);
   }
 
-  // A block is only ever added. Nothing a child has painted can then point at
-  // a block the game no longer offers.
+  // Adding a block never touches anything a child has painted.
   function enableBlock(blockId) {
     const enabled = readEnabledBlocks();
     if (enabled.includes(blockId)) return;
     try {
       global.localStorage.setItem(BLOCK_TOWN_KEY, JSON.stringify([...enabled, blockId]));
+    } catch {
+      // Private browsing modes refuse storage, so the palette stays as it was.
+    }
+  }
+
+  // Back to the three starting blocks. Painted worlds keep their cells; only
+  // the palette narrows.
+  function resetBlocks() {
+    try {
+      global.localStorage.removeItem(BLOCK_TOWN_KEY);
     } catch {
       // Private browsing modes refuse storage, so the palette stays as it was.
     }
@@ -86,7 +95,8 @@
       chip.dataset.block = String(block.id);
       const on = enabled.has(block.id);
       chip.setAttribute("aria-pressed", on ? "true" : "false");
-      // An enabled block is never taken away, so its chip stops reacting.
+      // An enabled block only goes away with the reset below, so its chip
+      // stops reacting.
       if (on) chip.setAttribute("aria-disabled", "true");
 
       const swatch = document.createElement("span");
@@ -178,8 +188,9 @@
         <p class="settings-done">Progress reset. The game starts from the beginning.</p>
       </div>
       <div data-state="blocks" hidden>
-        <p class="settings-panel-note">Tap a block to add it to the palette. Blocks are never taken away.</p>
+        <p class="settings-panel-note">Tap a block to add it to the palette.</p>
         <div class="settings-blocks"></div>
+        <button type="button" class="settings-danger" data-action="reset-blocks">Back to the three starting blocks</button>
         <button type="button" data-action="back">Back</button>
       </div>
     `;
@@ -225,6 +236,11 @@
         renderBlockChips(panel);
         showState(panel, "blocks");
         panel.querySelector("[data-action='back']").focus();
+        return;
+      }
+      if (action === "reset-blocks") {
+        resetBlocks();
+        renderBlockChips(panel);
         return;
       }
       if (action === "back") {

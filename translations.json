@@ -141,8 +141,12 @@
       "Назад"
     ],
     [
-      "Tap a block to add it to the palette. Blocks are never taken away.",
-      "Нажмите на блок, чтобы добавить его в палитру. Блоки не убираются."
+      "Tap a block to add it to the palette.",
+      "Нажмите на блок, чтобы добавить его в палитру."
+    ],
+    [
+      "Back to the three starting blocks",
+      "Вернуть три стартовых блока"
     ],
     [
       "Meadow",
