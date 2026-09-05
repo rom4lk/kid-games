@@ -29,8 +29,8 @@ the background:
 that was started with `start`, not one running in the foreground.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
-`island-discovery`, `forest-light`, `robo-route`, `robot-lab`, `garden-quest`, `hypothesis-lab`
-and `block-town` load translations or other content the same way. That does not work when a file is
+`island-discovery`, `forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and
+`block-town` load translations or other content the same way. That does not work when a file is
 opened directly over `file://`.
 
 ## The games
@@ -40,16 +40,15 @@ opened directly over `file://`.
 | `word-quest/` | Living Words | Reading a word and picking a picture, levels by word length | Russian, English |
 | `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
 | `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
-| `robo-route/` | Robo Route | Building a route out of picture commands and running it | Russian, English |
-| `robot-lab/` | Robot Lab | Building programs, debugging them and operating switches and doors | Russian, English |
+| `robo-stories/` | Robo Stories | Building programs out of picture cards across five robot stories: parcels, gates, batteries, a rover and a room | Russian, English |
 | `garden-quest/` | Garden Quest | Collecting a harvest on a fixed board within a limited number of steps | Russian, English |
 | `hypothesis-lab/` | Secret Rule Lab | Forming a hypothesis, predicting a result and testing a secret sorting rule | Russian, English |
 | `block-town/` | Block Town | Painting a town on squared paper, where roads, water and houses connect themselves | Russian, English |
 
 Details about a game loop and its deliberate design decisions are in the README of the game:
 [word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md),
-[forest-light/README.md](forest-light/README.md), [robo-route/README.md](robo-route/README.md),
-[robot-lab/README.md](robot-lab/README.md), [garden-quest/README.md](garden-quest/README.md),
+[forest-light/README.md](forest-light/README.md), [robo-stories/README.md](robo-stories/README.md),
+[garden-quest/README.md](garden-quest/README.md),
 [hypothesis-lab/README.md](hypothesis-lab/README.md), [block-town/README.md](block-town/README.md).
 
 ## Returning to the shelf
@@ -73,8 +72,8 @@ page is the one a game opens in, and a language picked inside a game is the one 
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
 next to it through the shared `shared/game-language.js`. The home page, `island-discovery`,
-`forest-light`, `robo-route`, `robot-lab`, `garden-quest`, `hypothesis-lab` and `block-town` work
-this way; `word-quest` carries its own two-language content in `word-quest/content/`.
+`forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and `block-town` work this way;
+`word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -99,10 +98,10 @@ So is the Block Town model:
 node block-town/test-game.js
 ```
 
-The Robot Lab reference programs and command rules are checked with:
+The Robo Stories levels, simulator, hint search and progress rules are checked with:
 
 ```bash
-node robot-lab/test-game.js
+node robo-stories/test-game.js
 ```
 
 ## Saved progress
@@ -114,8 +113,7 @@ Every game writes its progress to `localStorage` under its own key:
 | `word-quest` | `livingWordsProgressV2` |
 | `island-discovery` | `islandDiscoveryV1` |
 | `forest-light` | `forestLightProgressV1` |
-| `robo-route` | `roboRouteProgressV1` |
-| `robot-lab` | `robotLabCompletedV1` |
+| `robo-stories` | `roboStoriesProgressV1`, `roboStoriesSurveyV1` |
 | `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
 | `block-town` | `blockTownWorldsV1` |

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7c85c" />
+    <title>Robo Stories</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <main class="game-shell" data-screen="menu">
+      <header class="top-bar">
+        <div class="top-left">
+          <button class="round-button back-button" id="backButton" type="button" aria-label="Back" hidden>
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M40 24H10M22 10 8 24l14 14" />
+            </svg>
+          </button>
+          <span class="level-badge" id="levelBadge" hidden>
+            <span class="level-badge-emoji" id="levelBadgeEmoji" aria-hidden="true"></span>
+            <b id="levelBadgeNumber"></b>
+          </span>
+        </div>
+
+        <div class="goal-card" id="goalCard" aria-label="Goal" hidden>
+          <div class="goal-pairs" id="goalPairs" aria-hidden="true"></div>
+        </div>
+
+        <div class="top-settings">
+          <label class="language-picker language-picker--compact">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+          <button class="round-button sound-button is-on" id="soundButton" type="button" aria-label="Turn sound off">
+            <svg class="sound-on" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M9 20h8l10-8v24l-10-8H9z" />
+              <path d="M33 18c3.5 3 3.5 9 0 12M38 13c7 6 7 16 0 22" />
+            </svg>
+            <svg class="sound-off" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M9 20h8l10-8v24l-10-8H9z" />
+              <path d="m33 18 9 12M42 18l-9 12" />
+            </svg>
+          </button>
+          <button class="round-button parent-button" id="parentButton" type="button" aria-label="For parents">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="7" />
+              <path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.9 9.9l4.2 4.2M33.9 33.9l4.2 4.2M9.9 38.1l4.2-4.2M33.9 14.1l4.2-4.2" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="screen menu-screen" id="menuScreen">
+        <div class="menu-hero">
+          <div class="mascot" id="mascot" aria-hidden="true">
+            <img src="assets/robo-mascot.png" alt="" />
+            <span class="accessory accessory-cap" data-accessory="cap" hidden>🧢</span>
+            <span class="accessory accessory-key" data-accessory="key" hidden>🔑</span>
+            <span class="accessory accessory-bolt" data-accessory="bolt" hidden>⚡</span>
+            <span class="accessory accessory-flag" data-accessory="flag" hidden>🚩</span>
+            <span class="accessory accessory-broom" data-accessory="broom" hidden>🧹</span>
+            <span class="accessory accessory-compass" data-accessory="compass" hidden>🧭</span>
+          </div>
+          <div class="menu-copy">
+            <h1 tabindex="-1">Robo Stories</h1>
+            <p class="adult-text">Pick a story. Every story is open from the start; the levels inside open one after another. The robot earns a new accessory for every finished story.</p>
+          </div>
+        </div>
+        <div class="story-grid" id="storyGrid" aria-label="Stories"></div>
+      </section>
+
+      <section class="screen story-screen" id="storyScreen" hidden>
+        <div class="story-head">
+          <span class="story-head-emoji" id="storyEmoji" aria-hidden="true"></span>
+          <div>
+            <h1 id="storyTitle" tabindex="-1"></h1>
+            <p class="adult-text" id="storyLead"></p>
+          </div>
+        </div>
+        <div class="level-grid" id="levelGrid" aria-label="Levels"></div>
+      </section>
+
+      <section class="screen play-screen" id="playScreen" hidden>
+        <section class="world-card" id="worldCard" aria-label="Game world" data-theme="meadow" data-movement="arrows">
+          <div class="world-sky" aria-hidden="true">
+            <span class="cloud cloud-one"></span>
+            <span class="cloud cloud-two"></span>
+            <span class="hill hill-one"></span>
+            <span class="hill hill-two"></span>
+          </div>
+
+          <button class="hint-button" id="hintButton" type="button" aria-label="Show a hint">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M16 29c-3-2.4-5-6-5-10a13 13 0 0 1 26 0c0 4-2 7.6-5 10-1.8 1.5-2.7 3-2.7 5h-10.6c0-2-1-3.6-2.7-5z" />
+              <path d="M19 38h10M21 42h6" />
+              <path class="hint-rays" d="M24 2v4M8 8l3 3M40 8l-3 3M3 22h4M41 22h4" />
+            </svg>
+          </button>
+
+          <div class="track" id="track">
+            <div class="track-tiles" id="tiles" aria-hidden="true"></div>
+            <div class="layer" id="walls" aria-hidden="true"></div>
+            <div class="layer" id="switches" aria-hidden="true"></div>
+            <div class="layer" id="targets"></div>
+            <div class="layer" id="stations"></div>
+            <div class="layer" id="parcels"></div>
+            <div class="layer" id="gates" aria-hidden="true"></div>
+
+            <div class="entity robot" id="robot" role="img" aria-label="Robot">
+              <span class="robot-beam facing-east" id="robotBeam" aria-hidden="true">
+                <svg viewBox="0 0 40 40"><path d="M6 8l26 12L6 32z" /></svg>
+              </span>
+              <img src="assets/robo-mascot.png" alt="" />
+              <span class="held-parcel" id="heldParcel" role="img" aria-hidden="true">
+                <span class="parcel-lid"></span>
+                <span class="parcel-ribbon"></span>
+                <svg class="held-parcel-symbol" id="heldParcelSymbol" viewBox="0 0 32 32" aria-hidden="true"></svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="success-layer" id="successLayer" aria-hidden="true">
+            <div class="success-star">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <path d="m60 8 14 29 32 5-23 22 6 32-29-15-29 15 6-32-23-22 32-5z" />
+                <path class="star-face" d="M42 56h7M71 56h7M45 70c9 9 21 9 30 0" />
+              </svg>
+            </div>
+            <div class="result-stars" id="resultStars" aria-label="Stars"></div>
+
+            <div class="survey" id="survey" hidden>
+              <p class="adult-text survey-question">How hard was this level?</p>
+              <div class="survey-options">
+                <button class="survey-button survey-easy" type="button" data-answer="easy">
+                  <svg viewBox="0 0 64 64" aria-hidden="true">
+                    <circle class="face" cx="32" cy="32" r="26" />
+                    <circle cx="22" cy="26" r="3.5" />
+                    <circle cx="42" cy="26" r="3.5" />
+                    <path d="M20 38c6 8 18 8 24 0" />
+                  </svg>
+                  <span class="adult-text">Easy</span>
+                </button>
+                <button class="survey-button survey-normal" type="button" data-answer="normal">
+                  <svg viewBox="0 0 64 64" aria-hidden="true">
+                    <circle class="face" cx="32" cy="32" r="26" />
+                    <circle cx="22" cy="26" r="3.5" />
+                    <circle cx="42" cy="26" r="3.5" />
+                    <path d="M22 41h20" />
+                  </svg>
+                  <span class="adult-text">Normal</span>
+                </button>
+                <button class="survey-button survey-hard" type="button" data-answer="hard">
+                  <svg viewBox="0 0 64 64" aria-hidden="true">
+                    <circle class="face" cx="32" cy="32" r="26" />
+                    <path d="M16 20l10 4M48 20l-10 4" />
+                    <circle cx="22" cy="28" r="3.5" />
+                    <circle cx="42" cy="28" r="3.5" />
+                    <path d="M20 44c4-5 8 3 12-2s8 3 12-2" />
+                    <path class="sweat" d="M52 34c3 4 3 8 0 8s-3-4 0-8z" />
+                  </svg>
+                  <span class="adult-text">Very hard</span>
+                </button>
+              </div>
+            </div>
+
+            <button class="again-button next-button" id="nextButton" type="button" aria-label="Next level" hidden>
+              <svg class="next-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M11 32h40M38 18l14 14-14 14" />
+              </svg>
+              <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M10 32 32 12l22 20M17 27v25h30V27" />
+                <path d="M27 52V38h10v14" />
+              </svg>
+            </button>
+          </div>
+          <div class="confetti" id="confetti" aria-hidden="true"></div>
+        </section>
+
+        <section class="program-card" aria-label="Build a program">
+          <div class="program-row">
+            <button class="clear-button" id="clearButton" type="button" aria-label="Clear commands">
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M13 15h22M19 10h10M17 20l2 19h10l2-19" />
+                <path d="M23 24v10M27 24v10" />
+              </svg>
+            </button>
+
+            <div class="program-strip" id="programStrip" role="list" aria-label="Command sequence"></div>
+
+            <button class="play-button" id="playButton" type="button" aria-label="Run commands">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="m24 16 26 16-26 16z" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="coach is-hidden" id="coach" aria-hidden="true">
+            <span class="coach-finger">
+              <svg viewBox="0 0 64 76">
+                <path d="M27 37V13a7 7 0 0 1 14 0v19l4-4a7 7 0 0 1 10 10L42 55a16 16 0 0 1-13 7h-5a16 16 0 0 1-14-8L4 43a7 7 0 0 1 12-7l4 6V37a7 7 0 0 1 7-7z" />
+              </svg>
+            </span>
+            <span class="coach-sparkle">✦</span>
+          </div>
+
+          <div class="command-palette" id="commandPalette" aria-label="Commands">
+            <button class="command-button command-left" type="button" data-command="left" aria-label="Move left">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M55 32H14M28 17 13 32l15 15" />
+                <path class="command-trail" d="M48 49h.1M57 49h.1" />
+              </svg>
+              <kbd aria-hidden="true">←</kbd>
+            </button>
+            <button class="command-button command-right" type="button" data-command="right" aria-label="Move right">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M9 32h41M36 17l15 15-15 15" />
+                <path class="command-trail" d="M7 49h.1M16 49h.1" />
+              </svg>
+              <kbd aria-hidden="true">→</kbd>
+            </button>
+            <button class="command-button command-up" type="button" data-command="up" aria-label="Move up">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M32 55V14M17 28l15-15 15 15" />
+                <path class="command-trail" d="M49 48v.1M49 57v.1" />
+              </svg>
+              <kbd aria-hidden="true">↑</kbd>
+            </button>
+            <button class="command-button command-down" type="button" data-command="down" aria-label="Move down">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M32 9v41M17 36l15 15 15-15" />
+                <path class="command-trail" d="M49 7v.1M49 16v.1" />
+              </svg>
+              <kbd aria-hidden="true">↓</kbd>
+            </button>
+            <button class="command-button command-forward" type="button" data-command="forward" aria-label="Forward">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M32 40V10M18 24l14-14 14 14" />
+                <rect class="command-body" x="19" y="45" width="26" height="12" rx="5" />
+                <path class="command-trail" d="M26 51h.1M38 51h.1" />
+              </svg>
+              <kbd aria-hidden="true">F</kbd>
+            </button>
+            <button class="command-button command-turn-left" type="button" data-command="turnLeft" aria-label="Turn left">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M50 40a18 18 0 1 0-18 18" />
+                <path class="command-arrow" d="M26 52l6 6-6 6" />
+              </svg>
+              <kbd aria-hidden="true">L</kbd>
+            </button>
+            <button class="command-button command-turn-right" type="button" data-command="turnRight" aria-label="Turn right">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M14 40a18 18 0 1 1 18 18" />
+                <path class="command-arrow" d="M38 52l-6 6 6 6" />
+              </svg>
+              <kbd aria-hidden="true">R</kbd>
+            </button>
+            <button class="command-button command-pick" type="button" data-command="pick" aria-label="Pick up">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-box" d="M22 34h32v22H22zM22 34l16 8 16-8M38 42v14" />
+                <path class="command-arrow" d="M11 48V12M4 20l7-8 7 8" />
+              </svg>
+              <kbd aria-hidden="true">P</kbd>
+            </button>
+            <button class="command-button command-drop" type="button" data-command="drop" aria-label="Put down">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-box" d="M22 8h32v22H22zM22 8l16 8 16-8M38 16v14" />
+                <path class="command-arrow" d="M11 8v36M4 36l7 8 7-8" />
+                <path class="command-ground" d="M4 55h52" />
+              </svg>
+              <kbd aria-hidden="true">D</kbd>
+            </button>
+            <button class="command-button command-repeat" type="button" data-command="repeat" aria-label="Repeat two">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect class="command-card" x="7" y="10" width="20" height="26" rx="5" />
+                <rect class="command-card" x="37" y="10" width="20" height="26" rx="5" />
+                <path class="command-arrow" d="M50 44a18 9 0 0 1-36 0" />
+                <path class="command-arrow" d="M10 38l4 7 7-3" />
+                <text class="command-text" x="32" y="60">×2</text>
+              </svg>
+              <kbd aria-hidden="true">X</kbd>
+            </button>
+          </div>
+
+          <div class="adult-strip">
+            <p class="adult-text"><strong id="adultTitle"></strong> <span id="adultGoal"></span></p>
+            <p class="adult-text adult-hint" id="adultHint" hidden></p>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen story-done-screen" id="storyDoneScreen" hidden>
+        <div class="done-card">
+          <span class="done-emoji" id="doneEmoji" aria-hidden="true"></span>
+          <h1 id="doneTitle" tabindex="-1"></h1>
+          <p class="adult-text">Story complete! The robot has a new accessory.</p>
+          <div class="mascot mascot-done" id="doneMascot" aria-hidden="true">
+            <img src="assets/robo-mascot.png" alt="" />
+            <span class="accessory accessory-cap" data-accessory="cap" hidden>🧢</span>
+            <span class="accessory accessory-key" data-accessory="key" hidden>🔑</span>
+            <span class="accessory accessory-bolt" data-accessory="bolt" hidden>⚡</span>
+            <span class="accessory accessory-flag" data-accessory="flag" hidden>🚩</span>
+            <span class="accessory accessory-broom" data-accessory="broom" hidden>🧹</span>
+            <span class="accessory accessory-compass" data-accessory="compass" hidden>🧭</span>
+            <span class="done-accessory" id="doneAccessory" aria-hidden="true"></span>
+          </div>
+          <button class="again-button done-button" id="doneButton" type="button" aria-label="Back to the stories">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M10 32 32 12l22 20M17 27v25h30V27" />
+              <path d="M27 52V38h10v14" />
+            </svg>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div class="dialog-backdrop" id="parentPanel" hidden>
+      <section class="parent-dialog" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+        <h2 id="parentTitle">For parents</h2>
+        <p class="adult-text">After the first completion of every level the child answers one question: how hard it was. The answers are stored in this browser together with the number of runs and hints.</p>
+        <p class="adult-text" id="surveyEmpty">No answers yet.</p>
+        <div class="table-wrap">
+          <table class="survey-table" id="surveyTable" hidden>
+            <thead>
+              <tr>
+                <th>Story</th>
+                <th>Level</th>
+                <th>Answer</th>
+                <th>Runs</th>
+                <th>Hints</th>
+                <th>Cards / best</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <textarea class="survey-json" id="surveyJson" rows="6" readonly aria-label="Answers as JSON" hidden></textarea>
+        <p class="adult-text copy-status" id="copyStatus" aria-live="polite"></p>
+        <div class="parent-actions">
+          <button class="text-button" type="button" data-action="copy">Copy answers as JSON</button>
+          <button class="text-button" type="button" data-action="clear-survey">Clear answers</button>
+          <button class="text-button text-button--danger" type="button" data-action="reset-progress">Reset progress</button>
+          <button class="text-button text-button--primary" id="closeParentButton" type="button" data-action="close">Close</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="../shared/game-language.js"></script>
+    <script src="../shared/game-home.js"></script>
+    <script src="../shared/game-sound.js"></script>
+    <script src="levels.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
