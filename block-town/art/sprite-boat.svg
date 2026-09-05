@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- The boat, a 128 x 64 sprite sheet: frame A upright, frame B leaning three degrees, so a frame swap is a rock. It faces right. -->
+  <path d="M8 56q6 4 12 0t12 0t12 0t12 0" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/>
+  <path d="M72 56q6 4 12 0t12 0t12 0t12 0" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/>
+  <g id="boat">
+    <rect x="31" y="12" width="3" height="30" fill="#7a4f2a"/>
+    <path d="M35 14l17 24H35z" fill="#fff6dc"/>
+    <path d="M12 42h40l-6 10H18z" fill="#d2703f"/>
+    <circle cx="26" cy="47" r="2" fill="#fff6dc"/>
+    <circle cx="38" cy="47" r="2" fill="#fff6dc"/>
+  </g>
+  <use href="#boat" x="64" transform="rotate(3 96 44)"/>
+</svg>

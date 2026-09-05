@@ -1,11 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- A playground: a slide with a ladder and a ball. -->
+  <!-- A playground: a swing frame, a slide with a ladder and a ball. The swing itself is playground-swing.svg, laid over it by the game so it can swing. -->
   <rect width="64" height="64" fill="#f0dfae"/>
-  <path d="M14 20v34M20 20v34" stroke="#8f7448" stroke-width="3"/>
-  <path d="M14 28h6M14 36h6M14 44h6" stroke="#8f7448" stroke-width="2.5"/>
-  <rect x="12" y="15" width="18" height="6" rx="2" fill="#f2a63e"/>
-  <path d="M28 18L50 46" stroke="#f2a63e" stroke-width="9" stroke-linecap="round"/>
-  <path d="M48 46v10" stroke="#8f7448" stroke-width="3"/>
-  <circle cx="52" cy="54" r="7" fill="#6fb7e8"/>
-  <path d="M46 52q6 4 12 0" fill="none" stroke="#fff" stroke-width="2"/>
+  <path d="M6 56V16M22 56V16" stroke="#8f7448" stroke-width="3"/>
+  <path d="M4 16h20" stroke="#8f7448" stroke-width="3" stroke-linecap="round"/>
+  <path d="M34 20v34M40 20v34" stroke="#8f7448" stroke-width="3"/>
+  <path d="M34 28h6M34 36h6M34 44h6" stroke="#8f7448" stroke-width="2.5"/>
+  <rect x="32" y="15" width="18" height="6" rx="2" fill="#f2a63e"/>
+  <path d="M48 18L58 44" stroke="#f2a63e" stroke-width="9" stroke-linecap="round"/>
+  <path d="M56 44v12" stroke="#8f7448" stroke-width="3"/>
+  <circle cx="28" cy="57" r="5" fill="#6fb7e8"/>
+  <path d="M24 55.5q4 3 8 0" fill="none" stroke="#fff" stroke-width="1.5"/>
 </svg>

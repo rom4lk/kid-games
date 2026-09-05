@@ -48,6 +48,8 @@ const {
   brushCells,
   floodFill,
   houseDoor,
+  houseHasStreet,
+  spreadPick,
   fieldStage,
   FIELD_SHOOT_MS,
   FIELD_RIPE_MS,
@@ -610,6 +612,44 @@ function testHouseDoor() {
   assert.equal(houseDoor(between, 10, 10), "s");
 }
 
+function testHouseHasStreet() {
+  // A road on each of the four sides counts; a lone house does not.
+  const grid = buildGrid([
+    ".r........",
+    "rhr.......",
+    ".r........",
+    "....h.....",
+    "..........",
+  ]);
+  assert.equal(houseHasStreet(grid, 10, 11), true);
+  assert.equal(houseHasStreet(grid, 10, 34), false);
+  assert.equal(houseHasStreet(grid, 10, 1), false);
+  // One road on one side is enough, whichever side it is.
+  [
+    [".r.", ".h.", "..."],
+    ["...", ".hr", "..."],
+    ["...", ".h.", ".r."],
+    ["...", "rh.", "..."],
+  ].forEach((rows) => assert.equal(houseHasStreet(buildGrid(rows), 3, 4), true));
+
+  // Rails next to a house are not a street.
+  const rails = buildGrid(["...", ".h.", "..."]);
+  rails[5] = RAILS_ID;
+  assert.equal(houseHasStreet(rails, 3, 4), false);
+  assert.equal(houseHasStreet(rails, 3, 5), false);
+}
+
+function testSpreadPick() {
+  const twelve = [...Array(12)].map((_, index) => index * 10);
+  assert.deepEqual(spreadPick(twelve, 3), [0, 40, 80]);
+  assert.deepEqual(spreadPick([7, 9], 3), [7, 9]);
+  assert.deepEqual(spreadPick(twelve, 12), twelve);
+  assert.deepEqual(spreadPick(twelve, 0), []);
+  assert.deepEqual(spreadPick(null, 3), []);
+  // The same list always gives the same picks.
+  assert.deepEqual(spreadPick(twelve, 5), spreadPick(twelve, 5));
+}
+
 function testFieldStages() {
   const state = openWorld("size-2");
   const world = currentWorld(state);
@@ -1141,6 +1181,8 @@ testRoadPaths();
 testWalkAndLoopOrder();
 testLakesAndForests();
 testHouseDoor();
+testHouseHasStreet();
+testSpreadPick();
 testFieldStages();
 testEraser();
 testWideBrush();

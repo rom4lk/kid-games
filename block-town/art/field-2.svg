@@ -1,36 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Ripe field: rows of golden ears. -->
-  <rect width="64" height="64" fill="#d8c057"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- Ripe field, a 128 x 64 sheet of two frames: the ears bent two pixels left, then two pixels right. The furrows keep their heights in both, so they run on into the next cell. -->
+  <rect x="0" width="64" height="64" fill="#d8c057"/>
   <path d="M0 8h64" stroke="#c4a93e" stroke-width="2"/>
   <path d="M0 24h64" stroke="#c4a93e" stroke-width="2"/>
   <path d="M0 40h64" stroke="#c4a93e" stroke-width="2"/>
   <path d="M0 56h64" stroke="#c4a93e" stroke-width="2"/>
-  <path d="M8 7v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="8" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M24 7v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="24" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M40 7v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="40" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M56 7v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="56" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M16 23v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="16" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M32 23v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="32" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M48 23v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="48" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M8 39v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="8" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M24 39v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="24" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M40 39v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="40" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M56 39v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="56" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M16 55v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="16" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M32 55v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="32" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
-  <path d="M48 55v-7" stroke="#a3862f" stroke-width="1.5"/>
-  <ellipse cx="48" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M8 7L6 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="6" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M24 7L22 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="22" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M40 7L38 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="38" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M56 7L54 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="54" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M16 23L14 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="14" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M32 23L30 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="30" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M48 23L46 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="46" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M8 39L6 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="6" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M24 39L22 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="22" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M40 39L38 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="38" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M56 39L54 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="54" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M16 55L14 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="14" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M32 55L30 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="30" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M48 55L46 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="46" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <rect x="64" width="64" height="64" fill="#d8c057"/>
+  <path d="M64 8h64" stroke="#c4a93e" stroke-width="2"/>
+  <path d="M64 24h64" stroke="#c4a93e" stroke-width="2"/>
+  <path d="M64 40h64" stroke="#c4a93e" stroke-width="2"/>
+  <path d="M64 56h64" stroke="#c4a93e" stroke-width="2"/>
+  <path d="M72 7L74 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="74" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M88 7L90 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="90" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M104 7L106 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="106" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M120 7L122 0" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="122" cy="-1" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M80 23L82 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="82" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M96 23L98 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="98" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M112 23L114 16" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="114" cy="15" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M72 39L74 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="74" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M88 39L90 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="90" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M104 39L106 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="106" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M120 39L122 32" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="122" cy="31" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M80 55L82 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="82" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M96 55L98 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="98" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
+  <path d="M112 55L114 48" stroke="#a3862f" stroke-width="1.5"/>
+  <ellipse cx="114" cy="47" rx="2.2" ry="3.6" fill="#a3862f"/>
 </svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- The droplets of the fountain, a 128 x 64 sheet of two frames on a transparent background: frame A as they leave the jet, frame B a little higher and wider. -->
+  <g fill="#eaf7ff">
+    <circle cx="19" cy="26" r="2"/>
+    <circle cx="45" cy="26" r="2"/>
+    <circle cx="80" cy="20" r="2"/>
+    <circle cx="112" cy="20" r="2"/>
+    <circle cx="90" cy="11" r="1.5"/>
+    <circle cx="102" cy="11" r="1.5"/>
+  </g>
+</svg>

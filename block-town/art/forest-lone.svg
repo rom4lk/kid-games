@@ -1,10 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- A lone forest cell: one big tree on the meadow. -->
+  <!-- A lone forest cell: the meadow, the ground shadow and the trunk. The crown is forest-lone-crown.svg, laid over it by the game so it can sway. The trunk reaches up under the crown, so a bob never opens a gap. -->
   <rect width="64" height="64" fill="#a9dc88"/>
   <ellipse cx="32" cy="54" rx="16" ry="4" fill="#2f6f45" fill-opacity=".25"/>
-  <rect x="29" y="38" width="6" height="16" rx="2" fill="#7a4f2a"/>
-  <circle cx="32" cy="26" r="17" fill="#2f6f45"/>
-  <circle cx="24" cy="32" r="11" fill="#3f8a55"/>
-  <circle cx="40" cy="31" r="12" fill="#3f8a55"/>
-  <circle cx="32" cy="21" r="12" fill="#4f9b5f"/>
+  <rect x="29" y="30" width="6" height="24" rx="2" fill="#7a4f2a"/>
 </svg>

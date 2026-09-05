@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- The duck, a 128 x 64 sprite sheet: frame A, then frame B with the head one pixel lower, so a frame swap is a bob. It faces right. -->
+  <g id="duck-body">
+    <path d="M12 50q8 5 16 0t16 0" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/>
+    <path d="M17 36l-6-5v10z" fill="#ffd45c"/>
+    <ellipse cx="30" cy="40" rx="14" ry="9" fill="#ffd45c"/>
+    <ellipse cx="27" cy="41" rx="8" ry="5" fill="#f2c33e"/>
+  </g>
+  <g id="duck-head">
+    <circle cx="42" cy="28" r="8" fill="#ffd45c"/>
+    <circle cx="45" cy="26" r="1.6" fill="#3a4a3f"/>
+    <path d="M49 27l8 2-8 2z" fill="#f08c48"/>
+  </g>
+  <use href="#duck-body" x="64"/>
+  <use href="#duck-head" x="64" y="1"/>
+</svg>

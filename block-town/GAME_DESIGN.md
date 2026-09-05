@@ -127,14 +127,25 @@ Small life is the reward that replaces tasks. It appears on its own when the pai
 possible, and each reaction is visible without sound or reading:
 
 - A car drives along a connected road; on a closed loop it keeps driving round.
+- A road of two cells or more brings a walker, a small friendly person who strolls the roadside.
 - A train runs along connected rails.
-- A duck lands on a lake of four or more cells; a boat sails on a lake of ten or more.
-- Birds circle over a forest cluster of six or more cells.
+- A duck bobs on a lake of four or more cells; a boat rocks on a lake of ten or more.
+- Birds flap over a forest cluster of six or more cells.
+- A house with a street on any side starts smoking from its chimney; rails do not count. At most
+  six chimneys smoke at once, spread evenly over the town.
 - Fields ripen, a windmill turns when a field is near, a lighthouse blinks when it stands by water.
-- In the evening (after the world is complete) windows and lanterns light up.
+- In the evening (after the world is complete) windows and lanterns light up and fireflies come out.
+
+The painting breathes as well, slowly and by a pixel or two, never fast enough to pull the eye from
+the cell being painted: lone and row trees sway their crowns (a dense wood keeps still so its canopy
+never shows a seam), waves drift on every lake, ripe ears bend, a fountain splashes, a swing rocks,
+and the shadows of clouds pass over the whole sheet. Every motion is earned by the painting: no
+smoke without a street, no walker without a road, no ripple on an empty sheet.
 
 All of it is gentle and slow. Under `prefers-reduced-motion` the travel of cars, trains, birds and
-boats stops; their presence is kept with static figures, and light and opacity changes stay smooth.
+boats stops and every creature keeps its first frame, one still puff marks a chimney, the crowns,
+waves and ears stand where they are, the clouds and the blinking of the fireflies stop completely,
+and light and opacity changes stay smooth.
 
 ## Painting tools
 

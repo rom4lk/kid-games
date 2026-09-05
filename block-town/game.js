@@ -542,6 +542,26 @@ function houseDoor(grid, columns, index) {
   return DOOR_SIDES.find(([side]) => (mask & side) !== 0)?.[1] ?? "s";
 }
 
+// A house is lived in when a street runs past it, on any side. Rails do not
+// count: a train does not stop at a door.
+function houseHasStreet(grid, columns, index) {
+  if (grid?.[index] !== HOUSE_ID) return false;
+  return neighborMask(grid, columns, index, (value) => roadGroup(value) === "road") !== 0;
+}
+
+// `count` items of a list taken at even intervals, the whole list when it is
+// shorter. Deterministic, so the same painting always picks the same items and
+// a repaint elsewhere never moves them.
+function spreadPick(items, count) {
+  if (!Array.isArray(items) || !Number.isInteger(count) || count <= 0) return [];
+  if (items.length <= count) return items.slice();
+  const picks = [];
+  for (let step = 0; step < count; step += 1) {
+    picks.push(items[Math.floor((step * items.length) / count)]);
+  }
+  return picks;
+}
+
 // Bare soil, then shoots, then ripe ears. The caller passes the current time.
 function fieldStage(state, index, now = 0) {
   const world = currentWorld(state);
@@ -918,6 +938,8 @@ if (typeof module !== "undefined" && module.exports) {
     brushCells,
     floodFill,
     houseDoor,
+    houseHasStreet,
+    spreadPick,
     fieldStage,
     FIELD_SHOOT_MS,
     FIELD_RIPE_MS,
@@ -946,10 +968,18 @@ const MAX_SPRITES_PER_KIND = 3;
 // the lakes.
 const SPRITE_KINDS = [
   { kind: "car", source: "roads", minCells: 3, stepMs: 620 },
+  { kind: "walker", source: "roads", minCells: 2, stepMs: 1400 },
   { kind: "train", source: "rails", minCells: 3, stepMs: 520 },
   { kind: "duck", source: "lakes", minCells: 4, stepMs: 1500 },
   { kind: "boat", source: "lakes", minCells: 10, stepMs: 1900 },
   { kind: "bird", source: "woods", minCells: 6, stepMs: 900 },
+];
+
+// Anchored creatures stand on one cell and move by stylesheet keyframes alone,
+// so they cost the frame loop nothing. Each kind carries its own cap, and the
+// picks are spread over the world rather than taken in reading order.
+const ANCHOR_KINDS = [
+  { kind: "smoke", source: "homes", maxCount: 6 },
 ];
 
 const TRACK_SOURCES = {
@@ -957,6 +987,10 @@ const TRACK_SOURCES = {
   rails: (size, grid) => railPaths(grid, size.columns),
   lakes: (size, grid, underlay) => lakes(grid, underlay, size.columns),
   woods: (size, grid) => forestClusters(grid, size.columns),
+  // One track of one cell per house that has a street.
+  homes: (size, grid) => grid.flatMap((value, index) => (
+    houseHasStreet(grid, size.columns, index) ? [{ cells: [index], path: [index], loop: false }] : []
+  )),
 };
 
 // The shelf thumbnail draws one pixel per cell, so every block needs one flat
@@ -1899,14 +1933,14 @@ function initializeGame() {
     return row * size.columns + column;
   }
 
-  function createSprite(kind, track, key) {
+  function createSprite(kind, track, key, isStatic = false) {
     const element = document.createElement("span");
     element.className = `sprite sprite--${kind}`;
     // The inner element carries the drawing, so it can be mirrored without
     // disturbing the position of the sprite.
     element.innerHTML = "<i></i>";
     elements.living.append(element);
-    return { key, element, path: track.path, stepMs: kindStep(kind), phase: Math.random() };
+    return { key, element, path: track.path, stepMs: kindStep(kind), phase: Math.random(), static: isStatic };
   }
 
   function kindStep(kind) {
@@ -1938,20 +1972,33 @@ function initializeGame() {
     sprites.forEach((sprite) => placeSprite(sprite, 0, size, columns));
   }
 
+  // An anchored creature stands on its one cell; its motion is the stylesheet's.
+  function placeStaticSprites() {
+    const columns = openSize().columns;
+    const size = elements.grid.clientWidth / columns;
+    sprites.forEach((sprite) => {
+      if (sprite.static) placeSprite(sprite, 0, size, columns);
+    });
+  }
+
   function driveSprites(timestamp) {
     driverHandle = 0;
     const columns = openSize().columns;
     const size = elements.grid.clientWidth / columns;
+    let travelling = false;
     sprites.forEach((sprite) => {
+      if (sprite.static) return;
+      travelling = true;
       placeSprite(sprite, timestamp / sprite.stepMs + sprite.phase * sprite.path.length, size, columns);
     });
-    if (sprites.length > 0) driverHandle = window.requestAnimationFrame(driveSprites);
+    if (travelling) driverHandle = window.requestAnimationFrame(driveSprites);
   }
 
-  // Behind the pause, words and celebration card the sheet is covered, so
-  // there is nothing to animate and the frame loop stops.
+  // Behind the pause, words and celebration card the sheet is covered, and in
+  // a hidden tab nobody looks, so there is nothing to animate and the frame
+  // loop stops.
   function spritesAreWatched() {
-    return !paused && !wordsOpen && elements.celebration.hidden;
+    return !paused && !wordsOpen && elements.celebration.hidden && !document.hidden;
   }
 
   function startDriver() {
@@ -1970,7 +2017,7 @@ function initializeGame() {
   // Every reading the creatures of this world need, each one done once.
   function readTracks(size, grid, underlay) {
     const found = new Map();
-    SPRITE_KINDS.forEach(({ source }) => {
+    SPRITE_KINDS.concat(ANCHOR_KINDS).forEach(({ source }) => {
       if (found.has(source)) return;
       found.set(source, TRACK_SOURCES[source](size, grid, underlay));
     });
@@ -1990,23 +2037,28 @@ function initializeGame() {
     const size = worldSize(world);
     const tracks = readTracks(size, world.grid, world.underlay);
     const alive = new Map(sprites.map((sprite) => [sprite.key, sprite]));
+    const keep = (kind, track, isStatic) => {
+      const key = trackKey(kind, track);
+      const kept = alive.get(key);
+      if (!kept) return createSprite(kind, track, key, isStatic);
+      alive.delete(key);
+      return kept;
+    };
 
-    sprites = SPRITE_KINDS.flatMap(({ kind, source, minCells }) =>
+    const travelling = SPRITE_KINDS.flatMap(({ kind, source, minCells }) =>
       tracks.get(source)
         .filter((track) => track.cells.length >= minCells)
         .sort((left, right) => right.cells.length - left.cells.length)
         .slice(0, MAX_SPRITES_PER_KIND)
-        .map((track) => {
-          const key = trackKey(kind, track);
-          const kept = alive.get(key);
-          if (!kept) return createSprite(kind, track, key);
-          alive.delete(key);
-          return kept;
-        }));
+        .map((track) => keep(kind, track, false)));
+    const anchored = ANCHOR_KINDS.flatMap(({ kind, source, maxCount }) =>
+      spreadPick(tracks.get(source), maxCount).map((track) => keep(kind, track, true)));
+    sprites = travelling.concat(anchored);
 
     // Whatever is left over travelled a track the world no longer holds.
     alive.forEach((sprite) => sprite.element.remove());
 
+    placeStaticSprites();
     startDriver();
   }
 
@@ -2457,12 +2509,14 @@ function initializeGame() {
     const stageObserver = new ResizeObserver(() => {
       fitSheet();
       if (reduceMotion) parkSprites();
+      else placeStaticSprites();
     });
     stageObserver.observe(elements.stageArea);
   } else {
     window.addEventListener("resize", () => {
       fitSheet();
       if (reduceMotion) parkSprites();
+      else placeStaticSprites();
     });
   }
 
@@ -2470,6 +2524,9 @@ function initializeGame() {
     reduceMotion = event.matches;
     startDriver();
   });
+
+  // A hidden tab stops the frame loop outright; coming back starts it again.
+  document.addEventListener("visibilitychange", startDriver);
 
   function refreshWordsLanguage() {
     if (!wordsOpen) return;

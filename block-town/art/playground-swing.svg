@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The swing alone: two ropes and a seat, hanging from the pivot at (14, 16) of playground.svg, on a transparent background. -->
+  <path d="M10 17v22M18 17v22" stroke="#6f6a60" stroke-width="1.5"/>
+  <rect x="7" y="38" width="14" height="3" rx="1.5" fill="#c25a44"/>
+</svg>

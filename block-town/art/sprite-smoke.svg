@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 128">
+  <!-- Chimney smoke, a 192 x 128 sprite sheet of three frames, each two cells tall: the house cell is the lower half and the puffs rise into the cell above. A small puff low, a bigger puff higher, a faint puff highest. -->
+  <g fill="#c9d0cc">
+    <circle cx="44" cy="68" r="4" fill-opacity=".7"/>
+    <circle cx="108" cy="69" r="3" fill-opacity=".5"/>
+    <circle cx="110" cy="56" r="6" fill-opacity=".6"/>
+    <circle cx="172" cy="70" r="3" fill-opacity=".5"/>
+    <circle cx="173" cy="60" r="5" fill-opacity=".5"/>
+    <circle cx="176" cy="44" r="8" fill-opacity=".35"/>
+  </g>
+</svg>

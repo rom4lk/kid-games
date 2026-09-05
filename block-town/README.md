@@ -69,10 +69,20 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
 ## The living world
 
 Small life appears on its own as soon as the painting allows it, and disappears when the painting no
-longer does. A car drives a road of three cells or more and keeps circling a closed loop; a train
-runs the rails; a duck lands on a lake of four cells, a boat sails one of ten; birds glide over a
-wood of six. A windmill turns beside a field and a lighthouse blinks beside water. When the world is
-full, evening falls and the windows and lanterns come on.
+longer does. A car drives a road of three cells or more and keeps circling a closed loop; a road of
+two cells brings a walker who strolls along the roadside; a train runs the rails; a duck bobs on a
+lake of four cells, a boat rocks on one of ten; birds flap over a wood of six. A windmill turns
+beside a field and a lighthouse blinks beside water. A street painted past a house starts its
+chimney smoking, at most six chimneys spread over the town; erasing the street stops it.
+
+The painting itself breathes too, slowly and by a little: the crowns of lone and row trees sway,
+the waves of a lake drift, ripe ears bend in the wind, a fountain splashes, a swing rocks, and
+cloud shadows pass over the whole sheet. When the world is full, evening falls, the windows and
+lanterns come on and fireflies come out over the sheet.
+
+Under `prefers-reduced-motion` the creatures stand at their first cell in their first frame, one
+still puff marks a chimney, the crowns, waves and ears keep still, the clouds are gone and the
+fireflies stay lit at one brightness.
 
 ## Controls
 
@@ -105,8 +115,9 @@ The test covers the block and cell-size registries, screen-derived grid dimensio
 compatibility, enabling blocks and listing locked blocks, making, opening and deleting worlds,
 painting and painting over, a block an adult has not enabled, refused input, the stroke line filler,
 the autotile helpers, the inside corners of a lake, the paved square, the world analysis, the order
-of a walked track and of a closed loop, the house door, the field stages, the wide brush, rail paths,
-the bucket on a full world, the size of a full save and the normalization of a damaged save.
+of a walked track and of a closed loop, the house door, the street by a house and the even spread of
+the chimneys, the field stages, the wide brush, rail paths, the bucket on a full world, the size of a
+full save and the normalization of a damaged save.
 
 ## Saving
 
@@ -129,12 +140,18 @@ the bucket on a full world, the size of a full save and the normalization of a d
   and the dock, all on one sheet of squared paper — plus the words overlay and the pause with its shelf, cell-size picker and
   confirmations.
 - `styles.css` lays out the three edge-to-edge zones and every block from the pictures in `art/`,
-  then draws the creatures and the celebration. What a block does on its own — the sails of a
-  windmill, the lamp of a lighthouse, the windows of a house in the evening — is a pseudo-element
-  the stylesheet animates.
+  then draws the creatures, the cloud shadows, the fireflies and the celebration. What a block does
+  on its own — the sails of a windmill, the lamp of a lighthouse, the windows of a house in the
+  evening, the crown of a tree, the splash of a fountain, the swing of a playground — is a
+  pseudo-element the stylesheet animates. Motion that many cells share (the ears, the waves, the
+  crowns) reads three stepped clocks animated once on the grid, so a thousand cells cost about what
+  fifty do.
 - `art/` holds the SVG pictures, one file per piece: a shore, a rounded corner, a dashed centre
   line, a tree, a whole house. Each is a 64 x 64 drawing that `styles.css` layers and scales to the
-  cell; the pieces that only differ by their side are the same drawing turned.
+  cell; the pieces that only differ by their side are the same drawing turned. The creatures are
+  sprite sheets `sprite-*.svg` of 128 x 64 with frame A on the left and frame B on the right (the
+  smoke, 192 x 128, has three frames two cells tall); `field-2.svg` and `fountain-splash.svg` are
+  two-frame sheets of the same shape.
 - `game.js` holds the pure model above `module.exports` and the interface below it.
 - `translations.json` holds the English and Russian interface text.
 - `test-game.js` checks the model in Node.js.

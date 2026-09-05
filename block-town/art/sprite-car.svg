@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- The car, a 128 x 64 sprite sheet: one frame, repeated so every sheet is two frames wide. It faces right; the game mirrors it when it drives left. -->
+  <g id="car">
+    <ellipse cx="32" cy="47" rx="24" ry="3" fill="#2b4535" fill-opacity=".14"/>
+    <path d="M16 28l6-10h20l6 10z" fill="#e2685f"/>
+    <rect x="6" y="27" width="52" height="18" rx="6" fill="#e2685f"/>
+    <path d="M20 27l4-7h7v7z" fill="#fff6dc"/>
+    <path d="M33 20h7l4 7H33z" fill="#fff6dc"/>
+    <circle cx="18" cy="44" r="6" fill="#3a4a3f"/>
+    <circle cx="46" cy="44" r="6" fill="#3a4a3f"/>
+    <circle cx="18" cy="44" r="2.5" fill="#cfd6d0"/>
+    <circle cx="46" cy="44" r="2.5" fill="#cfd6d0"/>
+    <circle cx="54" cy="33" r="2.5" fill="#ffe9a8"/>
+    <path d="M46 40q4 3 8 0" fill="none" stroke="#8f3a33" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  <use href="#car" x="64"/>
+</svg>

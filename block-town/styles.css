@@ -176,6 +176,8 @@ button:focus-visible,
 .sheet-stage {
   position: relative;
   width: max-content;
+  /* The cloud shadows blend with the sheet alone, not with the page. */
+  isolation: isolate;
 }
 
 /* Evening light stays on a sheet that has been finished. */
@@ -218,17 +220,43 @@ button:focus-visible,
 }
 
 /* One animated custom property drives the shimmer of every unpainted cell, so
-   a sheet of a thousand cells still runs a single animation. */
+   a sheet of a thousand cells still runs a single animation. Three more are
+   the shared clocks of the living world: every cell that moves only reads
+   them, and a stepped clock changes its value a few times a second, so a cell
+   repaints only then. --tick2 picks a frame of a two-frame picture, --ripple
+   drifts the waves, --sway bobs the tree crowns. */
 @property --empty-tint {
   syntax: "<color>";
   inherits: true;
   initial-value: #fffdf4;
 }
 
+@property --tick2 {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ripple {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --sway {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 .sheet-grid {
   --empty-tint: var(--paper);
 
-  animation: paper-shimmer 2800ms ease-in-out infinite;
+  animation:
+    paper-shimmer 2800ms ease-in-out infinite,
+    tick-two 2400ms steps(2, jump-none) infinite,
+    ripple-drift 4000ms steps(8) infinite alternate,
+    sway-bob 3200ms steps(2, jump-none) infinite;
 }
 
 @keyframes paper-shimmer {
@@ -240,6 +268,22 @@ button:focus-visible,
   50% {
     --empty-tint: #fbf0cd;
   }
+}
+
+@keyframes tick-two {
+  from { --tick2: 0; }
+  to { --tick2: 1; }
+}
+
+/* Alternating, so the waves drift one way and back instead of jumping home. */
+@keyframes ripple-drift {
+  from { --ripple: 0px; }
+  to { --ripple: 4px; }
+}
+
+@keyframes sway-bob {
+  from { --sway: 0px; }
+  to { --sway: 1px; }
 }
 
 /* An unpainted cell keeps the squared-paper look. */
@@ -303,8 +347,12 @@ button:focus-visible,
   background-image: url("art/field-1.svg");
 }
 
+/* The ripe ears bend in the wind: two frames side by side in one picture, and
+   the shared clock picks one. */
 .block--field.field--2 {
   background-image: url("art/field-2.svg");
+  background-position: calc(var(--tick2) * 100%) center;
+  background-size: 200% 100%;
 }
 
 /* Roads. Every kind is assembled from pieces in art/, listed top layer first:
@@ -552,6 +600,31 @@ button:focus-visible,
   background-image: url("art/forest-dense-b.svg");
 }
 
+/* The crown of a lone tree or a row tree is a picture of its own over the
+   trunk, so it can sway: it bobs one pixel on the shared clock, and odd rows
+   bob half a beat later. A dense canopy is cut by the cell edge and joins its
+   neighbours, so it keeps still; a bob there would open a seam. */
+.block--forest.forest--0::after,
+.block--forest.forest--1::after {
+  position: absolute;
+  background: url("art/forest-lone-crown.svg") center / 100% 100% no-repeat;
+  background-position-y: var(--sway);
+  content: "";
+  inset: 0;
+}
+
+.block--forest.forest--1::after {
+  background-image: url("art/forest-row-a-crown.svg");
+}
+
+.block--forest.forest--1.tile--b::after {
+  background-image: url("art/forest-row-b-crown.svg");
+}
+
+.sheet-row:nth-child(odd) .block--forest::after {
+  background-position-y: calc(1px - var(--sway));
+}
+
 /* Buildings and decorations are one picture from art/ each, on their ground.
    What moves or lights up — the windows, the sails, the lamps — is a
    pseudo-element the game can animate, laid over the picture. */
@@ -669,6 +742,26 @@ button:focus-visible,
   background: url("art/playground.svg") center / 100% 100% no-repeat var(--sand);
 }
 
+/* The swing hangs from the top bar of its frame and rocks a little. */
+.block--playground::after {
+  position: absolute;
+  background: url("art/playground-swing.svg") center / 100% 100% no-repeat;
+  content: "";
+  inset: 0;
+  animation: swing-sway 2600ms ease-in-out infinite alternate;
+  transform-origin: 21.875% 25%;
+}
+
+@keyframes swing-sway {
+  from {
+    transform: rotate(-8deg);
+  }
+
+  to {
+    transform: rotate(8deg);
+  }
+}
+
 /* A lantern: the frame around its lamp is drawn here, so the evening can
    put a glow around it. */
 .block--lantern {
@@ -691,6 +784,15 @@ button:focus-visible,
 
 .block--fountain {
   background: url("art/fountain.svg") center / 100% 100% no-repeat var(--sand);
+}
+
+/* The droplets over the jet: two frames, the shared clock picks one. */
+.block--fountain::after {
+  position: absolute;
+  background: url("art/fountain-splash.svg") center / 200% 100% no-repeat;
+  background-position-x: calc(var(--tick2) * 100%);
+  content: "";
+  inset: 0;
 }
 
 /* Evening: the windows and the lanterns come on. */
@@ -740,13 +842,26 @@ button:focus-visible,
     var(--shore-s),
     var(--shore-w),
     var(--water-art);
-  background-position: center;
+  /* Only the wave layer, the last one, drifts on the shared clock; the shores
+     stay. Next to the waves the picture is the flat water colour, so the
+     strip it uncovers is invisible. */
+  background-position:
+    center, center, center, center, center, center,
+    center, center, center, center, center, center,
+    var(--ripple) center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
+/* The other layout drifts the other way, so a lake moves as a body of water
+   and not as one sheet. */
 .block--water.tile--b {
   --water-art: url("art/water-b.svg");
+
+  background-position:
+    center, center, center, center, center, center,
+    center, center, center, center, center, center,
+    calc(var(--ripple) * -1) center;
 }
 
 .block--water.shore--n {
@@ -793,6 +908,9 @@ button:focus-visible,
   --shore-se: none;
   --shore-sw: none;
   --water-art: url("art/water-pond.svg");
+
+  /* The ring of sand is part of the pond picture, so the pond does not drift. */
+  background-position: center;
 }
 
 .block--water.inner--ne {
@@ -819,6 +937,30 @@ button:focus-visible,
   pointer-events: none;
 }
 
+/* Fireflies come out in the evening over the whole sheet: a sparse pattern of
+   dots that brightens and dims in three steps. */
+.sheet-stage.is-evening .living-layer::before {
+  position: absolute;
+  background:
+    radial-gradient(circle at 23px 31px, var(--lamp) 0 2px, transparent 3px),
+    radial-gradient(circle at 121px 97px, var(--lamp) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 74px 128px, var(--lamp) 0 2px, transparent 3px);
+  background-size: 176px 144px;
+  content: "";
+  inset: 0;
+  animation: firefly-blink 2800ms steps(3, jump-none) infinite alternate;
+}
+
+@keyframes firefly-blink {
+  from {
+    opacity: 0.2;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .sprite {
   position: absolute;
   top: 0;
@@ -827,9 +969,16 @@ button:focus-visible,
   height: var(--cell-size);
 }
 
+/* Every creature is drawn from a sprite sheet in art/: 128 x 64, frame A on
+   the left and frame B on the right. The sheet is twice as wide as the box,
+   so a frame swap is background-position-x: 100%, and the mirroring flips the
+   whole sheet, which keeps the chosen frame. */
 .sprite > i {
   position: absolute;
   display: block;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
   inset: 0;
 }
 
@@ -837,115 +986,99 @@ button:focus-visible,
   transform: scaleX(-1);
 }
 
-/* A little car with a window. */
-.sprite--car > i::before {
-  position: absolute;
-  border-radius: 38% 38% 24% 24%;
-  background: #e2685f;
-  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
-  content: "";
-  inset: 30% 14%;
+.sprite--car > i {
+  background-image: url("art/sprite-car.svg");
 }
 
-/* Two windows, so the shape reads as a car and not as a red dot. */
-.sprite--car > i::after {
+.sprite--train > i {
+  background-image: url("art/sprite-train.svg");
+}
+
+/* The duck bobs, the boat rocks, the bird flaps and the walker steps: the
+   second frame of each sheet, shown in turn. */
+.sprite--duck > i {
+  background-image: url("art/sprite-duck.svg");
+  animation: frame-swap 1600ms steps(2, jump-none) infinite;
+}
+
+.sprite--boat > i {
+  background-image: url("art/sprite-boat.svg");
+  animation: frame-swap 2400ms steps(2, jump-none) infinite;
+}
+
+.sprite--bird > i {
+  background-image: url("art/sprite-bird.svg");
+  animation: frame-swap 800ms steps(2, jump-none) infinite;
+}
+
+.sprite--walker > i {
+  background-image: url("art/sprite-walker.svg");
+  animation: frame-swap 600ms steps(2, jump-none) infinite;
+}
+
+@keyframes frame-swap {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: 100%;
+  }
+}
+
+/* Chimney smoke stands on its house and rises into the cell above: the box is
+   two cells tall, and the sheet holds three frames of a puff on its way up. */
+.sprite--smoke > i {
+  top: -100%;
+  background-image: url("art/sprite-smoke.svg");
+  background-size: 300% 100%;
+  animation: smoke-rise 3000ms steps(3, jump-none) infinite;
+}
+
+@keyframes smoke-rise {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: 100%;
+  }
+}
+
+/* Cloud shadows drift over the whole world, creatures and grid alike. The
+   layer clips its picture, which is one pattern period wider than the sheet
+   and slides by exactly that period, so the loop never jumps. Moving it with a
+   transform costs the compositor one layer and the main thread nothing. */
+.cloud-layer {
   position: absolute;
+  z-index: 3;
+  border-radius: 10px;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.cloud-layer::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 520px);
+  height: 100%;
   background:
-    linear-gradient(
-      90deg,
-      #fff6dc 0 42%,
-      transparent 42% 58%,
-      #fff6dc 58% 100%
-    );
+    radial-gradient(150px 90px at 130px 110px, rgb(43 69 53) 0 40%, transparent 100%),
+    radial-gradient(190px 110px at 380px 270px, rgb(43 69 53) 0 40%, transparent 100%);
+  background-size: 520px 380px;
   content: "";
-  inset: 38% 26% 48%;
+  opacity: 0.07;
+  animation: clouds-drift 90s linear infinite;
+  will-change: transform;
 }
 
-/* A duck: a round body and a head with a beak. */
-.sprite--duck > i::before {
-  position: absolute;
-  border-radius: 50% 50% 46% 46%;
-  background: #ffd45c;
-  content: "";
-  inset: 44% 28% 24%;
-}
-
-.sprite--duck > i::after {
-  position: absolute;
-  top: 24%;
-  left: 48%;
-  width: 30%;
-  height: 30%;
-  border-radius: 50% 50% 46% 46%;
-  background:
-    radial-gradient(circle at 74% 56%, #f08c48 0 22%, transparent 22%),
-    radial-gradient(circle at 40% 42%, #3a4a3f 0 14%, transparent 14%),
-    #ffd45c;
-  content: "";
-}
-
-/* A train: a dark engine with a chimney. */
-.sprite--train > i::before {
-  position: absolute;
-  border-radius: 30% 30% 22% 22%;
-  background: #4a6076;
-  box-shadow: 0 1px 0 1px rgb(43 69 53 / 20%);
-  content: "";
-  inset: 32% 10%;
-}
-
-.sprite--train > i::after {
-  position: absolute;
-  top: 18%;
-  left: 22%;
-  width: 16%;
-  height: 22%;
-  border-radius: 20%;
-  background: #4a6076;
-  box-shadow: 34% 0 0 0 transparent;
-  content: "";
-}
-
-/* A boat: a hull and a small sail. */
-.sprite--boat > i::before {
-  position: absolute;
-  border-radius: 0 0 46% 46%;
-  background: #d2703f;
-  content: "";
-  inset: 56% 18% 22%;
-}
-
-.sprite--boat > i::after {
-  position: absolute;
-  bottom: 44%;
-  left: 40%;
-  width: 34%;
-  height: 34%;
-  background: #fff6dc;
-  clip-path: polygon(0 0, 100% 100%, 0 100%);
-  content: "";
-}
-
-/* Birds are two small wings over the wood. */
-.sprite--bird > i::before,
-.sprite--bird > i::after {
-  position: absolute;
-  top: 34%;
-  width: 22%;
-  height: 11%;
-  border-radius: 40%;
-  background: #4a6076;
-  content: "";
-}
-
-.sprite--bird > i::before {
-  left: 26%;
-  transform: rotate(-22deg);
-}
-
-.sprite--bird > i::after {
-  left: 48%;
-  transform: rotate(22deg);
+@keyframes clouds-drift {
+  to {
+    transform: translateX(-520px);
+  }
 }
 
 /* Palette and tools stay well above the 64px minimum. The blur makes the dock
@@ -1133,7 +1266,13 @@ button:focus-visible,
   font-size: 17px;
 }
 
+/* A swatch is a cell outside the sheet: what a block lays over itself, a
+   crown or a splash, must stay inside it, and the clocks never tick here, so
+   the swatch always shows frame A. */
 .palette-swatch {
+  --tick2: 0;
+
+  position: relative;
   display: block;
   width: 54px;
   height: 54px;
@@ -1605,13 +1744,37 @@ button:focus-visible,
     animation-name: word-reveal-fade;
   }
 
-  /* No pulsing: the unpainted cells keep a dashed frame instead. */
+  /* No pulsing and no clocks: the unpainted cells keep a dashed frame
+     instead, and with the clocks at their first value the ears, the waves and
+     the crowns stand where they stood. */
   .sheet-grid {
     animation: none;
   }
 
   /* The blades stop; the standing cross still says "windmill". */
   .block--windmill.is-turning::after {
+    animation: none;
+  }
+
+  /* The decorative loops stop: the clouds go, the fireflies stand at one
+     brightness. */
+  .cloud-layer {
+    display: none;
+  }
+
+  .sheet-stage.is-evening .living-layer::before {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  /* Every creature keeps its first frame: one still puff of smoke, a walker
+     standing, a bird with its wings up, the swing hanging straight. */
+  .sprite--smoke > i,
+  .sprite--walker > i,
+  .sprite--bird > i,
+  .sprite--duck > i,
+  .sprite--boat > i,
+  .block--playground::after {
     animation: none;
   }
 
