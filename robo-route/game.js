@@ -1,40 +1,40 @@
 const levels = [
   {
     robot: { x: 1, y: 1 },
-    parcel: { x: 1, y: 1 },
-    station: { x: 4, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 1, y: 1 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 4, y: 1 } }],
     obstacles: [],
     commands: ["pick", "right", "drop"],
     solution: ["pick", "right", "right", "right", "drop"],
   },
   {
     robot: { x: 2, y: 1 },
-    parcel: { x: 1, y: 1 },
-    station: { x: 5, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 1, y: 1 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 5, y: 1 } }],
     obstacles: [],
     commands: ["left", "pick", "right", "drop"],
     solution: ["left", "pick", "right", "right", "right", "right", "drop"],
   },
   {
     robot: { x: 1, y: 2 },
-    parcel: { x: 1, y: 1 },
-    station: { x: 4, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 1, y: 1 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 4, y: 1 } }],
     obstacles: [],
     commands: ["left", "pick", "right", "drop", "up"],
     solution: ["up", "pick", "right", "right", "right", "drop"],
   },
   {
     robot: { x: 0, y: 2 },
-    parcel: { x: 2, y: 2 },
-    station: { x: 4, y: 0 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 2, y: 2 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 4, y: 0 } }],
     obstacles: [],
     commands: ["left", "pick", "right", "drop", "up"],
     solution: ["right", "right", "pick", "up", "up", "right", "right", "drop"],
   },
   {
     robot: { x: 4, y: 2 },
-    parcel: { x: 4, y: 0 },
-    station: { x: 0, y: 2 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 4, y: 0 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 0, y: 2 } }],
     obstacles: [],
     commands: ["left", "pick", "right", "drop", "up", "down"],
     solution: [
@@ -52,16 +52,16 @@ const levels = [
   },
   {
     robot: { x: 0, y: 2 },
-    parcel: { x: 2, y: 2 },
-    station: { x: 4, y: 0 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 2, y: 2 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 4, y: 0 } }],
     obstacles: [{ x: 3, y: 2 }],
     commands: ["left", "pick", "right", "drop", "up", "down"],
     solution: ["right", "right", "pick", "up", "right", "right", "up", "drop"],
   },
   {
     robot: { x: 0, y: 2 },
-    parcel: { x: 0, y: 2 },
-    station: { x: 5, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 0, y: 2 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 5, y: 1 } }],
     obstacles: [],
     button: { x: 2, y: 2 },
     gate: { x: 3, y: 2 },
@@ -71,8 +71,8 @@ const levels = [
   },
   {
     robot: { x: 0, y: 1 },
-    parcel: { x: 0, y: 1 },
-    station: { x: 5, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 0, y: 1 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 5, y: 1 } }],
     obstacles: [],
     button: { x: 2, y: 0 },
     gate: { x: 3, y: 1 },
@@ -82,8 +82,8 @@ const levels = [
   },
   {
     robot: { x: 2, y: 2 },
-    parcel: { x: 2, y: 1 },
-    station: { x: 5, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 2, y: 1 }, stationId: "station-star" }],
+    stations: [{ id: "station-star", symbol: "star", position: { x: 5, y: 1 } }],
     obstacles: [],
     button: { x: 1, y: 2 },
     gate: { x: 3, y: 1 },
@@ -91,7 +91,73 @@ const levels = [
     commands: ["left", "pick", "right", "drop", "up", "down"],
     solution: ["left", "right", "up", "pick", "right", "right", "right", "drop"],
   },
+  {
+    robot: { x: 1, y: 1 },
+    parcels: [{ id: "parcel-star", symbol: "star", position: { x: 1, y: 1 }, stationId: "station-star" }],
+    stations: [
+      { id: "station-circle", symbol: "circle", position: { x: 2, y: 1 } },
+      { id: "station-star", symbol: "star", position: { x: 4, y: 1 } },
+    ],
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["pick", "right", "right", "right", "drop"],
+  },
+  {
+    robot: { x: 1, y: 1 },
+    parcels: [
+      { id: "parcel-star", symbol: "star", position: { x: 1, y: 0 }, stationId: "station-star" },
+      { id: "parcel-circle", symbol: "circle", position: { x: 1, y: 2 }, stationId: "station-circle" },
+    ],
+    stations: [
+      { id: "station-star", symbol: "star", position: { x: 2, y: 0 } },
+      { id: "station-circle", symbol: "circle", position: { x: 2, y: 2 } },
+    ],
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["up", "pick", "right", "drop", "left", "down", "down", "pick", "right", "drop"],
+  },
+  {
+    robot: { x: 2, y: 1 },
+    parcels: [
+      { id: "parcel-star", symbol: "star", position: { x: 2, y: 0 }, stationId: "station-star" },
+      { id: "parcel-circle", symbol: "circle", position: { x: 2, y: 2 }, stationId: "station-circle" },
+    ],
+    stations: [
+      { id: "station-star", symbol: "star", position: { x: 4, y: 2 } },
+      { id: "station-circle", symbol: "circle", position: { x: 4, y: 0 } },
+    ],
+    obstacles: [],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["up", "pick", "right", "right", "down", "down", "drop", "left", "left", "pick", "right", "right", "up", "up", "drop"],
+  },
+  {
+    robot: { x: 0, y: 0 },
+    parcels: [
+      { id: "parcel-star", symbol: "star", position: { x: 2, y: 0 }, stationId: "station-star" },
+      { id: "parcel-circle", symbol: "circle", position: { x: 1, y: 1 }, stationId: "station-circle" },
+    ],
+    stations: [
+      { id: "station-star", symbol: "star", position: { x: 3, y: 0 } },
+      { id: "station-circle", symbol: "circle", position: { x: 0, y: 1 } },
+    ],
+    obstacles: [{ x: 1, y: 0 }],
+    commands: ["left", "pick", "right", "drop", "up", "down"],
+    solution: ["down", "right", "pick", "left", "drop", "right", "right", "up", "pick", "right", "drop"],
+  },
 ];
+
+const symbolVisuals = {
+  star: {
+    name: "Star",
+    color: "#5aaee7",
+    markup: '<path d="m16 4 3.5 7.1 7.9 1.2-5.7 5.5 1.3 7.8-7-3.7-7 3.7 1.3-7.8-5.7-5.5 7.9-1.2z" />',
+  },
+  circle: {
+    name: "Circle",
+    color: "#ef9360",
+    markup: '<circle cx="16" cy="16" r="10" />',
+  },
+};
 
 const commandIcons = {
   left: `
@@ -157,6 +223,7 @@ const SOUND_KEY = "roboRouteSoundV1";
 const SPARE_SLOTS = 2;
 const IDLE_HINT_DELAY = 12000;
 const ORIGINAL_LEVEL_COUNT = 6;
+const PREVIOUS_LEVEL_COUNT = 9;
 
 function copyPosition(position) {
   return { x: position.x, y: position.y };
@@ -179,6 +246,48 @@ function isBlockedOn(level, position, gateOpen = Boolean(level.gateInitiallyOpen
   return outsideGrid || hitsObstacle || hitsClosedGate;
 }
 
+function validateLevel(level, index) {
+  const label = `Level ${index + 1}`;
+  const parcelIds = new Set();
+  const stationIds = new Set();
+  const parcelPositions = new Set();
+
+  if (!Array.isArray(level.parcels) || level.parcels.length === 0) {
+    throw new Error(`${label} must contain at least one parcel.`);
+  }
+  if (!Array.isArray(level.stations) || level.stations.length === 0) {
+    throw new Error(`${label} must contain at least one station.`);
+  }
+
+  level.stations.forEach((station) => {
+    if (stationIds.has(station.id)) throw new Error(`${label} has duplicate station IDs.`);
+    if (!symbolVisuals[station.symbol]) throw new Error(`${label} has an unknown station symbol.`);
+    stationIds.add(station.id);
+  });
+
+  level.parcels.forEach((parcel) => {
+    const positionKey = `${parcel.position.x},${parcel.position.y}`;
+    if (parcelIds.has(parcel.id)) throw new Error(`${label} has duplicate parcel IDs.`);
+    if (parcelPositions.has(positionKey)) {
+      throw new Error(`${label} has parcels sharing a starting cell.`);
+    }
+    const station = level.stations.find((candidate) => candidate.id === parcel.stationId);
+    if (!station) throw new Error(`${label} has a parcel without a matching station.`);
+    if (station.symbol !== parcel.symbol) {
+      throw new Error(`${label} has a parcel and station with different symbols.`);
+    }
+    parcelIds.add(parcel.id);
+    parcelPositions.add(positionKey);
+  });
+}
+
+function validateLevels(levelList) {
+  levelList.forEach(validateLevel);
+  return true;
+}
+
+validateLevels(levels);
+
 function normalizeProgress(saved) {
   if (!saved || typeof saved !== "object") {
     return { maxUnlockedLevel: 0, completedLevels: [] };
@@ -189,102 +298,209 @@ function normalizeProgress(saved) {
     { length: ORIGINAL_LEVEL_COUNT },
     (_, index) => index,
   ).every((index) => completedLevels.includes(index));
+  const completedPreviousLevels = Array.from(
+    { length: PREVIOUS_LEVEL_COUNT },
+    (_, index) => index,
+  ).every((index) => completedLevels.includes(index));
   const savedMaximum = Math.min(Number(saved.maxUnlockedLevel) || 0, levels.length - 1);
+  let maxUnlockedLevel = savedMaximum;
+
+  if (completedOriginalLevels) {
+    maxUnlockedLevel = Math.max(maxUnlockedLevel, ORIGINAL_LEVEL_COUNT);
+  }
+  if (completedPreviousLevels) {
+    maxUnlockedLevel = Math.max(maxUnlockedLevel, PREVIOUS_LEVEL_COUNT);
+  }
 
   return {
-    maxUnlockedLevel: completedOriginalLevels
-      ? Math.max(savedMaximum, ORIGINAL_LEVEL_COUNT)
-      : savedMaximum,
+    maxUnlockedLevel,
     completedLevels,
   };
+}
+
+function initialSimulationState(level) {
+  return {
+    robotPosition: copyPosition(level.robot),
+    parcelStates: level.parcels.map((parcel) => ({
+      id: parcel.id,
+      position: copyPosition(parcel.position),
+      delivered: false,
+    })),
+    carryingParcelId: null,
+    gateOpen: Boolean(level.gateInitiallyOpen),
+  };
+}
+
+function copySimulationState(state) {
+  return {
+    robotPosition: copyPosition(state.robotPosition),
+    parcelStates: state.parcelStates.map((parcel) => ({
+      id: parcel.id,
+      position: copyPosition(parcel.position),
+      delivered: parcel.delivered,
+    })),
+    carryingParcelId: state.carryingParcelId ?? null,
+    gateOpen: Boolean(state.gateOpen),
+  };
+}
+
+function isLevelComplete(state) {
+  return state.parcelStates.every((parcel) => parcel.delivered);
+}
+
+function outcomeFromState(state, details = {}) {
+  return {
+    failedAt: -1,
+    failureReason: null,
+    ...details,
+    ...state,
+    delivered: isLevelComplete(state),
+  };
+}
+
+function applyCommand(level, state, command) {
+  const nextState = copySimulationState(state);
+  const movement = movements[command];
+
+  if (movement) {
+    const nextPosition = {
+      x: nextState.robotPosition.x + movement.x,
+      y: nextState.robotPosition.y + movement.y,
+    };
+    if (isBlockedOn(level, nextPosition, nextState.gateOpen)) {
+      return { succeeded: false, state, failureReason: "blocked", blockedPosition: nextPosition };
+    }
+    nextState.robotPosition = nextPosition;
+    const carriedParcel = nextState.parcelStates.find(
+      (parcel) => parcel.id === nextState.carryingParcelId,
+    );
+    if (carriedParcel) carriedParcel.position = copyPosition(nextPosition);
+    if (level.button && positionsMatch(nextPosition, level.button)) nextState.gateOpen = true;
+    return { succeeded: true, state: nextState };
+  }
+
+  if (command === "pick") {
+    if (nextState.carryingParcelId) {
+      return { succeeded: false, state, failureReason: "hands-full" };
+    }
+    const parcel = nextState.parcelStates.find(
+      (candidate) => !candidate.delivered
+        && positionsMatch(candidate.position, nextState.robotPosition),
+    );
+    if (!parcel) return { succeeded: false, state, failureReason: "no-parcel" };
+    nextState.carryingParcelId = parcel.id;
+    return { succeeded: true, state: nextState };
+  }
+
+  if (command === "drop") {
+    if (!nextState.carryingParcelId) {
+      return { succeeded: false, state, failureReason: "empty-hands" };
+    }
+    const parcelDefinition = level.parcels.find(
+      (parcel) => parcel.id === nextState.carryingParcelId,
+    );
+    const matchingStation = level.stations.find(
+      (station) => station.id === parcelDefinition.stationId,
+    );
+    const currentStation = level.stations.find(
+      (station) => positionsMatch(station.position, nextState.robotPosition),
+    );
+
+    if (!positionsMatch(matchingStation.position, nextState.robotPosition)) {
+      return {
+        succeeded: false,
+        state,
+        failureReason: currentStation ? "wrong-station" : "no-station",
+        carriedParcelId: parcelDefinition.id,
+        matchingStationId: matchingStation.id,
+        wrongStationId: currentStation?.id ?? null,
+      };
+    }
+
+    const parcelState = nextState.parcelStates.find(
+      (parcel) => parcel.id === nextState.carryingParcelId,
+    );
+    parcelState.delivered = true;
+    nextState.carryingParcelId = null;
+    return { succeeded: true, state: nextState };
+  }
+
+  return { succeeded: false, state, failureReason: "unknown-command" };
 }
 
 // Replays a program without animation so hints can read the real world state
 // instead of comparing the child's route against the stored reference solution.
 function simulate(level, commands) {
-  let robotPosition = copyPosition(level.robot);
-  let parcelPosition = copyPosition(level.parcel);
-  let carrying = false;
-  let delivered = false;
-  let gateOpen = Boolean(level.gateInitiallyOpen);
+  let simulationState = initialSimulationState(level);
 
   for (let index = 0; index < commands.length; index += 1) {
-    const command = commands[index];
-    const movement = movements[command];
-    const fail = {
-      failedAt: index,
-      robotPosition,
-      parcelPosition,
-      carrying,
-      delivered,
-      gateOpen,
-    };
-
-    if (movement) {
-      const next = { x: robotPosition.x + movement.x, y: robotPosition.y + movement.y };
-      if (isBlockedOn(level, next, gateOpen)) return fail;
-      robotPosition = next;
-      if (carrying) parcelPosition = copyPosition(next);
-      if (level.button && positionsMatch(robotPosition, level.button)) gateOpen = true;
-    } else if (command === "pick") {
-      if (carrying || !positionsMatch(parcelPosition, robotPosition)) return fail;
-      carrying = true;
-    } else if (command === "drop") {
-      if (!carrying || !positionsMatch(robotPosition, level.station)) return fail;
-      carrying = false;
-      delivered = true;
+    const result = applyCommand(level, simulationState, commands[index]);
+    if (!result.succeeded) {
+      return outcomeFromState(simulationState, {
+        failedAt: index,
+        failureReason: result.failureReason,
+        blockedPosition: result.blockedPosition,
+        carriedParcelId: result.carriedParcelId,
+        matchingStationId: result.matchingStationId,
+        wrongStationId: result.wrongStationId,
+      });
     }
+    simulationState = result.state;
   }
 
-  return { failedAt: -1, robotPosition, parcelPosition, carrying, delivered, gateOpen };
+  return outcomeFromState(simulationState);
 }
 
-// Breadth-first search for the first command of a shortest finish from here,
-// so any legal route the child invented gets a useful next step.
-function nextHelpfulCommand(level, from) {
-  if (from.delivered) return null;
-  const initialGateOpen = from.gateOpen ?? Boolean(level.gateInitiallyOpen);
-  const keyOf = (position, carrying, gateOpen) => (
-    `${position.x},${position.y},${carrying ? 1 : 0},${gateOpen ? 1 : 0}`
-  );
-  const queue = [{
-    position: from.robotPosition,
-    carrying: from.carrying,
-    gateOpen: initialGateOpen,
-    first: null,
-  }];
-  const seen = new Set([keyOf(from.robotPosition, from.carrying, initialGateOpen)]);
+function simulationStateKey(state) {
+  const parcels = state.parcelStates.map((parcel) => (
+    `${parcel.id}:${parcel.position.x},${parcel.position.y},${parcel.delivered ? 1 : 0}`
+  )).join("|");
+  return [
+    `${state.robotPosition.x},${state.robotPosition.y}`,
+    state.carryingParcelId ?? "-",
+    state.gateOpen ? "1" : "0",
+    parcels,
+  ].join(";");
+}
 
-  while (queue.length > 0) {
-    const node = queue.shift();
+// Breadth-first search uses the same transitions as the simulator and can
+// choose either parcel first from the child's actual partial route.
+function findShortestCompletion(level, from) {
+  const initialState = copySimulationState(from);
+  if (isLevelComplete(initialState)) {
+    return { commands: [], firstCommand: null, exploredStates: 1 };
+  }
+  const queue = [{ state: initialState, commands: [] }];
+  const seen = new Set([simulationStateKey(initialState)]);
+  let cursor = 0;
+
+  while (cursor < queue.length) {
+    const node = queue[cursor];
+    cursor += 1;
 
     for (const command of level.commands) {
-      let position = node.position;
-      let carrying = node.carrying;
-      let gateOpen = node.gateOpen;
-
-      if (command === "pick") {
-        if (carrying || !positionsMatch(position, level.parcel)) continue;
-        carrying = true;
-      } else if (command === "drop") {
-        if (!carrying || !positionsMatch(position, level.station)) continue;
-        return node.first ?? command;
-      } else {
-        const movement = movements[command];
-        const next = { x: position.x + movement.x, y: position.y + movement.y };
-        if (isBlockedOn(level, next, gateOpen)) continue;
-        position = next;
-        if (level.button && positionsMatch(position, level.button)) gateOpen = true;
+      const result = applyCommand(level, node.state, command);
+      if (!result.succeeded) continue;
+      const commands = [...node.commands, command];
+      if (isLevelComplete(result.state)) {
+        return {
+          commands,
+          firstCommand: commands[0],
+          exploredStates: cursor,
+        };
       }
-
-      const key = keyOf(position, carrying, gateOpen);
+      const key = simulationStateKey(result.state);
       if (seen.has(key)) continue;
       seen.add(key);
-      queue.push({ position, carrying, gateOpen, first: node.first ?? command });
+      queue.push({ state: result.state, commands });
     }
   }
 
   return null;
+}
+
+function nextHelpfulCommand(level, from) {
+  return findShortestCompletion(level, from)?.firstCommand ?? null;
 }
 
 if (typeof module !== "undefined" && module.exports) {
@@ -293,12 +509,20 @@ if (typeof module !== "undefined" && module.exports) {
     movements,
     SPARE_SLOTS,
     ORIGINAL_LEVEL_COUNT,
+    PREVIOUS_LEVEL_COUNT,
     copyPosition,
     positionsMatch,
     slotCount,
     isBlockedOn,
+    validateLevel,
+    validateLevels,
     normalizeProgress,
+    initialSimulationState,
+    copySimulationState,
+    isLevelComplete,
+    applyCommand,
     simulate,
+    findShortestCompletion,
     nextHelpfulCommand,
   };
 }
@@ -339,17 +563,19 @@ if (typeof document !== "undefined") {
     completedLevels: new Set(savedProgress.completedLevels),
     commands: [],
     robotPosition: { x: 2, y: 1 },
-    parcelPosition: { x: 1, y: 1 },
-    carrying: false,
-    delivered: false,
+    parcelStates: [],
+    carryingParcelId: null,
     gateOpen: false,
     running: false,
     soundOn: readSoundSetting(),
   };
 
   const robot = document.querySelector("#robot");
-  const parcel = document.querySelector("#parcel");
-  const station = document.querySelector(".delivery-station");
+  const heldParcel = document.querySelector(".held-parcel");
+  const heldParcelSymbol = document.querySelector("#heldParcelSymbol");
+  const parcelContainer = document.querySelector("#parcels");
+  const stationContainer = document.querySelector("#deliveryStations");
+  const goalPairs = document.querySelector("#goalPairs");
   const obstacles = document.querySelector("#obstacles");
   const floorButtons = document.querySelector("#floorButtons");
   const gates = document.querySelector("#gates");
@@ -365,8 +591,9 @@ if (typeof document !== "undefined") {
   const finalParade = document.querySelector("#finalParade");
   const confetti = document.querySelector("#confetti");
   const coach = document.querySelector("#coach");
-  const stationLight = document.querySelector(".station-light");
   const commandButtons = [...document.querySelectorAll(".command-button")];
+  const parcelElements = new Map();
+  const stationElements = new Map();
 
   let idleHintTimer = 0;
 
@@ -375,7 +602,7 @@ if (typeof document !== "undefined") {
   function restartIdleHint() {
     window.clearTimeout(idleHintTimer);
     hintButton.classList.remove("is-idle");
-    if (state.running || state.delivered) return;
+    if (state.running || isLevelComplete(state)) return;
     idleHintTimer = window.setTimeout(() => {
       if (!state.running) hintButton.classList.add("is-idle");
     }, IDLE_HINT_DELAY);
@@ -422,13 +649,126 @@ if (typeof document !== "undefined") {
     gates.firstElementChild?.classList.toggle("is-open", state.gateOpen);
   }
 
+  function symbolSvg(symbol, className = "symbol-icon") {
+    return `<svg class="${className}" viewBox="0 0 32 32" aria-hidden="true">
+      ${symbolVisuals[symbol].markup}
+    </svg>`;
+  }
+
+  function renderGoal() {
+    const level = currentLevel();
+    goalPairs.replaceChildren();
+
+    level.parcels.forEach((parcel) => {
+      const visual = symbolVisuals[parcel.symbol];
+      const pair = document.createElement("span");
+      pair.className = "goal-pair";
+      pair.style.setProperty("--pair-color", visual.color);
+      pair.innerHTML = `
+        <span class="goal-parcel">
+          <svg viewBox="0 0 64 64">
+            <path class="goal-parcel-body" d="M13 22 32 12l19 10v25L32 57 13 47z" />
+            <path d="m13 22 19 10 19-10M32 32v25M24 16l19 10" />
+            <g class="goal-symbol" transform="translate(16 24)">${visual.markup}</g>
+          </svg>
+        </span>
+        <span class="goal-arrow">
+          <svg viewBox="0 0 72 40">
+            <path d="M8 20h48" />
+            <path d="m44 8 14 12-14 12" />
+          </svg>
+        </span>
+        <span class="goal-station">
+          <svg viewBox="0 0 64 64">
+            <path class="goal-station-body" d="M12 27 32 10l20 17v27H12z" />
+            <path d="M24 54V36h16v18" />
+            <g class="goal-symbol" transform="translate(16 23)">${visual.markup}</g>
+          </svg>
+        </span>`;
+      goalPairs.append(pair);
+    });
+  }
+
+  function renderParcelsAndStations() {
+    const level = currentLevel();
+    parcelContainer.replaceChildren();
+    stationContainer.replaceChildren();
+    parcelElements.clear();
+    stationElements.clear();
+
+    level.stations.forEach((station) => {
+      const visual = symbolVisuals[station.symbol];
+      const element = document.createElement("div");
+      element.className = "delivery-station";
+      element.setAttribute("role", "img");
+      element.setAttribute("aria-label", `${visual.name} delivery station`);
+      element.style.setProperty("--pair-color", visual.color);
+      element.innerHTML = `
+        <div class="station-roof"></div>
+        <div class="station-body">
+          <div class="station-symbol">${symbolSvg(station.symbol)}</div>
+          <div class="station-bay"><span class="station-glow"></span></div>
+        </div>
+        <div class="station-light"></div>`;
+      setGridPosition(element, station.position, 1 + station.position.y * 3);
+      stationContainer.append(element);
+      stationElements.set(station.id, element);
+    });
+
+    level.parcels.forEach((parcel) => {
+      const visual = symbolVisuals[parcel.symbol];
+      const element = document.createElement("div");
+      element.className = "parcel";
+      element.setAttribute("role", "img");
+      element.setAttribute("aria-label", `${visual.name} parcel`);
+      element.style.setProperty("--pair-color", visual.color);
+      element.innerHTML = `
+        <span class="parcel-lid"></span>
+        <span class="parcel-ribbon"></span>
+        ${symbolSvg(parcel.symbol)}`;
+      setGridPosition(element, parcel.position);
+      parcelContainer.append(element);
+      parcelElements.set(parcel.id, element);
+    });
+  }
+
   function updateWorld() {
     setGridPosition(robot, state.robotPosition);
-    setGridPosition(parcel, state.parcelPosition);
-    setGridPosition(station, currentLevel().station);
-    robot.classList.toggle("is-carrying", state.carrying);
-    parcel.classList.toggle("is-hidden", state.carrying || state.delivered);
-    stationLight.classList.toggle("is-active", state.delivered);
+    const level = currentLevel();
+
+    state.parcelStates.forEach((parcelState) => {
+      const element = parcelElements.get(parcelState.id);
+      if (!element) return;
+      const hidden = parcelState.delivered || parcelState.id === state.carryingParcelId;
+      setGridPosition(element, parcelState.position);
+      element.classList.toggle("is-hidden", hidden);
+      element.setAttribute("aria-hidden", String(hidden));
+    });
+
+    level.stations.forEach((station) => {
+      const element = stationElements.get(station.id);
+      const delivered = level.parcels.some((parcel) => (
+        parcel.stationId === station.id
+        && state.parcelStates.find((parcelState) => parcelState.id === parcel.id)?.delivered
+      ));
+      element?.classList.toggle("is-complete", delivered);
+      element?.querySelector(".station-light")?.classList.toggle("is-active", delivered);
+    });
+
+    const carriedParcel = level.parcels.find(
+      (parcel) => parcel.id === state.carryingParcelId,
+    );
+    robot.classList.toggle("is-carrying", Boolean(carriedParcel));
+    heldParcel.setAttribute("aria-hidden", String(!carriedParcel));
+    if (carriedParcel) {
+      const visual = symbolVisuals[carriedParcel.symbol];
+      heldParcel.style.setProperty("--pair-color", visual.color);
+      heldParcel.setAttribute("aria-label", `${visual.name} parcel in robot's hands`);
+      heldParcelSymbol.innerHTML = visual.markup;
+    } else {
+      heldParcel.removeAttribute("aria-label");
+      heldParcelSymbol.replaceChildren();
+    }
     updateGateMechanic();
   }
 
@@ -504,12 +844,17 @@ if (typeof document !== "undefined") {
   }
 
   function resetWorld() {
-    state.robotPosition = copyPosition(currentLevel().robot);
-    state.parcelPosition = copyPosition(currentLevel().parcel);
-    state.carrying = false;
-    state.delivered = false;
-    state.gateOpen = Boolean(currentLevel().gateInitiallyOpen);
+    const initialState = initialSimulationState(currentLevel());
+    state.robotPosition = initialState.robotPosition;
+    state.parcelStates = initialState.parcelStates;
+    state.carryingParcelId = initialState.carryingParcelId;
+    state.gateOpen = initialState.gateOpen;
     robot.classList.remove("is-confused", "is-stepping");
+    heldParcel.classList.remove("is-mismatch");
+    parcelElements.forEach((element) => element.classList.remove("is-mismatch"));
+    stationElements.forEach((element) => {
+      element.classList.remove("is-mismatch", "is-match-target");
+    });
     gates.firstElementChild?.classList.remove("is-opening", "is-blocked");
     floorButtons.firstElementChild?.classList.remove("is-activating");
     updateWorld();
@@ -639,17 +984,8 @@ if (typeof document !== "undefined") {
     robot.classList.remove("is-stepping");
   }
 
-  async function activateGateIfNeeded() {
-    const level = currentLevel();
-    if (
-      state.gateOpen
-      || !level.button
-      || !positionsMatch(state.robotPosition, level.button)
-    ) {
-      return;
-    }
-
-    state.gateOpen = true;
+  async function animateGateOpening(openedGate) {
+    if (!openedGate) return;
     const button = floorButtons.firstElementChild;
     const gate = gates.firstElementChild;
     button?.classList.add("is-activating");
@@ -662,10 +998,6 @@ if (typeof document !== "undefined") {
     gate?.classList.remove("is-opening");
   }
 
-  function isBlocked(position) {
-    return isBlockedOn(currentLevel(), position, state.gateOpen);
-  }
-
   function showBlockedGate(position) {
     const level = currentLevel();
     if (!level.gate || state.gateOpen || !positionsMatch(position, level.gate)) return;
@@ -676,57 +1008,59 @@ if (typeof document !== "undefined") {
     gate.classList.add("is-blocked");
   }
 
+  function applySimulationState(nextState) {
+    state.robotPosition = nextState.robotPosition;
+    state.parcelStates = nextState.parcelStates;
+    state.carryingParcelId = nextState.carryingParcelId;
+    state.gateOpen = nextState.gateOpen;
+  }
+
   async function executeCommand(command) {
+    const gateWasOpen = state.gateOpen;
+    const result = applyCommand(currentLevel(), state, command);
+    if (!result.succeeded) {
+      if (result.failureReason === "blocked") showBlockedGate(result.blockedPosition);
+      return result;
+    }
+
+    applySimulationState(result.state);
     const movement = movements[command];
     if (movement) {
-      const nextPosition = {
-        x: state.robotPosition.x + movement.x,
-        y: state.robotPosition.y + movement.y,
-      };
-      if (isBlocked(nextPosition)) {
-        showBlockedGate(nextPosition);
-        return false;
-      }
-      state.robotPosition = nextPosition;
-      if (state.carrying) state.parcelPosition = copyPosition(nextPosition);
       await animateStep();
-      await activateGateIfNeeded();
-      return true;
+      await animateGateOpening(!gateWasOpen && state.gateOpen);
+      return result;
     }
 
     if (command === "pick") {
-      if (state.carrying || !positionsMatch(state.parcelPosition, state.robotPosition)) {
-        return false;
-      }
-      state.carrying = true;
       updateWorld();
       playTone(490, 0.1, "sine", 0.07);
       playTone(720, 0.14, "sine", 0.06, 0.08);
       await wait(paceOf(450));
-      return true;
+      return result;
     }
 
     if (command === "drop") {
-      if (!state.carrying || !positionsMatch(state.robotPosition, currentLevel().station)) {
-        return false;
-      }
-      state.carrying = false;
-      state.delivered = true;
       updateWorld();
       playTone(760, 0.18, "triangle", 0.08);
       await wait(paceOf(480));
-      return true;
+      return result;
     }
 
-    return false;
+    return result;
   }
 
-  async function showFailure(index) {
+  async function showFailure(index, failure) {
     markSlot(index, "is-wrong");
     robot.classList.add("is-confused");
+    if (failure.failureReason === "wrong-station") {
+      heldParcel.classList.add("is-mismatch");
+      parcelElements.get(failure.carriedParcelId)?.classList.add("is-mismatch");
+      stationElements.get(failure.matchingStationId)?.classList.add("is-match-target");
+      stationElements.get(failure.wrongStationId)?.classList.add("is-mismatch");
+    }
     playTone(175, 0.18, "sawtooth", 0.045);
     playTone(135, 0.24, "sawtooth", 0.04, 0.14);
-    await wait(paceOf(850));
+    await wait(prefersReducedMotion.matches ? 650 : 850);
     robot.classList.remove("is-confused");
     resetWorld();
   }
@@ -790,23 +1124,23 @@ if (typeof document !== "undefined") {
 
     for (let index = 0; index < state.commands.length; index += 1) {
       markSlot(index, "is-active");
-      const succeeded = await executeCommand(state.commands[index]);
+      const result = await executeCommand(state.commands[index]);
       programStrip.children[index]?.classList.remove("is-active");
 
-      if (!succeeded) {
-        await showFailure(index);
+      if (!result.succeeded) {
+        await showFailure(index, result);
         state.running = false;
         setControlsDisabled(false);
         return;
       }
     }
 
-    if (state.delivered) {
+    if (isLevelComplete(state)) {
       showSuccess();
     } else {
-      // Every command ran, the parcel just is not home yet. That is an unfinished
+      // Every command ran, but not every parcel is home yet. That is an unfinished
       // route, not a mistake, so point at the next step instead of marking a slot wrong.
-      const outcome = simulate(currentLevel(), state.commands);
+      const outcome = outcomeFromState(copySimulationState(state));
       await wait(paceOf(280));
       resetWorld();
       suggestNextCommand(outcome);
@@ -824,6 +1158,8 @@ if (typeof document !== "undefined") {
     successLayer.setAttribute("aria-hidden", "true");
     confetti.replaceChildren();
     clearHints();
+    renderGoal();
+    renderParcelsAndStations();
     renderAvailableCommands();
     renderObstacles();
     renderGateMechanic();

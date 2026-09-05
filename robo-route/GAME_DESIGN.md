@@ -6,7 +6,7 @@ A six-year-old who does not read yet or reads syllable by syllable. The game tar
 
 ## The main idea
 
-The child helps a friendly robot deliver unusual parcels. Before starting the run they build a chain of actions from large picture cards. After the green button is pressed, the robot performs the cards one by one.
+The child helps a friendly robot deliver unusual parcels. Every parcel has a large symbol and belongs at the station with the same symbol. Before starting the run the child builds a chain of actions from large picture cards. After the green button is pressed, the robot performs the cards one by one.
 
 This keeps the main pleasure of Human Resource Machine — first come up with a program, then watch it run — but removes the text, the office theme and the difficult abstractions. In the final three levels, the robot can step on a floor button to open a gate for the rest of that run.
 
@@ -14,7 +14,7 @@ This keeps the main pleasure of Human Resource Machine — first come up with a 
 
 - Only three commands on the first level: pick up, step right, put down. The step left appears on the second.
 - Every command has a constant color, shape and animation.
-- The goal is always shown as a picture: a parcel, an arrow, a house.
+- The goal is always shown as one or two picture mappings: a marked parcel, an arrow, and a station with the same mark.
 - The active command bounces at the same moment as the robot's action.
 - A mistake does not punish: the robot wobbles funnily, the wrong card trembles, the board returns to the start.
 - The light bulb highlights one next useful command, without solving the whole task at once.
@@ -28,7 +28,7 @@ This keeps the main pleasure of Human Resource Machine — first come up with a 
 3. Press the big green start button.
 4. Compare the commands with the robot's movement.
 5. Remove the card that did not work or use the light bulb.
-6. Deliver the parcel and get a big star.
+6. Deliver every parcel and get a big star.
 
 ## Teaching without text
 
@@ -45,14 +45,19 @@ The first screen shows a pulsing finger near the commands. After the first tap t
 7. A floor button sits directly before a gate on the natural route, so the robot opens it safely while carrying the parcel.
 8. The button is one turn away from the direct route, introducing a short detour before the closed gate.
 9. The button is away from the parcel, making opening the route an explicit planning step before pick-up.
+10. One star parcel and two differently marked stations teach symbol matching without adding a second delivery.
+11. A star parcel and a circle parcel sit close to their matching stations; either delivery order takes the same number of cards.
+12. Two crossing deliveries require returning across the board, and either parcel can still go first.
+13. A bush makes one delivery order shorter, while both correct orders still fit in the command strip.
 
-A new command appears only after a level where the child has already mastered the previous set of actions. The gate reuses movement commands and does not add a direct interaction or a new card. Nine dots on the field show the progress without numbers; unlocked levels can be replayed.
+A new command appears only after a level where the child has already mastered the previous set of actions. The gate reuses movement commands and does not add a direct interaction or a new card. Symbol matching is taught with one parcel before the first two-parcel route. Thirteen dots on the field show the progress without numbers; unlocked levels can be replayed.
 
 ## Visual language
 
 - Soft rounded shapes without sharp corners.
 - A warm yellow background and a calm blue playing field.
 - Moving left is blue, moving right is purple, the pick-up is yellow, the drop-off is coral.
+- A parcel and its station repeat the same large shape; their shared color is only a supporting cue.
 - Buttons look like physical toy tiles and press down noticeably.
 - All interactive elements are larger than 54 px.
 
@@ -68,6 +73,11 @@ A new command appears only after a level where the child has already mastered th
 - Whether they connect the lowered button with the gate lifting out of the path.
 - Whether they independently plan the button detour on the next level.
 - Whether a closed-gate mistake is clear and easy to retry.
+- Whether the child matches parcels and stations by shape rather than only by color.
+- Whether the symbol on the parcel in the robot's hands stays recognizable.
+- Whether the child understands that play continues after the first of two deliveries.
+- Whether either delivery order feels valid instead of looking like a hidden prepared answer.
+- Whether a wrong-station response points clearly to the matching station without written help.
 
 ## The success criterion for a test
 
@@ -75,4 +85,4 @@ After one demonstration by an adult, the child completes the level a second time
 
 ## Prototype boundaries
 
-The current version has nine interactive levels, gradual unlocking of commands, a choice among already unlocked levels, an obstacle, a floor button and gate, hints, sounds, a responsive layout, feedback on mistakes and progress saved between sessions. The light bulb starts blinking on its own after a long pause with no action, and completing all nine levels gives a separate final reward. Localization for parents and analytics were deliberately left out until the basic mechanic is tested.
+The current version has thirteen interactive levels, gradual unlocking of commands, a choice among already unlocked levels, obstacles, a floor button and gate, symbol-matched parcels, two-parcel routes, hints, sounds, a responsive layout, feedback on mistakes and progress saved between sessions. The light bulb starts blinking on its own after a long pause with no action, and completing all thirteen levels gives a separate final reward. Localization for parents and analytics were deliberately left out until the basic mechanic is tested.

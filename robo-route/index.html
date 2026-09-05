@@ -11,26 +11,8 @@
   <body data-translations="translations.json">
     <main class="game-shell">
       <header class="top-bar">
-        <div class="goal-card" aria-label="Goal: move the parcel to the delivery station">
-          <span class="goal-parcel" aria-hidden="true">
-            <svg viewBox="0 0 64 64">
-              <path d="M13 22 32 12l19 10v25L32 57 13 47z" />
-              <path d="m13 22 19 10 19-10M32 32v25M24 16l19 10" />
-              <path class="parcel-star" d="m32 34 2.3 4.7 5.2.7-3.8 3.7.9 5.2-4.6-2.5-4.6 2.5.9-5.2-3.8-3.7 5.2-.7z" />
-            </svg>
-          </span>
-          <span class="goal-arrow" aria-hidden="true">
-            <svg viewBox="0 0 72 40">
-              <path d="M8 20h48" />
-              <path d="m44 8 14 12-14 12" />
-            </svg>
-          </span>
-          <span class="goal-station" aria-hidden="true">
-            <svg viewBox="0 0 64 64">
-              <path d="M12 27 32 10l20 17v27H12z" />
-              <path d="M24 54V36h16v18M28 42h8" />
-            </svg>
-          </span>
+        <div class="goal-card" aria-label="Goal: match every parcel with its delivery station">
+          <div class="goal-pairs" id="goalPairs" aria-hidden="true"></div>
         </div>
 
         <div class="top-settings">
@@ -84,33 +66,15 @@
           <div class="obstacles" id="obstacles" aria-hidden="true"></div>
           <div class="gates" id="gates" aria-hidden="true"></div>
 
-          <div class="delivery-station" aria-hidden="true">
-            <div class="station-roof"></div>
-            <div class="station-body">
-              <div class="station-window"></div>
-              <div class="station-bay">
-                <span class="station-glow"></span>
-              </div>
-            </div>
-            <div class="station-light"></div>
-          </div>
+          <div class="delivery-stations" id="deliveryStations"></div>
+          <div class="parcels" id="parcels"></div>
 
-          <div class="parcel" id="parcel" aria-hidden="true">
-            <span class="parcel-lid"></span>
-            <span class="parcel-ribbon"></span>
-            <svg viewBox="0 0 32 32">
-              <path d="m16 6 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9z" />
-            </svg>
-          </div>
-
-          <div class="robot" id="robot" aria-hidden="true">
+          <div class="robot" id="robot">
             <img src="assets/robo-mascot.png" alt="" />
-            <div class="held-parcel">
+            <div class="held-parcel" role="img" aria-hidden="true">
               <span class="parcel-lid"></span>
               <span class="parcel-ribbon"></span>
-              <svg viewBox="0 0 32 32">
-                <path d="m16 6 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9z" />
-              </svg>
+              <svg class="held-parcel-symbol" id="heldParcelSymbol" viewBox="0 0 32 32" aria-hidden="true"></svg>
             </div>
           </div>
         </div>
