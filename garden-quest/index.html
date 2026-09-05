@@ -12,7 +12,6 @@
     <main class="game-shell">
       <header class="hero">
         <div>
-          <p class="eyebrow">A tiny path-finding game</p>
           <h1>Garden Quest</h1>
           <p class="subtitle">Help Pip collect the tastiest harvest!</p>
         </div>
@@ -59,11 +58,13 @@
             </div>
           </section>
 
-          <section class="board-wrap" aria-label="Game board">
-            <div class="board" id="board" role="grid" tabindex="0"
-              aria-label="Eight by eight garden board"></div>
-            <div class="score-pop" id="scorePop" aria-hidden="true"></div>
-          </section>
+          <div class="board-stage">
+            <section class="board-wrap" aria-label="Game board">
+              <div class="board" id="board" role="grid" tabindex="0"
+                aria-label="Eight by eight garden board"></div>
+              <div class="score-pop" id="scorePop" aria-hidden="true"></div>
+            </section>
+          </div>
 
           <p class="game-message" id="gameMessage" aria-live="polite">
             Use the arrow keys or the big buttons.
@@ -84,7 +85,6 @@
           </section>
 
           <section class="controls-card" aria-label="Movement controls">
-            <h2>Move Pip</h2>
             <div class="d-pad">
               <button class="move-button move-up" type="button" data-direction="up" aria-label="Move up">↑</button>
               <button class="move-button move-left" type="button" data-direction="left" aria-label="Move left">←</button>
@@ -92,20 +92,10 @@
               <button class="move-button move-right" type="button" data-direction="right" aria-label="Move right">→</button>
               <button class="move-button move-down" type="button" data-direction="down" aria-label="Move down">↓</button>
             </div>
-            <button class="hint-button" id="hintButton" type="button">💡 Show a step</button>
-            <button class="restart-button" id="restartButton" type="button">↻ Start again</button>
-          </section>
-
-          <section class="harvest-card">
-            <h2>Harvest points</h2>
-            <div class="harvest-list">
-              <div><span aria-hidden="true">🍓</span><b>+1</b></div>
-              <div><span aria-hidden="true">🥕</span><b>+2</b></div>
-              <div><span aria-hidden="true">🍎</span><b>+3</b></div>
-              <div><span aria-hidden="true">🍆</span><b>+5</b></div>
-              <div><span aria-hidden="true">🍉</span><b>+10</b></div>
+            <div class="controls-actions">
+              <button class="hint-button" id="hintButton" type="button">💡 Show a step</button>
+              <button class="restart-button" id="restartButton" type="button">↻ Start again</button>
             </div>
-            <p class="rock-note"><span aria-hidden="true">🌳</span> Trees block the path, but bumping one does not use a step.</p>
           </section>
         </aside>
       </section>

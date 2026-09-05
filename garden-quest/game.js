@@ -274,7 +274,6 @@ function renderLevelPicker() {
         ${open ? "" : "disabled"} aria-current="${current ? "true" : "false"}"
         aria-label="Level ${index + 1}: ${open ? level.name : "locked"}">
         <span>${open ? index + 1 : "🔒"}</span>
-        <small>${open ? level.name : "Locked"}</small>
       </button>
     `;
   }).join("");

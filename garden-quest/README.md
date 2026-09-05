@@ -104,6 +104,13 @@ garden-quest/
 
 The game requires no library installation and no build step.
 
+## Layout
+
+On screens at least 881 px wide the board is sized by the height of the window instead of the width
+of its column, so the whole game — the level row, the board and the arrow buttons — fits one screen
+and the page does not scroll. Narrower screens keep the stacked layout, and the phone layout keeps
+the arrow buttons in a bar fixed to the bottom edge.
+
 ## Deliberate decisions
 
 These decisions were made on purpose and take precedence over the shared rules in
