@@ -53,19 +53,22 @@ const DEFAULT_BLOCK_IDS = BLOCKS
   .filter((block) => DEFAULT_BLOCK_KEYS.includes(block.key))
   .map((block) => block.id);
 
-// The sizes a new world can have. Sizes and tools are data, so shrinking a
-// world after a test with a child never touches the code around them.
+// However large the screen, one world stays a world: these caps keep a save
+// small and a rebuild of the sheet quick.
+const MAX_ROWS = 100;
+const MAX_COLUMNS = 200;
+
+// A new world starts from a chosen cell size. Its rows and columns are derived
+// from the screen and saved on the world itself. The fixed dimensions below
+// are used only by saves made before worlds recorded their own geometry.
 const WORLD_SIZES = [
-  { id: "size-1", rows: 5, columns: 10, tools: ["brush", "eraser"] },
-  { id: "size-2", rows: 8, columns: 16, tools: ["brush", "eraser"] },
-  { id: "size-3", rows: 12, columns: 24, tools: ["brush", "wide", "eraser"] },
-  // A big world no longer fits the screen: it opens zoomed in and brings the
-  // zoom buttons, the edge arrows and the mini-map with it.
-  { id: "size-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket", "eraser"], big: true },
-  { id: "size-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket", "eraser"], big: true },
-].map((size, index) => ({
+  { id: "size-1", cellSize: 120, rows: 5, columns: 10, tools: ["brush", "eraser"] },
+  { id: "size-2", cellSize: 80, rows: 8, columns: 16, tools: ["brush", "eraser"] },
+  { id: "size-3", cellSize: 56, rows: 12, columns: 24, tools: ["brush", "wide", "eraser"] },
+  { id: "size-4", cellSize: 40, rows: 18, columns: 36, tools: ["brush", "wide", "bucket", "eraser"] },
+  { id: "size-5", cellSize: 28, rows: 24, columns: 48, tools: ["brush", "wide", "bucket", "eraser"] },
+].map((size) => ({
   ...size,
-  number: index + 1,
   cellCount: size.rows * size.columns,
 }));
 
@@ -130,8 +133,35 @@ function worldSizeById(sizeId) {
   return WORLD_SIZES.find((size) => size.id === sizeId) || null;
 }
 
+// A world knows its own rows and columns. Geometry that cannot be read is not
+// a reason to lose a painting: the fixed size of its cell-size choice is a
+// good enough guess, and the grid is fitted to it like any other saved grid.
 function worldSize(world) {
-  return worldSizeById(world?.sizeId);
+  const fallback = worldSizeById(world?.sizeId);
+  if (!fallback) return null;
+  const hasSavedGeometry = world?.rows !== undefined || world?.columns !== undefined;
+  if (!hasSavedGeometry) return fallback;
+  if (!Number.isInteger(world.rows) || world.rows < 1 || world.rows > MAX_ROWS) return fallback;
+  if (!Number.isInteger(world.columns) || world.columns < 1 || world.columns > MAX_COLUMNS) {
+    return fallback;
+  }
+  return {
+    ...fallback,
+    rows: world.rows,
+    columns: world.columns,
+    cellCount: world.rows * world.columns,
+  };
+}
+
+function gridDimensionsForCellSize(sizeId, width, height) {
+  const size = worldSizeById(sizeId);
+  if (!size || !Number.isFinite(width) || width <= 0 || !Number.isFinite(height) || height <= 0) {
+    return null;
+  }
+  return {
+    rows: Math.max(1, Math.min(MAX_ROWS, Math.floor(height / size.cellSize))),
+    columns: Math.max(1, Math.min(MAX_COLUMNS, Math.floor(width / size.cellSize))),
+  };
 }
 
 // Garbage, a missing setting and an old list all give the same answer: the
@@ -192,12 +222,19 @@ function currentWorld(state) {
 }
 
 // A new world goes to the end of the shelf and opens at once.
-function createWorld(state, sizeId, now = 0) {
-  const size = worldSizeById(sizeId);
+function createWorld(state, sizeId, now = 0, dimensions) {
+  const fallback = worldSizeById(sizeId);
+  const size = worldSize({
+    sizeId,
+    rows: dimensions?.rows ?? fallback?.rows,
+    columns: dimensions?.columns ?? fallback?.columns,
+  });
   if (!state || !Array.isArray(state.worlds) || !size) return null;
   const world = {
     id: newWorldId(now),
     sizeId: size.id,
+    rows: size.rows,
+    columns: size.columns,
     grid: createGrid(size),
     underlay: createGrid(size),
     // Only the cells that hold a field are listed here, by the moment they
@@ -765,6 +802,8 @@ function serializeState(state) {
       return {
         id: world.id,
         sizeId: world.sizeId,
+        rows: world.rows,
+        columns: world.columns,
         grid: world.grid,
         bridges: world.underlay.reduce((list, value, index) => {
           if (value === WATER_ID) list.push(index);
@@ -785,13 +824,15 @@ function serializeState(state) {
 function normalizeSavedWorld(saved, now) {
   if (!saved || typeof saved !== "object") return null;
   if (typeof saved.id !== "string" || saved.id === "") return null;
-  const size = worldSizeById(saved.sizeId);
+  const size = worldSize(saved);
   if (!size || !Array.isArray(saved.grid)) return null;
 
   const grid = normalizeGrid(size, saved.grid);
   return {
     id: saved.id,
     sizeId: size.id,
+    rows: size.rows,
+    columns: size.columns,
     grid,
     underlay: normalizeUnderlay(size, saved.bridges, grid),
     planted: normalizePlanted(size, saved.planted, grid, saved.plantedBase, now),
@@ -834,6 +875,7 @@ if (typeof module !== "undefined" && module.exports) {
     isRoadBlock,
     worldSizeById,
     worldSize,
+    gridDimensionsForCellSize,
     normalizeEnabledBlocks,
     enableBlock,
     lockedBlockIds,
@@ -887,16 +929,6 @@ if (typeof module !== "undefined" && module.exports) {
   };
 }
 
-// The sheet of paper is fitted to the card, never scaled below a comfortable
-// finger size.
-const MIN_CELL_SIZE = 22;
-const MAX_CELL_SIZE = 92;
-
-// The steps of the zoom on a big world, and the smallest cell that still feels
-// comfortable under a finger.
-const ZOOM_LEVELS = [24, 32, 40, 54, 72];
-const COMFORT_CELL_SIZE = 40;
-const PAN_SHARE = 0.6;
 const SAVE_DELAY_MS = 250;
 
 // A stroke should sound like a tune, not a rattle, so only every few painted
@@ -927,8 +959,8 @@ const TRACK_SOURCES = {
   woods: (size, grid) => forestClusters(grid, size.columns),
 };
 
-// The thumbnail and the mini-map draw one pixel per cell, so every block needs
-// one flat color next to its full art in styles.css.
+// The shelf thumbnail draws one pixel per cell, so every block needs one flat
+// color next to its full art in styles.css.
 const BLOCK_COLORS = {
   meadow: "#a9dc88",
   path: "#e2d2ab",
@@ -952,12 +984,6 @@ const BLOCK_COLORS = {
   fountain: "#7fd3d0",
 };
 const THUMBNAIL_EMPTY = "#fffdf4";
-// On the mini-map a cell still waiting is not a color but a checker of these
-// two tones, drawn four pixels to the cell. No block can look like that, so a
-// lantern is never read as a hole and the mark never rests on color alone.
-const MINIMAP_EMPTY = "#fff3cd";
-const MINIMAP_EMPTY_MARK = "#d98f2b";
-const MINIMAP_SCALE = 2;
 
 // Past this many enabled blocks the palette groups them by family, and the
 // families always keep the same order and the same places.
@@ -978,7 +1004,7 @@ const FAMILY_SOUNDS = {
 
 function initializeGame() {
   const elements = {
-    card: document.querySelector(".sheet-card"),
+    stageArea: document.querySelector("#stage"),
     stage: document.querySelector("#sheet-stage"),
     grid: document.querySelector("#sheet-grid"),
     living: document.querySelector("#living-layer"),
@@ -986,15 +1012,7 @@ function initializeGame() {
     confetti: document.querySelector("#confetti"),
     stay: document.querySelector("#stay-button"),
     worldShelf: document.querySelector("#world-shelf"),
-    sizePicker: document.querySelector("#size-picker"),
-    sheetScroll: document.querySelector("#sheet-scroll"),
-    zoomButtons: document.querySelector("#zoom-buttons"),
-    zoomIn: document.querySelector("#zoom-in"),
-    zoomOut: document.querySelector("#zoom-out"),
-    edgeArrows: document.querySelector("#edge-arrows"),
-    minimap: document.querySelector("#minimap"),
-    minimapCanvas: document.querySelector("#minimap-canvas"),
-    minimapView: document.querySelector("#minimap-view"),
+    sizePicker: document.querySelector("#cell-size-picker"),
     shelf: document.querySelector("#shelf-button"),
     worldsBack: document.querySelector("#worlds-back-button"),
     sizesBack: document.querySelector("#sizes-back-button"),
@@ -1069,10 +1087,8 @@ function initializeGame() {
   };
 
   let state = loadGame();
-  ensureWorld();
   let selectedBlockId = state.enabledBlockIds[0];
   let selectedTool = "brush";
-  let zoomIndex = ZOOM_LEVELS.indexOf(COMFORT_CELL_SIZE);
   let cursorIndex = 0;
   // Where the frame is drawn now, so moving it clears one cell instead of all.
   let cursorShownIndex = -1;
@@ -1120,7 +1136,7 @@ function initializeGame() {
   // There is always an open world, so the first tap is always a painted cell.
   function ensureWorld() {
     if (currentWorld(state)) return false;
-    createWorld(state, WORLD_SIZES[0].id, Date.now());
+    createWorld(state, WORLD_SIZES[0].id, Date.now(), measureForSize(WORLD_SIZES[0].id));
     saveGame();
     return true;
   }
@@ -1290,11 +1306,11 @@ function initializeGame() {
     return classes;
   }
 
-  function renderCell(index, now = Date.now()) {
+  // The size and the world are passed in by the loops that redraw many cells
+  // at once: reading them per cell rebuilds the same geometry a thousand times.
+  function renderCell(index, now = Date.now(), size = openSize(), world = currentWorld(state)) {
     const element = cells[index];
     if (!element) return;
-    const world = currentWorld(state);
-    const size = worldSize(world);
     const { grid, underlay } = world;
     const classes = cellClasses(size, grid, underlay, index);
     // Cells alternate two layouts of the same art like a checkerboard, so a
@@ -1316,14 +1332,16 @@ function initializeGame() {
   }
 
   // A painted cell can change the look of its four neighbours and nothing else.
-  function renderCellAndNeighbors(index, now = Date.now()) {
-    renderCell(index, now);
-    neighborIndices(openSize(), index).forEach((neighbor) => renderCell(neighbor, now));
+  function renderCellAndNeighbors(index, now = Date.now(), size = openSize(), world = currentWorld(state)) {
+    renderCell(index, now, size, world);
+    neighborIndices(size, index).forEach((neighbor) => renderCell(neighbor, now, size, world));
   }
 
   function renderAllCells() {
     const now = Date.now();
-    for (let index = 0; index < cells.length; index += 1) renderCell(index, now);
+    const size = openSize();
+    const world = currentWorld(state);
+    for (let index = 0; index < cells.length; index += 1) renderCell(index, now, size, world);
   }
 
   // Fields ripen while the world is open, so they are looked over on a slow
@@ -1332,73 +1350,32 @@ function initializeGame() {
     window.clearInterval(fieldTimer);
     if (!isBlockEnabled(state, FIELD_ID)) return;
     const world = currentWorld(state);
+    const size = worldSize(world);
     fieldTimer = window.setInterval(() => {
       const now = Date.now();
-      Object.keys(world.planted).forEach((key) => renderCell(Number(key), now));
+      Object.keys(world.planted).forEach((key) => renderCell(Number(key), now, size, world));
     }, FIELD_TICK_MS);
   }
 
-  // One pixel per cell on the shelf, four on the mini-map: a cell still waiting
-  // needs room for its checker there. The canvas is scaled up by the stylesheet
-  // with `image-rendering: pixelated`, so the pattern stays sharp. The shelf of
-  // worlds and the mini-map both read the model through this and nothing else.
-  function drawThumbnail(canvas, world, { markEmpty = false } = {}) {
+  // One pixel per cell makes a live picture for the shelf. The canvas is scaled
+  // up by the stylesheet with `image-rendering: pixelated`, so it stays sharp.
+  function drawThumbnail(canvas, world) {
     const size = worldSize(world);
     if (!size) return;
-    const scale = markEmpty ? MINIMAP_SCALE : 1;
-    canvas.width = size.columns * scale;
-    canvas.height = size.rows * scale;
+    canvas.width = size.columns;
+    canvas.height = size.rows;
     const context = canvas.getContext("2d");
     if (!context) return;
-    context.fillStyle = markEmpty ? MINIMAP_EMPTY : THUMBNAIL_EMPTY;
+    context.fillStyle = THUMBNAIL_EMPTY;
     context.fillRect(0, 0, canvas.width, canvas.height);
     world.grid.forEach((value, index) => {
-      const left = (index % size.columns) * scale;
-      const top = Math.floor(index / size.columns) * scale;
+      const left = index % size.columns;
+      const top = Math.floor(index / size.columns);
       const block = blockById(value);
-      if (block) {
-        context.fillStyle = BLOCK_COLORS[block.key];
-        context.fillRect(left, top, scale, scale);
-        return;
-      }
-      // On the mini-map the cells still waiting carry a checker, so the last
-      // empty corner is easy to find by its pattern alone.
-      if (!markEmpty) return;
-      context.fillStyle = MINIMAP_EMPTY_MARK;
+      if (!block) return;
+      context.fillStyle = BLOCK_COLORS[block.key];
       context.fillRect(left, top, 1, 1);
-      context.fillRect(left + 1, top + 1, 1, 1);
     });
-  }
-
-  // The mini-map shows the whole world and where the window on it sits.
-  function updateMinimapView() {
-    const scroll = elements.sheetScroll;
-    if (!openSize().big || scroll.scrollWidth === 0) return;
-    const view = elements.minimapView.style;
-    view.left = `${(scroll.scrollLeft / scroll.scrollWidth) * 100}%`;
-    view.top = `${(scroll.scrollTop / scroll.scrollHeight) * 100}%`;
-    view.width = `${Math.min(100, (scroll.clientWidth / scroll.scrollWidth) * 100)}%`;
-    view.height = `${Math.min(100, (scroll.clientHeight / scroll.scrollHeight) * 100)}%`;
-  }
-
-  function drawMinimap() {
-    if (!openSize().big) return;
-    drawThumbnail(elements.minimapCanvas, currentWorld(state), { markEmpty: true });
-    updateMinimapView();
-  }
-
-  function panBy(direction) {
-    const scroll = elements.sheetScroll;
-    const behavior = reduceMotion ? "auto" : "smooth";
-    const stepX = scroll.clientWidth * PAN_SHARE;
-    const stepY = scroll.clientHeight * PAN_SHARE;
-    const moves = {
-      up: { top: -stepY },
-      down: { top: stepY },
-      left: { left: -stepX },
-      right: { left: stepX },
-    };
-    scroll.scrollBy({ ...moves[direction], behavior });
   }
 
   // One live picture per world, in the order the worlds were made, and a big
@@ -1406,7 +1383,6 @@ function initializeGame() {
   function renderWorldShelf() {
     elements.worldShelf.textContent = "";
     state.worlds.forEach((world, index) => {
-      const size = worldSize(world);
       const card = document.createElement("div");
       card.className = "world-card";
       card.setAttribute("role", "listitem");
@@ -1417,8 +1393,6 @@ function initializeGame() {
       open.dataset.world = world.id;
       open.setAttribute("aria-current", world.id === state.currentWorldId ? "true" : "false");
       open.setAttribute("aria-label", `World ${index + 1}`);
-      // A bigger world gets a bigger picture, so the sizes are easy to tell apart.
-      open.style.setProperty("--thumb-width", `${52 + size.number * 14}px`);
       const canvas = document.createElement("canvas");
       canvas.className = "world-thumbnail";
       open.append(canvas);
@@ -1491,25 +1465,19 @@ function initializeGame() {
     renderAllCells();
     fitSheet();
     cursorIndex = Math.min(cursorIndex, size.cellCount - 1);
-    showCursor({ scroll: false });
+    showCursor();
   }
 
   // The keyboard cursor. It is the same frame the screen reader follows, so
   // both ways of playing point at one cell. Only the cell that had the frame is
   // touched: clearing the whole world would be a thousand class writes per key.
-  function showCursor({ scroll = true } = {}) {
+  function showCursor() {
     const cell = cells[cursorIndex];
     if (!cell) return;
     cells[cursorShownIndex]?.classList.remove("is-cursor");
     cursorShownIndex = cursorIndex;
     cell.classList.add("is-cursor");
     elements.grid.setAttribute("aria-activedescendant", cell.id);
-    if (!scroll) return;
-    cell.scrollIntoView({
-      block: "nearest",
-      inline: "nearest",
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
   }
 
   function moveCursor([rowStep, columnStep]) {
@@ -1541,49 +1509,52 @@ function initializeGame() {
 
   function focusPalette() {
     const open = elements.paletteKinds.hidden ? elements.palette : elements.paletteKinds;
-    const button = open.querySelector('[aria-checked="true"]') || open.querySelector("button");
+    const button = open.querySelector('[aria-checked="true"], [aria-pressed="true"]')
+      || open.querySelector("button");
     button?.focus();
   }
 
-  // The largest cell at which the whole world still fits the card.
-  function fitCellSize(size) {
-    const style = window.getComputedStyle(elements.card);
-    const box = elements.card.getBoundingClientRect();
-    const width = box.width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-    const height = box.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
-    const cell = Math.floor(Math.min(width / size.columns, height / size.rows));
-    return Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, cell));
+  function stageDrawingArea() {
+    const stageStyle = window.getComputedStyle(elements.stageArea);
+    const gridStyle = window.getComputedStyle(elements.grid);
+    return {
+      width: elements.stageArea.clientWidth
+        - parseFloat(stageStyle.paddingLeft)
+        - parseFloat(stageStyle.paddingRight)
+        - parseFloat(gridStyle.borderLeftWidth)
+        - parseFloat(gridStyle.borderRightWidth),
+      height: elements.stageArea.clientHeight
+        - parseFloat(stageStyle.paddingTop)
+        - parseFloat(stageStyle.paddingBottom)
+        - parseFloat(gridStyle.borderTopWidth)
+        - parseFloat(gridStyle.borderBottomWidth),
+    };
   }
 
-  // A big world opens at a comfortable cell size even when that means scrolling.
-  function defaultZoomIndex(size) {
-    const fit = fitCellSize(size);
-    const fitting = ZOOM_LEVELS.filter((cell) => cell <= fit);
-    const best = fitting.length > 0 ? fitting[fitting.length - 1] : ZOOM_LEVELS[0];
-    return ZOOM_LEVELS.indexOf(Math.max(best, COMFORT_CELL_SIZE));
+  function dimensionsForCellSize(sizeId) {
+    const area = stageDrawingArea();
+    return gridDimensionsForCellSize(sizeId, area.width, area.height);
+  }
+
+  // How many cells of the chosen size fit the stage. The tools that size brings
+  // are drawn first: they stand in the dock, and the height of the dock is the
+  // height the stage does not get.
+  function measureForSize(sizeId) {
+    renderTools(worldSizeById(sizeId));
+    return dimensionsForCellSize(sizeId);
+  }
+
+  // There is no lower limit: every saved grid always fits the visible stage.
+  function fitCellSize(size) {
+    const area = stageDrawingArea();
+    const cell = Math.floor(Math.min(area.width / size.columns, area.height / size.rows));
+    return Math.max(1, cell);
   }
 
   function fitSheet() {
     const size = openSize();
-    const cell = size.big ? ZOOM_LEVELS[zoomIndex] : fitCellSize(size);
+    const cell = fitCellSize(size);
     elements.stage.style.setProperty("--cell-size", `${cell}px`);
-    elements.zoomIn.disabled = zoomIndex >= ZOOM_LEVELS.length - 1;
-    elements.zoomOut.disabled = zoomIndex <= 0;
-    updateMinimapView();
-  }
-
-  function renderSheetControls() {
-    const big = openSize().big === true;
-    elements.zoomButtons.hidden = !big;
-    elements.edgeArrows.hidden = !big;
-    elements.minimap.hidden = !big;
-  }
-
-  function setZoom(step) {
-    const next = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, zoomIndex + step));
-    if (next === zoomIndex) return;
-    zoomIndex = next;
-    fitSheet();
   }
 
   function blockSwatch(blockId) {
@@ -1601,16 +1572,28 @@ function initializeGame() {
     return swatch;
   }
 
-  function blockButton(blockId, { checked, family }) {
+  // A block on its own is one choice of a set, so it is a radio. Grouped by
+  // family the buttons are not a set of choices any more: a family with several
+  // kinds is a door to their row and says whether that row is open, which is
+  // what `aria-expanded` means and what a radio may never carry.
+  function blockButton(blockId, { checked, family, opens = false }) {
     const block = blockById(blockId);
     const button = document.createElement("button");
     button.type = "button";
     button.className = "palette-button";
     button.dataset.block = String(blockId);
-    if (family) button.dataset.family = family;
-    button.setAttribute("role", "radio");
-    button.setAttribute("aria-checked", checked ? "true" : "false");
     button.setAttribute("aria-label", family ? FAMILY_NAMES[family] : BLOCK_NAMES[block.key]);
+    if (family) {
+      button.setAttribute("aria-pressed", checked ? "true" : "false");
+      if (opens) {
+        button.dataset.family = family;
+        button.setAttribute("aria-haspopup", "true");
+        button.setAttribute("aria-expanded", "false");
+      }
+    } else {
+      button.setAttribute("role", "radio");
+      button.setAttribute("aria-checked", checked ? "true" : "false");
+    }
     button.append(blockSwatch(blockId));
     return button;
   }
@@ -1639,6 +1622,7 @@ function initializeGame() {
     elements.palette.textContent = "";
 
     if (state.enabledBlockIds.length <= GROUPED_FROM_COUNT) {
+      elements.palette.setAttribute("role", "radiogroup");
       state.enabledBlockIds.forEach((blockId) => {
         elements.palette.append(blockButton(blockId, { checked: blockId === selectedBlockId }));
       });
@@ -1646,21 +1630,45 @@ function initializeGame() {
       return;
     }
 
+    // Grouped, the row holds doors and blocks side by side, so it is a group
+    // with a name and not a set of radios.
+    elements.palette.setAttribute("role", "group");
     enabledFamilies().forEach((group) => {
       const kind = kindOf(group);
       const checked = group.blockIds.includes(selectedBlockId);
       elements.palette.append(blockButton(checked ? selectedBlockId : kind, {
         checked,
         family: group.family,
+        opens: group.blockIds.length > 1,
       }));
     });
     renderKinds();
+  }
+
+  // Only a family that opens a row carries the open state, and it is written
+  // in one place so the buttons and the row never disagree.
+  function markOpenFamily() {
+    elements.palette.querySelectorAll("[data-family]").forEach((button) => {
+      button.setAttribute("aria-expanded", button.dataset.family === openFamily ? "true" : "false");
+    });
   }
 
   function closeKinds() {
     openFamily = null;
     elements.paletteKinds.hidden = true;
     elements.paletteKinds.textContent = "";
+    markOpenFamily();
+  }
+
+  // Tapping a family opens its row; tapping the open one closes it again. The
+  // mouse, the touch and the keyboard all come through here.
+  function toggleFamily(family) {
+    if (family === openFamily) {
+      closeKinds();
+      return;
+    }
+    openFamily = family;
+    renderKinds();
   }
 
   // Tapping a family opens a short row with its kinds, and tapping a kind
@@ -1673,6 +1681,7 @@ function initializeGame() {
     }
     elements.paletteKinds.hidden = false;
     elements.paletteKinds.textContent = "";
+    markOpenFamily();
     group.blockIds.forEach((blockId) => {
       elements.paletteKinds.append(blockButton(blockId, { checked: blockId === selectedBlockId }));
     });
@@ -1806,8 +1815,8 @@ function initializeGame() {
 
   // Every world has the brush and the eraser; a large one adds the wide brush
   // and a big one the bucket: the size of the world decides.
-  function renderTools() {
-    const tools = openSize().tools;
+  function renderTools(size = openSize()) {
+    const tools = size.tools;
     if (tools.length < 2) {
       elements.tools.hidden = true;
       elements.tools.textContent = "";
@@ -1843,9 +1852,10 @@ function initializeGame() {
     const blockId = selectedTool === "eraser" ? EMPTY_CELL : selectedBlockId;
     const now = Date.now();
     let changed = 0;
+    const world = currentWorld(state);
     path.flatMap((cell) => brushCells(size, cell, span)).forEach((cell) => {
       if (!paintCell(state, cell, blockId, now)) return;
-      renderCellAndNeighbors(cell, now);
+      renderCellAndNeighbors(cell, now, size, world);
       changed += 1;
     });
     afterPainting(changed);
@@ -1889,10 +1899,6 @@ function initializeGame() {
     return row * size.columns + column;
   }
 
-  function cellSizePx() {
-    return elements.grid.clientWidth / openSize().columns;
-  }
-
   function createSprite(kind, track, key) {
     const element = document.createElement("span");
     element.className = `sprite sprite--${kind}`;
@@ -1907,8 +1913,7 @@ function initializeGame() {
     return SPRITE_KINDS.find((entry) => entry.kind === kind)?.stepMs ?? 800;
   }
 
-  function placeSprite(sprite, position, size) {
-    const columns = openSize().columns;
+  function placeSprite(sprite, position, size, columns) {
     const step = Math.floor(position);
     const from = sprite.path[step % sprite.path.length];
     const to = sprite.path[(step + 1) % sprite.path.length];
@@ -1928,15 +1933,17 @@ function initializeGame() {
   // Under reduced motion the creatures keep their place on the sheet: present,
   // but never travelling.
   function parkSprites() {
-    const size = cellSizePx();
-    sprites.forEach((sprite) => placeSprite(sprite, 0, size));
+    const columns = openSize().columns;
+    const size = elements.grid.clientWidth / columns;
+    sprites.forEach((sprite) => placeSprite(sprite, 0, size, columns));
   }
 
   function driveSprites(timestamp) {
     driverHandle = 0;
-    const size = cellSizePx();
+    const columns = openSize().columns;
+    const size = elements.grid.clientWidth / columns;
     sprites.forEach((sprite) => {
-      placeSprite(sprite, timestamp / sprite.stepMs + sprite.phase * sprite.path.length, size);
+      placeSprite(sprite, timestamp / sprite.stepMs + sprite.phase * sprite.path.length, size, columns);
     });
     if (sprites.length > 0) driverHandle = window.requestAnimationFrame(driveSprites);
   }
@@ -2001,7 +2008,6 @@ function initializeGame() {
     alive.forEach((sprite) => sprite.element.remove());
 
     startDriver();
-    drawMinimap();
   }
 
   function scheduleAnalysis() {
@@ -2067,11 +2073,8 @@ function initializeGame() {
     closeCelebration();
     renderPalette();
     renderTools();
-    renderSheetControls();
-    zoomIndex = defaultZoomIndex(openSize());
     cursorIndex = 0;
     buildSheet();
-    elements.sheetScroll.scrollTo(0, 0);
     watchFields();
     renderProgress();
     renderEvening();
@@ -2085,8 +2088,11 @@ function initializeGame() {
   // A size picked in the picker becomes a world at once, and the child lands
   // straight in it.
   function createAndOpenWorld(sizeId) {
-    const world = createWorld(state, sizeId, Date.now());
-    if (!world) return;
+    const world = createWorld(state, sizeId, Date.now(), measureForSize(sizeId));
+    if (!world) {
+      renderTools();
+      return;
+    }
     saveGame();
     openWorldById(world.id);
     closePause({ restoreFocus: false });
@@ -2101,7 +2107,7 @@ function initializeGame() {
     saveGame();
 
     if (state.worlds.length === 0) {
-      createWorld(state, WORLD_SIZES[0].id, Date.now());
+      createWorld(state, WORLD_SIZES[0].id, Date.now(), measureForSize(WORLD_SIZES[0].id));
       saveGame();
       openWorldById(state.currentWorldId);
       closePause({ restoreFocus: false });
@@ -2222,6 +2228,7 @@ function initializeGame() {
         // so the same press does not open the pause behind it.
         if (!elements.pauseOverlay.hidden) return;
         event.stopPropagation();
+        closeKinds();
         elements.grid.focus();
         return;
       }
@@ -2239,7 +2246,7 @@ function initializeGame() {
   bindButtonRow(elements.paletteKinds, ".palette-button");
   bindButtonRow(elements.tools, ".tool-button");
   bindButtonRow(elements.worldShelf, ".world-choice, .world-delete, .world-new");
-  bindButtonRow(elements.sizePicker, ".size-choice");
+  bindButtonRow(elements.sizePicker, ".cell-size-choice");
 
   // A click made with the keyboard has no pointer behind it; the focus then
   // moves on by itself, so the player never has to hunt for it.
@@ -2247,23 +2254,37 @@ function initializeGame() {
     return event.detail === 0;
   }
 
+  // Enter and Space both open a family from the keyboard. The default action is
+  // prevented, so the browser adds no click of its own and a held key cannot
+  // flap the row open and shut.
+  elements.palette.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const button = event.target.closest(".palette-button[data-family]");
+    if (!button) return;
+    event.preventDefault();
+    if (event.repeat) return;
+    toggleFamily(button.dataset.family);
+  });
+
   elements.palette.addEventListener("click", (event) => {
     const button = event.target.closest(".palette-button");
     if (!button) return;
-    const family = button.dataset.family;
     // A family with several kinds opens its row; a single kind is chosen at once.
-    if (family && family !== openFamily) {
-      const group = enabledFamilies().find((entry) => entry.family === family);
-      if (group.blockIds.length > 1) {
-        openFamily = family;
-        renderKinds();
-        if (cameFromKeyboard(event)) focusPalette();
-        return;
-      }
+    if (button.dataset.family) {
+      toggleFamily(button.dataset.family);
+      return;
     }
     closeKinds();
     selectBlock(Number(button.dataset.block));
     if (cameFromKeyboard(event)) elements.grid.focus();
+  });
+
+  // Move into the opened row only after keyup, so the same key cannot
+  // immediately choose its first kind.
+  elements.palette.addEventListener("keyup", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if (event.target.dataset.family !== openFamily) return;
+    focusPalette();
   });
 
   elements.paletteKinds.addEventListener("click", (event) => {
@@ -2272,6 +2293,16 @@ function initializeGame() {
     selectBlock(Number(button.dataset.block));
     if (cameFromKeyboard(event)) elements.grid.focus();
   });
+
+  // A tap on the world closes the row of kinds and still paints. If the focus
+  // stood inside that row it would be left on nothing, because the sheet takes
+  // no focus from a tap it handles itself, so the frame takes it instead.
+  elements.stageArea.addEventListener("pointerdown", () => {
+    if (!openFamily) return;
+    const fromKinds = elements.paletteKinds.contains(document.activeElement);
+    closeKinds();
+    if (fromKinds) elements.grid.focus();
+  }, { capture: true });
 
   elements.wordsButton.addEventListener("click", openWords);
 
@@ -2359,7 +2390,7 @@ function initializeGame() {
     }
     if (event.target.closest(".world-new")) {
       showPauseState("sizes");
-      elements.sizePicker.querySelector(".size-choice")?.focus();
+      elements.sizePicker.querySelector(".cell-size-choice")?.focus();
       return;
     }
     const open = event.target.closest(".world-choice");
@@ -2369,7 +2400,7 @@ function initializeGame() {
   });
 
   elements.sizePicker.addEventListener("click", (event) => {
-    const button = event.target.closest(".size-choice");
+    const button = event.target.closest(".cell-size-choice");
     if (!button) return;
     createAndOpenWorld(button.dataset.size);
   });
@@ -2422,41 +2453,18 @@ function initializeGame() {
     closePause();
   });
 
-  elements.zoomIn.addEventListener("click", () => setZoom(1));
-  elements.zoomOut.addEventListener("click", () => setZoom(-1));
-
-  elements.edgeArrows.addEventListener("click", (event) => {
-    const direction = event.target.closest("[data-pan]")?.dataset.pan;
-    if (direction) panBy(direction);
-  });
-
-  elements.sheetScroll.addEventListener("scroll", updateMinimapView);
-
-  elements.minimap.addEventListener("click", (event) => {
-    // A click from the keyboard names no spot on the map, and the corner it
-    // would report is not where anybody wants to go. The mini-map marks the
-    // cells still waiting, so from the keyboard it takes the frame to the first
-    // of them, ready to be painted.
-    if (cameFromKeyboard(event)) {
-      const waiting = currentWorld(state).grid.indexOf(EMPTY_CELL);
-      if (waiting < 0) return;
-      cursorIndex = waiting;
-      elements.grid.focus();
-      showCursor();
-      return;
-    }
-    const box = elements.minimapCanvas.getBoundingClientRect();
-    const scroll = elements.sheetScroll;
-    const acrossShare = (event.clientX - box.left) / box.width;
-    const downShare = (event.clientY - box.top) / box.height;
-    scroll.scrollLeft = acrossShare * scroll.scrollWidth - scroll.clientWidth / 2;
-    scroll.scrollTop = downShare * scroll.scrollHeight - scroll.clientHeight / 2;
-  });
-
-  window.addEventListener("resize", () => {
-    fitSheet();
-    if (reduceMotion) parkSprites();
-  });
+  if (typeof ResizeObserver === "function") {
+    const stageObserver = new ResizeObserver(() => {
+      fitSheet();
+      if (reduceMotion) parkSprites();
+    });
+    stageObserver.observe(elements.stageArea);
+  } else {
+    window.addEventListener("resize", () => {
+      fitSheet();
+      if (reduceMotion) parkSprites();
+    });
+  }
 
   motionQuery.addEventListener("change", (event) => {
     reduceMotion = event.matches;
@@ -2495,9 +2503,10 @@ function initializeGame() {
   renderSound();
   renderPalette();
   renderWordsButton();
+  // The world is made only once the dock stands: an empty dock would leave the
+  // stage taller than it will be, and the first world too many rows tall.
+  ensureWorld();
   renderTools();
-  renderSheetControls();
-  zoomIndex = defaultZoomIndex(openSize());
   buildSheet();
   watchFields();
   renderProgress();

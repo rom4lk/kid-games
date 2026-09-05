@@ -19,7 +19,7 @@ no goals, and the joy comes from the world reacting beautifully to every placed 
 | A grid world changed block by block | Resources, mining, crafting and recipes |
 | Free choice of what to build and where | Tasks, blueprints and prepared answers |
 | The world visibly reacts to every change | Any evaluation of the result — the child decides what is good |
-| More blocks and bigger worlds when they are wanted | Combat, dangers, timers and any way to lose |
+| More blocks and denser worlds when they are wanted | Combat, dangers, timers and any way to lose |
 | A finished world stays and can be revisited | Camera rotation, 3D and height |
 
 ## Who it is for and why
@@ -28,7 +28,8 @@ no goals, and the joy comes from the world reacting beautifully to every placed 
 - After one short demonstration by an adult, the child paints on their own.
 - The painting path requires no reading; the palette and the tools are pictures. The optional words
   screen is a reading activity shared with an adult.
-- A small world takes about 5 minutes; the big worlds are made to be returned to across many days.
+- A world with large cells takes about 5 minutes; denser worlds are made to be returned to across
+  many days.
 - The main emotions: calm, ownership ("my town") and curiosity — "what happens if I paint this here?"
 
 ## The main game loop
@@ -48,19 +49,25 @@ apply to the canvas. A single tap always works too.
 There is no ladder and nothing to unlock. The child makes worlds and keeps them. The pause menu
 holds a shelf with a live picture of every world in the order it was made; tapping a picture opens
 that world, and the cross under it deletes the world behind a confirmation. A big plus at the end of
-the shelf opens the size picker.
+the shelf opens the cell-size picker.
 
-| Size | Grid | Cells | Tools |
+| Cell choice | Target size | Example grid at 1280 x 800 | Tools |
 | --- | --- | --- | --- |
-| Small | 5 x 10 | 50 | Brush, eraser |
-| Medium | 8 x 16 | 128 | Brush, eraser |
-| Large | 12 x 24 | 288 | Brush, wide brush, eraser |
-| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket, eraser |
-| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket, eraser |
+| Largest | 120 px | 5 x 10 | Brush, eraser |
+| Large | 80 px | 7 x 15 | Brush, eraser |
+| Medium | 56 px | 10 x 22 | Brush, wide brush, eraser |
+| Small | 40 px | 15 x 31 | Brush, wide brush, fill bucket, eraser |
+| Smallest | 28 px | 21 x 45 | Brush, wide brush, fill bucket, eraser |
 
-The five sizes are drawn as growing rectangles of squared paper, so nothing has to be read to choose
-one. The first launch makes a small world by itself: the first tap already paints a cell. Deleting
-the last world leaves a fresh small one, so the game is never empty.
+The choice describes the approximate cell size, not a fixed number of cells. When a world is made,
+the game fills the available stage with as many cells of that size as fit, then saves the resulting
+rows and columns with the world. If the same world is later opened on a smaller screen, its cells
+shrink and its entire grid remains visible. The page and the grid never scroll.
+
+The five choices are drawn as equal rectangles whose squared-paper grid grows denser from left to
+right, so nothing has to be read to choose one. The first launch makes a world with the largest
+cells by itself: the first tap already paints a cell. Deleting the last world leaves a fresh one
+with the largest cells, so the game is never empty.
 
 ## The palette an adult sets
 
@@ -132,30 +139,34 @@ boats stops; their presence is kept with static figures, and light and opacity c
 ## Painting tools
 
 - **Brush** — the default tool: tap a cell or drag a stroke.
-- **Wide brush** (from the large world on) — paints 2 x 2, for big meadows and lakes.
-- **Fill bucket** (on the two big worlds) — fills a connected empty area with the chosen block.
+- **Wide brush** (from the medium-cell choice on) — paints 2 x 2, for big meadows and lakes.
+- **Fill bucket** (on the two densest choices) — fills a connected empty area with the chosen block.
 - **Eraser** (on every world) — empties a cell or a stroke of cells; a bridge loses its water too.
 - **No undo button**: painting over or erasing is always the fix, so nothing needs to be undone.
 - Tool buttons are big pictures next to the palette; the active tool is framed and enlarged.
 
 ## The screen and the controls
 
-The world is shown flat from above on a sheet of squared paper, and the camera never rotates.
+The world is shown flat from above on a sheet of squared paper, and the camera never rotates. The
+play screen has three edge-to-edge zones: a transparent sky strip for the progress sun, sound and
+pause; a squared-paper stage with the bright world centered on it; and a translucent dock for the
+palette and tools.
 
-- The three smaller sizes fit the screen whole. Cells there are comfortably large.
-- The two big sizes open zoomed in to a comfortable cell size. Two big buttons zoom in and out,
-  panning works by dragging the sheet with the second finger or with big edge arrows, and a mini-map
-  in the corner shows the whole world with the unpainted spots as bright dots. Tapping the mini-map
-  jumps there.
+- Every world fits the stage whole. Rows and columns stay fixed after creation, while cells shrink
+  when the available space gets smaller. There is no horizontal or vertical scrolling.
+- The family row opens above the dock as a popover, so it never resizes the stage. Choosing a kind,
+  tapping the open family again, pressing `Escape` inside the row or tapping the stage closes it.
 - Canvas cells may be smaller than the usual 64 px rule for interactive elements: a stray stroke
   costs nothing and is fixed by painting over, so precision is never required. The palette, the
-  tools, the zoom and the pause keep the 64 px minimum.
+  tools and the pause keep the 64 px minimum.
 - Keyboard: the arrow keys or `WASD` move a cursor frame, `Space` paints the current block,
   `Enter` moves focus into the palette and picks a block, `Escape` opens the pause and then walks
-  back through its screens. The shelf of worlds and the size picker are walked with the left and
-  right arrows.
-- The pause holds the shelf of worlds with the size picker, and the "clear this world" action, which
-  asks for a confirmation because it erases that world's painting. Deleting a world asks separately.
+  back through its screens. The shelf of worlds and the cell-size picker are walked with the left
+  and right arrows.
+- The pause holds the shelf of worlds with the cell-size picker, and the "clear this world" action,
+  which asks for a confirmation because it erases that world's painting. Deleting a world asks
+  separately. The adult language picker also lives in the pause card, outside the child's painting
+  path.
 
 On the screen at the same time: the sheet, the palette, the tools, the progress sun, the sound
 button and the pause. Nothing else.
@@ -193,7 +204,10 @@ button and the pause. Nothing else.
 
 ## Saving
 
-- `blockTownWorldsV1` holds every world — its size and its painting — and which world is open.
+- `blockTownWorldsV1` holds every world — its cell-size choice, saved rows and columns, and its
+  painting — and which world is open. Saves from before rows and columns were recorded, and a saved
+  row or column count that cannot be read, keep the fixed dimensions of their cell-size choice: a
+  damaged number costs a world its shape, never its painting.
 - `blockTownBlocksV1` holds the blocks an adult has enabled. The shelf page writes it, the game only
   reads it, and resetting progress keeps it.
 - `blockTownSoundV1` holds the sound choice.
@@ -210,22 +224,22 @@ The design counts as working if the child:
 1. Paints their own strokes and switches blocks without being told.
 2. Notices at least one world reaction and experiments with it on purpose.
 3. Fixes a cell by painting over it, without asking how to erase.
-4. Finds the unpainted cells at the end on their own (by the shimmer, the sun or the mini-map).
+4. Finds the unpainted cells at the end on their own (by the shimmer or the sun).
 5. Wants to come back to a finished world or to make a new one, and finds both on the shelf without
    help.
 
-Separately, note the moments where the child looks for an eraser or an undo button, gets lost on the
-two zoomed sizes, or stops painting for a long while without looking at the world's reactions.
+Separately, note the moments where the child looks for an eraser or an undo button, struggles to hit
+the smallest cells, or stops painting for a long while without looking at the world's reactions.
 
 ## The main risks
 
-1. **The big worlds turn into a chore.** Filling 1152 cells must stay pleasant: the big sizes carry
-   the wide brush and the bucket, strokes must feel fast, and the shimmer, the sun and the mini-map
-   must make the remaining work easy to see. If testing shows fatigue, shrink the big sizes — the
-   table of sizes is data, not architecture. A child who picks a size too big can also simply make a
-   smaller world instead.
-2. **Zoom and panning on the two big sizes.** This is the hardest interaction for the age. It must
-   be tested with a child early; the fallback is smaller big sizes that fit the screen whole.
+1. **Dense worlds turn into a chore.** The densest choice can contain about a thousand cells on a
+   common laptop screen. The wide brush and the bucket, fast strokes, the shimmer and the sun must
+   make the remaining work easy to see. If testing shows fatigue, increase the two smallest target
+   cell sizes.
+2. **Cells become too small.** A dense saved world must still fit when it moves to a smaller screen.
+   Painting remains forgiving because a stroke can be repainted, but the smallest choice needs
+   testing on the narrowest supported screens.
 3. **Palette overload.** Twenty blocks are many, and now an adult decides how many arrive at once.
    The three starting blocks, the family grouping past eight and stable button positions carry this;
    if a family submenu confuses, cut kinds rather than add explanations.

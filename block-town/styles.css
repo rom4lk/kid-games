@@ -3,6 +3,11 @@
   --ink-soft: #5c7566;
   --paper: #fffdf4;
   --paper-line: #d9e6cf;
+  --paper-outside: #f5f1e2;
+  --paper-outside-line: #e4ddc8;
+  --sheet-edge: #cbd8bf;
+  --dock: rgb(255 255 255 / 74%);
+  --dock-line: rgb(47 111 69 / 16%);
   --sky: #cfe9f3;
   --leaf: #4f9b5f;
   --leaf-dark: #2f6f45;
@@ -34,14 +39,19 @@
 
 html {
   min-height: 100%;
+  overflow: hidden;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
   color: var(--ink);
-  background: linear-gradient(160deg, #eaf6e3 0%, #dcf0ea 52%, #cfe6f2 100%);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 31px, var(--paper-outside-line) 31px 32px),
+    repeating-linear-gradient(180deg, transparent 0 31px, var(--paper-outside-line) 31px 32px),
+    var(--paper-outside);
   font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
 }
 
@@ -61,23 +71,19 @@ button:focus-visible,
 }
 
 .game-shell {
-  display: flex;
-  width: min(1120px, calc(100% - 24px));
-  /* The dynamic unit keeps the toolbar out from under the browser chrome; the
-     plain one is there for a browser that does not know it. */
+  display: grid;
+  grid-template-rows: 72px 1fr auto;
   height: 100vh;
   height: 100dvh;
-  flex-direction: column;
-  margin: 0 auto;
-  padding: clamp(12px, 2vw, 22px) 0;
-  gap: clamp(10px, 1.6vw, 18px);
+  margin: 0;
 }
 
-/* Topbar: the progress sun for the child, the quiet controls for an adult. */
-.topbar {
+/* Sky: the progress sun for the child and the two quiet corner controls. */
+.sky {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 12px;
   gap: 14px;
 }
 
@@ -154,29 +160,19 @@ button:focus-visible,
   border-left: 7px solid currentColor;
 }
 
-/* The sheet itself. */
-.sheet-card {
+/* The world lies on one endless sheet between the sky and the dock. */
+.stage {
   position: relative;
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: clamp(10px, 1.6vw, 20px);
-  border: 3px solid rgb(47 111 69 / 16%);
-  border-radius: 24px;
-  background: var(--paper);
-  box-shadow: var(--shadow);
+  padding: 8px;
+  overflow: hidden;
 }
 
-.sheet-scroll {
-  max-width: 100%;
-  max-height: 100%;
-  overflow: auto;
-}
-
-/* The stage is exactly as wide as the grid, so a sheet larger than the card
-   scrolls instead of being cut off. */
+/* The stage is exactly as wide as the grid. Every grid is fitted into the
+   space that is free, so neither the stage nor the page ever scrolls. */
 .sheet-stage {
   position: relative;
   width: max-content;
@@ -200,6 +196,8 @@ button:focus-visible,
   border: var(--sheet-border) solid var(--paper-line);
   border-radius: 10px;
   background: var(--paper);
+  box-shadow: 0 8px 28px rgb(43 69 53 / 12%);
+  outline: 3px solid var(--sheet-edge);
   overflow: hidden;
   /* A stroke is a drag across the paper: no scrolling, no selected text and no
      callout when a finger rests on a cell for a moment. */
@@ -260,9 +258,9 @@ button:focus-visible,
 }
 
 /* Block art. Every block is drawn from the SVG pictures in art/, layered and
-   scaled to the cell by the rules below; the flat color underneath is the one
-   the mini-map uses. The ground blocks alternate two layouts of their picture
-   like a checkerboard, so a meadow or a beach never reads as a stamp. */
+   scaled to the cell by the rules below. The ground blocks alternate two
+   layouts of their picture like a checkerboard, so a meadow or a beach never
+   reads as a stamp. */
 .block--meadow {
   background: url("art/meadow-a.svg") center / 100% 100% no-repeat var(--meadow);
 }
@@ -950,13 +948,23 @@ button:focus-visible,
   transform: rotate(22deg);
 }
 
-/* Palette and tools stay well above the 64px minimum. */
-.toolbar {
+/* Palette and tools stay well above the 64px minimum. The blur makes the dock
+   a stacking context, so the row of kinds inside it can only rise as high as
+   the dock itself: the dock is lifted above the sheet, under the pause. */
+.dock {
+  position: relative;
+  z-index: 10;
   display: flex;
+  min-height: 100px;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
   flex-wrap: wrap;
+  gap: 14px;
+  padding: 10px 14px max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--dock-line);
+  background: var(--dock);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .palette-area {
@@ -975,13 +983,27 @@ button:focus-visible,
   flex-wrap: wrap;
 }
 
-/* The kinds of one family: a short row above the family buttons. */
+/* The kinds of one family float above the dock without resizing the world. */
 .palette-kinds {
-  flex-basis: 100%;
+  position: absolute;
+  z-index: 1;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 16px);
+  justify-content: center;
   padding: 6px 8px;
   border: 3px solid rgb(47 111 69 / 18%);
   border-radius: 22px;
-  background: rgb(255 255 255 / 78%);
+  background: rgb(255 255 255 / 94%);
+  box-shadow: var(--shadow);
+  animation: palette-kinds-in 160ms ease-out;
+  transform: translateX(-50%);
+}
+
+@keyframes palette-kinds-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .tool-button {
@@ -1057,7 +1079,11 @@ button:focus-visible,
   transition: transform 140ms ease, border-color 140ms ease;
 }
 
-.palette-button[aria-checked="true"] {
+/* A block is chosen as a radio, a family is pressed as a button, and an open
+   family is marked the same way while its row stands. */
+.palette-button[aria-checked="true"],
+.palette-button[aria-pressed="true"],
+.palette-button[aria-expanded="true"] {
   border-color: var(--leaf-dark);
   transform: scale(1.08);
 }
@@ -1090,7 +1116,8 @@ button:focus-visible,
 }
 
 /* The chosen block is framed, larger and marked, never colored alone. */
-.palette-button[aria-checked="true"]::after {
+.palette-button[aria-checked="true"]::after,
+.palette-button[aria-pressed="true"]::after {
   position: absolute;
   right: -8px;
   bottom: -8px;
@@ -1145,6 +1172,14 @@ button:focus-visible,
   background: var(--paper);
   box-shadow: var(--shadow);
   gap: 16px;
+}
+
+.pause-settings {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  border-top: 1px solid rgb(92 117 102 / 30%);
+  font-size: 15px;
 }
 
 .pause-actions {
@@ -1314,94 +1349,6 @@ button:focus-visible,
   cursor: pointer;
 }
 
-/* Zoom, edge arrows and the mini-map: only the big sheets need them. */
-.zoom-buttons {
-  position: absolute;
-  z-index: 5;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.edge-arrows {
-  position: absolute;
-  z-index: 4;
-  inset: 0;
-  pointer-events: none;
-}
-
-.edge-arrow {
-  position: absolute;
-  display: flex;
-  width: 64px;
-  height: 64px;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: 3px solid rgb(47 111 69 / 20%);
-  border-radius: 50%;
-  background: rgb(255 255 255 / 88%);
-  color: var(--ink);
-  font-size: 20px;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-.edge-arrow--up {
-  top: 8px;
-  left: 50%;
-  margin-left: -32px;
-}
-
-.edge-arrow--down {
-  bottom: 8px;
-  left: 50%;
-  margin-left: -32px;
-}
-
-.edge-arrow--left {
-  top: 50%;
-  left: 8px;
-  margin-top: -32px;
-}
-
-.edge-arrow--right {
-  top: 50%;
-  right: 8px;
-  margin-top: -32px;
-}
-
-.minimap {
-  position: absolute;
-  z-index: 5;
-  right: 10px;
-  bottom: 10px;
-  width: 168px;
-  padding: 0;
-  border: 3px solid rgb(47 111 69 / 24%);
-  border-radius: 10px;
-  background: var(--paper);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.minimap-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  image-rendering: pixelated;
-}
-
-.minimap-view {
-  position: absolute;
-  border: 3px solid var(--leaf-dark);
-  border-radius: 3px;
-  pointer-events: none;
-}
-
 /* The finished sheet: soft confetti and one large picture button. */
 .celebration {
   position: absolute;
@@ -1534,8 +1481,8 @@ button:focus-visible,
 
 .world-thumbnail {
   display: block;
-  width: var(--thumb-width, 64px);
-  height: calc(var(--thumb-width, 64px) / 2);
+  width: 92px;
+  height: auto;
   border-radius: 6px;
   background: var(--paper);
   image-rendering: pixelated;
@@ -1562,7 +1509,7 @@ button:focus-visible,
   background: #fdf1ef;
 }
 
-/* The big plus that opens the size picker. */
+/* The big plus that opens the cell-size picker. */
 .world-new {
   display: flex;
   width: 78px;
@@ -1579,9 +1526,9 @@ button:focus-visible,
   cursor: pointer;
 }
 
-/* The five sizes are told apart by the picture alone: a growing rectangle of
-   squared paper, drawn with the same cells the world is painted on. */
-.size-picker {
+/* Every choice shows the same piece of paper. Its grid gets denser from left
+   to right, matching the cell size of the world it creates. */
+.cell-size-picker {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1589,7 +1536,7 @@ button:focus-visible,
   flex-wrap: wrap;
 }
 
-.size-choice {
+.cell-size-choice {
   display: flex;
   width: 96px;
   height: 96px;
@@ -1602,27 +1549,28 @@ button:focus-visible,
   cursor: pointer;
 }
 
-.size-choice:hover {
+.cell-size-choice:hover {
   border-color: var(--leaf-dark);
 }
 
-.size-mark {
+.cell-size-mark {
   display: block;
-  width: calc(var(--size-share) * 76px);
-  height: calc(var(--size-share) * 38px);
+  width: 76px;
+  height: 56px;
   border: 2px solid var(--leaf-dark);
   border-radius: 4px;
   background:
-    repeating-linear-gradient(90deg, transparent 0 7px, rgb(47 111 69 / 30%) 7px 8px),
-    repeating-linear-gradient(180deg, transparent 0 7px, rgb(47 111 69 / 30%) 7px 8px),
+    linear-gradient(rgb(47 111 69 / 30%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(47 111 69 / 30%) 1px, transparent 1px),
     var(--paper);
+  background-size: var(--mark-cell) var(--mark-cell);
 }
 
-.size-choice[data-size="size-1"] .size-mark { --size-share: 0.32; }
-.size-choice[data-size="size-2"] .size-mark { --size-share: 0.49; }
-.size-choice[data-size="size-3"] .size-mark { --size-share: 0.66; }
-.size-choice[data-size="size-4"] .size-mark { --size-share: 0.83; }
-.size-choice[data-size="size-5"] .size-mark { --size-share: 1; }
+.cell-size-choice[data-size="size-1"] .cell-size-mark { --mark-cell: 24px; }
+.cell-size-choice[data-size="size-2"] .cell-size-mark { --mark-cell: 18px; }
+.cell-size-choice[data-size="size-3"] .cell-size-mark { --mark-cell: 13px; }
+.cell-size-choice[data-size="size-4"] .cell-size-mark { --mark-cell: 10px; }
+.cell-size-choice[data-size="size-5"] .cell-size-mark { --mark-cell: 7px; }
 
 .shelf-icon {
   display: block;
@@ -1632,6 +1580,12 @@ button:focus-visible,
   border-radius: 6px;
   background:
     linear-gradient(90deg, transparent 0 46%, currentcolor 46% 54%, transparent 54% 100%);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .dock {
+    background: rgb(255 255 255 / 94%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

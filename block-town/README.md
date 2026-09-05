@@ -22,23 +22,22 @@ Then open `http://127.0.0.1:4173/block-town/`. A local server is required: the g
 ## The worlds
 
 There is no ladder of levels. The child makes worlds and keeps them: the pause menu holds a shelf
-with a live picture of every world, and a big plus at the end opens a picker of five sizes. Tapping
-a picture opens that world; the cross under it deletes the world behind a confirmation. The first
-launch makes a small world by itself, so the very first tap already paints a cell, and deleting the
-last world leaves a fresh small one in its place.
+with a live picture of every world, and a big plus at the end opens a picker of five cell sizes.
+Tapping a picture opens that world; the cross under it deletes the world behind a confirmation. The
+first launch makes a world with the largest cells by itself, so the very first tap already paints a
+cell, and deleting the last world leaves a fresh one in its place.
 
-| Size | Grid | Cells | Tools |
+| Cell choice | Target size | Example grid at 1280 x 800 | Tools |
 | --- | --- | --- | --- |
-| Small | 5 x 10 | 50 | Brush, eraser |
-| Medium | 8 x 16 | 128 | Brush, eraser |
-| Large | 12 x 24 | 288 | Brush, wide brush, eraser |
-| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket, eraser |
-| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket, eraser |
+| Largest | 120 px | 5 x 10 | Brush, eraser |
+| Large | 80 px | 7 x 15 | Brush, eraser |
+| Medium | 56 px | 10 x 22 | Brush, wide brush, eraser |
+| Small | 40 px | 15 x 31 | Brush, wide brush, fill bucket, eraser |
+| Smallest | 28 px | 21 x 45 | Brush, wide brush, fill bucket, eraser |
 
-The first three sizes fit the screen whole. The two big ones open at a comfortable cell size and
-scroll; two zoom buttons, four big edge arrows and a mini-map carry the movement around them. On the
-mini-map the cells still waiting carry a checker, so a hole is told from a block by its pattern and
-not by its color.
+The chosen size is a target rather than a fixed grid. A new world fills the available stage with
+cells close to that size and saves its resulting rows and columns. The whole grid always remains on
+screen: opening it in a smaller window makes every cell smaller, with no page or grid scrolling.
 
 ## The palette an adult sets
 
@@ -79,18 +78,19 @@ full, evening falls and the windows and lanterns come on.
 
 - Tap a cell to paint it, or drag to paint a whole stroke. Painting over or erasing is the only
   correction — there is no undo.
-- The palette holds the blocks. Past eight of them a family button opens a short row of its kinds.
+- The palette holds the blocks. Past eight of them a family button opens a short row above the
+  dock; choosing a kind, tapping the family again or tapping the sheet closes it.
 - The lock button after the palette opens the optional words screen. `Escape` returns from a word
   card to the word list, then from the list to the world.
 - The tools sit next to the palette: the brush, the wide brush (2 x 2), the fill bucket and the
-  eraser. Which of them a world offers follows its size; the brush and the eraser are always there.
+  eraser. Which of them a world offers follows its cell-size choice; the brush and the eraser are
+  always there.
 - The sun beside the sheet fills up as cells are painted, and unpainted cells shimmer.
-- `Escape` opens the pause, which holds the shelf of worlds, the size picker and the only reset,
+- `Escape` opens the pause, which holds the shelf of worlds, the cell-size picker and the only reset,
   "clear this world", behind a confirmation. `Escape` then walks back one pause screen at a time.
 - Keyboard: the arrow keys or `WASD` move the frame, `Space` paints, `Enter` steps into the palette
   and the left and right arrows walk along it, `Escape` returns to the sheet. The shelf of worlds
-  and the size picker are walked with the same left and right arrows. The mini-map has no spot to
-  point at from the keyboard, so pressing it takes the frame to the first cell still waiting.
+  and the cell-size picker are walked with the same left and right arrows.
 
 The painting path needs no reading: the palette, the tools and the pause are pictures. Reading is
 used only in the optional words screen with an adult.
@@ -101,21 +101,22 @@ used only in the optional words screen with an adult.
 node block-town/test-game.js
 ```
 
-The test covers the block and size registries, enabling blocks and listing locked blocks, making,
-opening and deleting worlds, painting and painting over, a block an adult has not enabled, refused
-input, the stroke line filler, the autotile helpers, the inside corners of a lake, the paved square,
-the world analysis, the order of a walked track and of a closed loop, the house door, the field
-stages, the wide brush, rail paths, the bucket on a full world, the size of a full save and the
-normalization of a damaged save.
+The test covers the block and cell-size registries, screen-derived grid dimensions, legacy save
+compatibility, enabling blocks and listing locked blocks, making, opening and deleting worlds,
+painting and painting over, a block an adult has not enabled, refused input, the stroke line filler,
+the autotile helpers, the inside corners of a lake, the paved square, the world analysis, the order
+of a walked track and of a closed loop, the house door, the field stages, the wide brush, rail paths,
+the bucket on a full world, the size of a full save and the normalization of a damaged save.
 
 ## Saving
 
-- `blockTownWorldsV1` holds every world — its size, painting, bridges and sown fields — and which
-  world is open. A shelf with one world of every size painted full is under eight kilobytes, and
-  under twenty-seven even when every one of those cells is a field, so the number of worlds needs no
-  cap. Only a field keeps the moment it was sown, and it keeps it in whole seconds counted from the
-  first sowing of its world; a save still holding full millisecond epochs is read as it stands. The
-  old `blockTownSheetsV1` save of the level ladder is neither read nor migrated.
+- `blockTownWorldsV1` holds every world — its cell-size choice, saved rows and columns, painting,
+  bridges and sown fields — and which world is open. Worlds saved before rows and columns were added,
+  and worlds whose saved numbers cannot be read, keep the fixed dimensions of their cell-size
+  choice. Only a field keeps the moment it was sown, and it keeps it
+  in whole seconds counted from the first sowing of its world; a save still holding full millisecond
+  epochs is read as it stands. The old `blockTownSheetsV1` save of the level ladder is neither read
+  nor migrated.
 - `blockTownBlocksV1` holds the blocks an adult has enabled. It is written by the shelf page and by
   the words screen, and "Reset progress" keeps it: like sound and language, it is a setting, not
   progress.
@@ -124,11 +125,13 @@ normalization of a damaged save.
 
 ## Files
 
-- `index.html` holds the accessible structure of the sheet, the palette, the words overlay and the
-  mini-map, plus the pause with its shelf of worlds, size picker and two confirmations.
-- `styles.css` lays out every block from the pictures in `art/` and draws the creatures and the
-  celebration. What a block does on its own — the sails of a windmill, the lamp of a lighthouse,
-  the windows of a house in the evening — is a pseudo-element the stylesheet animates.
+- `index.html` holds the accessible structure of the three play zones — the sky, the world stage
+  and the dock, all on one sheet of squared paper — plus the words overlay and the pause with its shelf, cell-size picker and
+  confirmations.
+- `styles.css` lays out the three edge-to-edge zones and every block from the pictures in `art/`,
+  then draws the creatures and the celebration. What a block does on its own — the sails of a
+  windmill, the lamp of a lighthouse, the windows of a house in the evening — is a pseudo-element
+  the stylesheet animates.
 - `art/` holds the SVG pictures, one file per piece: a shore, a rounded corner, a dashed centre
   line, a tree, a whole house. Each is a 64 x 64 drawing that `styles.css` layers and scales to the
   cell; the pieces that only differ by their side are the same drawing turned.

@@ -10,7 +10,7 @@
   </head>
   <body data-translations="translations.json">
     <main class="game-shell" id="game-shell">
-      <header class="topbar">
+      <header class="sky">
         <section class="progress-panel" id="progress-panel" aria-label="Painted part of the world">
           <span class="progress-sun" aria-hidden="true">
             <span class="progress-sun-fill" id="progress-sun-fill"></span>
@@ -19,14 +19,6 @@
         </section>
 
         <div class="top-actions" aria-label="Game controls">
-          <label class="language-picker language-picker--compact">
-            <span aria-hidden="true">🌐</span>
-            <span class="language-picker-text">Language</span>
-            <select data-language-select aria-label="Interface language">
-              <option value="en">English</option>
-              <option value="ru">Русский</option>
-            </select>
-          </label>
           <button class="round-button" id="sound-button" type="button" aria-label="Turn sound off">
             <span class="sound-icon" aria-hidden="true">♪</span>
           </button>
@@ -36,42 +28,11 @@
         </div>
       </header>
 
-      <section class="sheet-card" aria-label="Sheet of squared paper">
-        <div class="zoom-buttons" id="zoom-buttons" hidden>
-          <button class="round-button" id="zoom-in" type="button" aria-label="Make the cells bigger">
-            <span aria-hidden="true">+</span>
-          </button>
-          <button class="round-button" id="zoom-out" type="button" aria-label="Make the cells smaller">
-            <span aria-hidden="true">−</span>
-          </button>
-        </div>
-
-        <div class="edge-arrows" id="edge-arrows" hidden>
-          <button class="edge-arrow edge-arrow--up" type="button" data-pan="up" aria-label="Move up">
-            <span aria-hidden="true">▲</span>
-          </button>
-          <button class="edge-arrow edge-arrow--down" type="button" data-pan="down" aria-label="Move down">
-            <span aria-hidden="true">▼</span>
-          </button>
-          <button class="edge-arrow edge-arrow--left" type="button" data-pan="left" aria-label="Move left">
-            <span aria-hidden="true">◀</span>
-          </button>
-          <button class="edge-arrow edge-arrow--right" type="button" data-pan="right" aria-label="Move right">
-            <span aria-hidden="true">▶</span>
-          </button>
-        </div>
-
-        <button class="minimap" id="minimap" type="button" aria-label="Whole world. Tap a spot to jump there." hidden>
-          <canvas class="minimap-canvas" id="minimap-canvas"></canvas>
-          <span class="minimap-view" id="minimap-view" aria-hidden="true"></span>
-        </button>
-
-        <div class="sheet-scroll" id="sheet-scroll">
-          <div class="sheet-stage" id="sheet-stage">
-            <div class="sheet-grid" id="sheet-grid" role="grid" tabindex="0"
-              aria-label="World. Arrow keys move the frame, Space paints the chosen block."></div>
-            <div class="living-layer" id="living-layer" aria-hidden="true"></div>
-          </div>
+      <section class="stage" id="stage" aria-label="Sheet of squared paper">
+        <div class="sheet-stage" id="sheet-stage">
+          <div class="sheet-grid" id="sheet-grid" role="grid" tabindex="0"
+            aria-label="World. Arrow keys move the frame, Space paints the chosen block."></div>
+          <div class="living-layer" id="living-layer" aria-hidden="true"></div>
         </div>
         <div class="celebration" id="celebration" hidden>
           <div class="confetti" id="confetti" aria-hidden="true"></div>
@@ -91,7 +52,7 @@
         <div class="screen-reader-status" id="status" role="status" aria-live="polite"></div>
       </section>
 
-      <section class="toolbar" aria-label="Blocks and tools">
+      <section class="dock" aria-label="Blocks and tools">
         <div class="palette-area">
           <div class="palette-kinds" id="palette-kinds" role="radiogroup" aria-label="Kinds of block" hidden></div>
           <div class="palette" id="palette" role="radiogroup" aria-label="Blocks"></div>
@@ -124,21 +85,21 @@
           </button>
         </div>
         <div class="pause-actions pause-actions--shelf" data-state="sizes" hidden>
-          <div class="size-picker" id="size-picker" role="group" aria-label="Size of the new world">
-            <button class="size-choice" type="button" data-size="size-1" aria-label="Small world">
-              <span class="size-mark" aria-hidden="true"></span>
+          <div class="cell-size-picker" id="cell-size-picker" role="group" aria-label="Cell size in the new world">
+            <button class="cell-size-choice" type="button" data-size="size-1" aria-label="Largest cells">
+              <span class="cell-size-mark" aria-hidden="true"></span>
             </button>
-            <button class="size-choice" type="button" data-size="size-2" aria-label="Medium world">
-              <span class="size-mark" aria-hidden="true"></span>
+            <button class="cell-size-choice" type="button" data-size="size-2" aria-label="Large cells">
+              <span class="cell-size-mark" aria-hidden="true"></span>
             </button>
-            <button class="size-choice" type="button" data-size="size-3" aria-label="Large world">
-              <span class="size-mark" aria-hidden="true"></span>
+            <button class="cell-size-choice" type="button" data-size="size-3" aria-label="Medium cells">
+              <span class="cell-size-mark" aria-hidden="true"></span>
             </button>
-            <button class="size-choice" type="button" data-size="size-4" aria-label="Very large world">
-              <span class="size-mark" aria-hidden="true"></span>
+            <button class="cell-size-choice" type="button" data-size="size-4" aria-label="Small cells">
+              <span class="cell-size-mark" aria-hidden="true"></span>
             </button>
-            <button class="size-choice" type="button" data-size="size-5" aria-label="Huge world">
-              <span class="size-mark" aria-hidden="true"></span>
+            <button class="cell-size-choice" type="button" data-size="size-5" aria-label="Smallest cells">
+              <span class="cell-size-mark" aria-hidden="true"></span>
             </button>
           </div>
           <button class="pause-action" id="sizes-back-button" type="button" aria-label="Back to the worlds">
@@ -162,6 +123,16 @@
           <button class="pause-action cancel-button" id="cancel-delete-button" type="button" aria-label="No, keep the world">
             <span aria-hidden="true">✕</span>
           </button>
+        </div>
+        <div class="pause-settings">
+          <label class="language-picker">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
         </div>
       </div>
     </div>

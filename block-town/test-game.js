@@ -7,6 +7,7 @@ const {
   DEFAULT_BLOCK_IDS,
   worldSizeById,
   worldSize,
+  gridDimensionsForCellSize,
   normalizeEnabledBlocks,
   enableBlock,
   lockedBlockIds,
@@ -70,9 +71,9 @@ const ALL_BLOCK_IDS = BLOCKS.map((block) => block.id);
 
 // Most tests are about painting, not about what an adult has enabled, so they
 // start from a state where every block is available.
-function openWorld(sizeId = "size-1", enabledBlockIds = ALL_BLOCK_IDS) {
+function openWorld(sizeId = "size-1", enabledBlockIds = ALL_BLOCK_IDS, dimensions) {
   const state = createGameState(enabledBlockIds);
-  createWorld(state, sizeId, 1000);
+  createWorld(state, sizeId, 1000, dimensions);
   return state;
 }
 
@@ -105,19 +106,67 @@ function testRegistries() {
   const sizeIds = WORLD_SIZES.map((size) => size.id);
   assert.deepEqual(sizeIds, ["size-1", "size-2", "size-3", "size-4", "size-5"]);
   assert.equal(new Set(sizeIds).size, sizeIds.length);
+  assert.deepEqual(WORLD_SIZES.map((size) => size.cellSize), [120, 80, 56, 40, 28]);
+  // The fixed dimensions are only the fallback for saves made before worlds
+  // recorded their own screen-derived geometry.
   assert.deepEqual(WORLD_SIZES.map((size) => size.cellCount), [50, 128, 288, 648, 1152]);
   WORLD_SIZES.forEach((size) => {
     assert.equal(size.cellCount, size.rows * size.columns);
     assert.equal(size.tools.includes("brush"), true);
   });
-  // Only a big world is scrolled, and only a big world gets the bucket.
-  assert.deepEqual(WORLD_SIZES.map((size) => size.big === true), [false, false, false, true, true]);
+  assert.deepEqual(WORLD_SIZES.map((size) => size.tools.includes("bucket")), [false, false, false, true, true]);
 
   // The blocks a world starts with are real blocks.
   assert.equal(DEFAULT_BLOCK_IDS.length, 3);
   DEFAULT_BLOCK_IDS.forEach((blockId) => {
     assert.equal(ids.includes(blockId), true);
   });
+}
+
+function testGridDimensions() {
+  assert.deepEqual(gridDimensionsForCellSize("size-1", 1260, 608), { rows: 5, columns: 10 });
+  assert.deepEqual(gridDimensionsForCellSize("size-2", 1260, 608), { rows: 7, columns: 15 });
+  assert.deepEqual(gridDimensionsForCellSize("size-3", 1260, 608), { rows: 10, columns: 22 });
+  assert.deepEqual(gridDimensionsForCellSize("size-4", 1260, 608), { rows: 15, columns: 31 });
+  assert.deepEqual(gridDimensionsForCellSize("size-5", 1260, 608), { rows: 21, columns: 45 });
+  assert.deepEqual(gridDimensionsForCellSize("size-1", 40, 20), { rows: 1, columns: 1 });
+  // However large the screen, one world stays a world.
+  assert.deepEqual(gridDimensionsForCellSize("size-5", 100000, 100000), { rows: 100, columns: 200 });
+  assert.equal(gridDimensionsForCellSize("size-9", 1260, 608), null);
+  assert.equal(gridDimensionsForCellSize("size-1", 0, 608), null);
+  assert.equal(gridDimensionsForCellSize("size-1", 1260, Number.NaN), null);
+}
+
+// A world carries its own rows and columns. What a save cannot tell is filled
+// in from the fixed size of its cell-size choice, so a painting is never lost
+// to a damaged number.
+function testSavedGeometry() {
+  const fixed = worldSizeById("size-2");
+  assert.deepEqual(worldSize({ sizeId: "size-2", rows: 7, columns: 15 }), {
+    ...fixed,
+    rows: 7,
+    columns: 15,
+    cellCount: 105,
+  });
+  assert.equal(worldSize({ sizeId: "size-2" }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 7 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", columns: 15 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 0, columns: 16 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 8.5, columns: 16 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: "8", columns: 16 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 101, columns: 16 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 8, columns: 201 }), fixed);
+  assert.equal(worldSize({ sizeId: "size-2", rows: 100, columns: 200 }).cellCount, 20000);
+  // Only a size that does not exist has no answer at all.
+  assert.equal(worldSize({ sizeId: "size-9", rows: 5, columns: 10 }), null);
+
+  // Without a measurement a new world falls back to the fixed grid.
+  const state = createGameState(ALL_BLOCK_IDS);
+  const world = createWorld(state, "size-5", 1000, null);
+  assert.equal(world.rows, 24);
+  assert.equal(world.columns, 48);
+  assert.equal(world.grid.length, 1152);
+  assert.equal(world.underlay.length, 1152);
 }
 
 function testNeighbors() {
@@ -689,8 +738,14 @@ function testWorldShelf() {
   assert.equal(first.createdAt, 1000);
   assert.equal(state.currentWorldId, first.id);
 
-  const second = createWorld(state, "size-5", 2000);
-  assert.equal(second.grid.length, 1152);
+  const second = createWorld(state, "size-5", 2000, { rows: 21, columns: 45 });
+  assert.equal(second.grid.length, 945);
+  assert.deepEqual(worldSize(second), {
+    ...WORLD_SIZES[4],
+    rows: 21,
+    columns: 45,
+    cellCount: 945,
+  });
   // A new world goes to the end of the shelf and opens at once.
   assert.deepEqual(state.worlds.map((world) => world.id), [first.id, second.id]);
   assert.equal(state.currentWorldId, second.id);
@@ -878,7 +933,7 @@ function testSaveRoundTrip() {
   paintCell(state, 4, WATER_ID);
   paintCell(state, 4, PATH_ID);
   paintCell(state, 5, FIELD_ID, 4200);
-  const big = createWorld(state, "size-4", 2000);
+  const big = createWorld(state, "size-4", 2000, { rows: 15, columns: 31 });
   paintCell(state, 9, WATER_ID);
   paintCell(state, 9, PATH_ID);
   paintCell(state, 10, MEADOW_ID);
@@ -905,6 +960,8 @@ function testSaveRoundTrip() {
     assert.deepEqual(world.planted, secondsOnly(state.worlds[index].planted));
     assert.equal(world.celebrated, state.worlds[index].celebrated);
     assert.equal(world.sizeId, state.worlds[index].sizeId);
+    assert.equal(world.rows, state.worlds[index].rows);
+    assert.equal(world.columns, state.worlds[index].columns);
     assert.equal(world.createdAt, state.worlds[index].createdAt);
   });
 
@@ -973,6 +1030,8 @@ function testSavedStateNormalization() {
   assert.deepEqual(restored.worlds.map((world) => world.id), ["w-one"]);
   const world = restored.worlds[0];
   assert.equal(world.grid.length, 50);
+  assert.equal(world.rows, 5);
+  assert.equal(world.columns, 10);
   assert.deepEqual(world.grid.slice(0, 6), [
     MEADOW_ID,
     EMPTY_CELL,
@@ -990,6 +1049,20 @@ function testSavedStateNormalization() {
   assert.equal(world.createdAt, 0);
   // An unknown open world falls back to the first world on the shelf.
   assert.equal(restored.currentWorldId, "w-one");
+
+  // Geometry that cannot be read keeps the world and the fixed size of its
+  // cell-size choice; only a world without a readable size is dropped.
+  const invalidDimensions = normalizeSavedState({
+    worlds: [
+      { id: "w-flat", sizeId: "size-2", rows: 0, columns: 16, grid: [MEADOW_ID] },
+      { id: "w-lost", sizeId: "size-9", rows: 5, columns: 10, grid: [MEADOW_ID] },
+    ],
+  }, ALL_BLOCK_IDS);
+  assert.deepEqual(invalidDimensions.worlds.map((world) => world.id), ["w-flat"]);
+  assert.equal(invalidDimensions.worlds[0].rows, 8);
+  assert.equal(invalidDimensions.worlds[0].columns, 16);
+  assert.equal(invalidDimensions.worlds[0].grid.length, 128);
+  assert.equal(invalidDimensions.worlds[0].grid[0], MEADOW_ID);
 
   const oversized = normalizeSavedState({
     worlds: [{ id: "w-big", sizeId: "size-1", grid: new Array(500).fill(MEADOW_ID) }],
@@ -1045,10 +1118,15 @@ function testEverySizeCanBeFilled() {
     assert.equal(fillWorld(state, MEADOW_ID), size.cellCount);
     assert.equal(isWorldComplete(state, world.id), true);
   });
-  assert.equal(state.worlds.length, WORLD_SIZES.length);
+  const adaptive = createWorld(state, "size-5", 100, { rows: 21, columns: 45 });
+  assert.equal(fillWorld(state, MEADOW_ID), 945);
+  assert.equal(isWorldComplete(state, adaptive.id), true);
+  assert.equal(state.worlds.length, WORLD_SIZES.length + 1);
 }
 
 testRegistries();
+testGridDimensions();
+testSavedGeometry();
 testNeighbors();
 testStrokeLine();
 testNeighborMask();
