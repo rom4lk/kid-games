@@ -56,13 +56,13 @@ const DEFAULT_BLOCK_IDS = BLOCKS
 // The sizes a new world can have. Sizes and tools are data, so shrinking a
 // world after a test with a child never touches the code around them.
 const WORLD_SIZES = [
-  { id: "size-1", rows: 5, columns: 10, tools: ["brush"] },
-  { id: "size-2", rows: 8, columns: 16, tools: ["brush"] },
-  { id: "size-3", rows: 12, columns: 24, tools: ["brush", "wide"] },
+  { id: "size-1", rows: 5, columns: 10, tools: ["brush", "eraser"] },
+  { id: "size-2", rows: 8, columns: 16, tools: ["brush", "eraser"] },
+  { id: "size-3", rows: 12, columns: 24, tools: ["brush", "wide", "eraser"] },
   // A big world no longer fits the screen: it opens zoomed in and brings the
   // zoom buttons, the edge arrows and the mini-map with it.
-  { id: "size-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket"], big: true },
-  { id: "size-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket"], big: true },
+  { id: "size-4", rows: 18, columns: 36, tools: ["brush", "wide", "bucket", "eraser"], big: true },
+  { id: "size-5", rows: 24, columns: 48, tools: ["brush", "wide", "bucket", "eraser"], big: true },
 ].map((size, index) => ({
   ...size,
   number: index + 1,
@@ -284,10 +284,12 @@ function lineIndices(size, fromIndex, toIndex) {
 
 // Paints one cell of the open world. Painting over is always allowed, and
 // nothing here ever throws: a refused paint simply reports no change.
+// The eraser paints EMPTY_CELL, which needs no enabling.
 function paintCell(state, index, blockId, now = 0) {
   const world = currentWorld(state);
   const size = worldSize(world);
-  if (!isCellIndex(size, index) || !isBlockEnabled(state, blockId)) return false;
+  if (!isCellIndex(size, index)) return false;
+  if (blockId !== EMPTY_CELL && !isBlockEnabled(state, blockId)) return false;
 
   const { grid, underlay } = world;
   if (!Array.isArray(grid) || !Array.isArray(underlay)) return false;
@@ -1035,6 +1037,7 @@ function initializeGame() {
     brush: "Brush",
     wide: "Wide brush",
     bucket: "Fill",
+    eraser: "Eraser",
   };
 
   const BLOCK_NAMES = {
@@ -1801,8 +1804,8 @@ function initializeGame() {
     elements.grid.focus();
   }
 
-  // Small worlds get the brush alone, a medium one adds the wide brush and a
-  // big one the bucket: the size of the world decides.
+  // Every world has the brush and the eraser; a large one adds the wide brush
+  // and a big one the bucket: the size of the world decides.
   function renderTools() {
     const tools = openSize().tools;
     if (tools.length < 2) {
@@ -1837,10 +1840,11 @@ function initializeGame() {
     strokeLastIndex = index;
 
     const span = TOOL_SIZES[selectedTool] ?? 1;
+    const blockId = selectedTool === "eraser" ? EMPTY_CELL : selectedBlockId;
     const now = Date.now();
     let changed = 0;
     path.flatMap((cell) => brushCells(size, cell, span)).forEach((cell) => {
-      if (!paintCell(state, cell, selectedBlockId, now)) return;
+      if (!paintCell(state, cell, blockId, now)) return;
       renderCellAndNeighbors(cell, now);
       changed += 1;
     });
@@ -1862,6 +1866,8 @@ function initializeGame() {
     scheduleAnalysis();
     checkCompletion();
 
+    // Erasing is quiet: an emptied cell has no family to sound.
+    if (selectedTool === "eraser") return;
     cellsSinceSound += changed;
     if (cellsSinceSound < STROKE_SOUND_EVERY) return;
     cellsSinceSound = 0;

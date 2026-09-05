@@ -29,11 +29,11 @@ last world leaves a fresh small one in its place.
 
 | Size | Grid | Cells | Tools |
 | --- | --- | --- | --- |
-| Small | 5 x 10 | 50 | Brush |
-| Medium | 8 x 16 | 128 | Brush |
-| Large | 12 x 24 | 288 | Brush, wide brush |
-| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket |
-| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket |
+| Small | 5 x 10 | 50 | Brush, eraser |
+| Medium | 8 x 16 | 128 | Brush, eraser |
+| Large | 12 x 24 | 288 | Brush, wide brush, eraser |
+| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket, eraser |
+| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket, eraser |
 
 The first three sizes fit the screen whole. The two big ones open at a comfortable cell size and
 scroll; two zoom buttons, four big edge arrows and a mini-map carry the movement around them. On the
@@ -77,13 +77,13 @@ full, evening falls and the windows and lanterns come on.
 
 ## Controls
 
-- Tap a cell to paint it, or drag to paint a whole stroke. Painting over is the only correction —
-  there is no eraser and no undo.
+- Tap a cell to paint it, or drag to paint a whole stroke. Painting over or erasing is the only
+  correction — there is no undo.
 - The palette holds the blocks. Past eight of them a family button opens a short row of its kinds.
 - The lock button after the palette opens the optional words screen. `Escape` returns from a word
   card to the word list, then from the list to the world.
-- The tools appear when there is more than one: the brush, the wide brush (2 x 2) and the fill
-  bucket. Which of them a world offers follows its size.
+- The tools sit next to the palette: the brush, the wide brush (2 x 2), the fill bucket and the
+  eraser. Which of them a world offers follows its size; the brush and the eraser are always there.
 - The sun beside the sheet fills up as cells are painted, and unpainted cells shimmer.
 - `Escape` opens the pause, which holds the shelf of worlds, the size picker and the only reset,
   "clear this world", behind a confirmation. `Escape` then walks back one pause screen at a time.

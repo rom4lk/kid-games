@@ -585,6 +585,35 @@ function testFieldStages() {
   assert.deepEqual(currentWorld(state).planted, {});
 }
 
+function testEraser() {
+  const state = openWorld("size-1");
+  const world = currentWorld(state);
+
+  // Erasing an empty cell changes nothing; erasing a painted one empties it.
+  assert.equal(paintCell(state, 3, EMPTY_CELL), false);
+  assert.equal(paintCell(state, 3, FIELD_ID, 1000), true);
+  assert.equal(paintCell(state, 3, EMPTY_CELL), true);
+  assert.equal(world.grid[3], EMPTY_CELL);
+  assert.equal(world.planted[3], undefined);
+  assert.equal(paintedCount(state), 0);
+
+  // A bridge erased takes the water underneath with it.
+  assert.equal(paintCell(state, 4, WATER_ID), true);
+  assert.equal(paintCell(state, 4, PATH_ID), true);
+  assert.equal(world.underlay[4], WATER_ID);
+  assert.equal(paintCell(state, 4, EMPTY_CELL), true);
+  assert.equal(world.underlay[4], EMPTY_CELL);
+
+  // The bucket never erases.
+  assert.equal(paintCell(state, 0, FOREST_ID), true);
+  assert.equal(floodFill(state, 0, EMPTY_CELL), 0);
+
+  // Every size offers the eraser.
+  WORLD_SIZES.forEach((size) => {
+    assert.equal(size.tools.includes("eraser"), true);
+  });
+}
+
 function testWideBrush() {
   const size = worldSizeById("size-1");
   assert.deepEqual(brushCells(size, 0, 1), [0]);
@@ -1035,6 +1064,7 @@ testWalkAndLoopOrder();
 testLakesAndForests();
 testHouseDoor();
 testFieldStages();
+testEraser();
 testWideBrush();
 testRailPathsAndBigBucket();
 testWindmillAndLighthouse();

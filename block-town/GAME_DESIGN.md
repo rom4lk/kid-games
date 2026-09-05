@@ -36,7 +36,7 @@ no goals, and the joy comes from the world reacting beautifully to every placed 
 1. The child picks a block in the palette (a big picture button).
 2. They tap a cell — the block appears; they drag across cells — a whole stroke is painted.
 3. The world reacts at once: tiles connect, shores appear, small life shows up.
-4. Painting over a cell replaces the old block. There is no eraser and there are no mistakes.
+4. Painting over a cell replaces the old block, and the eraser empties it. There are no mistakes.
 5. When every cell of the world is painted, the town celebrates: evening falls, windows and lanterns
    light up, and the world stays open in the evening light.
 
@@ -52,11 +52,11 @@ the shelf opens the size picker.
 
 | Size | Grid | Cells | Tools |
 | --- | --- | --- | --- |
-| Small | 5 x 10 | 50 | Brush |
-| Medium | 8 x 16 | 128 | Brush |
-| Large | 12 x 24 | 288 | Brush, wide brush |
-| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket |
-| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket |
+| Small | 5 x 10 | 50 | Brush, eraser |
+| Medium | 8 x 16 | 128 | Brush, eraser |
+| Large | 12 x 24 | 288 | Brush, wide brush, eraser |
+| Very large | 18 x 36 | 648 | Brush, wide brush, fill bucket, eraser |
+| Huge | 24 x 48 | 1152 | Brush, wide brush, fill bucket, eraser |
 
 The five sizes are drawn as growing rectangles of squared paper, so nothing has to be read to choose
 one. The first launch makes a small world by itself: the first tap already paints a cell. Deleting
@@ -131,10 +131,11 @@ boats stops; their presence is kept with static figures, and light and opacity c
 
 ## Painting tools
 
-- **Brush** — the default and the only tool at the start: tap a cell or drag a stroke.
+- **Brush** — the default tool: tap a cell or drag a stroke.
 - **Wide brush** (from the large world on) — paints 2 x 2, for big meadows and lakes.
 - **Fill bucket** (on the two big worlds) — fills a connected empty area with the chosen block.
-- **No eraser and no undo button**: painting over is always the fix, so nothing needs to be undone.
+- **Eraser** (on every world) — empties a cell or a stroke of cells; a bridge loses its water too.
+- **No undo button**: painting over or erasing is always the fix, so nothing needs to be undone.
 - Tool buttons are big pictures next to the palette; the active tool is framed and enlarged.
 
 ## The screen and the controls
