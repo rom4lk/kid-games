@@ -41,15 +41,15 @@ const COLUMNS = [
 ];
 
 const TILE_DATA = {
-  plain: { icon: "🍀", food: 1, wood: 0, idea: 0 },
-  forest: { icon: "🌲", food: 0, wood: 2, idea: 0 },
-  orchard: { icon: "🍎", food: 2, wood: 0, idea: 0 },
-  hill: { icon: "⛰️", food: 0, wood: 1, idea: 1 },
-  lake: { icon: "💧", food: 1, wood: 0, idea: 0 },
-  ruins: { icon: "🧩", food: 0, wood: 0, idea: 2 },
-  village: { icon: "🏡", food: 1, wood: 1, idea: 1 },
-  water: { icon: "🌊", food: 1, wood: 0, idea: 0 },
-  city: { icon: "🏰", food: 0, wood: 0, idea: 0 },
+  plain: { icon: "🍀", color: "#a8d67d", food: 1, wood: 0, idea: 0 },
+  forest: { icon: "🌲", color: "#71b879", food: 0, wood: 2, idea: 0 },
+  orchard: { icon: "🍎", color: "#bee07d", food: 2, wood: 0, idea: 0 },
+  hill: { icon: "⛰️", color: "#d3bd8a", food: 0, wood: 1, idea: 1 },
+  lake: { icon: "💧", color: "#7fcbd4", food: 1, wood: 0, idea: 0 },
+  ruins: { icon: "🧩", color: "#c7b4d8", food: 0, wood: 0, idea: 2 },
+  village: { icon: "🏡", color: "#e8c282", food: 1, wood: 1, idea: 1 },
+  water: { icon: "🌊", color: "#4f9fd0", food: 1, wood: 0, idea: 0 },
+  city: { icon: "🏰", color: "#f4d268", food: 0, wood: 0, idea: 0 },
 };
 
 // The pools describe the mix of places, not their number. The far side of the
@@ -66,6 +66,42 @@ const FAR_POOL = [
   "village", "orchard", "plain", "ruins", "forest", "orchard",
   "ruins", "hill", "village", "lake", "orchard", "forest",
 ];
+
+// Pointy-top hexes in odd-r offset layout: odd rows sit half a hex to the right.
+const HEX_RADIUS = 34;
+const HEX_WIDTH = Math.sqrt(3) * HEX_RADIUS;
+const HEX_HEIGHT = 2 * HEX_RADIUS;
+const ROW_STEP = 1.5 * HEX_RADIUS;
+// The drawn face is a little smaller than the cell, so neighbours keep a gap.
+const FACE_RADIUS = HEX_RADIUS - 3;
+const MAP_PADDING = 12;
+const NEIGHBOURS = [
+  [[1, 0], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]],
+  [[1, 0], [1, -1], [0, -1], [-1, 0], [0, 1], [1, 1]],
+];
+
+// Every sprite leaves room for the drop shadow below the face.
+const SPRITE_PAD = 4;
+const SPRITE_SHADOW = 3;
+const SPRITE_WIDTH = HEX_WIDTH + SPRITE_PAD * 2;
+const SPRITE_HEIGHT = HEX_HEIGHT + SPRITE_PAD * 2 + SPRITE_SHADOW;
+const SPRITE_TOP = SPRITE_PAD + HEX_RADIUS;
+const MAP_FONT = 'ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+
+const WALK_MS = 220;
+const CAMERA_MS = 380;
+const REFUSE_MS = 260;
+const FLASH_MS = 1800;
+const FLASH_CYCLE_MS = 900;
+
+// Zoom limits: at the smallest scale a hex is still about 35 px wide and the
+// whole island fits the map card; at the largest the explorer fills the hex.
+const MIN_SCALE = 0.6;
+const MAX_SCALE = 2;
+// A mouse wheel notch (about 100 px) zooms by 14%; pinch deltas are tiny, so
+// the trackpad pinch (a wheel event with ctrlKey) gets a stronger factor.
+const WHEEL_SENSITIVITY = 0.0015;
+const PINCH_SENSITIVITY = 0.01;
 
 const state = {
   difficulty: "normal",
@@ -90,6 +126,23 @@ const state = {
 let pointedCard = null;
 let litLinks = [];
 
+// Everything about the picture that is not part of the saved game.
+const view = {
+  width: 0,
+  height: 0,
+  dpr: 1,
+  camera: { x: 0, y: 0 }, // world point shown at the centre of the canvas
+  scale: 1, // screen pixels per world unit
+  facing: 1, // 1 when the explorer looks right, -1 when left
+  cameraTween: null, // { from, to, start } while the camera travels
+  walk: null, // { from, start } while the explorer walks to the new hex
+  refused: null, // { index, start } while a refused hex pushes back
+  flash: null, // { start } while the reachable ring calls for attention
+  reachable: new Set(),
+  fringe: new Set(), // hidden hexes next to explored ones, drawn as "?"
+  frame: 0, // pending requestAnimationFrame id
+};
+
 function rules() {
   return DIFFICULTIES[state.difficulty] ?? DIFFICULTIES.normal;
 }
@@ -104,6 +157,8 @@ function motionDelay(milliseconds) {
 
 const elements = {
   map: document.querySelector("#game-map"),
+  canvas: document.querySelector("#map-canvas"),
+  overlay: document.querySelector("#map-overlay"),
   food: document.querySelector("#food-count"),
   wood: document.querySelector("#wood-count"),
   idea: document.querySelector("#idea-count"),
@@ -190,21 +245,10 @@ function positionOf(index) {
   };
 }
 
-function isAdjacent(first, second) {
-  const a = positionOf(first);
-  const b = positionOf(second);
-  return Math.abs(a.row - b.row) + Math.abs(a.column - b.column) === 1;
-}
-
 function adjacentIndexes(index) {
   const { row, column } = positionOf(index);
-  const candidates = [
-    [row - 1, column],
-    [row + 1, column],
-    [row, column - 1],
-    [row, column + 1],
-  ];
-  return candidates
+  return NEIGHBOURS[row & 1]
+    .map(([dColumn, dRow]) => [row + dRow, column + dColumn])
     .filter(([nextRow, nextColumn]) => (
       nextRow >= 0
       && nextRow < MAP_HEIGHT
@@ -214,16 +258,110 @@ function adjacentIndexes(index) {
     .map(([nextRow, nextColumn]) => nextRow * MAP_WIDTH + nextColumn);
 }
 
+function isAdjacent(first, second) {
+  return adjacentIndexes(first).includes(second);
+}
+
+function centerOf(index) {
+  const { row, column } = positionOf(index);
+  return {
+    x: HEX_WIDTH * (column + 0.5 * (row & 1)),
+    y: ROW_STEP * row,
+  };
+}
+
+function hexPath(radius) {
+  const path = new Path2D();
+  for (let corner = 0; corner < 6; corner += 1) {
+    const angle = Math.PI / 6 + corner * Math.PI / 3;
+    const x = radius * Math.cos(angle);
+    const y = radius * Math.sin(angle);
+    if (corner === 0) path.moveTo(x, y);
+    else path.lineTo(x, y);
+  }
+  path.closePath();
+  return path;
+}
+
+const FACE_PATH = hexPath(FACE_RADIUS);
+const FOCUS_PATH = hexPath(HEX_RADIUS + 1);
+
+// The camera sits at the centre of the canvas; the world grows from there.
+function toScreen(world) {
+  return {
+    x: (world.x - view.camera.x) * view.scale + view.width / 2,
+    y: (world.y - view.camera.y) * view.scale + view.height / 2,
+  };
+}
+
+function toWorld(screen) {
+  return {
+    x: (screen.x - view.width / 2) / view.scale + view.camera.x,
+    y: (screen.y - view.height / 2) / view.scale + view.camera.y,
+  };
+}
+
+// Screen point → axial coordinates → rounded cube → odd-r index, or null
+// outside the map. Exact for the whole hex, not for its bounding box.
+function hexAt(screenX, screenY) {
+  const { x, y } = toWorld({ x: screenX, y: screenY });
+  const q = (Math.sqrt(3) / 3 * x - y / 3) / HEX_RADIUS;
+  const r = (2 / 3 * y) / HEX_RADIUS;
+  let roundQ = Math.round(q);
+  let roundR = Math.round(r);
+  const roundS = Math.round(-q - r);
+  const diffQ = Math.abs(roundQ - q);
+  const diffR = Math.abs(roundR - r);
+  const diffS = Math.abs(roundS + q + r);
+  if (diffQ > diffR && diffQ > diffS) roundQ = -roundR - roundS;
+  else if (diffR > diffS) roundR = -roundQ - roundS;
+  const column = roundQ + (roundR - (roundR & 1)) / 2;
+  if (roundR < 0 || roundR >= MAP_HEIGHT || column < 0 || column >= MAP_WIDTH) return null;
+  return roundR * MAP_WIDTH + column;
+}
+
+function mapBounds() {
+  return {
+    minX: -HEX_WIDTH / 2 - MAP_PADDING,
+    maxX: HEX_WIDTH * MAP_WIDTH + MAP_PADDING,
+    minY: -HEX_RADIUS - MAP_PADDING,
+    maxY: ROW_STEP * (MAP_HEIGHT - 1) + HEX_RADIUS + MAP_PADDING,
+  };
+}
+
+function clampAxis(value, min, max, size) {
+  if (max - min <= size) return (min + max) / 2;
+  return Math.min(Math.max(value, min + size / 2), max - size / 2);
+}
+
+function clampCamera(point) {
+  const bounds = mapBounds();
+  return {
+    x: clampAxis(point.x, bounds.minX, bounds.maxX, view.width / view.scale),
+    y: clampAxis(point.y, bounds.minY, bounds.maxY, view.height / view.scale),
+  };
+}
+
+function easeOut(progress) {
+  return 1 - (1 - progress) ** 3;
+}
+
+// The spyglass sees one ring further. Distance is counted in steps, so the
+// mist opens in rings of hexes and not in a square.
 function revealAround(index) {
   const radius = state.opened.has("spyglass") ? 2 : 1;
-  const { row, column } = positionOf(index);
-  for (let nextRow = row - radius; nextRow <= row + radius; nextRow += 1) {
-    for (let nextColumn = column - radius; nextColumn <= column + radius; nextColumn += 1) {
-      const distance = Math.abs(nextRow - row) + Math.abs(nextColumn - column);
-      if (distance > radius) continue;
-      if (nextRow < 0 || nextRow >= MAP_HEIGHT || nextColumn < 0 || nextColumn >= MAP_WIDTH) continue;
-      state.revealed.add(nextRow * MAP_WIDTH + nextColumn);
-    }
+  let frontier = [index];
+  state.revealed.add(index);
+  for (let step = 0; step < radius; step += 1) {
+    const next = [];
+    frontier.forEach((current) => {
+      adjacentIndexes(current).forEach((near) => {
+        if (state.revealed.has(near)) return;
+        state.revealed.add(near);
+        next.push(near);
+      });
+    });
+    frontier = next;
   }
 }
 
@@ -424,16 +562,16 @@ function collectTile(index) {
   return true;
 }
 
-// A tile out of reach answers with the world: it pushes back and the reachable
+function startFlash() {
+  view.flash = { start: performance.now() };
+}
+
+// A hex out of reach answers with the world: it pushes back and the reachable
 // neighbours flash, so the message is not the only explanation.
 function refuseTile(index) {
-  const tile = elements.map.querySelector(`[data-index="${index}"]`);
-  if (tile) {
-    tile.classList.remove("refused");
-    requestAnimationFrame(() => tile.classList.add("refused"));
-  }
-  elements.map.classList.remove("show-reach");
-  requestAnimationFrame(() => elements.map.classList.add("show-reach"));
+  view.refused = { index, start: performance.now() };
+  startFlash();
+  scheduleDraw();
 }
 
 // The same world reaction as refuseTile(), for a card or button instead of a tile.
@@ -455,10 +593,12 @@ function pointAt(id) {
 function moveExplorer(index) {
   if (state.finished) return;
   if (index === state.explorer) {
-    elements.map.classList.remove("show-reach");
-    requestAnimationFrame(() => elements.map.classList.add("show-reach"));
+    startFlash();
+    scheduleDraw();
     return;
   }
+  // The mist beyond the "?" ring is not a place yet, so a tap there does nothing.
+  if (!state.revealed.has(index) && !view.fringe.has(index)) return;
   if (!isAdjacent(state.explorer, index)) {
     setMessage("far");
     refuseTile(index);
@@ -476,6 +616,9 @@ function moveExplorer(index) {
     return;
   }
 
+  if (!reducedMotion.matches) view.walk = { from: state.explorer, start: performance.now() };
+  const stride = centerOf(index).x - centerOf(state.explorer).x;
+  if (stride !== 0) view.facing = Math.sign(stride);
   state.explorer = index;
   state.energy -= 1;
   revealAround(index);
@@ -486,6 +629,7 @@ function moveExplorer(index) {
   const opened = settleResearch();
   if (!opened && filledCount(state.researching) > before) playSound("progress", before);
   render();
+  moveCamera(centerOf(index), true);
   saveGame();
 
   if (state.energy === 0) {
@@ -495,58 +639,463 @@ function moveExplorer(index) {
   }
 }
 
-function renderMap() {
-  const hadFocus = document.activeElement?.classList.contains("map-tile");
-  elements.map.replaceChildren();
+// --- Map view -------------------------------------------------------------
 
-  state.tiles.forEach((type, index) => {
-    const tile = document.createElement("button");
-    const isRevealed = state.revealed.has(index);
-    const isExplorer = state.explorer === index;
-    const isCollected = state.collected.has(index);
-    const isDeep = type === "water" && !state.opened.has("boat");
-    const isReachable = isRevealed
-      && !isExplorer
-      && !isDeep
-      && state.energy > 0
-      && isAdjacent(state.explorer, index);
-    tile.type = "button";
-    tile.className = "map-tile";
-    tile.dataset.index = index;
+// Water without a boat is not a place the explorer can step on yet.
+function isDeep(index) {
+  return state.tiles[index] === "water" && !state.opened.has("boat");
+}
 
-    const terrain = readText(`tile-${isRevealed ? type : "hidden"}`);
-    let stateKey = null;
-    if (isExplorer) stateKey = "tile-state-explorer";
-    else if (isCollected && isReachable) stateKey = "tile-state-collected-reachable";
-    else if (isCollected) stateKey = "tile-state-collected";
-    else if (isReachable) stateKey = "tile-state-reachable";
-    const label = stateKey ? readText(stateKey).replace("{terrain}", terrain) : terrain;
-    tile.setAttribute("aria-label", label);
+function computeReach() {
+  const canStep = state.energy > 0;
+  view.reachable = new Set(canStep
+    ? adjacentIndexes(state.explorer)
+      .filter((index) => state.revealed.has(index) && !isDeep(index))
+    : []);
+  const fringe = new Set();
+  state.revealed.forEach((index) => {
+    adjacentIndexes(index).forEach((near) => {
+      if (!state.revealed.has(near)) fringe.add(near);
+    });
+  });
+  view.fringe = fringe;
+}
 
-    if (!isRevealed) {
-      tile.classList.add("hidden");
-      tile.disabled = true;
-    } else {
-      tile.classList.add(type);
-      tile.textContent = TILE_DATA[type].icon;
-      tile.addEventListener("click", () => moveExplorer(index));
-    }
+function tileLabel(index) {
+  const terrain = readText(`tile-${state.revealed.has(index) ? state.tiles[index] : "hidden"}`);
+  const isExplorer = state.explorer === index;
+  const isCollected = state.collected.has(index);
+  const isReachable = view.reachable.has(index);
+  let stateKey = null;
+  if (isExplorer) stateKey = "tile-state-explorer";
+  else if (isCollected && isReachable) stateKey = "tile-state-collected-reachable";
+  else if (isCollected) stateKey = "tile-state-collected";
+  else if (isReachable) stateKey = "tile-state-reachable";
+  return stateKey ? readText(stateKey).replace("{terrain}", terrain) : terrain;
+}
 
-    // Deep water is not a broken tile: once the boat exists on the path of
-    // discoveries, every water cell carries its sign.
-    if (isDeep && isRevealed) {
-      tile.classList.add("deep");
-      if (state.treeSeen) tile.classList.add("wants-boat");
-    }
-    if (isCollected) tile.classList.add("collected");
-    if (isExplorer) tile.classList.add("explorer");
-    if (isReachable) tile.classList.add("reachable");
+// Invisible buttons over the explorer and the reachable hexes carry the
+// keyboard, the focus and the accessible names. The canvas draws everything.
+function syncOverlay() {
+  const hadFocus = elements.overlay.contains(document.activeElement);
+  elements.overlay.replaceChildren();
 
-    elements.map.append(tile);
+  [state.explorer, ...view.reachable].forEach((index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "hex-button";
+    button.dataset.index = index;
+    button.style.width = `${HEX_WIDTH}px`;
+    button.style.height = `${HEX_HEIGHT}px`;
+    button.setAttribute("aria-label", tileLabel(index));
+    button.addEventListener("click", () => moveExplorer(index));
+    elements.overlay.append(button);
   });
 
-  if (hadFocus) elements.map.querySelector(`[data-index="${state.explorer}"]`)?.focus();
+  if (hadFocus) focusExplorer();
+  positionOverlay();
 }
+
+function focusExplorer() {
+  elements.overlay.querySelector(`[data-index="${state.explorer}"]`)?.focus();
+}
+
+function positionOverlay() {
+  for (const button of elements.overlay.children) {
+    const { x, y } = toScreen(centerOf(Number(button.dataset.index)));
+    const left = x - (HEX_WIDTH / 2) * view.scale;
+    const top = y - (HEX_HEIGHT / 2) * view.scale;
+    button.style.transform = `translate(${left}px, ${top}px) scale(${view.scale})`;
+  }
+}
+
+// Zoom keeps the explorer where it is on the screen: the world grows and
+// shrinks around the figure, never around a corner of the map.
+function setScale(nextScale) {
+  const scale = Math.min(Math.max(nextScale, MIN_SCALE), MAX_SCALE);
+  if (scale === view.scale) return;
+  const explorer = centerOf(state.explorer);
+  const anchor = toScreen(explorer);
+  view.scale = scale;
+  view.cameraTween = null;
+  view.camera = clampCamera({
+    x: explorer.x - (anchor.x - view.width / 2) / scale,
+    y: explorer.y - (anchor.y - view.height / 2) / scale,
+  });
+  scheduleDraw();
+}
+
+// Wheel deltas arrive in pixels, lines or pages depending on the device.
+function wheelPixels(event) {
+  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) return event.deltaY * 16;
+  if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) return event.deltaY * view.height;
+  return event.deltaY;
+}
+
+function moveCamera(target, animate) {
+  const to = clampCamera(target);
+  if (animate && !reducedMotion.matches) {
+    view.cameraTween = { from: { ...view.camera }, to, start: performance.now() };
+  } else {
+    view.camera = to;
+    view.cameraTween = null;
+  }
+  scheduleDraw();
+}
+
+function resizeCanvas() {
+  const rect = elements.map.getBoundingClientRect();
+  view.width = rect.width;
+  view.height = rect.height;
+  view.dpr = window.devicePixelRatio || 1;
+  elements.canvas.width = Math.round(view.width * view.dpr);
+  elements.canvas.height = Math.round(view.height * view.dpr);
+  view.cameraTween = null;
+  if (state.tiles.length) view.camera = clampCamera(centerOf(state.explorer));
+  scheduleDraw();
+}
+
+function scheduleDraw() {
+  if (!view.frame) view.frame = requestAnimationFrame(draw);
+}
+
+// --- Sprites --------------------------------------------------------------
+
+const sprites = new Map();
+
+// Sprites are rasterised for the zoom rounded up to a quarter step, so a frame
+// only ever shrinks them a little and a wheel gesture does not redraw them.
+function spriteDensity() {
+  return view.dpr * Math.ceil(view.scale * 4) / 4;
+}
+
+// One picture per terrain and state, drawn once per pixel density. Emoji
+// text is the slow part of a frame, so a frame only copies these pictures.
+function sprite(kind, collected, deep, wantsBoat) {
+  const density = spriteDensity();
+  const key = `${kind}|${collected ? "done" : "new"}|${deep ? "deep" : "open"}|${wantsBoat ? "boat" : "quiet"}|${density}`;
+  let image = sprites.get(key);
+  if (image) return image;
+
+  image = document.createElement("canvas");
+  image.width = Math.ceil(SPRITE_WIDTH * density);
+  image.height = Math.ceil(SPRITE_HEIGHT * density);
+  const brush = image.getContext("2d");
+  brush.scale(density, density);
+  brush.translate(SPRITE_WIDTH / 2, SPRITE_TOP);
+  brush.textAlign = "center";
+  brush.textBaseline = "middle";
+
+  if (kind === "hidden") {
+    brush.fillStyle = "#87a59c";
+    brush.fill(FACE_PATH);
+    brush.save();
+    brush.clip(FACE_PATH);
+    brush.lineWidth = 4;
+    brush.strokeStyle = "rgba(255, 255, 255, 0.17)";
+    brush.stroke(FACE_PATH);
+    brush.restore();
+    brush.fillStyle = "#233743";
+    brush.font = `900 23px ${MAP_FONT}`;
+    brush.fillText("?", 0, 1);
+  } else {
+    const tile = TILE_DATA[kind];
+    brush.save();
+    brush.translate(0, SPRITE_SHADOW);
+    brush.fillStyle = "rgba(72, 97, 73, 0.14)";
+    brush.fill(FACE_PATH);
+    brush.restore();
+    brush.fillStyle = tile.color;
+    brush.fill(FACE_PATH);
+    // A darker rim along the two lower edges stands in for the bevel.
+    brush.save();
+    brush.clip(FACE_PATH);
+    brush.beginPath();
+    brush.moveTo(-FACE_RADIUS * Math.sqrt(3) / 2, FACE_RADIUS / 2);
+    brush.lineTo(0, FACE_RADIUS);
+    brush.lineTo(FACE_RADIUS * Math.sqrt(3) / 2, FACE_RADIUS / 2);
+    brush.lineWidth = 10;
+    brush.lineJoin = "round";
+    brush.strokeStyle = "rgba(52, 72, 51, 0.12)";
+    brush.stroke();
+    brush.restore();
+    brush.font = `32px ${MAP_FONT}`;
+    brush.fillText(tile.icon, 0, 2);
+    if (collected) {
+      brush.save();
+      brush.clip(FACE_PATH);
+      brush.fillStyle = "rgba(255, 255, 255, 0.3)";
+      brush.fillRect(-HEX_WIDTH / 2, -HEX_RADIUS, HEX_WIDTH, HEX_HEIGHT);
+      brush.restore();
+      brush.fillStyle = "#2f6b4f";
+      brush.font = `900 17px ${MAP_FONT}`;
+      brush.shadowColor = "rgba(255, 255, 255, 0.85)";
+      brush.shadowOffsetY = 1;
+      brush.fillText("✓", -FACE_RADIUS * 0.42, -FACE_RADIUS * 0.5);
+      brush.shadowColor = "transparent";
+      brush.shadowOffsetY = 0;
+    }
+    // Water without a boat is not broken, it is waiting: it lies deeper, and
+    // once the path of discoveries is known it carries its sign.
+    if (deep) {
+      brush.save();
+      brush.clip(FACE_PATH);
+      brush.fillStyle = "rgba(35, 60, 80, 0.16)";
+      brush.fillRect(-HEX_WIDTH / 2, -HEX_RADIUS, HEX_WIDTH, HEX_HEIGHT);
+      brush.restore();
+      if (wantsBoat) {
+        brush.font = `15px ${MAP_FONT}`;
+        brush.fillText("🛶", FACE_RADIUS * 0.4, FACE_RADIUS * 0.5);
+      }
+    }
+  }
+
+  sprites.set(key, image);
+  return image;
+}
+
+function tileSprite(index) {
+  if (!state.revealed.has(index)) return sprite("hidden", false, false, false);
+  const deep = isDeep(index);
+  return sprite(state.tiles[index], state.collected.has(index), deep, deep && state.treeSeen);
+}
+
+// --- Drawing --------------------------------------------------------------
+
+// The refused hex dips and shrinks, then settles: the same keyframes as the
+// old CSS animation, sampled by progress.
+function refuseFrame(progress) {
+  const frames = [
+    [0, 0, 1],
+    [0.3, 3, 0.95],
+    [0.65, 0, 1.02],
+    [1, 0, 1],
+  ];
+  for (let step = 1; step < frames.length; step += 1) {
+    const [end, dy, scale] = frames[step];
+    if (progress <= end) {
+      const [begin, fromDy, fromScale] = frames[step - 1];
+      const part = (progress - begin) / (end - begin);
+      return { dy: fromDy + (dy - fromDy) * part, scale: fromScale + (scale - fromScale) * part };
+    }
+  }
+  return { dy: 0, scale: 1 };
+}
+
+function ringStyle(now) {
+  if (!view.flash) return { width: 4, color: "rgba(255, 226, 99, 0.92)" };
+  // Reduced motion keeps a steady, wider ring instead of a pulse.
+  if (reducedMotion.matches) return { width: 7, color: "rgba(255, 196, 60, 0.95)" };
+  const cycle = ((now - view.flash.start) % FLASH_CYCLE_MS) / FLASH_CYCLE_MS;
+  const pulse = Math.sin(Math.PI * cycle);
+  return {
+    width: 4 + 5 * pulse,
+    color: `rgba(255, ${Math.round(226 - 30 * pulse)}, ${Math.round(99 - 39 * pulse)}, 0.94)`,
+  };
+}
+
+function visibleRange() {
+  const topLeft = toWorld({ x: 0, y: 0 });
+  const bottomRight = toWorld({ x: view.width, y: view.height });
+  return {
+    rowMin: Math.max(0, Math.floor((topLeft.y - HEX_RADIUS) / ROW_STEP) - 1),
+    rowMax: Math.min(MAP_HEIGHT - 1, Math.ceil((bottomRight.y + HEX_RADIUS) / ROW_STEP) + 1),
+    columnMin: Math.max(0, Math.floor(topLeft.x / HEX_WIDTH) - 2),
+    columnMax: Math.min(MAP_WIDTH - 1, Math.ceil(bottomRight.x / HEX_WIDTH) + 1),
+  };
+}
+
+function drawTile(context, index, now, lift = 0) {
+  const { x, y } = centerOf(index);
+  const image = tileSprite(index);
+  context.save();
+  context.translate(x, y - lift);
+  if (view.refused?.index === index && !reducedMotion.matches) {
+    const { dy, scale } = refuseFrame((now - view.refused.start) / REFUSE_MS);
+    context.translate(0, dy);
+    context.scale(scale, scale);
+  }
+  context.drawImage(image, -SPRITE_WIDTH / 2, -SPRITE_TOP, SPRITE_WIDTH, SPRITE_HEIGHT);
+  context.restore();
+}
+
+// A reachable hex is lifted above its neighbours with a yellow ring, like the
+// old lifted tile with its box-shadow.
+function drawReachable(context, index, now) {
+  const { x, y } = centerOf(index);
+  const ring = ringStyle(now);
+  context.save();
+  context.translate(x, y - 3);
+  context.lineWidth = ring.width * 2;
+  context.lineJoin = "round";
+  context.strokeStyle = ring.color;
+  context.stroke(FACE_PATH);
+  context.restore();
+  drawTile(context, index, now, 3);
+}
+
+function fillRoundedRect(context, x, y, width, height, radius, color) {
+  context.fillStyle = color;
+  context.beginPath();
+  context.roundRect(x, y, width, height, radius);
+  context.fill();
+}
+
+function drawCompass(context, x, y, radius) {
+  context.save();
+  context.translate(x, y);
+  context.fillStyle = "#fffaf0";
+  context.strokeStyle = "#233743";
+  context.lineWidth = 1.5;
+  context.beginPath();
+  context.arc(0, 0, radius, 0, Math.PI * 2);
+  context.fill();
+  context.stroke();
+  context.lineWidth = 2;
+  context.strokeStyle = "#e0523d";
+  context.beginPath();
+  context.moveTo(0, 0);
+  context.lineTo(0, -radius + 2);
+  context.stroke();
+  context.strokeStyle = "#3b5ba5";
+  context.beginPath();
+  context.moveTo(0, 0);
+  context.lineTo(0, radius - 2);
+  context.stroke();
+  context.restore();
+}
+
+// A small explorer in a safari hat, with a backpack and a compass in hand.
+// The figure faces the way it last walked and hops while walking; the ground
+// shadow stays on the hex so the hop reads as a jump, not a slide.
+function drawExplorerFigure(context, x, y, facing, hop) {
+  context.save();
+  context.translate(x, y + 6);
+  context.fillStyle = "rgba(35, 55, 67, 0.18)";
+  context.beginPath();
+  context.ellipse(0, 18, 13, 4.5, 0, 0, Math.PI * 2);
+  context.fill();
+  context.scale(facing, 1);
+  context.translate(0, -hop);
+  context.lineJoin = "round";
+  context.lineCap = "round";
+
+  fillRoundedRect(context, -15, -7, 10, 16, 4, "#a86d3a"); // backpack
+  fillRoundedRect(context, -8, 6, 6, 10, 3, "#3b5ba5"); // legs
+  fillRoundedRect(context, 2, 6, 6, 10, 3, "#3b5ba5");
+  fillRoundedRect(context, -9, 13, 8, 5, 2.5, "#6b4a2b"); // shoes
+  fillRoundedRect(context, 1, 13, 9, 5, 2.5, "#6b4a2b");
+  fillRoundedRect(context, -10, -8, 20, 17, 6, "#4c9a5f"); // shirt
+
+  context.strokeStyle = "#f6c9a0"; // arm reaching forward
+  context.lineWidth = 5;
+  context.beginPath();
+  context.moveTo(8, -3);
+  context.lineTo(16, 2);
+  context.stroke();
+  drawCompass(context, 18, 4, 4.5);
+
+  context.fillStyle = "#f6c9a0"; // head
+  context.beginPath();
+  context.arc(0, -17, 9, 0, Math.PI * 2);
+  context.fill();
+  context.fillStyle = "#233743"; // eyes
+  context.beginPath();
+  context.arc(2, -18, 1.4, 0, Math.PI * 2);
+  context.arc(6.5, -18, 1.4, 0, Math.PI * 2);
+  context.fill();
+  context.fillStyle = "rgba(238, 136, 70, 0.4)"; // cheek
+  context.beginPath();
+  context.arc(-1, -14, 2.2, 0, Math.PI * 2);
+  context.fill();
+  context.strokeStyle = "#8a4a2b"; // smile
+  context.lineWidth = 1.5;
+  context.beginPath();
+  context.arc(4.5, -14.5, 3, 0.15 * Math.PI, 0.85 * Math.PI);
+  context.stroke();
+
+  context.fillStyle = "#d9b46a"; // hat brim
+  context.beginPath();
+  context.ellipse(0, -23, 14, 4, 0, 0, Math.PI * 2);
+  context.fill();
+  fillRoundedRect(context, -8, -33, 16, 11, 5, "#e5c67f"); // hat crown
+  fillRoundedRect(context, -8, -26, 16, 3, 1, "#e0523d"); // hat band
+  context.restore();
+}
+
+function drawExplorer(context, now) {
+  let { x, y } = centerOf(state.explorer);
+  let hop = 0;
+  if (view.walk) {
+    const progress = Math.min((now - view.walk.start) / WALK_MS, 1);
+    const eased = easeOut(progress);
+    const from = centerOf(view.walk.from);
+    x = from.x + (x - from.x) * eased;
+    y = from.y + (y - from.y) * eased;
+    hop = Math.sin(progress * Math.PI) * 8;
+  }
+  drawExplorerFigure(context, x, y, view.facing, hop);
+}
+
+// The keyboard focus lives on an invisible button, so its ring is painted here.
+function drawFocus(context) {
+  const focused = elements.overlay.querySelector(":focus-visible");
+  if (!focused) return;
+  const { x, y } = centerOf(Number(focused.dataset.index));
+  context.save();
+  context.translate(x, y);
+  context.lineWidth = 3;
+  context.lineJoin = "round";
+  context.strokeStyle = "#307157";
+  context.stroke(FOCUS_PATH);
+  context.restore();
+}
+
+function draw(now) {
+  view.frame = 0;
+  const context = elements.canvas.getContext("2d");
+  let animating = false;
+
+  if (view.cameraTween) {
+    const progress = Math.min((now - view.cameraTween.start) / CAMERA_MS, 1);
+    const eased = easeOut(progress);
+    const { from, to } = view.cameraTween;
+    view.camera = { x: from.x + (to.x - from.x) * eased, y: from.y + (to.y - from.y) * eased };
+    if (progress >= 1) view.cameraTween = null;
+    else animating = true;
+  }
+  if (view.walk && now - view.walk.start >= WALK_MS) view.walk = null;
+  if (view.refused && now - view.refused.start >= REFUSE_MS) view.refused = null;
+  if (view.flash && now - view.flash.start >= FLASH_MS) view.flash = null;
+  if (view.walk || view.refused || view.flash) animating = true;
+
+  context.setTransform(view.dpr, 0, 0, view.dpr, 0, 0);
+  context.clearRect(0, 0, view.width, view.height);
+
+  context.save();
+  context.translate(view.width / 2, view.height / 2);
+  context.scale(view.scale, view.scale);
+  context.translate(-view.camera.x, -view.camera.y);
+
+  const range = visibleRange();
+  for (let row = range.rowMin; row <= range.rowMax; row += 1) {
+    for (let column = range.columnMin; column <= range.columnMax; column += 1) {
+      const index = row * MAP_WIDTH + column;
+      if (!state.revealed.has(index) && !view.fringe.has(index)) continue;
+      if (view.reachable.has(index)) continue;
+      drawTile(context, index, now);
+    }
+  }
+  view.reachable.forEach((index) => drawReachable(context, index, now));
+  drawExplorer(context, now);
+  drawFocus(context);
+  context.restore();
+
+  positionOverlay();
+  if (animating) scheduleDraw();
+}
+
+// --- Panels ---------------------------------------------------------------
 
 function renderEnergy() {
   const steps = stepsPerDay();
@@ -760,14 +1309,13 @@ function goalText(learning) {
 function renderCoach() {
   const learning = COACH_ORDER.indexOf(state.coach) >= COACH_ORDER.indexOf("learn");
   elements.researchPanel.classList.toggle("is-locked", !learning);
-  elements.map.classList.toggle("is-teaching", state.coach === "move");
 
   if (state.opened.has("festival")) return;
   elements.goalText.textContent = goalText(learning);
 }
 
 function render() {
-  elements.map.classList.remove("show-reach");
+  view.flash = null;
   elements.food.textContent = state.food;
   elements.wood.textContent = state.wood;
   elements.idea.textContent = state.idea;
@@ -776,7 +1324,8 @@ function render() {
   elements.treeIdea.textContent = state.idea;
   elements.turn.textContent = state.turn;
   renderEnergy();
-  renderMap();
+  computeReach();
+  syncOverlay();
   renderResearchSlot();
   renderScene();
   renderGoalProgress();
@@ -784,6 +1333,9 @@ function render() {
   if (elements.treeModal.classList.contains("visible")) renderTree();
   elements.endTurn.classList.toggle("is-waiting", state.energy === 0 && !state.finished);
   elements.treeButton.classList.toggle("is-calling", pointedCard !== null);
+  // While the first step is being taught, the reachable ring keeps calling.
+  if (state.coach === "move") startFlash();
+  scheduleDraw();
 }
 
 function endTurn() {
@@ -957,14 +1509,18 @@ function startGame(difficulty) {
   state.energy = stepsPerDay();
   pointedCard = null;
   litLinks = [];
+  view.walk = null;
+  view.refused = null;
+  view.facing = 1;
   revealAround(CITY_INDEX);
   setMessage("start");
   hideModals();
   render();
+  moveCamera(centerOf(CITY_INDEX), false);
   saveGame();
   // The dialog that had the focus is gone now, so the keyboard is handed the
   // explorer instead of falling back to the top of the page.
-  elements.map.querySelector(`[data-index="${state.explorer}"]`)?.focus();
+  focusExplorer();
 }
 
 // A dialog covers the whole screen, so the board behind it must stop being
@@ -1005,6 +1561,38 @@ function askDifficulty() {
   elements.startCancel.hidden = state.finished || state.tiles.length === 0;
   showModal(elements.startModal);
 }
+
+function hexAtEvent(event) {
+  const rect = elements.canvas.getBoundingClientRect();
+  return hexAt(event.clientX - rect.left, event.clientY - rect.top);
+}
+
+// A tap counts only when the finger goes down and up on the same hex, so a
+// swipe across the map does not move the explorer. The reachable hexes are
+// covered by overlay buttons and never reach the canvas.
+let pressedIndex = null;
+elements.canvas.addEventListener("pointerdown", (event) => {
+  pressedIndex = hexAtEvent(event);
+});
+elements.canvas.addEventListener("pointerup", (event) => {
+  const index = hexAtEvent(event);
+  if (index !== null && index === pressedIndex) moveExplorer(index);
+  pressedIndex = null;
+});
+elements.canvas.addEventListener("pointercancel", () => {
+  pressedIndex = null;
+});
+// The whole map card zooms, including the overlay buttons that cover the
+// reachable hexes. A wheel over the map never scrolls the page.
+elements.map.addEventListener("wheel", (event) => {
+  if (state.tiles.length === 0) return;
+  event.preventDefault();
+  const sensitivity = event.ctrlKey ? PINCH_SENSITIVITY : WHEEL_SENSITIVITY;
+  setScale(view.scale * Math.exp(-wheelPixels(event) * sensitivity));
+}, { passive: false });
+elements.overlay.addEventListener("focusin", scheduleDraw);
+elements.overlay.addEventListener("focusout", scheduleDraw);
+new ResizeObserver(resizeCanvas).observe(elements.map);
 
 elements.endTurn.addEventListener("click", endTurn);
 elements.treeButton.addEventListener("click", openTree);

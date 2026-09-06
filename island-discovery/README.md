@@ -60,6 +60,22 @@ Garden, workshop and library also show up in the city picture, and the boat with
 grows through the session. The goal card at the top of the island screen repeats the chosen
 discovery and counts the three friendly places the festival waits for.
 
+## The map
+
+The island is a 15 x 10 grid of pointy-top hexes in odd-r offset layout, so every place has six
+neighbours instead of four. Only the explored hexes and the "?" ring around them are drawn; the rest
+of the island stays in the mist.
+
+The map is drawn on a `<canvas>`, and the camera follows the explorer. Over the canvas sit invisible
+buttons for the explorer and the reachable hexes: they carry the keyboard, the focus and the
+accessible names, while the canvas paints everything, including the focus ring. A frame is requested
+only when something changes, and the explorer walk, the camera travel and the refused-hex bounce are
+skipped under `prefers-reduced-motion`.
+
+The mouse wheel, a two-finger scroll and a trackpad pinch zoom the map between 0.6x and 2x around the
+explorer, who stays where they are on the screen. The explorer is a drawn figure in a safari hat with
+a backpack and a compass; it faces the way it last walked and hops while walking.
+
 ## The river
 
 Column 10 of the map is a river of ten water cells with no gap to walk around. Until the boat is
