@@ -12,7 +12,6 @@ next word.
 - every level is open from the menu, while the chapters inside a level unlock one after another;
 - a comprehension check through a choice of one picture out of three, with the captions hidden until
   the answer is correct;
-- optional speech recognition through the microphone;
 - splitting a word into parts through a separate button, a tap on the word card, or automatically
   after a second mistake;
 - the option to set a word aside and come back to it later in the same chapter;
@@ -20,10 +19,6 @@ next word.
 - automatic saving of the progress and the statistics;
 - a panel for an adult with the progress and the settings;
 - adaptation for a computer, a tablet and a phone.
-
-The microphone is used only as an extra effect. Even if the browser does not support speech
-recognition or access is denied, every chapter can be completed by reading out loud and picking a
-picture.
 
 ## Running
 
@@ -40,15 +35,13 @@ http://127.0.0.1:4173/word-quest/
 ```
 
 A local server is needed because the interface strings and the word packs are loaded through `fetch`,
-which does not work over `file://`. It also makes the microphone behave more predictably. For speech
-recognition it is better to use an up-to-date version of Chrome or Edge and to allow the site access
-to the microphone.
+which does not work over `file://`.
 
 ## The game loop
 
 1. The child picks the reading language, then a level by word length, then a chapter.
 2. The chapter screen shows the situation and a large word.
-3. The child reads the word themselves or presses the microphone button.
+3. The child reads the word themselves.
 4. If needed, opens the split into parts, or sets the word aside for later.
 5. Picks the matching picture; the caption appears only on the correct answer.
 6. After a correct answer, sees the result inside the story and moves on.
@@ -60,8 +53,8 @@ The progress is saved to `localStorage` under the key `livingWordsProgressV2`. I
 
 - the chosen language;
 - the number of words solved in each chapter of each language and level;
-- the number of microphone attempts, opened hints and wrong choices;
-- the microphone and sound settings.
+- the number of opened hints and wrong choices;
+- the sound setting.
 
 The data can be reset from the panel for an adult, which erases the progress for both languages.
 

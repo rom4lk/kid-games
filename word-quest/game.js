@@ -12,20 +12,14 @@ const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
 
 const SPEECH_LOCALES = { en: "en-US", ru: "ru-RU" };
 
-// A browser can accept start() and then never open the microphone: no start, no
-// error, no end. Without this wait the button would light up and say nothing.
-const RECOGNITION_START_TIMEOUT = 3000;
-
 const DEFAULT_STATE = {
   language: null,
   completed: {},
   stats: {
-    voiceTries: 0,
     helpUses: 0,
     wrongChoices: 0,
   },
   settings: {
-    microphone: true,
     sound: true,
   },
 };
@@ -51,17 +45,10 @@ let currentPack;
 let currentLetters = LEVELS.en[0];
 let currentChapterIndex = 0;
 let currentTaskIndex = 0;
-// Bumped on every rendered task, so an await started on an older task or on a
-// screen that has since been left can notice and bail out.
-let taskGeneration = 0;
 let currentAttemptCount = 0;
 let currentHintUsed = false;
 let currentTaskSolved = false;
 let solvedTaskIndexes = new Set();
-let recognition;
-let recognitionStartTimer;
-let recognitionAnswered = false;
-let microphoneRequested = false;
 let speakTimer;
 
 function readState() {
@@ -73,8 +60,13 @@ function readState() {
       ...structuredClone(DEFAULT_STATE),
       ...saved,
       completed: { ...DEFAULT_STATE.completed, ...saved.completed },
-      stats: { ...DEFAULT_STATE.stats, ...saved.stats },
-      settings: { ...DEFAULT_STATE.settings, ...saved.settings },
+      stats: {
+        helpUses: saved.stats?.helpUses ?? DEFAULT_STATE.stats.helpUses,
+        wrongChoices: saved.stats?.wrongChoices ?? DEFAULT_STATE.stats.wrongChoices,
+      },
+      settings: {
+        sound: saved.settings?.sound ?? DEFAULT_STATE.settings.sound,
+      },
     };
   } catch {
     return structuredClone(DEFAULT_STATE);
@@ -242,7 +234,6 @@ function initializeStaticContent() {
   setText("backLabel", ui.play.back);
   setText("readingInstruction", ui.play.readInstruction);
   setText("tapHint", ui.play.tapHint);
-  setText("microphoneLabel", ui.play.microphone);
   setText("hintLabel", ui.play.hint);
   setText("listenLabel", ui.play.listen);
   setText("choiceInstruction", ui.play.choiceInstruction);
@@ -251,10 +242,7 @@ function initializeStaticContent() {
   setText("parentTitle", ui.parent.title);
   setText("parentLead", ui.parent.lead);
   setText("readWordsLabel", ui.parent.readWords);
-  setText("voiceTriesLabel", ui.parent.voiceTries);
   setText("helpUsesLabel", ui.parent.helpUses);
-  setText("microphoneSettingLabel", ui.parent.microphoneLabel);
-  setText("microphoneSettingHelp", ui.parent.microphoneHelp);
   setText("soundSettingLabel", ui.parent.soundLabel);
   setText("soundSettingHelp", ui.parent.soundHelp);
   setText("resetButton", ui.parent.reset);
@@ -280,11 +268,9 @@ function bindEvents() {
   elements.soundButton.addEventListener("click", toggleSound);
   elements.wordCard.addEventListener("click", revealHint);
   elements.hintButton.addEventListener("click", revealHint);
-  elements.microphoneButton.addEventListener("click", startRecognition);
   elements.listenButton.addEventListener("click", speakCurrentWord);
   elements.nextButton.addEventListener("click", advanceTask);
   elements.chapterButton.addEventListener("click", leaveChapterCelebration);
-  elements.microphoneSetting.addEventListener("change", updateMicrophoneSetting);
   elements.soundSetting.addEventListener("change", updateSoundSetting);
   elements.resetButton.addEventListener("click", resetProgress);
   elements.resetDialog.addEventListener("close", applyReset);
@@ -362,7 +348,6 @@ function renderHeader() {
 }
 
 function showMenu() {
-  stopRecognition();
   renderHeader();
   renderMenu();
   showScreen(elements.menuScreen);
@@ -411,7 +396,6 @@ async function openLevel(letters) {
 }
 
 async function showChapters(letters) {
-  stopRecognition();
   currentLetters = letters;
   currentPack = await getPack(activeLanguage, letters);
   renderHeader();
@@ -507,17 +491,15 @@ function skipTask() {
   if (nextIndex === -1) return;
   currentTaskIndex = nextIndex;
   renderTask();
-  setText("recognitionStatus", ui.play.skipped);
+  setText("feedbackStatus", ui.play.skipped);
   playTone("hint");
   scrollToTop();
 }
 
 function renderTask() {
-  stopRecognition();
   stopSpeaking();
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
-  taskGeneration += 1;
   currentAttemptCount = 0;
   currentHintUsed = false;
   currentTaskSolved = false;
@@ -529,7 +511,7 @@ function renderTask() {
   setText("storyPrompt", task.prompt);
   setText("wordMain", task.word);
   setText("wordSyllables", task.syllables);
-  setText("recognitionStatus", "");
+  setText("feedbackStatus", "");
   setText("successTitle", ui.play.successTitle);
   setText("successText", task.success);
   setText("missionLabel", fillTemplate(ui.play.mission, {
@@ -563,7 +545,6 @@ function renderTask() {
 
   const isLastTask = currentTaskIndex === chapter.tasks.length - 1;
   setText("nextButton", isLastTask ? ui.play.finish : ui.play.next);
-  configureMicrophoneButton();
   renderHeader();
 }
 
@@ -591,7 +572,7 @@ function revealHint() {
   const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
   elements.wordCard.classList.add("show-syllables");
   elements.wordSyllables.hidden = false;
-  setText("recognitionStatus", fillTemplate(ui.play.hintUsed, {
+  setText("feedbackStatus", fillTemplate(ui.play.hintUsed, {
     syllables: task.syllables,
   }));
 
@@ -619,10 +600,10 @@ function handleChoice(button, choice) {
     window.setTimeout(() => button.classList.remove("wrong"), 450);
 
     if (currentAttemptCount === 1) {
-      setText("recognitionStatus", ui.play.wrongFirst);
+      setText("feedbackStatus", ui.play.wrongFirst);
     } else {
       revealHint();
-      setText("recognitionStatus", fillTemplate(ui.play.wrongAgain, {
+      setText("feedbackStatus", fillTemplate(ui.play.wrongAgain, {
         syllables: task.syllables,
       }));
     }
@@ -633,7 +614,6 @@ function handleChoice(button, choice) {
 
   currentTaskSolved = true;
   elements.skipButton.disabled = true;
-  stopRecognition();
   button.classList.add("correct");
   // Only now may the caption appear: in the DOM and in the accessible name.
   const caption = document.createElement("span");
@@ -657,7 +637,7 @@ function handleChoice(button, choice) {
   );
 
   setText("storyPrompt", task.success);
-  setText("recognitionStatus", "");
+  setText("feedbackStatus", "");
   elements.sceneCharacter.classList.add("celebrate");
   elements.successPanel.hidden = false;
   elements.listenButton.hidden = !canSpeak();
@@ -708,32 +688,6 @@ function leaveChapterCelebration() {
   startChapter(currentChapterIndex + 1);
 }
 
-// Brave ships the recognition API, but its speech service is switched off on
-// purpose, so every session dies right away with a "network" error.
-function speechRecognitionAvailable() {
-  return (
-    Boolean(window.SpeechRecognition || window.webkitSpeechRecognition)
-    && window.isSecureContext
-    && !navigator.brave
-  );
-}
-
-function configureMicrophoneButton() {
-  const supported = speechRecognitionAvailable();
-  const enabled = state.settings.microphone;
-  elements.microphoneButton.disabled = !enabled || !supported;
-  elements.microphoneButton.classList.remove("active");
-  setText("microphoneLabel", enabled ? ui.play.microphone : ui.play.microphoneDisabled);
-
-  // A disabled button cannot be hovered on a tablet, focused, or read by a
-  // screen reader, so the explanation is a real line of text under the actions.
-  const showNote = enabled && !supported;
-  if (showNote) {
-    setText("microphoneNote", ui.play.microphoneUnsupported);
-  }
-  elements.microphoneNote.hidden = !showNote;
-}
-
 function speechLocale() {
   return SPEECH_LOCALES[activeLanguage] || SPEECH_LOCALES.en;
 }
@@ -764,207 +718,11 @@ function stopSpeaking() {
   }
 }
 
-async function startRecognition() {
-  if (currentTaskSolved || !state.settings.microphone) return;
-
-  // A second press stops listening. Starting again while the previous session is
-  // still closing makes the browser drop the new one without a single event.
-  if (recognition) {
-    stopRecognition();
-    setText("recognitionStatus", "");
-    return;
-  }
-
-  if (!speechRecognitionAvailable()) {
-    setText("recognitionStatus", ui.play.microphoneUnsupported);
-    return;
-  }
-  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  // The request for access is still waiting for an answer.
-  if (microphoneRequested) return;
-
-  const task = currentTaskOf();
-  const generation = taskGeneration;
-  showListeningButton();
-  microphoneRequested = true;
-  const allowed = await requestMicrophoneAccess();
-  microphoneRequested = false;
-
-  if (!allowed) {
-    resetMicrophoneButton();
-    setText("recognitionStatus", ui.play.microphonePermission);
-    return;
-  }
-
-  // Asking for access takes as long as the child needs to answer the browser;
-  // by then the play screen can be left entirely or show a different word.
-  if (
-    recognition
-    || currentTaskSolved
-    || elements.playScreen.hidden
-    || generation !== taskGeneration
-  ) {
-    resetMicrophoneButton();
-    return;
-  }
-
-  const listener = new Recognition();
-  recognition = listener;
-  recognitionAnswered = false;
-  listener.lang = speechLocale();
-  listener.interimResults = false;
-  listener.maxAlternatives = 3;
-
-  listener.onstart = () => {
-    clearRecognitionTimer();
-    showListeningButton();
-    setText("recognitionStatus", ui.play.microphoneListening);
-    state.stats.voiceTries += 1;
-    saveState();
-  };
-
-  listener.onresult = (event) => {
-    recognitionAnswered = true;
-    const alternatives = [...event.results[0]].map((result) => result.transcript.trim());
-    const target = normalizeSpeech(task.word);
-    const matched = alternatives.some((transcript) => {
-      const normalized = normalizeSpeech(transcript);
-      return normalized === target || normalized.split(" ").includes(target);
-    });
-    const transcript = alternatives[0] || "";
-
-    if (matched) {
-      setText("recognitionStatus", fillTemplate(ui.play.heardSuccess, {
-        word: task.word.toLocaleLowerCase(speechLocale()),
-      }));
-      playTone("voice");
-    } else {
-      setText("recognitionStatus", fillTemplate(ui.play.heardMismatch, {
-        transcript,
-      }));
-    }
-  };
-
-  listener.onnomatch = () => {
-    recognitionAnswered = true;
-    setText("recognitionStatus", ui.play.microphoneError);
-  };
-
-  listener.onerror = (event) => {
-    recognitionAnswered = true;
-    // "aborted" only means the game itself stopped listening.
-    if (event.error === "aborted") return;
-
-    const permissionErrors = new Set(["not-allowed", "service-not-allowed", "audio-capture"]);
-    let message = ui.play.microphoneError;
-    if (permissionErrors.has(event.error)) {
-      message = ui.play.microphonePermission;
-    } else if (event.error === "network" || event.error === "language-not-supported") {
-      // The browser has no speech service behind the API.
-      message = ui.play.microphoneUnsupported;
-    }
-    setText("recognitionStatus", message);
-  };
-
-  listener.onend = () => {
-    clearRecognitionTimer();
-    recognition = undefined;
-    resetMicrophoneButton();
-
-    // A session that ends with no result and no error must still answer the press.
-    if (!recognitionAnswered) {
-      setText("recognitionStatus", ui.play.microphoneError);
-    }
-  };
-
-  recognitionStartTimer = window.setTimeout(() => {
-    recognitionStartTimer = undefined;
-    if (recognition !== listener) return;
-    stopRecognition();
-    setText("recognitionStatus", ui.play.microphoneUnsupported);
-  }, RECOGNITION_START_TIMEOUT);
-
-  try {
-    listener.start();
-  } catch {
-    stopRecognition();
-    setText("recognitionStatus", ui.play.microphoneError);
-  }
-}
-
-// The speech prompt of the browser is easy to miss, and a prompt that stays
-// unanswered kills the session silently. A plain request for the microphone gives
-// a clear answer and, once it is granted, speech recognition starts right away.
-async function requestMicrophoneAccess() {
-  if (!navigator.mediaDevices?.getUserMedia) return true;
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    stream.getTracks().forEach((track) => track.stop());
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function currentTaskOf() {
-  return currentPack?.chapters[currentChapterIndex]?.tasks[currentTaskIndex];
-}
-
-function showListeningButton() {
-  elements.microphoneButton.classList.add("active");
-  setText("microphoneLabel", ui.play.microphoneListening);
-}
-
-function resetMicrophoneButton() {
-  elements.microphoneButton.classList.remove("active");
-
-  if (ui) {
-    setText("microphoneLabel", ui.play.microphone);
-  }
-}
-
-function clearRecognitionTimer() {
-  if (recognitionStartTimer === undefined) return;
-  window.clearTimeout(recognitionStartTimer);
-  recognitionStartTimer = undefined;
-}
-
-function stopRecognition() {
-  clearRecognitionTimer();
-  resetMicrophoneButton();
-  if (!recognition) return;
-
-  recognition.onend = null;
-  recognition.abort();
-  recognition = undefined;
-}
-
-function normalizeSpeech(value) {
-  return value
-    .toLocaleLowerCase(speechLocale())
-    .normalize("NFKD")
-    .replace(/\p{M}/gu, "")
-    .replace(/[^\p{L}\s-]/gu, "")
-    .replace(/-/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function openParentDialog() {
   setText("readWordsValue", getLanguageWordCount());
-  setText("voiceTriesValue", state.stats.voiceTries);
   setText("helpUsesValue", state.stats.helpUses);
-  elements.microphoneSetting.checked = state.settings.microphone;
   elements.soundSetting.checked = state.settings.sound;
   elements.parentDialog.showModal();
-}
-
-function updateMicrophoneSetting() {
-  state.settings.microphone = elements.microphoneSetting.checked;
-  saveState();
-  configureMicrophoneButton();
 }
 
 function updateSoundSetting() {
@@ -1002,7 +760,6 @@ const TONES = {
   hint: { frequency: 520, duration: 0.12 },
   wrong: { frequency: 190, duration: 0.12, wave: "triangle" },
   success: { frequency: 660, duration: 0.28, bendTo: 990 },
-  voice: { frequency: 780, duration: 0.2 },
   chapter: { frequency: 520, duration: 0.42, bendTo: 780 },
 };
 
@@ -1023,7 +780,6 @@ function resetProgress() {
 
 async function applyReset() {
   if (elements.resetDialog.returnValue !== "confirm") return;
-  stopRecognition();
   try {
     localStorage.removeItem(STORAGE_KEY);
   } catch {

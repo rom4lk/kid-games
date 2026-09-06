@@ -1002,7 +1002,6 @@ h1 {
   margin: 18px 0 8px;
 }
 
-.microphone-button,
 .hint-button,
 .skip-button {
   display: inline-flex;
@@ -1072,56 +1071,7 @@ h1 {
   gap: 10px;
 }
 
-.microphone-button.active {
-  border-color: rgba(255, 143, 112, 0.7);
-  background: rgba(255, 143, 112, 0.15);
-}
-
-.microphone-button:disabled {
-  cursor: not-allowed;
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.microphone-button:disabled > * {
-  opacity: 0.48;
-}
-
-/* Why the microphone is off: real text, reachable on touch and by a reader. */
-.microphone-note {
-  max-width: 520px;
-  margin: 0 auto 10px;
-  color: var(--muted);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.35;
-  text-align: center;
-}
-
-.microphone-icon {
-  position: relative;
-  width: 14px;
-  height: 20px;
-  border: 2px solid currentColor;
-  border-radius: 9px;
-  color: var(--coral);
-  font-size: 0;
-}
-
-.microphone-icon::after {
-  position: absolute;
-  bottom: -7px;
-  left: 50%;
-  width: 9px;
-  height: 6px;
-  border-bottom: 2px solid currentColor;
-  border-left: 2px solid currentColor;
-  border-radius: 0 0 0 7px;
-  content: "";
-  transform: translateX(-50%) rotate(-45deg);
-}
-
-.recognition-status {
+.feedback-status {
   min-height: 24px;
   margin: 0 auto 12px;
   color: var(--mint);
@@ -1340,7 +1290,7 @@ h1 {
 .stats-grid {
   display: grid;
   margin: 20px 0;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 9px;
 }
 
@@ -1706,8 +1656,8 @@ h1 {
     grid-template-columns: 1fr 1fr;
   }
 
-  .microphone-button,
-  .hint-button {
+  .hint-button,
+  .skip-button {
     padding: 0 10px;
     font-size: 0.86rem;
   }
