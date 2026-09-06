@@ -164,10 +164,6 @@
           </button>
 
           <div class="reading-actions">
-            <button class="microphone-button" id="microphoneButton" type="button">
-              <span class="microphone-icon" aria-hidden="true">●</span>
-              <span id="microphoneLabel"></span>
-            </button>
             <button class="hint-button" id="hintButton" type="button">
               <span class="syllable-mark" aria-hidden="true">ОО<i></i>ОО</span>
               <span id="hintLabel"></span>
@@ -178,8 +174,7 @@
             </button>
           </div>
 
-          <p class="microphone-note" id="microphoneNote" hidden></p>
-          <p class="recognition-status" id="recognitionStatus" aria-live="polite"></p>
+          <p class="feedback-status" id="feedbackStatus" aria-live="polite"></p>
 
           <div class="choice-area">
             <p id="choiceInstruction"></p>
@@ -229,19 +224,7 @@
 
         <div class="stats-grid">
           <div><span id="readWordsLabel"></span><strong id="readWordsValue">0</strong></div>
-          <div><span id="voiceTriesLabel"></span><strong id="voiceTriesValue">0</strong></div>
           <div><span id="helpUsesLabel"></span><strong id="helpUsesValue">0</strong></div>
-        </div>
-
-        <div class="setting-row">
-          <div>
-            <strong id="microphoneSettingLabel"></strong>
-            <p id="microphoneSettingHelp"></p>
-          </div>
-          <label class="switch-control">
-            <input id="microphoneSetting" type="checkbox" />
-            <span aria-hidden="true"></span>
-          </label>
         </div>
 
         <div class="setting-row">
