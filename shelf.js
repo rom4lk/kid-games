@@ -3,7 +3,7 @@
   // preferences, not progress, so a reset keeps them.
   const PROGRESS_KEYS = {
     "word-quest": ["livingWordsProgressV2"],
-    "island-discovery": ["islandDiscoveryV1"],
+    "island-discovery": ["islandDiscoveryV1", "islandDiscoveryV2"],
     "forest-light": ["forestLightProgressV1"],
     "robo-stories": ["roboStoriesProgressV1", "roboStoriesSurveyV1"],
     "garden-quest": ["gardenQuestUnlockedV1", "gardenQuestBestScoresV3"],

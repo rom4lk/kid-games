@@ -315,6 +315,26 @@ h1 {
 .map-tile.village { background: #e8c282; }
 .map-tile.city { background: #f4d268; }
 
+.map-tile.water { background: #4f9fd0; }
+
+/* Water without a boat is not broken, it is waiting: it lies flat, and once
+   the tree is known it shows what it is waiting for. */
+.map-tile.deep {
+  cursor: default;
+  filter: saturate(0.9) brightness(0.95);
+}
+
+/* Until the boat exists on the path of discoveries there is nothing to say
+   about the water, so it is only deep. After that every cell carries its sign. */
+.map-tile.deep.wants-boat::after {
+  content: "🛶";
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  font-size: 11px;
+}
+
+
 .map-tile.collected {
   filter: saturate(0.7);
 }
@@ -362,9 +382,380 @@ h1 {
   50% { box-shadow: 0 0 0 7px rgba(255, 196, 60, 0.95); }
 }
 
-.building-list.is-locked {
+/* The chosen discovery is the one thing the city panel asks about. */
+.research-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.research-panel.is-locked {
   display: none;
 }
+
+.research-invite {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  border: 3px dashed #d9cfa9;
+  border-radius: 18px;
+  background: #fffdf3;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.research-invite strong {
+  font-size: 20px;
+}
+
+.research-invite-icon {
+  font-size: 34px;
+}
+
+.tree-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--green-dark);
+  box-shadow: 0 6px 0 #235741;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.tree-button > span:first-child {
+  font-size: 24px;
+}
+
+.tree-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #235741;
+}
+
+.tree-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #235741;
+}
+
+/* The island asked for a discovery, so the way into the tree calls back. */
+.tree-button.is-calling {
+  animation: glow 1.7s ease-in-out infinite;
+}
+
+/* The tree needs more room than the dialogs that only ask one question. */
+.modal-card.tree-card {
+  width: min(1000px, 100%);
+  max-height: calc(100vh - 44px);
+  padding: 18px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.tree-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.tree-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+.tree-back {
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border: 3px solid #b9cdb0;
+  border-radius: 18px;
+  background: white;
+  color: var(--green-dark);
+  cursor: pointer;
+  font-size: 27px;
+  font-weight: 900;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr 38px 1fr 38px 1fr;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.tech-column-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 14px;
+  background: #eef5db;
+  color: var(--green-dark);
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.tech-column-icon {
+  font-size: 23px;
+}
+
+/* An arrow is a shape, not a colour: the head fills in when the road is open. */
+.tech-arrow {
+  display: grid;
+  place-items: center;
+  color: #c3cdbc;
+  font-size: 25px;
+}
+
+.tech-arrow.is-open {
+  color: var(--green);
+}
+
+.tech-arrow.is-lit {
+  color: var(--orange);
+  animation: arrow-lit 0.7s ease-in-out 3;
+}
+
+@keyframes arrow-lit {
+  50% { transform: translateX(5px); }
+}
+
+.tech-card {
+  display: grid;
+  grid-template-columns: 52px 1fr 26px;
+  align-items: start;
+  gap: 10px;
+  padding: 11px 11px 12px;
+  border: 3px solid #e5dec4;
+  border-radius: 18px;
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+.tech-card:hover {
+  border-color: var(--yellow);
+  transform: translateY(-2px);
+}
+
+.tech-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 15px;
+  background: #f4f0e2;
+  font-size: 29px;
+}
+
+.tech-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.tech-copy strong {
+  font-size: 20px;
+}
+
+.tech-copy small {
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.tech-mark {
+  font-size: 22px;
+  text-align: right;
+}
+
+/* An open card is finished: a check, a light plate, no price left to read. */
+.tech-card.is-open {
+  border-color: #83be82;
+  background: #eef8df;
+}
+
+.tech-card.is-open .tech-mark {
+  color: var(--green);
+  font-weight: 900;
+}
+
+/* Everything is there for the taking, so a ready card sparkles. */
+.tech-card.is-ready {
+  border-color: var(--orange);
+  background: #fff3e6;
+  animation: glow 1.7s ease-in-out infinite;
+}
+
+/* The chosen card wears the same balloon as the goal at the top of the page. */
+.tech-card.is-goal {
+  border-color: var(--green-dark);
+  border-style: solid;
+  background: #f2faf1;
+  box-shadow: 0 0 0 3px rgba(48, 113, 87, 0.22);
+}
+
+/* A locked card is a promise, not a wall: dim, with a lock and its parents. */
+.tech-card.is-locked {
+  border-style: dashed;
+  border-color: #cdd3c6;
+  background: #f7f7f2;
+  opacity: 0.72;
+}
+
+.tech-card.is-locked .tech-icon {
+  filter: grayscale(0.85);
+}
+
+.tech-card.is-pointed {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(238, 136, 70, 0.4);
+}
+
+.tech-parents {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.parent-chip {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 2px dashed #b6bcae;
+  border-radius: 50%;
+  background: white;
+  font-size: 15px;
+}
+
+.parent-chip.done {
+  position: relative;
+  border-style: solid;
+  border-color: var(--green);
+  background: #e8f6df;
+}
+
+.parent-chip.done::after {
+  content: "✓";
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* The price is counted, not read: one picture per gift, filled as it arrives. */
+.tech-cost {
+  display: grid;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.cost-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cost-chip {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 2px dashed #c2c8ba;
+  border-radius: 50%;
+  background: #f6f6f1;
+  filter: grayscale(0.9);
+  font-size: 15px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease, filter 0.2s ease, background 0.2s ease;
+}
+
+.cost-chip.filled {
+  border-style: solid;
+  border-color: #d7b563;
+  background: #fff3cd;
+  filter: none;
+  opacity: 1;
+}
+
+/* On the island panel the chosen card is the headline, so it grows. */
+.tech-card.is-slot {
+  grid-template-columns: 60px 1fr 26px;
+  border-color: var(--green-dark);
+}
+
+.tech-card.is-slot .tech-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 34px;
+}
+
+/* The three places the festival waits for, as pictures instead of a score. */
+.goal-progress {
+  display: flex;
+  gap: 5px;
+  padding: 6px 9px;
+}
+
+.goal-pill {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 16px;
+  opacity: 0.65;
+}
+
+.goal-pill.done {
+  position: relative;
+  border-style: solid;
+  border-color: white;
+  background: white;
+  opacity: 1;
+}
+
+.goal-pill.done::after {
+  content: "✓";
+  position: absolute;
+  right: -3px;
+  bottom: -5px;
+  color: var(--green-dark);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+/* Every discovery leaves something behind in the city picture. */
+.scene-item {
+  position: absolute;
+  bottom: 3px;
+  font-size: 21px;
+}
+
+.scene-garden { left: 46px; }
+.scene-workshop { right: 58px; }
+.scene-library { left: 68px; bottom: 25px; font-size: 18px; }
+.scene-boat { right: 12px; bottom: 24px; }
+
 
 .difficulty-picker {
   display: grid;
@@ -569,144 +960,6 @@ h1 {
   font-weight: 900;
 }
 
-.building-list {
-  display: grid;
-  gap: 8px;
-}
-
-.building-card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 49px 1fr 28px;
-  width: 100%;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
-  border: 2px solid #e5dec4;
-  border-radius: 16px;
-  background: white;
-  color: var(--ink);
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
-}
-
-/* The grid display above outranks the browser default for [hidden], so the
-   festival card has to be hidden explicitly until it is unlocked. */
-.building-card[hidden] {
-  display: none;
-}
-
-.building-card:hover:not(:disabled) {
-  border-color: var(--yellow);
-  transform: translateX(-3px);
-}
-
-.building-card:disabled {
-  cursor: default;
-  opacity: 0.54;
-}
-
-.building-card.built {
-  border-color: #83be82;
-  background: #eef8df;
-  opacity: 1;
-}
-
-/* Missing gifts are shown, not hidden: the card still answers a tap. */
-.building-card.unaffordable {
-  border-style: dashed;
-  border-color: var(--orange);
-}
-
-.building-icon {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border-radius: 14px;
-  font-size: 27px;
-}
-
-.garden-icon { background: #e5ef9d; }
-.workshop-icon { background: #eed3ad; }
-.library-icon { background: #d9d3ed; }
-.festival-icon { background: #ffd7bc; }
-
-.building-copy {
-  display: grid;
-  gap: 2px;
-}
-
-.building-copy strong {
-  font-size: 20px;
-}
-
-.building-copy small {
-  color: var(--muted);
-  font-size: 20px;
-  line-height: 1.25;
-}
-
-.cost {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 3px;
-}
-
-.cost b {
-  position: relative;
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: #f4f0e2;
-  font-size: 20px;
-}
-
-/* The missing pill is marked by shape and a badge, not by color alone. */
-.cost b.short {
-  border: 2px dashed var(--orange);
-}
-
-.cost b.short::after {
-  content: "!";
-  position: absolute;
-  top: -7px;
-  right: -5px;
-  display: grid;
-  width: 15px;
-  height: 15px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--orange);
-  color: white;
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.build-check {
-  display: none;
-  color: var(--green);
-  font-size: 24px;
-  font-weight: 900;
-}
-
-.building-card.built .build-check {
-  display: block;
-}
-
-.building-card.built .building-copy small,
-.building-card.built .cost {
-  display: none;
-}
-
-.festival-card.ready {
-  border-color: var(--orange);
-  background: #fff0df;
-  opacity: 1;
-  animation: glow 1.7s ease-in-out infinite;
-}
-
 .footer-note {
   display: flex;
   justify-content: center;
@@ -859,9 +1112,25 @@ h1 {
   .city-scene {
     display: none;
   }
+}
 
-  .building-list {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 900px) {
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-arrow {
+    display: none;
+  }
+
+  /* Grid places every card by hand, so the flow has to be restored by hand. */
+  .tech-column-head,
+  .tech-card {
+    grid-area: auto !important;
+  }
+
+  .tree-head h2 {
+    font-size: 22px;
   }
 }
 
@@ -948,19 +1217,19 @@ h1 {
     font-size: 8px;
   }
 
-  .building-list {
-    grid-template-columns: 1fr;
+  .tech-card {
+    grid-template-columns: 44px 1fr 24px;
+    padding: 8px 9px;
   }
 
-  .building-card {
-    grid-template-columns: 43px 1fr 24px;
-    padding: 7px 9px;
+  .tech-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
   }
 
-  .building-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 23px;
+  .tree-card {
+    padding: 13px;
   }
 
   .footer-note {
@@ -1002,10 +1271,16 @@ h1 {
     box-shadow: 0 0 0 5px rgba(255, 196, 60, 0.95);
   }
 
-  /* Two calls for attention keep calling, without the pulse and the hop. */
-  .festival-card.ready {
+  /* Three calls for attention keep calling, without the pulse and the hop. */
+  .tech-card.is-ready,
+  .tree-button.is-calling {
     animation: none;
     box-shadow: 0 0 0 5px rgba(238, 136, 70, 0.5);
+  }
+
+  /* A lit road keeps its colour and drops the travelling arrows. */
+  .tech-arrow.is-lit {
+    animation: none;
   }
 
   .end-turn-button.is-waiting {
@@ -1025,7 +1300,12 @@ h1 {
     transform: none;
   }
 
-  .building-card:hover:not(:disabled) {
+  .tech-card:hover {
+    transform: none;
+  }
+
+  .tree-button:hover,
+  .tree-button:active {
     transform: none;
   }
 

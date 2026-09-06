@@ -101,56 +101,28 @@
             <span class="castle">🏰</span>
             <span class="tree">🌳</span>
             <span class="flowers">🌷🌼</span>
+            <span class="scene-item scene-garden" data-scene="garden" hidden>🌻</span>
+            <span class="scene-item scene-workshop" data-scene="workshop" hidden>🛠️</span>
+            <span class="scene-item scene-library" data-scene="library" hidden>📚</span>
+            <span class="scene-item scene-boat" data-scene="boat" hidden>🛶</span>
           </div>
 
           <div class="build-heading">
-            <span>WHAT SHALL WE BUILD?</span>
+            <span>WHAT ARE WE LEARNING?</span>
             <span class="heading-actions">
               <button id="sound-button" class="help-button" type="button" aria-label="Turn sound off">♪</button>
               <button id="restart-button-top" class="help-button" type="button" aria-label="Start over">↻</button>
             </span>
           </div>
 
-          <div class="building-list">
-            <button class="building-card" type="button" data-building="garden" data-food="0" data-wood="4" data-idea="0">
-              <span class="building-icon garden-icon" aria-hidden="true">🌻</span>
-              <span class="building-copy">
-                <strong>Garden</strong>
-                <small>Gives one apple every day</small>
-                <span class="cost"><b>🪵 4</b></span>
-              </span>
-              <span class="build-check" aria-hidden="true">✓</span>
-            </button>
-
-            <button class="building-card" type="button" data-building="workshop" data-food="4" data-wood="0" data-idea="0">
-              <span class="building-icon workshop-icon" aria-hidden="true">🛠️</span>
-              <span class="building-copy">
-                <strong>Workshop</strong>
-                <small>Gives one log every day</small>
-                <span class="cost"><b>🍎 4</b></span>
-              </span>
-              <span class="build-check" aria-hidden="true">✓</span>
-            </button>
-
-            <button class="building-card" type="button" data-building="library" data-food="2" data-wood="2" data-idea="0">
-              <span class="building-icon library-icon" aria-hidden="true">📚</span>
-              <span class="building-copy">
-                <strong>Library</strong>
-                <small>Gives one idea every day</small>
-                <span class="cost"><b>🍎 2</b><b>🪵 2</b></span>
-              </span>
-              <span class="build-check" aria-hidden="true">✓</span>
-            </button>
-
-            <button class="building-card festival-card" type="button" data-building="festival" data-food="5" data-wood="5" data-idea="3" hidden>
-              <span class="building-icon festival-icon" aria-hidden="true">🎪</span>
-              <span class="building-copy">
-                <strong>Festival</strong>
-                <small>Unlocks after three buildings</small>
-                <span class="cost"><b>🍎 5</b><b>🪵 5</b><b>💡 3</b></span>
-              </span>
+          <div class="research-panel is-locked">
+            <div id="research-slot" class="research-slot"></div>
+            <button id="tree-button" class="tree-button" type="button">
+              <span aria-hidden="true">💡</span>
+              <span>The path of discoveries</span>
             </button>
           </div>
+
         </aside>
       </section>
 
@@ -209,6 +181,32 @@
       </div>
     </div>
 
+    <div class="modal-backdrop" id="tree-modal" role="dialog" aria-modal="true" aria-labelledby="tree-title">
+      <div class="modal-card tree-card">
+        <div class="tree-head">
+          <button class="tree-back" id="tree-back" type="button" data-autofocus aria-label="Back to the island">
+            <span aria-hidden="true">←</span>
+          </button>
+          <h2 id="tree-title">The path of discoveries</h2>
+          <div class="resource-bar tree-resources" aria-label="City resources">
+            <div class="resource food-resource">
+              <span aria-hidden="true">🍎</span>
+              <strong id="tree-food-count">2</strong>
+            </div>
+            <div class="resource wood-resource">
+              <span aria-hidden="true">🪵</span>
+              <strong id="tree-wood-count">2</strong>
+            </div>
+            <div class="resource idea-resource">
+              <span aria-hidden="true">💡</span>
+              <strong id="tree-idea-count">0</strong>
+            </div>
+          </div>
+        </div>
+        <div class="tech-grid" id="tech-grid"></div>
+      </div>
+    </div>
+
     <div class="sr-only" aria-hidden="true">
       <span id="message-start">Tap a neighboring tile to send the explorer on a journey!</span>
       <span id="message-plain">The green meadow gave you an apple!</span>
@@ -223,13 +221,18 @@
       <span id="message-no-energy">No steps left. Press New day.</span>
       <span id="message-steps-left">Take all your steps first.</span>
       <span id="message-new-day">The city shared its supplies. You can explore the island again!</span>
-      <span id="message-cannot-build">First collect the missing gifts.</span>
+      <span id="message-no-boat">The water is deep. The boat is not ready yet.</span>
+      <span id="message-water">You caught a fish from the boat!</span>
+      <span id="message-goal-set">This is your new goal!</span>
+      <span id="message-parent-first">First open this one.</span>
+      <span id="message-learned">Great! The explorer learned something new.</span>
+      <span id="message-already-open">You have this already. Pick something else!</span>
       <span id="message-built">Great! The city has a new friendly place.</span>
       <span id="message-festival-ready">All places are ready! Collect supplies for the big festival.</span>
       <span id="message-city">You returned to Sunny!</span>
       <span id="coach-move">Tap a tile next to the explorer</span>
       <span id="coach-collect">Keep going and collect island gifts</span>
-      <span id="coach-build">Build 3 friendly places</span>
+      <span id="coach-learn">Pick what to learn</span>
       <span id="goal-festival">Hold a big festival</span>
       <span id="tile-plain">meadow</span>
       <span id="tile-forest">forest</span>
@@ -244,6 +247,37 @@
       <span id="tile-state-collected">{terrain}, collected</span>
       <span id="tile-state-collected-reachable">{terrain}, collected, reachable</span>
       <span id="tile-state-reachable">{terrain}, reachable</span>
+
+      <span id="card-name-garden">Garden</span>
+      <span id="card-effect-garden">Gives one apple every day</span>
+      <span id="card-name-workshop">Workshop</span>
+      <span id="card-effect-workshop">Gives one log every day</span>
+      <span id="card-name-boots">Boots</span>
+      <span id="card-effect-boots">One more step every day</span>
+      <span id="card-name-library">Library</span>
+      <span id="card-effect-library">Gives one idea every day</span>
+      <span id="card-name-basket">Basket</span>
+      <span id="card-effect-basket">Every place gives one more gift</span>
+      <span id="card-name-spyglass">Spyglass</span>
+      <span id="card-effect-spyglass">The explorer sees farther</span>
+      <span id="card-name-boat">Boat</span>
+      <span id="card-effect-boat">The explorer can cross the water</span>
+      <span id="card-name-festival">Festival</span>
+      <span id="card-effect-festival">The big day for the whole island</span>
+      <span id="card-state-open">{card}, open</span>
+      <span id="card-state-ready">{card}, can be opened now</span>
+      <span id="card-state-goal">{card}, this is the goal now</span>
+      <span id="card-state-free">{card}, can be chosen</span>
+      <span id="card-state-locked">{card}, opens after {parent}</span>
+      <span id="card-need-food">apples: {count} of {need}</span>
+      <span id="card-need-wood">logs: {count} of {need}</span>
+      <span id="card-need-idea">ideas: {count} of {need}</span>
+      <span id="goal-gathering">Gathering for: {card}</span>
+      <span id="goal-places">{count} of 3 places ready</span>
+      <span id="tree-column-home">Home</span>
+      <span id="tree-column-island">Island</span>
+      <span id="tree-column-far">Far away</span>
+      <span id="tile-water">deep water</span>
     </div>
 
     <script src="../shared/game-language.js"></script>
