@@ -181,7 +181,7 @@ h1 {
 .goal-progress {
   padding: 7px 13px;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--green-dark);
   color: white;
   font-size: 20px;
   font-weight: 900;
@@ -463,8 +463,8 @@ h1 {
 .primary-button {
   border: 0;
   border-radius: 16px;
-  background: var(--orange);
-  box-shadow: 0 6px 0 #c96335;
+  background: #d2662f;
+  box-shadow: 0 6px 0 #a94f24;
   color: white;
   cursor: pointer;
   font-weight: 900;
@@ -484,13 +484,13 @@ h1 {
 .end-turn-button:hover,
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 0 #c96335;
+  box-shadow: 0 8px 0 #a94f24;
 }
 
 .end-turn-button:active,
 .primary-button:active {
   transform: translateY(4px);
-  box-shadow: 0 2px 0 #c96335;
+  box-shadow: 0 2px 0 #a94f24;
 }
 
 .city-card {

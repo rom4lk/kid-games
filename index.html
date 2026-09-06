@@ -133,7 +133,6 @@
 
       .card p {
         margin: 0;
-        overflow: hidden;
         color: var(--muted);
         font-size: 15px;
         line-height: 1.4;
@@ -306,17 +305,13 @@
         font-weight: 900;
       }
 
-      /* The cards fit as a 3 by 3 shelf when the screen is tall enough.
-         Smaller windows keep the plain scrolling shelf above. */
-      @media (min-width: 860px) and (min-height: 700px) {
-        body {
-          height: 100dvh;
-          overflow: hidden;
-        }
-
+      /* A wide screen lines the cards up in three columns. Every row keeps the
+         height of its tallest card: a card must never cut its own description
+         off, so a window too short for the whole shelf scrolls instead. */
+      @media (min-width: 860px) {
         .shelf {
+          flex: none;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          grid-template-rows: repeat(3, minmax(0, 1fr));
         }
       }
 

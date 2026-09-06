@@ -65,6 +65,13 @@ input:focus-visible {
   outline-offset: 4px;
 }
 
+/* Screen headings are focused after every switch so the tab order continues
+   from the new screen. They are not keyboard-reachable, so the browser focus
+   ring around the title is noise. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 .ambient-stars,
 .ambient-stars::before,
 .ambient-stars::after {
@@ -94,7 +101,7 @@ input:focus-visible {
 .app-shell {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 24px 0 52px;
+  padding: 24px 0 28px;
 }
 
 .app-header {
@@ -831,12 +838,16 @@ h1 {
   transition: width 280ms ease;
 }
 
+/* The word and the pictures to pick from are one step of the game loop, so they
+   have to be on the screen together — a child who cannot see the answers does
+   not know the step is unfinished. The scene is kept to the height its own
+   bubble needs, and that is what buys the pictures their room. */
 .adventure-scene {
   position: relative;
   display: grid;
-  min-height: 240px;
+  min-height: 132px;
   overflow: hidden;
-  padding: 30px;
+  padding: 16px 22px;
   border: 1px solid var(--border);
   border-radius: 30px 30px 0 0;
   background: linear-gradient(140deg, var(--scene-a), var(--scene-b));
@@ -893,7 +904,7 @@ h1 {
 }
 
 .scene-character {
-  font-size: clamp(5.8rem, 13vw, 9.5rem);
+  font-size: clamp(3.4rem, min(13vw, 10vh), 9.5rem);
   filter: drop-shadow(0 22px 15px rgba(8, 4, 25, 0.28));
   text-align: center;
   transform-origin: center bottom;
@@ -931,7 +942,7 @@ h1 {
 }
 
 .reading-panel {
-  padding: 30px clamp(18px, 5vw, 58px) 38px;
+  padding: 18px clamp(18px, 5vw, 58px) 20px;
   border: 1px solid var(--border);
   border-top: 0;
   border-radius: 0 0 30px 30px;
@@ -941,23 +952,28 @@ h1 {
 
 .reading-instruction,
 .choice-area > p {
-  margin-bottom: 11px;
+  margin-bottom: 9px;
   color: #cfc6ea;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: 0.02em;
   text-align: center;
+}
+
+/* The one instruction the whole screen is about stands above the rest. */
+.reading-instruction {
+  font-size: 1.45rem;
 }
 
 .word-card {
   position: relative;
   display: flex;
   width: min(500px, 100%);
-  min-height: 145px;
+  min-height: 124px;
   margin: 0 auto;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 14px 24px;
   border: 3px solid rgba(255, 209, 102, 0.32);
   border-radius: 26px;
   color: #3d3063;
@@ -999,7 +1015,7 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 18px 0 8px;
+  margin: 10px 0 4px;
 }
 
 .microphone-button,
@@ -1131,7 +1147,7 @@ h1 {
 }
 
 .choice-area {
-  padding-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid var(--border);
 }
 
@@ -1146,7 +1162,7 @@ h1 {
 .choice-button {
   position: relative;
   display: grid;
-  min-height: 135px;
+  min-height: 118px;
   border: 2px solid transparent;
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.08);
@@ -1751,6 +1767,40 @@ h1 {
 
   .stats-grid strong {
     margin-bottom: 0;
+  }
+}
+
+/* A short window has the same job as a tall one: the word and the pictures to
+   pick from stay on the screen together. The scene, the paddings and the size
+   of the cards give up the height for it — the word itself stays big. */
+@media (max-height: 780px) {
+  .adventure-scene {
+    min-height: 0;
+    padding: 12px 18px;
+  }
+
+  .scene-character {
+    font-size: clamp(2.6rem, min(13vw, 8vh), 9.5rem);
+  }
+
+  .word-main,
+  .word-syllables {
+    font-size: clamp(2.65rem, min(9vw, 11vh), 5.7rem);
+  }
+
+  .microphone-button,
+  .hint-button,
+  .skip-button {
+    min-height: 52px;
+  }
+
+  .recognition-status {
+    min-height: 0;
+    margin-bottom: 6px;
+  }
+
+  .choice-button {
+    min-height: 96px;
   }
 }
 

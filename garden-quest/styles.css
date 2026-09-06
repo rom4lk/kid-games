@@ -709,14 +709,50 @@ h1 {
   }
 }
 
-/* One column under the mission card would leave the controls card as wide as the
-   page, so it keeps a width of its own. The phone layout below pins it to the
-   bottom edge instead. */
+/* A portrait tablet is the awkward width: too narrow for the side panel next to
+   the board, too wide for the phone bar below. It gets the same one-screen deal
+   as a computer — the board takes the height the rest of the page leaves, and
+   the mission and the controls share the row under it, so the d-pad is never
+   below the fold while the message on screen points at it. */
 @media (min-width: 651px) and (max-width: 880px) {
-  .controls-card {
-    width: 100%;
-    max-width: 420px;
+  .game-shell {
+    display: grid;
+    min-height: 100dvh;
+    padding: 16px 0 20px;
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .game-layout {
+    min-height: 0;
+    align-items: stretch;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .play-column {
+    display: grid;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  /* The stage is the only element that knows both free dimensions. */
+  .board-stage {
+    min-height: 0;
+    container-type: size;
+  }
+
+  .board-wrap {
+    width: 100%;                      /* fallback for browsers without cq units */
+    width: min(100cqw, 100cqh);
     margin: 0 auto;
+  }
+
+  .side-panel {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 290px);
+  }
+
+  .d-pad {
+    grid-template-rows: repeat(3, 48px);
   }
 }
 

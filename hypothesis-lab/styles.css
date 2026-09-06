@@ -164,7 +164,7 @@ p {
 .game-shell {
   width: min(1320px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 26px 0 56px;
+  padding: 18px 0 26px;
 }
 
 .mission-card,
@@ -182,8 +182,8 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 22px;
-  margin-bottom: 18px;
-  padding: 22px 26px;
+  margin-bottom: 14px;
+  padding: 15px 22px;
 }
 
 .eyebrow {
@@ -275,8 +275,8 @@ p {
 .machine-stage {
   position: relative;
   display: grid;
-  margin: 18px 0;
-  padding: 18px;
+  margin: 12px 0;
+  padding: 12px;
   border-radius: 18px;
   background:
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
@@ -288,13 +288,13 @@ p {
 
 .machine-face {
   display: grid;
-  width: 88px;
-  height: 72px;
+  width: 72px;
+  height: 58px;
   border: 2px solid rgba(255, 255, 255, 0.27);
-  border-radius: 24px;
+  border-radius: 20px;
   background: var(--navy-soft);
   box-shadow: 0 0 0 7px rgba(247, 201, 72, 0.08);
-  font-size: 2.7rem;
+  font-size: 2.1rem;
   place-items: center;
 }
 
@@ -326,13 +326,13 @@ p {
 }
 
 .accept-bin {
-  color: #bff5df;
-  background: rgba(72, 184, 159, 0.25);
+  color: #e7fff6;
+  background: rgba(72, 184, 159, 0.62);
 }
 
 .reject-bin {
-  color: #ffd0c8;
-  background: rgba(239, 108, 98, 0.23);
+  color: #fff1ee;
+  background: rgba(239, 108, 98, 0.62);
 }
 
 .evidence-list {
@@ -345,7 +345,7 @@ p {
   grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: white;
@@ -394,13 +394,13 @@ p {
 
 .attribute-icon {
   display: inline-grid;
-  min-width: 25px;
-  height: 25px;
+  min-width: 27px;
+  height: 27px;
   padding: 0 2px;
   border: 1px solid #d7dce7;
   border-radius: 7px;
   background: #f7f8fb;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1;
   place-items: center;
 }
@@ -418,8 +418,8 @@ p {
 .scientist-note {
   display: flex;
   gap: 11px;
-  margin-top: 16px;
-  padding: 13px;
+  margin-top: 12px;
+  padding: 11px 13px;
   border-left: 4px solid var(--yellow);
   border-radius: 0 13px 13px 0;
   background: var(--yellow-soft);
@@ -820,6 +820,17 @@ p {
   }
 }
 
+@media (max-width: 650px) {
+  .mission-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hypothesis-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1024px) {
   .topbar {
     flex-wrap: wrap;
@@ -843,9 +854,7 @@ p {
   }
 
   .mission-card {
-    align-items: flex-start;
-    padding: 18px;
-    flex-direction: column;
+    padding: 15px 18px;
   }
 
   .machine-card,
@@ -860,10 +869,6 @@ p {
 
   .machine-stage {
     margin: 16px 0;
-  }
-
-  .hypothesis-grid {
-    grid-template-columns: 1fr;
   }
 
   .object-grid {
@@ -1016,6 +1021,61 @@ p {
 
 .badge.earned {
   color: #e2a72a;
+}
+
+/* The bot's examples and the child's turn are one thought, so both stay on the
+   screen: from a tablet upwards the two cards share the height the page leaves
+   them and scroll inside themselves when a mission gathers many examples. The
+   notebook underneath is a log to look back at, not a control, so it may sit
+   below the fold. */
+@media (min-width: 651px) and (min-height: 640px) {
+  .workspace {
+    max-height: calc(100dvh - 264px);
+    align-items: stretch;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .machine-card,
+  .research-card {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 980px) and (min-height: 640px) {
+  .workspace {
+    grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  /* Stacked, the examples card is as wide as the page. The sorting bot moves
+     beside the examples instead of above them, which is what buys the list the
+     room to show them all. */
+  .machine-card {
+    display: grid;
+    align-content: start;
+    align-items: start;
+    gap: 12px 16px;
+    grid-template-columns: minmax(0, 232px) minmax(0, 1fr);
+  }
+
+  /* A narrow stage would break "Does not fit" across lines, so the two answers
+     stand one under the other. */
+  .sort-bins {
+    grid-template-columns: 1fr;
+  }
+
+  .machine-card > .section-heading,
+  .machine-card > .scientist-note {
+    grid-column: 1 / -1;
+  }
+
+  .machine-stage {
+    margin: 0;
+  }
+
+  .scientist-note {
+    margin-top: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
