@@ -1,7 +1,6 @@
 const OBJECTS = {
   blueBall: {
     name: "Blue ball",
-    emoji: "🔵",
     shape: "round",
     color: "blue",
     material: "rubber",
@@ -11,7 +10,6 @@ const OBJECTS = {
   },
   coin: {
     name: "Silver coin",
-    emoji: "🪙",
     shape: "round",
     color: "silver",
     material: "metal",
@@ -21,7 +19,6 @@ const OBJECTS = {
   },
   redBlock: {
     name: "Red block",
-    emoji: "🟥",
     shape: "square",
     color: "red",
     material: "wood",
@@ -31,7 +28,6 @@ const OBJECTS = {
   },
   spoon: {
     name: "Silver spoon",
-    emoji: "🥄",
     shape: "long",
     color: "silver",
     material: "metal",
@@ -41,7 +37,6 @@ const OBJECTS = {
   },
   orangeButton: {
     name: "Orange button",
-    emoji: "🟠",
     shape: "round",
     color: "orange",
     material: "plastic",
@@ -51,7 +46,6 @@ const OBJECTS = {
   },
   greenBook: {
     name: "Green book",
-    emoji: "📗",
     shape: "rectangle",
     color: "green",
     material: "paper",
@@ -61,7 +55,6 @@ const OBJECTS = {
   },
   redPlate: {
     name: "Red plate",
-    emoji: "🍽️",
     shape: "round",
     color: "red",
     material: "ceramic",
@@ -71,7 +64,6 @@ const OBJECTS = {
   },
   woodRing: {
     name: "Wooden ring",
-    emoji: "⭕",
     shape: "round",
     color: "brown",
     material: "wood",
@@ -81,7 +73,6 @@ const OBJECTS = {
   },
   steelKey: {
     name: "Gold key",
-    emoji: "🔑",
     shape: "long",
     color: "gold",
     material: "metal",
@@ -91,7 +82,6 @@ const OBJECTS = {
   },
   silverRibbon: {
     name: "Silver ribbon",
-    emoji: "🎗️",
     shape: "wavy",
     color: "silver",
     material: "fabric",
@@ -101,7 +91,6 @@ const OBJECTS = {
   },
   plasticFork: {
     name: "Plastic fork",
-    emoji: "🍴",
     shape: "long",
     color: "blue",
     material: "plastic",
@@ -111,7 +100,6 @@ const OBJECTS = {
   },
   blueCup: {
     name: "Blue cup",
-    emoji: "🥤",
     shape: "cylinder",
     color: "blue",
     material: "plastic",
@@ -121,7 +109,6 @@ const OBJECTS = {
   },
   redBerry: {
     name: "Red berry",
-    emoji: "🍓",
     shape: "round",
     color: "red",
     material: "organic",
@@ -131,7 +118,6 @@ const OBJECTS = {
   },
   redBook: {
     name: "Red book",
-    emoji: "📕",
     shape: "rectangle",
     color: "red",
     material: "paper",
@@ -141,7 +127,6 @@ const OBJECTS = {
   },
   blueMarble: {
     name: "Blue marble",
-    emoji: "🔮",
     shape: "round",
     color: "blue",
     material: "glass",
@@ -151,7 +136,6 @@ const OBJECTS = {
   },
   redSock: {
     name: "Red sock",
-    emoji: "🧦",
     shape: "irregular",
     color: "red",
     material: "fabric",
@@ -161,7 +145,6 @@ const OBJECTS = {
   },
   redKey: {
     name: "Red key",
-    emoji: "🗝️",
     shape: "long",
     color: "red",
     material: "metal",
@@ -171,7 +154,6 @@ const OBJECTS = {
   },
   metalBall: {
     name: "Metal ball",
-    emoji: "⚙️",
     shape: "round",
     color: "silver",
     material: "metal",
@@ -181,7 +163,6 @@ const OBJECTS = {
   },
   woodStar: {
     name: "Wooden star",
-    emoji: "⭐",
     shape: "star",
     color: "brown",
     material: "wood",
@@ -191,7 +172,6 @@ const OBJECTS = {
   },
   woodSpoon: {
     name: "Wooden spoon",
-    emoji: "🪵🥄",
     shape: "long",
     color: "brown",
     material: "wood",
@@ -201,7 +181,6 @@ const OBJECTS = {
   },
   shoe: {
     name: "Black shoe",
-    emoji: "👟",
     shape: "irregular",
     color: "black",
     material: "fabric",
@@ -211,7 +190,6 @@ const OBJECTS = {
   },
   blueWheel: {
     name: "Blue wheel",
-    emoji: "🔵🛞",
     shape: "round",
     color: "blue",
     material: "rubber",
@@ -221,7 +199,6 @@ const OBJECTS = {
   },
   redWheel: {
     name: "Red wheel",
-    emoji: "🔴🛞",
     shape: "round",
     color: "red",
     material: "rubber",
@@ -231,7 +208,6 @@ const OBJECTS = {
   },
   blueBlock: {
     name: "Blue block",
-    emoji: "🟦",
     shape: "square",
     color: "blue",
     material: "wood",
@@ -241,7 +217,6 @@ const OBJECTS = {
   },
   yellowBall: {
     name: "Yellow ball",
-    emoji: "🟡",
     shape: "round",
     color: "yellow",
     material: "rubber",
@@ -251,26 +226,204 @@ const OBJECTS = {
   },
 };
 
+// The child reads the picture, not the caption. Every object is drawn from its own
+// attributes, so color, shape, material and size can be checked by looking at it.
+const ART_COLORS = {
+  blue: { fill: "#3a7bd8", edge: "#1d4a91" },
+  silver: { fill: "#c6ccd6", edge: "#87909f" },
+  red: { fill: "#d94236", edge: "#93231a" },
+  orange: { fill: "#ef8d28", edge: "#a55710" },
+  green: { fill: "#459751", edge: "#255c30" },
+  brown: { fill: "#8f5c2c", edge: "#573517" },
+  gold: { fill: "#e0ad2a", edge: "#8f6a10" },
+  black: { fill: "#3a4150", edge: "#171b22" },
+  yellow: { fill: "#f7d64a", edge: "#b88f1f" },
+};
+
+const ART_SHAPES = {
+  round: '<circle cx="50" cy="50" r="36" />',
+  square: '<rect x="16" y="16" width="68" height="68" rx="7" />',
+  rectangle: '<rect x="10" y="29" width="80" height="42" rx="6" />',
+  long: '<rect x="6" y="38" width="88" height="24" rx="12" />',
+  cylinder: '<path d="M27 28 a23 10 0 0 1 46 0 v44 a23 10 0 0 1 -46 0 z" />',
+  wavy: '<path d="M8 44 q11 -17 22 0 t22 0 t22 0 t18 0 v14 q-9 17 -18 0 t-22 0 t-22 0 t-22 0 z" />',
+  star: '<path d="M50 10 L61 38 L91 40 L68 59 L76 88 L50 71 L24 88 L32 59 L9 40 L39 38 Z" />',
+  irregular: '<path d="M25 24 Q48 8 70 21 Q93 34 85 57 Q78 83 51 85 Q21 87 15 60 Q11 37 25 24 Z" />',
+};
+
+// Drawn over the body and clipped to its outline. Metal and wood have to be
+// unmistakable: the rules ask about them directly.
+const ART_MATERIALS = {
+  metal: '<path d="M-20 110 L34 -10 L52 -10 L-2 110 Z" fill="#ffffff" opacity="0.62" />'
+    + '<path d="M6 110 L60 -10 L69 -10 L15 110 Z" fill="#ffffff" opacity="0.38" />',
+  wood: '<g fill="none" stroke="#3d2410" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round">'
+    + '<path d="M-10 30 q30 -9 60 0 t60 0" /><path d="M-10 50 q30 9 60 0 t60 0" />'
+    + '<path d="M-10 70 q30 -9 60 0 t60 0" /></g>',
+  glass: '<rect x="-10" y="-10" width="120" height="120" fill="#ffffff" opacity="0.4" />'
+    + '<path d="M24 74 L60 14 L74 14 L38 74 Z" fill="#ffffff" opacity="0.72" />',
+  fabric: '<g stroke="#ffffff" stroke-opacity="0.5" stroke-width="3">'
+    + '<path d="M-10 22 H110 M-10 42 H110 M-10 62 H110 M-10 82 H110" />'
+    + '<path d="M22 -10 V110 M42 -10 V110 M62 -10 V110 M82 -10 V110" /></g>',
+  paper: '<path d="M58 -10 L110 42 L58 42 Z" fill="#ffffff" opacity="0.72" />'
+    + '<path d="M58 -10 L58 42 L110 42" fill="none" stroke="#00000033" stroke-width="3" />',
+  ceramic: '<ellipse cx="36" cy="34" rx="15" ry="9" fill="#ffffff" opacity="0.6"'
+    + ' transform="rotate(-35 36 34)" />',
+  plastic: '<ellipse cx="36" cy="32" rx="11" ry="7" fill="#ffffff" opacity="0.8"'
+    + ' transform="rotate(-30 36 32)" />',
+  rubber: '<g fill="#000000" opacity="0.16"><circle cx="30" cy="34" r="4" /><circle cx="52" cy="26" r="4" />'
+    + '<circle cx="68" cy="46" r="4" /><circle cx="40" cy="60" r="4" /><circle cx="62" cy="72" r="4" /></g>',
+  organic: '<g fill="#ffffff" opacity="0.45"><circle cx="34" cy="36" r="5" /><circle cx="56" cy="28" r="3" />'
+    + '<circle cx="46" cy="56" r="4" /><circle cx="66" cy="60" r="3" /></g>',
+};
+
+const ART_SIZES = { small: 0.6, medium: 0.8, large: 1 };
+
+// One picture for "no": a red bar across the token. Negated rules and the object that
+// cannot roll share it, so the child learns a single sign for a crossed-out idea.
+const ART_STRIKE = '<line x1="14" y1="86" x2="86" y2="14" stroke="#ffffff" stroke-width="17"'
+  + ' stroke-linecap="round" opacity="0.85" />'
+  + '<line x1="14" y1="86" x2="86" y2="14" stroke="#c0271c" stroke-width="9" stroke-linecap="round" />';
+
+const TOKEN_NEUTRAL = { fill: "#dbe0e8", edge: "#6b7688" };
+
+const MATERIAL_TOKEN_COLORS = {
+  wood: ART_COLORS.brown,
+  metal: ART_COLORS.silver,
+  organic: ART_COLORS.green,
+  glass: { fill: "#cfe6f5", edge: "#7297ad" },
+  paper: { fill: "#f2ece0", edge: "#a2957e" },
+  fabric: { fill: "#c9a2c6", edge: "#8a6188" },
+  rubber: { fill: "#6f7681", edge: "#3f454e" },
+  plastic: { fill: "#7fc9c2", edge: "#3f857e" },
+  ceramic: { fill: "#f0e2d2", edge: "#ac9075" },
+};
+
+const TOKEN_ATTRIBUTE_LABELS = {
+  color: "Color",
+  shape: "Shape",
+  material: "Material",
+  size: "Size",
+  category: "Category",
+  move: "Movement",
+};
+
 const ATTRIBUTE_ICONS = {
   color: {
-    blue: "🔵", silver: "⚪", red: "🔴", orange: "🟠", green: "🟢",
-    brown: "🟤", gold: "🥇", black: "⚫", yellow: "🟡",
+    blue: "color:blue", silver: "color:silver", red: "color:red", orange: "color:orange",
+    green: "color:green", brown: "color:brown", gold: "color:gold", black: "color:black",
+    yellow: "color:yellow",
   },
   shape: {
-    round: "⭕", square: "◼", long: "↔️", wavy: "〰️", rectangle: "▭",
-    irregular: "✳️", star: "⭐", cylinder: "🥫",
+    round: "shape:round", square: "shape:square", long: "shape:long", wavy: "shape:wavy",
+    rectangle: "shape:rectangle", irregular: "shape:irregular", star: "shape:star",
+    cylinder: "shape:cylinder",
   },
   material: {
-    rubber: "🛞", metal: "⚙️", wood: "🪵", plastic: "🧴", paper: "📄",
-    ceramic: "🏺", fabric: "🧵", organic: "🌱", glass: "💎",
+    rubber: "material:rubber", metal: "material:metal", wood: "material:wood",
+    plastic: "material:plastic", paper: "material:paper", ceramic: "material:ceramic",
+    fabric: "material:fabric", organic: "material:organic", glass: "material:glass",
   },
-  size: { small: "🤏", medium: "✋", large: "🙌" },
+  size: { small: "size:small", medium: "size:medium", large: "size:large" },
   category: {
-    toy: "🧸", money: "🪙", kitchen: "🍽️", clothing: "👕",
-    school: "📚", tool: "🛠️", craft: "✂️", food: "🍎",
+    toy: "category:toy", money: "category:money", kitchen: "category:kitchen",
+    clothing: "category:clothing", school: "category:school", tool: "category:tool",
+    craft: "category:craft", food: "category:food",
   },
-  canRoll: { true: "🎳", false: "⛔" },
+  canRoll: { true: "move:roll", false: "move:still" },
 };
+
+// A category is the one attribute a drawing cannot show, so it keeps a pictogram.
+const CATEGORY_EMOJI = {
+  toy: "🧸", money: "🪙", kitchen: "🍽️", clothing: "👕",
+  school: "📚", tool: "🛠️", craft: "✂️", food: "🍎",
+};
+
+let artInstanceCount = 0;
+
+function renderObjectArt(object) {
+  const clipId = `object-art-${(artInstanceCount += 1)}`;
+  const color = ART_COLORS[object.color];
+  const shape = ART_SHAPES[object.shape];
+  const material = ART_MATERIALS[object.material] || "";
+  const bodyOpacity = object.material === "glass" ? ' opacity="0.72"' : "";
+  return `
+    <svg class="object-art" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <defs><clipPath id="${clipId}">${shape}</clipPath></defs>
+      <g transform="translate(50 50) scale(${ART_SIZES[object.size]}) translate(-50 -50)">
+        <g fill="${color.fill}" stroke="${color.edge}" stroke-width="5"
+          stroke-linejoin="round"${bodyOpacity}>${shape}</g>
+        <g clip-path="url(#${clipId})">${material}</g>
+        <g fill="none" stroke="${color.edge}" stroke-width="5" stroke-linejoin="round">${shape}</g>
+      </g>
+    </svg>
+  `;
+}
+
+function renderTokenBody(kind, value) {
+  if (kind === "color") {
+    const color = ART_COLORS[value];
+    return `<circle cx="50" cy="50" r="34" fill="${color.fill}" stroke="${color.edge}" stroke-width="8" />`;
+  }
+  if (kind === "shape") {
+    return `<g fill="${TOKEN_NEUTRAL.fill}" stroke="${TOKEN_NEUTRAL.edge}" stroke-width="7"
+      stroke-linejoin="round">${ART_SHAPES[value]}</g>`;
+  }
+  if (kind === "material") {
+    const color = MATERIAL_TOKEN_COLORS[value];
+    const clipId = `token-art-${(artInstanceCount += 1)}`;
+    const body = ART_SHAPES.square;
+    return `<defs><clipPath id="${clipId}">${body}</clipPath></defs>
+      <g fill="${color.fill}" stroke="${color.edge}" stroke-width="7" stroke-linejoin="round">${body}</g>
+      <g clip-path="url(#${clipId})">${ART_MATERIALS[value] || ""}</g>
+      <g fill="none" stroke="${color.edge}" stroke-width="7" stroke-linejoin="round">${body}</g>`;
+  }
+  if (kind === "size") {
+    return `<rect x="7" y="7" width="86" height="86" rx="14" fill="none" stroke="#b9c0cc"
+        stroke-width="5" stroke-dasharray="9 8" />
+      <circle cx="50" cy="50" r="${(34 * ART_SIZES[value]).toFixed(1)}"
+        fill="${TOKEN_NEUTRAL.fill}" stroke="${TOKEN_NEUTRAL.edge}" stroke-width="8" />`;
+  }
+  // Movement: a ball with speed lines behind it. "Cannot roll" is the same ball crossed out.
+  return `<g fill="none" stroke="${TOKEN_NEUTRAL.edge}" stroke-width="8" stroke-linecap="round">
+      <path d="M6 32 h20" /><path d="M6 58 h13" /></g>
+    <circle cx="60" cy="52" r="30" fill="${TOKEN_NEUTRAL.fill}" stroke="${TOKEN_NEUTRAL.edge}"
+      stroke-width="8" />
+    <path d="M48 40 a17 17 0 0 1 22 6" fill="none" stroke="${TOKEN_NEUTRAL.edge}" stroke-width="7"
+      stroke-linecap="round" />`;
+}
+
+function renderAttributeToken(tokenId, negated = false) {
+  const [kind, value] = tokenId.split(":");
+  const struck = negated || tokenId === "move:still";
+  const body = kind === "category"
+    ? `<text x="50" y="52" text-anchor="middle" dominant-baseline="central"
+        font-size="74">${CATEGORY_EMOJI[value]}</text>`
+    : renderTokenBody(kind, value === "still" ? "roll" : value);
+  return `<svg class="token-art" viewBox="0 0 100 100" aria-hidden="true"
+    focusable="false">${body}${struck ? ART_STRIKE : ""}</svg>`;
+}
+
+function renderRuleArt(ruleId) {
+  const rule = RULES[ruleId];
+  const joiner = rule.connective === "or" ? "or" : "and";
+  return rule.tokens.map((token, index) => {
+    const negated = token.startsWith("!");
+    const art = renderAttributeToken(negated ? token.slice(1) : token, negated);
+    return index === 0 ? art : `<span class="rule-joiner">${joiner}</span>${art}`;
+  }).join("");
+}
+
+// Only the attributes the mission's rules actually ask about. Six icons on every card
+// is noise a six-year-old cannot filter.
+function getLevelAttributeLabels(level) {
+  const labels = new Set();
+  level.hypothesisIds.forEach((ruleId) => {
+    RULES[ruleId].tokens.forEach((token) => {
+      labels.add(TOKEN_ATTRIBUTE_LABELS[token.replace("!", "").split(":")[0]]);
+    });
+  });
+  return labels;
+}
 
 function getObjectAttributes(object) {
   return [
@@ -296,91 +449,95 @@ function getObjectAccessibleLabel(object, tested = false) {
 
 const RULES = {
   red: {
-    icon: "🔴",
+    tokens: ["color:red"],
     title: "It accepts red objects",
     short: "red",
     test: (object) => object.color === "red",
   },
   round: {
-    icon: "⭕",
+    tokens: ["shape:round"],
     title: "It accepts round objects",
     short: "round",
     test: (object) => object.shape === "round",
   },
   metal: {
-    icon: "🔧",
+    tokens: ["material:metal"],
     title: "It accepts metal objects",
     short: "metal",
     test: (object) => object.material === "metal",
   },
   small: {
-    icon: "🤏",
+    tokens: ["size:small"],
     title: "It accepts small objects",
     short: "small",
     test: (object) => object.size === "small",
   },
   silver: {
-    icon: "🥈",
+    tokens: ["color:silver"],
     title: "It accepts silver objects",
     short: "silver",
     test: (object) => object.color === "silver",
   },
   kitchen: {
-    icon: "🍽️",
+    tokens: ["category:kitchen"],
     title: "It accepts kitchen objects",
     short: "kitchen",
     test: (object) => object.category === "kitchen",
   },
   redAndSmall: {
-    icon: "🔴 + 🤏",
+    tokens: ["color:red", "size:small"],
+    connective: "and",
     title: "It accepts red and small objects",
     short: "red and small",
     test: (object) => object.color === "red" && object.size === "small",
   },
   nonMetal: {
-    icon: "🔧 ✖",
+    tokens: ["!material:metal"],
     title: "It accepts non-metal objects",
     short: "not metal",
     test: (object) => object.material !== "metal",
   },
   wood: {
-    icon: "🪵",
+    tokens: ["material:wood"],
     title: "It accepts wooden objects",
     short: "wooden",
     test: (object) => object.material === "wood",
   },
   roundAndNotMetal: {
-    icon: "⭕ + 🔧 ✖",
+    tokens: ["shape:round", "!material:metal"],
+    connective: "and",
     title: "It accepts round, non-metal objects",
     short: "round and not metal",
     test: (object) => object.shape === "round" && object.material !== "metal",
   },
   long: {
-    icon: "📏",
+    tokens: ["shape:long"],
     title: "It accepts long objects",
     short: "long",
     test: (object) => object.shape === "long",
   },
   kitchenOrWood: {
-    icon: "🍽️ / 🪵",
+    tokens: ["category:kitchen", "material:wood"],
+    connective: "or",
     title: "It accepts kitchen or wooden objects",
     short: "kitchen or wooden",
     test: (object) => object.category === "kitchen" || object.material === "wood",
   },
   blue: {
-    icon: "🔵",
+    tokens: ["color:blue"],
     title: "It accepts blue objects",
     short: "blue",
     test: (object) => object.color === "blue",
   },
   rolls: {
-    icon: "🎳",
+    tokens: ["move:roll"],
     title: "It accepts objects that can roll",
     short: "can roll",
     test: (object) => Boolean(object.canRoll),
   },
   blueAndRolls: {
-    icon: "🔵 + 🎳",
+    tokens: ["color:blue", "move:roll"],
+    connective: "and",
     title: "It accepts blue objects that can roll",
     short: "blue and rolls",
     test: (object) => object.color === "blue" && object.canRoll,
@@ -511,6 +668,9 @@ if (typeof module !== "undefined" && module.exports) {
     sanitizeCompletedLevels,
     getObjectAttributes,
     getObjectAccessibleLabel,
+    getLevelAttributeLabels,
+    renderObjectArt,
+    renderRuleArt,
     evaluateExperiment,
   };
 }
@@ -605,15 +765,18 @@ if (typeof document !== "undefined") {
   }
 
   function renderAttributeStrip(object) {
+    const shownLabels = getLevelAttributeLabels(LEVELS[currentLevelIndex]);
     return `
       <span class="attribute-strip">
-        ${getObjectAttributes(object).map((attribute) => `
+        ${getObjectAttributes(object)
+          .filter((attribute) => shownLabels.has(attribute.label))
+          .map((attribute) => `
           <span
             class="attribute-icon"
             role="img"
             aria-label="${attribute.label}: ${attribute.value}"
             title="${attribute.label}: ${attribute.value}"
-          >${attribute.icon}</span>
+          >${renderAttributeToken(attribute.icon)}</span>
         `).join("")}
       </span>
     `;
@@ -675,7 +838,7 @@ if (typeof document !== "undefined") {
       const accepted = ruleResult(level.targetRule, objectId);
       return `
         <article class="evidence-item">
-          <span class="evidence-emoji" aria-hidden="true">${object.emoji}</span>
+          <span class="evidence-art">${renderObjectArt(object)}</span>
           <span class="evidence-copy">
             <strong>${object.name}</strong>
             <small>${level.initialEvidence.includes(objectId) ? "Bot example" : "Your test"}</small>
@@ -700,7 +863,7 @@ if (typeof document !== "undefined") {
         title="${RULES[ruleId].title}"
         ${phase === "proof" || disproved ? "disabled" : ""}
       >
-        <span class="hypothesis-icon" aria-hidden="true">${RULES[ruleId].icon}</span>
+        <span class="hypothesis-icon" aria-hidden="true">${renderRuleArt(ruleId)}</span>
         <strong>${RULES[ruleId].short}</strong>
         ${disproved ? '<small>Rule is out</small>' : ""}
       </button>
@@ -724,7 +887,7 @@ if (typeof document !== "undefined") {
           aria-pressed="${selectedObjectId === objectId}"
           aria-label="${getObjectAccessibleLabel(object, tested)}"
         >
-          <span class="emoji" aria-hidden="true">${object.emoji}</span>
+          <span class="object-art-slot">${renderObjectArt(object)}</span>
           <span class="name">${object.name}</span>
           ${renderAttributeStrip(object)}
           ${tested ? '<span class="tested-mark" aria-hidden="true">✓</span>' : ""}
@@ -744,7 +907,7 @@ if (typeof document !== "undefined") {
       elements.experimentTitle.textContent = "What will the bot do?";
       elements.experimentPrompt.textContent = "Pick an object first.";
     } else {
-      elements.selectedObject.textContent = object.emoji;
+      elements.selectedObject.innerHTML = renderObjectArt(object);
       elements.experimentLabel.textContent = phase === "proof"
         ? `Proof trial ${proofIndex + 1} of ${proofQueue.length}`
         : "Your guess";
@@ -768,9 +931,9 @@ if (typeof document !== "undefined") {
     elements.notebookBody.innerHTML = records.map((record) => {
       return `
         <article class="record-card ${record.hypothesisFits ? "record-supports" : "record-contradicts"}">
-          <span class="record-object" aria-hidden="true">${OBJECTS[record.objectId].emoji}</span>
+          <span class="record-object">${renderObjectArt(OBJECTS[record.objectId])}</span>
           <span class="record-line">
-            <b>${RULES[record.hypothesisId].icon}</b>
+            <b class="record-rule" aria-hidden="true">${renderRuleArt(record.hypothesisId)}</b>
             <small>${RULES[record.hypothesisId].short}</small>
           </span>
           <span class="record-step">

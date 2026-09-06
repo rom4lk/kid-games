@@ -1,5 +1,7 @@
 {
   "pairs": [
+    ["and", "и"],
+    ["or", "или"],
     ["Language", "Язык"],
     ["Interface language", "Язык интерфейса"],
     ["A browser game about forming hypotheses, making predictions, and testing secret rules.", "Игра о гипотезах, предсказаниях и проверке тайных правил."],

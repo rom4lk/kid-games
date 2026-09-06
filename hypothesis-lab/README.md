@@ -9,7 +9,11 @@ A browser game about scientific thinking. The player studies examples of a sorti
 - a required prediction before every experiment;
 - any prediction is accepted: a mismatch with the selected rule is shown as the result of the experiment
   rather than as an input error, and the rule itself is not crossed out because of it;
-- hypotheses are shown with a pictogram and a short word;
+- every object is drawn from its own attributes, so its color, shape, material and size can be read
+  off the picture without reading the caption;
+- a card shows only the attributes the current mission's rules ask about;
+- hypotheses are shown with the same attribute pictures and a short word, and a negated rule is
+  crossed out with a red bar;
 - the numbered steps appear one at a time: first the rule, then the object, then the prediction;
 - a lab log that separately shows whether the prediction matched and whether the rule still fits;
 - a hypothesis contradicted by at least one log entry is crossed out and can no longer be selected;

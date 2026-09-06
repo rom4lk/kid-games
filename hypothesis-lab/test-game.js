@@ -11,6 +11,9 @@ const {
   sanitizeCompletedLevels,
   getObjectAttributes,
   getObjectAccessibleLabel,
+  getLevelAttributeLabels,
+  renderObjectArt,
+  renderRuleArt,
   evaluateExperiment,
 } = require("./game.js");
 
@@ -30,6 +33,33 @@ getObjectAttributes(OBJECTS.redBerry).forEach(({ label, value }) => {
   assert.ok(accessibleObjectLabel.includes(`${label}: ${value}`));
 });
 assert.match(getObjectAccessibleLabel(OBJECTS.redBerry, true), /already tested/);
+
+// Every attribute a mission asks about must be visible, and nothing else may crowd the card.
+LEVELS.forEach((level, levelIndex) => {
+  const shownLabels = getLevelAttributeLabels(level);
+  assert.ok(shownLabels.size < 6, `Level ${levelIndex + 1} must hide unused attributes`);
+  level.hypothesisIds.forEach((ruleId) => {
+    RULES[ruleId].tokens.forEach((token) => {
+      const [kind, value] = token.replace("!", "").split(":");
+      const group = kind === "move" ? ATTRIBUTE_ICONS.canRoll : ATTRIBUTE_ICONS[kind];
+      assert.ok(
+        Object.values(group).includes(token.replace("!", "")),
+        `Rule ${ruleId} uses unknown token ${kind}:${value}`,
+      );
+    });
+    const artAttributes = getObjectAttributes(OBJECTS[level.testObjects[0]])
+      .filter((attribute) => shownLabels.has(attribute.label));
+    assert.ok(artAttributes.length > 0, `Level ${levelIndex + 1} must show at least one attribute`);
+  });
+});
+
+// Two objects that differ only in an attribute the rules use must not draw the same picture.
+assert.notEqual(renderObjectArt(OBJECTS.redBlock), renderObjectArt(OBJECTS.blueBlock));
+assert.notEqual(renderObjectArt(OBJECTS.redBerry), renderObjectArt(OBJECTS.redPlate));
+assert.notEqual(renderRuleArt("red"), renderRuleArt("round"));
+assert.match(renderRuleArt("nonMetal"), /#c0271c/);
+assert.match(renderRuleArt("kitchenOrWood"), /rule-joiner">or</);
+assert.match(renderRuleArt("redAndSmall"), /rule-joiner">and</);
 
 LEVELS.forEach((level, levelIndex) => {
   assert.ok(RULES[level.targetRule], `Level ${levelIndex + 1} must have a target rule`);
