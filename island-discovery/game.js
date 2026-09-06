@@ -1,6 +1,6 @@
-const MAP_WIDTH = 6;
-const MAP_HEIGHT = 4;
-const CITY_INDEX = 14;
+const MAP_WIDTH = 15;
+const MAP_HEIGHT = 10;
+const CITY_INDEX = 82;
 const STORAGE_KEY = "islandDiscoveryV1";
 const SOUND_KEY = "islandDiscoverySoundV1";
 const RESOURCE_ORDER = ["food", "wood", "idea"];
@@ -98,7 +98,12 @@ function readText(id) {
 }
 
 function shuffledTiles() {
-  const pool = [...TILE_POOL];
+  // The pool describes the mix of places, not the size of the island, so it is
+  // repeated until the board is full and cut to the exact number of cells.
+  const cells = MAP_WIDTH * MAP_HEIGHT - 1;
+  const pool = [];
+  while (pool.length < cells) pool.push(...TILE_POOL);
+  pool.length = cells;
   for (let index = pool.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(Math.random() * (index + 1));
     [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];

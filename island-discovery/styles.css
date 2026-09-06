@@ -261,9 +261,10 @@ h1 {
 
 .game-map {
   display: grid;
-  grid-template-columns: repeat(6, minmax(52px, 1fr));
-  gap: 8px;
-  aspect-ratio: 6 / 4;
+  grid-template-columns: repeat(15, minmax(26px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 4px;
+  aspect-ratio: 15 / 10;
 }
 
 .map-tile {
@@ -273,23 +274,23 @@ h1 {
   padding: 0;
   place-items: center;
   border: 0;
-  border-radius: 16px;
+  border-radius: 9px;
   box-shadow:
-    inset 0 -6px 0 rgba(52, 72, 51, 0.12),
-    0 3px 4px rgba(72, 97, 73, 0.14);
+    inset 0 -3px 0 rgba(52, 72, 51, 0.12),
+    0 2px 3px rgba(72, 97, 73, 0.14);
   cursor: pointer;
-  font-size: clamp(30px, 4.6vw, 44px);
+  font-size: clamp(17px, 2.2vw, 27px);
   transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
 
 .map-tile:hover:not(.hidden),
 .map-tile.reachable {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   filter: saturate(1.12);
   box-shadow:
-    inset 0 -6px 0 rgba(52, 72, 51, 0.12),
-    0 0 0 4px rgba(255, 226, 99, 0.92),
-    0 7px 10px rgba(72, 97, 73, 0.19);
+    inset 0 -3px 0 rgba(52, 72, 51, 0.12),
+    0 0 0 3px rgba(255, 226, 99, 0.92),
+    0 4px 6px rgba(72, 97, 73, 0.19);
 }
 
 .map-tile.hidden {
@@ -301,7 +302,7 @@ h1 {
 .map-tile.hidden::before {
   content: "?";
   color: var(--ink);
-  font-size: 23px;
+  font-size: 14px;
   font-weight: 900;
 }
 
@@ -321,10 +322,10 @@ h1 {
 .map-tile.collected::before {
   content: "✓";
   position: absolute;
-  left: 4px;
-  top: 2px;
+  left: 2px;
+  top: 0;
   color: #2f6b4f;
-  font-size: 17px;
+  font-size: 11px;
   font-weight: 900;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 }
@@ -357,8 +358,8 @@ h1 {
 }
 
 @keyframes reach-flash {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 226, 99, 0.92); }
-  50% { box-shadow: 0 0 0 9px rgba(255, 196, 60, 0.95); }
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255, 226, 99, 0.92); }
+  50% { box-shadow: 0 0 0 7px rgba(255, 196, 60, 0.95); }
 }
 
 .building-list.is-locked {
@@ -415,17 +416,17 @@ h1 {
 .map-tile.explorer::after {
   content: "🧭";
   position: absolute;
-  right: -5px;
-  bottom: -3px;
+  right: -3px;
+  bottom: -2px;
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   place-items: center;
-  border: 3px solid white;
+  border: 2px solid white;
   border-radius: 50%;
   background: var(--orange);
-  box-shadow: 0 4px 7px rgba(61, 61, 45, 0.26);
-  font-size: 17px;
+  box-shadow: 0 2px 4px rgba(61, 61, 45, 0.26);
+  font-size: 11px;
   animation: land 0.28s ease-out;
 }
 
@@ -846,11 +847,15 @@ h1 {
   50% { transform: translateY(-7px) rotate(2deg); }
 }
 
-@media (max-width: 840px) {
+/* Fifteen columns need the full width of the page before the city card
+   is allowed to take a share of it. */
+@media (max-width: 1080px) {
   .game-layout {
     grid-template-columns: 1fr;
   }
+}
 
+@media (max-width: 840px) {
   .city-scene {
     display: none;
   }
@@ -926,21 +931,21 @@ h1 {
   }
 
   .game-map {
-    grid-template-columns: repeat(6, minmax(34px, 1fr));
-    gap: 4px;
+    grid-template-columns: repeat(15, minmax(14px, 1fr));
+    gap: 2px;
   }
 
   .map-tile {
-    border-radius: 10px;
-    font-size: clamp(20px, 7vw, 30px);
+    border-radius: 6px;
+    font-size: clamp(11px, 2.6vw, 18px);
   }
 
   .map-tile.explorer::after {
-    right: -3px;
-    width: 23px;
-    height: 23px;
+    right: -2px;
+    width: 15px;
+    height: 15px;
     border-width: 2px;
-    font-size: 13px;
+    font-size: 8px;
   }
 
   .building-list {
@@ -994,7 +999,7 @@ h1 {
   .game-map.show-reach .map-tile.reachable,
   .game-map.is-teaching .map-tile.reachable {
     animation: none;
-    box-shadow: 0 0 0 7px rgba(255, 196, 60, 0.95);
+    box-shadow: 0 0 0 5px rgba(255, 196, 60, 0.95);
   }
 
   /* Two calls for attention keep calling, without the pulse and the hop. */
