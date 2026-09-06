@@ -24,7 +24,7 @@ const VECTORS = {
 const ARROW_HEADINGS = { left: "west", right: "east", up: "north", down: "south" };
 const MOVEMENT_COMMANDS = {
   arrows: ["left", "right", "up", "down"],
-  turns: ["forward", "turnLeft", "turnRight"],
+  turns: ["forward", "turnLeft", "turnRight", "jump"],
 };
 const ACTION_COMMANDS = ["pick", "drop", "repeat"];
 const SURVEY_ANSWERS = ["easy", "normal", "hard"];
@@ -66,6 +66,13 @@ const LEGEND = {
   O: { kind: "gate", shape: "circle" },
   q: { kind: "switch", shape: "square" },
   Q: { kind: "gate", shape: "square" },
+  "~": { kind: "water" },
+  "<": { kind: "belt", heading: "west" },
+  ">": { kind: "belt", heading: "east" },
+  "^": { kind: "belt", heading: "north" },
+  v: { kind: "belt", heading: "south" },
+  b: { kind: "ball" },
+  x: { kind: "spot" },
 };
 
 function positionsMatch(first, second) {
@@ -84,6 +91,10 @@ function parseMap(map, label) {
     stations: [],
     switches: [],
     gates: [],
+    water: [],
+    belts: [],
+    balls: [],
+    spots: [],
   };
 
   map.forEach((row, y) => {
@@ -98,6 +109,10 @@ function parseMap(map, label) {
       if (entry.kind === "station") parsed.stations.push({ id: entry.symbol, symbol: entry.symbol, x, y });
       if (entry.kind === "switch") parsed.switches.push({ x, y, shape: entry.shape });
       if (entry.kind === "gate") parsed.gates.push({ x, y, shape: entry.shape });
+      if (entry.kind === "water") parsed.water.push({ x, y });
+      if (entry.kind === "belt") parsed.belts.push({ x, y, heading: entry.heading });
+      if (entry.kind === "ball") parsed.balls.push({ id: parsed.balls.length, x, y });
+      if (entry.kind === "spot") parsed.spots.push({ x, y });
     });
   });
 
@@ -120,10 +135,41 @@ function validateLevel(level, label) {
   if (level.targets.some((target) => positionsMatch(target, level.robot))) {
     throw new Error(`${label} starts the robot on a target, which would never be collected.`);
   }
-  if (!DIRECTIONS.includes(level.robot.facing)) throw new Error(`${label} has an unknown facing.`);
-  if (level.parcels.length === 0 && level.targets.length === 0) {
-    throw new Error(`${label} has nothing to deliver or collect.`);
+  if (level.water.some((cell) => positionsMatch(cell, level.robot))) {
+    throw new Error(`${label} starts the robot in the water.`);
   }
+  if (level.belts.some((belt) => positionsMatch(belt, level.robot))) {
+    throw new Error(`${label} starts the robot on a belt, which would carry it away before the first card.`);
+  }
+  if (level.balls.some((ball) => positionsMatch(ball, level.robot))) {
+    throw new Error(`${label} starts the robot inside a snowball.`);
+  }
+  if (!DIRECTIONS.includes(level.robot.facing)) throw new Error(`${label} has an unknown facing.`);
+  if (level.parcels.length === 0 && level.targets.length === 0 && level.balls.length === 0) {
+    throw new Error(`${label} has nothing to deliver, collect or push.`);
+  }
+  if (level.balls.length !== level.spots.length) {
+    throw new Error(`${label} has ${level.balls.length} snowballs and ${level.spots.length} marks; they must match.`);
+  }
+
+  // A belt hands the robot to the next cell, so that cell must exist and be
+  // walkable, and a chain of belts must end somewhere instead of looping.
+  level.belts.forEach((belt) => {
+    let cell = belt;
+    for (let steps = 0; steps <= level.belts.length; steps += 1) {
+      const vector = VECTORS[cell.heading];
+      const beyond = { x: cell.x + vector.x, y: cell.y + vector.y };
+      if (!inside(beyond) || isWall(beyond) || level.water.some((water) => positionsMatch(water, beyond))
+        || level.gates.some((gate) => positionsMatch(gate, beyond))
+        || level.balls.some((ball) => positionsMatch(ball, beyond))) {
+        throw new Error(`${label} has a belt that runs into something it cannot cross.`);
+      }
+      const nextBelt = level.belts.find((candidate) => positionsMatch(candidate, beyond));
+      if (!nextBelt) return;
+      cell = nextBelt;
+    }
+    throw new Error(`${label} has belts that run in a circle.`);
+  });
 
   const parcelSymbols = new Set();
   level.parcels.forEach((parcel) => {
@@ -214,6 +260,7 @@ function initialState(level) {
     carrying: null,
     collected: level.targets.map(() => false),
     openGates: [],
+    balls: level.balls.map((ball) => ({ id: ball.id, x: ball.x, y: ball.y })),
     lastTwo: [],
   };
 }
@@ -225,13 +272,19 @@ function copyState(state) {
     carrying: state.carrying,
     collected: [...state.collected],
     openGates: [...state.openGates],
+    balls: state.balls.map((ball) => ({ ...ball })),
     lastTwo: [...state.lastTwo],
   };
 }
 
+function isOnSpot(level, position) {
+  return level.spots.some((spot) => positionsMatch(spot, position));
+}
+
 function isComplete(level, state) {
   return state.parcels.every((parcel) => parcel.delivered)
-    && state.collected.every(Boolean);
+    && state.collected.every(Boolean)
+    && level.spots.every((spot) => state.balls.some((ball) => positionsMatch(ball, spot)));
 }
 
 function blockedBy(level, state, position) {
@@ -239,9 +292,20 @@ function blockedBy(level, state, position) {
     || position.y < 0 || position.y >= level.height;
   if (outside) return "edge";
   if (level.walls.some((wall) => positionsMatch(wall, position))) return "wall";
+  if (level.water.some((cell) => positionsMatch(cell, position))) return "water";
   const gate = level.gates.find((candidate) => positionsMatch(candidate, position));
   if (gate && !state.openGates.includes(gate.shape)) return "gate";
   return null;
+}
+
+function ballAt(state, position) {
+  return state.balls.find((ball) => positionsMatch(ball, position)) ?? null;
+}
+
+// What stops a step or a jump into `position`: the field, a wall, water, a
+// closed gate, or a snowball that is not being pushed.
+function landingBlock(level, state, position) {
+  return blockedBy(level, state, position) ?? (ballAt(state, position) ? "snowball" : null);
 }
 
 function nextTargetIndex(level, state) {
@@ -256,6 +320,47 @@ function nextTargetIndex(level, state) {
 function withHistory(state, command) {
   state.lastTwo = [...state.lastTwo, command].slice(-2);
   return state;
+}
+
+// The robot arrives on a cell: the parcel in its hands follows, a floor
+// switch opens its gates, a thing to collect is taken, and a belt carries the
+// robot one cell further, where all of this happens again.
+function enterCell(level, next, position, events) {
+  next.robot.x = position.x;
+  next.robot.y = position.y;
+
+  const carried = next.parcels.find((parcel) => parcel.id === next.carrying);
+  if (carried) {
+    carried.x = position.x;
+    carried.y = position.y;
+  }
+
+  const floorSwitch = level.switches.find((candidate) => positionsMatch(candidate, position));
+  if (floorSwitch && !next.openGates.includes(floorSwitch.shape)) {
+    next.openGates = [...next.openGates, floorSwitch.shape].sort();
+    events.push({ type: "switch", shape: floorSwitch.shape });
+  }
+
+  const targetIndex = level.targets.findIndex((target) => positionsMatch(target, position));
+  if (targetIndex >= 0 && !next.collected[targetIndex]) {
+    const expected = nextTargetIndex(level, next);
+    if (level.targets[targetIndex].order !== null && expected !== targetIndex) {
+      events.push({ type: "wrong-order", index: targetIndex, expected });
+    } else {
+      next.collected[targetIndex] = true;
+      events.push({ type: "collect", index: targetIndex });
+    }
+  }
+
+  const belt = level.belts.find((candidate) => positionsMatch(candidate, position));
+  if (belt) {
+    const vector = VECTORS[belt.heading];
+    const beyond = { x: position.x + vector.x, y: position.y + vector.y };
+    if (!landingBlock(level, next, beyond)) {
+      events.push({ type: "ride", heading: belt.heading, position: beyond });
+      enterCell(level, next, beyond, events);
+    }
+  }
 }
 
 function applyCommand(level, state, command) {
@@ -277,34 +382,35 @@ function applyCommand(level, state, command) {
     }
 
     const next = copyState(state);
-    const events = [{ type: "step", heading }];
-    next.robot.x = position.x;
-    next.robot.y = position.y;
-    if (level.movement === "arrows") next.robot.facing = heading;
-
-    const carried = next.parcels.find((parcel) => parcel.id === next.carrying);
-    if (carried) {
-      carried.x = position.x;
-      carried.y = position.y;
-    }
-
-    const floorSwitch = level.switches.find((candidate) => positionsMatch(candidate, position));
-    if (floorSwitch && !next.openGates.includes(floorSwitch.shape)) {
-      next.openGates = [...next.openGates, floorSwitch.shape].sort();
-      events.push({ type: "switch", shape: floorSwitch.shape });
-    }
-
-    const targetIndex = level.targets.findIndex((target) => positionsMatch(target, position));
-    if (targetIndex >= 0 && !next.collected[targetIndex]) {
-      const expected = nextTargetIndex(level, next);
-      if (level.targets[targetIndex].order !== null && expected !== targetIndex) {
-        events.push({ type: "wrong-order", index: targetIndex, expected });
-      } else {
-        next.collected[targetIndex] = true;
-        events.push({ type: "collect", index: targetIndex });
+    const events = [];
+    // Walking into a snowball rolls it one cell ahead. If that cell is taken,
+    // the ball stays and the robot bumps into it.
+    const ball = ballAt(next, position);
+    if (ball) {
+      const beyond = { x: position.x + vector.x, y: position.y + vector.y };
+      if (landingBlock(level, next, beyond)) {
+        return { ok: false, reason: "blocked", blockedBy: "snowball", blockedAt: beyond, ballId: ball.id };
       }
+      ball.x = beyond.x;
+      ball.y = beyond.y;
+      events.push({ type: "push", ballId: ball.id, heading, to: beyond, placed: isOnSpot(level, beyond) });
     }
+    events.push({ type: "step", heading, position });
+    if (level.movement === "arrows") next.robot.facing = heading;
+    enterCell(level, next, position, events);
+    return { ok: true, state: withHistory(next, command), events };
+  }
 
+  if (command === "jump") {
+    const vector = VECTORS[state.robot.facing];
+    const landing = { x: state.robot.x + vector.x * 2, y: state.robot.y + vector.y * 2 };
+    const block = landingBlock(level, state, landing);
+    if (block) {
+      return { ok: false, reason: "blocked", blockedBy: block, blockedAt: landing };
+    }
+    const next = copyState(state);
+    const events = [{ type: "jump", heading: state.robot.facing, position: landing }];
+    enterCell(level, next, landing, events);
     return { ok: true, state: withHistory(next, command), events };
   }
 
@@ -409,6 +515,7 @@ function stateKey(level, state, withHistoryKey) {
     state.parcels.map((parcel) => (parcel.delivered ? "D" : "-")).join(""),
     state.collected.map((flag) => (flag ? "1" : "0")).join(""),
     state.openGates.join("+"),
+    state.balls.map((ball) => `${ball.x},${ball.y}`).sort().join("|"),
     withHistoryKey ? state.lastTwo.join(",") : "",
   ];
   return parts.join(";");
@@ -473,6 +580,22 @@ function findShortestCompletion(level, fromState) {
 
 function nextHelpfulCommand(level, fromState) {
   return findShortestCompletion(level, fromState)?.commands[0] ?? null;
+}
+
+// The first card after which the goal can no longer be reached, or -1. Only
+// pushing gets there: a snowball rolled into a corner never comes back, so
+// that card is the one to fix.
+function firstStuckCard(level, program) {
+  let state = initialState(level);
+  for (const step of expandProgram(program)) {
+    if (step.invalid) return -1;
+    const result = applyCommand(level, state, step.command);
+    if (!result.ok) return -1;
+    state = result.state;
+    if (isComplete(level, state)) return -1;
+    if (!findShortestCompletion(level, state)) return step.sourceIndex;
+  }
+  return -1;
 }
 
 // Saved progress: best stars per level, grouped by story. Garbage becomes an
@@ -546,6 +669,7 @@ if (typeof module !== "undefined" && module.exports) {
     isComplete,
     findShortestCompletion,
     nextHelpfulCommand,
+    firstStuckCard,
     normalizeProgress,
     levelStars,
     isLevelUnlocked,
@@ -602,6 +726,7 @@ if (typeof document !== "undefined") {
     pick: "Pick up",
     drop: "Put down",
     repeat: "Repeat two",
+    jump: "Jump",
   };
 
   const KEY_COMMANDS = {
@@ -615,6 +740,7 @@ if (typeof document !== "undefined") {
     KeyP: "pick",
     KeyD: "drop",
     KeyX: "repeat",
+    KeyJ: "jump",
   };
 
   const ACCESSORIES = {
@@ -624,6 +750,9 @@ if (typeof document !== "undefined") {
     flag: "🚩",
     broom: "🧹",
     compass: "🧭",
+    scarf: "🧣",
+    wrench: "🔧",
+    ring: "🛟",
   };
 
   const $ = (selector) => document.querySelector(selector);
@@ -646,12 +775,16 @@ if (typeof document !== "undefined") {
   const track = $("#track");
   const tiles = $("#tiles");
   const layers = {
+    water: $("#water"),
+    belts: $("#belts"),
     walls: $("#walls"),
     switches: $("#switches"),
+    spots: $("#spots"),
     gates: $("#gates"),
     stations: $("#stations"),
     targets: $("#targets"),
     parcels: $("#parcels"),
+    balls: $("#balls"),
   };
   const robot = $("#robot");
   const robotBeam = $("#robotBeam");
@@ -691,6 +824,12 @@ if (typeof document !== "undefined") {
   const targetElements = [];
   const switchElements = new Map();
   const gateElements = new Map();
+  const waterElements = new Map();
+  const beltElements = new Map();
+  const spotElements = new Map();
+  const ballElements = new Map();
+
+  const cellKey = (position) => `${position.x},${position.y}`;
 
   const state = {
     screen: "menu",
@@ -752,6 +891,23 @@ if (typeof document !== "undefined") {
       return `<span class="target-art target-dust"><svg viewBox="0 0 48 48" aria-hidden="true">
         <path class="dust-body" d="M10 30c-4-8 4-16 12-14 3-6 14-6 16 2 6 0 8 10 2 13-1 6-9 8-14 4-5 4-14 2-16-5z" />
         <circle cx="18" cy="26" r="2.4" /><circle cx="28" cy="22" r="2.2" /><circle cx="30" cy="31" r="2" />
+      </svg></span>`;
+    }
+    if (theme === "factory") {
+      return `<span class="target-art target-gear"><svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle class="gear-teeth-outline" cx="24" cy="24" r="17" />
+        <circle class="gear-teeth" cx="24" cy="24" r="17" />
+        <circle class="gear-body" cx="24" cy="24" r="14" />
+        <circle class="gear-hole" cx="24" cy="24" r="5" />
+      </svg></span>`;
+    }
+    if (theme === "pond") {
+      return `<span class="target-art target-duck"><svg viewBox="0 0 48 48" aria-hidden="true">
+        <ellipse class="duck-body" cx="21" cy="31" rx="16" ry="10" />
+        <circle class="duck-body" cx="31" cy="17" r="9" />
+        <path class="duck-beak" d="m39 15 8 3-8 4z" />
+        <circle class="duck-eye" cx="33" cy="15" r="1.8" />
+        <path class="duck-wing" d="M10 31c4-5 11-5 15 0" />
       </svg></span>`;
     }
     return `<span class="target-art target-battery"><span class="battery-cap"></span><svg viewBox="0 0 32 48" aria-hidden="true">
@@ -834,6 +990,10 @@ if (typeof document !== "undefined") {
         if (level.parcels.some((parcel) => positionsMatch(parcel, position))) classes.push("is-parcel");
         if (level.gates.some((gate) => positionsMatch(gate, position))) classes.push("is-gate");
         if (level.switches.some((floorSwitch) => positionsMatch(floorSwitch, position))) classes.push("is-switch");
+        if (level.water.some((cell) => positionsMatch(cell, position))) classes.push("is-water");
+        if (level.belts.some((belt) => positionsMatch(belt, position))) classes.push("is-belt");
+        if (level.spots.some((spot) => positionsMatch(spot, position))) classes.push("is-spot");
+        if (level.balls.some((ball) => positionsMatch(ball, position))) classes.push("is-ball");
         if (positionsMatch(level.robot, position)) classes.push("is-robot");
         cells.push(`<i class="${classes.join(" ")}"></i>`);
       }
@@ -970,6 +1130,30 @@ if (typeof document !== "undefined") {
       goalPairs.append(pair);
     });
 
+    if (level.balls.length > 0) {
+      const pair = document.createElement("span");
+      pair.className = "goal-pair goal-push";
+      pair.innerHTML = `
+        <span class="goal-target goal-snowball">
+          <svg viewBox="0 0 64 64">
+            <circle class="goal-snowball-body" cx="32" cy="34" r="22" />
+            <path d="M20 26c4-6 12-8 19-6" />
+          </svg>
+          ${level.balls.length > 1 ? `<b>×${level.balls.length}</b>` : ""}
+        </span>
+        <span class="goal-arrow">
+          <svg viewBox="0 0 72 40"><path d="M8 20h48" /><path d="m44 8 14 12-14 12" /></svg>
+        </span>
+        <span class="goal-spot">
+          <svg viewBox="0 0 64 64">
+            <circle class="goal-spot-ring" cx="32" cy="34" r="22" />
+            <circle class="goal-spot-face" cx="26" cy="30" r="2.5" /><circle class="goal-spot-face" cx="38" cy="30" r="2.5" />
+            <path d="M32 34 42 37l-10 3z" />
+          </svg>
+        </span>`;
+      goalPairs.append(pair);
+    }
+
     if (level.targets.length > 0) {
       const ordered = level.targets[0].order !== null;
       const pair = document.createElement("span");
@@ -990,7 +1174,9 @@ if (typeof document !== "undefined") {
 
     const goalLabel = level.parcels.length > 0
       ? "Goal: match every parcel with its station"
-      : "Goal: collect everything on the field";
+      : level.balls.length > 0
+        ? "Goal: roll every snowball onto a mark"
+        : "Goal: collect everything on the field";
     goalCard.setAttribute("aria-label", goalLabel);
   }
 
@@ -1002,6 +1188,67 @@ if (typeof document !== "undefined") {
     targetElements.length = 0;
     switchElements.clear();
     gateElements.clear();
+    waterElements.clear();
+    beltElements.clear();
+    spotElements.clear();
+    ballElements.clear();
+
+    level.water.forEach((cell) => {
+      const element = document.createElement("span");
+      element.className = "entity water";
+      element.innerHTML = '<span class="water-art"><i></i><i></i></span>';
+      setGridPosition(element, cell);
+      layers.water.append(element);
+      waterElements.set(cellKey(cell), element);
+    });
+
+    level.belts.forEach((belt) => {
+      const element = document.createElement("span");
+      element.className = "entity belt";
+      element.style.setProperty("--angle", `${FACING_ANGLES[belt.heading]}deg`);
+      element.innerHTML = `
+        <span class="belt-art">
+          <svg viewBox="0 0 64 32" aria-hidden="true">
+            <path d="m10 6 10 10-10 10M28 6l10 10-10 10M46 6l10 10-10 10" />
+          </svg>
+        </span>`;
+      setGridPosition(element, belt);
+      layers.belts.append(element);
+      beltElements.set(cellKey(belt), element);
+    });
+
+    level.spots.forEach((spot) => {
+      const element = document.createElement("span");
+      element.className = "entity spot";
+      element.innerHTML = `
+        <span class="spot-art">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="18" r="8" /><circle cx="24" cy="34" r="11" />
+          </svg>
+        </span>`;
+      setGridPosition(element, spot);
+      layers.spots.append(element);
+      spotElements.set(cellKey(spot), element);
+    });
+
+    level.balls.forEach((ball) => {
+      const element = document.createElement("span");
+      element.className = "entity snowball";
+      element.setAttribute("role", "img");
+      element.setAttribute("aria-label", "Snowball");
+      element.innerHTML = `
+        <span class="snowball-art">
+          <span class="snowball-hat"></span>
+          <svg class="snowball-face" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="17" cy="19" r="3" /><circle cx="31" cy="19" r="3" />
+            <path class="snowball-nose" d="M24 23 36 27l-12 4z" />
+            <path class="snowball-smile" d="M16 35c5 5 11 5 16 0" />
+          </svg>
+        </span>`;
+      setGridPosition(element, ball);
+      layers.balls.append(element);
+      ballElements.set(ball.id, element);
+    });
 
     level.walls.forEach((wall) => {
       const element = document.createElement("span");
@@ -1134,6 +1381,18 @@ if (typeof document !== "undefined") {
       (switchElements.get(shape) ?? []).forEach((element) => element.classList.toggle("is-pressed", open));
       (gateElements.get(shape) ?? []).forEach((element) => element.classList.toggle("is-open", open));
     });
+
+    world.balls.forEach((ball) => {
+      const element = ballElements.get(ball.id);
+      if (!element) return;
+      const placed = isOnSpot(level, ball);
+      setGridPosition(element, ball);
+      element.classList.toggle("is-placed", placed);
+      element.setAttribute("aria-label", placed ? "Snowman" : "Snowball");
+    });
+    spotElements.forEach((element, key) => {
+      element.classList.toggle("is-filled", world.balls.some((ball) => cellKey(ball) === key));
+    });
   }
 
   function resetWorld() {
@@ -1146,6 +1405,10 @@ if (typeof document !== "undefined") {
     gateElements.forEach((elements) => elements.forEach((element) => element.classList.remove("is-opening", "is-blocked")));
     switchElements.forEach((elements) => elements.forEach((element) => element.classList.remove("is-activating")));
     tiles.querySelectorAll(".is-refused").forEach((tile) => tile.classList.remove("is-refused"));
+    ballElements.forEach((element) => element.classList.remove("is-stuck"));
+    waterElements.forEach((element) => element.classList.remove("is-splash"));
+    beltElements.forEach((element) => element.classList.remove("is-rolling"));
+    robot.classList.remove("is-jumping", "is-riding");
     updateWorld();
   }
 
@@ -1323,6 +1586,16 @@ if (typeof document !== "undefined") {
   function suggestNextCommand(fromState) {
     const level = currentLevel();
     const nextCommand = nextHelpfulCommand(level, fromState);
+    if (!nextCommand) {
+      // No way to the goal from here: a snowball is stuck. The card that
+      // rolled it there trembles, so the child knows what to take out.
+      const stuckAt = firstStuckCard(level, state.program);
+      if (stuckAt >= 0) {
+        markSlot(stuckAt, "is-wrong");
+        playTone(190, 0.16, "sine", 0.07);
+        return;
+      }
+    }
     if (!nextCommand || state.program.length >= slotCount(level)) {
       glowPlayButton();
       return;
@@ -1369,6 +1642,71 @@ if (typeof document !== "undefined") {
     playTone(300, 0.07, "triangle", 0.045);
     updateWorld();
     await wait(paceOf(340));
+  }
+
+  async function animateJump() {
+    robot.classList.remove("is-jumping");
+    void robot.offsetWidth;
+    robot.classList.add("is-jumping");
+    playTone(390, 0.09, "triangle", 0.05);
+    playTone(620, 0.12, "sine", 0.05, 0.1);
+    updateWorld();
+    await wait(paceOf(560));
+    robot.classList.remove("is-jumping");
+  }
+
+  // The belt does the moving: the robot slides without a step, and the belt
+  // it stands on lights up so the cause is visible.
+  async function animateRide(belt) {
+    belt?.classList.add("is-rolling");
+    robot.classList.add("is-riding");
+    playTone(150, 0.2, "triangle", 0.04);
+    updateWorld();
+    await wait(paceOf(380));
+    robot.classList.remove("is-riding");
+    belt?.classList.remove("is-rolling");
+  }
+
+  // The model applies a whole card at once, but a belt can carry the robot
+  // through several cells for one card, so the shown world advances one
+  // event at a time and the exact state is taken from the model at the end.
+  function applyEventToView(event) {
+    const world = state.world;
+    if (event.position) {
+      world.robot.x = event.position.x;
+      world.robot.y = event.position.y;
+      const carried = world.parcels.find((parcel) => parcel.id === world.carrying);
+      if (carried) {
+        carried.x = event.position.x;
+        carried.y = event.position.y;
+      }
+      if (event.type === "step" && currentLevel().movement === "arrows") world.robot.facing = event.heading;
+    }
+    if (event.type === "turn") world.robot.facing = event.facing;
+    if (event.type === "push") {
+      const ball = world.balls.find((candidate) => candidate.id === event.ballId);
+      ball.x = event.to.x;
+      ball.y = event.to.y;
+    }
+    if (event.type === "switch" && !world.openGates.includes(event.shape)) {
+      world.openGates = [...world.openGates, event.shape].sort();
+    }
+    if (event.type === "collect") world.collected[event.index] = true;
+    if (event.type === "pick") world.carrying = event.parcelId;
+    if (event.type === "drop") {
+      world.parcels.find((parcel) => parcel.id === event.parcelId).delivered = true;
+      world.carrying = null;
+    }
+  }
+
+  // The ball moves together with the robot's step, so only a sound is added
+  // here and the wait belongs to the step that follows.
+  function animatePush(placed) {
+    playTone(240, 0.12, "triangle", 0.05);
+    if (placed) {
+      playTone(660, 0.14, "sine", 0.07, 0.3);
+      playTone(880, 0.2, "sine", 0.07, 0.42);
+    }
   }
 
   async function animateSwitch(shape) {
@@ -1432,12 +1770,23 @@ if (typeof document !== "undefined") {
         flashRefusedCell(result.blockedAt);
         showBlockedGate(result.blockedAt);
       }
+      if (result.reason === "blocked" && result.blockedBy === "water") {
+        waterElements.get(cellKey(result.blockedAt))?.classList.add("is-splash");
+      }
+      if (result.reason === "blocked" && result.ballId !== undefined) {
+        ballElements.get(result.ballId)?.classList.add("is-stuck");
+      }
       return result;
     }
 
-    state.world = result.state;
+    state.world = copyState(state.world);
     for (const event of result.events) {
+      const belt = event.type === "ride" ? beltElements.get(cellKey(state.world.robot)) : null;
+      applyEventToView(event);
+      if (event.type === "push") animatePush(event.placed);
       if (event.type === "step") await animateStep();
+      if (event.type === "jump") await animateJump();
+      if (event.type === "ride") await animateRide(belt);
       if (event.type === "turn") await animateTurn();
       if (event.type === "switch") await animateSwitch(event.shape);
       if (event.type === "collect") await animateCollect(event.index);
@@ -1454,6 +1803,7 @@ if (typeof document !== "undefined") {
         await wait(paceOf(480));
       }
     }
+    state.world = result.state;
     return result;
   }
 

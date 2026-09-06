@@ -40,7 +40,7 @@ opened directly over `file://`.
 | `word-quest/` | Living Words | Reading a word and picking a picture, levels by word length | Russian, English |
 | `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
 | `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
-| `robo-stories/` | Robo Stories | Building programs out of picture cards across five robot stories: parcels, gates, batteries, a rover and a room | Russian, English |
+| `robo-stories/` | Robo Stories | Building programs out of picture cards across eight robot stories: parcels, gates, batteries, a rover, a room, snowballs, conveyor belts and a pond | Russian, English |
 | `garden-quest/` | Garden Quest | Collecting a harvest on a fixed board within a limited number of steps | Russian, English |
 | `hypothesis-lab/` | Secret Rule Lab | Forming a hypothesis, predicting a result and testing a secret sorting rule | Russian, English |
 | `block-town/` | Block Town | Painting a town on squared paper, where roads, water and houses connect themselves | Russian, English |

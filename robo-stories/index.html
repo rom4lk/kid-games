@@ -65,6 +65,9 @@
             <span class="accessory accessory-flag" data-accessory="flag" hidden>🚩</span>
             <span class="accessory accessory-broom" data-accessory="broom" hidden>🧹</span>
             <span class="accessory accessory-compass" data-accessory="compass" hidden>🧭</span>
+            <span class="accessory accessory-scarf" data-accessory="scarf" hidden>🧣</span>
+            <span class="accessory accessory-wrench" data-accessory="wrench" hidden>🔧</span>
+            <span class="accessory accessory-ring" data-accessory="ring" hidden>🛟</span>
           </div>
           <div class="menu-copy">
             <h1 tabindex="-1">Robo Stories</h1>
@@ -104,11 +107,15 @@
 
           <div class="track" id="track">
             <div class="track-tiles" id="tiles" aria-hidden="true"></div>
+            <div class="layer" id="water" aria-hidden="true"></div>
+            <div class="layer" id="belts" aria-hidden="true"></div>
             <div class="layer" id="walls" aria-hidden="true"></div>
             <div class="layer" id="switches" aria-hidden="true"></div>
+            <div class="layer" id="spots" aria-hidden="true"></div>
             <div class="layer" id="targets"></div>
             <div class="layer" id="stations"></div>
             <div class="layer" id="parcels"></div>
+            <div class="layer" id="balls"></div>
             <div class="layer" id="gates" aria-hidden="true"></div>
 
             <div class="entity robot" id="robot" role="img" aria-label="Robot">
@@ -259,6 +266,14 @@
               </svg>
               <kbd aria-hidden="true">R</kbd>
             </button>
+            <button class="command-button command-jump" type="button" data-command="jump" aria-label="Jump">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path class="command-arrow" d="M10 44C12 14 48 14 51 41" />
+                <path class="command-arrow" d="m43 35 8 8 8-8" />
+                <path class="command-wave" d="M14 56c4-5 8-5 12 0s8 5 12 0 8-5 12 0" />
+              </svg>
+              <kbd aria-hidden="true">J</kbd>
+            </button>
             <button class="command-button command-pick" type="button" data-command="pick" aria-label="Pick up">
               <svg viewBox="0 0 64 64" aria-hidden="true">
                 <path class="command-box" d="M22 34h32v22H22zM22 34l16 8 16-8M38 42v14" />
@@ -306,6 +321,9 @@
             <span class="accessory accessory-flag" data-accessory="flag" hidden>🚩</span>
             <span class="accessory accessory-broom" data-accessory="broom" hidden>🧹</span>
             <span class="accessory accessory-compass" data-accessory="compass" hidden>🧭</span>
+            <span class="accessory accessory-scarf" data-accessory="scarf" hidden>🧣</span>
+            <span class="accessory accessory-wrench" data-accessory="wrench" hidden>🔧</span>
+            <span class="accessory accessory-ring" data-accessory="ring" hidden>🛟</span>
             <span class="done-accessory" id="doneAccessory" aria-hidden="true"></span>
           </div>
           <button class="again-button done-button" id="doneButton" type="button" aria-label="Back to the stories">

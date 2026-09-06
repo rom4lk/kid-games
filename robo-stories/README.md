@@ -12,12 +12,15 @@ the robot reward come from Robot Lab.
 
 ## What is in the game
 
-- five stories with eight levels each, forty levels in total;
-- two ways of moving: arrow cards (left, right, up, down) or a headlight robot that walks forward and
-  turns left or right;
-- two kinds of goal: carry every parcel to the station with the same sign, or collect everything on
-  the field (batteries, crystals, dust);
-- bushes, crates, walls, craters and furniture that block cells;
+- eight stories with eight levels each, sixty-four levels in total;
+- two ways of moving: arrow cards (left, right, up, down) or a headlight robot that walks forward,
+  turns left or right and jumps over one cell;
+- three kinds of goal: carry every parcel to the station with the same sign, collect everything on
+  the field (batteries, crystals, dust, gears, ducks), or roll every snowball onto a mark;
+- bushes, crates, walls, craters, furniture, fences and barriers that block cells;
+- water that stops a step but not a jump;
+- conveyor belts that carry the robot along to the end of the belt;
+- snowballs that roll one cell ahead when the robot walks into them;
 - floor switches and gates matched by shape and color: a round switch opens round gates, a square
   switch opens square gates; the robot presses a switch by stepping on it;
 - numbered batteries that have to be collected in order;
@@ -61,6 +64,9 @@ over `file://`.
 | 3 | Charging Lab | forward, turn left, turn right | batteries | the headlight, turns, walls, doors by shape, batteries in order |
 | 4 | Mars Rover | forward, turns, `×2` | crystals | the repeat card on long straight roads |
 | 5 | Clean Room | arrows, `×2` | every dusty spot | covering an area with repeat cards |
+| 6 | Snow Yard | arrows | snowballs on their marks | pushing: walk into a ball and it rolls, so stand on the far side |
+| 7 | Toy Factory | arrows | gears | conveyor belts that carry the robot, with and against the way |
+| 8 | Lily Pond | forward, turns, jump | rubber ducks | the jump card over water, lily pads to walk on |
 
 Inside a story a new card appears only after a level where the child has used the previous ones.
 The two turn cards arrive together.
@@ -78,6 +84,7 @@ The letters are printed in the corner of each card, the way keys are printed on 
 | `P` | Pick up |
 | `D` | Put down |
 | `X` | Repeat two |
+| `J` | Jump |
 | `Enter` | Run the program |
 | `Backspace` | Remove the last card |
 
@@ -96,6 +103,16 @@ The shortcuts read the physical key, so they also work on a Russian layout.
   comes first glows, and the robot walks on.
 - The `×2` card lights up only after two cards stand before it, and it repeats the two actions that
   were executed last, so `forward, forward, ×2, ×2` is six steps.
+- Walking into a snowball rolls it one cell ahead in the same direction. If that cell is the edge, a
+  fence or another ball, the ball shakes, the cell behind it flashes and the run stops. A ball on a
+  mark becomes a snowman; the level is done when every mark has one.
+- A step or a jump that lands on a belt starts a ride: the belt carries the robot one cell in its
+  direction, and a belt there carries it further, until the robot lands on plain floor. Riding is
+  not a card and costs nothing. A belt that points at a wall stops the ride without a crash, and a
+  belt running against the robot carries it back to where it came from.
+- Water stops a step like a wall does and the water splashes. The jump card flies over the next cell,
+  whatever it is, and lands on the cell after it; that cell has to be walkable. The cell the robot
+  flies over is untouched, so a duck there is not collected.
 - Any program that reaches the goal wins. The stored solution is only used by the tests.
 
 ## The hint
@@ -103,8 +120,10 @@ The shortcuts read the physical key, so they also work on a Russian layout.
 The light bulb searches from the real state of the field: the robot, the direction it faces, the
 parcel in its hands, every parcel, battery and gate, and the two last actions for the `×2` card. It
 highlights the next useful card and the slot it goes into. If the program already contains a card
-that cannot run, the bulb marks that card instead. After a long pause with no action the bulb starts
-blinking on its own. The bulb never performs the action for the child.
+that cannot run, the bulb marks that card instead. If the goal can no longer be reached at all,
+which only happens when a snowball has been rolled where it cannot come back from, the bulb marks
+the card that rolled it there. After a long pause with no action the bulb starts blinking on its
+own. The bulb never performs the action for the child.
 
 For an adult the light bulb also shows a one-sentence route in the text strip under the cards.
 
@@ -143,12 +162,13 @@ node robo-stories/test-game.js
 The tests confirm that every stored solution wins and is the shortest program the search can find,
 that cards appear one at a time, that hints alone finish every level with three stars, and they cover
 the map legend, level validation, movement in both modes, symbol matching, gates, numbered
-batteries, the repeat card, stars, saved progress and the survey records.
+batteries, the repeat card, snowballs and stuck detection, belts, water and jumps, stars, saved
+progress and the survey records.
 
 ## Files
 
 - `index.html` contains the three screens, the success layer and the panel for parents.
-- `styles.css` contains the visual system, the five field themes and the animations.
+- `styles.css` contains the visual system, the eight field themes and the animations.
 - `levels.js` contains the stories and their levels as small text maps.
 - `game.js` contains the level parser, the simulator, the search, the progress rules and the
   interface. The part that needs no browser is exported for the tests.

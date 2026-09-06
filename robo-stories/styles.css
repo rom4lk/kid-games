@@ -10,6 +10,7 @@
   --purple: #8c78d5;
   --green: #72bd67;
   --orange: #ef9360;
+  --pink: #e884b6;
   --shadow: 0 8px 0 rgba(50, 72, 91, 0.13), 0 15px 32px rgba(50, 72, 91, 0.13);
 }
 
@@ -317,6 +318,24 @@ p {
   text-shadow: 0 2px 0 rgba(38, 67, 92, 0.3);
 }
 
+.goal-snowball-body {
+  fill: #f4f9ff;
+}
+
+.goal-spot-ring {
+  fill: rgba(255, 255, 255, 0.4);
+  stroke-dasharray: 9 7;
+}
+
+.goal-spot-face {
+  fill: var(--ink);
+}
+
+.goal-spot path {
+  fill: var(--orange);
+  stroke-width: 2;
+}
+
 /* ---------- Menu of stories ---------- */
 
 .menu-hero {
@@ -362,6 +381,9 @@ p {
 .accessory-flag { top: -8px; right: -12px; }
 .accessory-broom { bottom: -4px; left: -22px; transform: rotate(15deg); }
 .accessory-compass { bottom: -4px; right: -18px; }
+.accessory-scarf { top: 50%; left: 50%; transform: translateX(-50%) rotate(-6deg); }
+.accessory-wrench { top: 52%; right: -24px; transform: rotate(35deg); }
+.accessory-ring { bottom: 24%; left: -26px; }
 
 .story-grid {
   display: grid;
@@ -609,6 +631,31 @@ p {
   box-shadow: inset 0 0 0 2px var(--ink);
 }
 
+.mini-cell.is-water {
+  background: #7fc7e8;
+}
+
+.mini-cell.is-belt {
+  background: repeating-linear-gradient(90deg, #6f8190 0 2px, #b7c4cd 2px 4px);
+}
+
+.mini-cell.is-ball::after,
+.mini-cell.is-spot::after {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  content: "";
+}
+
+.mini-cell.is-ball::after {
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.mini-cell.is-spot::after {
+  border: 2px dashed var(--ink);
+}
+
 .star-row {
   display: inline-flex;
   gap: 4px;
@@ -800,6 +847,55 @@ p {
   display: none;
 }
 
+.world-card[data-theme="snow"] {
+  background: linear-gradient(#d7e9f8 0 52%, #f6fbff 52%);
+}
+
+.world-card[data-theme="snow"]::after {
+  background: #dfeaf5;
+}
+
+.world-card[data-theme="snow"] .hill {
+  background: #fff;
+}
+
+.world-card[data-theme="snow"] .hill-two {
+  background: #eaf2fa;
+}
+
+.world-card[data-theme="snow"] .cloud {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.world-card[data-theme="factory"] {
+  background: linear-gradient(#e9eef2 0 40%, #cbd5dd 40%);
+}
+
+.world-card[data-theme="factory"]::after {
+  background: repeating-linear-gradient(90deg, #aebbc6 0 40px, #bcc8d2 40px 80px);
+}
+
+.world-card[data-theme="factory"] .hill,
+.world-card[data-theme="factory"] .cloud {
+  display: none;
+}
+
+.world-card[data-theme="pond"] {
+  background: linear-gradient(#c5e9f7 0 46%, #8fd08b 46%);
+}
+
+.world-card[data-theme="pond"]::after {
+  background: #6cb86a;
+}
+
+.world-card[data-theme="pond"] .hill {
+  background: #a9de9d;
+}
+
+.world-card[data-theme="pond"] .hill-two {
+  background: #93cf88;
+}
+
 .hint-button {
   position: absolute;
   top: 14px;
@@ -852,6 +948,31 @@ p {
 
 .world-card[data-theme="room"] .track::before {
   background: rgba(200, 226, 240, 0.8);
+}
+
+.world-card[data-theme="snow"] .track::before {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.world-card[data-theme="factory"] .track::before {
+  background: rgba(222, 231, 237, 0.9);
+}
+
+/* The pond itself is the field: the tiles are lily pads on blue water. */
+.world-card[data-theme="pond"] .track::before {
+  background: #74c4e8;
+  box-shadow: inset 0 -8px 0 rgba(30, 90, 130, 0.12);
+}
+
+.world-card[data-theme="pond"] .tile {
+  border: 3px solid rgba(40, 110, 60, 0.35);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #a5e08f, #6fbf64 75%);
+  box-shadow: inset 0 -5px 0 rgba(30, 90, 40, 0.15);
+}
+
+.world-card[data-theme="snow"] .tile {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .track-tiles {
@@ -999,6 +1120,220 @@ p {
 
 .world-card[data-theme="room"] .wall-art::after {
   display: none;
+}
+
+.world-card[data-theme="snow"] .wall-art {
+  width: 84%;
+  height: 58%;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 0 22%, var(--ink) 22% 26%, transparent 26% 48%, var(--ink) 48% 52%, transparent 52% 74%, var(--ink) 74% 78%, transparent 78%),
+    #b98a5a;
+  box-shadow: inset 0 -8px rgba(90, 50, 10, 0.22), 0 7px 0 rgba(38, 67, 92, 0.13);
+}
+
+.world-card[data-theme="snow"] .wall-art::before {
+  top: -26%;
+  left: -5%;
+  width: 110%;
+  height: 32%;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.world-card[data-theme="snow"] .wall-art::after {
+  display: none;
+}
+
+.world-card[data-theme="factory"] .wall-art {
+  width: 82%;
+  height: 70%;
+  border-radius: 10px;
+  background: repeating-linear-gradient(-45deg, #f6c343 0 12px, #3b4a58 12px 24px);
+  box-shadow: inset 0 -8px rgba(0, 0, 0, 0.18), 0 7px 0 rgba(38, 67, 92, 0.13);
+}
+
+.world-card[data-theme="factory"] .wall-art::before,
+.world-card[data-theme="factory"] .wall-art::after {
+  display: none;
+}
+
+/* Water, belts, marks and snowballs */
+
+.water {
+  z-index: 1;
+}
+
+.water-art {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #74c4e8;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.water-art i {
+  position: absolute;
+  left: 22%;
+  width: 56%;
+  height: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+.water-art i:first-child {
+  top: 28%;
+}
+
+.water-art i:last-child {
+  top: 58%;
+  left: 34%;
+  width: 40%;
+}
+
+.water.is-splash .water-art {
+  animation: splash 560ms ease;
+}
+
+.belt {
+  z-index: 1;
+}
+
+.belt-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96%;
+  height: 76%;
+  overflow: hidden;
+  border: 4px solid var(--ink);
+  border-radius: 12px;
+  background: repeating-linear-gradient(90deg, #56687a 0 12px, #71859a 12px 24px);
+  box-shadow: inset 0 -6px rgba(0, 0, 0, 0.18);
+  transform: rotate(var(--angle, 0deg));
+  animation: beltRoll 900ms linear infinite;
+}
+
+.belt-art svg {
+  width: 72%;
+  fill: none;
+  stroke: #ffd65c;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.belt.is-rolling .belt-art {
+  box-shadow: inset 0 -6px rgba(0, 0, 0, 0.18), 0 0 0 6px rgba(249, 201, 77, 0.55);
+  filter: brightness(1.15);
+}
+
+.spot {
+  z-index: 1;
+}
+
+.spot-art {
+  display: grid;
+  place-items: center;
+  width: 74%;
+  height: 74%;
+  border: 5px dashed rgba(38, 67, 92, 0.5);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.spot-art svg {
+  width: 60%;
+  fill: rgba(255, 255, 255, 0.7);
+  stroke: rgba(38, 67, 92, 0.35);
+  stroke-width: 3;
+}
+
+.spot.is-filled .spot-art {
+  border-style: solid;
+  border-color: var(--teal);
+  background: rgba(50, 184, 170, 0.25);
+}
+
+.snowball {
+  z-index: 4;
+  transition: left 430ms cubic-bezier(0.34, 1.3, 0.64, 1), top 430ms cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.snowball-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72%;
+  height: 72%;
+  border: 4px solid var(--ink);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 30%, #dbe8f4 100%);
+  box-shadow: inset -6px -8px 0 rgba(38, 67, 92, 0.1), 0 8px 0 rgba(38, 67, 92, 0.13);
+}
+
+.snowball-face {
+  display: none;
+  width: 100%;
+  height: 100%;
+  fill: var(--ink);
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.snowball-nose {
+  fill: var(--orange);
+  stroke-width: 2;
+}
+
+.snowball-smile {
+  fill: none;
+}
+
+.snowball-hat {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  display: none;
+  width: 44%;
+  height: 32%;
+  border: 4px solid var(--ink);
+  border-radius: 6px 6px 2px 2px;
+  background: #3b4a58;
+  transform: translateX(-50%);
+}
+
+.snowball-hat::after {
+  position: absolute;
+  right: -22%;
+  bottom: -4px;
+  left: -22%;
+  height: 8px;
+  border: 4px solid var(--ink);
+  border-radius: 4px;
+  background: #3b4a58;
+  content: "";
+}
+
+/* A snowball on its mark becomes a snowman: the reward is the picture itself. */
+.snowball.is-placed .snowball-face,
+.snowball.is-placed .snowball-hat {
+  display: block;
+}
+
+.snowball.is-placed .snowball-art {
+  animation: snowmanPop 420ms ease;
+}
+
+.snowball.is-stuck .snowball-art {
+  outline: 5px solid var(--coral);
+  outline-offset: 3px;
+  animation: wrongSlot 420ms ease;
 }
 
 /* Floor switches and gates */
@@ -1454,6 +1789,65 @@ p {
   animation: hintGlow 800ms ease-in-out 2;
 }
 
+.target-gear svg,
+.target-duck svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 6px 0 rgba(38, 67, 92, 0.16));
+}
+
+/* The teeth are two dashed rings: an ink ring underneath draws their outline. */
+.gear-teeth-outline,
+.gear-teeth {
+  fill: none;
+  stroke-dasharray: 5.5 7.85;
+  stroke-linecap: butt;
+}
+
+.gear-teeth-outline {
+  stroke: var(--ink);
+  stroke-width: 14;
+}
+
+.gear-teeth {
+  stroke: #f5b556;
+  stroke-width: 8;
+}
+
+.gear-body {
+  fill: #f5b556;
+}
+
+.gear-hole {
+  fill: #fff6cf;
+}
+
+.duck-body {
+  fill: #ffd84d;
+}
+
+.duck-beak {
+  fill: var(--orange);
+}
+
+.duck-eye {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.duck-wing {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.world-card[data-theme="pond"] .target .target-art {
+  animation: duckBob 2.4s ease-in-out infinite;
+}
+
 /* The robot */
 
 .robot {
@@ -1474,6 +1868,19 @@ p {
 
 .robot.is-confused {
   animation: robotOops 520ms ease;
+}
+
+.robot.is-jumping {
+  transition-duration: 560ms;
+}
+
+.robot.is-jumping img {
+  animation: robotJump 560ms ease;
+}
+
+.robot.is-riding {
+  transition-duration: 380ms;
+  transition-timing-function: linear;
 }
 
 .robot-beam {
@@ -1847,6 +2254,15 @@ p {
 
 .command-repeat {
   --button-color: var(--teal);
+}
+
+.command-jump {
+  --button-color: var(--pink);
+}
+
+.command-wave {
+  stroke-width: 4;
+  opacity: 0.85;
 }
 
 .command-body {
@@ -2298,6 +2714,31 @@ p {
   100% { transform: translateY(520px) rotate(620deg); opacity: 0; }
 }
 
+@keyframes robotJump {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-38%) scale(1.1); }
+}
+
+@keyframes splash {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  40% { transform: scale(1.12); filter: brightness(1.3); }
+}
+
+@keyframes beltRoll {
+  from { background-position: 0 0; }
+  to { background-position: 24px 0; }
+}
+
+@keyframes snowmanPop {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.18) rotate(-5deg); }
+}
+
+@keyframes duckBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+}
+
 /* ---------- Small screens ---------- */
 
 @media (max-width: 960px) {
@@ -2537,5 +2978,26 @@ p {
 
   .success-star {
     animation-duration: 1ms;
+  }
+
+  .belt-art,
+  .world-card[data-theme="pond"] .target .target-art {
+    animation: none;
+  }
+
+  .snowball,
+  .robot.is-jumping,
+  .robot.is-jumping img,
+  .robot.is-riding,
+  .water.is-splash .water-art,
+  .snowball.is-placed .snowball-art,
+  .snowball.is-stuck .snowball-art {
+    animation: none;
+    transition-duration: 1ms;
+  }
+
+  .water.is-splash .water-art {
+    outline: 5px solid var(--coral);
+    outline-offset: 3px;
   }
 }

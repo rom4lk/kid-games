@@ -9,9 +9,11 @@ touch screen. One level takes one to five minutes; one story takes a session or 
 ## The main idea
 
 The game is a shelf of short stories. In every story the robot has a job: carry parcels, charge
-itself with batteries, gather crystals on Mars, vacuum a room. Every story also has its own way of
-moving and its own cards, so a mechanic that would be confusing next to another one gets a story of
-its own: arrows in the delivery stories, forward and turns in the lab and on Mars.
+itself with batteries, gather crystals on Mars, vacuum a room, build snowmen, collect gears in a
+factory, bring back rubber ducks from a pond. Every story also has its own way of moving and its own
+cards, so a mechanic that would be confusing next to another one gets a story of its own: arrows in
+the delivery stories, forward and turns in the lab and on Mars, pushing in the snow, belts in the
+factory, the jump at the pond.
 
 Before the run the child fills a strip of visible slots with picture cards. After the green button
 the robot performs the cards one by one, and the active card bounces in time with the robot.
@@ -51,7 +53,12 @@ The first level of every story shows a pulsing finger near the cards; after the 
 away. The `×2` card stays dim until two cards stand before it, so the rule "repeat needs two" is
 shown instead of explained. When the run ends without reaching the goal, the game points at the next
 card instead of marking a mistake. When a parcel is put down on the wrong station, the matching
-station glows.
+station glows. When a snowball has been rolled where it can never come back from, the card that
+rolled it there trembles, so the child takes out that card and not the last one.
+
+The world explains its own rules by reacting: a belt lights up while it carries the robot, a ball
+that cannot roll shakes, water splashes when the robot lands in it, and a ball on its mark becomes a
+snowman at once.
 
 The text on the screen is for an adult: the level title and its goal in one sentence under the
 cards, the text of the hint, the lock note on a level card, the survey question. It is small, muted
@@ -70,13 +77,24 @@ and separated from the child's controls, and the child never needs it.
    winding canyon, then several crystals.
 5. **Clean Room.** Arrows plus `×2`. Rows of dust, furniture to go around, and a final room that does
    not fit into the strip without repeat cards.
+6. **Snow Yard.** Arrows only. Walking into a snowball rolls it one cell ahead, so the robot has to
+   stand on the far side of the ball to roll it where the mark is. One ball first, then a corner, a
+   fence, two balls, and a fort where the order of the two balls matters.
+7. **Toy Factory.** Arrows only. A belt carries the robot to its end for the price of one card; a belt
+   running against the robot carries it back. A single belt first, then a belt that turns a corner,
+   the wrong-way belt, and gears at the ends of longer chains.
+8. **Lily Pond.** Forward, turns and the new jump card. Water stops a step, and the jump flies over one
+   cell, so the pond is a path of lily pads where walking and jumping alternate. A single hop first,
+   then a walk before the hop, then turns, an island, and a big pond with three ducks.
 
 ## Visual language
 
 - Soft rounded shapes without sharp corners, a warm yellow background, and a calm field whose colors
   change with the story: a meadow, a yard, a lab, Mars, a room.
 - Every card has a constant color and picture. Arrows are blue, purple, green and orange; the pick-up
-  is yellow and the put-down is coral; the repeat card is teal.
+  is yellow and the put-down is coral; the repeat card is teal; the jump card is pink.
+- A belt carries its direction in the yellow chevrons and the moving stripes; a snowball's mark is a
+  dashed ring with a faint snowman inside; water is blue with ripples and the lily pads are round.
 - A parcel and its station repeat the same large sign; their shared color is only a supporting cue.
 - A switch and its gate repeat the same shape; the color is only a supporting cue.
 - The headlight robot carries a large yellow beam on the side it faces.
@@ -96,6 +114,12 @@ and separated from the child's controls, and the child never needs it.
 - Whether the `×2` card is understood after the first Mars level, and whether the highlighted pair of
   cards helps.
 - Whether the spare slots read as "allowed but not free".
+- Whether the child understands that the robot has to stand behind a snowball to roll it, and whether
+  they read the trembling card as "this push was the mistake" after a ball is stuck.
+- Whether they see that the belt, not a card, moves the robot, and whether the wrong-way belt reads
+  as "go another way" rather than as a broken level.
+- Whether they try to jump over land as well as over water, and whether the splash explains a jump
+  that fell short.
 - Whether the three faces of the survey are told apart and answered honestly rather than tapped to
   get past the screen.
 
@@ -106,6 +130,6 @@ own and can explain with gestures what at least one card is for.
 
 ## Boundaries
 
-The current version has five stories with eight levels each. A sixth story that mixes parcels and
+The current version has eight stories with eight levels each. A story that mixes parcels and
 batteries on larger fields is planned but not built. The survey answers stay in the browser; there
 is no upload anywhere.

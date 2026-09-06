@@ -16,6 +16,7 @@ const {
   isComplete,
   findShortestCompletion,
   nextHelpfulCommand,
+  firstStuckCard,
   normalizeProgress,
   levelStars,
   isLevelUnlocked,
@@ -62,7 +63,7 @@ function makeLevel(overrides) {
 }
 
 function testEveryStoryHasLevels() {
-  assert.equal(STORIES.length, 5);
+  assert.equal(STORIES.length, 8);
   STORIES.forEach((entry) => {
     assert.ok(entry.levels.length >= 6 && entry.levels.length <= 10, `${entry.title} has 6 to 10 levels`);
     assert.ok(entry.title && entry.lead && entry.emoji && entry.accessory, `${entry.title} has its card texts`);
@@ -146,7 +147,7 @@ function testMapLegend() {
   assert.deepEqual(parsed.switches, [{ x: 0, y: 1, shape: "circle" }, { x: 1, y: 2, shape: "square" }]);
   assert.deepEqual(parsed.gates, [{ x: 2, y: 1, shape: "circle" }, { x: 2, y: 2, shape: "square" }]);
   assert.throws(() => parseMap(["..", "..."], "ragged"), /different length/);
-  assert.throws(() => parseMap(["x"], "unknown"), /unknown map symbol/);
+  assert.throws(() => parseMap(["z"], "unknown"), /unknown map symbol/);
 }
 
 function testLevelValidation() {
@@ -159,7 +160,12 @@ function testLevelValidation() {
   assert.throws(() => makeLevel({ level: { map: ["..Q", "*.."], solution: [] } }), /without a switch/);
   assert.throws(() => makeLevel({ level: { commands: ["forward"] } }), /which its story does not use/);
   assert.throws(() => makeLevel({ level: { solution: ["up"] } }), /palette does not offer/);
-  assert.throws(() => makeLevel({ level: { map: ["..."], solution: [] } }), /nothing to deliver or collect/);
+  assert.throws(() => makeLevel({ level: { map: ["..."], solution: [] } }), /nothing to deliver, collect or push/);
+  assert.throws(() => makeLevel({ level: { map: ["b.."], robot: { x: 1, y: 0, facing: "east" }, solution: [] } }), /snowballs and 0 marks/);
+  assert.throws(() => makeLevel({ level: { map: ["~.S", "s.."], solution: [] } }), /starts the robot in the water/);
+  assert.throws(() => makeLevel({ level: { map: [">.S", "s.."], solution: [] } }), /starts the robot on a belt/);
+  assert.throws(() => makeLevel({ level: { map: [".>#", "s.S"], solution: [] } }), /runs into something it cannot cross/);
+  assert.throws(() => makeLevel({ level: { map: [".>v", ".^<", "s.S"], solution: [] } }), /run in a circle/);
 }
 
 function testArrowMovementAndBlocking() {
@@ -328,6 +334,83 @@ function testSurveyRecords() {
   assert.equal(kept[0].answer, "easy");
 }
 
+function testSnowballsRollAndGetStuck() {
+  const item = level("snow", 1);
+  const pushed = applyCommand(item, initialState(item), "right");
+  assert.equal(pushed.ok, true);
+  assert.deepEqual([pushed.state.robot.x, pushed.state.balls[0].x], [1, 2], "the robot takes the ball's cell and the ball rolls ahead");
+  assert.equal(pushed.events[0].type, "push");
+  assert.equal(pushed.events[0].placed, false);
+  const done = simulate(item, item.solution);
+  assert.equal(done.complete, true);
+  assert.equal(done.completedAt, 2, "the run stops when the last ball reaches its mark");
+
+  const fence = level("snow", 6);
+  const intoFence = simulate(fence, ["right", "right"]);
+  assert.equal(intoFence.reason, "blocked");
+  assert.equal(intoFence.blockedBy, "snowball", "a ball against a fence does not move");
+  assert.deepEqual(intoFence.blockedAt, { x: 3, y: 1 });
+  assert.equal(intoFence.ballId, 0);
+
+  const two = level("snow", 7);
+  const collision = simulate(two, ["up", "right", "right", "right", "down", "right", "down", "right"]);
+  assert.equal(collision.reason, "blocked");
+  assert.equal(collision.blockedBy, "edge", "a ball cannot leave the field");
+
+  // A ball rolled to the edge column can never come back to a mark in the
+  // middle, so the hint blames the card that rolled it there.
+  const detour = level("snow", 4);
+  const stuck = ["up", "right", "right", "right"];
+  const outcome = simulate(detour, stuck);
+  assert.equal(outcome.failedAt, -1, "rolling a ball to the edge is not a crash");
+  assert.equal(nextHelpfulCommand(detour, outcome.state), null);
+  assert.equal(firstStuckCard(detour, stuck), 3);
+  assert.equal(firstStuckCard(detour, ["up", "right"]), -1, "one push to the right can still be undone");
+  assert.equal(firstStuckCard(detour, detour.solution), -1);
+}
+
+function testBeltsCarryTheRobot() {
+  const item = level("factory", 1);
+  const ride = applyCommand(item, initialState(item), "right");
+  assert.deepEqual(
+    ride.events.map((event) => event.type),
+    ["step", "ride", "ride", "ride", "collect"],
+    "one card walks onto the belt and the belt does the rest",
+  );
+  assert.deepEqual([ride.state.robot.x, ride.state.robot.y], [4, 1]);
+  assert.equal(isComplete(item, ride.state), true);
+
+  const corner = level("factory", 3);
+  const chain = simulate(corner, ["right", "down"]);
+  assert.equal(chain.complete, true, "a belt hands over to a belt of another direction");
+
+  const wrongWay = level("factory", 4);
+  const back = simulate(wrongWay, ["left"]);
+  assert.equal(back.failedAt, -1, "a belt running the wrong way is not a crash");
+  assert.deepEqual([back.state.robot.x, back.state.robot.y], [5, 2], "it carries the robot back to where it came from");
+  assert.equal(simulate(wrongWay, wrongWay.solution).complete, true);
+}
+
+function testJumpsCrossWater() {
+  const item = level("pond", 2);
+  assert.equal(simulate(item, ["forward", "forward"]).blockedBy, "water", "walking into water stops the run");
+  assert.equal(simulate(item, ["jump"]).blockedBy, "water", "landing in water stops the run too");
+  assert.deepEqual(simulate(item, ["jump"]).blockedAt, { x: 2, y: 1 });
+  const across = simulate(item, ["forward", "jump"]);
+  assert.deepEqual([across.state.robot.x, across.state.robot.y], [3, 1], "a jump lands two cells ahead");
+  assert.equal(across.state.robot.facing, "east");
+  assert.equal(simulate(level("pond", 1), ["turnLeft", "jump"]).blockedBy, "edge");
+
+  const overDuck = makeLevel({
+    story: { movement: "turns", theme: "pond" },
+    level: { map: [".*.*"], commands: ["jump", "forward"], solution: ["jump", "forward"] },
+  });
+  const flown = simulate(overDuck, ["jump"]);
+  assert.deepEqual(flown.state.collected, [false, false], "the cell the robot flies over is untouched");
+  assert.equal(simulate(overDuck, ["forward", "jump"]).complete, true);
+  assert.throws(() => makeLevel({ level: { map: ["s.S"], commands: ["jump", "right"], solution: ["right"] } }), /which its story does not use/);
+}
+
 function testSearchIgnoresFacingWhenArrowsMove() {
   const item = level("post", 1);
   const start = initialState(item);
@@ -359,6 +442,9 @@ const tests = [
   testHintFromTheChildsRealState,
   testProgressRules,
   testSurveyRecords,
+  testSnowballsRollAndGetStuck,
+  testBeltsCarryTheRobot,
+  testJumpsCrossWater,
   testSearchIgnoresFacingWhenArrowsMove,
 ];
 
