@@ -711,11 +711,12 @@ function railPaths(grid, columns) {
   return roadPaths(grid, columns, "rails");
 }
 
-// Water under a bridge belongs to the lake, so a bridge never splits it in two.
-function lakes(grid, underlay, columns) {
+// The open water a duck and a boat can travel. A bridge covers the water under
+// it, so it cuts the swim in two; the lake itself still keeps its shape and its
+// shores, because those are drawn from the water under the bridge as well.
+function lakes(grid, columns) {
   if (!Array.isArray(grid)) return [];
-  const water = grid.map((value, index) => (isWaterCell(grid, underlay, index) ? WATER_ID : EMPTY_CELL));
-  return connectedComponents(water, columns, [WATER_ID])
+  return connectedComponents(grid, columns, [WATER_ID])
     .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
 }
 
@@ -985,7 +986,7 @@ const ANCHOR_KINDS = [
 const TRACK_SOURCES = {
   roads: (size, grid) => roadPaths(grid, size.columns),
   rails: (size, grid) => railPaths(grid, size.columns),
-  lakes: (size, grid, underlay) => lakes(grid, underlay, size.columns),
+  lakes: (size, grid) => lakes(grid, size.columns),
   woods: (size, grid) => forestClusters(grid, size.columns),
   // One track of one cell per house that has a street.
   homes: (size, grid) => grid.flatMap((value, index) => (
@@ -2015,11 +2016,11 @@ function initializeGame() {
   }
 
   // Every reading the creatures of this world need, each one done once.
-  function readTracks(size, grid, underlay) {
+  function readTracks(size, grid) {
     const found = new Map();
     SPRITE_KINDS.concat(ANCHOR_KINDS).forEach(({ source }) => {
       if (found.has(source)) return;
-      found.set(source, TRACK_SOURCES[source](size, grid, underlay));
+      found.set(source, TRACK_SOURCES[source](size, grid));
     });
     return found;
   }
@@ -2035,7 +2036,7 @@ function initializeGame() {
   function analyzeWorld() {
     const world = currentWorld(state);
     const size = worldSize(world);
-    const tracks = readTracks(size, world.grid, world.underlay);
+    const tracks = readTracks(size, world.grid);
     const alive = new Map(sprites.map((sprite) => [sprite.key, sprite]));
     const keep = (kind, track, isStatic) => {
       const key = trackKey(kind, track);

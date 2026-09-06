@@ -56,7 +56,8 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
 
 - A road becomes a straight, a turn, a T, a crossing or an end.
 - A road painted across water becomes a bridge, and painting water back over it gives the water
-  back. The lake underneath stays one lake.
+  back. The lake underneath keeps its shape and its shores, but a duck and a boat do not travel
+  under the bridge: it cuts the open water in two.
 - Water draws a shore on every side where it meets something else, rounds the corners of a lake
   and puts a fillet in every inside corner where the lake bends.
 - Road painted two cells wide or more becomes a paved square: the centre line stops and the paving

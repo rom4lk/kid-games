@@ -129,7 +129,9 @@ possible, and each reaction is visible without sound or reading:
 - A car drives along a connected road; on a closed loop it keeps driving round.
 - A road of two cells or more brings a walker, a small friendly person who strolls the roadside.
 - A train runs along connected rails.
-- A duck bobs on a lake of four or more cells; a boat rocks on a lake of ten or more.
+- A duck bobs on a lake of four or more cells; a boat rocks on a lake of ten or more. A bridge
+  stands on the water, so neither of them travels under it: each side of the bridge is its own
+  stretch of water and counts its cells on its own.
 - Birds flap over a forest cluster of six or more cells.
 - A house with a street on any side starts smoking from its chimney; rails do not count. At most
   six chimneys smoke at once, spread evenly over the town.

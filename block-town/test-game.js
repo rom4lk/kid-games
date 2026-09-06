@@ -558,8 +558,7 @@ function testLakesAndForests() {
     "..........",
     "fffff.f...",
     ]);
-  const underlay = new Array(50).fill(0);
-  const found = lakes(grid, underlay, 10).sort((left, right) => right.size - left.size);
+  const found = lakes(grid, 10).sort((left, right) => right.size - left.size);
   assert.equal(found.length, 2);
   assert.deepEqual(found.map((lake) => lake.size), [5, 3]);
   // Only the lake of four or more cells is big enough for a duck.
@@ -570,7 +569,8 @@ function testLakesAndForests() {
   assert.equal(clusters.filter((cluster) => cluster.size >= 6).length, 0);
   assertContinuous(clusters[0].path, true);
 
-  // A bridge keeps the lake underneath in one piece.
+  // A bridge stands on the water, so a duck and a boat cannot travel under it:
+  // the swim is cut in two and neither half ever runs along the road.
   const split = buildGrid([
     "..........",
     "wwrww.....",
@@ -580,9 +580,11 @@ function testLakesAndForests() {
   ]);
   const bridgeUnderlay = new Array(50).fill(0);
   bridgeUnderlay[12] = WATER_ID;
-  const joined = lakes(split, bridgeUnderlay, 10);
-  assert.equal(joined.length, 1);
-  assert.equal(joined[0].size, 5);
+  const cut = lakes(split, 10).sort((left, right) => right.size - left.size);
+  assert.deepEqual(cut.map((lake) => lake.size), [2, 2]);
+  assert.ok(cut.every((lake) => !lake.path.includes(12)));
+  // The water under the bridge is still water, so the lake keeps its shores.
+  assert.equal(waterEdges(split, bridgeUnderlay, 10, 12) & (MASK_EAST | MASK_WEST), 0);
 }
 
 function testHouseDoor() {
