@@ -1446,7 +1446,6 @@ if (typeof document !== "undefined") {
       slot.className = "program-slot";
       slot.type = "button";
       slot.dataset.index = index;
-      slot.setAttribute("role", "listitem");
       slot.classList.toggle("is-spare", index >= level.par);
 
       if (command) {

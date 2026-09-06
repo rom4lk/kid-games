@@ -13,6 +13,7 @@ const {
   lockedBlockIds,
   isBlockEnabled,
   neighborIndices,
+  diagonalIndices,
   lineIndices,
   MASK_NORTH,
   MASK_EAST,
@@ -177,6 +178,43 @@ function testNeighbors() {
   assert.deepEqual(neighborIndices(size, 9), [19, 8]);
   assert.deepEqual(neighborIndices(size, 11), [1, 12, 21, 10]);
   assert.deepEqual(neighborIndices(size, 49), [39, 48]);
+}
+
+// The corner art of a cell reads its diagonals, so a repaint has to reach them.
+function testDiagonals() {
+  const size = worldSizeById("size-1");
+  assert.deepEqual(diagonalIndices(size, 0), [11]);
+  assert.deepEqual(diagonalIndices(size, 9), [18]);
+  assert.deepEqual(diagonalIndices(size, 11), [2, 22, 20, 0]);
+  assert.deepEqual(diagonalIndices(size, 49), [38]);
+}
+
+// The look of a cell must not depend on the order the cells were painted in:
+// filling a two by two square makes all four cells a paved square, whichever
+// one went down first.
+function testCornerArtIgnoresPaintOrder() {
+  const size = worldSizeById("size-1");
+  const pathId = BLOCKS.find((block) => block.key === "path").id;
+  const square = [11, 12, 21, 22];
+  const state = createGameState([pathId]);
+  createWorld(state, size.id);
+  const world = currentWorld(state);
+
+  // Every cell of a finished square is a plaza with no inside corners, and the
+  // cell painted first sees that only once the diagonal is painted too.
+  square.forEach((index) => paintCell(state, index, pathId));
+  square.forEach((index) => {
+    assert.equal(roadPlaza(world.grid, size.columns, index), true);
+    assert.equal(roadInnerCorners(world.grid, size.columns, index), 0);
+  });
+
+  // The cell painted first has its three companions among its own eight
+  // surrounding cells, so a repaint of them keeps the drawing honest.
+  const around = new Set([
+    ...neighborIndices(size, 11),
+    ...diagonalIndices(size, 11),
+  ]);
+  square.slice(1).forEach((index) => assert.equal(around.has(index), true));
 }
 
 function testStrokeLine() {
@@ -1171,6 +1209,8 @@ testGridDimensions();
 testSavedGeometry();
 testNeighbors();
 testStrokeLine();
+testDiagonals();
+testCornerArtIgnoresPaintOrder();
 testNeighborMask();
 testRoadTile();
 testWaterEdges();

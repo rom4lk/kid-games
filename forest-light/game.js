@@ -983,9 +983,18 @@ function startGame() {
     const button = resourceButtons.get(harvest.nodeId);
     const result = tapHarvest(state);
 
+    // A refused tap has to say why: a hungry hero, a full backpack, or an item
+    // that is simply not there any more, which needs no words of its own.
     if (result === false) {
-      refuse("The hero is too hungry to lift the stone.");
+      if (node && node.kind === "stone" && isHungry(state)) {
+        refuse("The hero is too hungry to lift the stone.");
+      } else if (state.backpack.length >= BACKPACK_SIZE) {
+        refuse("The backpack is full.");
+      } else {
+        refuse(null);
+      }
       render();
+      refreshHint();
       return;
     }
 

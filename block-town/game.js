@@ -280,8 +280,31 @@ function gridNeighbors(cellCount, columns, index) {
   return neighbors;
 }
 
+// The four diagonal neighbours, in the same north-east, south-east, south-west,
+// north-west order as the corner bits. A cell whose corner art is drawn from
+// `quadrantMask` depends on these as much as on the four sides.
+function gridDiagonals(cellCount, columns, index) {
+  const rows = Math.floor(cellCount / columns);
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  const north = row > 0;
+  const south = row < rows - 1;
+  const east = column < columns - 1;
+  const west = column > 0;
+  const diagonals = [];
+  if (north && east) diagonals.push(index - columns + 1);
+  if (south && east) diagonals.push(index + columns + 1);
+  if (south && west) diagonals.push(index + columns - 1);
+  if (north && west) diagonals.push(index - columns - 1);
+  return diagonals;
+}
+
 function neighborIndices(size, index) {
   return gridNeighbors(size.cellCount, size.columns, index);
+}
+
+function diagonalIndices(size, index) {
+  return gridDiagonals(size.cellCount, size.columns, index);
 }
 
 function isCellIndex(size, index) {
@@ -902,6 +925,7 @@ if (typeof module !== "undefined" && module.exports) {
     lockedBlockIds,
     isBlockEnabled,
     neighborIndices,
+    diagonalIndices,
     lineIndices,
     MASK_NORTH,
     MASK_EAST,
@@ -913,6 +937,7 @@ if (typeof module !== "undefined" && module.exports) {
     CORNER_NW,
     roadGroup,
     gridNeighbors,
+    gridDiagonals,
     connectedComponents,
     roadPaths,
     railPaths,
@@ -1039,6 +1064,7 @@ const FAMILY_SOUNDS = {
 
 function initializeGame() {
   const elements = {
+    shell: document.querySelector("#game-shell"),
     stageArea: document.querySelector("#stage"),
     stage: document.querySelector("#sheet-stage"),
     grid: document.querySelector("#sheet-grid"),
@@ -1366,10 +1392,13 @@ function initializeGame() {
     return (row + (index % columns)) % 2 === 1;
   }
 
-  // A painted cell can change the look of its four neighbours and nothing else.
+  // A painted cell can change the look of the eight cells around it and nothing
+  // else. The diagonals matter too: a paved square and every rounded inside
+  // corner are drawn from the diagonal neighbour as well as from the sides.
   function renderCellAndNeighbors(index, now = Date.now(), size = openSize(), world = currentWorld(state)) {
     renderCell(index, now, size, world);
     neighborIndices(size, index).forEach((neighbor) => renderCell(neighbor, now, size, world));
+    diagonalIndices(size, index).forEach((diagonal) => renderCell(diagonal, now, size, world));
   }
 
   function renderAllCells() {
@@ -1796,6 +1825,7 @@ function initializeGame() {
     showWordsState("list");
     renderWordList();
     elements.wordsOverlay.hidden = false;
+    elements.shell.inert = true;
     startDriver();
     const firstLocked = elements.wordList.querySelector(".word-button:not([data-open='true'])");
     (firstLocked ?? elements.wordsClose).focus();
@@ -1814,6 +1844,7 @@ function initializeGame() {
     wordsOpen = false;
     stopSpeaking();
     elements.wordsOverlay.hidden = true;
+    elements.shell.inert = paused;
     startDriver();
     (elements.wordsButton.hidden ? elements.grid : elements.wordsButton).focus();
   }
@@ -2147,8 +2178,8 @@ function initializeGame() {
       return;
     }
     saveGame();
-    openWorldById(world.id);
     closePause({ restoreFocus: false });
+    openWorldById(world.id);
     announce("A new world.");
   }
 
@@ -2162,14 +2193,14 @@ function initializeGame() {
     if (state.worlds.length === 0) {
       createWorld(state, WORLD_SIZES[0].id, Date.now(), measureForSize(WORLD_SIZES[0].id));
       saveGame();
-      openWorldById(state.currentWorldId);
       closePause({ restoreFocus: false });
+      openWorldById(state.currentWorldId);
       announce("The world is deleted. Here is a new one.");
       return;
     }
     if (wasOpen) {
-      openWorldById(state.currentWorldId);
       closePause({ restoreFocus: false });
+      openWorldById(state.currentWorldId);
       announce("The world is deleted.");
       return;
     }
@@ -2196,17 +2227,19 @@ function initializeGame() {
     startDriver();
     renderWorldShelf();
     elements.pauseOverlay.hidden = false;
+    elements.shell.inert = true;
     showPauseState("menu");
     elements.resume.focus();
   }
 
-  // Opening a world already puts the focus on the sheet, so the pause closes
-  // behind it without taking the focus back.
+  // Opening a world puts the focus on the sheet itself, so the pause closes
+  // first and without taking the focus back.
   function closePause({ restoreFocus = true } = {}) {
     paused = false;
     startDriver();
     pendingDeleteId = null;
     elements.pauseOverlay.hidden = true;
+    elements.shell.inert = wordsOpen;
     showPauseState("menu");
     if (restoreFocus) elements.pause.focus();
   }
@@ -2448,8 +2481,10 @@ function initializeGame() {
     }
     const open = event.target.closest(".world-choice");
     if (!open) return;
-    openWorldById(open.dataset.world);
+    // The pause closes first: opening a world hands the focus to the sheet,
+    // and the sheet only takes it once the shell is reachable again.
     closePause({ restoreFocus: false });
+    openWorldById(open.dataset.world);
   });
 
   elements.sizePicker.addEventListener("click", (event) => {

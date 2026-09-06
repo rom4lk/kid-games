@@ -164,15 +164,21 @@
 
   function buildPanel(item, title, game) {
     const panel = document.createElement("div");
+    const titleId = `settings-title-${game}`;
     panel.className = "settings-panel";
     panel.hidden = true;
     panel.setAttribute("role", "dialog");
+    // A dialog needs a name, and the name it should carry is the game it is for.
+    panel.setAttribute("aria-labelledby", titleId);
+    // The reset leaves a message and no button; the panel itself then holds the
+    // focus until it closes, so the keyboard never lands on nothing.
+    panel.tabIndex = -1;
     // Only Block Town hands the choice of blocks to an adult.
     const blocksButton = game === "block-town"
       ? '<button type="button" data-action="blocks">Blocks</button>'
       : "";
     panel.innerHTML = `
-      <p class="settings-panel-title"></p>
+      <p class="settings-panel-title" id="${titleId}"></p>
       <div data-state="menu">
         <p class="settings-panel-note">Progress is stored in this browser.</p>
         <button type="button" class="settings-danger" data-action="reset">Reset progress</button>
@@ -185,7 +191,7 @@
         <button type="button" data-action="cancel">Cancel</button>
       </div>
       <div data-state="done" hidden>
-        <p class="settings-done">Progress reset. The game starts from the beginning.</p>
+        <p class="settings-done" role="status">Progress reset. The game starts from the beginning.</p>
       </div>
       <div data-state="blocks" hidden>
         <p class="settings-panel-note">Tap a block to add it to the palette.</p>
@@ -261,6 +267,10 @@
       if (action === "confirm") {
         clearProgress(game);
         showState(panel, "done");
+        // The button that was pressed is hidden now, so the panel takes the
+        // focus and keeps it until the message has been read and the panel
+        // hands it back to the settings button.
+        panel.focus();
         openPanel.timer = global.setTimeout(closePanel, DONE_MESSAGE_MS);
         return;
       }

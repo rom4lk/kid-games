@@ -209,6 +209,7 @@ const bestElement = document.querySelector("#bestValue");
 const gameMessageElement = document.querySelector("#gameMessage");
 const scorePopElement = document.querySelector("#scorePop");
 const levelDialogElement = document.querySelector("#levelDialog");
+const gameShellElement = document.querySelector(".game-shell");
 const soundButton = document.querySelector("#soundButton");
 
 let currentLevelIndex = 0;
@@ -283,6 +284,13 @@ function renderLevelPicker() {
   });
 }
 
+// The result dialog is modal, so the board and the controls behind it stop
+// answering the keyboard while it is open.
+function showResultDialog(open) {
+  levelDialogElement.hidden = !open;
+  gameShellElement.inert = open;
+}
+
 function createBoardState(level) {
   let start = { row: 0, column: 0 };
   const board = level.map.map((row, rowIndex) =>
@@ -324,7 +332,7 @@ function startLevel(levelIndex) {
   score = 0;
   movesLeft = level.moves;
   gameFinished = false;
-  levelDialogElement.hidden = true;
+  showResultDialog(false);
   clearFeedback();
 
   document.querySelector("#levelLabel").textContent = `Level ${currentLevelIndex + 1}`;
@@ -620,7 +628,7 @@ function finishLevel() {
 
   updateStats();
   renderLevelPicker();
-  levelDialogElement.hidden = false;
+  showResultDialog(true);
   nextButton.focus();
   playFinishSound(stars);
 }
