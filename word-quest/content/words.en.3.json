@@ -575,7 +575,7 @@
           "choices": [
             {
               "id": "bug",
-              "emoji": "🐛",
+              "emoji": "🪲",
               "label": "bug"
             },
             {
@@ -584,9 +584,9 @@
               "label": "spider"
             },
             {
-              "id": "ladybug",
-              "emoji": "🐞",
-              "label": "ladybug"
+              "id": "caterpillar",
+              "emoji": "🐛",
+              "label": "caterpillar"
             }
           ],
           "correct": "bug"
@@ -1678,12 +1678,12 @@
         {
           "word": "BUG",
           "syllables": "B-U-G",
-          "prompt": "Something green crawls along a branch. Read the word.",
+          "prompt": "Something small crawls along a branch. Read the word.",
           "success": "The bug stops to nibble a tasty leaf.",
           "choices": [
             {
               "id": "bug",
-              "emoji": "🐛",
+              "emoji": "🪲",
               "label": "bug"
             },
             {
@@ -2743,7 +2743,7 @@
           "choices": [
             {
               "id": "hug",
-              "emoji": "🤗",
+              "emoji": "🫂",
               "label": "hug"
             },
             {
@@ -3779,13 +3779,13 @@
           "choices": [
             {
               "id": "bug",
-              "emoji": "🐛",
+              "emoji": "🪲",
               "label": "bug"
             },
             {
-              "id": "ladybug",
-              "emoji": "🐞",
-              "label": "ladybug"
+              "id": "caterpillar",
+              "emoji": "🐛",
+              "label": "caterpillar"
             },
             {
               "id": "snail",
@@ -4261,7 +4261,7 @@
           "choices": [
             {
               "id": "hug",
-              "emoji": "🤗",
+              "emoji": "🫂",
               "label": "hug"
             },
             {
@@ -4538,7 +4538,7 @@
           "choices": [
             {
               "id": "hug",
-              "emoji": "🤗",
+              "emoji": "🫂",
               "label": "hug"
             },
             {
@@ -5044,7 +5044,7 @@
           "choices": [
             {
               "id": "hug",
-              "emoji": "🤗",
+              "emoji": "🫂",
               "label": "hug"
             },
             {
