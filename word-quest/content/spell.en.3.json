@@ -1,0 +1,622 @@
+{
+  "language": "en",
+  "letters": 3,
+  "mode": "spell",
+  "chapters": [
+    {
+      "id": "spell-en3-01",
+      "title": "The Name Machine",
+      "emoji": "🏷️",
+      "character": "🤖",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Every animal in the yard wears a name now. Tomorrow the machine moves to the kitchen.",
+      "tasks": [
+        {
+          "word": "CAT",
+          "emoji": "🐱",
+          "prompt": "The tag machine wakes up. Its first customer purrs and waits.",
+          "success": "CAT. The tag clips on and the purring gets louder.",
+          "choices": [
+            "CAT",
+            "COT",
+            "CUT"
+          ]
+        },
+        {
+          "word": "DOG",
+          "emoji": "🐶",
+          "prompt": "Someone barks at the machine and wags a tail.",
+          "success": "DOG. The tail wags even faster.",
+          "choices": [
+            "DOG",
+            "DIG",
+            "DUG"
+          ]
+        },
+        {
+          "word": "PIG",
+          "emoji": "🐷",
+          "prompt": "A pink customer rolls in straight from the mud.",
+          "success": "PIG. The tag stays clean, the customer does not.",
+          "choices": [
+            "PIG",
+            "BIG",
+            "FIG"
+          ]
+        },
+        {
+          "word": "HEN",
+          "emoji": "🐔",
+          "prompt": "A feathered neighbor steps up and clucks twice.",
+          "success": "HEN. She struts off to show the tag to the eggs.",
+          "choices": [
+            "HEN",
+            "PEN",
+            "TEN"
+          ]
+        },
+        {
+          "word": "COW",
+          "emoji": "🐮",
+          "prompt": "A big slow customer moos at the little machine.",
+          "success": "COW. The bell and the tag ring together.",
+          "choices": [
+            "COW",
+            "BOW",
+            "HOW"
+          ]
+        },
+        {
+          "word": "RAT",
+          "emoji": "🐀",
+          "prompt": "A small grey shape sneaks out from behind the machine.",
+          "success": "RAT. The tag is bigger than the customer.",
+          "choices": [
+            "RAT",
+            "RAG",
+            "RAM"
+          ]
+        },
+        {
+          "word": "BEE",
+          "emoji": "🐝",
+          "prompt": "Something yellow buzzes around the pile of tags.",
+          "success": "BEE. The tag flies away with her.",
+          "choices": [
+            "BEE",
+            "BED",
+            "BET"
+          ]
+        },
+        {
+          "word": "ANT",
+          "emoji": "🐜",
+          "prompt": "The tiniest customer of the day climbs up the machine.",
+          "success": "ANT. Six legs carry the tag home.",
+          "choices": [
+            "ANT",
+            "AND",
+            "ANY"
+          ]
+        },
+        {
+          "word": "FOX",
+          "emoji": "🦊",
+          "prompt": "A red tail slips out of the bushes.",
+          "success": "FOX. The tag disappears into the bushes too.",
+          "choices": [
+            "FOX",
+            "FIX",
+            "FAX"
+          ]
+        },
+        {
+          "word": "BAT",
+          "emoji": "🦇",
+          "prompt": "The last customer hangs from the machine upside down.",
+          "success": "BAT. The tag hangs upside down as well.",
+          "choices": [
+            "BAT",
+            "BIT",
+            "BUT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell-en3-02",
+      "title": "The Kitchen Labels",
+      "emoji": "🍳",
+      "character": "🧑‍🍳",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Every pot and jar has its label back. Now the family can pack for the trip.",
+      "tasks": [
+        {
+          "word": "PAN",
+          "emoji": "🍳",
+          "prompt": "All the labels fell off the shelf. The first thing is still warm from the fire.",
+          "success": "PAN. The eggs can start cooking.",
+          "choices": [
+            "PAN",
+            "PEN",
+            "PIN"
+          ]
+        },
+        {
+          "word": "POT",
+          "emoji": "🍲",
+          "prompt": "Something round is bubbling on the stove.",
+          "success": "POT. The soup gets its label back.",
+          "choices": [
+            "POT",
+            "PET",
+            "PIT"
+          ]
+        },
+        {
+          "word": "CUP",
+          "emoji": "🥤",
+          "prompt": "A cold drink with a straw waits on the table.",
+          "success": "CUP. The straw squeaks a thank you.",
+          "choices": [
+            "CUP",
+            "CAP",
+            "COP"
+          ]
+        },
+        {
+          "word": "MUG",
+          "emoji": "☕",
+          "prompt": "Steam rises from something with a handle.",
+          "success": "MUG. The cocoa is still hot.",
+          "choices": [
+            "MUG",
+            "RUG",
+            "TUG"
+          ]
+        },
+        {
+          "word": "NUT",
+          "emoji": "🥜",
+          "prompt": "Two small brown shells roll across the counter.",
+          "success": "NUT. The shells crack open.",
+          "choices": [
+            "NUT",
+            "NET",
+            "NOT"
+          ]
+        },
+        {
+          "word": "HAM",
+          "emoji": "🍖",
+          "prompt": "The dog has been staring at the top shelf all morning.",
+          "success": "HAM. The dog is still staring.",
+          "choices": [
+            "HAM",
+            "HIM",
+            "HUM"
+          ]
+        },
+        {
+          "word": "BUN",
+          "emoji": "🥯",
+          "prompt": "Something round and baked comes out of the oven.",
+          "success": "BUN. It is far too hot to hold.",
+          "choices": [
+            "BUN",
+            "BIN",
+            "BAN"
+          ]
+        },
+        {
+          "word": "JAR",
+          "emoji": "🫙",
+          "prompt": "An empty glass thing with a lid stands by the window.",
+          "success": "JAR. It is ready for the berries.",
+          "choices": [
+            "JAR",
+            "JAM",
+            "JAW"
+          ]
+        },
+        {
+          "word": "CAN",
+          "emoji": "🥫",
+          "prompt": "A metal tin rolls out of the cupboard.",
+          "success": "CAN. The label sticks on the first try.",
+          "choices": [
+            "CAN",
+            "CAP",
+            "CAB"
+          ]
+        },
+        {
+          "word": "TEA",
+          "emoji": "🫖",
+          "prompt": "The last thing on the shelf whistles when it is ready.",
+          "success": "TEA. The whole kitchen smells of mint.",
+          "choices": [
+            "TEA",
+            "SEA",
+            "PEA"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell-en3-03",
+      "title": "Packing for the Trip",
+      "emoji": "🎒",
+      "character": "🧳",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "The bags are packed and the road is open. The first stop is a camp in the woods.",
+      "tasks": [
+        {
+          "word": "BAG",
+          "emoji": "👜",
+          "prompt": "Packing starts with something to put everything else in.",
+          "success": "BAG. It opens wide and waits.",
+          "choices": [
+            "BAG",
+            "BIG",
+            "BUG"
+          ]
+        },
+        {
+          "word": "MAP",
+          "emoji": "🗺️",
+          "prompt": "A big folded paper shows the roads and the rivers.",
+          "success": "MAP. The way to the sea is marked in red.",
+          "choices": [
+            "MAP",
+            "MAN",
+            "MAT"
+          ]
+        },
+        {
+          "word": "HAT",
+          "emoji": "👒",
+          "prompt": "The sun is strong, so this one goes on the head.",
+          "success": "HAT. The shade comes along for free.",
+          "choices": [
+            "HAT",
+            "HOT",
+            "HUT"
+          ]
+        },
+        {
+          "word": "CAP",
+          "emoji": "🧢",
+          "prompt": "A smaller one with a stiff front goes into the bag too.",
+          "success": "CAP. The visor keeps the sun out of the eyes.",
+          "choices": [
+            "CAP",
+            "CUP",
+            "COP"
+          ]
+        },
+        {
+          "word": "TOY",
+          "emoji": "🧸",
+          "prompt": "Nobody in this family travels without a soft friend.",
+          "success": "TOY. The friend gets the best seat.",
+          "choices": [
+            "TOY",
+            "TOP",
+            "TOE"
+          ]
+        },
+        {
+          "word": "CAR",
+          "emoji": "🚗",
+          "prompt": "Everyone is ready. Something waits by the gate with open doors.",
+          "success": "CAR. The doors click shut and the trip begins.",
+          "choices": [
+            "CAR",
+            "CAT",
+            "CAN"
+          ]
+        },
+        {
+          "word": "BUS",
+          "emoji": "🚌",
+          "prompt": "A long yellow one stops at the corner.",
+          "success": "BUS. It is full of people and bags.",
+          "choices": [
+            "BUS",
+            "BUN",
+            "BUG"
+          ]
+        },
+        {
+          "word": "VAN",
+          "emoji": "🚐",
+          "prompt": "A taller one carries the big boxes.",
+          "success": "VAN. Everything fits inside.",
+          "choices": [
+            "VAN",
+            "MAN",
+            "FAN"
+          ]
+        },
+        {
+          "word": "JET",
+          "emoji": "✈️",
+          "prompt": "Something is roaring high above the road.",
+          "success": "JET. It leaves a white line across the sky.",
+          "choices": [
+            "JET",
+            "NET",
+            "PET"
+          ]
+        },
+        {
+          "word": "CAB",
+          "emoji": "🚕",
+          "prompt": "A yellow one with a lamp on the roof waits for a wave.",
+          "success": "CAB. The driver waves back.",
+          "choices": [
+            "CAB",
+            "CUB",
+            "COB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell-en3-04",
+      "title": "The Camp in the Woods",
+      "emoji": "⛺",
+      "character": "🦝",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "The camp is packed away. The road leads on to the town fair.",
+      "tasks": [
+        {
+          "word": "LOG",
+          "emoji": "🪵",
+          "prompt": "A piece of a tree lies by the fire pit.",
+          "success": "LOG. It makes a very good seat.",
+          "choices": [
+            "LOG",
+            "LEG",
+            "LAG"
+          ]
+        },
+        {
+          "word": "AXE",
+          "emoji": "🪓",
+          "prompt": "Something sharp leans against the wood pile.",
+          "success": "AXE. The wood splits with a crack.",
+          "choices": [
+            "AXE",
+            "ACE",
+            "APE"
+          ]
+        },
+        {
+          "word": "SAW",
+          "emoji": "🪚",
+          "prompt": "Another tool has small teeth along one side.",
+          "success": "SAW. The teeth sing through the branch.",
+          "choices": [
+            "SAW",
+            "SAD",
+            "SAT"
+          ]
+        },
+        {
+          "word": "HUT",
+          "emoji": "🛖",
+          "prompt": "A little round house with a straw roof stands by the path.",
+          "success": "HUT. The door is already open.",
+          "choices": [
+            "HUT",
+            "HAT",
+            "HOT"
+          ]
+        },
+        {
+          "word": "WEB",
+          "emoji": "🕸️",
+          "prompt": "Silver threads shine between two branches.",
+          "success": "WEB. The spider is still working on it.",
+          "choices": [
+            "WEB",
+            "WET",
+            "WED"
+          ]
+        },
+        {
+          "word": "NET",
+          "emoji": "🥅",
+          "prompt": "Something full of holes waits by the water.",
+          "success": "NET. Not one fish today.",
+          "choices": [
+            "NET",
+            "NUT",
+            "NOT"
+          ]
+        },
+        {
+          "word": "BUG",
+          "emoji": "🐛",
+          "prompt": "A small green thing crawls along a leaf.",
+          "success": "BUG. The leaf gets a little shorter.",
+          "choices": [
+            "BUG",
+            "BAG",
+            "BIG"
+          ]
+        },
+        {
+          "word": "BED",
+          "emoji": "🛏️",
+          "prompt": "Inside the hut there is a soft place for the night.",
+          "success": "BED. The pillow is cool on both sides.",
+          "choices": [
+            "BED",
+            "BAD",
+            "BUD"
+          ]
+        },
+        {
+          "word": "SUN",
+          "emoji": "☀️",
+          "prompt": "In the morning something climbs up over the trees.",
+          "success": "SUN. The camp warms up fast.",
+          "choices": [
+            "SUN",
+            "BUN",
+            "FUN"
+          ]
+        },
+        {
+          "word": "TAP",
+          "emoji": "🚰",
+          "prompt": "Turn this one and cold water comes out.",
+          "success": "TAP. All the bottles are full again.",
+          "choices": [
+            "TAP",
+            "TIP",
+            "TOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell-en3-05",
+      "title": "The Big Fair",
+      "emoji": "🎪",
+      "character": "🤹",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "The fair is over and every word on the way was read. Words that look almost the same cannot fool you now.",
+      "tasks": [
+        {
+          "word": "BOY",
+          "emoji": "👦",
+          "prompt": "Someone runs ahead to the ticket booth.",
+          "success": "BOY. He is first in the line.",
+          "choices": [
+            "BOY",
+            "BOX",
+            "BOW"
+          ]
+        },
+        {
+          "word": "MAN",
+          "emoji": "👨",
+          "prompt": "A tall grown-up pays for the tickets.",
+          "success": "MAN. He keeps them all in one pocket.",
+          "choices": [
+            "MAN",
+            "MAT",
+            "MAP"
+          ]
+        },
+        {
+          "word": "TEN",
+          "emoji": "🔟",
+          "prompt": "The ring toss shows a number after every hit.",
+          "success": "TEN. The best score of the day.",
+          "choices": [
+            "TEN",
+            "HEN",
+            "PEN"
+          ]
+        },
+        {
+          "word": "EYE",
+          "emoji": "👁️",
+          "prompt": "The first funny mirror makes one thing huge.",
+          "success": "EYE. It blinks back, twice as big.",
+          "choices": [
+            "EYE",
+            "DYE",
+            "BYE"
+          ]
+        },
+        {
+          "word": "ARM",
+          "emoji": "💪",
+          "prompt": "The next mirror stretches something strong.",
+          "success": "ARM. It looks ready to lift the whole tent.",
+          "choices": [
+            "ARM",
+            "ART",
+            "ARC"
+          ]
+        },
+        {
+          "word": "LEG",
+          "emoji": "🦵",
+          "prompt": "The last mirror makes walking very funny.",
+          "success": "LEG. Two long steps cross the whole room.",
+          "choices": [
+            "LEG",
+            "LOG",
+            "LAG"
+          ]
+        },
+        {
+          "word": "GEM",
+          "emoji": "💎",
+          "prompt": "On the prize shelf something sparkles.",
+          "success": "GEM. It throws little lights on the wall.",
+          "choices": [
+            "GEM",
+            "GUM",
+            "GYM"
+          ]
+        },
+        {
+          "word": "BOW",
+          "emoji": "🎀",
+          "prompt": "The prize is wrapped and something soft sits on top.",
+          "success": "BOW. The ribbon is bright red.",
+          "choices": [
+            "BOW",
+            "BOX",
+            "BOY"
+          ]
+        },
+        {
+          "word": "TIE",
+          "emoji": "👔",
+          "prompt": "The clown wears something long around his neck.",
+          "success": "TIE. He spins it like a propeller.",
+          "choices": [
+            "TIE",
+            "PIE",
+            "LIE"
+          ]
+        },
+        {
+          "word": "PIE",
+          "emoji": "🥧",
+          "prompt": "The last stall smells of apples and warm crust.",
+          "success": "PIE. Everyone at the fair gets a slice.",
+          "choices": [
+            "PIE",
+            "TIE",
+            "LIE"
+          ]
+        }
+      ]
+    }
+  ]
+}

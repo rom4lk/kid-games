@@ -10,6 +10,11 @@ const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
 
+// The second task type: a picture and three words that differ in one letter.
+// It is a separate mode, not a level, so it keeps its own pack and its own
+// progress key while reusing every screen of the game.
+const SPELL_MODE = { key: "spell3", language: "en", letters: 3, chapters: 5 };
+
 const SPEECH_LOCALES = { en: "en-US", ru: "ru-RU" };
 
 const DEFAULT_STATE = {
@@ -117,10 +122,16 @@ function getUi(language) {
   return uiCache.get(language);
 }
 
+function packPath(language, letters) {
+  return letters === SPELL_MODE.key
+    ? `content/spell.${language}.${SPELL_MODE.letters}.json`
+    : `content/words.${language}.${letters}.json`;
+}
+
 function getPack(language, letters) {
   const key = `${language}-${letters}`;
   if (!packCache.has(key)) {
-    const request = fetchJson(`content/words.${language}.${letters}.json`).catch((error) => {
+    const request = fetchJson(packPath(language, letters)).catch((error) => {
       packCache.delete(key);
       throw error;
     });
@@ -223,20 +234,17 @@ function initializeStaticContent() {
   elements.menuLanguageButton.setAttribute("aria-label", ui.start.changeLanguage);
 
   setText("chaptersEyebrow", ui.chapters.eyebrow);
-  setText("chaptersLead", ui.chapters.lead);
   setText("chaptersProgressLabel", ui.menu.readerLabel);
   setText("finalEyebrow", ui.chapters.finalEyebrow);
   setText("finalTitle", ui.chapters.finalTitle);
-  setText("finalText", ui.chapters.finalText);
   setText("replayLevelButton", ui.chapters.replay);
+  // The lead and the final text depend on the mode, so showChapters sets them.
 
   setText("skipLabel", ui.play.skip);
   setText("backLabel", ui.play.back);
-  setText("readingInstruction", ui.play.readInstruction);
-  setText("tapHint", ui.play.tapHint);
-  setText("hintLabel", ui.play.hint);
   setText("listenLabel", ui.play.listen);
-  setText("choiceInstruction", ui.play.choiceInstruction);
+  // The instruction, the card hint, the hint button and the choice line differ
+  // between the modes, so renderTask sets them through applyModeStrings.
 
   setText("parentEyebrow", ui.parent.eyebrow);
   setText("parentTitle", ui.parent.title);
@@ -298,6 +306,22 @@ function activeLevels() {
   return LEVELS[activeLanguage];
 }
 
+function hasSpellMode() {
+  return activeLanguage === SPELL_MODE.language;
+}
+
+function isSpellMode() {
+  return currentPack?.mode === "spell";
+}
+
+function levelChapterCount(letters) {
+  return letters === SPELL_MODE.key ? SPELL_MODE.chapters : CHAPTERS_PER_LEVEL;
+}
+
+function levelWordCount(letters) {
+  return levelChapterCount(letters) * WORDS_PER_CHAPTER;
+}
+
 function levelKey(letters) {
   return `${activeLanguage}-${letters}`;
 }
@@ -323,21 +347,19 @@ function isChapterUnlocked(letters, chapterIndex) {
 
 function getLevelProgress(letters) {
   let total = 0;
-  for (let index = 0; index < CHAPTERS_PER_LEVEL; index += 1) {
+  for (let index = 0; index < levelChapterCount(letters); index += 1) {
     total += getChapterProgress(letters, index);
   }
   return total;
 }
 
 function isLevelComplete(letters) {
-  return getLevelProgress(letters) >= WORDS_PER_LEVEL;
+  return getLevelProgress(letters) >= levelWordCount(letters);
 }
 
 function getLanguageWordCount() {
-  return activeLevels().reduce(
-    (total, letters) => total + getLevelProgress(letters),
-    0,
-  );
+  const keys = hasSpellMode() ? [...activeLevels(), SPELL_MODE.key] : activeLevels();
+  return keys.reduce((total, letters) => total + getLevelProgress(letters), 0);
 }
 
 function renderHeader() {
@@ -355,12 +377,13 @@ function showMenu() {
 
 function renderMenu() {
   elements.levelGrid.innerHTML = "";
+  renderModeRow();
 
   activeLevels().forEach((letters) => {
     const done = getLevelProgress(letters);
     const progressText = fillTemplate(ui.menu.progress, {
       done,
-      total: WORDS_PER_LEVEL,
+      total: levelWordCount(letters),
     });
     const button = document.createElement("button");
 
@@ -375,13 +398,46 @@ function renderMenu() {
       <span class="level-name">${ui.menu.levelNames[letters]}</span>
       <span class="level-sample">${ui.menu.levelSamples[letters]}</span>
       <span class="world-progress">
-        <span class="world-progress-track"><span style="width: ${(done / WORDS_PER_LEVEL) * 100}%"></span></span>
+        <span class="world-progress-track"><span style="width: ${(done / levelWordCount(letters)) * 100}%"></span></span>
         <strong>${progressText}</strong>
       </span>
     `;
     button.addEventListener("click", () => openLevel(letters));
     elements.levelGrid.appendChild(button);
   });
+}
+
+// The mode card sits under the levels, not among them: the task inside it is a
+// different one, and the picture on the card shows that before any reading.
+function renderModeRow() {
+  elements.modeRow.innerHTML = "";
+  if (!hasSpellMode()) return;
+
+  const done = getLevelProgress(SPELL_MODE.key);
+  const total = levelWordCount(SPELL_MODE.key);
+  const progressText = fillTemplate(ui.menu.progress, { done, total });
+  const button = document.createElement("button");
+
+  button.className = "mode-card";
+  button.type = "button";
+  button.setAttribute("aria-label", `${ui.spell.cardName}. ${progressText}`);
+  button.innerHTML = `
+    <span class="mode-icon" aria-hidden="true">
+      <span class="mode-picture">🐱</span>
+      <span class="mode-arrow">→</span>
+      <span class="mode-words"><b>CAT</b><i>COT</i><i>CUT</i></span>
+    </span>
+    <span class="mode-copy">
+      <span class="level-name">${ui.spell.cardName}</span>
+      <span class="level-sample">${ui.spell.cardSample}</span>
+      <span class="world-progress">
+        <span class="world-progress-track"><span style="width: ${(done / total) * 100}%"></span></span>
+        <strong>${progressText}</strong>
+      </span>
+    </span>
+  `;
+  button.addEventListener("click", () => openLevel(SPELL_MODE.key));
+  elements.modeRow.appendChild(button);
 }
 
 async function openLevel(letters) {
@@ -399,12 +455,14 @@ async function showChapters(letters) {
   currentLetters = letters;
   currentPack = await getPack(activeLanguage, letters);
   renderHeader();
-  setText("chaptersTitle", ui.chapters.titles[letters]);
+  setText("chaptersTitle", isSpellMode() ? ui.spell.chaptersTitle : ui.chapters.titles[letters]);
+  setText("chaptersLead", isSpellMode() ? ui.spell.chaptersLead : ui.chapters.lead);
+  setText("finalText", isSpellMode() ? ui.spell.finalText : ui.chapters.finalText);
   setText(
     "chaptersProgressValue",
     fillTemplate(ui.chapters.progress, {
       done: getLevelProgress(letters),
-      total: WORDS_PER_LEVEL,
+      total: levelWordCount(letters),
     }),
   );
   renderChapters();
@@ -500,6 +558,7 @@ function renderTask() {
   stopSpeaking();
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
+  const spell = isSpellMode();
   currentAttemptCount = 0;
   currentHintUsed = false;
   currentTaskSolved = false;
@@ -509,9 +568,12 @@ function renderTask() {
   setText("sceneCharacter", chapter.character);
   elements.sceneCharacter.classList.remove("celebrate");
   setText("storyPrompt", task.prompt);
-  setText("wordMain", task.word);
-  setText("wordSyllables", task.syllables);
+  // In the spell mode the card carries the picture and the answers carry the
+  // letters, so the two halves of the reading task swap places.
+  setText("wordMain", spell ? task.emoji : task.word);
+  setText("wordSyllables", spell ? "" : task.syllables);
   setText("feedbackStatus", "");
+  applyModeStrings(spell);
   setText("successTitle", ui.play.successTitle);
   setText("successText", task.success);
   setText("missionLabel", fillTemplate(ui.play.mission, {
@@ -519,15 +581,41 @@ function renderTask() {
     total: chapter.tasks.length,
   }));
 
+  elements.wordCard.classList.toggle("picture-card", spell);
   elements.wordCard.classList.remove("show-syllables");
   elements.wordSyllables.hidden = true;
   elements.successPanel.hidden = true;
   elements.skipButton.disabled = nextUnsolvedTaskIndex(currentTaskIndex) === -1;
   elements.choiceGrid.hidden = false;
+  elements.choiceGrid.classList.toggle("word-choices", spell);
+  elements.choiceGrid.classList.remove("show-diff");
   elements.choiceGrid.innerHTML = "";
 
   renderMissionProgress(chapter);
 
+  if (spell) {
+    renderWordChoices(task);
+  } else {
+    renderPictureChoices(task);
+  }
+
+  const isLastTask = currentTaskIndex === chapter.tasks.length - 1;
+  setText("nextButton", isLastTask ? ui.play.finish : ui.play.next);
+  renderHeader();
+}
+
+// Both modes answer the same four questions on the screen, with their own words.
+function applyModeStrings(spell) {
+  const strings = spell ? ui.spell : ui.play;
+  setText("readingInstruction", strings.readInstruction);
+  setText("tapHint", strings.tapHint);
+  setText("hintLabel", strings.hint);
+  setText("choiceInstruction", strings.choiceInstruction);
+  elements.syllableMark.hidden = spell;
+  elements.letterMark.hidden = !spell;
+}
+
+function renderPictureChoices(task) {
   shuffle([...task.choices]).forEach((choice, choiceIndex) => {
     const button = document.createElement("button");
     button.className = "choice-button";
@@ -542,10 +630,36 @@ function renderTask() {
     button.addEventListener("click", () => handleChoice(button, choice));
     elements.choiceGrid.appendChild(button);
   });
+}
 
-  const isLastTask = currentTaskIndex === chapter.tasks.length - 1;
-  setText("nextButton", isLastTask ? ui.play.finish : ui.play.next);
-  renderHeader();
+// Every letter gets a box of the same width, so the three words line up in
+// columns and the letter that changes stands in a column of its own.
+function renderWordChoices(task) {
+  const changing = changingPositions(task.choices);
+
+  shuffle([...task.choices]).forEach((word) => {
+    const button = document.createElement("button");
+    button.className = "choice-button word-choice";
+    button.type = "button";
+    button.dataset.choice = word;
+    button.setAttribute("aria-label", word);
+    button.append(...[...word].map((letter, index) => {
+      const box = document.createElement("span");
+      box.className = changing.has(index) ? "letter changing" : "letter";
+      box.textContent = letter;
+      return box;
+    }));
+    button.addEventListener("click", () => handleChoice(button, { id: word, label: word }));
+    elements.choiceGrid.appendChild(button);
+  });
+}
+
+function changingPositions(words) {
+  const positions = new Set();
+  for (let index = 0; index < words[0].length; index += 1) {
+    if (words.some((word) => word[index] !== words[0][index])) positions.add(index);
+  }
+  return positions;
 }
 
 // The bar shows how many words are solved, not how far the child has jumped:
@@ -570,11 +684,19 @@ function shuffle(values) {
 function revealHint() {
   if (currentTaskSolved) return;
   const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
-  elements.wordCard.classList.add("show-syllables");
-  elements.wordSyllables.hidden = false;
-  setText("feedbackStatus", fillTemplate(ui.play.hintUsed, {
-    syllables: task.syllables,
-  }));
+
+  if (isSpellMode()) {
+    // The hint points at the one letter that decides the answer. It never says
+    // which of the three words is the right one.
+    elements.choiceGrid.classList.add("show-diff");
+    setText("feedbackStatus", ui.spell.hintUsed);
+  } else {
+    elements.wordCard.classList.add("show-syllables");
+    elements.wordSyllables.hidden = false;
+    setText("feedbackStatus", fillTemplate(ui.play.hintUsed, {
+      syllables: task.syllables,
+    }));
+  }
 
   if (!currentHintUsed) {
     currentHintUsed = true;
@@ -589,8 +711,11 @@ function handleChoice(button, choice) {
   if (currentTaskSolved) return;
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
+  const spell = isSpellMode();
+  // In the spell mode the word itself is the answer, so no separate id is stored.
+  const correctId = spell ? task.word : task.correct;
 
-  if (choice.id !== task.correct) {
+  if (choice.id !== correctId) {
     currentAttemptCount += 1;
     state.stats.wrongChoices += 1;
     saveState();
@@ -600,10 +725,10 @@ function handleChoice(button, choice) {
     window.setTimeout(() => button.classList.remove("wrong"), 450);
 
     if (currentAttemptCount === 1) {
-      setText("feedbackStatus", ui.play.wrongFirst);
+      setText("feedbackStatus", spell ? ui.spell.wrongFirst : ui.play.wrongFirst);
     } else {
       revealHint();
-      setText("feedbackStatus", fillTemplate(ui.play.wrongAgain, {
+      setText("feedbackStatus", spell ? ui.spell.wrongAgain : fillTemplate(ui.play.wrongAgain, {
         syllables: task.syllables,
       }));
     }
@@ -616,11 +741,14 @@ function handleChoice(button, choice) {
   elements.skipButton.disabled = true;
   button.classList.add("correct");
   // Only now may the caption appear: in the DOM and in the accessible name.
-  const caption = document.createElement("span");
-  caption.className = "choice-label";
-  caption.textContent = choice.label;
-  button.appendChild(caption);
-  button.setAttribute("aria-label", choice.label);
+  // A word choice needs none of that - it has been showing its letters all along.
+  if (!spell) {
+    const caption = document.createElement("span");
+    caption.className = "choice-label";
+    caption.textContent = choice.label;
+    button.appendChild(caption);
+    button.setAttribute("aria-label", choice.label);
+  }
   elements.choiceGrid.querySelectorAll("button").forEach((choiceButton) => {
     choiceButton.disabled = true;
   });

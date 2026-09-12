@@ -15,6 +15,7 @@ LANGUAGES = ["en", "ru"]
 LEVELS = [3, 4, 5, 6, 7]
 CHAPTERS_PER_LEVEL = 20
 WORDS_PER_CHAPTER = 10
+SPELL_CHAPTERS = 5
 
 WORD_ALPHABETS = {
     "en": re.compile(r"^[A-Z]+$"),
@@ -199,10 +200,111 @@ def validate_pack(language, letters):
         )
 
 
+def validate_spell_task(file_name, pack, chapter, task, task_index, seen_words):
+    where = f'{file_name}: chapter "{chapter.get("id")}", task {task_index + 1}'
+    alphabet = WORD_ALPHABETS[pack["language"]]
+
+    for field in ("word", "emoji", "prompt", "success"):
+        if not isinstance(task.get(field), str) or not task[field].strip():
+            errors.append(f'{where}: field "{field}" is missing or empty')
+            return
+
+    word = task["word"]
+    if len(word) != pack["letters"]:
+        errors.append(f'{where}: word "{word}" has {len(word)} letters, expected {pack["letters"]}')
+    if not alphabet.match(word):
+        errors.append(f'{where}: word "{word}" has characters outside the {pack["language"]} uppercase alphabet')
+    if word in seen_words:
+        errors.append(f'{where}: word "{word}" repeats inside the chapter')
+    seen_words.add(word)
+    if TEXT_LETTERS.search(task["emoji"]):
+        errors.append(f'{where}: emoji "{task["emoji"]}" contains letters or digits')
+    if re.search(rf"\b{re.escape(word)}\b", task["prompt"], re.IGNORECASE):
+        errors.append(f'{where}: the prompt gives away the answer "{word}"')
+
+    choices = task.get("choices")
+    if not isinstance(choices, list) or len(choices) != 3:
+        errors.append(f"{where}: expected exactly 3 choices")
+        return
+    if len(set(choices)) != 3:
+        errors.append(f"{where}: choices are not unique")
+        return
+    if word not in choices:
+        errors.append(f'{where}: the word "{word}" is not among the choices')
+    for choice in choices:
+        if not isinstance(choice, str) or len(choice) != len(word) or not alphabet.match(choice):
+            errors.append(f'{where}: choice "{choice}" is not a {len(word)}-letter word of the same alphabet')
+            return
+
+    # The whole point of the mode: the three words differ in exactly one letter,
+    # and always in the same place, so the child has one column to compare.
+    changing = [index for index in range(len(word)) if len({choice[index] for choice in choices}) > 1]
+    if len(changing) != 1:
+        errors.append(
+            f'{where}: choices {choices} differ in {len(changing)} letter positions, expected exactly 1'
+        )
+
+
+def validate_spell_pack(language, letters, chapters_per_pack):
+    file_name = f"spell.{language}.{letters}.json"
+    if not (CONTENT_DIR / file_name).exists():
+        (errors if require_all else warnings).append(f"{file_name}: file is missing")
+        return
+
+    pack = load_json(file_name)
+    if pack.get("language") != language:
+        errors.append(f'{file_name}: language "{pack.get("language")}" does not match the file name')
+    if pack.get("letters") != letters:
+        errors.append(f'{file_name}: letters {pack.get("letters")} do not match the file name')
+    if pack.get("mode") != "spell":
+        errors.append(f'{file_name}: mode "{pack.get("mode")}" is not "spell"')
+    chapters = pack.get("chapters")
+    if not isinstance(chapters, list) or len(chapters) != chapters_per_pack:
+        errors.append(f"{file_name}: expected {chapters_per_pack} chapters, found {len(chapters or [])}")
+        return
+
+    if language == "ru":
+        check_no_yo(file_name, pack)
+
+    chapter_ids = set()
+    word_counts: dict[str, int] = {}
+
+    for chapter_index, chapter in enumerate(chapters):
+        where = f"{file_name}: chapter {chapter_index + 1}"
+        for field in ("id", "title", "emoji", "character", "completeText"):
+            if not isinstance(chapter.get(field), str) or not chapter[field].strip():
+                errors.append(f'{where}: field "{field}" is missing or empty')
+        if chapter.get("id") in chapter_ids:
+            errors.append(f'{where}: duplicate chapter id "{chapter.get("id")}"')
+        chapter_ids.add(chapter.get("id"))
+        colors = chapter.get("colors")
+        if (
+            not isinstance(colors, list)
+            or len(colors) != 2
+            or not all(isinstance(color, str) and re.fullmatch(r"#[0-9a-fA-F]{6}", color) for color in colors)
+        ):
+            errors.append(f"{where}: colors must be two hex values")
+        tasks = chapter.get("tasks")
+        if not isinstance(tasks, list) or len(tasks) != WORDS_PER_CHAPTER:
+            errors.append(f"{where}: expected {WORDS_PER_CHAPTER} tasks, found {len(tasks or [])}")
+            continue
+
+        seen_words: set[str] = set()
+        for task_index, task in enumerate(tasks):
+            validate_spell_task(file_name, pack, chapter, task, task_index, seen_words)
+            word = task.get("word")
+            if word:
+                word_counts[word] = word_counts.get(word, 0) + 1
+
+    max_repeat = max(word_counts.values(), default=0)
+    print(f"{file_name}: {len(word_counts)} unique words, max repeats per word: {max_repeat}")
+
+
 validate_ui()
 for lang in LANGUAGES:
     for level in LEVELS:
         validate_pack(lang, level)
+validate_spell_pack("en", 3, SPELL_CHAPTERS)
 
 for message in warnings:
     print(f"WARN  {message}")

@@ -76,6 +76,20 @@
     "skip": "Another word",
     "skipped": "We set that word aside. We will come back to it."
   },
+  "spell": {
+    "cardName": "Find the word",
+    "cardSample": "CAT · COT · CUT",
+    "chaptersTitle": "Find the word",
+    "chaptersLead": "Look at the picture and pick the word that names it. Five stories, ten words in each.",
+    "readInstruction": "What is in the picture?",
+    "tapHint": "Letters",
+    "hint": "Compare the letters",
+    "hintUsed": "The words differ in one letter. Look at the bright letter.",
+    "choiceInstruction": "Pick the word that fits",
+    "wrongFirst": "Almost! Read every letter and try again.",
+    "wrongAgain": "The bright letter is the one that changes. Read the words again.",
+    "finalText": "You have read every story in this mode - all fifty words."
+  },
   "chapter": {
     "eyebrow": "Chapter complete",
     "title": "The story came alive!",

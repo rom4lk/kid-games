@@ -663,6 +663,73 @@ h1 {
   width: 100%;
 }
 
+.mode-row {
+  margin-top: 18px;
+}
+
+.mode-card {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: clamp(14px, 4vw, 34px);
+  padding: 20px 26px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  color: var(--ink);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.mode-card:hover {
+  border-color: rgba(255, 209, 102, 0.48);
+  transform: translateY(-5px);
+}
+
+/* The icon says what the mode asks for without a word to read: one picture
+   turns into three words that look almost the same. */
+.mode-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.mode-picture {
+  font-size: 3.2rem;
+}
+
+.mode-arrow {
+  color: var(--gold);
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+
+.mode-words {
+  display: grid;
+  gap: 3px;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.mode-words b {
+  color: var(--gold);
+}
+
+.mode-words i {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.mode-copy {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+}
+
 .chapter-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1139,6 +1206,69 @@ h1 {
   animation: choice-correct 480ms ease;
 }
 
+/* The spell mode swaps the halves of the task: the card holds the picture and
+   the answers hold the words. */
+/* The picture and the three stacked words have to fit on one screen together:
+   an answer below the fold is an answer the child never considers. */
+.word-card.picture-card {
+  min-height: 140px;
+}
+
+.picture-card .word-main {
+  font-size: clamp(3.6rem, 12vw, 6rem);
+  letter-spacing: 0;
+}
+
+.letter-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.letter-mark i,
+.letter-mark b {
+  width: 9px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+.letter-mark i {
+  background: rgba(247, 209, 122, 0.32);
+}
+
+.letter-mark b {
+  background: #f7d17a;
+}
+
+.choice-grid.word-choices {
+  max-width: 460px;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+/* Every letter sits in a box of the same width, so the three words line up in
+   columns and the letter that changes stands in a column of its own. */
+.word-choice {
+  min-height: 68px;
+  justify-content: center;
+  grid-auto-flow: column;
+  font-size: clamp(2.1rem, 6vw, 2.9rem);
+  font-weight: 900;
+}
+
+.word-choice .letter {
+  width: 0.72em;
+  text-align: center;
+}
+
+.word-choices.show-diff .letter.changing {
+  color: #ffd166;
+  text-decoration: underline;
+  text-decoration-color: #ffd166;
+  text-decoration-thickness: 5px;
+  text-underline-offset: 8px;
+}
+
 .choice-label {
   position: absolute;
   bottom: 9px;
@@ -1603,6 +1733,18 @@ h1 {
     font-size: 3.4rem;
   }
 
+  .mode-card {
+    padding: 16px;
+  }
+
+  .mode-picture {
+    font-size: 2.4rem;
+  }
+
+  .mode-words {
+    font-size: 0.8rem;
+  }
+
   .chapter-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1686,6 +1828,13 @@ h1 {
     min-height: 100px;
     border-radius: 18px;
     font-size: 2.7rem;
+  }
+
+  /* A word answer needs far less height than a picture one, and three of them
+     stand under each other. */
+  .word-choice {
+    min-height: 62px;
+    font-size: 2.1rem;
   }
 
   .success-panel {

@@ -8,6 +8,7 @@ next word.
 
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
 - levels by word length, from 3 to 7 letters, in both languages;
+- a second mode, "Find the word": a picture and three written words that differ in one letter;
 - 20 chapters in every level, 10 words in every chapter — 200 words per level;
 - every level is open from the menu, while the chapters inside a level unlock one after another;
 - a comprehension check through a choice of one picture out of three, with the captions hidden until
@@ -47,12 +48,30 @@ which does not work over `file://`.
 6. After a correct answer, sees the result inside the story and moves on.
 7. Ten words finish a chapter and unlock the next one; twenty chapters finish the level.
 
+## The "Find the word" mode
+
+The levels ask the child to read a word and pick the picture. This mode turns the task around: the
+card shows a picture and the three answers are written words that differ in exactly one letter -
+CAT, COT, CUT. Guessing by the first letter stops working, because in most tasks the first letter is
+the one that is the same everywhere.
+
+- the mode is a separate card under the levels on the main menu, English only, five stories of ten
+  words, and it keeps its own progress;
+- every letter sits in a box of the same width, so the three words line up in columns and the letter
+  that changes stands in a column of its own;
+- the hint highlights that column in all three words instead of splitting a word into parts. It
+  shows where to look and never says which word is the right one;
+- the same hint opens by itself after a second wrong answer, exactly like the syllables do in the
+  levels;
+- all fifty words of the mode are different, and every distractor is a real English word.
+
 ## Stored progress
 
 The progress is saved to `localStorage` under the key `livingWordsProgressV2`. It holds:
 
 - the chosen language;
 - the number of words solved in each chapter of each language and level;
+- the number of words solved in each chapter of the "Find the word" mode, under the key `en-spell3`;
 - the number of opened hints and wrong choices;
 - the sound setting.
 
@@ -68,8 +87,9 @@ word-quest/
 ├── content/
 │   ├── ui.en.json        # English interface strings
 │   ├── ui.ru.json        # Russian interface strings
-│   └── words.<lang>.<letters>.json
-│                         # A word pack: 20 chapters of 10 tasks
+│   ├── words.<lang>.<letters>.json
+│   │                     # A word pack: 20 chapters of 10 tasks
+│   └── spell.en.3.json   # The "Find the word" mode: 5 chapters of 10 tasks
 ├── tools/
 │   └── validate.py       # Content checks for the packs and the UI files
 └── README.md             # Product and launch notes
@@ -113,9 +133,24 @@ A word pack declares its language and word length and then lists the chapters:
 }
 ```
 
+A task of the "Find the word" mode carries a picture instead of the parts, and its choices are plain
+words. The word itself is the correct answer, so no separate `correct` field is needed:
+
+```json
+{
+  "word": "CAT",
+  "emoji": "🐱",
+  "prompt": "The tag machine wakes up. Its first customer purrs and waits.",
+  "success": "CAT. The tag clips on and the purring gets louder.",
+  "choices": ["CAT", "COT", "CUT"]
+}
+```
+
 The rules the content has to follow — the word length, the alphabet, the parts spelling the word back,
 exactly three unique choices, the caption of the correct choice matching the word, and no letter Ё in
-the Russian files — are checked by the validator:
+the Russian files — are checked by the validator. For the mode it also checks that the word is among
+the choices, that the choices are words of the same length, and that they differ in exactly one letter
+position:
 
 ```bash
 python3 word-quest/tools/validate.py
@@ -142,3 +177,7 @@ These decisions were made on purpose and take precedence over the shared rules i
   reading task loses its point. The button for that action must be understandable to the child without reading.
 - **The captions under the pictures stay hidden until the answer is correct.** Otherwise the child reads
   the caption instead of the word.
+- **In the "Find the word" mode the three answers are visible from the start.** They are the reading
+  task itself, so there is nothing to hide. Their letters are marked only when the hint is opened.
+- **The mode is offered in English only.** It is written as one pack of fifty words; a Russian pack
+  would need its own minimal pairs and is not written yet.

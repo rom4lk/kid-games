@@ -96,6 +96,7 @@
         </div>
 
         <div class="level-grid" id="levelGrid"></div>
+        <div class="mode-row" id="modeRow"></div>
       </section>
 
       <section class="screen chapters-screen" id="chaptersScreen" hidden>
@@ -165,7 +166,10 @@
 
           <div class="reading-actions">
             <button class="hint-button" id="hintButton" type="button">
-              <span class="syllable-mark" aria-hidden="true">ОО<i></i>ОО</span>
+              <span class="syllable-mark" id="syllableMark" aria-hidden="true">ОО<i></i>ОО</span>
+              <span class="letter-mark" id="letterMark" aria-hidden="true" hidden>
+                <i></i><b></b><i></i>
+              </span>
               <span id="hintLabel"></span>
             </button>
             <button class="skip-button" id="skipButton" type="button">
