@@ -41,6 +41,7 @@
     ["The item is ready to pick up.", "Предмет можно взять."],
     ["The item is in the backpack.", "Предмет лежит в рюкзаке."],
     ["The backpack is full.", "Рюкзак полон."],
+    ["The forest ends here.", "Здесь лес кончается."],
     ["The hero is too hungry to lift the stone.", "Герой проголодался и не поднимет камень."],
     ["The hero is not hungry yet.", "Герой пока не голоден."],
     ["The hero ate the berries.", "Герой поел ягод."],

@@ -1503,10 +1503,17 @@ if (typeof document !== "undefined") {
 
   // The lamp is the only way out of a stuck route, so it offers itself after
   // a long pause instead of waiting to be discovered.
+  // The star is drawn over the map alone: the cards, the strip and the play
+  // button keep their own places on the screen. While it shows, everything
+  // that could change or rerun the program has to stay shut.
+  function isCelebrating() {
+    return successLayer.classList.contains("is-visible");
+  }
+
   function restartIdleHint() {
     window.clearTimeout(idleHintTimer);
     hintButton.classList.remove("is-idle");
-    if (state.screen !== "play" || state.running || successLayer.classList.contains("is-visible")) return;
+    if (state.screen !== "play" || state.running || isCelebrating()) return;
     idleHintTimer = window.setTimeout(() => {
       if (!state.running) hintButton.classList.add("is-idle");
     }, IDLE_HINT_DELAY);
@@ -1554,13 +1561,27 @@ if (typeof document !== "undefined") {
     renderProgram();
   }
 
+  // Removing a card rebuilds every slot, so a keyboard that stood on the strip
+  // would be left on nothing. It is handed the card that moved into the place,
+  // the last card left, or the palette when the strip is empty.
+  function focusProgramStrip(index) {
+    const slots = [...programStrip.querySelectorAll(".program-slot:not(:disabled)")];
+    if (slots.length === 0) {
+      commandButtons.find((button) => !button.hidden && !button.disabled)?.focus({ preventScroll: true });
+      return;
+    }
+    slots[Math.min(index, slots.length - 1)].focus({ preventScroll: true });
+  }
+
   function removeCommand(index) {
     if (state.running) return;
+    const fromStrip = programStrip.contains(document.activeElement);
     clearHints();
     state.program.splice(index, 1);
     restartIdleHint();
     playTone(220, 0.08, "triangle", 0.05);
     renderProgram();
+    if (fromStrip) focusProgramStrip(index);
   }
 
   function clearProgram() {
@@ -1961,8 +1982,12 @@ if (typeof document !== "undefined") {
     }
 
     state.running = false;
-    setControlsDisabled(false);
-    settleProgram();
+    // A finished level hands back only the way out of it. The next level
+    // opens the cards again through openLevel().
+    const celebrating = isCelebrating();
+    setControlsDisabled(celebrating);
+    backButton.disabled = false;
+    if (!celebrating) settleProgram();
     restartIdleHint();
   }
 
@@ -2141,7 +2166,7 @@ if (typeof document !== "undefined") {
       return;
     }
     if (event.target.closest?.("select, input, textarea")) return;
-    if (state.screen !== "play") return;
+    if (state.screen !== "play" || isCelebrating()) return;
 
     const command = KEY_COMMANDS[event.code];
     if (command) {

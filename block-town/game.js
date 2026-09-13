@@ -36,6 +36,57 @@ const BLOCKS = [
 const FIELD_SHOOT_MS = 20000;
 const FIELD_RIPE_MS = 60000;
 
+// The shelf thumbnail draws one pixel per cell, so every block needs one flat
+// color next to its full art in styles.css.
+const BLOCK_COLORS = {
+  meadow: "#a9dc88",
+  path: "#e2d2ab",
+  forest: "#4f9b5f",
+  water: "#82c9e8",
+  house: "#e58f6a",
+  field: "#d8c057",
+  flowers: "#e78cbb",
+  sand: "#f0dfae",
+  asphalt: "#9aa2a6",
+  rails: "#8b7a63",
+  tower: "#b58bd0",
+  farm: "#c97f52",
+  mountain: "#9d9a92",
+  windmill: "#efe3c4",
+  lighthouse: "#e5645f",
+  castle: "#b9b3a6",
+  playground: "#f2a63e",
+  lantern: "#ffd45c",
+  bench: "#c09a6a",
+  fountain: "#7fd3d0",
+};
+
+// What an adult reads on the shelf page and on the reading screen. The shelf
+// page keeps its own copy of this table, and block-town/test-game.js holds
+// the two together.
+const BLOCK_NAMES = {
+  meadow: "Meadow",
+  path: "Road",
+  forest: "Forest",
+  water: "Water",
+  house: "House",
+  field: "Field",
+  flowers: "Flowers",
+  sand: "Sand",
+  asphalt: "Asphalt road",
+  rails: "Rails",
+  tower: "Tower",
+  farm: "Farm",
+  mountain: "Mountain",
+  windmill: "Windmill",
+  lighthouse: "Lighthouse",
+  castle: "Castle",
+  playground: "Playground",
+  lantern: "Lantern",
+  bench: "Bench",
+  fountain: "Fountain",
+};
+
 const BLOCK_BY_ID = new Map(BLOCKS.map((block) => [block.id, block]));
 const BLOCK_BY_KEY = new Map(BLOCKS.map((block) => [block.key, block]));
 const WATER_ID = BLOCK_BY_KEY.get("water").id;
@@ -913,6 +964,8 @@ if (typeof module !== "undefined" && module.exports) {
     EMPTY_CELL,
     WATER_ID,
     BLOCKS,
+    BLOCK_COLORS,
+    BLOCK_NAMES,
     WORLD_SIZES,
     DEFAULT_BLOCK_IDS,
     blockById,
@@ -1019,30 +1072,6 @@ const TRACK_SOURCES = {
   )),
 };
 
-// The shelf thumbnail draws one pixel per cell, so every block needs one flat
-// color next to its full art in styles.css.
-const BLOCK_COLORS = {
-  meadow: "#a9dc88",
-  path: "#e2d2ab",
-  forest: "#4f9b5f",
-  water: "#82c9e8",
-  house: "#e58f6a",
-  field: "#d8c057",
-  flowers: "#e78cbb",
-  sand: "#f0dfae",
-  asphalt: "#9aa2a6",
-  rails: "#8b7a63",
-  tower: "#b58bd0",
-  farm: "#c97f52",
-  mountain: "#9d9a92",
-  windmill: "#efe3c4",
-  lighthouse: "#e5645f",
-  castle: "#b9b3a6",
-  playground: "#f2a63e",
-  lantern: "#ffd45c",
-  bench: "#c09a6a",
-  fountain: "#7fd3d0",
-};
 const THUMBNAIL_EMPTY = "#fffdf4";
 
 // Past this many enabled blocks the palette groups them by family, and the
@@ -1117,29 +1146,6 @@ function initializeGame() {
     wide: "Wide brush",
     bucket: "Fill",
     eraser: "Eraser",
-  };
-
-  const BLOCK_NAMES = {
-    meadow: "Meadow",
-    path: "Road",
-    forest: "Forest",
-    water: "Water",
-    house: "House",
-    field: "Field",
-    flowers: "Flowers",
-    sand: "Sand",
-    asphalt: "Asphalt road",
-    rails: "Rails",
-    tower: "Tower",
-    farm: "Farm",
-    mountain: "Mountain",
-    windmill: "Windmill",
-    lighthouse: "Lighthouse",
-    castle: "Castle",
-    playground: "Playground",
-    lantern: "Lantern",
-    bench: "Bench",
-    fountain: "Fountain",
   };
 
   const BLOCK_WORDS = {
@@ -1256,7 +1262,7 @@ function initializeGame() {
   }
 
   function speechLocale() {
-    return GameLanguage.getLanguage() === "ru" ? "ru-RU" : "en-US";
+    return window.GameLanguage?.getLanguage() === "ru" ? "ru-RU" : "en-US";
   }
 
   function stopSpeaking() {
@@ -1302,11 +1308,17 @@ function initializeGame() {
 
   function wordFor(blockId) {
     const block = blockById(blockId);
-    return block ? GameLanguage.translate(BLOCK_WORDS[block.key]) : "";
+    return block ? translateText(BLOCK_WORDS[block.key]) : "";
   }
 
   function fillTemplate(template, values) {
     return template.replace(/\{([a-zA-Z][a-zA-Z0-9]*)\}/g, (_, name) => values[name] ?? "");
+  }
+
+  // The words screen reads its text through the shared translator. Without it
+  // the screen still works and simply keeps the English word.
+  function translateText(text) {
+    return window.GameLanguage?.translate(text) ?? text;
   }
 
   // Worlds are told apart by their pictures, so a number is only for the
@@ -1866,7 +1878,7 @@ function initializeGame() {
     elements.wordConfirm.hidden = true;
     elements.wordDone.hidden = false;
     renderWordAudio();
-    announce(fillTemplate(GameLanguage.translate("Opened: {word}"), { word: wordFor(blockId) }));
+    announce(fillTemplate(translateText("Opened: {word}"), { word: wordFor(blockId) }));
     renderPalette();
     renderWordsButton();
     watchFields();
@@ -2574,8 +2586,8 @@ function initializeGame() {
     renderWordAudio();
   }
 
-  GameLanguage.onChange(refreshWordsLanguage);
-  GameLanguage.ready.then(refreshWordsLanguage);
+  window.GameLanguage?.onChange(refreshWordsLanguage);
+  window.GameLanguage?.ready.then(refreshWordsLanguage);
 
   // An adult enables blocks on the shelf page, in another tab. The storage
   // event brings the new list here, so the palette never waits for a reload.

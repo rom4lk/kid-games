@@ -1,8 +1,12 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const {
   EMPTY_CELL,
   WATER_ID,
   BLOCKS,
+  BLOCK_COLORS,
+  BLOCK_NAMES,
   WORLD_SIZES,
   DEFAULT_BLOCK_IDS,
   worldSizeById,
@@ -1204,7 +1208,39 @@ function testEverySizeCanBeFilled() {
   assert.equal(state.worlds.length, WORLD_SIZES.length + 1);
 }
 
+// The shelf page must not load the game, so it carries its own copy of the
+// block table. Nothing in either file fails when the two drift apart, which is
+// what this test is for: the ids, the order, the names and the colors have to
+// stay one table, and every name has to be a line the shelf can translate.
+function testShelfBlockTableMatches() {
+  const root = path.join(__dirname, "..");
+  const shelf = fs.readFileSync(path.join(root, "shelf.js"), "utf8");
+  const translations = JSON.parse(fs.readFileSync(path.join(root, "translations.json"), "utf8"));
+  const english = new Set(translations.pairs.map(([source]) => source));
+
+  const copy = [...shelf.matchAll(
+    /\{ id: (\d+), key: "(\w+)", name: "([^"]+)", color: "(#[0-9a-f]{6})" \}/g,
+  )].map(([, id, key, name, color]) => ({ id: Number(id), key, name, color }));
+
+  assert.equal(copy.length, BLOCKS.length, "shelf.js must list every block");
+  copy.forEach((entry, index) => {
+    const block = BLOCKS[index];
+    assert.equal(entry.id, block.id, `shelf.js block ${index + 1} has the wrong id`);
+    assert.equal(entry.key, block.key, `shelf.js block ${index + 1} has the wrong key`);
+    assert.equal(entry.name, BLOCK_NAMES[block.key], `shelf.js renames ${block.key}`);
+    assert.equal(entry.color, BLOCK_COLORS[block.key], `shelf.js recolors ${block.key}`);
+    assert.ok(english.has(entry.name), `translations.json has no line for "${entry.name}"`);
+  });
+
+  // The three blocks a world starts with are named the same way on both sides.
+  const defaults = [...shelf.matchAll(/const BLOCK_TOWN_DEFAULTS = \[([^\]]+)\]/g)]
+    .flatMap(([, list]) => [...list.matchAll(/"(\w+)"/g)].map(([, key]) => key))
+    .map((key) => BLOCKS.find((block) => block.key === key)?.id);
+  assert.deepEqual([...defaults].sort(), [...DEFAULT_BLOCK_IDS].sort());
+}
+
 testRegistries();
+testShelfBlockTableMatches();
 testGridDimensions();
 testSavedGeometry();
 testNeighbors();

@@ -404,6 +404,20 @@ function startGame() {
   const restartButton = document.querySelector("#restart-button");
   const liveStatus = document.querySelector("#live-status");
 
+  // An overlay covers the whole world, so what is behind it must stop
+  // answering the keyboard as well. The overlays live inside the world itself,
+  // so every other part of it is switched off; the live region stays on, or
+  // the announcements would go quiet with it.
+  const worldParts = [...world.children].filter((part) => (
+    part !== pauseOverlay && part !== victoryOverlay && part !== liveStatus
+  ));
+
+  function setWorldInert(value) {
+    worldParts.forEach((part) => {
+      part.inert = value;
+    });
+  }
+
   const resourceButtons = new Map();
   let selectedNodeId = null;
   let movementSequence = 0;
@@ -1163,6 +1177,7 @@ function startGame() {
     window.setTimeout(() => {
       victoryOverlay.classList.add("is-visible");
       victoryOverlay.setAttribute("aria-hidden", "false");
+      setWorldInert(true);
       restartButton.focus();
     }, shortened(VICTORY_DELAY));
   }
@@ -1181,6 +1196,7 @@ function startGame() {
     paused = nextPaused;
     pauseOverlay.classList.toggle("is-visible", paused);
     pauseOverlay.setAttribute("aria-hidden", String(!paused));
+    setWorldInert(paused);
     render();
     if (paused) {
       clearHintTimers();
@@ -1248,7 +1264,10 @@ function startGame() {
       return;
     }
     if (state.phase !== "explore") return;
-    if (document.activeElement?.tagName === "BUTTON") return;
+    // Only a text control keeps the arrow keys for itself. A button does not
+    // use them, and the game hands a button the focus by itself after every
+    // pick, so walking has to stay available.
+    if (["SELECT", "INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
 
     const steps = {
       ArrowUp: [0, -4],
@@ -1267,13 +1286,16 @@ function startGame() {
     event.preventDefault();
 
     // Walking off the side of the screen is the same door as the edge button.
+    // Where the forest ends there is no door, and a step into it has to answer
+    // like every other refusal instead of doing nothing at all.
     const nextX = playerPosition.x + step[0];
-    if (step[0] < 0 && playerPosition.x <= 6) {
-      travelToGlade(neighbourGlade(-1));
-      return;
-    }
-    if (step[0] > 0 && playerPosition.x >= 94) {
-      travelToGlade(neighbourGlade(1));
+    let leaving = 0;
+    if (step[0] < 0 && playerPosition.x <= 6) leaving = -1;
+    if (step[0] > 0 && playerPosition.x >= 94) leaving = 1;
+    if (leaving !== 0) {
+      const glade = neighbourGlade(leaving);
+      if (glade) travelToGlade(glade);
+      else refuse("The forest ends here.");
       return;
     }
     clearSelection();

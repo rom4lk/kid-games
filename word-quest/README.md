@@ -9,12 +9,15 @@ next word.
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
 - levels by word length, from 3 to 7 letters, in both languages;
 - a second mode, "Find the word": a picture and three written words that differ in one letter;
-- 20 chapters in every level, 10 words in every chapter — 200 words per level;
+- 20 chapters in every level, 10 words in every chapter — 200 readings per level, drawn from a
+  smaller set of words: there are not 200 short nouns a six-year-old knows and a picture can
+  tell apart, so a word comes back several times on purpose;
 - every level is open from the menu, while the chapters inside a level unlock one after another;
 - a comprehension check through a choice of one picture out of three, with the captions hidden until
   the answer is correct;
 - splitting a word into parts through a separate button, a tap on the word card, or automatically
-  after a second mistake;
+  after a second mistake — a word of one syllable has no parts to show, so the button and the
+  card stay quiet there instead of answering with no change;
 - the option to set a word aside and come back to it later in the same chapter;
 - gentle feedback with no penalties and no timer;
 - automatic saving of the progress and the statistics;
@@ -158,6 +161,10 @@ python3 word-quest/tools/validate.py
 
 Add `--all` to require every expected pack to exist. Missing packs are only a warning without that
 flag, because the levels are written one at a time.
+
+The validator also holds the floor under the repetition described above: a level must carry at least
+35 different words, and no word may appear more than 8 times in it. Both are errors, so a new pack
+cannot quietly shrink to a handful of words said over and over.
 
 ## Adding a level
 

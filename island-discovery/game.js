@@ -147,7 +147,9 @@ function rules() {
   return DIFFICULTIES[state.difficulty] ?? DIFFICULTIES.normal;
 }
 
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotion = typeof window !== "undefined" && window.matchMedia
+  ? window.matchMedia("(prefers-reduced-motion: reduce)")
+  : { matches: false };
 
 // CSS animations obey the reduced motion setting on their own; a pause in
 // JavaScript has to be shortened by hand or the game just sits still.
@@ -155,40 +157,50 @@ function motionDelay(milliseconds) {
   return reducedMotion.matches ? 120 : milliseconds;
 }
 
+// test-game.js loads the model half of this file with no browser around it, so
+// every lookup answers with nothing instead of throwing.
+function element(selector) {
+  return typeof document === "undefined" ? null : document.querySelector(selector);
+}
+
+function elementList(selector) {
+  return typeof document === "undefined" ? [] : [...document.querySelectorAll(selector)];
+}
+
 const elements = {
-  map: document.querySelector("#game-map"),
-  canvas: document.querySelector("#map-canvas"),
-  overlay: document.querySelector("#map-overlay"),
-  food: document.querySelector("#food-count"),
-  wood: document.querySelector("#wood-count"),
-  idea: document.querySelector("#idea-count"),
-  treeFood: document.querySelector("#tree-food-count"),
-  treeWood: document.querySelector("#tree-wood-count"),
-  treeIdea: document.querySelector("#tree-idea-count"),
-  turn: document.querySelector("#turn-count"),
-  energy: document.querySelector("#energy-pips"),
-  status: document.querySelector("#status-message"),
-  goalText: document.querySelector("#goal-text"),
-  goalProgress: document.querySelector("#goal-progress"),
-  endTurn: document.querySelector("#end-turn-button"),
-  startModal: document.querySelector("#start-modal"),
-  startCancel: document.querySelector("#start-cancel"),
-  appShell: document.querySelector(".app-shell"),
-  researchPanel: document.querySelector(".research-panel"),
-  researchSlot: document.querySelector("#research-slot"),
-  treeButton: document.querySelector("#tree-button"),
-  treeModal: document.querySelector("#tree-modal"),
-  treeBack: document.querySelector("#tree-back"),
-  techGrid: document.querySelector("#tech-grid"),
-  sceneItems: [...document.querySelectorAll("[data-scene]")],
-  victory: document.querySelector("#victory-modal"),
-  victoryTurns: document.querySelector("#victory-turns"),
-  victoryTiles: document.querySelector("#victory-tiles"),
-  energyText: document.querySelector("#energy-text"),
+  map: element("#game-map"),
+  canvas: element("#map-canvas"),
+  overlay: element("#map-overlay"),
+  food: element("#food-count"),
+  wood: element("#wood-count"),
+  idea: element("#idea-count"),
+  treeFood: element("#tree-food-count"),
+  treeWood: element("#tree-wood-count"),
+  treeIdea: element("#tree-idea-count"),
+  turn: element("#turn-count"),
+  energy: element("#energy-pips"),
+  status: element("#status-message"),
+  goalText: element("#goal-text"),
+  goalProgress: element("#goal-progress"),
+  endTurn: element("#end-turn-button"),
+  startModal: element("#start-modal"),
+  startCancel: element("#start-cancel"),
+  appShell: element(".app-shell"),
+  researchPanel: element(".research-panel"),
+  researchSlot: element("#research-slot"),
+  treeButton: element("#tree-button"),
+  treeModal: element("#tree-modal"),
+  treeBack: element("#tree-back"),
+  techGrid: element("#tech-grid"),
+  sceneItems: elementList("[data-scene]"),
+  victory: element("#victory-modal"),
+  victoryTurns: element("#victory-turns"),
+  victoryTiles: element("#victory-tiles"),
+  energyText: element("#energy-text"),
   resources: {
-    food: document.querySelector(".food-resource"),
-    wood: document.querySelector(".wood-resource"),
-    idea: document.querySelector(".idea-resource"),
+    food: element(".food-resource"),
+    wood: element(".wood-resource"),
+    idea: element(".idea-resource"),
   },
 };
 
@@ -200,7 +212,9 @@ function loadSoundPreference() {
   }
 }
 
-let soundEnabled = loadSoundPreference();
+// Read from storage once the page is there; the model half of this file is
+// loaded without one.
+let soundEnabled = true;
 
 function readText(id) {
   return document.querySelector(`#${id}`).textContent.trim();
@@ -271,6 +285,7 @@ function centerOf(index) {
 }
 
 function hexPath(radius) {
+  if (typeof Path2D === "undefined") return null;
   const path = new Path2D();
   for (let corner = 0; corner < 6; corner += 1) {
     const angle = Math.PI / 6 + corner * Math.PI / 3;
@@ -348,21 +363,30 @@ function easeOut(progress) {
 
 // The spyglass sees one ring further. Distance is counted in steps, so the
 // mist opens in rings of hexes and not in a square.
-function revealAround(index) {
-  const radius = state.opened.has("spyglass") ? 2 : 1;
+// The walk keeps its own visited set. Asking `revealed` instead would stop the
+// second ring at every hex the explorer had already seen, and the spyglass
+// would open less the longer the island has been walked.
+function revealRings(revealed, index, radius) {
+  const visited = new Set([index]);
   let frontier = [index];
-  state.revealed.add(index);
+  revealed.add(index);
   for (let step = 0; step < radius; step += 1) {
     const next = [];
     frontier.forEach((current) => {
       adjacentIndexes(current).forEach((near) => {
-        if (state.revealed.has(near)) return;
-        state.revealed.add(near);
+        if (visited.has(near)) return;
+        visited.add(near);
+        revealed.add(near);
         next.push(near);
       });
     });
     frontier = next;
   }
+  return revealed;
+}
+
+function revealAround(index) {
+  revealRings(state.revealed, index, state.opened.has("spyglass") ? 2 : 1);
 }
 
 function pulseResource(resource) {
@@ -1203,6 +1227,11 @@ function createCard(id) {
 }
 
 function renderTree() {
+  // Every card is built anew, so a keyboard standing on one would be left on
+  // nothing inside a dialog whose board is already inert.
+  const focusedCard = elements.techGrid.contains(document.activeElement)
+    ? document.activeElement.closest("[data-card]")?.dataset.card ?? null
+    : null;
   elements.techGrid.replaceChildren();
 
   // A column and the cards standing in it are written out together, so that a
@@ -1239,6 +1268,11 @@ function renderTree() {
     arrow.style.gridArea = `${CARDS[child].row + 2} / ${CARDS[parent].column * 2 + 2}`;
     elements.techGrid.append(arrow);
   });
+
+  // The same card again, or the way out of the tree.
+  if (focusedCard) {
+    (elements.techGrid.querySelector(`[data-card="${focusedCard}"]`) ?? elements.treeBack).focus();
+  }
 }
 
 function renderResearchSlot() {
@@ -1567,82 +1601,115 @@ function hexAtEvent(event) {
   return hexAt(event.clientX - rect.left, event.clientY - rect.top);
 }
 
-// A tap counts only when the finger goes down and up on the same hex, so a
-// swipe across the map does not move the explorer. The reachable hexes are
-// covered by overlay buttons and never reach the canvas.
-let pressedIndex = null;
-elements.canvas.addEventListener("pointerdown", (event) => {
-  pressedIndex = hexAtEvent(event);
-});
-elements.canvas.addEventListener("pointerup", (event) => {
-  const index = hexAtEvent(event);
-  if (index !== null && index === pressedIndex) moveExplorer(index);
-  pressedIndex = null;
-});
-elements.canvas.addEventListener("pointercancel", () => {
-  pressedIndex = null;
-});
-// The whole map card zooms, including the overlay buttons that cover the
-// reachable hexes. A wheel over the map never scrolls the page.
-elements.map.addEventListener("wheel", (event) => {
-  if (state.tiles.length === 0) return;
-  event.preventDefault();
-  const sensitivity = event.ctrlKey ? PINCH_SENSITIVITY : WHEEL_SENSITIVITY;
-  setScale(view.scale * Math.exp(-wheelPixels(event) * sensitivity));
-}, { passive: false });
-elements.overlay.addEventListener("focusin", scheduleDraw);
-elements.overlay.addEventListener("focusout", scheduleDraw);
-new ResizeObserver(resizeCanvas).observe(elements.map);
-
-elements.endTurn.addEventListener("click", endTurn);
-elements.treeButton.addEventListener("click", openTree);
-elements.treeBack.addEventListener("click", closeTree);
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeTree();
-});
-document.querySelectorAll(".difficulty-card").forEach((button) => {
-  button.addEventListener("click", () => startGame(button.dataset.difficulty));
-});
-document.querySelector("#restart-button").addEventListener("click", askDifficulty);
-const restartTop = document.querySelector("#restart-button-top");
-restartTop.addEventListener("click", askDifficulty);
-elements.startCancel.addEventListener("click", () => {
-  hideModals();
-  restartTop.focus();
-});
-
-const soundButton = document.querySelector("#sound-button");
-soundButton.textContent = soundEnabled ? "♪" : "×";
-soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
-soundButton.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  try {
-    localStorage.setItem(SOUND_KEY, soundEnabled ? "on" : "off");
-  } catch {
-    // Private browsing modes can refuse writes. The choice stays for this session only.
-  }
-  soundButton.textContent = soundEnabled ? "♪" : "×";
-  soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
-  if (soundEnabled) playSound("build");
-});
-
-// The island changed shape when the path of discoveries arrived, so a game
-// saved by the older version is dropped instead of being repaired.
-try {
-  localStorage.removeItem(LEGACY_STORAGE_KEY);
-} catch {
-  // Nothing to clear when storage is unavailable.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    MAP_WIDTH,
+    MAP_HEIGHT,
+    CITY_INDEX,
+    RIVER_COLUMN,
+    DIFFICULTIES,
+    CARDS,
+    CARD_ORDER,
+    CITY_PLACES,
+    TILE_DATA,
+    state,
+    view,
+    positionOf,
+    adjacentIndexes,
+    isAdjacent,
+    centerOf,
+    hexAt,
+    islandTiles,
+    revealRings,
+    stepsPerDay,
+    cardState,
+    firstMissingParent,
+    routeTo,
+  };
 }
 
-renderCoach();
+// Everything below this line answers the page. The island itself is the model
+// above it, and test-game.js checks that without a browser.
+if (typeof document !== "undefined") {
+  soundEnabled = loadSoundPreference();
 
-if (loadGame()) {
-  // A card that was already paid for when the tab closed finishes on the spot
-  // instead of waiting for one more step.
-  if (!settleResearch()) setMessage(state.energy > 0 ? "start" : "no-energy");
-  if (!state.finished) hideModals();
-  render();
-} else {
-  setMessage("start");
-  showModal(elements.startModal);
+  // A tap counts only when the finger goes down and up on the same hex, so a
+  // swipe across the map does not move the explorer. The reachable hexes are
+  // covered by overlay buttons and never reach the canvas.
+  let pressedIndex = null;
+  elements.canvas.addEventListener("pointerdown", (event) => {
+    pressedIndex = hexAtEvent(event);
+  });
+  elements.canvas.addEventListener("pointerup", (event) => {
+    const index = hexAtEvent(event);
+    if (index !== null && index === pressedIndex) moveExplorer(index);
+    pressedIndex = null;
+  });
+  elements.canvas.addEventListener("pointercancel", () => {
+    pressedIndex = null;
+  });
+  // The whole map card zooms, including the overlay buttons that cover the
+  // reachable hexes. A wheel over the map never scrolls the page.
+  elements.map.addEventListener("wheel", (event) => {
+    if (state.tiles.length === 0) return;
+    event.preventDefault();
+    const sensitivity = event.ctrlKey ? PINCH_SENSITIVITY : WHEEL_SENSITIVITY;
+    setScale(view.scale * Math.exp(-wheelPixels(event) * sensitivity));
+  }, { passive: false });
+  elements.overlay.addEventListener("focusin", scheduleDraw);
+  elements.overlay.addEventListener("focusout", scheduleDraw);
+  new ResizeObserver(resizeCanvas).observe(elements.map);
+
+  elements.endTurn.addEventListener("click", endTurn);
+  elements.treeButton.addEventListener("click", openTree);
+  elements.treeBack.addEventListener("click", closeTree);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeTree();
+  });
+  document.querySelectorAll(".difficulty-card").forEach((button) => {
+    button.addEventListener("click", () => startGame(button.dataset.difficulty));
+  });
+  document.querySelector("#restart-button").addEventListener("click", askDifficulty);
+  const restartTop = document.querySelector("#restart-button-top");
+  restartTop.addEventListener("click", askDifficulty);
+  elements.startCancel.addEventListener("click", () => {
+    hideModals();
+    restartTop.focus();
+  });
+
+  const soundButton = document.querySelector("#sound-button");
+  soundButton.textContent = soundEnabled ? "♪" : "×";
+  soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
+  soundButton.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    try {
+      localStorage.setItem(SOUND_KEY, soundEnabled ? "on" : "off");
+    } catch {
+      // Private browsing modes can refuse writes. The choice stays for this session only.
+    }
+    soundButton.textContent = soundEnabled ? "♪" : "×";
+    soundButton.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
+    if (soundEnabled) playSound("build");
+  });
+
+  // The island changed shape when the path of discoveries arrived, so a game
+  // saved by the older version is dropped instead of being repaired.
+  try {
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+  } catch {
+    // Nothing to clear when storage is unavailable.
+  }
+
+  renderCoach();
+
+  if (loadGame()) {
+    // A card that was already paid for when the tab closed finishes on the spot
+    // instead of waiting for one more step.
+    if (!settleResearch()) setMessage(state.energy > 0 ? "start" : "no-energy");
+    if (!state.finished) hideModals();
+    render();
+  } else {
+    setMessage("start");
+    showModal(elements.startModal);
+  }
 }

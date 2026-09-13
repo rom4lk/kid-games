@@ -86,22 +86,17 @@ python3 word-quest/tools/validate.py
 Add `--all` to require every expected pack to exist — that is the final check before the content is
 considered complete.
 
-The Secret Rule Lab logic is checked separately:
+Every game keeps its rules apart from the screen it draws, and each one has a test that runs them
+without a browser:
 
 ```bash
-node hypothesis-lab/test-game.js
-```
-
-So is the Block Town model:
-
-```bash
-node block-town/test-game.js
-```
-
-The Robo Stories levels, simulator, hint search and progress rules are checked with:
-
-```bash
-node robo-stories/test-game.js
+node hypothesis-lab/test-game.js   # the six missions and the rule logic
+node block-town/test-game.js       # the world model, and the shelf's copy of the block table
+node robo-stories/test-game.js     # the levels, the simulator, the hint search, the progress rules
+node forest-light/test-game.js     # gathering, building and the evening
+node garden-quest/test-game.js     # the ten gardens: every star and the perfect route are reachable
+node island-discovery/test-game.js # the hex map, the fog, the path of discoveries
+node word-quest/test-game.js       # the reading rules and the shape of the word packs
 ```
 
 ## Saved progress
@@ -111,7 +106,7 @@ Every game writes its progress to `localStorage` under its own key:
 | Game | Key |
 | --- | --- |
 | `word-quest` | `livingWordsProgressV2` |
-| `island-discovery` | `islandDiscoveryV1` |
+| `island-discovery` | `islandDiscoveryV2` |
 | `forest-light` | `forestLightProgressV1` |
 | `robo-stories` | `roboStoriesProgressV1`, `roboStoriesSurveyV1` |
 | `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |

@@ -29,7 +29,9 @@ const DEFAULT_STATE = {
   },
 };
 
-const elements = Object.fromEntries(
+// test-game.js loads the rules in this file without a browser, so the table of
+// elements is empty there and nothing that draws is ever called.
+const elements = typeof document === "undefined" ? {} : Object.fromEntries(
   [...document.querySelectorAll("[id]")].map((element) => [element.id, element]),
 );
 
@@ -43,7 +45,8 @@ const screens = [
 
 let ui;
 let activeLanguage = "en";
-let state = readState();
+// Saved progress is read once the page is there; without one the defaults do.
+let state = structuredClone(DEFAULT_STATE);
 const uiCache = new Map();
 const packCache = new Map();
 let currentPack;
@@ -151,7 +154,9 @@ function setText(id, value) {
   elements[id].textContent = value;
 }
 
-const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotionQuery = typeof window !== "undefined" && window.matchMedia
+  ? window.matchMedia("(prefers-reduced-motion: reduce)")
+  : { matches: false };
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: reducedMotionQuery.matches ? "auto" : "smooth" });
@@ -326,12 +331,17 @@ function levelKey(letters) {
   return `${activeLanguage}-${letters}`;
 }
 
-function getChapterProgress(letters, chapterIndex) {
-  const level = state.completed[levelKey(letters)];
-  const value = Number(level?.[chapterIndex] || 0);
-  // A corrupted stored value must not reach the progress bars as NaN.
+// A corrupted stored value must not reach the progress bars as NaN, and no
+// chapter can report more words than it holds.
+function chapterProgressValue(saved) {
+  const value = Number(saved || 0);
   if (!Number.isFinite(value)) return 0;
   return Math.min(Math.max(value, 0), WORDS_PER_CHAPTER);
+}
+
+function getChapterProgress(letters, chapterIndex) {
+  const level = state.completed[levelKey(letters)];
+  return chapterProgressValue(level?.[chapterIndex]);
 }
 
 function setChapterProgress(letters, chapterIndex, value) {
@@ -526,21 +536,25 @@ function startChapter(chapterIndex, forceFirst = false) {
 
 // A word can be set aside, so progress is the run of solved words from the
 // start rather than the highest index reached.
-function solvedPrefixLength() {
+function solvedPrefixLength(solved = solvedTaskIndexes) {
   let length = 0;
-  while (solvedTaskIndexes.has(length)) length += 1;
+  while (solved.has(length)) length += 1;
   return length;
+}
+
+// The loop never lands back on fromIndex: when the current word is the only
+// unsolved one there is nothing to skip to, and the answer is -1.
+function findNextUnsolved(fromIndex, taskCount, solved) {
+  for (let step = 1; step < taskCount; step += 1) {
+    const index = (fromIndex + step) % taskCount;
+    if (!solved.has(index)) return index;
+  }
+  return -1;
 }
 
 function nextUnsolvedTaskIndex(fromIndex) {
   const chapter = currentPack.chapters[currentChapterIndex];
-  // The loop never lands back on fromIndex: when the current word is the only
-  // unsolved one there is nothing to skip to, and the answer is -1.
-  for (let step = 1; step < chapter.tasks.length; step += 1) {
-    const index = (fromIndex + step) % chapter.tasks.length;
-    if (!solvedTaskIndexes.has(index)) return index;
-  }
-  return -1;
+  return findNextUnsolved(fromIndex, chapter.tasks.length, solvedTaskIndexes);
 }
 
 function skipTask() {
@@ -581,8 +595,12 @@ function renderTask() {
     total: chapter.tasks.length,
   }));
 
+  const canShowParts = spell || hasSyllableSplit(task);
   elements.wordCard.classList.toggle("picture-card", spell);
   elements.wordCard.classList.remove("show-syllables");
+  elements.wordCard.disabled = !canShowParts;
+  elements.hintButton.hidden = !canShowParts;
+  elements.tapHint.hidden = !canShowParts;
   elements.wordSyllables.hidden = true;
   elements.successPanel.hidden = true;
   elements.skipButton.disabled = nextUnsolvedTaskIndex(currentTaskIndex) === -1;
@@ -654,6 +672,13 @@ function renderWordChoices(task) {
   });
 }
 
+// A word of one syllable is written the same way with and without the split,
+// so the parts hint has nothing to show. It then stays off the screen instead
+// of answering a tap with no change and counting as help all the same.
+function hasSyllableSplit(task) {
+  return typeof task.syllables === "string" && task.syllables !== task.word;
+}
+
 function changingPositions(words) {
   const positions = new Set();
   for (let index = 0; index < words[0].length; index += 1) {
@@ -684,6 +709,7 @@ function shuffle(values) {
 function revealHint() {
   if (currentTaskSolved) return;
   const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
+  if (!isSpellMode() && !hasSyllableSplit(task)) return;
 
   if (isSpellMode()) {
     // The hint points at the one letter that decides the answer. It never says
@@ -728,9 +754,15 @@ function handleChoice(button, choice) {
       setText("feedbackStatus", spell ? ui.spell.wrongFirst : ui.play.wrongFirst);
     } else {
       revealHint();
-      setText("feedbackStatus", spell ? ui.spell.wrongAgain : fillTemplate(ui.play.wrongAgain, {
-        syllables: task.syllables,
-      }));
+      // A word with no parts to show is repeated whole instead of being
+      // promised a split that would look exactly the same.
+      const wholeWord = !spell && !hasSyllableSplit(task);
+      setText("feedbackStatus", spell
+        ? ui.spell.wrongAgain
+        : fillTemplate(wholeWord ? ui.play.wrongAgainWhole : ui.play.wrongAgain, {
+          word: task.word,
+          syllables: task.syllables,
+        }));
     }
 
     playTone("wrong");
@@ -948,4 +980,24 @@ async function initialize() {
   }
 }
 
-initialize();
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    LEVELS,
+    SPELL_MODE,
+    CHAPTERS_PER_LEVEL,
+    WORDS_PER_CHAPTER,
+    chapterProgressValue,
+    changingPositions,
+    fillTemplate,
+    findNextUnsolved,
+    hasSyllableSplit,
+    packPath,
+    shuffle,
+    solvedPrefixLength,
+  };
+}
+
+if (typeof document !== "undefined") {
+  state = readState();
+  initialize();
+}

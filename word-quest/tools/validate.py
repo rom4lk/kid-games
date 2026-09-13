@@ -17,6 +17,13 @@ CHAPTERS_PER_LEVEL = 20
 WORDS_PER_CHAPTER = 10
 SPELL_CHAPTERS = 5
 
+# A level is two hundred readings, not two hundred different words: there are
+# not two hundred short nouns a six-year-old knows and a picture can tell apart,
+# least of all at three letters. Repetition is deliberate, but it has a floor,
+# so a new pack cannot quietly become a handful of words said over and over.
+MIN_UNIQUE_WORDS = 35
+MAX_WORD_REPEATS = 8
+
 WORD_ALPHABETS = {
     "en": re.compile(r"^[A-Z]+$"),
     "ru": re.compile(r"^[А-ЯЙЬЪ]+$"),
@@ -184,15 +191,20 @@ def validate_pack(language, letters):
     if unsplit_words:
         warnings.append(
             f"{file_name}: {unsplit_words} of {total_words} tasks have syllables identical to the"
-            " word, so the parts hint changes nothing visually while still counting a help use"
+            " word, so the game offers no parts hint on them at all"
         )
-    if word_counts and len(word_counts) < total_words:
+    if word_counts:
         top_word, top_count = max(word_counts.items(), key=lambda item: item[1])
-        warnings.append(
-            f"{file_name}: only {len(word_counts)} unique words across {total_words} tasks"
-            f' (most repeated: "{top_word}" x{top_count}), while the README and the completion'
-            f" text promise {total_words} words per level"
-        )
+        if len(word_counts) < MIN_UNIQUE_WORDS:
+            errors.append(
+                f"{file_name}: only {len(word_counts)} unique words across {total_words} tasks,"
+                f" fewer than the {MIN_UNIQUE_WORDS} a level has to hold"
+            )
+        if top_count > MAX_WORD_REPEATS:
+            errors.append(
+                f'{file_name}: "{top_word}" is repeated {top_count} times, more than the'
+                f" {MAX_WORD_REPEATS} times one word may appear in a level"
+            )
     if split_words and split_words == letter_split_words:
         warnings.append(
             f"{file_name}: every split is letter by letter, not by syllables, while the UI"

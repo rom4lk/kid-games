@@ -1060,6 +1060,12 @@ h1 {
   line-height: 1;
 }
 
+/* A word of one syllable hides the parts hint, so its card is not a button
+   any more and must not keep a button's cursor. */
+.word-card:disabled {
+  cursor: default;
+}
+
 .word-card.show-syllables .word-main {
   display: none;
 }
