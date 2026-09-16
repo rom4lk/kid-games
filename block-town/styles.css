@@ -22,6 +22,7 @@
   --water: #82c9e8;
   --soil: #b98c5c;
   --sand: #f0dfae;
+  --snow: #e4ecf7;
   --asphalt: #9aa2a6;
   --rail-bed: #cbb79a;
   --lamp: #ffe9a8;
@@ -337,6 +338,28 @@ button:focus-visible,
   background-image: url("art/mountain-b.svg");
 }
 
+.block--snow {
+  background: url("art/snow-a.svg") center / 100% 100% no-repeat var(--snow);
+}
+
+.block--snow.tile--b {
+  background-image: url("art/snow-b.svg");
+}
+
+.block--rocks {
+  background: url("art/rocks-a.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--rocks.tile--b {
+  background-image: url("art/rocks-b.svg");
+}
+
+/* The beds of a garden sit at the heights of the field furrows, so a garden
+   next to a field runs on into it. */
+.block--garden {
+  background: url("art/garden.svg") center / 100% 100% no-repeat var(--soil);
+}
+
 /* A field grows: bare soil, then shoots, then ripe ears. The furrows sit at
    the same heights in every picture, so they run on into the next cell. */
 .block--field {
@@ -625,6 +648,24 @@ button:focus-visible,
   background-position-y: calc(1px - var(--sway));
 }
 
+/* An apple tree sways like a lone forest tree: its crown, apples and all, is
+   a picture of its own over the trunk. */
+.block--orchard {
+  background: url("art/orchard.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--orchard::after {
+  position: absolute;
+  background: url("art/orchard-crown.svg") center / 100% 100% no-repeat;
+  background-position-y: var(--sway);
+  content: "";
+  inset: 0;
+}
+
+.sheet-row:nth-child(odd) .block--orchard::after {
+  background-position-y: calc(1px - var(--sway));
+}
+
 /* Buildings and decorations are one picture from art/ each, on their ground.
    What moves or lights up — the windows, the sails, the lamps — is a
    pseudo-element the game can animate, laid over the picture. */
@@ -738,6 +779,64 @@ button:focus-visible,
   background: url("art/castle.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
+/* A school and a shop have windows like a house: in the same place in every
+   picture, lit in the evening. */
+.block--school {
+  background: url("art/school.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--school::before,
+.block--school::after {
+  position: absolute;
+  top: 53.1%;
+  width: 17.2%;
+  height: 15.6%;
+  border-radius: 1px;
+  background: transparent;
+  content: "";
+  transition: background-color 900ms ease;
+}
+
+.block--school::before {
+  left: 20.3%;
+}
+
+.block--school::after {
+  left: 62.5%;
+}
+
+.block--shop {
+  background: url("art/shop.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--shop::after {
+  position: absolute;
+  top: 56.3%;
+  left: 21.9%;
+  width: 28.1%;
+  height: 21.9%;
+  border-radius: 1px;
+  background: transparent;
+  content: "";
+  transition: background-color 900ms ease;
+}
+
+/* A station: the lamp under its canopy is drawn here, so the evening can put
+   a glow around it. */
+.block--station {
+  background: url("art/station.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--station::after {
+  position: absolute;
+  top: 56.3%;
+  left: 46.9%;
+  width: 6.2%;
+  height: 3.1%;
+  border-radius: 1px;
+  content: "";
+}
+
 .block--playground {
   background: url("art/playground.svg") center / 100% 100% no-repeat var(--sand);
 }
@@ -795,14 +894,44 @@ button:focus-visible,
   inset: 0;
 }
 
+.block--statue {
+  background: url("art/statue.svg") center / 100% 100% no-repeat var(--sand);
+}
+
+/* The cloth of a flag waves on the shared clock, like a tree crown. */
+.block--flag {
+  background: url("art/flag.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--flag::after {
+  position: absolute;
+  background: url("art/flag-cloth.svg") center / 100% 100% no-repeat;
+  background-position-y: var(--sway);
+  content: "";
+  inset: 0;
+}
+
+.sheet-row:nth-child(odd) .block--flag::after {
+  background-position-y: calc(1px - var(--sway));
+}
+
+.block--snowman {
+  background: url("art/snowman.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
 /* Evening: the windows and the lanterns come on. */
 .sheet-stage.is-evening .block--house::before,
-.sheet-stage.is-evening .block--house::after {
+.sheet-stage.is-evening .block--house::after,
+.sheet-stage.is-evening .block--school::before,
+.sheet-stage.is-evening .block--school::after,
+.sheet-stage.is-evening .block--shop::after,
+.sheet-stage.is-evening .block--station::after {
   background: var(--lamp);
 }
 
 .sheet-stage.is-evening .block--lantern::before,
-.sheet-stage.is-evening .block--lighthouse::after {
+.sheet-stage.is-evening .block--lighthouse::after,
+.sheet-stage.is-evening .block--station::after {
   box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
 }
 

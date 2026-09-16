@@ -91,7 +91,7 @@ without a browser:
 
 ```bash
 node hypothesis-lab/test-game.js   # the six missions and the rule logic
-node block-town/test-game.js       # the world model, and the shelf's copy of the block table
+node block-town/test-game.js       # the world model, the shelf's copy of the block table, the art
 node robo-stories/test-game.js     # the levels, the simulator, the hint search, the progress rules
 node forest-light/test-game.js     # gathering, building and the evening
 node garden-quest/test-game.js     # the ten gardens: every star and the perfect route are reachable
@@ -120,7 +120,7 @@ Every card on the home page has a settings button in its corner: it opens a smal
 that resets the progress of that game after a confirmation. The reset removes only the keys listed
 above, so the sound and language settings stay as they were.
 
-The Block Town panel holds one more screen, "Blocks": a list of all twenty blocks, where an adult
+The Block Town panel holds one more screen, "Blocks": a list of all thirty blocks, where an adult
 adds the ones the child may paint with. That choice lives under `blockTownBlocksV1`, is written by
 the home page and by the words screen inside the game, and a reset of progress keeps it — like sound
 and language, it is a setting.

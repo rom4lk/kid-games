@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The cloth of the flag alone, hanging from the pole of flag.svg, on a transparent background. -->
+  <path d="M26 10q12-4 24 0v18q-12-4-24 0z" fill="#4c6ef5"/>
+  <path d="M26 16q12-4 24 0v6q-12-4-24 0z" fill="#ffd45c"/>
+</svg>

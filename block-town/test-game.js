@@ -904,7 +904,7 @@ function testEnabledBlocks() {
 
   const fresh = createGameState(null);
   const locked = lockedBlockIds(fresh);
-  assert.equal(locked.length, 17);
+  assert.equal(locked.length, 27);
   DEFAULT_BLOCK_IDS.forEach((blockId) => {
     assert.equal(locked.includes(blockId), false);
   });
@@ -1215,8 +1215,10 @@ function testEverySizeCanBeFilled() {
 function testShelfBlockTableMatches() {
   const root = path.join(__dirname, "..");
   const shelf = fs.readFileSync(path.join(root, "shelf.js"), "utf8");
-  const translations = JSON.parse(fs.readFileSync(path.join(root, "translations.json"), "utf8"));
-  const english = new Set(translations.pairs.map(([source]) => source));
+  // The shelf reads the root dictionary, the game its own: a name has to be in both.
+  const english = ["translations.json", path.join("block-town", "translations.json")].map((file) => (
+    new Set(JSON.parse(fs.readFileSync(path.join(root, file), "utf8")).pairs.map(([source]) => source))
+  ));
 
   const copy = [...shelf.matchAll(
     /\{ id: (\d+), key: "(\w+)", name: "([^"]+)", color: "(#[0-9a-f]{6})" \}/g,
@@ -1229,7 +1231,9 @@ function testShelfBlockTableMatches() {
     assert.equal(entry.key, block.key, `shelf.js block ${index + 1} has the wrong key`);
     assert.equal(entry.name, BLOCK_NAMES[block.key], `shelf.js renames ${block.key}`);
     assert.equal(entry.color, BLOCK_COLORS[block.key], `shelf.js recolors ${block.key}`);
-    assert.ok(english.has(entry.name), `translations.json has no line for "${entry.name}"`);
+    english.forEach((names, index) => {
+      assert.ok(names.has(entry.name), `translations file ${index + 1} has no line for "${entry.name}"`);
+    });
   });
 
   // The three blocks a world starts with are named the same way on both sides.
@@ -1239,8 +1243,24 @@ function testShelfBlockTableMatches() {
   assert.deepEqual([...defaults].sort(), [...DEFAULT_BLOCK_IDS].sort());
 }
 
+// Every block is drawn by styles.css from pictures in art/. A block without a
+// rule would paint as a blank cell, and a rule naming a missing picture would
+// paint as its flat ground, so both are checked here.
+function testEveryBlockHasArt() {
+  const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+  BLOCKS.forEach((block) => {
+    assert.ok(styles.includes(`.block--${block.key} {`), `styles.css has no rule for ${block.key}`);
+  });
+  const pictures = [...styles.matchAll(/url\("art\/([^"]+)"\)/g)].map(([, name]) => name);
+  assert.ok(pictures.length > 0);
+  new Set(pictures).forEach((name) => {
+    assert.ok(fs.existsSync(path.join(__dirname, "art", name)), `art/${name} is missing`);
+  });
+}
+
 testRegistries();
 testShelfBlockTableMatches();
+testEveryBlockHasArt();
 testGridDimensions();
 testSavedGeometry();
 testNeighbors();

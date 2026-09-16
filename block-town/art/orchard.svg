@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- An orchard cell: the meadow, the ground shadow, a fallen apple and the trunk. The crown is orchard-crown.svg, laid over it by the game so it can sway. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="32" cy="54" rx="17" ry="4" fill="#2f6f45" fill-opacity=".22"/>
+  <rect x="29" y="34" width="6" height="20" rx="2" fill="#7a4f2a"/>
+  <path d="M29 42l-6-4M35 44l6-4" stroke="#7a4f2a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="14" cy="52" r="3" fill="#e5645f"/>
+  <circle cx="52" cy="50" r="3" fill="#e5645f"/>
+</svg>

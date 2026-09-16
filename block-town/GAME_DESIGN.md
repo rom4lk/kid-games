@@ -73,7 +73,7 @@ with the largest cells, so the game is never empty.
 
 Progression is the adult's job now. Every world starts with three blocks — forest, water and road —
 and an adult adds more from the shelf page: the gear on the Block Town card opens a list of all
-twenty blocks, and tapping one adds it to the palette. A block cannot be removed one by one; the only
+thirty blocks, and tapping one adds it to the palette. A block cannot be removed one by one; the only
 way back is a button on the same list that returns the palette to the three starting blocks. Painted
 worlds keep every cell after that, so nothing a child has built is lost — the palette only narrows.
 
@@ -84,12 +84,12 @@ kind). Familiar blocks keep the same pictures and the same positions in the pale
 | Family | Kinds | Notes |
 | --- | --- | --- |
 | Roads | path, asphalt, rails | Painted over water they become a bridge on their own |
-| Nature | meadow, forest, flowers, field, sand, mountain | Meadow is the calm filler for empty corners |
+| Nature | meadow, forest, flowers, field, sand, mountain, snow, orchard, rocks, garden | Meadow is the calm filler for empty corners |
 | Water | water | One kind; the world itself draws shores, lakes and rivers |
-| Buildings | house, tower, farm, windmill, lighthouse, castle | |
-| Decorations | lantern, bench, fountain, playground | |
+| Buildings | house, tower, farm, windmill, lighthouse, castle, school, shop, station | |
+| Decorations | lantern, bench, fountain, playground, statue, flag, snowman | |
 
-Twenty blocks in all — never all at once unless an adult decides the child is ready for them.
+Thirty blocks in all — never all at once unless an adult decides the child is ready for them.
 
 ## Words that open blocks
 
@@ -136,12 +136,13 @@ possible, and each reaction is visible without sound or reading:
 - A house with a street on any side starts smoking from its chimney; rails do not count. At most
   six chimneys smoke at once, spread evenly over the town.
 - Fields ripen, a windmill turns when a field is near, a lighthouse blinks when it stands by water.
-- In the evening (after the world is complete) windows and lanterns light up and fireflies come out.
+- In the evening (after the world is complete) the windows of houses, schools and shops, the
+  lanterns and the station lamps light up and fireflies come out.
 
 The painting breathes as well, slowly and by a pixel or two, never fast enough to pull the eye from
-the cell being painted: lone and row trees sway their crowns (a dense wood keeps still so its canopy
-never shows a seam), waves drift on every lake, ripe ears bend, a fountain splashes, a swing rocks,
-and the shadows of clouds pass over the whole sheet. Every motion is earned by the painting: no
+the cell being painted: lone and row trees and apple trees sway their crowns (a dense wood keeps
+still so its canopy never shows a seam), a flag waves, waves drift on every lake, ripe ears bend, a
+fountain splashes, a swing rocks, and the shadows of clouds pass over the whole sheet. Every motion is earned by the painting: no
 smoke without a street, no walker without a road, no ripple on an empty sheet.
 
 All of it is gentle and slow. Under `prefers-reduced-motion` the travel of cars, trains, birds and
@@ -253,6 +254,6 @@ the smallest cells, or stops painting for a long while without looking at the wo
 2. **Cells become too small.** A dense saved world must still fit when it moves to a smaller screen.
    Painting remains forgiving because a stroke can be repainted, but the smallest choice needs
    testing on the narrowest supported screens.
-3. **Palette overload.** Twenty blocks are many, and now an adult decides how many arrive at once.
+3. **Palette overload.** Thirty blocks are many, and now an adult decides how many arrive at once.
    The three starting blocks, the family grouping past eight and stable button positions carry this;
    if a family submenu confuses, cut kinds rather than add explanations.

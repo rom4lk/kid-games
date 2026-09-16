@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Rocks, layout a: a big grey boulder and two small ones on the grass. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="30" cy="48" rx="20" ry="4" fill="#2b4535" fill-opacity=".14"/>
+  <path d="M12 46q-2-16 12-22q14-6 24 4q6 8 0 18z" fill="#aeb0ac"/>
+  <path d="M24 24q12-2 20 6q4 6 2 14l-14 2q-4-12-8-22z" fill="#c4c6c2"/>
+  <path d="M30 32q6 0 10 5" fill="none" stroke="#8f918d" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="52" cy="54" rx="7" ry="4.5" fill="#aeb0ac"/>
+  <ellipse cx="51" cy="52.5" rx="4" ry="2" fill="#c4c6c2"/>
+  <ellipse cx="10" cy="56" rx="5" ry="3.5" fill="#aeb0ac"/>
+</svg>

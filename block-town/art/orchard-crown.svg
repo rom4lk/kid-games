@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The crown of the apple tree alone, with its apples, at the same place as in orchard.svg, on a transparent background. -->
+  <circle cx="32" cy="26" r="16" fill="#5aa25f"/>
+  <circle cx="21" cy="30" r="10" fill="#6fb86a"/>
+  <circle cx="43" cy="30" r="10" fill="#6fb86a"/>
+  <circle cx="32" cy="20" r="11" fill="#7cbf5f"/>
+  <circle cx="24" cy="24" r="3" fill="#e5645f"/>
+  <circle cx="40" cy="22" r="3" fill="#e5645f"/>
+  <circle cx="32" cy="33" r="3" fill="#e5645f"/>
+  <circle cx="45" cy="34" r="2.5" fill="#e5645f"/>
+</svg>

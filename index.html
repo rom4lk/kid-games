@@ -251,9 +251,10 @@
         font-weight: 800;
       }
 
-      /* The list of Block Town blocks needs two columns to stay readable. */
+      /* The list of Block Town blocks sits in three columns; a phone too
+         narrow for three readable names falls back to two. */
       .settings-panel--blocks {
-        width: min(400px, calc(100vw - 24px));
+        width: min(560px, calc(100vw - 24px));
       }
 
       .settings-blocks {
@@ -261,8 +262,14 @@
         max-height: min(52vh, 380px);
         margin-bottom: 10px;
         gap: 6px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         overflow-y: auto;
+      }
+
+      @media (max-width: 520px) {
+        .settings-blocks {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
 
       .settings-panel .settings-chip {

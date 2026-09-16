@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Rocks, layout b: the boulders elsewhere. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="36" cy="52" rx="20" ry="4" fill="#2b4535" fill-opacity=".14"/>
+  <path d="M18 50q-2-14 10-20q14-6 24 2q6 8 2 18z" fill="#aeb0ac"/>
+  <path d="M30 30q12-2 20 6q3 6 1 12l-14 2q-3-10-7-20z" fill="#c4c6c2"/>
+  <path d="M36 38q6 0 10 5" fill="none" stroke="#8f918d" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="12" cy="20" rx="7" ry="4.5" fill="#aeb0ac"/>
+  <ellipse cx="11" cy="18.5" rx="4" ry="2" fill="#c4c6c2"/>
+  <ellipse cx="54" cy="16" rx="5" ry="3.5" fill="#aeb0ac"/>
+</svg>

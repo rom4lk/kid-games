@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A snowman on its own patch of snow: three balls, a carrot nose, a hat, a scarf and stick arms. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <ellipse cx="32" cy="56" rx="24" ry="7" fill="#e4ecf7"/>
+  <ellipse cx="32" cy="58" rx="18" ry="3" fill="#2b4535" fill-opacity=".1"/>
+  <circle cx="32" cy="46" r="13" fill="#ffffff" stroke="#cfdceb" stroke-width="1.5"/>
+  <circle cx="32" cy="27" r="10" fill="#ffffff" stroke="#cfdceb" stroke-width="1.5"/>
+  <path d="M22 30l-9-6M42 30l9-6" stroke="#7a4f2a" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="22" y="12" width="20" height="4" rx="2" fill="#2b4535"/>
+  <rect x="26" y="3" width="12" height="10" rx="1.5" fill="#2b4535"/>
+  <rect x="26" y="9" width="12" height="3" fill="#e5645f"/>
+  <path d="M23 35q9 5 18 0v4q-9 5-18 0z" fill="#e5645f"/>
+  <path d="M38 37l3 8" stroke="#e5645f" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="28.5" cy="25" r="1.5" fill="#2b4535"/>
+  <circle cx="35.5" cy="25" r="1.5" fill="#2b4535"/>
+  <path d="M32 27l8 2-8 2z" fill="#f0912f"/>
+  <path d="M28 31q4 2.5 8 0" fill="none" stroke="#2b4535" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="32" cy="42" r="1.5" fill="#2b4535"/>
+  <circle cx="32" cy="48" r="1.5" fill="#2b4535"/>
+</svg>

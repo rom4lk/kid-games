@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A station: a low hall with a big clock under a wide canopy and a platform in front. The lamp under the canopy is lit by the game in the evening. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <rect x="0" y="50" width="64" height="14" fill="#cbb79a"/>
+  <path d="M0 52h64" stroke="#ffd45c" stroke-width="2"/>
+  <rect x="10" y="26" width="44" height="26" rx="2" fill="#f4e4b8"/>
+  <path d="M6 28q26-14 52 0v4H6z" fill="#6d8f9c"/>
+  <rect x="4" y="30" width="56" height="4" rx="2" fill="#547785"/>
+  <circle cx="32" cy="22" r="6" fill="#fff7e0" stroke="#547785" stroke-width="2"/>
+  <path d="M32 22v-4M32 22h3" stroke="#6f6a60" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="14" y="38" width="8" height="8" rx="1.5" fill="#cfe9f3" stroke="#547785" stroke-width="2"/>
+  <rect x="42" y="38" width="8" height="8" rx="1.5" fill="#cfe9f3" stroke="#547785" stroke-width="2"/>
+  <path d="M27 52V42q0-4 5-4t5 4v10z" fill="#547785"/>
+  <rect x="30" y="36" width="4" height="2" fill="#6f6a60"/>
+</svg>

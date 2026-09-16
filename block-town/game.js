@@ -29,6 +29,16 @@ const BLOCKS = [
   { id: 18, key: "lantern", family: "decor" },
   { id: 19, key: "bench", family: "decor" },
   { id: 20, key: "fountain", family: "decor" },
+  { id: 21, key: "snow", family: "nature" },
+  { id: 22, key: "orchard", family: "nature" },
+  { id: 23, key: "rocks", family: "nature" },
+  { id: 24, key: "garden", family: "nature" },
+  { id: 25, key: "school", family: "buildings" },
+  { id: 26, key: "shop", family: "buildings" },
+  { id: 27, key: "station", family: "buildings" },
+  { id: 28, key: "statue", family: "decor" },
+  { id: 29, key: "flag", family: "decor" },
+  { id: 30, key: "snowman", family: "decor" },
 ];
 
 // How long a field needs before it shows shoots and then ripe ears. The model
@@ -59,6 +69,16 @@ const BLOCK_COLORS = {
   lantern: "#ffd45c",
   bench: "#c09a6a",
   fountain: "#7fd3d0",
+  snow: "#e4ecf7",
+  orchard: "#7cbf5f",
+  rocks: "#969c98",
+  garden: "#b6884f",
+  school: "#b34a3c",
+  shop: "#cc4a7a",
+  station: "#6d8f9c",
+  statue: "#d5d9dd",
+  flag: "#4c6ef5",
+  snowman: "#e6edf5",
 };
 
 // What an adult reads on the shelf page and on the reading screen. The shelf
@@ -85,6 +105,16 @@ const BLOCK_NAMES = {
   lantern: "Lantern",
   bench: "Bench",
   fountain: "Fountain",
+  snow: "Snow",
+  orchard: "Orchard",
+  rocks: "Rocks",
+  garden: "Garden",
+  school: "School",
+  shop: "Shop",
+  station: "Station",
+  statue: "Statue",
+  flag: "Flag",
+  snowman: "Snowman",
 };
 
 const BLOCK_BY_ID = new Map(BLOCKS.map((block) => [block.id, block]));

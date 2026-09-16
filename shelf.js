@@ -39,6 +39,16 @@
     { id: 18, key: "lantern", name: "Lantern", color: "#ffd45c" },
     { id: 19, key: "bench", name: "Bench", color: "#c09a6a" },
     { id: 20, key: "fountain", name: "Fountain", color: "#7fd3d0" },
+    { id: 21, key: "snow", name: "Snow", color: "#e4ecf7" },
+    { id: 22, key: "orchard", name: "Orchard", color: "#7cbf5f" },
+    { id: 23, key: "rocks", name: "Rocks", color: "#969c98" },
+    { id: 24, key: "garden", name: "Garden", color: "#b6884f" },
+    { id: 25, key: "school", name: "School", color: "#b34a3c" },
+    { id: 26, key: "shop", name: "Shop", color: "#cc4a7a" },
+    { id: 27, key: "station", name: "Station", color: "#6d8f9c" },
+    { id: 28, key: "statue", name: "Statue", color: "#d5d9dd" },
+    { id: 29, key: "flag", name: "Flag", color: "#4c6ef5" },
+    { id: 30, key: "snowman", name: "Snowman", color: "#e6edf5" },
   ];
 
   let openPanel = null;
