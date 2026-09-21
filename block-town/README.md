@@ -45,7 +45,7 @@ Every world starts with three blocks — forest, water and road — and an adult
 the shelf page: the gear on the Block Town card opens the settings panel, and its "Blocks" screen
 lists all thirty blocks. Tapping one adds it for good; a block can never be taken away, which is
 what keeps every saved world paintable. Past eight enabled blocks the palette folds into families,
-and a family button opens a short row of its kinds. Enabling a block in one tab reaches an open game
+and a family button opens a row of its kinds. Enabling a block in one tab reaches an open game
 in another without a reload. The child can also open the lock button at the end of the palette,
 read a word aloud and have an adult confirm it; the matching block appears and returns to the world
 already selected.
@@ -77,9 +77,9 @@ beside a field and a lighthouse blinks beside water. A street painted past a hou
 chimney smoking, at most six chimneys spread over the town; erasing the street stops it.
 
 The painting itself breathes too, slowly and by a little: the crowns of lone and row trees and of
-apple trees sway, a flag waves, the waves of a lake drift, ripe ears bend in the wind, a fountain
+apple trees sway, a flag and the pennant of a tower wave, the waves of a lake drift, ripe ears bend in the wind, a fountain
 splashes, a swing rocks, and cloud shadows pass over the whole sheet. When the world is full, evening falls, the windows of
-houses, schools and shops, the lanterns and the station lamps come on and fireflies come out over
+houses, towers, schools, shops and stations, the lanterns and the station lamps come on and fireflies come out over
 the sheet.
 
 Under `prefers-reduced-motion` the creatures stand at their first cell in their first frame, one
@@ -90,7 +90,7 @@ fireflies stay lit at one brightness.
 
 - Tap a cell to paint it, or drag to paint a whole stroke. Painting over or erasing is the only
   correction — there is no undo.
-- The palette holds the blocks. Past eight of them a family button opens a short row above the
+- The palette holds the blocks. Past eight of them a family button opens a row of kinds above the
   dock; choosing a kind, tapping the family again or tapping the sheet closes it.
 - The lock button after the palette opens the optional words screen. `Escape` returns from a word
   card to the word list, then from the list to the world.
@@ -120,7 +120,7 @@ the autotile helpers, the inside corners of a lake, the paved square, the world 
 of a walked track and of a closed loop, the house door, the street by a house and the even spread of
 the chimneys, the field stages, the wide brush, rail paths, the bucket on a full world, the size of a
 full save, the normalization of a damaged save, the shelf's copy of the block table and its names in
-both dictionaries, and a stylesheet rule and existing pictures for every block.
+both dictionaries, and a stylesheet rule with its own existing pictures for every block.
 
 ## Saving
 

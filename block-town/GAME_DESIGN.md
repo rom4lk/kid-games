@@ -78,8 +78,9 @@ way back is a button on the same list that returns the palette to the three star
 worlds keep every cell after that, so nothing a child has built is lost — the palette only narrows.
 
 Blocks are grouped into families. Up to eight enabled blocks the palette is a flat row of big
-buttons; past that a family button opens a short row of its kinds (tap the family, then tap the
-kind). Familiar blocks keep the same pictures and the same positions in the palette.
+buttons; past that a family button opens a row of its kinds (tap the family, then tap the kind).
+The kind buttons shrink to keep the largest family on one row, and on a screen too narrow for that
+the row breaks into two of equal length. Familiar blocks keep the same pictures and the same positions in the palette.
 
 | Family | Kinds | Notes |
 | --- | --- | --- |
@@ -136,12 +137,12 @@ possible, and each reaction is visible without sound or reading:
 - A house with a street on any side starts smoking from its chimney; rails do not count. At most
   six chimneys smoke at once, spread evenly over the town.
 - Fields ripen, a windmill turns when a field is near, a lighthouse blinks when it stands by water.
-- In the evening (after the world is complete) the windows of houses, schools and shops, the
+- In the evening (after the world is complete) the windows of houses, towers, schools, shops and stations, the
   lanterns and the station lamps light up and fireflies come out.
 
 The painting breathes as well, slowly and by a pixel or two, never fast enough to pull the eye from
 the cell being painted: lone and row trees and apple trees sway their crowns (a dense wood keeps
-still so its canopy never shows a seam), a flag waves, waves drift on every lake, ripe ears bend, a
+still so its canopy never shows a seam), a flag and the pennant of a tower wave, waves drift on every lake, ripe ears bend, a
 fountain splashes, a swing rocks, and the shadows of clouds pass over the whole sheet. Every motion is earned by the painting: no
 smoke without a street, no walker without a road, no ripple on an empty sheet.
 

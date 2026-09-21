@@ -1787,6 +1787,8 @@ function initializeGame() {
     }
     elements.paletteKinds.hidden = false;
     elements.paletteKinds.textContent = "";
+    // The stylesheet sizes the buttons from the number of kinds in the row.
+    elements.paletteKinds.style.setProperty("--kinds", String(group.blockIds.length));
     markOpenFamily();
     group.blockIds.forEach((blockId) => {
       elements.paletteKinds.append(blockButton(blockId, { checked: blockId === selectedBlockId }));

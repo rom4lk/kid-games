@@ -360,6 +360,10 @@ button:focus-visible,
   background: url("art/garden.svg") center / 100% 100% no-repeat var(--soil);
 }
 
+.block--garden.tile--b {
+  background-image: url("art/garden-b.svg");
+}
+
 /* A field grows: bare soil, then shoots, then ripe ears. The furrows sit at
    the same heights in every picture, so they run on into the next cell. */
 .block--field {
@@ -708,8 +712,35 @@ button:focus-visible,
   left: 59.4%;
 }
 
+/* A tower: its window lights up in the evening like the windows of a house,
+   and its pennant is a picture of its own over the pole, so it can wave on
+   the shared clock like the cloth of a flag. */
 .block--tower {
   background: url("art/tower.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--tower::before {
+  position: absolute;
+  top: 42.2%;
+  left: 45.3%;
+  width: 9.4%;
+  height: 12.5%;
+  border-radius: 999px;
+  background: transparent;
+  content: "";
+  transition: background-color 900ms ease;
+}
+
+.block--tower::after {
+  position: absolute;
+  background: url("art/tower-flag.svg") center / 100% 100% no-repeat;
+  background-position-y: var(--sway);
+  content: "";
+  inset: 0;
+}
+
+.sheet-row:nth-child(odd) .block--tower::after {
+  background-position-y: calc(1px - var(--sway));
 }
 
 .block--farm {
@@ -809,7 +840,9 @@ button:focus-visible,
   background: url("art/shop.svg") center / 100% 100% no-repeat var(--meadow);
 }
 
-.block--shop::after {
+/* The lit window is drawn under the goods in it, so the evening lights the
+   shop without painting over what stands in the window. */
+.block--shop::before {
   position: absolute;
   top: 56.3%;
   left: 21.9%;
@@ -821,10 +854,32 @@ button:focus-visible,
   transition: background-color 900ms ease;
 }
 
+.block--shop::after {
+  position: absolute;
+  background: url("art/shop-goods.svg") center / 100% 100% no-repeat;
+  content: "";
+  inset: 0;
+}
+
 /* A station: the lamp under its canopy is drawn here, so the evening can put
-   a glow around it. */
+   a glow around it, and its two windows light up like the windows of a house.
+   Both panes are one layer, so the lamp keeps the other pseudo-element. */
 .block--station {
   background: url("art/station.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+.block--station::before {
+  position: absolute;
+  top: 59.4%;
+  left: 21.9%;
+  width: 56.2%;
+  height: 12.5%;
+  background:
+    linear-gradient(var(--lamp), var(--lamp)) left / 22.2% 100% no-repeat,
+    linear-gradient(var(--lamp), var(--lamp)) right / 22.2% 100% no-repeat;
+  content: "";
+  opacity: 0;
+  transition: opacity 900ms ease;
 }
 
 .block--station::after {
@@ -922,9 +977,10 @@ button:focus-visible,
 /* Evening: the windows and the lanterns come on. */
 .sheet-stage.is-evening .block--house::before,
 .sheet-stage.is-evening .block--house::after,
+.sheet-stage.is-evening .block--tower::before,
 .sheet-stage.is-evening .block--school::before,
 .sheet-stage.is-evening .block--school::after,
-.sheet-stage.is-evening .block--shop::after,
+.sheet-stage.is-evening .block--shop::before,
 .sheet-stage.is-evening .block--station::after {
   background: var(--lamp);
 }
@@ -933,6 +989,10 @@ button:focus-visible,
 .sheet-stage.is-evening .block--lighthouse::after,
 .sheet-stage.is-evening .block--station::after {
   box-shadow: 0 0 0 5px rgb(255 233 168 / 52%);
+}
+
+.sheet-stage.is-evening .block--station::before {
+  opacity: 1;
 }
 
 /* Water, from the SVG pictures in art/: a sandy shore of one width is laid on
@@ -1237,7 +1297,6 @@ button:focus-visible,
 }
 
 .palette,
-.palette-kinds,
 .tools {
   display: flex;
   align-items: center;
@@ -1245,15 +1304,24 @@ button:focus-visible,
   flex-wrap: wrap;
 }
 
-/* The kinds of one family float above the dock without resizing the world. */
+/* The kinds of one family float above the dock without resizing the world.
+   A family of ten is wider than a tablet holds, so the buttons shrink to the
+   width the open family needs — no further, and never below a size a small
+   finger can hit. The game sets --kinds to the number of kinds it just drew. */
 .palette-kinds {
+  --kind-size: clamp(52px, (100vw - 44px - (var(--kinds, 1) - 1) * 10px) / var(--kinds, 1), 76px);
+
   position: absolute;
   z-index: 1;
   bottom: calc(100% + 8px);
   left: 50%;
+  display: flex;
   width: max-content;
   max-width: calc(100% - 16px);
+  align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 6px 8px;
   border: 3px solid rgb(47 111 69 / 18%);
   border-radius: 22px;
@@ -1261,6 +1329,18 @@ button:focus-visible,
   box-shadow: var(--shadow);
   animation: palette-kinds-in 160ms ease-out;
   transform: translateX(-50%);
+}
+
+.palette-kinds .palette-button {
+  width: var(--kind-size);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.palette-kinds .palette-swatch {
+  width: 79%;
+  height: auto;
+  aspect-ratio: 1;
 }
 
 @keyframes palette-kinds-in {
@@ -1493,8 +1573,8 @@ button:focus-visible,
 
 /* Words that turn into blocks. */
 .words-card {
-  width: min(760px, 100%);
-  max-width: min(760px, 100%);
+  width: min(1180px, 100%);
+  max-width: min(1180px, 100%);
   max-height: 90vh;
 }
 
@@ -1509,9 +1589,10 @@ button:focus-visible,
   display: grid;
   width: 100%;
   min-height: 0;
-  /* Wide enough for the longest word next to its picture, so no word is
-     ever cut off. */
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* Three columns on a wide screen, two on a tablet and one on a phone: a
+     column is never narrower than the longest word next to its picture, so no
+     word is ever cut off. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 12px;
   overflow-y: auto;
 }

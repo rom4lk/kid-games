@@ -1243,18 +1243,24 @@ function testShelfBlockTableMatches() {
   assert.deepEqual([...defaults].sort(), [...DEFAULT_BLOCK_IDS].sort());
 }
 
-// Every block is drawn by styles.css from pictures in art/. A block without a
-// rule would paint as a blank cell, and a rule naming a missing picture would
-// paint as its flat ground, so both are checked here.
+// Every block is drawn by styles.css from pictures in art/ named after it. A
+// block without a rule paints as a blank cell, a rule naming a missing picture
+// paints as its flat ground, and a rule borrowing another block's picture draws
+// the wrong thing, so all three are checked here.
 function testEveryBlockHasArt() {
   const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+  const rules = [...styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
   BLOCKS.forEach((block) => {
     assert.ok(styles.includes(`.block--${block.key} {`), `styles.css has no rule for ${block.key}`);
-  });
-  const pictures = [...styles.matchAll(/url\("art\/([^"]+)"\)/g)].map(([, name]) => name);
-  assert.ok(pictures.length > 0);
-  new Set(pictures).forEach((name) => {
-    assert.ok(fs.existsSync(path.join(__dirname, "art", name)), `art/${name} is missing`);
+    const selector = new RegExp(`\\.block--${block.key}\\b`);
+    const pictures = rules
+      .filter(([, rule]) => selector.test(rule))
+      .flatMap(([, , body]) => [...body.matchAll(/url\("art\/([^"]+)"\)/g)].map(([, name]) => name));
+    assert.ok(pictures.length > 0, `${block.key} is drawn without a picture`);
+    new Set(pictures).forEach((name) => {
+      assert.ok(name.startsWith(block.key), `${block.key} is drawn with art/${name}`);
+      assert.ok(fs.existsSync(path.join(__dirname, "art", name)), `art/${name} is missing`);
+    });
   });
 }
 
