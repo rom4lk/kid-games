@@ -1415,9 +1415,13 @@ function testEveryBlockHasArt() {
 }
 
 // cellClasses lives in the interface and cannot run here, so the class names it
-// gives a joined cell are pinned from the stylesheet's end: a typo on either
-// side would leave a patch without its kerb and fail nothing else.
+// gives a joined cell are pinned from both ends, the source of game.js and the
+// stylesheet: a typo on either side would leave a patch without its kerb and
+// fail nothing else.
 function testJoinedLookStyles() {
+  const source = fs.readFileSync(path.join(__dirname, "game.js"), "utf8");
+  assert.ok(source.includes('"is-joined"'), "game.js never gives a cell the is-joined class");
+  assert.ok(source.includes('sideClasses("joined"'), "game.js never names the joined sides");
   const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
   const rules = [...styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
     .map(([, selector, body]) => ({ selector: selector.trim(), body }));
@@ -1427,10 +1431,10 @@ function testJoinedLookStyles() {
   assert.ok(!shared.body.includes('url("art/'), ".cell.is-joined must not paint over the block's art");
   // The same side names, in the same order, as SIDE_CLASSES in game.js.
   ["n", "e", "s", "w"].forEach((side) => {
-    assert.ok(
-      rules.some((rule) => rule.selector.endsWith(`.cell.is-joined.joined--${side}`)),
-      `styles.css has no kerb for the ${side} side`,
-    );
+    const rule = rules.find((candidate) => candidate.selector.endsWith(`.cell.is-joined.joined--${side}`));
+    assert.ok(rule, `styles.css has no kerb for the ${side} side`);
+    assert.ok(rule.body.includes(`--kerb-${side}:`), `.joined--${side} does not set --kerb-${side}`);
+    assert.ok(shared.body.includes(`var(--kerb-${side})`), `.cell.is-joined never reads --kerb-${side}`);
   });
 }
 
