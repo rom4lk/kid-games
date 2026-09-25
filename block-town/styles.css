@@ -1286,6 +1286,29 @@ button:focus-visible,
   }
 }
 
+/* A group of three or more of one kind brings one creature that stays on its
+   cell: a butterfly opens its wings, a hare twitches an ear, a cat flicks its
+   tail and a balloon bobs, each by the second frame of its sheet. */
+.sprite--butterfly > i {
+  background-image: url("art/sprite-butterfly.svg");
+  animation: frame-swap 900ms steps(2, jump-none) infinite;
+}
+
+.sprite--hare > i {
+  background-image: url("art/sprite-hare.svg");
+  animation: frame-swap 2600ms steps(2, jump-none) infinite;
+}
+
+.sprite--cat > i {
+  background-image: url("art/sprite-cat.svg");
+  animation: frame-swap 2200ms steps(2, jump-none) infinite;
+}
+
+.sprite--balloon > i {
+  background-image: url("art/sprite-balloon.svg");
+  animation: frame-swap 3000ms steps(2, jump-none) infinite;
+}
+
 /* Cloud shadows drift over the whole world, creatures and grid alike. The
    layer clips its picture, which is one pattern period wider than the sheet
    and slides by exactly that period, so the loop never jumps. Moving it with a
@@ -2036,6 +2059,10 @@ button:focus-visible,
   .sprite--bird > i,
   .sprite--duck > i,
   .sprite--boat > i,
+  .sprite--butterfly > i,
+  .sprite--hare > i,
+  .sprite--cat > i,
+  .sprite--balloon > i,
   .block--playground::after {
     animation: none;
   }

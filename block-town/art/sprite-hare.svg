@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64">
+  <!-- A hare, a 128 x 64 sprite sheet: sitting with both ears up, then with the front ear tipped back. It sits low in the lower right of the cell, inside the kerb band, so the block art stays in view. -->
+  <ellipse cx="42" cy="56" rx="10" ry="1.4" fill="#2b4535" fill-opacity=".14"/>
+  <ellipse cx="41" cy="50" rx="8" ry="6" fill="#8b7a63"/>
+  <circle cx="33.5" cy="49" r="2.4" fill="#fff6dc"/>
+  <ellipse cx="45" cy="54.5" rx="3.5" ry="1.5" fill="#6f6a60"/>
+  <path d="M45 40q-2-10 0.5-11q2.5 1 1.5 11z" fill="#8b7a63"/>
+  <path d="M45.6 38q-1-6 0.4-7" fill="none" stroke="#e78cbb" stroke-width="1" stroke-linecap="round"/>
+  <path d="M49 40q0-10 2.5-10.5q2 1.5-0.5 11z" fill="#8b7a63"/>
+  <circle cx="48" cy="43" r="4.8" fill="#8b7a63"/>
+  <ellipse cx="46" cy="47.5" rx="2.4" ry="1.6" fill="#e2d2ab"/>
+  <circle cx="49.8" cy="42.2" r="1" fill="#3a4a3f"/>
+  <circle cx="52.4" cy="44.2" r=".9" fill="#e78cbb"/>
+  <ellipse cx="106" cy="56" rx="10" ry="1.4" fill="#2b4535" fill-opacity=".14"/>
+  <ellipse cx="105" cy="50" rx="8" ry="6" fill="#8b7a63"/>
+  <circle cx="97.5" cy="49" r="2.4" fill="#fff6dc"/>
+  <ellipse cx="109" cy="54.5" rx="3.5" ry="1.5" fill="#6f6a60"/>
+  <path d="M109 40q-6-7-5-9q3-1 7 8z" fill="#8b7a63"/>
+  <path d="M108.2 38q-3.5-4-3.4-6" fill="none" stroke="#e78cbb" stroke-width="1" stroke-linecap="round"/>
+  <path d="M113 40q0-10 2.5-10.5q2 1.5-0.5 11z" fill="#8b7a63"/>
+  <circle cx="112" cy="43" r="4.8" fill="#8b7a63"/>
+  <ellipse cx="110" cy="47.5" rx="2.4" ry="1.6" fill="#e2d2ab"/>
+  <circle cx="113.8" cy="42.2" r="1" fill="#3a4a3f"/>
+  <circle cx="116.4" cy="44.2" r=".9" fill="#e78cbb"/>
+</svg>

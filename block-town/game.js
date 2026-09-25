@@ -2230,7 +2230,9 @@ function initializeGame() {
         .map((track) => keep(kind, track, false)));
     const anchored = ANCHOR_KINDS.flatMap(({ kind, source, maxCount }) =>
       spreadPick(tracks.get(source), maxCount).map((track) => keep(kind, track, true)));
-    sprites = travelling.concat(anchored);
+    const clustered = clusterCreatures(world.grid, size.columns)
+      .map(({ kind, anchor }) => keep(kind, { cells: [anchor], path: [anchor], loop: false }, true));
+    sprites = travelling.concat(anchored, clustered);
 
     // Whatever is left over travelled a track the world no longer holds.
     alive.forEach((sprite) => sprite.element.remove());

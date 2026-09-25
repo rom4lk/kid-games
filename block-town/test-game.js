@@ -1619,11 +1619,35 @@ function testJoinedSurfaces() {
   });
 }
 
+// Every creature a group of one kind can bring needs its sprite sheet, a rule
+// that draws it, and a place in the reduced-motion list, where it keeps its
+// first frame.
+function testClusterCreatureArt() {
+  const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+  const rules = [...styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  const media = "@media (prefers-reduced-motion: reduce)";
+  assert.equal(styles.split(media).length, 2, "styles.css must hold exactly one reduced-motion block");
+  const reduced = styles.slice(styles.indexOf(media));
+  const kinds = new Set(BLOCKS.map((block) => clusterCreature(block.id)).filter(Boolean));
+  kinds.forEach((kind) => {
+    const picture = `sprite-${kind}.svg`;
+    assert.ok(fs.existsSync(path.join(__dirname, "art", picture)), `art/${picture} is missing`);
+    assert.ok(
+      rules.some(([, selector, body]) => (
+        selector.trim().endsWith(`.sprite--${kind} > i`) && body.includes(`url("art/${picture}")`)
+      )),
+      `styles.css does not draw a ${kind}`,
+    );
+    assert.ok(reduced.includes(`.sprite--${kind} > i`), `a ${kind} keeps moving under reduced motion`);
+  });
+}
+
 testRegistries();
 testShelfBlockTableMatches();
 testEveryBlockHasArt();
 testJoinedLookStyles();
 testJoinedSurfaces();
+testClusterCreatureArt();
 testGridDimensions();
 testSavedGeometry();
 testNeighbors();
