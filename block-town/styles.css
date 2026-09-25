@@ -649,9 +649,9 @@ button:focus-visible,
 }
 
 /* Forest, from the SVG pictures in art/: a lone cell is one big tree; with
-   one or two forest neighbours it is a tree in a row; with three or four it
-   is a piece of a dense canopy whose crowns are cut by the cell edge, so the
-   neighbours join into one wood. Cells alternate two layouts of every
+   one or two forest neighbours it is a tree in a row; with three or four, or
+   inside a filled 2 x 2 of forest, it is a piece of a dense canopy whose
+   crowns are cut by the cell edge, so the neighbours join into one wood. Cells alternate two layouts of every
    picture, so a wood never reads as a stamp. */
 .block--forest {
   background: url("art/forest-lone.svg") center / 100% 100% no-repeat var(--forest);
