@@ -1446,6 +1446,9 @@ function initializeGame() {
     if (block.key === "forest") {
       classes.push(`forest--${forestDensity(grid, size.columns, index)}`);
     }
+    if (usesJoinedLook(grid[index]) && joinedSquare(grid, size.columns, index)) {
+      classes.push("is-joined", ...sideClasses("joined", joinedEdges(grid, size.columns, index)));
+    }
     return classes;
   }
 

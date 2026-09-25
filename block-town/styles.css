@@ -26,6 +26,7 @@
   --asphalt: #9aa2a6;
   --rail-bed: #cbb79a;
   --lamp: #ffe9a8;
+  --kerb: rgb(43 69 53 / 30%);
   --sheet-border: 2px;
 
   /* The grid geometry is the only thing the model writes into the DOM. */
@@ -301,6 +302,33 @@ button:focus-visible,
   outline: 4px solid var(--leaf-dark);
   outline-offset: -4px;
 }
+
+/* A block filled two cells by two or larger is a patch, not four stamps: a
+   kerb runs along every side where the patch meets a different kind, and
+   never between two cells of the same kind, so the inside of a patch stays
+   open. The kerb is drawn as four inset shadows, which need no
+   pseudo-element — every block's own ::before and ::after are already its
+   windows, its sails or its crown — and it is never rounded: a rounded
+   corner would clip the cell's own art and show paper between two painted
+   blocks. */
+.cell.is-joined {
+  --kerb-width: max(2px, calc(var(--cell-size) / 10));
+  --kerb-n: 0px;
+  --kerb-e: 0px;
+  --kerb-s: 0px;
+  --kerb-w: 0px;
+
+  box-shadow:
+    inset 0 var(--kerb-n) 0 0 var(--kerb),
+    inset calc(-1 * var(--kerb-e)) 0 0 0 var(--kerb),
+    inset 0 calc(-1 * var(--kerb-s)) 0 0 var(--kerb),
+    inset var(--kerb-w) 0 0 0 var(--kerb);
+}
+
+.cell.is-joined.joined--n { --kerb-n: var(--kerb-width); }
+.cell.is-joined.joined--e { --kerb-e: var(--kerb-width); }
+.cell.is-joined.joined--s { --kerb-s: var(--kerb-width); }
+.cell.is-joined.joined--w { --kerb-w: var(--kerb-width); }
 
 /* Block art. Every block is drawn from the SVG pictures in art/, layered and
    scaled to the cell by the rules below. The ground blocks alternate two

@@ -1411,9 +1411,30 @@ function testEveryBlockHasArt() {
   });
 }
 
+// cellClasses lives in the interface and cannot run here, so the class names it
+// gives a joined cell are pinned from the stylesheet's end: a typo on either
+// side would leave a patch without its kerb and fail nothing else.
+function testJoinedLookStyles() {
+  const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+  const rules = [...styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .map(([, selector, body]) => ({ selector: selector.trim(), body }));
+  const shared = rules.find((rule) => rule.selector.endsWith(".cell.is-joined"));
+  assert.ok(shared, "styles.css has no .cell.is-joined rule");
+  assert.ok(shared.body.includes("box-shadow"), ".cell.is-joined draws no kerb");
+  assert.ok(!shared.body.includes('url("art/'), ".cell.is-joined must not paint over the block's art");
+  // The same side names, in the same order, as SIDE_CLASSES in game.js.
+  ["n", "e", "s", "w"].forEach((side) => {
+    assert.ok(
+      rules.some((rule) => rule.selector.endsWith(`.cell.is-joined.joined--${side}`)),
+      `styles.css has no kerb for the ${side} side`,
+    );
+  });
+}
+
 testRegistries();
 testShelfBlockTableMatches();
 testEveryBlockHasArt();
+testJoinedLookStyles();
 testGridDimensions();
 testSavedGeometry();
 testNeighbors();
