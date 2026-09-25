@@ -727,14 +727,18 @@ function usesJoinedLook(blockId) {
   return block.family !== "roads" && block.key !== "water" && block.key !== "forest";
 }
 
-// A lone forest cell is one small tree; inside a cluster the trees grow.
+// A lone forest cell is one small tree; with one or two neighbours it is a
+// tree in a row; with three or four, or inside a filled 2 x 2 of forest, the
+// trees close into a canopy that is cut by the cell edge and joins its
+// neighbours into one wood.
 function forestDensity(grid, columns, index) {
   if (grid?.[index] !== FOREST_ID) return 0;
   const mask = neighborMask(grid, columns, index, (value) => value === FOREST_ID);
   const neighbors = [MASK_NORTH, MASK_EAST, MASK_SOUTH, MASK_WEST]
     .filter((side) => (mask & side) !== 0).length;
   if (neighbors === 0) return 0;
-  return neighbors < 3 ? 1 : 2;
+  if (neighbors >= 3 || joinedSquare(grid, columns, index)) return 2;
+  return 1;
 }
 
 // Every group of touching cells that holds one of the wanted blocks.

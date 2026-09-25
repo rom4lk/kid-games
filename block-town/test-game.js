@@ -489,7 +489,9 @@ function testForestDensity() {
     "..........",
   ]);
   assert.equal(forestDensity(grid, 10, 0), 0);
-  assert.equal(forestDensity(grid, 10, 5), 1);
+  assert.equal(forestDensity(grid, 10, 5), 2);
+  assert.equal(forestDensity(grid, 10, 4), 2);
+  assert.equal(forestDensity(grid, 10, 15), 2);
   assert.equal(forestDensity(grid, 10, 14), 2);
   assert.equal(forestDensity(grid, 10, 24), 1);
   assert.equal(forestDensity(grid, 10, 1), 0);
