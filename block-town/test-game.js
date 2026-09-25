@@ -485,8 +485,8 @@ function testForestDensity() {
     "f...ff....",
     "....ff....",
     "....f.....",
-    "..........",
-    "..........",
+    "fff....ff.",
+    ".......f..",
   ]);
   assert.equal(forestDensity(grid, 10, 0), 0);
   assert.equal(forestDensity(grid, 10, 5), 2);
@@ -495,6 +495,9 @@ function testForestDensity() {
   assert.equal(forestDensity(grid, 10, 14), 2);
   assert.equal(forestDensity(grid, 10, 24), 1);
   assert.equal(forestDensity(grid, 10, 1), 0);
+  // Two neighbours in a row or an L are not a 2 x 2: the trees stay in a row.
+  assert.equal(forestDensity(grid, 10, 31), 1);
+  assert.equal(forestDensity(grid, 10, 37), 1);
 }
 
 // A 5 x 10 grid with one block painted as a 2 x 2 square at the given cells.
