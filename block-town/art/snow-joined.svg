@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <!-- Snow, joined: a snowfield with a long drift and a sled track that run on into the next cell. -->
   <rect width="64" height="64" fill="#e4ecf7"/>
-  <rect y="40" width="64" height="16" fill="#e3ebf4"/>
+  <rect y="40" width="64" height="16" fill="#ffffff"/>
   <path d="M0 26h64M0 34h64" fill="none" stroke="#cfdceb" stroke-width="2" stroke-linecap="round"/>
 </svg>
