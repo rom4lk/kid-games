@@ -695,6 +695,38 @@ function lighthouseBlinks(grid, underlay, columns, index) {
   return mask !== 0;
 }
 
+// A cell is joined when it is one of the four cells of a filled 2 x 2 square
+// of its own block: the cell, two sides that meet at a corner and the
+// diagonal between them. A line, an L of three and a diagonal touch hold no
+// square, so they stay single. This is the question a road already asks
+// itself as `roadPlaza`, asked for every block.
+function joinedSquare(grid, columns, index) {
+  const blockId = grid?.[index];
+  if (!blockById(blockId)) return false;
+  const same = (value) => value === blockId;
+  const sides = neighborMask(grid, columns, index, same);
+  const diagonals = diagonalMask(grid, columns, index, same);
+  return quadrantMask(sides, diagonals, true) !== 0;
+}
+
+// The sides where a patch meets a different kind, or the edge of the world.
+// Two cells of the same kind never get a kerb between them, even when the
+// neighbour is not in a square itself, so the rim marks the meeting with
+// something else and never cuts across one kind.
+function joinedEdges(grid, columns, index) {
+  const blockId = grid?.[index];
+  if (!blockById(blockId)) return 0;
+  return MASK_ALL & ~neighborMask(grid, columns, index, (value) => value === blockId);
+}
+
+// Which blocks take the kerb. The road, the water and the forest answer a
+// square with a look of their own, so they keep it.
+function usesJoinedLook(blockId) {
+  const block = blockById(blockId);
+  if (!block) return false;
+  return block.family !== "roads" && block.key !== "water" && block.key !== "forest";
+}
+
 // A lone forest cell is one small tree; inside a cluster the trees grow.
 function forestDensity(grid, columns, index) {
   if (grid?.[index] !== FOREST_ID) return 0;
@@ -1014,6 +1046,7 @@ if (typeof module !== "undefined" && module.exports) {
     MASK_EAST,
     MASK_SOUTH,
     MASK_WEST,
+    MASK_ALL,
     CORNER_NE,
     CORNER_SE,
     CORNER_SW,
@@ -1033,6 +1066,9 @@ if (typeof module !== "undefined" && module.exports) {
     roadInnerCorners,
     waterEdges,
     waterInnerCorners,
+    joinedSquare,
+    joinedEdges,
+    usesJoinedLook,
     forestDensity,
     windmillTurns,
     lighthouseBlinks,

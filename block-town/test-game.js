@@ -23,6 +23,7 @@ const {
   MASK_EAST,
   MASK_SOUTH,
   MASK_WEST,
+  MASK_ALL,
   roadGroup,
   connectedComponents,
   roadPaths,
@@ -35,6 +36,9 @@ const {
   roadInnerCorners,
   waterEdges,
   waterInnerCorners,
+  joinedSquare,
+  joinedEdges,
+  usesJoinedLook,
   CORNER_NE,
   CORNER_SE,
   CORNER_SW,
@@ -489,6 +493,147 @@ function testForestDensity() {
   assert.equal(forestDensity(grid, 10, 14), 2);
   assert.equal(forestDensity(grid, 10, 24), 1);
   assert.equal(forestDensity(grid, 10, 1), 0);
+}
+
+// A 5 x 10 grid with one block painted as a 2 x 2 square at the given cells.
+function squareOf(blockId, cells = [11, 12, 21, 22]) {
+  const grid = Array(50).fill(EMPTY_CELL);
+  cells.forEach((index) => {
+    grid[index] = blockId;
+  });
+  return grid;
+}
+
+function testJoinedSquare() {
+  // Every block joins in a filled 2 x 2 of its own kind, and nothing else does.
+  BLOCKS.forEach((block) => {
+    const grid = squareOf(block.id);
+    grid.forEach((value, index) => {
+      const expected = [11, 12, 21, 22].includes(index);
+      assert.equal(joinedSquare(grid, 10, index), expected, `${block.key} cell ${index}`);
+    });
+  });
+
+  // An L of three, a line of four and a diagonal touch hold no square.
+  const shapes = buildGrid([
+    "mm.hhhh...",
+    "m.........",
+    "......m...",
+    ".......m..",
+    "..........",
+  ]);
+  shapes.forEach((value, index) => assert.equal(joinedSquare(shapes, 10, index), false, `cell ${index}`));
+
+  // A square of two different kinds is no square of either.
+  const mixed = buildGrid([
+    "..........",
+    ".mm.......",
+    ".hh.......",
+    "..........",
+    "..........",
+  ]);
+  [11, 12, 21, 22].forEach((index) => assert.equal(joinedSquare(mixed, 10, index), false));
+
+  // A 3 x 3 joins all nine cells, a 2 x 3 strip all six.
+  const big = buildGrid([
+    "mmm.hh....",
+    "mmm.hh....",
+    "mmm.hh....",
+    "..........",
+    "..........",
+  ]);
+  [0, 1, 2, 10, 11, 12, 20, 21, 22, 4, 5, 14, 15, 24, 25].forEach((index) => {
+    assert.equal(joinedSquare(big, 10, index), true, `cell ${index}`);
+  });
+
+  // The tail hanging off a square is not joined.
+  const tail = buildGrid([
+    "..........",
+    ".mm.......",
+    ".mm.......",
+    ".m........",
+    "..........",
+  ]);
+  [11, 12, 21, 22].forEach((index) => assert.equal(joinedSquare(tail, 10, index), true));
+  assert.equal(joinedSquare(tail, 10, 31), false);
+
+  // An empty cell never joins: not on an empty world, not inside a ring.
+  const empty = Array(50).fill(EMPTY_CELL);
+  empty.forEach((value, index) => assert.equal(joinedSquare(empty, 10, index), false));
+  const ring = buildGrid([
+    "mmm.......",
+    "m.m.......",
+    "mmm.......",
+    "..........",
+    "..........",
+  ]);
+  assert.equal(joinedSquare(ring, 10, 11), false);
+
+  // A square in the corner of the world is still a square; the outside of the
+  // world never counts as a match.
+  const corner = squareOf(MEADOW_ID, [0, 1, 10, 11]);
+  [0, 1, 10, 11].forEach((index) => assert.equal(joinedSquare(corner, 10, index), true));
+  assert.equal(joinedSquare(buildGrid([
+    "m.........",
+    "..........",
+    "..........",
+    "..........",
+    "..........",
+  ]), 10, 0), false);
+
+  // Input the model cannot read answers false.
+  assert.equal(joinedSquare(corner, 10, -1), false);
+  assert.equal(joinedSquare(corner, 10, 50), false);
+  assert.equal(joinedSquare(corner, 0, 0), false);
+  assert.equal(joinedSquare(undefined, 10, 0), false);
+}
+
+function testJoinedEdges() {
+  // The north-west cell of a square meets the outside on its north and west.
+  const square = squareOf(MEADOW_ID);
+  assert.equal(joinedEdges(square, 10, 11), MASK_NORTH | MASK_WEST);
+  assert.equal(joinedEdges(square, 10, 22), MASK_SOUTH | MASK_EAST);
+
+  // The middle of a 3 x 3 has no edge at all.
+  const big = buildGrid([
+    "..........",
+    ".mmm......",
+    ".mmm......",
+    ".mmm......",
+    "..........",
+  ]);
+  assert.equal(joinedEdges(big, 10, 22), 0);
+  assert.equal(joinedEdges(big, 10, 11), MASK_NORTH | MASK_WEST);
+
+  // No edge toward a tail of the same kind, one toward a different kind.
+  const tail = buildGrid([
+    "..........",
+    ".mmh......",
+    ".mm.......",
+    ".m........",
+    "..........",
+  ]);
+  assert.equal(joinedEdges(tail, 10, 21), MASK_WEST);
+  assert.equal(joinedEdges(tail, 10, 12), MASK_NORTH | MASK_EAST);
+
+  // The border of the world is an edge.
+  const corner = squareOf(MEADOW_ID, [0, 1, 10, 11]);
+  assert.equal(joinedEdges(corner, 10, 0), MASK_NORTH | MASK_WEST);
+  assert.equal(joinedEdges(corner, 10, 11), MASK_SOUTH | MASK_EAST);
+
+  // A lone cell meets something else on every side; an empty cell has no edges.
+  assert.equal(joinedEdges(tail, 10, 13), MASK_ALL);
+  assert.equal(joinedEdges(tail, 10, 0), 0);
+}
+
+function testUsesJoinedLook() {
+  // The road family, the water and the forest keep their own look; the other
+  // twenty-five take the kerb, and a thirty-first block would take it too.
+  const own = BLOCKS.filter((block) => !usesJoinedLook(block.id)).map((block) => block.key);
+  assert.deepEqual(own.sort(), ["asphalt", "forest", "path", "rails", "water"]);
+  assert.equal(BLOCKS.filter((block) => usesJoinedLook(block.id)).length, 25);
+  assert.equal(usesJoinedLook(EMPTY_CELL), false);
+  assert.equal(usesJoinedLook(999), false);
 }
 
 // Two cells next to each other in a path must be next to each other on the
@@ -1280,6 +1425,9 @@ testWaterInnerCorners();
 testRoadPlaza();
 testRoadInnerCorners();
 testForestDensity();
+testJoinedSquare();
+testJoinedEdges();
+testUsesJoinedLook();
 testConnectedComponents();
 testRoadPaths();
 testWalkAndLoopOrder();
