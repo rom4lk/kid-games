@@ -342,6 +342,12 @@ button:focus-visible,
   background-image: url("art/meadow-b.svg");
 }
 
+/* A meadow filled two by two is one mown lawn: the stripes run on from cell
+   to cell, so the patch shows one surface. */
+.cell.block--meadow.is-joined {
+  background-image: url("art/meadow-joined.svg");
+}
+
 .block--flowers {
   background: url("art/flowers-a.svg") center / 100% 100% no-repeat var(--meadow);
 }
@@ -358,6 +364,12 @@ button:focus-visible,
   background-image: url("art/sand-b.svg");
 }
 
+/* Sand filled two by two is one smooth beach: the long ripples run on from
+   cell to cell, so the patch shows one surface. */
+.cell.block--sand.is-joined {
+  background-image: url("art/sand-joined.svg");
+}
+
 .block--mountain {
   background: url("art/mountain-a.svg") center / 100% 100% no-repeat var(--meadow);
 }
@@ -372,6 +384,12 @@ button:focus-visible,
 
 .block--snow.tile--b {
   background-image: url("art/snow-b.svg");
+}
+
+/* Snow filled two by two is one snowfield: the drift and the sled track run
+   on from cell to cell, so the patch shows one surface. */
+.cell.block--snow.is-joined {
+  background-image: url("art/snow-joined.svg");
 }
 
 .block--rocks {
@@ -773,6 +791,12 @@ button:focus-visible,
 
 .block--farm {
   background: url("art/farm.svg") center / 100% 100% no-repeat var(--meadow);
+}
+
+/* Farms filled two by two stand on one yard: the trodden earth and the straw
+   run on from cell to cell, and the barn stays where it was. */
+.cell.block--farm.is-joined {
+  background-image: url("art/farm-joined.svg");
 }
 
 /* A windmill turns only when a field is next to it. The sails are a picture

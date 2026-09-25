@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Meadow, joined: a mown lawn whose stripes run on into the next cell. -->
+  <rect width="64" height="64" fill="#a9dc88"/>
+  <rect width="64" height="16" fill="#5aa25f" fill-opacity=".18"/>
+  <rect y="32" width="64" height="16" fill="#5aa25f" fill-opacity=".18"/>
+  <path d="M8 16v-4M24 16v-4M40 16v-4M56 16v-4" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 48v-4M24 48v-4M40 48v-4M56 48v-4" fill="none" stroke="#5aa25f" stroke-width="2" stroke-linecap="round"/>
+</svg>

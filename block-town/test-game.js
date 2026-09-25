@@ -1431,10 +1431,28 @@ function testJoinedLookStyles() {
   });
 }
 
+// Four blocks draw a surface of their own when they fill a 2 x 2. Each needs its
+// picture and a rule that shows it on a joined cell of that block.
+function testJoinedSurfaces() {
+  const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+  const rules = [...styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  ["meadow", "sand", "snow", "farm"].forEach((key) => {
+    const picture = `${key}-joined.svg`;
+    assert.ok(fs.existsSync(path.join(__dirname, "art", picture)), `art/${picture} is missing`);
+    assert.ok(
+      rules.some(([, selector, body]) => (
+        selector.includes(`.block--${key}.is-joined`) && body.includes(`url("art/${picture}")`)
+      )),
+      `styles.css does not draw a joined ${key}`,
+    );
+  });
+}
+
 testRegistries();
 testShelfBlockTableMatches();
 testEveryBlockHasArt();
 testJoinedLookStyles();
+testJoinedSurfaces();
 testGridDimensions();
 testSavedGeometry();
 testNeighbors();

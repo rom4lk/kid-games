@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Sand, joined: a smooth beach whose long ripples run on into the next cell. -->
+  <rect width="64" height="64" fill="#f0dfae"/>
+  <path d="M0 16q8-5 16 0t16 0t16 0t16 0" fill="none" stroke="#cfb277" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M0 48q8-5 16 0t16 0t16 0t16 0" fill="none" stroke="#cfb277" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
