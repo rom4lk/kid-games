@@ -64,8 +64,8 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
   shows, so a plaza reads as a plaza and not as a frame of lines.
 - Any block filled two cells by two or larger reads as one patch. Meadow, sand, snow and farm turn
   into a surface of their own — a mown lawn, a smooth beach, a snowfield with a sled track, a
-  farmyard — and every block but the road, the water and the forest gains a kerb where the patch
-  meets a different kind, never between two cells of the same kind. A line or an L of three stays
+  farmyard — and every block but the roads, the rails, the water and the forest gains a kerb where
+  the patch meets a different kind, never between two cells of the same kind. A line or an L of three stays
   as it is.
 - A lone forest cell is one small tree; inside a cluster, or a filled 2 x 2 of forest, the trees
   grow taller and denser.

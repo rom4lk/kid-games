@@ -118,9 +118,9 @@ to learn.
 - Road painted two cells wide or more becomes a paved square instead of a tangle of centre lines.
 - Any block filled two cells by two or larger reads as one patch. The forest closes into its dense
   canopy; meadow, sand, snow and farm turn into one surface of their own — a mown lawn, a smooth
-  beach, a snowfield with a sled track, a farmyard; and every block other than the road, the water
-  and the forest gains a kerb along the sides where the patch meets a different kind, never between
-  two cells of the same kind. A line or an L of three is not a patch.
+  beach, a snowfield with a sled track, a farmyard; and every block other than the roads, the rails,
+  the water and the forest gains a kerb along the sides where the patch meets a different kind,
+  never between two cells of the same kind. A line or an L of three is not a patch.
 - A lone forest cell is one tree; a cluster, or a filled 2 x 2 of forest, grows denser and taller
   trees inside.
 - A house next to a road turns its door and a doorstep path toward the street.
