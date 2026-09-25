@@ -30,6 +30,10 @@ const {
   railPaths,
   lakes,
   forestClusters,
+  CLUSTER_MIN_CELLS,
+  clusterCreature,
+  sameKindClusters,
+  clusterCreatures,
   neighborMask,
   roadTile,
   roadPlaza,
@@ -779,6 +783,166 @@ function testLakesAndForests() {
   assert.equal(waterEdges(split, bridgeUnderlay, 10, 12) & (MASK_EAST | MASK_WEST), 0);
 }
 
+function testSameKindClusters() {
+  assert.equal(CLUSTER_MIN_CELLS, 3);
+
+  // An L of three is a group, though it is not a joined patch.
+  const corner = buildGrid([
+    "mm........",
+    "m.........",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  const bent = sameKindClusters(corner, 10);
+  assert.equal(bent.length, 1);
+  assert.equal(bent[0].id, MEADOW_ID);
+  assert.equal(bent[0].size, 3);
+  assert.deepEqual(bent[0].cells, [0, 1, 10]);
+  bent[0].cells.forEach((index) => assert.equal(joinedSquare(corner, 10, index), false));
+
+  // A filled 2 x 2 is one group of four.
+  const square = sameKindClusters(squareOf(MEADOW_ID), 10);
+  assert.equal(square.length, 1);
+  assert.equal(square[0].size, 4);
+
+  // A pair is not a group.
+  assert.deepEqual(sameKindClusters(buildGrid([
+    "..........",
+    "..mm......",
+    "..........",
+    "..........",
+    "..........",
+  ]), 10), []);
+
+  // Two groups apart stay two groups.
+  const apart = sameKindClusters(buildGrid([
+    "mmm....mmm",
+    "..........",
+    "..........",
+    "..........",
+    "..........",
+  ]), 10);
+  assert.equal(apart.length, 2);
+  assert.ok(apart.every((cluster) => cluster.id === MEADOW_ID && cluster.size === 3));
+
+  // Two kinds that touch stay two groups, one per kind.
+  const touching = sameKindClusters(buildGrid([
+    "..........",
+    "mmmhhh....",
+    "..........",
+    "..........",
+    "..........",
+  ]), 10);
+  assert.deepEqual(touching.map((cluster) => cluster.id).sort((a, b) => a - b), [MEADOW_ID, HOUSE_ID]);
+  assert.ok(touching.every((cluster) => cluster.size === 3));
+
+  // Cells that touch only by a corner are not a group.
+  assert.deepEqual(sameKindClusters(buildGrid([
+    "m.........",
+    ".m........",
+    "..m.......",
+    "..........",
+    "..........",
+  ]), 10), []);
+
+  // An empty cell never makes a group, however many of them touch.
+  assert.deepEqual(sameKindClusters(Array(50).fill(EMPTY_CELL), 10), []);
+  const sparse = buildGrid([
+    "..........",
+    "..........",
+    "...mmm....",
+    "..........",
+    "..........",
+  ]);
+  const found = sameKindClusters(sparse, 10);
+  assert.ok(found.every((cluster) => cluster.id !== EMPTY_CELL));
+  assert.equal(found.length, 1);
+
+  // The anchor is one of the group's cells, and the same grid gives the same one.
+  [bent, square, apart, touching, found].flat().forEach((cluster) => {
+    assert.ok(cluster.cells.includes(cluster.anchor));
+  });
+  assert.equal(sameKindClusters(sparse, 10)[0].anchor, found[0].anchor);
+  assert.equal(found[0].anchor, 24);
+}
+
+function testClusterCreatures() {
+  // One butterfly on the meadow, one cat on the row of houses, nothing for the
+  // lone houses.
+  const mixed = buildGrid([
+    "mmm...h...",
+    "..........",
+    "hhh.....h.",
+    "..........",
+    "..........",
+  ]);
+  assert.deepEqual(clusterCreatures(mixed, 10), [
+    { kind: "butterfly", id: MEADOW_ID, anchor: 1 },
+    { kind: "cat", id: HOUSE_ID, anchor: 21 },
+  ]);
+
+  // Two meadows of different size: one butterfly, on the bigger one.
+  const uneven = buildGrid([
+    "mmm.......",
+    "..........",
+    "mmmm......",
+    "..........",
+    "..........",
+  ]);
+  assert.deepEqual(clusterCreatures(uneven, 10), [{ kind: "butterfly", id: MEADOW_ID, anchor: 22 }]);
+
+  // Two meadows of equal size: one butterfly, on the one with the lower anchor.
+  const even = buildGrid([
+    "..........",
+    "mmm....mmm",
+    "..........",
+    "..........",
+    "..........",
+  ]);
+  assert.deepEqual(clusterCreatures(even, 10), [{ kind: "butterfly", id: MEADOW_ID, anchor: 11 }]);
+
+  // Painting an unrelated group of houses leaves the butterfly where it was.
+  const withHouses = uneven.slice();
+  [46, 47, 48].forEach((index) => {
+    withHouses[index] = HOUSE_ID;
+  });
+  const butterfly = (grid) => clusterCreatures(grid, 10).find((creature) => creature.kind === "butterfly");
+  assert.equal(butterfly(withHouses).anchor, butterfly(uneven).anchor);
+  assert.equal(clusterCreatures(withHouses, 10).length, 2);
+
+  // The forest, the water and the roads are groups, but bring no new creature.
+  const lived = buildGrid([
+    "fff.......",
+    "..........",
+    "www.......",
+    "..........",
+    "rrr.......",
+  ]);
+  assert.equal(sameKindClusters(lived, 10).length, 3);
+  assert.deepEqual(clusterCreatures(lived, 10), []);
+}
+
+// Every block answers a group of its kind: with one of the four new creatures,
+// or, for the roads, the water and the forest, with the life they already have.
+function testEveryBlockEarnsACreature() {
+  const kinds = ["butterfly", "hare", "cat", "balloon"];
+  BLOCKS.forEach((block) => {
+    const creature = clusterCreature(block.id);
+    assert.ok(creature === null || kinds.includes(creature), `${block.key} earns ${creature}`);
+  });
+  const silent = BLOCKS.filter((block) => clusterCreature(block.id) === null).map((block) => block.key);
+  assert.deepEqual(silent.sort(), ["asphalt", "forest", "path", "rails", "water"]);
+  kinds.forEach((kind) => {
+    assert.ok(BLOCKS.some((block) => clusterCreature(block.id) === kind), `no block earns a ${kind}`);
+  });
+  const hares = BLOCKS.filter((block) => clusterCreature(block.id) === "hare").map((block) => block.key);
+  assert.deepEqual(hares.sort(), ["mountain", "rocks", "sand", "snow"]);
+  assert.equal(clusterCreature(EMPTY_CELL), null);
+  assert.equal(clusterCreature(999), null);
+  assert.equal(clusterCreature(undefined), null);
+}
+
 function testHouseDoor() {
   const grid = buildGrid([
     "h.rh......",
@@ -1480,6 +1644,9 @@ testConnectedComponents();
 testRoadPaths();
 testWalkAndLoopOrder();
 testLakesAndForests();
+testSameKindClusters();
+testClusterCreatures();
+testEveryBlockEarnsACreature();
 testHouseDoor();
 testHouseHasStreet();
 testSpreadPick();

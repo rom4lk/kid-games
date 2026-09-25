@@ -865,6 +865,60 @@ function forestClusters(grid, columns) {
     .map((cells) => ({ ...componentTrack(cells, grid.length, columns), size: cells.length }));
 }
 
+const CLUSTER_MIN_CELLS = 3;
+
+// Which creature a group of one kind brings. It follows the family the child
+// already sees in the palette: a cat in a row of buildings, a balloon over a
+// group of decorations, a butterfly over green nature. Bare nature is the one
+// exception — a hare sits on sand, snow, mountain and rocks — and the forest,
+// the water and the roads answer with the life they already have, so they
+// bring nothing new.
+const CLUSTER_CREATURE_BY_FAMILY = { nature: "butterfly", buildings: "cat", decor: "balloon" };
+const CLUSTER_CREATURE_BY_KEY = {
+  sand: "hare",
+  snow: "hare",
+  mountain: "hare",
+  rocks: "hare",
+  forest: null,
+};
+
+function clusterCreature(id) {
+  const block = blockById(id);
+  if (!block) return null;
+  if (block.key in CLUSTER_CREATURE_BY_KEY) return CLUSTER_CREATURE_BY_KEY[block.key];
+  return CLUSTER_CREATURE_BY_FAMILY[block.family] ?? null;
+}
+
+// Every group of three or more touching cells that hold the very same block:
+// a line and an L count as well as a filled square. An empty cell holds no
+// block, so it never makes a group, and two kinds that touch stay two
+// groups: the world answers one kind, not a mixed corner.
+function sameKindClusters(grid, columns) {
+  return BLOCKS.flatMap((block) => connectedComponents(grid, columns, [block.id])
+    .filter((cells) => cells.length >= CLUSTER_MIN_CELLS)
+    .map((cells) => ({
+      id: block.id,
+      cells,
+      size: cells.length,
+      anchor: cells[Math.floor(cells.length / 2)],
+    })));
+}
+
+// One creature per kind, on the biggest group of that kind and on the earlier
+// of two equal groups, so the same painting always puts the same creatures in
+// the same places and a stroke somewhere else never moves them.
+function clusterCreatures(grid, columns) {
+  const biggest = new Map();
+  sameKindClusters(grid, columns).forEach((cluster) => {
+    if (!clusterCreature(cluster.id)) return;
+    const kept = biggest.get(cluster.id);
+    if (!kept || cluster.size > kept.size) biggest.set(cluster.id, cluster);
+  });
+  return [...biggest.values()]
+    .sort((left, right) => left.anchor - right.anchor)
+    .map(({ id, anchor }) => ({ kind: clusterCreature(id), id, anchor }));
+}
+
 function paintedCount(state, worldId = state?.currentWorldId) {
   const grid = worldById(state, worldId)?.grid;
   if (!Array.isArray(grid)) return 0;
@@ -1063,6 +1117,10 @@ if (typeof module !== "undefined" && module.exports) {
     railPaths,
     lakes,
     forestClusters,
+    CLUSTER_MIN_CELLS,
+    clusterCreature,
+    sameKindClusters,
+    clusterCreatures,
     neighborMask,
     diagonalMask,
     roadTile,
