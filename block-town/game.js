@@ -905,9 +905,11 @@ function sameKindClusters(grid, columns) {
 }
 
 // One creature per kind, on the biggest group of that kind and on the earlier
-// of two equal groups, so the same painting always puts the same creatures in
-// the same places and a stroke somewhere else never moves them.
-function clusterCreatures(grid, columns) {
+// of two equal groups, so a stroke somewhere else never moves them. `standing`
+// holds the cells creatures stand on now: a creature whose group still holds
+// its cell stays there as the group grows or shrinks; otherwise it takes the
+// middle cell of its group.
+function clusterCreatures(grid, columns, standing = []) {
   const biggest = new Map();
   sameKindClusters(grid, columns).forEach((cluster) => {
     if (!clusterCreature(cluster.id)) return;
@@ -915,8 +917,12 @@ function clusterCreatures(grid, columns) {
     if (!kept || cluster.size > kept.size) biggest.set(cluster.id, cluster);
   });
   return [...biggest.values()]
-    .sort((left, right) => left.anchor - right.anchor)
-    .map(({ id, anchor }) => ({ kind: clusterCreature(id), id, anchor }));
+    .map(({ id, cells, anchor }) => ({
+      kind: clusterCreature(id),
+      id,
+      anchor: cells.find((cell) => standing.includes(cell)) ?? anchor,
+    }))
+    .sort((left, right) => left.anchor - right.anchor);
 }
 
 function paintedCount(state, worldId = state?.currentWorldId) {
@@ -2230,7 +2236,11 @@ function initializeGame() {
         .map((track) => keep(kind, track, false)));
     const anchored = ANCHOR_KINDS.flatMap(({ kind, source, maxCount }) =>
       spreadPick(tracks.get(source), maxCount).map((track) => keep(kind, track, true)));
-    const clustered = clusterCreatures(world.grid, size.columns)
+    // A cluster creature keeps its cell while that cell still holds its kind.
+    const standing = sprites
+      .filter((sprite) => sprite.static && sprite.key.split(":")[0] === clusterCreature(world.grid[sprite.path[0]]))
+      .map((sprite) => sprite.path[0]);
+    const clustered = clusterCreatures(world.grid, size.columns, standing)
       .map(({ kind, anchor }) => keep(kind, { cells: [anchor], path: [anchor], loop: false }, true));
     sprites = travelling.concat(anchored, clustered);
 

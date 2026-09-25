@@ -911,6 +911,28 @@ function testClusterCreatures() {
   assert.equal(butterfly(withHouses).anchor, butterfly(uneven).anchor);
   assert.equal(clusterCreatures(withHouses, 10).length, 2);
 
+  // A creature that keeps its group keeps its cell as the group grows.
+  const row = buildGrid([
+    "..........",
+    ".mmm......",
+    "..........",
+  ]);
+  assert.equal(butterfly(row).anchor, 12);
+  const longer = row.slice();
+  longer[14] = MEADOW_ID;
+  assert.equal(butterfly(longer).anchor, 13);
+  assert.equal(clusterCreatures(longer, 10, [12])[0].anchor, 12);
+
+  // A standing cell that was painted over falls back to the middle cell.
+  const paintedOver = longer.slice();
+  paintedOver[12] = HOUSE_ID;
+  paintedOver[11] = EMPTY_CELL;
+  paintedOver[15] = MEADOW_ID;
+  assert.equal(clusterCreatures(paintedOver, 10, [12])[0].anchor, 14);
+
+  // A standing cell in a smaller group does not keep the creature from the bigger one.
+  assert.equal(clusterCreatures(uneven, 10, [1]).find((creature) => creature.kind === "butterfly").anchor, 22);
+
   // The forest, the water and the roads are groups, but bring no new creature.
   const lived = buildGrid([
     "fff.......",
