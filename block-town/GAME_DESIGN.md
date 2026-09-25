@@ -140,6 +140,12 @@ possible, and each reaction is visible without sound or reading:
   stands on the water, so neither of them travels under it: each side of the bridge is its own
   stretch of water and counts its cells on its own.
 - Birds flap over a forest cluster of six or more cells.
+- Three or more cells of one kind joined side by side — a line, an L or a filled patch alike —
+  bring one creature to the biggest such group of that kind, one creature per kind: a butterfly
+  over meadow, flowers, garden, orchard and field; a hare on sand, snow, mountain and rocks; a cat
+  in a group of buildings of one kind; a balloon over a group of decorations. The look waits for a
+  2 x 2, the life comes at three. Roads, water and forest answer with the life they already have
+  and get no second creature.
 - A house with a street on any side starts smoking from its chimney; rails do not count. At most
   six chimneys smoke at once, spread evenly over the town.
 - Fields ripen, a windmill turns when a field is near, a lighthouse blinks when it stands by water.

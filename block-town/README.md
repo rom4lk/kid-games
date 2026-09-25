@@ -78,7 +78,10 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
 Small life appears on its own as soon as the painting allows it, and disappears when the painting no
 longer does. A car drives a road of three cells or more and keeps circling a closed loop; a road of
 two cells brings a walker who strolls along the roadside; a train runs the rails; a duck bobs on a
-lake of four cells, a boat rocks on one of ten; birds flap over a wood of six. A windmill turns
+lake of four cells, a boat rocks on one of ten; birds flap over a wood of six. Any other block
+painted three cells or more of one kind side by side, in a line, an L or a patch, brings one
+creature to its biggest group — a butterfly over green nature, a hare on sand, snow, mountain and
+rocks, a cat among buildings, a balloon over decorations — one per kind. A windmill turns
 beside a field and a lighthouse blinks beside water. A street painted past a house starts its
 chimney smoking, at most six chimneys spread over the town; erasing the street stops it.
 
@@ -128,7 +131,8 @@ the chimneys, the field stages, the wide brush, rail paths, the bucket on a full
 full save, the normalization of a damaged save, the shelf's copy of the block table and its names in
 both dictionaries, a stylesheet rule with its own existing pictures for every block, the joined
 2 x 2 square for every block, the edges of a patch, which blocks take the kerb, the stylesheet rules
-that draw it, and the four joined surfaces with their pictures.
+that draw it, the four joined surfaces with their pictures, the groups of three of one kind, the
+creature every block earns, and the pictures of those creatures.
 
 ## Saving
 
