@@ -62,7 +62,13 @@ Nothing here has to be learned: every block looks at its neighbours and draws it
   and puts a fillet in every inside corner where the lake bends.
 - Road painted two cells wide or more becomes a paved square: the centre line stops and the paving
   shows, so a plaza reads as a plaza and not as a frame of lines.
-- A lone forest cell is one small tree; inside a cluster the trees grow taller and denser.
+- Any block filled two cells by two or larger reads as one patch. Meadow, sand, snow and farm turn
+  into a surface of their own — a mown lawn, a smooth beach, a snowfield with a sled track, a
+  farmyard — and every block but the road, the water and the forest gains a kerb where the patch
+  meets a different kind, never between two cells of the same kind. A line or an L of three stays
+  as it is.
+- A lone forest cell is one small tree; inside a cluster, or a filled 2 x 2 of forest, the trees
+  grow taller and denser.
 - A house turns its door toward the street next to it.
 - A field goes from bare soil to green shoots to ripe ears while the world is open.
 - Rails are a separate network: a car never drives onto them and a train never leaves them.
@@ -120,7 +126,9 @@ the autotile helpers, the inside corners of a lake, the paved square, the world 
 of a walked track and of a closed loop, the house door, the street by a house and the even spread of
 the chimneys, the field stages, the wide brush, rail paths, the bucket on a full world, the size of a
 full save, the normalization of a damaged save, the shelf's copy of the block table and its names in
-both dictionaries, and a stylesheet rule with its own existing pictures for every block.
+both dictionaries, a stylesheet rule with its own existing pictures for every block, the joined
+2 x 2 square for every block, the edges of a patch, which blocks take the kerb, the stylesheet rules
+that draw it, and the four joined surfaces with their pictures.
 
 ## Saving
 
