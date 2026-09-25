@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <!-- A farm, joined: the same barn standing on a yard of trodden earth and straw that runs on into the next cell. -->
   <rect width="64" height="64" fill="#e2d2ab"/>
-  <path d="M6 5l3-2M14 5l3-2M22 5l3-2M30 5l3-2M38 5l3-2M46 5l3-2M54 5l3-2" fill="none" stroke="#c4a93e" stroke-width="2" stroke-linecap="round"/>
+  <path d="M4 5l3-2M12 5l3-2M20 5l3-2M28 5l3-2M36 5l3-2M44 5l3-2M52 5l3-2M60 5l3-2" fill="none" stroke="#c4a93e" stroke-width="2" stroke-linecap="round"/>
   <path d="M2 62l3-2M10 62l3-2M18 62l3-2M26 62l3-2M34 62l3-2M42 62l3-2M50 62l3-2M58 62l3-2" fill="none" stroke="#c4a93e" stroke-width="2" stroke-linecap="round"/>
   <ellipse cx="32" cy="58" rx="26" ry="3" fill="#2b4535" fill-opacity=".14"/>
   <rect x="10" y="30" width="44" height="26" rx="2" fill="#c97f52"/>
