@@ -150,8 +150,8 @@ words. The word itself is the correct answer, so no separate `correct` field is 
 ```
 
 The rules the content has to follow — the word length, the alphabet, the parts spelling the word back,
-exactly three unique choices, the caption of the correct choice matching the word, and no letter Ё in
-the Russian files — are checked by the validator. For the mode it also checks that the word is among
+exactly three unique choices and the caption of the correct choice matching the word — are checked by
+the validator. Russian text spells Ё wherever the word has it. For the mode it also checks that the word is among
 the choices, that the choices are words of the same length, and that they differ in exactly one letter
 position:
 

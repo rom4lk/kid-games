@@ -26,9 +26,9 @@ MAX_WORD_REPEATS = 8
 
 WORD_ALPHABETS = {
     "en": re.compile(r"^[A-Z]+$"),
-    "ru": re.compile(r"^[А-ЯЙЬЪ]+$"),
+    "ru": re.compile(r"^[А-ЯЁЙЬЪ]+$"),
 }
-TEXT_LETTERS = re.compile(r"[A-Za-zА-Яа-я0-9]")
+TEXT_LETTERS = re.compile(r"[A-Za-zА-Яа-яЁё0-9]")
 
 require_all = "--all" in sys.argv
 errors: list[str] = []
@@ -48,18 +48,6 @@ def key_paths(value, prefix=""):
         yield prefix
 
 
-def check_no_yo(file_name, value, location=""):
-    if isinstance(value, str):
-        if "ё" in value or "Ё" in value:
-            errors.append(f'{file_name}: "{location}" contains the letter Ё')
-    elif isinstance(value, list):
-        for index, item in enumerate(value):
-            check_no_yo(file_name, item, f"{location}[{index}]")
-    elif isinstance(value, dict):
-        for key, child in value.items():
-            check_no_yo(file_name, child, f"{location}.{key}" if location else key)
-
-
 def validate_ui():
     en = load_json("ui.en.json")
     ru = load_json("ui.ru.json")
@@ -69,7 +57,6 @@ def validate_ui():
         errors.append(f'ui.ru.json: missing key "{key}"')
     for key in ru_keys - en_keys:
         errors.append(f'ui.en.json: missing key "{key}"')
-    check_no_yo("ui.ru.json", ru)
 
 
 def validate_task(file_name, pack, chapter, task, task_index, seen_words):
@@ -138,9 +125,6 @@ def validate_pack(language, letters):
     if not isinstance(chapters, list) or len(chapters) != CHAPTERS_PER_LEVEL:
         errors.append(f"{file_name}: expected {CHAPTERS_PER_LEVEL} chapters, found {len(chapters or [])}")
         return
-
-    if language == "ru":
-        check_no_yo(file_name, pack)
 
     chapter_ids = set()
     word_counts: dict[str, int] = {}
@@ -274,9 +258,6 @@ def validate_spell_pack(language, letters, chapters_per_pack):
     if not isinstance(chapters, list) or len(chapters) != chapters_per_pack:
         errors.append(f"{file_name}: expected {chapters_per_pack} chapters, found {len(chapters or [])}")
         return
-
-    if language == "ru":
-        check_no_yo(file_name, pack)
 
     chapter_ids = set()
     word_counts: dict[str, int] = {}
