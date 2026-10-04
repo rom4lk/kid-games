@@ -14,6 +14,7 @@ const {
   packPath,
   shuffle,
   solvedPrefixLength,
+  splitsAtOnce,
 } = require("./game.js");
 
 const CONTENT = path.join(__dirname, "content");
@@ -25,6 +26,14 @@ function testSyllableSplit() {
   assert.equal(hasSyllableSplit({ word: "КОТ", syllables: "КОТ" }), false);
   assert.equal(hasSyllableSplit({ word: "МАШИНА", syllables: "МА-ШИ-НА" }), true);
   assert.equal(hasSyllableSplit({ word: "CAT" }), false, "a task with no parts offers no hint");
+}
+
+// A Russian word of several syllables is shown split from the start; a word
+// of one syllable and an English word are not.
+function testSplitsAtOnce() {
+  assert.equal(splitsAtOnce({ word: "МАШИНА", syllables: "МА-ШИ-НА" }, "ru"), true);
+  assert.equal(splitsAtOnce({ word: "КОТ", syllables: "КОТ" }, "ru"), false);
+  assert.equal(splitsAtOnce({ word: "BANANA", syllables: "BA-NA-NA" }, "en"), false);
 }
 
 function testChangingPositions() {
@@ -108,6 +117,7 @@ function testSpellChoicesDifferInOneLetter() {
 }
 
 testSyllableSplit();
+testSplitsAtOnce();
 testChangingPositions();
 testTemplates();
 testSolvedPrefix();

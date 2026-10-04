@@ -1054,10 +1054,23 @@ h1 {
 
 .word-main,
 .word-syllables {
-  font-size: clamp(2.65rem, 9vw, 5.7rem);
+  --word-size: clamp(2.65rem, 9vw, 5.7rem);
+  font-size: var(--word-size);
   font-weight: 900;
   letter-spacing: 0.09em;
   line-height: 1;
+}
+
+/* A split is longer than its word by the hyphens, so a long one shrinks to
+   stay on one line of the card instead of breaking after a hyphen. The card
+   sets --split-length to the number of characters in the split. */
+.word-card {
+  container-type: inline-size;
+}
+
+.word-card .word-syllables {
+  font-size: min(var(--word-size), calc(100cqw / (var(--split-length, 7) * 0.8)));
+  white-space: nowrap;
 }
 
 /* A word of one syllable hides the parts hint, so its card is not a button
@@ -1890,7 +1903,7 @@ h1 {
 
   .word-main,
   .word-syllables {
-    font-size: clamp(2.65rem, min(9vw, 11vh), 5.7rem);
+    --word-size: clamp(2.65rem, min(9vw, 11vh), 5.7rem);
   }
 
   .microphone-button,

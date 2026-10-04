@@ -586,6 +586,7 @@ function renderTask() {
   // letters, so the two halves of the reading task swap places.
   setText("wordMain", spell ? task.emoji : task.word);
   setText("wordSyllables", spell ? "" : task.syllables);
+  elements.wordCard.style.setProperty("--split-length", spell ? 0 : task.syllables.length);
   setText("feedbackStatus", "");
   applyModeStrings(spell);
   setText("successTitle", ui.play.successTitle);
@@ -595,13 +596,17 @@ function renderTask() {
     total: chapter.tasks.length,
   }));
 
-  const canShowParts = spell || hasSyllableSplit(task);
+  // A Russian word comes split from the start, so there is nothing left for
+  // the parts hint to reveal and the card stays quiet, as it does for a word
+  // of one syllable.
+  const splitAtOnce = splitsAtOnce(task, activeLanguage);
+  const canShowParts = spell || (hasSyllableSplit(task) && !splitAtOnce);
   elements.wordCard.classList.toggle("picture-card", spell);
-  elements.wordCard.classList.remove("show-syllables");
+  elements.wordCard.classList.toggle("show-syllables", splitAtOnce);
   elements.wordCard.disabled = !canShowParts;
   elements.hintButton.hidden = !canShowParts;
   elements.tapHint.hidden = !canShowParts;
-  elements.wordSyllables.hidden = true;
+  elements.wordSyllables.hidden = !splitAtOnce;
   elements.successPanel.hidden = true;
   elements.skipButton.disabled = nextUnsolvedTaskIndex(currentTaskIndex) === -1;
   elements.choiceGrid.hidden = false;
@@ -679,6 +684,13 @@ function hasSyllableSplit(task) {
   return typeof task.syllables === "string" && task.syllables !== task.word;
 }
 
+// Russian words are shown split into syllables from the start: a child who is
+// just learning to read takes a long word in parts, so the split is the
+// reading itself there, not a hint to ask for.
+function splitsAtOnce(task, language) {
+  return language === "ru" && hasSyllableSplit(task);
+}
+
 function changingPositions(words) {
   const positions = new Set();
   for (let index = 0; index < words[0].length; index += 1) {
@@ -709,7 +721,7 @@ function shuffle(values) {
 function revealHint() {
   if (currentTaskSolved) return;
   const task = currentPack.chapters[currentChapterIndex].tasks[currentTaskIndex];
-  if (!isSpellMode() && !hasSyllableSplit(task)) return;
+  if (!isSpellMode() && (!hasSyllableSplit(task) || splitsAtOnce(task, activeLanguage))) return;
 
   if (isSpellMode()) {
     // The hint points at the one letter that decides the answer. It never says
@@ -992,6 +1004,7 @@ if (typeof module !== "undefined" && module.exports) {
     findNextUnsolved,
     hasSyllableSplit,
     packPath,
+    splitsAtOnce,
     shuffle,
     solvedPrefixLength,
   };

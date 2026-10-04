@@ -18,6 +18,8 @@ next word.
 - splitting a word into parts through a separate button, a tap on the word card, or automatically
   after a second mistake — a word of one syllable has no parts to show, so the button and the
   card stay quiet there instead of answering with no change;
+- a Russian word of several syllables is shown split from the start, so the button and the card
+  stay quiet there too: there is nothing left to reveal;
 - the option to set a word aside and come back to it later in the same chapter;
 - gentle feedback with no penalties and no timer;
 - automatic saving of the progress and the statistics;
