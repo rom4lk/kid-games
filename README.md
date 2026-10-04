@@ -12,7 +12,12 @@ A single server started from the repository root serves every game:
 python3 server.py
 ```
 
-Then open `http://127.0.0.1:4173/` — that page links to the games.
+Then open `http://127.0.0.1:4173/` — that page links to the games. Other computers on the home
+network open `http://<name>.local:4173/`, where `<name>` is this computer's name; the server prints
+both addresses when it starts.
+
+Port 4173 serves the child's shared progress to every computer, so development and verification
+play uses the preview on port 4174 or another spare port, never 4173.
 
 Without a command the server runs in the foreground and is stopped with `Ctrl+C`. It can also run in
 the background:
@@ -27,6 +32,31 @@ the background:
 `start` writes the process id to `.server/server.pid` and the output of the server to
 `.server/server.log`; the whole `.server/` folder is ignored by git. The commands only see a server
 that was started with `start`, not one running in the foreground.
+
+### Starting with the Mac
+
+`com.kovalev.kid-games.plist` is a LaunchAgent that runs the server whenever the user is logged in,
+restarts it if it stops, and writes its output to `.server/server.log`. Install it from the
+repository root:
+
+```bash
+mkdir -p .server
+ln -s "$PWD/com.kovalev.kid-games.plist" ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kovalev.kid-games.plist
+```
+
+The plist names the absolute path of this checkout and `/opt/homebrew/bin/python3`; edit it if
+either differs. After a change to `server.py`, restart the server with
+`launchctl kickstart -k gui/$(id -u)/com.kovalev.kid-games`. To remove the agent, run
+`launchctl bootout gui/$(id -u)/com.kovalev.kid-games` and delete the link in
+`~/Library/LaunchAgents/`.
+
+The agent's server writes no pid file, so `status` and `stop` report "Not running" and `start` fails
+on the busy port; use the `launchctl` commands instead. Before the first `bootstrap`, stop a server
+started with `start`, otherwise the agent keeps restarting against a busy port. While the agent is
+loaded, do not run `start` or the foreground `python3 server.py` either: if one of them takes port
+4173 while the agent restarts, the agent retries every ten seconds and appends a traceback to the log
+each time. To recover, stop that server and run `launchctl kickstart -k` as above.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
 `island-discovery`, `forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and
@@ -113,8 +143,8 @@ Every game writes its progress to `localStorage` under its own key:
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
 | `block-town` | `blockTownWorldsV1` |
 
-Progress is tied to the browser and the address, is not synchronized between devices and is erased when
-site data is cleared.
+When the games are opened from `server.py`, the progress is shared between computers, as described
+below. Pages opened over `file://` or from another static server keep progress in the browser only.
 
 Every card on the home page has a settings button in its corner: it opens a small panel for an adult
 that resets the progress of that game after a confirmation. The reset removes only the keys listed
@@ -124,6 +154,27 @@ The Block Town panel holds one more screen, "Blocks": a list of all thirty block
 adds the ones the child may paint with. That choice lives under `blockTownBlocksV1`, is written by
 the home page and by the words screen inside the game, and a reset of progress keeps it — like sound
 and language, it is a setting.
+
+### Shared progress
+
+`server.py` keeps the progress keys in `saves/progress.json` next to itself (ignored by git), and
+`shared/progress-sync.js`, the first script on every page, copies them between that file and the
+browser's `localStorage`. The synced keys are `SYNCED_KEYS` in `server.py`: the table above plus
+`blockTownBlocksV1`. Sound and language stay per device, except that Word Quest keeps its own sound
+switch and language inside `livingWordsProgressV2`, so those two travel with its progress. The last
+write wins per key.
+
+The first time a browser meets a key, its own copy, if it has one, goes to the server and replaces
+what is there; after that the server's copy wins on every page load. So a browser or address that
+still holds old progress (another browser on the Mac, or `localhost:4173`) pushes it on its first
+visit: open the games only from browsers whose progress is wanted. A write that fails because the
+server is unreachable is kept in the browser and sent on the next page load.
+
+Back up the progress by copying `saves/progress.json`. Reset one game from the settings panel on the
+home page as before; the reset reaches every computer. Do not delete the file to reset everything:
+browsers keep their copies when the server has nothing at all, and push them again as soon as they
+write. The two marker keys `kidGamesProgressSyncedV1` and `kidGamesProgressPendingV1` belong to each
+browser and are never synced.
 
 ## Shared principles
 
