@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import signal
+import socket
 import subprocess
 import sys
+import threading
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -17,6 +20,41 @@ RUNTIME_PATH = SERVER_PATH.parent / ".server"
 PID_PATH = RUNTIME_PATH / "server.pid"
 LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
+PROGRESS_PATH = SERVER_PATH.parent / "saves" / "progress.json"
+API_PATH = "/api/progress"
+# Sound and language stay per device, so only progress keys are kept on the server.
+SYNCED_KEYS = (
+    "livingWordsProgressV2",
+    "islandDiscoveryV2",
+    "forestLightProgressV1",
+    "roboStoriesProgressV1",
+    "roboStoriesSurveyV1",
+    "gardenQuestBestScoresV3",
+    "gardenQuestUnlockedV1",
+    "secretRuleLabCompletedV1",
+    "blockTownWorldsV1",
+    "blockTownBlocksV1",
+)
+
+# ThreadingHTTPServer answers every request in its own thread.
+progress_lock = threading.Lock()
+
+
+def read_progress():
+    # Only a missing file counts as empty: a broken one must fail the request instead of being
+    # overwritten by the next save.
+    try:
+        return json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {}
+
+
+def write_progress(progress):
+    """Replace the file in one step, so a crash never leaves half of it. Callers hold the lock."""
+    PROGRESS_PATH.parent.mkdir(exist_ok=True)
+    temporary_path = PROGRESS_PATH.with_suffix(".tmp")
+    temporary_path.write_text(json.dumps(progress, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(temporary_path, PROGRESS_PATH)
 
 
 class NoCacheRequestHandler(SimpleHTTPRequestHandler):
@@ -26,11 +64,70 @@ class NoCacheRequestHandler(SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
+    def do_GET(self):
+        if self.path != API_PATH:
+            super().do_GET()
+            return
+
+        with progress_lock:
+            saved = read_progress()
+        # Every synced key is listed, so the pages learn the allowlist from here.
+        body = json.dumps({key: saved.get(key) for key in SYNCED_KEYS}, ensure_ascii=False).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_PUT(self):
+        key = self.progress_key()
+        if not key:
+            return
+
+        value = self.rfile.read(int(self.headers.get("Content-Length", 0))).decode("utf-8")
+        with progress_lock:
+            progress = read_progress()
+            progress[key] = value
+            write_progress(progress)
+        self.send_response(204)
+        self.end_headers()
+
+    def do_DELETE(self):
+        key = self.progress_key()
+        if not key:
+            return
+
+        with progress_lock:
+            progress = read_progress()
+            progress.pop(key, None)
+            write_progress(progress)
+        self.send_response(204)
+        self.end_headers()
+
+    def progress_key(self):
+        """Return the synced key named by the path, or answer 404 and return None."""
+        prefix = API_PATH + "/"
+        key = self.path[len(prefix):] if self.path.startswith(prefix) else None
+        if key not in SYNCED_KEYS:
+            self.send_error(404)
+            return None
+        return key
+
+
+def lan_host():
+    """The name other computers on the home network reach this one by."""
+    name = socket.gethostname()
+    return name if "." in name else f"{name}.local"
+
+
+def urls():
+    return f"http://{DISPLAY_HOST}:{PORT}/ and http://{lan_host()}:{PORT}/"
+
 
 def serve():
     os.chdir(SERVER_PATH.parent)
     server = ThreadingHTTPServer((BIND_HOST, PORT), NoCacheRequestHandler)
-    print(f"Serving games at http://{DISPLAY_HOST}:{PORT}/", flush=True)
+    print(f"Serving games at {urls()}", flush=True)
 
     try:
         server.serve_forever()
@@ -59,7 +156,7 @@ def running_pid():
 def start_command():
     pid = running_pid()
     if pid:
-        print(f"Already running with pid {pid} at http://{DISPLAY_HOST}:{PORT}/")
+        print(f"Already running with pid {pid} at {urls()}")
         return
 
     RUNTIME_PATH.mkdir(exist_ok=True)
@@ -79,7 +176,7 @@ def start_command():
         sys.exit(1)
 
     PID_PATH.write_text(f"{process.pid}\n")
-    print(f"Started with pid {process.pid} at http://{DISPLAY_HOST}:{PORT}/")
+    print(f"Started with pid {process.pid} at {urls()}")
 
 
 def stop_command():
@@ -112,7 +209,7 @@ def restart_command():
 def status_command():
     pid = running_pid()
     if pid:
-        print(f"Running with pid {pid} at http://{DISPLAY_HOST}:{PORT}/")
+        print(f"Running with pid {pid} at {urls()}")
     else:
         print("Not running")
 
