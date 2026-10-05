@@ -15,7 +15,6 @@ LANGUAGES = ["en", "ru"]
 LEVELS = [3, 4, 5, 6, 7]
 CHAPTERS_PER_LEVEL = 20
 WORDS_PER_CHAPTER = 10
-SPELL_CHAPTERS = 5
 
 # A level is two hundred readings, not two hundred different words: there are
 # not two hundred short nouns a six-year-old knows and a picture can tell apart,
@@ -23,6 +22,19 @@ SPELL_CHAPTERS = 5
 # so a new pack cannot quietly become a handful of words said over and over.
 MIN_UNIQUE_WORDS = 35
 MAX_WORD_REPEATS = 8
+
+# A "Find the word" pack has its own floor and cap. English repeats nothing.
+# The Russian packs repeat on purpose: few short words have two real partners
+# that differ from them in one letter, and in the same column. The four-letter
+# floor is higher because that pack draws on the larger pool.
+# (language, letters) -> (chapters, minimum unique answer words, maximum repeats per word)
+SPELL_PACKS = {
+    ("en", 3): (5, 50, 1),
+    ("ru", 3): (10, 20, 6),
+    ("ru", 4): (10, 25, 5),
+}
+MAX_SAME_SPELL_TASK = 2
+MAX_FIRST_LETTER_SHARE = 0.3
 
 WORD_ALPHABETS = {
     "en": re.compile(r"^[A-Z]+$"),
@@ -241,7 +253,8 @@ def validate_spell_task(file_name, pack, chapter, task, task_index, seen_words):
         )
 
 
-def validate_spell_pack(language, letters, chapters_per_pack):
+def validate_spell_pack(language, letters, limits):
+    chapters_per_pack, min_unique_words, max_word_repeats = limits
     file_name = f"spell.{language}.{letters}.json"
     if not (CONTENT_DIR / file_name).exists():
         (errors if require_all else warnings).append(f"{file_name}: file is missing")
@@ -261,6 +274,8 @@ def validate_spell_pack(language, letters, chapters_per_pack):
 
     chapter_ids = set()
     word_counts: dict[str, int] = {}
+    task_counts: dict[tuple, int] = {}
+    first_letter_tasks = 0
 
     for chapter_index, chapter in enumerate(chapters):
         where = f"{file_name}: chapter {chapter_index + 1}"
@@ -288,16 +303,55 @@ def validate_spell_pack(language, letters, chapters_per_pack):
             word = task.get("word")
             if word:
                 word_counts[word] = word_counts.get(word, 0) + 1
+            choices = task.get("choices")
+            if (
+                isinstance(choices, list)
+                and choices
+                and all(isinstance(choice, str) and choice for choice in choices)
+            ):
+                if word:
+                    same_task = (word, tuple(sorted(choices)))
+                    task_counts[same_task] = task_counts.get(same_task, 0) + 1
+                if len({choice[0] for choice in choices}) > 1:
+                    first_letter_tasks += 1
 
     max_repeat = max(word_counts.values(), default=0)
     print(f"{file_name}: {len(word_counts)} unique words, max repeats per word: {max_repeat}")
+
+    total_words = sum(word_counts.values())
+    if word_counts:
+        top_word, top_count = max(word_counts.items(), key=lambda item: item[1])
+        if len(word_counts) < min_unique_words:
+            errors.append(
+                f"{file_name}: only {len(word_counts)} unique words across {total_words} tasks,"
+                f" fewer than the {min_unique_words} this pack has to hold"
+            )
+        if top_count > max_word_repeats:
+            errors.append(
+                f'{file_name}: "{top_word}" is repeated {top_count} times, more than the'
+                f" {max_word_repeats} times one word may appear in this pack"
+            )
+
+    # Content quality signals. Warnings only, like the ones for the levels.
+    for (word, choices), count in task_counts.items():
+        if count > MAX_SAME_SPELL_TASK:
+            warnings.append(
+                f'{file_name}: "{word}" comes back {count} times with the same choices {list(choices)},'
+                f" more than {MAX_SAME_SPELL_TASK}; a repeated word should get new distractors"
+            )
+    if total_words and first_letter_tasks / total_words > MAX_FIRST_LETTER_SHARE:
+        warnings.append(
+            f"{file_name}: {first_letter_tasks} of {total_words} tasks change the first letter, more than"
+            f" {MAX_FIRST_LETTER_SHARE:.0%}, so guessing by the first letter works too often"
+        )
 
 
 validate_ui()
 for lang in LANGUAGES:
     for level in LEVELS:
         validate_pack(lang, level)
-validate_spell_pack("en", 3, SPELL_CHAPTERS)
+for (lang, letters), limits in SPELL_PACKS.items():
+    validate_spell_pack(lang, letters, limits)
 
 for message in warnings:
     print(f"WARN  {message}")
