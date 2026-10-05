@@ -1282,6 +1282,12 @@ h1 {
   text-align: center;
 }
 
+/* Cyrillic capitals such as Ж, Щ and Ю are much wider than Latin ones, and in
+   a 0.72em box they run into the next letter. */
+html[lang="ru"] .word-choice .letter {
+  width: 0.9em;
+}
+
 .word-choices.show-diff .letter.changing {
   color: #ffd166;
   text-decoration: underline;
