@@ -8,7 +8,8 @@ next word.
 
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
 - levels by word length, from 3 to 7 letters, in both languages;
-- a second mode, "Find the word": a picture and three written words that differ in one letter;
+- a second mode, "Find the word": a picture and three written words that differ in one letter, in
+  both languages, with one pack per word length;
 - 20 chapters in every level, 10 words in every chapter — 200 readings per level, drawn from a
   smaller set of words: there are not 200 short nouns a six-year-old knows and a picture can
   tell apart, so a word comes back several times on purpose;
@@ -60,15 +61,19 @@ card shows a picture and the three answers are written words that differ in exac
 CAT, COT, CUT. Guessing by the first letter stops working, because in most tasks the first letter is
 the one that is the same everywhere.
 
-- the mode is a separate card under the levels on the main menu, English only, five stories of ten
-  words, and it keeps its own progress;
+- the mode is a card under the levels on the main menu, one card per pack: English has one pack of
+  3-letter words in five stories, Russian has a 3-letter and a 4-letter pack in ten stories each,
+  and every pack keeps its own progress;
 - every letter sits in a box of the same width, so the three words line up in columns and the letter
   that changes stands in a column of its own;
 - the hint highlights that column in all three words instead of splitting a word into parts. It
   shows where to look and never says which word is the right one;
 - the same hint opens by itself after a second wrong answer, exactly like the syllables do in the
   levels;
-- all fifty words of the mode are different, and every distractor is a real English word.
+- all fifty words of the English pack are different. The Russian packs repeat answer words on
+  purpose, under a floor and a cap, for the same reason the levels do: few short words a child knows
+  have two real partners that differ from them in one letter. Every distractor is a real word of its
+  language.
 
 ## Stored progress
 
@@ -76,7 +81,8 @@ The progress is saved to `localStorage` under the key `livingWordsProgressV2`. I
 
 - the chosen language;
 - the number of words solved in each chapter of each language and level;
-- the number of words solved in each chapter of the "Find the word" mode, under the key `en-spell3`;
+- the number of words solved in each chapter of each "Find the word" pack, under the keys
+  `en-spell3`, `ru-spell3` and `ru-spell4`;
 - the number of opened hints and wrong choices;
 - the sound setting.
 
@@ -94,7 +100,8 @@ word-quest/
 │   ├── ui.ru.json        # Russian interface strings
 │   ├── words.<lang>.<letters>.json
 │   │                     # A word pack: 20 chapters of 10 tasks
-│   └── spell.en.3.json   # The "Find the word" mode: 5 chapters of 10 tasks
+│   └── spell.<lang>.<letters>.json
+│                         # A "Find the word" pack: 5 or 10 chapters of 10 tasks
 ├── tools/
 │   └── validate.py       # Content checks for the packs and the UI files
 └── README.md             # Product and launch notes
@@ -168,12 +175,24 @@ The validator also holds the floor under the repetition described above: a level
 35 different words, and no word may appear more than 8 times in it. Both are errors, so a new pack
 cannot quietly shrink to a handful of words said over and over.
 
+A "Find the word" pack has its own floor and cap, also errors:
+
+- English: 50 different words, each used once;
+- Russian, 3 letters: at least 20 different words, each used up to 6 times;
+- Russian, 4 letters: at least 25 different words, each used up to 5 times.
+
+Two more signals are warnings: the same word coming back with the same three choices more than
+twice, and the first letter changing in more than 30% of the tasks of a pack. The Russian packs keep
+the first letter under that share, so a word whose only real partners differ in a later letter
+comes back with the same pair, and the validator lists those words.
+
 ## Adding a level
 
 The list of playable levels lives in the `LEVELS` constant at the top of [game.js](game.js). All ten
 packs — levels 3 to 7 in both languages — are written and listed. To add another level, write its
 pack, run the validator, add the level number to `LEVELS` and add its strings to both `ui.*.json`
-files.
+files. A "Find the word" pack is listed in `SPELL_PACKS` in [game.js](game.js) and in `SPELL_PACKS`
+in [tools/validate.py](tools/validate.py).
 
 ## Deliberate decisions
 
@@ -188,5 +207,9 @@ These decisions were made on purpose and take precedence over the shared rules i
   the caption instead of the word.
 - **In the "Find the word" mode the three answers are visible from the start.** They are the reading
   task itself, so there is nothing to hide. Their letters are marked only when the hint is opened.
-- **The mode is offered in English only.** It is written as one pack of fifty words; a Russian pack
-  would need its own minimal pairs and is not written yet.
+- **The mode exists for 3-letter English words and for 3- and 4-letter Russian words only.** Longer
+  words have too few minimal pairs a child knows, and English stays at five stories.
+- **Russian words in the "Find the word" mode are shown whole, not split into syllables.** The three
+  words must line up letter by letter in columns, and a split would break the columns the hint relies
+  on. This overrides the syllable rule in GAME_DESIGN.md and the way the Russian levels show a word
+  split at once.
