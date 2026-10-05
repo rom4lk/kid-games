@@ -11,9 +11,17 @@ const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
 
 // The second task type: a picture and three words that differ in one letter.
-// It is a separate mode, not a level, so it keeps its own pack and its own
-// progress key while reusing every screen of the game.
-const SPELL_MODE = { key: "spell3", language: "en", letters: 3, chapters: 5 };
+// It is a separate mode, not a level, so each pack keeps its own file and its
+// own progress key while reusing every screen of the game. The picture and the
+// three words draw the pack's card on the menu, because the menu is drawn
+// before any pack is loaded.
+const SPELL_PACKS = {
+  en: [{ key: "spell3", letters: 3, chapters: 5, picture: "🐱", sample: ["CAT", "COT", "CUT"] }],
+  ru: [
+    { key: "spell3", letters: 3, chapters: 10, picture: "🐱", sample: ["КОТ", "КОД", "КОМ"] },
+    { key: "spell4", letters: 4, chapters: 10, picture: "🐐", sample: ["КОЗА", "КОСА", "КОРА"] },
+  ],
+};
 
 const SPEECH_LOCALES = { en: "en-US", ru: "ru-RU" };
 
@@ -125,9 +133,14 @@ function getUi(language) {
   return uiCache.get(language);
 }
 
+function spellPack(language, key) {
+  return (SPELL_PACKS[language] || []).find((pack) => pack.key === key);
+}
+
 function packPath(language, letters) {
-  return letters === SPELL_MODE.key
-    ? `content/spell.${language}.${SPELL_MODE.letters}.json`
+  const spell = spellPack(language, letters);
+  return spell
+    ? `content/spell.${language}.${spell.letters}.json`
     : `content/words.${language}.${letters}.json`;
 }
 
@@ -311,8 +324,8 @@ function activeLevels() {
   return LEVELS[activeLanguage];
 }
 
-function hasSpellMode() {
-  return activeLanguage === SPELL_MODE.language;
+function activeSpellPacks() {
+  return SPELL_PACKS[activeLanguage] || [];
 }
 
 function isSpellMode() {
@@ -320,7 +333,7 @@ function isSpellMode() {
 }
 
 function levelChapterCount(letters) {
-  return letters === SPELL_MODE.key ? SPELL_MODE.chapters : CHAPTERS_PER_LEVEL;
+  return spellPack(activeLanguage, letters)?.chapters ?? CHAPTERS_PER_LEVEL;
 }
 
 function levelWordCount(letters) {
@@ -368,7 +381,7 @@ function isLevelComplete(letters) {
 }
 
 function getLanguageWordCount() {
-  const keys = hasSpellMode() ? [...activeLevels(), SPELL_MODE.key] : activeLevels();
+  const keys = [...activeLevels(), ...activeSpellPacks().map((pack) => pack.key)];
   return keys.reduce((total, letters) => total + getLevelProgress(letters), 0);
 }
 
@@ -421,33 +434,35 @@ function renderMenu() {
 // different one, and the picture on the card shows that before any reading.
 function renderModeRow() {
   elements.modeRow.innerHTML = "";
-  if (!hasSpellMode()) return;
 
-  const done = getLevelProgress(SPELL_MODE.key);
-  const total = levelWordCount(SPELL_MODE.key);
-  const progressText = fillTemplate(ui.menu.progress, { done, total });
-  const button = document.createElement("button");
+  activeSpellPacks().forEach((pack) => {
+    const done = getLevelProgress(pack.key);
+    const total = levelWordCount(pack.key);
+    const progressText = fillTemplate(ui.menu.progress, { done, total });
+    const sample = fillTemplate(ui.spell.cardSample, { letters: ui.menu.levelNames[pack.letters] });
+    const button = document.createElement("button");
 
-  button.className = "mode-card";
-  button.type = "button";
-  button.setAttribute("aria-label", `${ui.spell.cardName}. ${progressText}`);
-  button.innerHTML = `
-    <span class="mode-icon" aria-hidden="true">
-      <span class="mode-picture">🐱</span>
-      <span class="mode-arrow">→</span>
-      <span class="mode-words"><b>CAT</b><i>COT</i><i>CUT</i></span>
-    </span>
-    <span class="mode-copy">
-      <span class="level-name">${ui.spell.cardName}</span>
-      <span class="level-sample">${ui.spell.cardSample}</span>
-      <span class="world-progress">
-        <span class="world-progress-track"><span style="width: ${(done / total) * 100}%"></span></span>
-        <strong>${progressText}</strong>
+    button.className = "mode-card";
+    button.type = "button";
+    button.setAttribute("aria-label", `${ui.spell.cardName}, ${sample}. ${progressText}`);
+    button.innerHTML = `
+      <span class="mode-icon" aria-hidden="true">
+        <span class="mode-picture">${pack.picture}</span>
+        <span class="mode-arrow">→</span>
+        <span class="mode-words"><b>${pack.sample[0]}</b><i>${pack.sample[1]}</i><i>${pack.sample[2]}</i></span>
       </span>
-    </span>
-  `;
-  button.addEventListener("click", () => openLevel(SPELL_MODE.key));
-  elements.modeRow.appendChild(button);
+      <span class="mode-copy">
+        <span class="level-name">${ui.spell.cardName}</span>
+        <span class="level-sample">${sample}</span>
+        <span class="world-progress">
+          <span class="world-progress-track"><span style="width: ${(done / total) * 100}%"></span></span>
+          <strong>${progressText}</strong>
+        </span>
+      </span>
+    `;
+    button.addEventListener("click", () => openLevel(pack.key));
+    elements.modeRow.appendChild(button);
+  });
 }
 
 async function openLevel(letters) {
@@ -465,7 +480,12 @@ async function showChapters(letters) {
   currentLetters = letters;
   currentPack = await getPack(activeLanguage, letters);
   renderHeader();
-  setText("chaptersTitle", isSpellMode() ? ui.spell.chaptersTitle : ui.chapters.titles[letters]);
+  setText(
+    "chaptersTitle",
+    isSpellMode()
+      ? fillTemplate(ui.spell.chaptersTitle, { letters: ui.menu.levelNames[currentPack.letters] })
+      : ui.chapters.titles[letters],
+  );
   setText("chaptersLead", isSpellMode() ? ui.spell.chaptersLead : ui.chapters.lead);
   setText("finalText", isSpellMode() ? ui.spell.finalText : ui.chapters.finalText);
   setText(
@@ -995,7 +1015,7 @@ async function initialize() {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     LEVELS,
-    SPELL_MODE,
+    SPELL_PACKS,
     CHAPTERS_PER_LEVEL,
     WORDS_PER_CHAPTER,
     chapterProgressValue,
@@ -1004,6 +1024,7 @@ if (typeof module !== "undefined" && module.exports) {
     findNextUnsolved,
     hasSyllableSplit,
     packPath,
+    spellPack,
     splitsAtOnce,
     shuffle,
     solvedPrefixLength,

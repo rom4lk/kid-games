@@ -664,6 +664,8 @@ h1 {
 }
 
 .mode-row {
+  display: grid;
+  gap: 16px;
   margin-top: 18px;
 }
 
