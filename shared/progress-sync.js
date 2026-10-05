@@ -6,7 +6,7 @@
   // on the shelf leaves them alone.
   // The synced keys this browser has already met: until then its own copy wins.
   const SYNCED_LIST_KEY = "kidGamesProgressSyncedV1";
-  // The synced keys whose last write never reached the server.
+  // The synced keys whose last write the server has not confirmed yet.
   const PENDING_LIST_KEY = "kidGamesProgressPendingV1";
   // Browsers drop a keepalive request once the keepalive bodies in flight pass
   // 64 KiB, so a big Block Town save is sent without it.
@@ -14,6 +14,9 @@
   const { getItem, setItem, removeItem } = global.Storage.prototype;
   let storage;
   let syncedKeys;
+  // The number of the latest write per key, so an older answer cannot clear
+  // the pending mark of a newer write.
+  const writeCounts = new Map();
 
   function readList(name) {
     try {
@@ -84,9 +87,9 @@
     writeList(PENDING_LIST_KEY, pending);
   }
 
-  function markPending(key, failed) {
+  function markPending(key, isPending) {
     const pending = readList(PENDING_LIST_KEY);
-    if (failed) {
+    if (isPending) {
       pending.add(key);
     } else {
       pending.delete(key);
@@ -94,13 +97,20 @@
     writeList(PENDING_LIST_KEY, pending);
   }
 
+  // The key is pending until the server confirms the write, so a request cut
+  // off by closing the page is pushed again on the next load.
   function send(key, value) {
+    const write = (writeCounts.get(key) || 0) + 1;
+    writeCounts.set(key, write);
+    markPending(key, true);
     const options = { method: value === null ? "DELETE" : "PUT" };
     if (value !== null) options.body = value;
     if (value === null || value.length < KEEPALIVE_LIMIT) options.keepalive = true;
     global.fetch(`${API_PATH}/${key}`, options)
       .then((response) => response.ok, () => false)
-      .then((ok) => markPending(key, !ok));
+      .then((ok) => {
+        if (ok && writeCounts.get(key) === write) markPending(key, false);
+      });
   }
 
   // Without the API (file://, another static server) the page keeps plain
