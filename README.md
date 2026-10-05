@@ -171,9 +171,9 @@ visit: open the games only from browsers whose progress is wanted. A write that 
 server is unreachable is kept in the browser and sent on the next page load.
 
 Back up the progress by copying `saves/progress.json`. Reset one game from the settings panel on the
-home page as before; the reset reaches every computer. Do not delete the file to reset everything:
-browsers keep their copies when the server has nothing at all, and push them again as soon as they
-write. The two marker keys `kidGamesProgressSyncedV1` and `kidGamesProgressPendingV1` belong to each
+home page as before: the server keeps the reset key as `null`, and every computer removes its copy.
+A key missing from the file is not a reset, so if the file is lost, each browser pushes its copies
+back on its next page load. Deleting the file therefore does not reset anything. The two marker keys `kidGamesProgressSyncedV1` and `kidGamesProgressPendingV1` belong to each
 browser and are never synced.
 
 ## Shared principles

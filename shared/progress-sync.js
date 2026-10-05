@@ -36,7 +36,8 @@
     request.send();
     if (request.status !== 200) return null;
     const saved = JSON.parse(request.responseText);
-    return saved && typeof saved === "object" && !Array.isArray(saved) ? saved : null;
+    const valid = saved && Array.isArray(saved.keys) && saved.progress && typeof saved.progress === "object";
+    return valid ? saved : null;
   }
 
   // Also synchronous, so a push is either confirmed or retried on the next load.
@@ -48,15 +49,15 @@
   }
 
   function reconcile(saved) {
-    // An empty answer means the file is gone, not that every game was reset,
-    // so it must not wipe the copies kept in the browser.
-    const serverEmpty = Object.values(saved).every((value) => value === null);
     const reconciled = readList(SYNCED_LIST_KEY);
     const pending = readList(PENDING_LIST_KEY);
 
     syncedKeys.forEach((key) => {
       const local = getItem.call(storage, key);
-      if (pending.has(key) || (!reconciled.has(key) && local !== null)) {
+      // A key missing from the answer is unknown to the server (a lost file),
+      // not reset, so the local copy goes back up. A reset arrives as null.
+      const known = Object.prototype.hasOwnProperty.call(saved, key);
+      if (pending.has(key) || (local !== null && (!reconciled.has(key) || !known))) {
         try {
           if (!pushNow(key, local)) return;
         } catch {
@@ -67,9 +68,9 @@
         return;
       }
 
-      if (saved[key] !== null) {
+      if (known && saved[key] !== null) {
         setItem.call(storage, key, saved[key]);
-      } else if (!serverEmpty) {
+      } else if (known) {
         removeItem.call(storage, key);
       }
       reconciled.add(key);
@@ -105,8 +106,8 @@
     const saved = loadSaved();
     if (!saved) return;
     // The server names the synced keys, so the list lives in one place.
-    syncedKeys = new Set(Object.keys(saved));
-    reconcile(saved);
+    syncedKeys = new Set(saved.keys);
+    reconcile(saved.progress);
   } catch {
     return;
   }

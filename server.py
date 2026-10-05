@@ -71,8 +71,10 @@ class NoCacheRequestHandler(SimpleHTTPRequestHandler):
 
         with progress_lock:
             saved = read_progress()
-        # Every synced key is listed, so the pages learn the allowlist from here.
-        body = json.dumps({key: saved.get(key) for key in SYNCED_KEYS}, ensure_ascii=False).encode("utf-8")
+        # The pages learn the allowlist from "keys". "progress" holds only the keys in the file, with
+        # null for a reset, so a lost file is told apart from a reset.
+        progress = {key: saved[key] for key in SYNCED_KEYS if key in saved}
+        body = json.dumps({"keys": SYNCED_KEYS, "progress": progress}, ensure_ascii=False).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
@@ -99,7 +101,8 @@ class NoCacheRequestHandler(SimpleHTTPRequestHandler):
 
         with progress_lock:
             progress = read_progress()
-            progress.pop(key, None)
+            # A null marks the reset, so other browsers remove their copies instead of pushing them.
+            progress[key] = None
             write_progress(progress)
         self.send_response(204)
         self.end_headers()
