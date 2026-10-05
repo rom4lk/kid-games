@@ -53,7 +53,10 @@ def write_progress(progress):
     """Replace the file in one step, so a crash never leaves half of it. Callers hold the lock."""
     PROGRESS_PATH.parent.mkdir(exist_ok=True)
     temporary_path = PROGRESS_PATH.with_suffix(".tmp")
-    temporary_path.write_text(json.dumps(progress, ensure_ascii=False, indent=2), encoding="utf-8")
+    with temporary_path.open("w", encoding="utf-8") as temporary_file:
+        temporary_file.write(json.dumps(progress, ensure_ascii=False, indent=2))
+        temporary_file.flush()
+        os.fsync(temporary_file.fileno())
     os.replace(temporary_path, PROGRESS_PATH)
 
 
