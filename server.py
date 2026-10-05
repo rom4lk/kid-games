@@ -22,6 +22,9 @@ LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
 PROGRESS_PATH = SERVER_PATH.parent / "saves" / "progress.json"
 API_PATH = "/api/progress"
+# A full 200 x 100 Block Town world is about 100 KB of JSON; the cap leaves room for many and only
+# stops a runaway or bogus request.
+MAX_BODY_BYTES = 5_000_000
 # Sound and language stay per device, so only progress keys are kept on the server.
 SYNCED_KEYS = (
     "livingWordsProgressV2",
@@ -89,7 +92,21 @@ class NoCacheRequestHandler(SimpleHTTPRequestHandler):
         if not key:
             return
 
-        value = self.rfile.read(int(self.headers.get("Content-Length", 0))).decode("utf-8")
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+        except ValueError:
+            length = -1
+        if length < 0:
+            self.send_error(400)
+            return
+        if length > MAX_BODY_BYTES:
+            self.send_error(413)
+            return
+        try:
+            value = self.rfile.read(length).decode("utf-8")
+        except UnicodeDecodeError:
+            self.send_error(400)
+            return
         with progress_lock:
             progress = read_progress()
             progress[key] = value
