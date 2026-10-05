@@ -30,14 +30,18 @@
 
   // Synchronous on purpose: the games read their saves as soon as they load,
   // so the server's copy has to be in localStorage before their scripts run.
+  // Returns null when there is no API at all; throws when the API is failing.
   function loadSaved() {
+    if (global.location.protocol === "file:") return null;
     const request = new XMLHttpRequest();
     request.open("GET", API_PATH, false);
     request.send();
-    if (request.status !== 200) return null;
+    if (request.status === 404 || request.status === 0) return null;
+    if (request.status !== 200) throw new Error(`Progress API answered ${request.status}`);
     const saved = JSON.parse(request.responseText);
     const valid = saved && Array.isArray(saved.keys) && saved.progress && typeof saved.progress === "object";
-    return valid ? saved : null;
+    if (!valid) throw new Error("Progress API sent an unexpected answer");
+    return saved;
   }
 
   // Also synchronous, so a push is either confirmed or retried on the next load.
@@ -101,13 +105,25 @@
 
   // Without the API (file://, another static server) the page keeps plain
   // localStorage and says nothing.
+  let saved;
   try {
     storage = global.localStorage;
-    const saved = loadSaved();
-    if (!saved) return;
+  } catch {
+    return;
+  }
+  try {
+    saved = loadSaved();
+  } catch {
+    // The API is failing (an error status, no connection, a bad answer): the
+    // keys this browser has already met still go through send(), so their
+    // writes wait in the pending list for the next healthy load.
+    saved = undefined;
+  }
+  if (saved === null) return;
+  try {
     // The server names the synced keys, so the list lives in one place.
-    syncedKeys = new Set(saved.keys);
-    reconcile(saved.progress);
+    syncedKeys = new Set(saved ? saved.keys : readList(SYNCED_LIST_KEY));
+    if (saved) reconcile(saved.progress);
   } catch {
     return;
   }
