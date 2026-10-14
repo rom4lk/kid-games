@@ -212,7 +212,7 @@
         {
           "word": "ONE WHITE SWAN",
           "syllables": "O-N-E WHITE S-W-A-N",
-          "prompt": "The car rolls over a bridge above a pond. Read what is down on the water.",
+          "prompt": "The car rolls over a bridge above a pond. Read what I see down there.",
           "success": "One white swan glides under the bridge.",
           "choices": [
             {
@@ -270,7 +270,7 @@
           "word": "BLACK BIRD SINGS",
           "syllables": "BLACK B-I-R-D SINGS",
           "prompt": "On Pearl's chimney, someone is welcoming us. Read who it is.",
-          "success": "A black bird sings from the top of the chimney. Welcome home!",
+          "success": "A black bird sings from the top of the chimney. Welcome to Maple Hollow!",
           "choices": [
             {
               "id": "black-bird-sing",
@@ -652,7 +652,7 @@
         {
           "word": "BIG ORANGE CARROT",
           "syllables": "B-I-G OR-ANGE CAR-ROT",
-          "prompt": "A boy at the next stall shows off the best thing he has grown. Read what he holds up.",
+          "prompt": "A boy at the next stall shows us something he has grown. Read what he holds up.",
           "success": "A big orange carrot - he pulled it up all by himself!",
           "choices": [
             {
@@ -1206,7 +1206,7 @@
         {
           "word": "TWO FROGS SING",
           "syllables": "T-W-O FROGS S-I-N-G",
-          "prompt": "On a lily pad there is a little crowd. Read who is there and what is happening.",
+          "prompt": "On a lily pad there are visitors. Read who is there and what is happening.",
           "success": "Two frogs sing - ribbit, ribbit!",
           "choices": [
             {
@@ -1236,7 +1236,7 @@
         {
           "word": "TWO WHITE SWANS",
           "syllables": "T-W-O WHITE SWANS",
-          "prompt": "Pearl asks me to look at the middle of the pond. Read what I see.",
+          "prompt": "Pearl asks me to stop sketching and look around. Read what I see.",
           "success": "Two white swans glide side by side.",
           "choices": [
             {
@@ -1263,7 +1263,7 @@
         {
           "word": "BIG GREEN FROG",
           "syllables": "B-I-G GREEN F-R-O-G",
-          "prompt": "Something sits very still on a stone by the water. Read what it is.",
+          "prompt": "Pearl shows me a stone by the water. Read what is on it.",
           "success": "A big green frog - it blinks and stays put.",
           "choices": [
             {
@@ -1347,7 +1347,7 @@
         {
           "word": "ONE YELLOW BALL",
           "syllables": "O-N-E YEL-LOW B-A-L-L",
-          "prompt": "A boy on the other bank has lost his toy in the reeds. Read what Pearl finds.",
+          "prompt": "A boy on the other bank is searching the reeds. Read what Pearl finds there.",
           "success": "One yellow ball - the boy waves thank you!",
           "choices": [
             {
@@ -1672,7 +1672,7 @@
         {
           "word": "FIVE YELLOW HEARTS",
           "syllables": "F-I-V-E YEL-LOW HEARTS",
-          "prompt": "Otto cuts lemon cookies with a cookie cutter. Read what shapes are on the tray.",
+          "prompt": "Otto cuts cookies with a cookie cutter. Read what shapes are on the tray.",
           "success": "Five yellow hearts, warm and smelling of lemon.",
           "choices": [
             {
@@ -2068,7 +2068,7 @@
           "word": "FOUR PINK FLOWERS",
           "syllables": "F-O-U-R P-I-N-K FLOW-ERS",
           "prompt": "Granny Willa's garden is next to the church. Read what grows by her gate.",
-          "success": "Four pink flowers - cherry blossom, the first of the year.",
+          "success": "Four pink flowers - the last ones of Granny's summer.",
           "choices": [
             {
               "id": "four-pink-flower",
@@ -2151,7 +2151,7 @@
         {
           "word": "BIG YELLOW FLOWER",
           "syllables": "B-I-G YEL-LOW FLOW-ER",
-          "prompt": "Granny Willa shows me the plant she is proudest of. Read what it is.",
+          "prompt": "Granny Willa shows me a plant by the shed. Read what it is.",
           "success": "A big yellow flower, taller than me!",
           "choices": [
             {
@@ -2292,7 +2292,7 @@
         {
           "word": "ONE GREEN FROG",
           "syllables": "O-N-E GREEN F-R-O-G",
-          "prompt": "At the edge of the pond, something sits very still. Read what I find there.",
+          "prompt": "At the edge of the pond, Pearl points at the bank. Read what I find there.",
           "success": "One green frog - it jumps in with a plop!",
           "choices": [
             {
@@ -2614,7 +2614,7 @@
         {
           "word": "THREE WHITE BALLS",
           "syllables": "THREE WHITE BALLS",
-          "prompt": "Mr. Bramble packs prizes for the throwing game. Read what goes into the box.",
+          "prompt": "Mr. Bramble packs a box for the throwing game. Read what goes into it.",
           "success": "Three white balls for the throwing game - aim well!",
           "choices": [
             {
@@ -2762,7 +2762,7 @@
         {
           "word": "ONE BLACK CAT",
           "syllables": "O-N-E BLACK C-A-T",
-          "prompt": "Through the rainy window, someone is looking in at us. Read who it is.",
+          "prompt": "Through the rainy window, Pearl points at the garden wall. Read who is looking in at us.",
           "success": "One black cat - Inky from next door wants to come in.",
           "choices": [
             {
@@ -3277,7 +3277,7 @@
         {
           "word": "TWO BIG DOGS",
           "syllables": "T-W-O B-I-G D-O-G-S",
-          "prompt": "By the barn door, someone keeps an eye on us. Read who is on guard.",
+          "prompt": "Farmer Lin points to the barn door. Read who is waiting by it.",
           "success": "Two big dogs wag their tails - they guard the farm.",
           "choices": [
             {
@@ -3337,7 +3337,7 @@
         {
           "word": "ONE DOG SINGS",
           "syllables": "O-N-E D-O-G SINGS",
-          "prompt": "Up in the hayloft, someone has come to listen and join in. Read who it is.",
+          "prompt": "Pearl looks up at the hayloft. Read who is up there and what is going on.",
           "success": "One dog sings along from the hayloft - a bit out of tune.",
           "choices": [
             {
@@ -3508,7 +3508,7 @@
         {
           "word": "BIG PIG SLEEPS",
           "syllables": "B-I-G P-I-G SLEEPS",
-          "prompt": "When the show is over, Farmer Lin turns off the barn lights. Read who is in the last stall and what it is doing.",
+          "prompt": "Farmer Lin checks the last stall in the barn. Read who is in it and what it is doing.",
           "success": "A big pig sleeps and snores louder than the whole choir.",
           "choices": [
             {
@@ -4261,7 +4261,7 @@
         {
           "word": "TWO CATS KISS",
           "syllables": "T-W-O C-A-T-S K-I-S-S",
-          "prompt": "At the end of the first act, the puppet friends meet again after a long trip. Read who is on stage and what happens.",
+          "prompt": "At the end of the first act, the puppet friends come back on stage. Read who is there and what happens.",
           "success": "Two cats kiss, and everyone in the hall says aww.",
           "choices": [
             {
@@ -4345,7 +4345,7 @@
         {
           "word": "ONE BIG WHALE",
           "syllables": "O-N-E B-I-G WHALE",
-          "prompt": "For the sea scene, Mr. Bramble fetches a puppet from his trunk. Read what he brings out.",
+          "prompt": "For the sea scene, Mr. Bramble opens his trunk. Read what he brings out.",
           "success": "One big whale - it takes both of us to hold it.",
           "choices": [
             {
@@ -4502,7 +4502,7 @@
         {
           "word": "THREE PINK HEARTS",
           "syllables": "THREE P-I-N-K HEARTS",
-          "prompt": "Pearl tries on a dress for the parade. Read what is sewn on the front.",
+          "prompt": "Pearl tries on a dress for the festival picnic. Read what is sewn on the front.",
           "success": "Three pink hearts on the front - Pearl twirls around.",
           "choices": [
             {
@@ -4735,7 +4735,7 @@
           "word": "TEN GREEN SQUARES",
           "syllables": "T-E-N GREEN SQUARES",
           "prompt": "Pearl paints the sides of the parade wagon. Read what she has painted on the left side.",
-          "success": "Ten green squares, like a checkerboard.",
+          "success": "Ten green squares in two tidy rows along the side.",
           "choices": [
             {
               "id": "ten-green-square",
@@ -4819,7 +4819,7 @@
           "word": "TWO CATS SLEEP",
           "syllables": "T-W-O C-A-T-S SLEEP",
           "prompt": "Under the wagon, in the shade, someone has found a cool spot. Read who is there.",
-          "success": "Two cats sleep under the wagon - Biscuit and Inky, side by side.",
+          "success": "Two cats sleep under the wagon, side by side in the shade.",
           "choices": [
             {
               "id": "two-cat-sleep",
@@ -5227,7 +5227,7 @@
         {
           "word": "SMALL BLACK CAT",
           "syllables": "SMALL BLACK C-A-T",
-          "prompt": "Someone has climbed onto the bakery sign to watch the parade. Read who it is.",
+          "prompt": "Someone is up on the bakery sign, watching the parade. Read who it is.",
           "success": "A small black cat - Inky has the best seat in town.",
           "choices": [
             {
@@ -5321,7 +5321,7 @@
         {
           "word": "THREE RED APPLES",
           "syllables": "THREE R-E-D AP-PLES",
-          "prompt": "After the parade, everyone has a picnic in the meadow by the church. Read what is in our basket.",
+          "prompt": "After the parade, everyone sits down to the picnic. Read what is in our basket.",
           "success": "Three red apples from Farmer Lin's orchard.",
           "choices": [
             {
@@ -5694,7 +5694,7 @@
         {
           "word": "THREE CATS CRY",
           "syllables": "THREE C-A-T-S C-R-Y",
-          "prompt": "On the way home we pass Pearl's porch, where some of the village pets are hiding. Read who is there and what is happening.",
+          "prompt": "On the way home we pass Pearl's porch, where some of the village pets are waiting. Read who is there and what is happening.",
           "success": "Three cats cry at the bangs, so Pearl lets them in.",
           "choices": [
             {
@@ -5721,7 +5721,7 @@
         {
           "word": "TWO WHITE SWANS",
           "syllables": "T-W-O WHITE SWANS",
-          "prompt": "The fireworks light up the pond below. Read what is on the water.",
+          "prompt": "The fireworks light up the pond below. Read what I see there.",
           "success": "Two white swans float calmly under the fireworks.",
           "choices": [
             {
@@ -5806,7 +5806,7 @@
           "word": "TWO BEARS SLEEP",
           "syllables": "T-W-O BEARS SLEEP",
           "prompt": "Back in my room, I line up my toys on the pillow. Read who is there and what is going on.",
-          "success": "Two bears sleep on my pillow - my old teddy and the raffle bear.",
+          "success": "Two bears sleep on my pillow - my old teddy and the new one from Maple Hollow.",
           "choices": [
             {
               "id": "two-bear-sleep",
