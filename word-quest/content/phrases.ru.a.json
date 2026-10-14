@@ -1,0 +1,5446 @@
+{
+  "language": "ru",
+  "mode": "phrase",
+  "level": "a",
+  "chapters": [
+    {
+      "id": "ru-a-01",
+      "title": "Ярмарка приехала",
+      "emoji": "🎪",
+      "character": "🤡",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Ворота открыты, билеты куплены. Пора внутрь - в первый шатёр!",
+      "tasks": [
+        {
+          "word": "КРАСНЫЙ ФЛАГ",
+          "syllables": "КРАС-НЫЙ ФЛАГ",
+          "prompt": "Первый фургон ярмарки въезжает на поляну. Прочитай, что у него на крыше.",
+          "success": "Красный флаг на крыше - значит, ярмарка приехала!",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "красный флаг"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "красный лист"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "ДВА ШАРА",
+          "syllables": "ДВА ША-РА",
+          "prompt": "Из фургона выпрыгивает клоун Бим. Прочитай, что он держит за ниточки.",
+          "success": "Два шара рвутся в небо, и Бим смеётся.",
+          "choices": [
+            {
+              "id": "two-balloon",
+              "emoji": "🎈",
+              "count": 2,
+              "label": "два шара"
+            },
+            {
+              "id": "five-balloon",
+              "emoji": "🎈",
+              "count": 5,
+              "label": "пять шаров"
+            },
+            {
+              "id": "two-ball",
+              "emoji": "⚽",
+              "count": 2,
+              "label": "два мяча"
+            }
+          ],
+          "correct": "two-balloon"
+        },
+        {
+          "word": "БОЛЬШОЙ ДОМ",
+          "syllables": "БОЛЬ-ШОЙ ДОМ",
+          "prompt": "Рабочие стучат молотками посреди поляны. Прочитай, что у них получилось.",
+          "success": "Большой дом из досок и ткани - здесь будет касса.",
+          "choices": [
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "большой дом"
+            },
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            },
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "большой торт"
+            }
+          ],
+          "correct": "big-house"
+        },
+        {
+          "word": "КОТ СПИТ",
+          "syllables": "КОТ СПИТ",
+          "prompt": "Бим заглядывает в свой фургон и прикладывает палец к губам. Прочитай, кто там.",
+          "success": "Кот спит на подушке - пусть отдыхает до вечера.",
+          "choices": [
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "кот спит"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "пёс спит"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "кот поёт"
+            }
+          ],
+          "correct": "cat-sleep"
+        },
+        {
+          "word": "СИНЯЯ МАШИНА",
+          "syllables": "СИ-НЯ-Я МА-ШИ-НА",
+          "prompt": "У ворот кто-то сигналит: би-би! Прочитай, кто подъехал.",
+          "success": "Синяя машина привезла фокусника с чемоданом.",
+          "choices": [
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "синяя машина"
+            },
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "жёлтая машина"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "синяя книга"
+            }
+          ],
+          "correct": "blue-car"
+        },
+        {
+          "word": "ДЕСЯТЬ ЗВЁЗД",
+          "syllables": "ДЕ-СЯТЬ ЗВЁЗД",
+          "prompt": "Над воротами включают гирлянду. Что зажглось? Прочитай.",
+          "success": "Десять звёзд мигают над воротами!",
+          "choices": [
+            {
+              "id": "ten-star",
+              "emoji": "⭐",
+              "count": 10,
+              "label": "десять звёзд"
+            },
+            {
+              "id": "seven-star",
+              "emoji": "⭐",
+              "count": 7,
+              "label": "семь звёзд"
+            },
+            {
+              "id": "ten-balloon",
+              "emoji": "🎈",
+              "count": 10,
+              "label": "десять шаров"
+            }
+          ],
+          "correct": "ten-star"
+        },
+        {
+          "word": "ПАПА ИДЁТ",
+          "syllables": "ПА-ПА И-ДЁТ",
+          "prompt": "С поляны видна дорожка к кассе. Прочитай, что там происходит.",
+          "success": "Папа идёт за билетами для всей семьи.",
+          "choices": [
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "папа идёт"
+            },
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "мама идёт"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "папа плывёт"
+            }
+          ],
+          "correct": "dad-walk"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ПЁС",
+          "syllables": "МА-ЛЕНЬ-КИЙ ПЁС",
+          "prompt": "Под ногами у Бима кто-то вертится и путается. Кто это? Прочитай.",
+          "success": "Маленький пёс Бима - главный помощник на ярмарке.",
+          "choices": [
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "маленький пёс"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "большой пёс"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            }
+          ],
+          "correct": "small-dog"
+        },
+        {
+          "word": "ЖЁЛТОЕ СЕРДЦЕ",
+          "syllables": "ЖЁЛ-ТО-Е СЕРД-ЦЕ",
+          "prompt": "На воротах висит табличка с картинкой. Прочитай, что на ней нарисовано.",
+          "success": "Жёлтое сердце значит: здесь рады всем гостям!",
+          "choices": [
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "синее сердце"
+            },
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "жёлтый круг"
+            }
+          ],
+          "correct": "yellow-heart"
+        },
+        {
+          "word": "МАМА ПОЁТ",
+          "syllables": "МА-МА ПО-ЁТ",
+          "prompt": "У кассы собралась очередь. Прочитай, кто стоит первым и чем занят.",
+          "success": "Мама поёт, и вся очередь подпевает.",
+          "choices": [
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "мама поёт"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "бабушка поёт"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "мама спит"
+            }
+          ],
+          "correct": "mom-sing"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-02",
+      "title": "Шатёр красок",
+      "emoji": "🎨",
+      "character": "🦝",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Краски высохли, и Тимоша дарит нам картинку. А впереди - шатёр с волшебными зеркалами!",
+      "tasks": [
+        {
+          "word": "ЗЕЛЁНЫЙ КРУГ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ КРУГ",
+          "prompt": "В шатре красок енот Тимоша макает кисть в баночку. Прочитай, что он нарисовал.",
+          "success": "Зелёный круг - как полянка, если смотреть сверху.",
+          "choices": [
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "зелёный круг"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "красный круг"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            }
+          ],
+          "correct": "green-circle"
+        },
+        {
+          "word": "СИНИЙ КВАДРАТ",
+          "syllables": "СИ-НИЙ КВАД-РАТ",
+          "prompt": "Тимоша меняет кисть и рисует снова. Прочитай, что вышло на этот раз.",
+          "success": "Синий квадрат - окошко для будущего домика.",
+          "choices": [
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "синий квадрат"
+            },
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "белый квадрат"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "синий круг"
+            }
+          ],
+          "correct": "blue-square"
+        },
+        {
+          "word": "ЧЕТЫРЕ ГРУШИ",
+          "syllables": "ЧЕ-ТЫ-РЕ ГРУ-ШИ",
+          "prompt": "На столе у Тимоши стоит ваза - он рисует её с натуры. Прочитай, что в вазе.",
+          "success": "Четыре груши, и все сочные-пресочные!",
+          "choices": [
+            {
+              "id": "four-pear",
+              "emoji": "🍐",
+              "count": 4,
+              "label": "четыре груши"
+            },
+            {
+              "id": "two-pear",
+              "emoji": "🍐",
+              "count": 2,
+              "label": "две груши"
+            },
+            {
+              "id": "four-lemon",
+              "emoji": "🍋",
+              "count": 4,
+              "label": "четыре лимона"
+            }
+          ],
+          "correct": "four-pear"
+        },
+        {
+          "word": "БОЛЬШАЯ РЫБА",
+          "syllables": "БОЛЬ-ША-Я РЫ-БА",
+          "prompt": "Тимоша показывает новую картину. Кто на ней? Прочитай.",
+          "success": "Большая рыба во всю картину - даже хвост не поместился!",
+          "choices": [
+            {
+              "id": "big-fish",
+              "emoji": "🐟",
+              "size": "big",
+              "label": "большая рыба"
+            },
+            {
+              "id": "small-fish",
+              "emoji": "🐟",
+              "size": "small",
+              "label": "маленькая рыба"
+            },
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "большая сова"
+            }
+          ],
+          "correct": "big-fish"
+        },
+        {
+          "word": "ПАПА РИСУЕТ",
+          "syllables": "ПА-ПА РИ-СУ-ЕТ",
+          "prompt": "За соседним столом тоже кто-то занят делом. Прочитай, кто это.",
+          "success": "Папа рисует портрет Тимоши - очень похоже!",
+          "choices": [
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "папа рисует"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "мама рисует"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "папа варит"
+            }
+          ],
+          "correct": "dad-paint"
+        },
+        {
+          "word": "КРАСНАЯ КНИГА",
+          "syllables": "КРАС-НА-Я КНИ-ГА",
+          "prompt": "Тимоша просит подать ему кое-что с полки. Прочитай, что он просит.",
+          "success": "Красная книга с образцами красок - самая нужная!",
+          "choices": [
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "красная книга"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "зелёная книга"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "красное сердце"
+            }
+          ],
+          "correct": "red-book"
+        },
+        {
+          "word": "ПЯТЬ ЛИМОНОВ",
+          "syllables": "ПЯТЬ ЛИ-МО-НОВ",
+          "prompt": "Тимоша рисует корзинку на кухонном столе. Прочитай, что лежит в корзинке.",
+          "success": "Пять лимонов - такие кислые, что енот морщится!",
+          "choices": [
+            {
+              "id": "five-lemon",
+              "emoji": "🍋",
+              "count": 5,
+              "label": "пять лимонов"
+            },
+            {
+              "id": "nine-lemon",
+              "emoji": "🍋",
+              "count": 9,
+              "label": "девять лимонов"
+            },
+            {
+              "id": "five-pear",
+              "emoji": "🍐",
+              "count": 5,
+              "label": "пять груш"
+            }
+          ],
+          "correct": "five-lemon"
+        },
+        {
+          "word": "МАЛЬЧИК ПОЁТ",
+          "syllables": "МАЛЬ-ЧИК ПО-ЁТ",
+          "prompt": "В углу шатра кто-то устроился на табуретке. Прочитай, что там происходит.",
+          "success": "Мальчик поёт, а Тимоша рисует в такт.",
+          "choices": [
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "мальчик поёт"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "девочка поёт"
+            },
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "мальчик спит"
+            }
+          ],
+          "correct": "boy-sing"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЖУК",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЖУК",
+          "prompt": "Тимоша берёт новую кисточку. Прочитай, кого он рисует.",
+          "success": "Маленький жук сидит на углу картины, как живой.",
+          "choices": [
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "маленький жук"
+            },
+            {
+              "id": "big-beetle",
+              "emoji": "🪲",
+              "size": "big",
+              "label": "большой жук"
+            },
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            }
+          ],
+          "correct": "small-beetle"
+        },
+        {
+          "word": "ЖЁЛТЫЙ ЦВЕТОК",
+          "syllables": "ЖЁЛ-ТЫЙ ЦВЕ-ТОК",
+          "prompt": "Последний мазок - и Тимоша отходит полюбоваться. Прочитай, что на холсте.",
+          "success": "Жёлтый цветок тянется к солнцу прямо с картины!",
+          "choices": [
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "жёлтый цветок"
+            },
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "белый цветок"
+            },
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "жёлтый мяч"
+            }
+          ],
+          "correct": "yellow-flower"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-03",
+      "title": "Волшебные зеркала",
+      "emoji": "🪞",
+      "character": "🧙",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "Зеркала погасли, и все снова обычного роста. Слышишь музыку? Это карусель!",
+      "tasks": [
+        {
+          "word": "БОЛЬШОЙ КОТ",
+          "syllables": "БОЛЬ-ШОЙ КОТ",
+          "prompt": "Волшебник открывает первое зеркало. В нём отражается зверь. Прочитай, кто.",
+          "success": "Большой кот в зеркале - шире самого зеркала!",
+          "choices": [
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            },
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            }
+          ],
+          "correct": "big-cat"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЛЕВ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЛЕВ",
+          "prompt": "Второе зеркало показывает другого зверя. Прочитай, кого.",
+          "success": "Маленький лев пищит вместо рыка - смешно!",
+          "choices": [
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            },
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            },
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "маленький кит"
+            }
+          ],
+          "correct": "small-lion"
+        },
+        {
+          "word": "БОЛЬШОЙ МЯЧ",
+          "syllables": "БОЛЬ-ШОЙ МЯЧ",
+          "prompt": "Волшебник подносит к третьему зеркалу что-то из кармана. Прочитай, что отразилось.",
+          "success": "Большой мяч - в зеркале он размером с бочку!",
+          "choices": [
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            },
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "маленький мяч"
+            },
+            {
+              "id": "big-mushroom",
+              "emoji": "🍄",
+              "size": "big",
+              "label": "большой гриб"
+            }
+          ],
+          "correct": "big-ball"
+        },
+        {
+          "word": "ДВЕ СОВЫ",
+          "syllables": "ДВЕ СО-ВЫ",
+          "prompt": "В тёмном углу шатра кто-то есть. Прочитай, кто там.",
+          "success": "Две совы моргают жёлтыми глазами.",
+          "choices": [
+            {
+              "id": "two-owl",
+              "emoji": "🦉",
+              "count": 2,
+              "label": "две совы"
+            },
+            {
+              "id": "six-owl",
+              "emoji": "🦉",
+              "count": 6,
+              "label": "шесть сов"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "две рыбы"
+            }
+          ],
+          "correct": "two-owl"
+        },
+        {
+          "word": "БЕЛЫЙ КРУГ",
+          "syllables": "БЕ-ЛЫЙ КРУГ",
+          "prompt": "На полу шатра нарисован знак. Прочитай, какой.",
+          "success": "Белый круг - встань в него и смотри в зеркало!",
+          "choices": [
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "белый круг"
+            },
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            }
+          ],
+          "correct": "white-circle"
+        },
+        {
+          "word": "ЛЕВ ПОЁТ",
+          "syllables": "ЛЕВ ПО-ЁТ",
+          "prompt": "За четвёртым зеркалом кто-то прячется. Прочитай, кто это и что делает.",
+          "success": "Лев поёт басом, и зеркала дрожат!",
+          "choices": [
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "кот поёт"
+            },
+            {
+              "id": "lion-sleep",
+              "emoji": "🦁",
+              "badge": "💤",
+              "label": "лев спит"
+            }
+          ],
+          "correct": "lion-sing"
+        },
+        {
+          "word": "ТРИ КИТА",
+          "syllables": "ТРИ КИ-ТА",
+          "prompt": "Самое широкое зеркало показывает новых гостей. Кто там? Прочитай.",
+          "success": "Три кита плывут по зеркалу, как по морю.",
+          "choices": [
+            {
+              "id": "three-whale",
+              "emoji": "🐋",
+              "count": 3,
+              "label": "три кита"
+            },
+            {
+              "id": "eight-whale",
+              "emoji": "🐋",
+              "count": 8,
+              "label": "восемь китов"
+            },
+            {
+              "id": "three-elephant",
+              "emoji": "🐘",
+              "count": 3,
+              "label": "три слона"
+            }
+          ],
+          "correct": "three-whale"
+        },
+        {
+          "word": "ЧЁРНЫЙ ФЛАГ",
+          "syllables": "ЧЁР-НЫЙ ФЛАГ",
+          "prompt": "Над последним зеркалом что-то висит. Прочитай, что это.",
+          "success": "Чёрный флаг - знак волшебника-шутника.",
+          "choices": [
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "чёрный флаг"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            },
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "чёрный квадрат"
+            }
+          ],
+          "correct": "black-flag"
+        },
+        {
+          "word": "ДЕДУШКА СПИТ",
+          "syllables": "ДЕ-ДУШ-КА СПИТ",
+          "prompt": "На скамейке у выхода кто-то сидит. Прочитай, что там происходит.",
+          "success": "Дедушка спит - зеркала его совсем укачали.",
+          "choices": [
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "дедушка спит"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "бабушка спит"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "дедушка поёт"
+            }
+          ],
+          "correct": "grandpa-sleep"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ДОМ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ДОМ",
+          "prompt": "Волшебник показывает последнее зеркало, самое кривое. Прочитай, что в нём.",
+          "success": "Маленький дом - в нём поместится только мышка.",
+          "choices": [
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            },
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "большой дом"
+            },
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "маленький жук"
+            }
+          ],
+          "correct": "small-house"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-04",
+      "title": "Карусель",
+      "emoji": "🎠",
+      "character": "🐴",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Голова кружится, но весело! Пойдём посмотрим кукольный театр.",
+      "tasks": [
+        {
+          "word": "МАМА ЕДЕТ",
+          "syllables": "МА-МА Е-ДЕТ",
+          "prompt": "Вокруг карусели проложена дорожка. Прочитай, что там происходит.",
+          "success": "Мама едет на велосипеде и звенит звонком!",
+          "choices": [
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "мама едет"
+            },
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "папа едет"
+            },
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "мама идёт"
+            }
+          ],
+          "correct": "mom-ride"
+        },
+        {
+          "word": "ВОСЕМЬ ШАРОВ",
+          "syllables": "ВО-СЕМЬ ША-РОВ",
+          "prompt": "Продавец у карусели раздаёт подарки самым смелым. Прочитай, сколько у него осталось.",
+          "success": "Восемь шаров - хватит на всех смелых!",
+          "choices": [
+            {
+              "id": "eight-balloon",
+              "emoji": "🎈",
+              "count": 8,
+              "label": "восемь шаров"
+            },
+            {
+              "id": "six-balloon",
+              "emoji": "🎈",
+              "count": 6,
+              "label": "шесть шаров"
+            },
+            {
+              "id": "eight-ball",
+              "emoji": "⚽",
+              "count": 8,
+              "label": "восемь мячей"
+            }
+          ],
+          "correct": "eight-balloon"
+        },
+        {
+          "word": "ОРАНЖЕВЫЙ МЯЧ",
+          "syllables": "О-РАН-ЖЕ-ВЫЙ МЯЧ",
+          "prompt": "Мимо карусели что-то катится по траве. Что это? Прочитай.",
+          "success": "Оранжевый мяч прикатился прямо к билетёру.",
+          "choices": [
+            {
+              "id": "orange-ball",
+              "emoji": "🏀",
+              "label": "оранжевый мяч"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "белый мяч"
+            },
+            {
+              "id": "orange-circle",
+              "emoji": "🟠",
+              "label": "оранжевый круг"
+            }
+          ],
+          "correct": "orange-ball"
+        },
+        {
+          "word": "БОЛЬШОЙ КИТ",
+          "syllables": "БОЛЬ-ШОЙ КИТ",
+          "prompt": "Мы садимся на карусель. Прочитай, на ком мы поедем.",
+          "success": "Большой кит качается вверх-вниз, как на волнах!",
+          "choices": [
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "большой кит"
+            },
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "маленький кит"
+            },
+            {
+              "id": "big-elephant",
+              "emoji": "🐘",
+              "size": "big",
+              "label": "большой слон"
+            }
+          ],
+          "correct": "big-whale"
+        },
+        {
+          "word": "МАЛЫШ ПОЁТ",
+          "syllables": "МА-ЛЫШ ПО-ЁТ",
+          "prompt": "В голубом вагончике карусели кто-то сидит. Прочитай, кто там.",
+          "success": "Малыш поёт песенку в такт музыке.",
+          "choices": [
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "дедушка поёт"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "малыш спит"
+            }
+          ],
+          "correct": "baby-sing"
+        },
+        {
+          "word": "КРАСНЫЙ КРУГ",
+          "syllables": "КРАС-НЫЙ КРУГ",
+          "prompt": "У входа на карусель нарисована метка. Прочитай, какая.",
+          "success": "Красный круг - отсюда начинается очередь.",
+          "choices": [
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "красный круг"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "синий круг"
+            },
+            {
+              "id": "red-square",
+              "emoji": "🟥",
+              "label": "красный квадрат"
+            }
+          ],
+          "correct": "red-circle"
+        },
+        {
+          "word": "ОДИН СЛОН",
+          "syllables": "О-ДИН СЛОН",
+          "prompt": "Карусель поворачивается, и мимо проплывает новое сиденье. Прочитай, что на нём.",
+          "success": "Один слон - зато какой важный!",
+          "choices": [
+            {
+              "id": "one-elephant",
+              "emoji": "🐘",
+              "count": 1,
+              "label": "один слон"
+            },
+            {
+              "id": "four-elephant",
+              "emoji": "🐘",
+              "count": 4,
+              "label": "четыре слона"
+            },
+            {
+              "id": "one-whale",
+              "emoji": "🐋",
+              "count": 1,
+              "label": "один кит"
+            }
+          ],
+          "correct": "one-elephant"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ КИТ",
+          "syllables": "МА-ЛЕНЬ-КИЙ КИТ",
+          "prompt": "Рядом крутится вторая карусель. Прочитай, кто на ней главный.",
+          "success": "Маленький кит - для самых юных гостей.",
+          "choices": [
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "маленький кит"
+            },
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "большой кит"
+            },
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            }
+          ],
+          "correct": "small-whale"
+        },
+        {
+          "word": "ПАПА ТАНЦУЕТ",
+          "syllables": "ПА-ПА ТАН-ЦУ-ЕТ",
+          "prompt": "Музыка играет всё громче. Кто это там у ограды? Прочитай.",
+          "success": "Папа танцует, и все хлопают!",
+          "choices": [
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "папа танцует"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "мама танцует"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "папа рисует"
+            }
+          ],
+          "correct": "dad-dance"
+        },
+        {
+          "word": "СИНЕЕ СЕРДЦЕ",
+          "syllables": "СИ-НЕ-Е СЕРД-ЦЕ",
+          "prompt": "Билетёр выдаёт значки тем, кто прокатился. Прочитай, какой значок достался нам.",
+          "success": "Синее сердце - значок храбреца!",
+          "choices": [
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "синее сердце"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "синий ромб"
+            }
+          ],
+          "correct": "blue-heart"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-05",
+      "title": "Кукольный театр",
+      "emoji": "🎭",
+      "character": "🧸",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Спектакль окончен, куклы кланяются. Пойдём к воротам - там ферма с настоящими зверями!",
+      "tasks": [
+        {
+          "word": "ЛИСА СПИТ",
+          "syllables": "ЛИ-СА СПИТ",
+          "prompt": "Занавес открывается: на сцене лесная полянка и пенёк. Прочитай, кто за пеньком.",
+          "success": "Лиса спит и видит во сне курочек.",
+          "choices": [
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "лиса спит"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "сова спит"
+            },
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "лиса поёт"
+            }
+          ],
+          "correct": "fox-sleep"
+        },
+        {
+          "word": "ЁЖ ПОЁТ",
+          "syllables": "ЁЖ ПО-ЁТ",
+          "prompt": "Из-за кулис выходит новая кукла. Кто это? Прочитай.",
+          "success": "Ёж поёт, а иголки дрожат в такт.",
+          "choices": [
+            {
+              "id": "hedgehog-sing",
+              "emoji": "🦔",
+              "badge": "🎵",
+              "label": "ёж поёт"
+            },
+            {
+              "id": "whale-sing",
+              "emoji": "🐋",
+              "badge": "🎵",
+              "label": "кит поёт"
+            },
+            {
+              "id": "hedgehog-sleep",
+              "emoji": "🦔",
+              "badge": "💤",
+              "label": "ёж спит"
+            }
+          ],
+          "correct": "hedgehog-sing"
+        },
+        {
+          "word": "ПЯТЬ МЫШЕЙ",
+          "syllables": "ПЯТЬ МЫ-ШЕЙ",
+          "prompt": "Под сценой кто-то шуршит и выглядывает. Прочитай, кто там.",
+          "success": "Пять мышей пришли посмотреть спектакль бесплатно!",
+          "choices": [
+            {
+              "id": "five-mouse",
+              "emoji": "🐭",
+              "count": 5,
+              "label": "пять мышей"
+            },
+            {
+              "id": "two-mouse",
+              "emoji": "🐭",
+              "count": 2,
+              "label": "две мыши"
+            },
+            {
+              "id": "five-duck",
+              "emoji": "🦆",
+              "count": 5,
+              "label": "пять уток"
+            }
+          ],
+          "correct": "five-mouse"
+        },
+        {
+          "word": "БОЛЬШАЯ ЛИСА",
+          "syllables": "БОЛЬ-ША-Я ЛИ-СА",
+          "prompt": "Кукольник надевает на руку новую куклу. Прочитай, какую.",
+          "success": "Большая лиса - выше самого кукольника!",
+          "choices": [
+            {
+              "id": "big-fox",
+              "emoji": "🦊",
+              "size": "big",
+              "label": "большая лиса"
+            },
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "маленькая лиса"
+            },
+            {
+              "id": "big-mouse",
+              "emoji": "🐭",
+              "size": "big",
+              "label": "большая мышь"
+            }
+          ],
+          "correct": "big-fox"
+        },
+        {
+          "word": "БЕЛАЯ ПТИЦА",
+          "syllables": "БЕ-ЛА-Я ПТИ-ЦА",
+          "prompt": "Над сценой на ниточке что-то спускается. Прочитай, что это.",
+          "success": "Белая птица машет крыльями - совсем как живая.",
+          "choices": [
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "белая птица"
+            },
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "чёрная птица"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            }
+          ],
+          "correct": "white-bird"
+        },
+        {
+          "word": "ТРИ СОВЫ",
+          "syllables": "ТРИ СО-ВЫ",
+          "prompt": "В тёмном лесу на сцене кто-то прячется. Прочитай и найди их на картинке.",
+          "success": "Три совы ухают хором: у-у-у!",
+          "choices": [
+            {
+              "id": "three-owl",
+              "emoji": "🦉",
+              "count": 3,
+              "label": "три совы"
+            },
+            {
+              "id": "nine-owl",
+              "emoji": "🦉",
+              "count": 9,
+              "label": "девять сов"
+            },
+            {
+              "id": "three-fox",
+              "emoji": "🦊",
+              "count": 3,
+              "label": "три лисы"
+            }
+          ],
+          "correct": "three-owl"
+        },
+        {
+          "word": "ЧЁРНЫЙ КРУГ",
+          "syllables": "ЧЁР-НЫЙ КРУГ",
+          "prompt": "Кукольник показывает зрителям табличку. Прочитай, что на ней.",
+          "success": "Чёрный круг - это нора. Сейчас кто-то вылезет!",
+          "choices": [
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            },
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "жёлтый круг"
+            },
+            {
+              "id": "black-heart",
+              "emoji": "🖤",
+              "label": "чёрное сердце"
+            }
+          ],
+          "correct": "black-circle"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЁЖ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЁЖ",
+          "prompt": "Из норы вылезает новый герой. Прочитай, кто это.",
+          "success": "Маленький ёж фыркает и топает лапками.",
+          "choices": [
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            },
+            {
+              "id": "big-hedgehog",
+              "emoji": "🦔",
+              "size": "big",
+              "label": "большой ёж"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "маленький пёс"
+            }
+          ],
+          "correct": "small-hedgehog"
+        },
+        {
+          "word": "КОАЛА СПИТ",
+          "syllables": "КО-А-ЛА СПИТ",
+          "prompt": "На ветке нарисованного дерева кто-то устроился. Прочитай, кто и чем занят.",
+          "success": "Коала спит прямо посреди спектакля. Тише!",
+          "choices": [
+            {
+              "id": "koala-sleep",
+              "emoji": "🐨",
+              "badge": "💤",
+              "label": "коала спит"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "лиса спит"
+            },
+            {
+              "id": "koala-sing",
+              "emoji": "🐨",
+              "badge": "🎵",
+              "label": "коала поёт"
+            }
+          ],
+          "correct": "koala-sleep"
+        },
+        {
+          "word": "ЗЕЛЁНЫЙ ЛИСТ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ ЛИСТ",
+          "prompt": "Кукольник подбрасывает что-то вверх. Прочитай, что падает на сцену.",
+          "success": "Зелёный лист медленно кружится - значит, в сказке лето.",
+          "choices": [
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "красный лист"
+            },
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "зелёный перец"
+            }
+          ],
+          "correct": "green-leaf"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-06",
+      "title": "Ферма у ворот",
+      "emoji": "🐄",
+      "character": "🧑‍🌾",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Ферма показала всех своих жителей. Теперь - в морской шатёр!",
+      "tasks": [
+        {
+          "word": "ШЕСТЬ УТОК",
+          "syllables": "ШЕСТЬ У-ТОК",
+          "prompt": "Фермер открывает калитку к пруду. Прочитай, кто там.",
+          "success": "Шесть уток крякают и плывут к хлебу.",
+          "choices": [
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "шесть уток"
+            },
+            {
+              "id": "four-duck",
+              "emoji": "🦆",
+              "count": 4,
+              "label": "четыре утки"
+            },
+            {
+              "id": "six-mouse",
+              "emoji": "🐭",
+              "count": 6,
+              "label": "шесть мышей"
+            }
+          ],
+          "correct": "six-duck"
+        },
+        {
+          "word": "ДВА ЯЙЦА",
+          "syllables": "ДВА ЯЙ-ЦА",
+          "prompt": "Фермер выходит из курятника с корзинкой. Что в ней? Прочитай.",
+          "success": "Два яйца - на завтрак хватит!",
+          "choices": [
+            {
+              "id": "two-egg",
+              "emoji": "🥚",
+              "count": 2,
+              "label": "два яйца"
+            },
+            {
+              "id": "five-egg",
+              "emoji": "🥚",
+              "count": 5,
+              "label": "пять яиц"
+            },
+            {
+              "id": "two-ball",
+              "emoji": "⚽",
+              "count": 2,
+              "label": "два мяча"
+            }
+          ],
+          "correct": "two-egg"
+        },
+        {
+          "word": "ДЕВЯТЬ ПЧЁЛ",
+          "syllables": "ДЕ-ВЯТЬ ПЧЁЛ",
+          "prompt": "Возле ульев работает пасечник. Прочитай, кто кружит над ним.",
+          "success": "Девять пчёл - а мёда хватит на всех.",
+          "choices": [
+            {
+              "id": "nine-bee",
+              "emoji": "🐝",
+              "count": 9,
+              "label": "девять пчёл"
+            },
+            {
+              "id": "seven-bee",
+              "emoji": "🐝",
+              "count": 7,
+              "label": "семь пчёл"
+            },
+            {
+              "id": "nine-beetle",
+              "emoji": "🪲",
+              "count": 9,
+              "label": "девять жуков"
+            }
+          ],
+          "correct": "nine-bee"
+        },
+        {
+          "word": "БОЛЬШОЕ ЯЙЦО",
+          "syllables": "БОЛЬ-ШО-Е ЯЙ-ЦО",
+          "prompt": "Фермер показывает нам находку из гнезда. Прочитай, что он нашёл.",
+          "success": "Большое яйцо - наверное, страусиное!",
+          "choices": [
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "большое яйцо"
+            },
+            {
+              "id": "small-egg",
+              "emoji": "🥚",
+              "size": "small",
+              "label": "маленькое яйцо"
+            },
+            {
+              "id": "big-cloud",
+              "emoji": "☁️",
+              "size": "big",
+              "label": "большое облако"
+            }
+          ],
+          "correct": "big-egg"
+        },
+        {
+          "word": "ЗЕЛЁНЫЙ ПЕРЕЦ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ ПЕ-РЕЦ",
+          "prompt": "В теплице поспел урожай. Прочитай, что висит на кусте.",
+          "success": "Зелёный перец хрустит и пахнет летом.",
+          "choices": [
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "зелёный перец"
+            },
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "красный перец"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "зелёный круг"
+            }
+          ],
+          "correct": "green-pepper"
+        },
+        {
+          "word": "ЖЁЛТЫЙ КРУГ",
+          "syllables": "ЖЁЛ-ТЫЙ КРУГ",
+          "prompt": "Фермер рисует мелом на двери сарая. Прочитай, что получилось.",
+          "success": "Жёлтый круг - это солнышко, чтобы в сарае было светло.",
+          "choices": [
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "жёлтый круг"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "синий круг"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            }
+          ],
+          "correct": "yellow-circle"
+        },
+        {
+          "word": "ПЁС ПОЁТ",
+          "syllables": "ПЁС ПО-ЁТ",
+          "prompt": "У сарая кто-то сидит на бочке. Прочитай, кто и что делает.",
+          "success": "Пёс поёт: у-у-у! Это он так здоровается.",
+          "choices": [
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "пёс поёт"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "кот поёт"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "пёс спит"
+            }
+          ],
+          "correct": "dog-sing"
+        },
+        {
+          "word": "ДЕДУШКА ПОЁТ",
+          "syllables": "ДЕ-ДУШ-КА ПО-ЁТ",
+          "prompt": "На крыльце стоит кресло-качалка. Кто в нём? Прочитай.",
+          "success": "Дедушка поёт старую песню про ферму.",
+          "choices": [
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "дедушка поёт"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "дедушка спит"
+            }
+          ],
+          "correct": "grandpa-sing"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ КОТ",
+          "syllables": "МА-ЛЕНЬ-КИЙ КОТ",
+          "prompt": "На сеновале кто-то шевелится. Прочитай и найди его на картинке.",
+          "success": "Маленький кот играет с соломинкой.",
+          "choices": [
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            },
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            }
+          ],
+          "correct": "small-cat"
+        },
+        {
+          "word": "ЧЕТЫРЕ КОТА",
+          "syllables": "ЧЕ-ТЫ-РЕ КО-ТА",
+          "prompt": "Фермер зовёт всех обедать, и к мискам сбегаются гости. Прочитай, кто прибежал.",
+          "success": "Четыре кота - и каждый хочет молока первым!",
+          "choices": [
+            {
+              "id": "four-cat",
+              "emoji": "🐱",
+              "count": 4,
+              "label": "четыре кота"
+            },
+            {
+              "id": "eight-cat",
+              "emoji": "🐱",
+              "count": 8,
+              "label": "восемь котов"
+            },
+            {
+              "id": "four-hare",
+              "emoji": "🐰",
+              "count": 4,
+              "label": "четыре зайца"
+            }
+          ],
+          "correct": "four-cat"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-07",
+      "title": "Морской шатёр",
+      "emoji": "🐠",
+      "character": "🐙",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "Аквариум засыпает, а у нас впереди тихий шатёр, где поют колыбельные.",
+      "tasks": [
+        {
+          "word": "СЕМЬ РЫБ",
+          "syllables": "СЕМЬ РЫБ",
+          "prompt": "Морской шатёр - это огромный аквариум со стеклянными стенами. Прочитай, кто за стеклом.",
+          "success": "Семь рыб плывут друг за другом, как поезд.",
+          "choices": [
+            {
+              "id": "seven-fish",
+              "emoji": "🐟",
+              "count": 7,
+              "label": "семь рыб"
+            },
+            {
+              "id": "five-fish",
+              "emoji": "🐟",
+              "count": 5,
+              "label": "пять рыб"
+            },
+            {
+              "id": "seven-whale",
+              "emoji": "🐋",
+              "count": 7,
+              "label": "семь китов"
+            }
+          ],
+          "correct": "seven-fish"
+        },
+        {
+          "word": "БОЛЬШАЯ РЫБА",
+          "syllables": "БОЛЬ-ША-Я РЫ-БА",
+          "prompt": "Со дна поднимается тень. Кто это? Прочитай.",
+          "success": "Большая рыба зевает - в рот поместится ведро!",
+          "choices": [
+            {
+              "id": "big-fish",
+              "emoji": "🐟",
+              "size": "big",
+              "label": "большая рыба"
+            },
+            {
+              "id": "small-fish",
+              "emoji": "🐟",
+              "size": "small",
+              "label": "маленькая рыба"
+            },
+            {
+              "id": "big-duck",
+              "emoji": "🦆",
+              "size": "big",
+              "label": "большая утка"
+            }
+          ],
+          "correct": "big-fish"
+        },
+        {
+          "word": "КИТ ПОЁТ",
+          "syllables": "КИТ ПО-ЁТ",
+          "prompt": "Смотритель стучит по стеклу и показывает в глубину. Прочитай, что там происходит.",
+          "success": "Кит поёт свою длинную песню - её слышно на весь шатёр.",
+          "choices": [
+            {
+              "id": "whale-sing",
+              "emoji": "🐋",
+              "badge": "🎵",
+              "label": "кит поёт"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            },
+            {
+              "id": "whale-sleep",
+              "emoji": "🐋",
+              "badge": "💤",
+              "label": "кит спит"
+            }
+          ],
+          "correct": "whale-sing"
+        },
+        {
+          "word": "СИНИЙ РОМБ",
+          "syllables": "СИ-НИЙ РОМБ",
+          "prompt": "На стекле приклеена наклейка. Прочитай, что на ней.",
+          "success": "Синий ромб значит: здесь можно трогать стекло.",
+          "choices": [
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "синий ромб"
+            },
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "оранжевый ромб"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "синий квадрат"
+            }
+          ],
+          "correct": "blue-diamond"
+        },
+        {
+          "word": "ТРИ РЫБЫ",
+          "syllables": "ТРИ РЫ-БЫ",
+          "prompt": "Из водорослей кто-то выплывает. Прочитай, кто.",
+          "success": "Три рыбы - полосатые, как матросы.",
+          "choices": [
+            {
+              "id": "three-fish",
+              "emoji": "🐟",
+              "count": 3,
+              "label": "три рыбы"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "десять рыб"
+            },
+            {
+              "id": "three-duck",
+              "emoji": "🦆",
+              "count": 3,
+              "label": "три утки"
+            }
+          ],
+          "correct": "three-fish"
+        },
+        {
+          "word": "ПАПА ПЛЫВЁТ",
+          "syllables": "ПА-ПА ПЛЫ-ВЁТ",
+          "prompt": "В бассейне рядом с аквариумом кто-то есть. Прочитай, кто и чем занят.",
+          "success": "Папа плывёт быстрее всех рыб!",
+          "choices": [
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "папа плывёт"
+            },
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "мама плывёт"
+            },
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "папа гребёт"
+            }
+          ],
+          "correct": "dad-swim"
+        },
+        {
+          "word": "МАМА ГРЕБЁТ",
+          "syllables": "МА-МА ГРЕ-БЁТ",
+          "prompt": "По каналу вокруг шатра кто-то показался. Прочитай, кто это.",
+          "success": "Мама гребёт веслом, и лодка летит по воде.",
+          "choices": [
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "мама гребёт"
+            },
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "папа гребёт"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "мама едет"
+            }
+          ],
+          "correct": "mom-row"
+        },
+        {
+          "word": "БЕЛЫЙ КВАДРАТ",
+          "syllables": "БЕ-ЛЫЙ КВАД-РАТ",
+          "prompt": "Пол у аквариума выложен плиткой. Прочитай, какой.",
+          "success": "Белый квадрат - на нём лучше всего видно рыбок.",
+          "choices": [
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "белый квадрат"
+            },
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "чёрный квадрат"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "белый круг"
+            }
+          ],
+          "correct": "white-square"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ КИТ",
+          "syllables": "МА-ЛЕНЬ-КИЙ КИТ",
+          "prompt": "В аквариуме у входа живёт кто-то особенный. Прочитай и найди его.",
+          "success": "Маленький кит - совсем кроха, ему всего месяц.",
+          "choices": [
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "маленький кит"
+            },
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "большой кит"
+            },
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            }
+          ],
+          "correct": "small-whale"
+        },
+        {
+          "word": "КИТ СПИТ",
+          "syllables": "КИТ СПИТ",
+          "prompt": "Свет в морском шатре гаснет. Прочитай, что там теперь.",
+          "success": "Кит спит, покачиваясь в темноте.",
+          "choices": [
+            {
+              "id": "whale-sleep",
+              "emoji": "🐋",
+              "badge": "💤",
+              "label": "кит спит"
+            },
+            {
+              "id": "hedgehog-sleep",
+              "emoji": "🦔",
+              "badge": "💤",
+              "label": "ёж спит"
+            },
+            {
+              "id": "whale-sing",
+              "emoji": "🐋",
+              "badge": "🎵",
+              "label": "кит поёт"
+            }
+          ],
+          "correct": "whale-sleep"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-08",
+      "title": "Тихий шатёр",
+      "emoji": "🌙",
+      "character": "🧚",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "Все выспались и отдохнули. А теперь - громко! Начинается певческий конкурс.",
+      "tasks": [
+        {
+          "word": "СОВА СПИТ",
+          "syllables": "СО-ВА СПИТ",
+          "prompt": "В тихом шатре горит ночник. Прочитай, кто там.",
+          "success": "Сова спит днём - она ведь ночная птица.",
+          "choices": [
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "сова спит"
+            },
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "мышь спит"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "сова поёт"
+            }
+          ],
+          "correct": "owl-sleep"
+        },
+        {
+          "word": "МЫШЬ ПОЁТ",
+          "syllables": "МЫШЬ ПО-ЁТ",
+          "prompt": "В углу шатра есть норка. Загляни в неё и прочитай.",
+          "success": "Мышь поёт колыбельную своим мышатам.",
+          "choices": [
+            {
+              "id": "mouse-sing",
+              "emoji": "🐭",
+              "badge": "🎵",
+              "label": "мышь поёт"
+            },
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "лиса поёт"
+            },
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "мышь спит"
+            }
+          ],
+          "correct": "mouse-sing"
+        },
+        {
+          "word": "МАЛЫШ СПИТ",
+          "syllables": "МА-ЛЫШ СПИТ",
+          "prompt": "Посреди шатра стоит качалка с одеялом. Прочитай, кто в ней.",
+          "success": "Малыш спит и улыбается во сне.",
+          "choices": [
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "малыш спит"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "мама спит"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            }
+          ],
+          "correct": "baby-sleep"
+        },
+        {
+          "word": "ВОСЕМЬ ЗВЁЗД",
+          "syllables": "ВО-СЕМЬ ЗВЁЗД",
+          "prompt": "Потолок шатра тёмный, как ночное небо. Прочитай, что на нём.",
+          "success": "Восемь звёзд - можно загадать восемь желаний!",
+          "choices": [
+            {
+              "id": "eight-star",
+              "emoji": "⭐",
+              "count": 8,
+              "label": "восемь звёзд"
+            },
+            {
+              "id": "six-star",
+              "emoji": "⭐",
+              "count": 6,
+              "label": "шесть звёзд"
+            },
+            {
+              "id": "eight-cloud",
+              "emoji": "☁️",
+              "count": 8,
+              "label": "восемь облаков"
+            }
+          ],
+          "correct": "eight-star"
+        },
+        {
+          "word": "ДВА ОБЛАКА",
+          "syllables": "ДВА ОБ-ЛА-КА",
+          "prompt": "По потолку медленно плывут картинки от фонарика. Прочитай, какие.",
+          "success": "Два облака плывут, как два барашка.",
+          "choices": [
+            {
+              "id": "two-cloud",
+              "emoji": "☁️",
+              "count": 2,
+              "label": "два облака"
+            },
+            {
+              "id": "five-cloud",
+              "emoji": "☁️",
+              "count": 5,
+              "label": "пять облаков"
+            },
+            {
+              "id": "two-whale",
+              "emoji": "🐋",
+              "count": 2,
+              "label": "два кита"
+            }
+          ],
+          "correct": "two-cloud"
+        },
+        {
+          "word": "ЧЁРНАЯ ПТИЦА",
+          "syllables": "ЧЁР-НА-Я ПТИ-ЦА",
+          "prompt": "На окне шатра кто-то сидит. Кто это? Прочитай.",
+          "success": "Чёрная птица заглянула на огонёк.",
+          "choices": [
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "чёрная птица"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "белая птица"
+            },
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            }
+          ],
+          "correct": "black-bird"
+        },
+        {
+          "word": "БОЛЬШАЯ СОВА",
+          "syllables": "БОЛЬ-ША-Я СО-ВА",
+          "prompt": "Сказочница достаёт из сундука игрушку. Прочитай, какую.",
+          "success": "Большая сова - мягкая, как подушка.",
+          "choices": [
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "большая сова"
+            },
+            {
+              "id": "small-owl",
+              "emoji": "🦉",
+              "size": "small",
+              "label": "маленькая сова"
+            },
+            {
+              "id": "big-mouse",
+              "emoji": "🐭",
+              "size": "big",
+              "label": "большая мышь"
+            }
+          ],
+          "correct": "big-owl"
+        },
+        {
+          "word": "БЕЛОЕ СЕРДЦЕ",
+          "syllables": "БЕ-ЛО-Е СЕРД-ЦЕ",
+          "prompt": "На подушке вышит узор. Прочитай, что вышито.",
+          "success": "Белое сердце - чтобы снились добрые сны.",
+          "choices": [
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            },
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "белый цветок"
+            }
+          ],
+          "correct": "white-heart"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЖУК",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЖУК",
+          "prompt": "На одеяле кто-то сидит. Прочитай, кто пришёл послушать сказку.",
+          "success": "Маленький жук тоже пришёл послушать сказку.",
+          "choices": [
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "маленький жук"
+            },
+            {
+              "id": "big-beetle",
+              "emoji": "🪲",
+              "size": "big",
+              "label": "большой жук"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            }
+          ],
+          "correct": "small-beetle"
+        },
+        {
+          "word": "БАБУШКА СПИТ",
+          "syllables": "БА-БУШ-КА СПИТ",
+          "prompt": "У стены стоит кресло с пледом. Прочитай, что там происходит.",
+          "success": "Бабушка спит - сказка оказалась очень длинной.",
+          "choices": [
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "бабушка спит"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "дедушка спит"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "бабушка поёт"
+            }
+          ],
+          "correct": "grandma-sleep"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-09",
+      "title": "Певческий конкурс",
+      "emoji": "🎤",
+      "character": "🦜",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Победила дружба: призы получили все. А теперь - на танцплощадку!",
+      "tasks": [
+        {
+          "word": "КОТ ПОЁТ",
+          "syllables": "КОТ ПО-ЁТ",
+          "prompt": "На сцену выходит первый участник конкурса. Прочитай, кто это и что делает.",
+          "success": "Кот поёт: мяу-мяу - и зал аплодирует!",
+          "choices": [
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "кот поёт"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            },
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "кот спит"
+            }
+          ],
+          "correct": "cat-sing"
+        },
+        {
+          "word": "ДЕВОЧКА ПОЁТ",
+          "syllables": "ДЕ-ВОЧ-КА ПО-ЁТ",
+          "prompt": "Второй участник долго волнуется за кулисами. Прочитай, кто вышел.",
+          "success": "Девочка поёт так звонко, что дрожат лампочки.",
+          "choices": [
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "девочка поёт"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "мальчик поёт"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "девочка спит"
+            }
+          ],
+          "correct": "girl-sing"
+        },
+        {
+          "word": "ПАПА ПОЁТ",
+          "syllables": "ПА-ПА ПО-ЁТ",
+          "prompt": "Ведущий объявляет третий номер: сюрприз! Кто на сцене? Прочитай.",
+          "success": "Папа поёт басом - никто не ожидал!",
+          "choices": [
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "папа поёт"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "папа спит"
+            }
+          ],
+          "correct": "dad-sing"
+        },
+        {
+          "word": "ЧЕТЫРЕ МЫШИ",
+          "syllables": "ЧЕ-ТЫ-РЕ МЫ-ШИ",
+          "prompt": "За кулисами устроилась группа поддержки. Прочитай, кто там.",
+          "success": "Четыре мыши машут флажками за своего певца.",
+          "choices": [
+            {
+              "id": "four-mouse",
+              "emoji": "🐭",
+              "count": 4,
+              "label": "четыре мыши"
+            },
+            {
+              "id": "ten-mouse",
+              "emoji": "🐭",
+              "count": 10,
+              "label": "десять мышей"
+            },
+            {
+              "id": "four-owl",
+              "emoji": "🦉",
+              "count": 4,
+              "label": "четыре совы"
+            }
+          ],
+          "correct": "four-mouse"
+        },
+        {
+          "word": "КРАСНЫЙ ФЛАГ",
+          "syllables": "КРАС-НЫЙ ФЛАГ",
+          "prompt": "Над сценой поднимают знак: конкурс начался! Прочитай, что подняли.",
+          "success": "Красный флаг взлетает вверх - конкурс начался!",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "красный флаг"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "чёрный флаг"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "красный круг"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "БОЛЬШОЙ ПЁС",
+          "syllables": "БОЛЬ-ШОЙ ПЁС",
+          "prompt": "В жюри сидит строгий судья. Прочитай, кто это.",
+          "success": "Большой пёс в галстуке - главный судья конкурса.",
+          "choices": [
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "большой пёс"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "маленький пёс"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            }
+          ],
+          "correct": "big-dog"
+        },
+        {
+          "word": "ЖЁЛТАЯ МАШИНА",
+          "syllables": "ЖЁЛ-ТА-Я МА-ШИ-НА",
+          "prompt": "К сцене кто-то подвозит нового певца. Прочитай, на чём он приехал.",
+          "success": "Жёлтая машина-такси привезла певца прямо к сцене.",
+          "choices": [
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "жёлтая машина"
+            },
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "синяя машина"
+            },
+            {
+              "id": "yellow-star",
+              "emoji": "⭐",
+              "label": "жёлтая звезда"
+            }
+          ],
+          "correct": "yellow-car"
+        },
+        {
+          "word": "ОДНА СОВА",
+          "syllables": "ОД-НА СО-ВА",
+          "prompt": "Под потолком сцены кто-то следит за конкурсом. Прочитай и найди картинку.",
+          "success": "Одна сова - самый внимательный зритель.",
+          "choices": [
+            {
+              "id": "one-owl",
+              "emoji": "🦉",
+              "count": 1,
+              "label": "одна сова"
+            },
+            {
+              "id": "three-owl",
+              "emoji": "🦉",
+              "count": 3,
+              "label": "три совы"
+            },
+            {
+              "id": "one-duck",
+              "emoji": "🦆",
+              "count": 1,
+              "label": "одна утка"
+            }
+          ],
+          "correct": "one-owl"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЛЕВ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЛЕВ",
+          "prompt": "Последний участник выходит под барабанную дробь. Прочитай, кто готов петь.",
+          "success": "Маленький лев рычит песню - получается очень мило.",
+          "choices": [
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            },
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            }
+          ],
+          "correct": "small-lion"
+        },
+        {
+          "word": "ЗЕЛЁНАЯ КНИГА",
+          "syllables": "ЗЕ-ЛЁ-НА-Я КНИ-ГА",
+          "prompt": "Ведущий открывает список победителей. Прочитай, во что он смотрит.",
+          "success": "Зелёная книга победителей - туда записали всех!",
+          "choices": [
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "зелёная книга"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "синяя книга"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            }
+          ],
+          "correct": "green-book"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-10",
+      "title": "Танцплощадка",
+      "emoji": "🪩",
+      "character": "🦩",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Ноги устали, а животы проголодались. Идём на кухню ярмарки!",
+      "tasks": [
+        {
+          "word": "МАМА ТАНЦУЕТ",
+          "syllables": "МА-МА ТАН-ЦУ-ЕТ",
+          "prompt": "На танцплощадке включают музыку. Прочитай, кто вышел первым.",
+          "success": "Мама танцует, и юбка кружится колоколом.",
+          "choices": [
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "мама танцует"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "папа танцует"
+            },
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "мама поёт"
+            }
+          ],
+          "correct": "mom-dance"
+        },
+        {
+          "word": "ПАПА ТАНЦУЕТ",
+          "syllables": "ПА-ПА ТАН-ЦУ-ЕТ",
+          "prompt": "Следом на площадку выходит ещё кто-то. Кто это? Прочитай.",
+          "success": "Папа танцует смешной танец с прыжками!",
+          "choices": [
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "папа танцует"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "мама танцует"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "папа идёт"
+            }
+          ],
+          "correct": "dad-dance"
+        },
+        {
+          "word": "ЖЁЛТЫЙ КРУГ",
+          "syllables": "ЖЁЛ-ТЫЙ КРУГ",
+          "prompt": "Над площадкой зажигают фонарь. Прочитай, какой он формы и цвета.",
+          "success": "Жёлтый круг светит, как луна.",
+          "choices": [
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "жёлтый круг"
+            },
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            },
+            {
+              "id": "yellow-square",
+              "emoji": "🟨",
+              "label": "жёлтый квадрат"
+            }
+          ],
+          "correct": "yellow-circle"
+        },
+        {
+          "word": "БЕЛЫЙ ЦВЕТОК",
+          "syllables": "БЕ-ЛЫЙ ЦВЕ-ТОК",
+          "prompt": "Кто-то из танцоров дарит подарок. Прочитай, что в подарке.",
+          "success": "Белый цветок - для лучшей танцовщицы.",
+          "choices": [
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "белый цветок"
+            },
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "жёлтый цветок"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            }
+          ],
+          "correct": "white-flower"
+        },
+        {
+          "word": "ПЯТЬ ШАРОВ",
+          "syllables": "ПЯТЬ ША-РОВ",
+          "prompt": "Над площадкой привязаны украшения. Прочитай, какие.",
+          "success": "Пять шаров покачиваются под музыку.",
+          "choices": [
+            {
+              "id": "five-balloon",
+              "emoji": "🎈",
+              "count": 5,
+              "label": "пять шаров"
+            },
+            {
+              "id": "two-balloon",
+              "emoji": "🎈",
+              "count": 2,
+              "label": "два шара"
+            },
+            {
+              "id": "five-star",
+              "emoji": "⭐",
+              "count": 5,
+              "label": "пять звёзд"
+            }
+          ],
+          "correct": "five-balloon"
+        },
+        {
+          "word": "СЕМЬ КЕКСОВ",
+          "syllables": "СЕМЬ КЕК-СОВ",
+          "prompt": "Рядом стоит стол с угощением. Прочитай, что там.",
+          "success": "Семь кексов с вишенкой - по одному на танцора.",
+          "choices": [
+            {
+              "id": "seven-cupcake",
+              "emoji": "🧁",
+              "count": 7,
+              "label": "семь кексов"
+            },
+            {
+              "id": "nine-cupcake",
+              "emoji": "🧁",
+              "count": 9,
+              "label": "девять кексов"
+            },
+            {
+              "id": "seven-cake",
+              "emoji": "🎂",
+              "count": 7,
+              "label": "семь тортов"
+            }
+          ],
+          "correct": "seven-cupcake"
+        },
+        {
+          "word": "БОЛЬШОЙ ТОРТ",
+          "syllables": "БОЛЬ-ШОЙ ТОРТ",
+          "prompt": "Повар выносит угощение на подносе. Прочитай, что он несёт.",
+          "success": "Большой торт - сразу видно, праздник!",
+          "choices": [
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "большой торт"
+            },
+            {
+              "id": "small-cake",
+              "emoji": "🎂",
+              "size": "small",
+              "label": "маленький торт"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            }
+          ],
+          "correct": "big-cake"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ МЯЧ",
+          "syllables": "МА-ЛЕНЬ-КИЙ МЯЧ",
+          "prompt": "Под ноги танцорам что-то закатилось. Что это? Прочитай.",
+          "success": "Маленький мяч - чуть не наступили!",
+          "choices": [
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "маленький мяч"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            },
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            }
+          ],
+          "correct": "small-ball"
+        },
+        {
+          "word": "МАЛЬЧИК СПИТ",
+          "syllables": "МАЛЬ-ЧИК СПИТ",
+          "prompt": "На скамейке у края площадки кто-то сидит. Прочитай, кто и что делает.",
+          "success": "Мальчик спит - натанцевался.",
+          "choices": [
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "мальчик спит"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "девочка спит"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "мальчик поёт"
+            }
+          ],
+          "correct": "boy-sleep"
+        },
+        {
+          "word": "СИНИЙ КРУГ",
+          "syllables": "СИ-НИЙ КРУГ",
+          "prompt": "На полу площадки нарисована метка. Прочитай и встань в неё.",
+          "success": "Синий круг - встань в него и кружись!",
+          "choices": [
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "синий круг"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "белый круг"
+            },
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "синяя машина"
+            }
+          ],
+          "correct": "blue-circle"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-11",
+      "title": "Кухня ярмарки",
+      "emoji": "🍳",
+      "character": "🧑‍🍳",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Все сыты и довольны. Пойдём погуляем в саду за ярмаркой.",
+      "tasks": [
+        {
+          "word": "МАМА ВАРИТ",
+          "syllables": "МА-МА ВА-РИТ",
+          "prompt": "Мы заглядываем в окно кухни. Прочитай, кто там.",
+          "success": "Мама варит суп в огромной кастрюле.",
+          "choices": [
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "мама варит"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "папа варит"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "мама рисует"
+            }
+          ],
+          "correct": "mom-cook"
+        },
+        {
+          "word": "ПАПА ВАРИТ",
+          "syllables": "ПА-ПА ВА-РИТ",
+          "prompt": "У второго окна тоже кто-то есть. Кто это? Прочитай.",
+          "success": "Папа варит кашу и пробует ложкой.",
+          "choices": [
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "папа варит"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "мама варит"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "папа стоит"
+            }
+          ],
+          "correct": "dad-cook"
+        },
+        {
+          "word": "ДВЕ ГРУШИ",
+          "syllables": "ДВЕ ГРУ-ШИ",
+          "prompt": "Повариха ставит на стол тарелку. Прочитай, что на ней.",
+          "success": "Две груши, сладкие и сочные.",
+          "choices": [
+            {
+              "id": "two-pear",
+              "emoji": "🍐",
+              "count": 2,
+              "label": "две груши"
+            },
+            {
+              "id": "six-pear",
+              "emoji": "🍐",
+              "count": 6,
+              "label": "шесть груш"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "две рыбы"
+            }
+          ],
+          "correct": "two-pear"
+        },
+        {
+          "word": "ШЕСТЬ ЯИЦ",
+          "syllables": "ШЕСТЬ Я-ИЦ",
+          "prompt": "В миске на столе приготовлено кое-что для теста. Прочитай, что именно.",
+          "success": "Шесть яиц - будет пышный омлет!",
+          "choices": [
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "шесть яиц"
+            },
+            {
+              "id": "three-egg",
+              "emoji": "🥚",
+              "count": 3,
+              "label": "три яйца"
+            },
+            {
+              "id": "six-lemon",
+              "emoji": "🍋",
+              "count": 6,
+              "label": "шесть лимонов"
+            }
+          ],
+          "correct": "six-egg"
+        },
+        {
+          "word": "ДЕСЯТЬ КЕКСОВ",
+          "syllables": "ДЕ-СЯТЬ КЕК-СОВ",
+          "prompt": "Из духовки достают противень. Прочитай, что на нём.",
+          "success": "Десять кексов, румяных и горячих!",
+          "choices": [
+            {
+              "id": "ten-cupcake",
+              "emoji": "🧁",
+              "count": 10,
+              "label": "десять кексов"
+            },
+            {
+              "id": "eight-cupcake",
+              "emoji": "🧁",
+              "count": 8,
+              "label": "восемь кексов"
+            },
+            {
+              "id": "ten-cake",
+              "emoji": "🎂",
+              "count": 10,
+              "label": "десять тортов"
+            }
+          ],
+          "correct": "ten-cupcake"
+        },
+        {
+          "word": "БОЛЬШОЙ ТОРТ",
+          "syllables": "БОЛЬ-ШОЙ ТОРТ",
+          "prompt": "К празднику готовят главное блюдо. Прочитай, какое.",
+          "success": "Большой торт в три этажа!",
+          "choices": [
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "большой торт"
+            },
+            {
+              "id": "small-cake",
+              "emoji": "🎂",
+              "size": "small",
+              "label": "маленький торт"
+            },
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "большое яйцо"
+            }
+          ],
+          "correct": "big-cake"
+        },
+        {
+          "word": "ЗЕЛЁНЫЙ ПЕРЕЦ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ ПЕ-РЕЦ",
+          "prompt": "Повар режет овощи для салата. Прочитай, что у него на доске.",
+          "success": "Зелёный перец - хрум-хрум!",
+          "choices": [
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "зелёный перец"
+            },
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "красный перец"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "зелёная книга"
+            }
+          ],
+          "correct": "green-pepper"
+        },
+        {
+          "word": "КРАСНЫЙ ПЕРЕЦ",
+          "syllables": "КРАС-НЫЙ ПЕ-РЕЦ",
+          "prompt": "Рядом на доске лежит ещё кое-что. Прочитай и найди картинку.",
+          "success": "Красный перец - осторожно, жжётся!",
+          "choices": [
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "красный перец"
+            },
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "зелёный перец"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "красное сердце"
+            }
+          ],
+          "correct": "red-pepper"
+        },
+        {
+          "word": "БОЛЬШОЙ ГРИБ",
+          "syllables": "БОЛЬ-ШОЙ ГРИБ",
+          "prompt": "Помощник повара приносит корзинку из леса. Прочитай, что он нашёл.",
+          "success": "Большой гриб - на всю сковородку!",
+          "choices": [
+            {
+              "id": "big-mushroom",
+              "emoji": "🍄",
+              "size": "big",
+              "label": "большой гриб"
+            },
+            {
+              "id": "small-mushroom",
+              "emoji": "🍄",
+              "size": "small",
+              "label": "маленький гриб"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            }
+          ],
+          "correct": "big-mushroom"
+        },
+        {
+          "word": "КОТ СПИТ",
+          "syllables": "КОТ СПИТ",
+          "prompt": "Под столом на кухне кто-то есть. Прочитай, кто и что делает.",
+          "success": "Кот спит - он уже поел сметаны.",
+          "choices": [
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "кот спит"
+            },
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "мышь спит"
+            },
+            {
+              "id": "cat-laugh",
+              "emoji": "😹",
+              "label": "кот смеётся"
+            }
+          ],
+          "correct": "cat-sleep"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-12",
+      "title": "Сад и огород",
+      "emoji": "🌷",
+      "character": "🐌",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Сад обошли весь. Слышишь плеск? За садом течёт река.",
+      "tasks": [
+        {
+          "word": "ЖЁЛТЫЙ ЦВЕТОК",
+          "syllables": "ЖЁЛ-ТЫЙ ЦВЕ-ТОК",
+          "prompt": "Садовник ведёт нас к грядке. Прочитай, что там выросло.",
+          "success": "Жёлтый цветок поворачивает голову за солнцем.",
+          "choices": [
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "жёлтый цветок"
+            },
+            {
+              "id": "red-flower",
+              "emoji": "🌹",
+              "label": "красный цветок"
+            },
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "жёлтый круг"
+            }
+          ],
+          "correct": "yellow-flower"
+        },
+        {
+          "word": "БЕЛЫЙ ЦВЕТОК",
+          "syllables": "БЕ-ЛЫЙ ЦВЕ-ТОК",
+          "prompt": "У скамейки растёт куст. Прочитай, что на нём распустилось.",
+          "success": "Белый цветок пахнет мёдом.",
+          "choices": [
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "белый цветок"
+            },
+            {
+              "id": "red-flower",
+              "emoji": "🌹",
+              "label": "красный цветок"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "белая птица"
+            }
+          ],
+          "correct": "white-flower"
+        },
+        {
+          "word": "ТРИ ПЧЕЛЫ",
+          "syllables": "ТРИ ПЧЕ-ЛЫ",
+          "prompt": "Над клумбой кто-то кружит. Кто это? Прочитай.",
+          "success": "Три пчелы собирают сладкий сок.",
+          "choices": [
+            {
+              "id": "three-bee",
+              "emoji": "🐝",
+              "count": 3,
+              "label": "три пчелы"
+            },
+            {
+              "id": "eight-bee",
+              "emoji": "🐝",
+              "count": 8,
+              "label": "восемь пчёл"
+            },
+            {
+              "id": "three-beetle",
+              "emoji": "🪲",
+              "count": 3,
+              "label": "три жука"
+            }
+          ],
+          "correct": "three-bee"
+        },
+        {
+          "word": "ВОСЕМЬ ЖУКОВ",
+          "syllables": "ВО-СЕМЬ ЖУ-КОВ",
+          "prompt": "Садовник поднимает камень. Прочитай, кто под ним прятался.",
+          "success": "Восемь жуков разбегаются в разные стороны!",
+          "choices": [
+            {
+              "id": "eight-beetle",
+              "emoji": "🪲",
+              "count": 8,
+              "label": "восемь жуков"
+            },
+            {
+              "id": "five-beetle",
+              "emoji": "🪲",
+              "count": 5,
+              "label": "пять жуков"
+            },
+            {
+              "id": "eight-bee",
+              "emoji": "🐝",
+              "count": 8,
+              "label": "восемь пчёл"
+            }
+          ],
+          "correct": "eight-beetle"
+        },
+        {
+          "word": "БОЛЬШОЙ ЖУК",
+          "syllables": "БОЛЬ-ШОЙ ЖУК",
+          "prompt": "На лопухе сидит гость. Прочитай, кто.",
+          "success": "Большой жук блестит, как броня.",
+          "choices": [
+            {
+              "id": "big-beetle",
+              "emoji": "🪲",
+              "size": "big",
+              "label": "большой жук"
+            },
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "маленький жук"
+            },
+            {
+              "id": "big-mushroom",
+              "emoji": "🍄",
+              "size": "big",
+              "label": "большой гриб"
+            }
+          ],
+          "correct": "big-beetle"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЁЖ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЁЖ",
+          "prompt": "Под кустом смородины кто-то шуршит. Прочитай, кто там прячется.",
+          "success": "Маленький ёж ищет яблоко.",
+          "choices": [
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            },
+            {
+              "id": "big-hedgehog",
+              "emoji": "🦔",
+              "size": "big",
+              "label": "большой ёж"
+            },
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "маленький жук"
+            }
+          ],
+          "correct": "small-hedgehog"
+        },
+        {
+          "word": "ЁЖ СПИТ",
+          "syllables": "ЁЖ СПИТ",
+          "prompt": "В куче сена у забора кто-то устроился. Прочитай, кто и чем занят.",
+          "success": "Ёж спит после обеда, свернувшись клубком.",
+          "choices": [
+            {
+              "id": "hedgehog-sleep",
+              "emoji": "🦔",
+              "badge": "💤",
+              "label": "ёж спит"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "лиса спит"
+            },
+            {
+              "id": "hedgehog-sing",
+              "emoji": "🦔",
+              "badge": "🎵",
+              "label": "ёж поёт"
+            }
+          ],
+          "correct": "hedgehog-sleep"
+        },
+        {
+          "word": "БАБУШКА ПОЁТ",
+          "syllables": "БА-БУШ-КА ПО-ЁТ",
+          "prompt": "На веранде кто-то сидит с лейкой. Прочитай, что там происходит.",
+          "success": "Бабушка поёт песню про огород.",
+          "choices": [
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "бабушка поёт"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "дедушка поёт"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "бабушка спит"
+            }
+          ],
+          "correct": "grandma-sing"
+        },
+        {
+          "word": "ЗЕЛЁНЫЙ ЛИСТ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ ЛИСТ",
+          "prompt": "Ветер срывает что-то с яблони. Прочитай, что прилетело.",
+          "success": "Зелёный лист - ещё совсем летний.",
+          "choices": [
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "красный лист"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "зелёное сердце"
+            }
+          ],
+          "correct": "green-leaf"
+        },
+        {
+          "word": "ЧЕТЫРЕ ГРУШИ",
+          "syllables": "ЧЕ-ТЫ-РЕ ГРУ-ШИ",
+          "prompt": "Садовник угощает нас из корзины. Прочитай, что в ней.",
+          "success": "Четыре груши - по одной каждому.",
+          "choices": [
+            {
+              "id": "four-pear",
+              "emoji": "🍐",
+              "count": 4,
+              "label": "четыре груши"
+            },
+            {
+              "id": "nine-pear",
+              "emoji": "🍐",
+              "count": 9,
+              "label": "девять груш"
+            },
+            {
+              "id": "four-lemon",
+              "emoji": "🍋",
+              "count": 4,
+              "label": "четыре лимона"
+            }
+          ],
+          "correct": "four-pear"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-13",
+      "title": "Река и лодки",
+      "emoji": "🛶",
+      "character": "🦫",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "Накатались и наплавались. А на горке у реки нас ждёт спортивный городок!",
+      "tasks": [
+        {
+          "word": "ПАПА ГРЕБЁТ",
+          "syllables": "ПА-ПА ГРЕ-БЁТ",
+          "prompt": "На реке показалась лодка. Прочитай, кто в ней и что делает.",
+          "success": "Папа гребёт, а лодка скользит к мосту.",
+          "choices": [
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "папа гребёт"
+            },
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "мама гребёт"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "папа плывёт"
+            }
+          ],
+          "correct": "dad-row"
+        },
+        {
+          "word": "МАМА ПЛЫВЁТ",
+          "syllables": "МА-МА ПЛЫ-ВЁТ",
+          "prompt": "У мостков кто-то есть. Прочитай, что там происходит.",
+          "success": "Мама плывёт к буйку и машет нам.",
+          "choices": [
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "мама плывёт"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "папа плывёт"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "мама бежит"
+            }
+          ],
+          "correct": "mom-swim"
+        },
+        {
+          "word": "ДЕСЯТЬ УТОК",
+          "syllables": "ДЕ-СЯТЬ У-ТОК",
+          "prompt": "Из камышей кто-то появляется. Кто это? Прочитай.",
+          "success": "Десять уток гуськом - то есть уточкой!",
+          "choices": [
+            {
+              "id": "ten-duck",
+              "emoji": "🦆",
+              "count": 10,
+              "label": "десять уток"
+            },
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "шесть уток"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "десять рыб"
+            }
+          ],
+          "correct": "ten-duck"
+        },
+        {
+          "word": "ДВЕ УТКИ",
+          "syllables": "ДВЕ УТ-КИ",
+          "prompt": "Мы бросаем крошки хлеба в воду. Прочитай, кто приплыл.",
+          "success": "Две утки ловят крошки на лету.",
+          "choices": [
+            {
+              "id": "two-duck",
+              "emoji": "🦆",
+              "count": 2,
+              "label": "две утки"
+            },
+            {
+              "id": "seven-duck",
+              "emoji": "🦆",
+              "count": 7,
+              "label": "семь уток"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "две рыбы"
+            }
+          ],
+          "correct": "two-duck"
+        },
+        {
+          "word": "БОЛЬШОЙ СЛОН",
+          "syllables": "БОЛЬ-ШОЙ СЛОН",
+          "prompt": "На отмели кто-то плещется. Прочитай, кто.",
+          "success": "Большой слон поливает себя из хобота.",
+          "choices": [
+            {
+              "id": "big-elephant",
+              "emoji": "🐘",
+              "size": "big",
+              "label": "большой слон"
+            },
+            {
+              "id": "small-elephant",
+              "emoji": "🐘",
+              "size": "small",
+              "label": "маленький слон"
+            },
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "большой кит"
+            }
+          ],
+          "correct": "big-elephant"
+        },
+        {
+          "word": "БЕЛЫЙ ФЛАГ",
+          "syllables": "БЕ-ЛЫЙ ФЛАГ",
+          "prompt": "На лодочной станции что-то висит на мачте. Прочитай, что.",
+          "success": "Белый флаг - значит, можно кататься.",
+          "choices": [
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "красный флаг"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "белый мяч"
+            }
+          ],
+          "correct": "white-flag"
+        },
+        {
+          "word": "БЕЛЫЙ МЯЧ",
+          "syllables": "БЕ-ЛЫЙ МЯЧ",
+          "prompt": "По воде к берегу что-то плывёт. Прочитай и найди картинку.",
+          "success": "Белый мяч - кто-то с того берега потерял.",
+          "choices": [
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "белый мяч"
+            },
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "жёлтый мяч"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            }
+          ],
+          "correct": "white-ball"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ДОМ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ДОМ",
+          "prompt": "На другом берегу что-то виднеется. Прочитай, что там стоит.",
+          "success": "Маленький дом лодочника с синей дверью.",
+          "choices": [
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            },
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "большой дом"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            }
+          ],
+          "correct": "small-house"
+        },
+        {
+          "word": "ПЁС СПИТ",
+          "syllables": "ПЁС СПИТ",
+          "prompt": "На носу причаленной лодки кто-то устроился. Прочитай, кто и чем занят.",
+          "success": "Пёс спит на солнышке, и ему снятся рыбки.",
+          "choices": [
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "пёс спит"
+            },
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "кот спит"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "пёс поёт"
+            }
+          ],
+          "correct": "dog-sleep"
+        },
+        {
+          "word": "ПЯТЬ РЫБ",
+          "syllables": "ПЯТЬ РЫБ",
+          "prompt": "Лодочник показывает ведро. Прочитай, что в нём.",
+          "success": "Пять рыб - и все отпустим обратно в реку.",
+          "choices": [
+            {
+              "id": "five-fish",
+              "emoji": "🐟",
+              "count": 5,
+              "label": "пять рыб"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "десять рыб"
+            },
+            {
+              "id": "five-duck",
+              "emoji": "🦆",
+              "count": 5,
+              "label": "пять уток"
+            }
+          ],
+          "correct": "five-fish"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-14",
+      "title": "Спортивный городок",
+      "emoji": "🏅",
+      "character": "🦘",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "Медали получены, мышцы гудят. Пора в книжную лавку - отдохнуть с книжкой.",
+      "tasks": [
+        {
+          "word": "МАМА ЛЕЗЕТ",
+          "syllables": "МА-МА ЛЕ-ЗЕТ",
+          "prompt": "В спортивном городке есть высокая стена. Прочитай, кто там и что делает.",
+          "success": "Мама лезет наверх быстрее всех!",
+          "choices": [
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "мама лезет"
+            },
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "папа лезет"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "мама стоит"
+            }
+          ],
+          "correct": "mom-climb"
+        },
+        {
+          "word": "ПАПА БЕЖИТ",
+          "syllables": "ПА-ПА БЕ-ЖИТ",
+          "prompt": "Вокруг городка проложена дорожка. Прочитай, кто на ней.",
+          "success": "Папа бежит и даже не запыхался.",
+          "choices": [
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "папа бежит"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "мама бежит"
+            },
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "папа лезет"
+            }
+          ],
+          "correct": "dad-run"
+        },
+        {
+          "word": "МАМА ИГРАЕТ",
+          "syllables": "МА-МА ИГ-РА-ЕТ",
+          "prompt": "На площадке с кольцом кто-то есть. Прочитай, чем там заняты.",
+          "success": "Мама играет и попадает в кольцо!",
+          "choices": [
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "мама играет"
+            },
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "папа играет"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "мама бежит"
+            }
+          ],
+          "correct": "mom-play"
+        },
+        {
+          "word": "ОРАНЖЕВЫЙ МЯЧ",
+          "syllables": "О-РАН-ЖЕ-ВЫЙ МЯЧ",
+          "prompt": "Тренер достаёт что-то из сетки. Что это? Прочитай.",
+          "success": "Оранжевый мяч - сейчас будет игра!",
+          "choices": [
+            {
+              "id": "orange-ball",
+              "emoji": "🏀",
+              "label": "оранжевый мяч"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "белый мяч"
+            },
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "оранжевый ромб"
+            }
+          ],
+          "correct": "orange-ball"
+        },
+        {
+          "word": "КРАСНЫЙ КРУГ",
+          "syllables": "КРАС-НЫЙ КРУГ",
+          "prompt": "На земле нарисована мишень. Прочитай, куда целиться.",
+          "success": "Красный круг - в самый центр!",
+          "choices": [
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "красный круг"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "зелёный круг"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "красный флаг"
+            }
+          ],
+          "correct": "red-circle"
+        },
+        {
+          "word": "ТРИ МЯЧА",
+          "syllables": "ТРИ МЯ-ЧА",
+          "prompt": "Тренер выкатывает корзину. Прочитай, что в ней.",
+          "success": "Три мяча - по одному на команду.",
+          "choices": [
+            {
+              "id": "three-ball",
+              "emoji": "⚽",
+              "count": 3,
+              "label": "три мяча"
+            },
+            {
+              "id": "ten-ball",
+              "emoji": "⚽",
+              "count": 10,
+              "label": "десять мячей"
+            },
+            {
+              "id": "three-balloon",
+              "emoji": "🎈",
+              "count": 3,
+              "label": "три шара"
+            }
+          ],
+          "correct": "three-ball"
+        },
+        {
+          "word": "ДЕВЯТЬ ЗВЁЗД",
+          "syllables": "ДЕ-ВЯТЬ ЗВЁЗД",
+          "prompt": "Победителям раздают наклейки. Прочитай, какие и сколько.",
+          "success": "Девять звёзд - по одной каждому чемпиону.",
+          "choices": [
+            {
+              "id": "nine-star",
+              "emoji": "⭐",
+              "count": 9,
+              "label": "девять звёзд"
+            },
+            {
+              "id": "seven-star",
+              "emoji": "⭐",
+              "count": 7,
+              "label": "семь звёзд"
+            },
+            {
+              "id": "nine-ball",
+              "emoji": "⚽",
+              "count": 9,
+              "label": "девять мячей"
+            }
+          ],
+          "correct": "nine-star"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ МЯЧ",
+          "syllables": "МА-ЛЕНЬ-КИЙ МЯЧ",
+          "prompt": "В песочнице кто-то забыл игрушку. Прочитай, какую.",
+          "success": "Маленький мяч - его можно сжать в кулаке.",
+          "choices": [
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "маленький мяч"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            },
+            {
+              "id": "small-mushroom",
+              "emoji": "🍄",
+              "size": "small",
+              "label": "маленький гриб"
+            }
+          ],
+          "correct": "small-ball"
+        },
+        {
+          "word": "БОЛЬШОЙ МЯЧ",
+          "syllables": "БОЛЬ-ШОЙ МЯЧ",
+          "prompt": "Тренер выкатывает новую игрушку. Прочитай и найди её.",
+          "success": "Большой мяч - выше меня ростом!",
+          "choices": [
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            },
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "маленький мяч"
+            },
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "большой торт"
+            }
+          ],
+          "correct": "big-ball"
+        },
+        {
+          "word": "СИНИЙ КВАДРАТ",
+          "syllables": "СИ-НИЙ КВАД-РАТ",
+          "prompt": "На стене городка висит табличка. Прочитай, что на ней.",
+          "success": "Синий квадрат - здесь можно отдохнуть.",
+          "choices": [
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "синий квадрат"
+            },
+            {
+              "id": "red-square",
+              "emoji": "🟥",
+              "label": "красный квадрат"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "синее сердце"
+            }
+          ],
+          "correct": "blue-square"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-15",
+      "title": "Книжная лавка",
+      "emoji": "📚",
+      "character": "🐢",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Книжки выбраны и куплены. Вечереет - пойдём в лес за ярмаркой, пока светло.",
+      "tasks": [
+        {
+          "word": "КРАСНАЯ КНИГА",
+          "syllables": "КРАС-НА-Я КНИ-ГА",
+          "prompt": "Продавец лавки показывает новинку. Прочитай, какую.",
+          "success": "Красная книга сказок - самая толстая в лавке.",
+          "choices": [
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "красная книга"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "синяя книга"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "красный круг"
+            }
+          ],
+          "correct": "red-book"
+        },
+        {
+          "word": "СИНЯЯ КНИГА",
+          "syllables": "СИ-НЯ-Я КНИ-ГА",
+          "prompt": "На верхней полке стоит что-то интересное. Прочитай, что.",
+          "success": "Синяя книга про море, с волнами на обложке.",
+          "choices": [
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "синяя книга"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "зелёная книга"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "синий ромб"
+            }
+          ],
+          "correct": "blue-book"
+        },
+        {
+          "word": "ЗЕЛЁНАЯ КНИГА",
+          "syllables": "ЗЕ-ЛЁ-НА-Я КНИ-ГА",
+          "prompt": "Продавец достаёт с витрины ещё одну находку. Прочитай, что он достал.",
+          "success": "Зелёная книга про лес - с картинками зверей.",
+          "choices": [
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "зелёная книга"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "красная книга"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "зелёный круг"
+            }
+          ],
+          "correct": "green-book"
+        },
+        {
+          "word": "ЧЕТЫРЕ СОВЫ",
+          "syllables": "ЧЕ-ТЫ-РЕ СО-ВЫ",
+          "prompt": "Открываем первую книжку. Прочитай, кто на картинке.",
+          "success": "Четыре совы сидят на ветке рядком.",
+          "choices": [
+            {
+              "id": "four-owl",
+              "emoji": "🦉",
+              "count": 4,
+              "label": "четыре совы"
+            },
+            {
+              "id": "nine-owl",
+              "emoji": "🦉",
+              "count": 9,
+              "label": "девять сов"
+            },
+            {
+              "id": "four-mouse",
+              "emoji": "🐭",
+              "count": 4,
+              "label": "четыре мыши"
+            }
+          ],
+          "correct": "four-owl"
+        },
+        {
+          "word": "ОДИН ЛЕВ",
+          "syllables": "О-ДИН ЛЕВ",
+          "prompt": "Листаем дальше. Кто на новой странице? Прочитай.",
+          "success": "Один лев гуляет по саванне - он здесь царь.",
+          "choices": [
+            {
+              "id": "one-lion",
+              "emoji": "🦁",
+              "count": 1,
+              "label": "один лев"
+            },
+            {
+              "id": "three-lion",
+              "emoji": "🦁",
+              "count": 3,
+              "label": "три льва"
+            },
+            {
+              "id": "one-cat",
+              "emoji": "🐱",
+              "count": 1,
+              "label": "один кот"
+            }
+          ],
+          "correct": "one-lion"
+        },
+        {
+          "word": "БОЛЬШОЙ ЛЕВ",
+          "syllables": "БОЛЬ-ШОЙ ЛЕВ",
+          "prompt": "Следующая картинка - на развороте. Прочитай, кто там.",
+          "success": "Большой лев с огромной гривой.",
+          "choices": [
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            },
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            }
+          ],
+          "correct": "big-lion"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ КОТ",
+          "syllables": "МА-ЛЕНЬ-КИЙ КОТ",
+          "prompt": "В углу страницы прячется кто-то ещё. Прочитай и найди его.",
+          "success": "Маленький кот выглядывает из-за буквы.",
+          "choices": [
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "маленький кот"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "маленький пёс"
+            }
+          ],
+          "correct": "small-cat"
+        },
+        {
+          "word": "ДЕДУШКА СПИТ",
+          "syllables": "ДЕ-ДУШ-КА СПИТ",
+          "prompt": "В кресле у окна кто-то устроился с газетой. Прочитай, кто и что делает.",
+          "success": "Дедушка спит, а газета сползла на пол.",
+          "choices": [
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "дедушка спит"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "малыш спит"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "дедушка поёт"
+            }
+          ],
+          "correct": "grandpa-sleep"
+        },
+        {
+          "word": "ЛЕВ СПИТ",
+          "syllables": "ЛЕВ СПИТ",
+          "prompt": "Продавец показывает обложку детской книжки. Прочитай, что на ней.",
+          "success": "Лев спит, а мышка прыгает рядом - знакомая сказка!",
+          "choices": [
+            {
+              "id": "lion-sleep",
+              "emoji": "🦁",
+              "badge": "💤",
+              "label": "лев спит"
+            },
+            {
+              "id": "koala-sleep",
+              "emoji": "🐨",
+              "badge": "💤",
+              "label": "коала спит"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            }
+          ],
+          "correct": "lion-sleep"
+        },
+        {
+          "word": "СОВА ПОЁТ",
+          "syllables": "СО-ВА ПО-ЁТ",
+          "prompt": "Над прилавком висят старые часы. Прочитай, кто выглядывает из окошка.",
+          "success": "Сова поёт: ух-ух! Уже вечер.",
+          "choices": [
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "сова поёт"
+            },
+            {
+              "id": "whale-sing",
+              "emoji": "🐋",
+              "badge": "🎵",
+              "label": "кит поёт"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "сова спит"
+            }
+          ],
+          "correct": "owl-sing"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-16",
+      "title": "Лес за ярмаркой",
+      "emoji": "🌳",
+      "character": "🐿️",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Лес проводил нас до опушки. Ой, небо темнеет - кажется, сейчас пойдёт дождь!",
+      "tasks": [
+        {
+          "word": "ПЯТЬ ЁЛОК",
+          "syllables": "ПЯТЬ Ё-ЛОК",
+          "prompt": "Тропинка уводит в лес. Прочитай, что растёт вдоль тропинки.",
+          "success": "Пять ёлок стоят, как часовые.",
+          "choices": [
+            {
+              "id": "five-fir",
+              "emoji": "🌲",
+              "count": 5,
+              "label": "пять ёлок"
+            },
+            {
+              "id": "three-fir",
+              "emoji": "🌲",
+              "count": 3,
+              "label": "три ёлки"
+            },
+            {
+              "id": "five-mushroom",
+              "emoji": "🍄",
+              "count": 5,
+              "label": "пять грибов"
+            }
+          ],
+          "correct": "five-fir"
+        },
+        {
+          "word": "ТРИ ГРИБА",
+          "syllables": "ТРИ ГРИ-БА",
+          "prompt": "Под деревьями мы кое-что находим. Прочитай, что.",
+          "success": "Три гриба - отнесём повару!",
+          "choices": [
+            {
+              "id": "three-mushroom",
+              "emoji": "🍄",
+              "count": 3,
+              "label": "три гриба"
+            },
+            {
+              "id": "eight-mushroom",
+              "emoji": "🍄",
+              "count": 8,
+              "label": "восемь грибов"
+            },
+            {
+              "id": "three-fir",
+              "emoji": "🌲",
+              "count": 3,
+              "label": "три ёлки"
+            }
+          ],
+          "correct": "three-mushroom"
+        },
+        {
+          "word": "БОЛЬШАЯ ЛИСА",
+          "syllables": "БОЛЬ-ША-Я ЛИ-СА",
+          "prompt": "Из-за куста кто-то выглядывает. Кто это? Прочитай.",
+          "success": "Большая лиса с пушистым хвостом.",
+          "choices": [
+            {
+              "id": "big-fox",
+              "emoji": "🦊",
+              "size": "big",
+              "label": "большая лиса"
+            },
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "маленькая лиса"
+            },
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "большая сова"
+            }
+          ],
+          "correct": "big-fox"
+        },
+        {
+          "word": "БОЛЬШОЙ ЁЖ",
+          "syllables": "БОЛЬ-ШОЙ ЁЖ",
+          "prompt": "У старого пня кто-то копошится. Прочитай, кто.",
+          "success": "Большой ёж несёт на спине яблоко.",
+          "choices": [
+            {
+              "id": "big-hedgehog",
+              "emoji": "🦔",
+              "size": "big",
+              "label": "большой ёж"
+            },
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            },
+            {
+              "id": "big-mushroom",
+              "emoji": "🍄",
+              "size": "big",
+              "label": "большой гриб"
+            }
+          ],
+          "correct": "big-hedgehog"
+        },
+        {
+          "word": "ЛИСА ПОЁТ",
+          "syllables": "ЛИ-СА ПО-ЁТ",
+          "prompt": "Где-то в чаще кто-то есть. Прочитай, кто и что делает.",
+          "success": "Лиса поёт - видно, у неё хорошее настроение.",
+          "choices": [
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "лиса поёт"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "сова поёт"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "лиса спит"
+            }
+          ],
+          "correct": "fox-sing"
+        },
+        {
+          "word": "МЫШЬ СПИТ",
+          "syllables": "МЫШЬ СПИТ",
+          "prompt": "В дупле старого дерева кто-то живёт. Загляни внутрь и прочитай.",
+          "success": "Мышь спит в дупле на сухой траве.",
+          "choices": [
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "мышь спит"
+            },
+            {
+              "id": "hedgehog-sleep",
+              "emoji": "🦔",
+              "badge": "💤",
+              "label": "ёж спит"
+            },
+            {
+              "id": "mouse-sing",
+              "emoji": "🐭",
+              "badge": "🎵",
+              "label": "мышь поёт"
+            }
+          ],
+          "correct": "mouse-sleep"
+        },
+        {
+          "word": "ЧЁРНАЯ ПТИЦА",
+          "syllables": "ЧЁР-НА-Я ПТИ-ЦА",
+          "prompt": "На ветке сосны кто-то сидит. Прочитай и найди картинку.",
+          "success": "Чёрная птица каркает нам вслед.",
+          "choices": [
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "чёрная птица"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "белая птица"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "чёрный флаг"
+            }
+          ],
+          "correct": "black-bird"
+        },
+        {
+          "word": "ЗЕЛЁНЫЙ КРУГ",
+          "syllables": "ЗЕ-ЛЁ-НЫЙ КРУГ",
+          "prompt": "На стволе дерева нарисована метка. Прочитай, какая.",
+          "success": "Зелёный круг - значит, идём правильно.",
+          "choices": [
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "зелёный круг"
+            },
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            }
+          ],
+          "correct": "green-circle"
+        },
+        {
+          "word": "БЕЛЫЙ КВАДРАТ",
+          "syllables": "БЕ-ЛЫЙ КВАД-РАТ",
+          "prompt": "На другой сосне - другая метка. Прочитай её.",
+          "success": "Белый квадрат - тропинка поворачивает.",
+          "choices": [
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "белый квадрат"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "синий квадрат"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "белый круг"
+            }
+          ],
+          "correct": "white-square"
+        },
+        {
+          "word": "ШЕСТЬ ЖУКОВ",
+          "syllables": "ШЕСТЬ ЖУ-КОВ",
+          "prompt": "Мы приподнимаем кусок коры. Прочитай, кто под ним.",
+          "success": "Шесть жуков щекочут ладошку.",
+          "choices": [
+            {
+              "id": "six-beetle",
+              "emoji": "🪲",
+              "count": 6,
+              "label": "шесть жуков"
+            },
+            {
+              "id": "two-beetle",
+              "emoji": "🪲",
+              "count": 2,
+              "label": "два жука"
+            },
+            {
+              "id": "six-mouse",
+              "emoji": "🐭",
+              "count": 6,
+              "label": "шесть мышей"
+            }
+          ],
+          "correct": "six-beetle"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-17",
+      "title": "Гроза и радуга",
+      "emoji": "🌈",
+      "character": "🐸",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "Гроза прошла, и над ярмаркой зажглась радуга. Скоро вечер и огни!",
+      "tasks": [
+        {
+          "word": "ТРИ ОБЛАКА",
+          "syllables": "ТРИ ОБ-ЛА-КА",
+          "prompt": "Небо над ярмаркой темнеет. Прочитай, что набежало.",
+          "success": "Три облака, тяжёлые и серые.",
+          "choices": [
+            {
+              "id": "three-cloud",
+              "emoji": "☁️",
+              "count": 3,
+              "label": "три облака"
+            },
+            {
+              "id": "seven-cloud",
+              "emoji": "☁️",
+              "count": 7,
+              "label": "семь облаков"
+            },
+            {
+              "id": "three-hare",
+              "emoji": "🐰",
+              "count": 3,
+              "label": "три зайца"
+            }
+          ],
+          "correct": "three-cloud"
+        },
+        {
+          "word": "ДВА ЗАЙЦА",
+          "syllables": "ДВА ЗАЙ-ЦА",
+          "prompt": "Под лопухом кто-то прячется от дождя. Кто это? Прочитай.",
+          "success": "Два зайца дрожат ушами, но им сухо.",
+          "choices": [
+            {
+              "id": "two-hare",
+              "emoji": "🐰",
+              "count": 2,
+              "label": "два зайца"
+            },
+            {
+              "id": "five-hare",
+              "emoji": "🐰",
+              "count": 5,
+              "label": "пять зайцев"
+            },
+            {
+              "id": "two-elephant",
+              "emoji": "🐘",
+              "count": 2,
+              "label": "два слона"
+            }
+          ],
+          "correct": "two-hare"
+        },
+        {
+          "word": "ЖЁЛТОЕ СЕРДЦЕ",
+          "syllables": "ЖЁЛ-ТО-Е СЕРД-ЦЕ",
+          "prompt": "Дождь кончился. Клоун Бим выходит из фургона с подарком. Прочитай, что у него.",
+          "success": "Жёлтое сердце - солнышко вернулось!",
+          "choices": [
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            },
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "жёлтый мяч"
+            }
+          ],
+          "correct": "yellow-heart"
+        },
+        {
+          "word": "СИНЕЕ СЕРДЦЕ",
+          "syllables": "СИ-НЕ-Е СЕРД-ЦЕ",
+          "prompt": "Бим рисует мелом на мокром асфальте. Прочитай, что получилось.",
+          "success": "Синее сердце, как капля дождя.",
+          "choices": [
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "синее сердце"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "синий квадрат"
+            }
+          ],
+          "correct": "blue-heart"
+        },
+        {
+          "word": "КРАСНЫЙ ЛИСТ",
+          "syllables": "КРАС-НЫЙ ЛИСТ",
+          "prompt": "Ветер принёс что-то с дерева. Прочитай, что упало к ногам.",
+          "success": "Красный лист - первый осенний гость.",
+          "choices": [
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "красный лист"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "зелёный лист"
+            },
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "красный перец"
+            }
+          ],
+          "correct": "red-leaf"
+        },
+        {
+          "word": "МАЛЫШ ПОЁТ",
+          "syllables": "МА-ЛЫШ ПО-ЁТ",
+          "prompt": "У лужи кто-то есть. Прочитай, кто и чем занят.",
+          "success": "Малыш поёт и шлёпает по луже.",
+          "choices": [
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "девочка поёт"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "малыш спит"
+            }
+          ],
+          "correct": "baby-sing"
+        },
+        {
+          "word": "ПАПА СТОИТ",
+          "syllables": "ПА-ПА СТО-ИТ",
+          "prompt": "Под навесом кто-то ждёт. Прочитай, кто.",
+          "success": "Папа стоит под навесом и держит наш зонтик.",
+          "choices": [
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "папа стоит"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "мама стоит"
+            },
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "папа бежит"
+            }
+          ],
+          "correct": "dad-stand"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ПЁС",
+          "syllables": "МА-ЛЕНЬ-КИЙ ПЁС",
+          "prompt": "Из-под фургона кто-то выглядывает. Прочитай, кто это.",
+          "success": "Маленький пёс отряхивается - брызги во все стороны!",
+          "choices": [
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "маленький пёс"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "большой пёс"
+            },
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            }
+          ],
+          "correct": "small-dog"
+        },
+        {
+          "word": "БОЛЬШОЙ ЗАЯЦ",
+          "syllables": "БОЛЬ-ШОЙ ЗА-ЯЦ",
+          "prompt": "На мокрой траве кто-то появился. Прочитай и найди его.",
+          "success": "Большой заяц, а уши - до неба!",
+          "choices": [
+            {
+              "id": "big-hare",
+              "emoji": "🐰",
+              "size": "big",
+              "label": "большой заяц"
+            },
+            {
+              "id": "small-hare",
+              "emoji": "🐰",
+              "size": "small",
+              "label": "маленький заяц"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "большой кот"
+            }
+          ],
+          "correct": "big-hare"
+        },
+        {
+          "word": "КОАЛА ПОЁТ",
+          "syllables": "КО-А-ЛА ПО-ЁТ",
+          "prompt": "В живом уголке ярмарки кто-то сидит на ветке. Прочитай, что там происходит.",
+          "success": "Коала поёт - дождик ей понравился!",
+          "choices": [
+            {
+              "id": "koala-sing",
+              "emoji": "🐨",
+              "badge": "🎵",
+              "label": "коала поёт"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            },
+            {
+              "id": "koala-sleep",
+              "emoji": "🐨",
+              "badge": "💤",
+              "label": "коала спит"
+            }
+          ],
+          "correct": "koala-sing"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-18",
+      "title": "Вечерние огни",
+      "emoji": "🏮",
+      "character": "🦋",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "Огни горят, ярмарка сияет. Завтра последний день - день подарков!",
+      "tasks": [
+        {
+          "word": "ВОСЕМЬ ЗВЁЗД",
+          "syllables": "ВО-СЕМЬ ЗВЁЗД",
+          "prompt": "Над ярмаркой темнеет. Прочитай, что появилось в небе.",
+          "success": "Восемь звёзд - и с каждой минутой всё больше.",
+          "choices": [
+            {
+              "id": "eight-star",
+              "emoji": "⭐",
+              "count": 8,
+              "label": "восемь звёзд"
+            },
+            {
+              "id": "ten-star",
+              "emoji": "⭐",
+              "count": 10,
+              "label": "десять звёзд"
+            },
+            {
+              "id": "eight-balloon",
+              "emoji": "🎈",
+              "count": 8,
+              "label": "восемь шаров"
+            }
+          ],
+          "correct": "eight-star"
+        },
+        {
+          "word": "ШЕСТЬ ШАРОВ",
+          "syllables": "ШЕСТЬ ША-РОВ",
+          "prompt": "Продавец у входа привязывает что-то к тележке. Прочитай, что.",
+          "success": "Шесть шаров светятся изнутри!",
+          "choices": [
+            {
+              "id": "six-balloon",
+              "emoji": "🎈",
+              "count": 6,
+              "label": "шесть шаров"
+            },
+            {
+              "id": "two-balloon",
+              "emoji": "🎈",
+              "count": 2,
+              "label": "два шара"
+            },
+            {
+              "id": "six-star",
+              "emoji": "⭐",
+              "count": 6,
+              "label": "шесть звёзд"
+            }
+          ],
+          "correct": "six-balloon"
+        },
+        {
+          "word": "ЖЁЛТАЯ МАШИНА",
+          "syllables": "ЖЁЛ-ТА-Я МА-ШИ-НА",
+          "prompt": "К воротам кто-то подъезжает, мигая фарами. Кто это? Прочитай.",
+          "success": "Жёлтая машина-такси - кто-то уже едет домой.",
+          "choices": [
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "жёлтая машина"
+            },
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "красная машина"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "жёлтое сердце"
+            }
+          ],
+          "correct": "yellow-car"
+        },
+        {
+          "word": "СИНЯЯ МАШИНА",
+          "syllables": "СИ-НЯ-Я МА-ШИ-НА",
+          "prompt": "Через минуту снова свет фар. Прочитай, кто приехал теперь.",
+          "success": "Синяя машина - это за фокусником.",
+          "choices": [
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "синяя машина"
+            },
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "красная машина"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "синий круг"
+            }
+          ],
+          "correct": "blue-car"
+        },
+        {
+          "word": "БЕЛЫЙ МЕДВЕДЬ",
+          "syllables": "БЕ-ЛЫЙ МЕД-ВЕДЬ",
+          "prompt": "В холодном павильоне стоят ледяные фигуры. Прочитай, кто здесь.",
+          "success": "Белый медведь изо льда - как настоящий!",
+          "choices": [
+            {
+              "id": "white-bear",
+              "emoji": "🐻‍❄️",
+              "label": "белый медведь"
+            },
+            {
+              "id": "brown-bear",
+              "emoji": "🐻",
+              "label": "коричневый медведь"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "белая птица"
+            }
+          ],
+          "correct": "white-bear"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ДОМ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ДОМ",
+          "prompt": "Вдоль дорожки стоят светящиеся фигурки. Прочитай, какая ближе всех.",
+          "success": "Маленький дом с огоньком в окошке.",
+          "choices": [
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            },
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "большой дом"
+            },
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "маленький кит"
+            }
+          ],
+          "correct": "small-house"
+        },
+        {
+          "word": "БОЛЬШОЙ ДОМ",
+          "syllables": "БОЛЬ-ШОЙ ДОМ",
+          "prompt": "В конце аллеи что-то светится. Прочитай, что там горит.",
+          "success": "Большой дом весь в огнях!",
+          "choices": [
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "большой дом"
+            },
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "маленький дом"
+            },
+            {
+              "id": "big-elephant",
+              "emoji": "🐘",
+              "size": "big",
+              "label": "большой слон"
+            }
+          ],
+          "correct": "big-house"
+        },
+        {
+          "word": "МАМА ИДЁТ",
+          "syllables": "МА-МА И-ДЁТ",
+          "prompt": "По аллее к нам кто-то приближается с фонарём. Прочитай и найди картинку.",
+          "success": "Мама идёт - пора собираться!",
+          "choices": [
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "мама идёт"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "папа идёт"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "мама танцует"
+            }
+          ],
+          "correct": "mom-walk"
+        },
+        {
+          "word": "ДЕВОЧКА СПИТ",
+          "syllables": "ДЕ-ВОЧ-КА СПИТ",
+          "prompt": "В коляске под пледом кто-то есть. Прочитай, кто и что делает.",
+          "success": "Девочка спит - сегодня было столько всего!",
+          "choices": [
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "девочка спит"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "бабушка спит"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "девочка поёт"
+            }
+          ],
+          "correct": "girl-sleep"
+        },
+        {
+          "word": "ПЁС ПОЁТ",
+          "syllables": "ПЁС ПО-ЁТ",
+          "prompt": "У фургона Бима кто-то сидит под луной. Прочитай, что там происходит.",
+          "success": "Пёс поёт луне свою вечернюю песню.",
+          "choices": [
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "пёс поёт"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "лев поёт"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "пёс спит"
+            }
+          ],
+          "correct": "dog-sing"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-19",
+      "title": "Подарки",
+      "emoji": "🎁",
+      "character": "🦄",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Подарки разобраны, а дома все уснули. Утром - последний праздник, прощальный парад!",
+      "tasks": [
+        {
+          "word": "СЕМЬ ШАРОВ",
+          "syllables": "СЕМЬ ША-РОВ",
+          "prompt": "Клоун Бим раздаёт подарки. Прочитай, что он даёт первым гостям.",
+          "success": "Семь шаров - на целую семью!",
+          "choices": [
+            {
+              "id": "seven-balloon",
+              "emoji": "🎈",
+              "count": 7,
+              "label": "семь шаров"
+            },
+            {
+              "id": "five-balloon",
+              "emoji": "🎈",
+              "count": 5,
+              "label": "пять шаров"
+            },
+            {
+              "id": "seven-ball",
+              "emoji": "⚽",
+              "count": 7,
+              "label": "семь мячей"
+            }
+          ],
+          "correct": "seven-balloon"
+        },
+        {
+          "word": "ОДНО ЯЙЦО",
+          "syllables": "ОД-НО ЯЙ-ЦО",
+          "prompt": "В корзинке под салфеткой спрятан сюрприз. Прочитай, что там.",
+          "success": "Одно яйцо, шоколадное, с игрушкой внутри!",
+          "choices": [
+            {
+              "id": "one-egg",
+              "emoji": "🥚",
+              "count": 1,
+              "label": "одно яйцо"
+            },
+            {
+              "id": "three-egg",
+              "emoji": "🥚",
+              "count": 3,
+              "label": "три яйца"
+            },
+            {
+              "id": "one-cloud",
+              "emoji": "☁️",
+              "count": 1,
+              "label": "одно облако"
+            }
+          ],
+          "correct": "one-egg"
+        },
+        {
+          "word": "ДВА ТОРТА",
+          "syllables": "ДВА ТОР-ТА",
+          "prompt": "Повар ярмарки тоже приготовил подарок. Прочитай, какой.",
+          "success": "Два торта - один с вишней, другой с кремом.",
+          "choices": [
+            {
+              "id": "two-cake",
+              "emoji": "🎂",
+              "count": 2,
+              "label": "два торта"
+            },
+            {
+              "id": "six-cake",
+              "emoji": "🎂",
+              "count": 6,
+              "label": "шесть тортов"
+            },
+            {
+              "id": "two-cupcake",
+              "emoji": "🧁",
+              "count": 2,
+              "label": "два кекса"
+            }
+          ],
+          "correct": "two-cake"
+        },
+        {
+          "word": "ЖЁЛТЫЙ МЯЧ",
+          "syllables": "ЖЁЛ-ТЫЙ МЯЧ",
+          "prompt": "Тренер из спортивного городка тоже пришёл с подарком. Прочитай, с каким.",
+          "success": "Жёлтый мяч - играть во дворе.",
+          "choices": [
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "жёлтый мяч"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "белый мяч"
+            },
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "жёлтый цветок"
+            }
+          ],
+          "correct": "yellow-ball"
+        },
+        {
+          "word": "БЕЛОЕ СЕРДЦЕ",
+          "syllables": "БЕ-ЛО-Е СЕРД-ЦЕ",
+          "prompt": "Сказочница протягивает открытку. Прочитай, что на ней.",
+          "success": "Белое сердце - на память о колыбельных.",
+          "choices": [
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "белое сердце"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "красное сердце"
+            },
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "белый квадрат"
+            }
+          ],
+          "correct": "white-heart"
+        },
+        {
+          "word": "СИНИЙ РОМБ",
+          "syllables": "СИ-НИЙ РОМБ",
+          "prompt": "Енот Тимоша дарит свой рисунок. Прочитай, что он нарисовал.",
+          "success": "Синий ромб, как волшебный кристалл.",
+          "choices": [
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "синий ромб"
+            },
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "оранжевый ромб"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "синяя книга"
+            }
+          ],
+          "correct": "blue-diamond"
+        },
+        {
+          "word": "БОЛЬШОЕ ЯЙЦО",
+          "syllables": "БОЛЬ-ШО-Е ЯЙ-ЦО",
+          "prompt": "Фермер привёз с фермы что-то в соломе. Что это? Прочитай.",
+          "success": "Большое яйцо - вдруг из него кто-то вылупится?",
+          "choices": [
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "большое яйцо"
+            },
+            {
+              "id": "small-egg",
+              "emoji": "🥚",
+              "size": "small",
+              "label": "маленькое яйцо"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "большой мяч"
+            }
+          ],
+          "correct": "big-egg"
+        },
+        {
+          "word": "БОЛЬШАЯ МЫШЬ",
+          "syllables": "БОЛЬ-ША-Я МЫШЬ",
+          "prompt": "Кукольник отдаёт нам куклу из спектакля. Прочитай, какую.",
+          "success": "Большая мышь в смешном колпачке!",
+          "choices": [
+            {
+              "id": "big-mouse",
+              "emoji": "🐭",
+              "size": "big",
+              "label": "большая мышь"
+            },
+            {
+              "id": "small-mouse",
+              "emoji": "🐭",
+              "size": "small",
+              "label": "маленькая мышь"
+            },
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "большая сова"
+            }
+          ],
+          "correct": "big-mouse"
+        },
+        {
+          "word": "МАМА СПИТ",
+          "syllables": "МА-МА СПИТ",
+          "prompt": "Вечером дома в гостиной кто-то есть. Прочитай, кто и что делает.",
+          "success": "Мама спит, а подарки лежат рядом.",
+          "choices": [
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "мама спит"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "папа спит"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "мама варит"
+            }
+          ],
+          "correct": "mom-sleep"
+        },
+        {
+          "word": "ПАПА СПИТ",
+          "syllables": "ПА-ПА СПИТ",
+          "prompt": "А кто в соседнем кресле? Прочитай и найди картинку.",
+          "success": "Папа спит и храпит на весь дом!",
+          "choices": [
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "папа спит"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "дедушка спит"
+            },
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "папа поёт"
+            }
+          ],
+          "correct": "dad-sleep"
+        }
+      ]
+    },
+    {
+      "id": "ru-a-20",
+      "title": "Прощальный парад",
+      "emoji": "🎉",
+      "character": "🤡",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "Фургоны уезжают, а ярмарка остаётся в памяти. Ты прочитал все её истории!",
+      "tasks": [
+        {
+          "word": "КРАСНЫЙ ФЛАГ",
+          "syllables": "КРАС-НЫЙ ФЛАГ",
+          "prompt": "Парад начинается! Прочитай, что несут впереди.",
+          "success": "Красный флаг ярмарки гордо реет над парадом.",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "красный флаг"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "белый флаг"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "красная книга"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "ЧЁРНЫЙ КРУГ",
+          "syllables": "ЧЁР-НЫЙ КРУГ",
+          "prompt": "За ними едет барабанщик. Прочитай, что нарисовано на барабане.",
+          "success": "Чёрный круг - точно посередине барабана.",
+          "choices": [
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "чёрный круг"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "белый круг"
+            },
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "чёрная птица"
+            }
+          ],
+          "correct": "black-circle"
+        },
+        {
+          "word": "ДЕВЯТЬ ШАРОВ",
+          "syllables": "ДЕ-ВЯТЬ ША-РОВ",
+          "prompt": "Над колонной парада что-то плывёт. Что это? Прочитай.",
+          "success": "Девять шаров - и все рвутся в небо.",
+          "choices": [
+            {
+              "id": "nine-balloon",
+              "emoji": "🎈",
+              "count": 9,
+              "label": "девять шаров"
+            },
+            {
+              "id": "seven-balloon",
+              "emoji": "🎈",
+              "count": 7,
+              "label": "семь шаров"
+            },
+            {
+              "id": "nine-star",
+              "emoji": "⭐",
+              "count": 9,
+              "label": "девять звёзд"
+            }
+          ],
+          "correct": "nine-balloon"
+        },
+        {
+          "word": "ЧЕТЫРЕ СЛОНА",
+          "syllables": "ЧЕ-ТЫ-РЕ СЛО-НА",
+          "prompt": "По улице шагает колонна гостей. Прочитай, кто там.",
+          "success": "Четыре слона машут хоботами.",
+          "choices": [
+            {
+              "id": "four-elephant",
+              "emoji": "🐘",
+              "count": 4,
+              "label": "четыре слона"
+            },
+            {
+              "id": "one-elephant",
+              "emoji": "🐘",
+              "count": 1,
+              "label": "один слон"
+            },
+            {
+              "id": "four-whale",
+              "emoji": "🐋",
+              "count": 4,
+              "label": "четыре кита"
+            }
+          ],
+          "correct": "four-elephant"
+        },
+        {
+          "word": "БОЛЬШОЙ СЛОН",
+          "syllables": "БОЛЬ-ШОЙ СЛОН",
+          "prompt": "Во главе колонны кто-то важно шагает. Прочитай, кто.",
+          "success": "Большой слон в нарядной попоне.",
+          "choices": [
+            {
+              "id": "big-elephant",
+              "emoji": "🐘",
+              "size": "big",
+              "label": "большой слон"
+            },
+            {
+              "id": "small-elephant",
+              "emoji": "🐘",
+              "size": "small",
+              "label": "маленький слон"
+            },
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            }
+          ],
+          "correct": "big-elephant"
+        },
+        {
+          "word": "МАЛЕНЬКИЙ ЛЕВ",
+          "syllables": "МА-ЛЕНЬ-КИЙ ЛЕВ",
+          "prompt": "Наверху, на спине переднего зверя, кто-то сидит. Прочитай и найди его.",
+          "success": "Маленький лев машет лапой зрителям.",
+          "choices": [
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "маленький лев"
+            },
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "большой лев"
+            },
+            {
+              "id": "small-hedgehog",
+              "emoji": "🦔",
+              "size": "small",
+              "label": "маленький ёж"
+            }
+          ],
+          "correct": "small-lion"
+        },
+        {
+          "word": "ПАПА ЕДЕТ",
+          "syllables": "ПА-ПА Е-ДЕТ",
+          "prompt": "Мимо трибуны кто-то проносится. Прочитай, кто это.",
+          "success": "Папа едет на велосипеде с флажком.",
+          "choices": [
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "папа едет"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "мама едет"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "папа танцует"
+            }
+          ],
+          "correct": "dad-ride"
+        },
+        {
+          "word": "МАМА РИСУЕТ",
+          "syllables": "МА-МА РИ-СУ-ЕТ",
+          "prompt": "У края дороги кто-то сидит на раскладном стуле. Прочитай, что там происходит.",
+          "success": "Мама рисует парад, чтобы запомнить его навсегда.",
+          "choices": [
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "мама рисует"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "папа рисует"
+            },
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "мама играет"
+            }
+          ],
+          "correct": "mom-paint"
+        },
+        {
+          "word": "КОТ ПОЁТ",
+          "syllables": "КОТ ПО-ЁТ",
+          "prompt": "На крыше фургона Бима кто-то сидит. Прочитай, кто и чем занят.",
+          "success": "Кот поёт - он прощается с ярмаркой.",
+          "choices": [
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "кот поёт"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "пёс поёт"
+            },
+            {
+              "id": "cat-cry",
+              "emoji": "😿",
+              "label": "кот плачет"
+            }
+          ],
+          "correct": "cat-sing"
+        },
+        {
+          "word": "МАЛЫШ СПИТ",
+          "syllables": "МА-ЛЫШ СПИТ",
+          "prompt": "Парад закончился, все расходятся. Прочитай, кто в коляске и что делает.",
+          "success": "Малыш спит - лучшая ярмарка в его жизни!",
+          "choices": [
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "малыш спит"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "папа спит"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "малыш поёт"
+            }
+          ],
+          "correct": "baby-sleep"
+        }
+      ]
+    }
+  ]
+}
