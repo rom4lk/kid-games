@@ -334,7 +334,7 @@ A phrase pack is listed by appending its key, `phraseA`, `phraseB` or `phraseC`,
 its file passes the validator. `PHRASE_LEVELS` in [game.js](game.js) and `PHRASE_LEVELS` in
 [tools/validate.py](tools/validate.py) must agree on the three levels. The strings of all three
 phrase levels are already in both `ui.*.json` files. Listed now: Russian levels A, B and C, and
-English levels A and B. The last phrase pack, English level C, is still to be written.
+English levels A, B and C.
 
 ## Deliberate decisions
 
