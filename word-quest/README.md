@@ -8,6 +8,12 @@ next word.
 
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
 - levels by word length, from 3 to 7 letters, in both languages;
+- phrase levels after the 7-letter level, in three steps: two short words, two longer words and
+  three words. A phrase is a color, a number or a size with a noun, or a subject with an action
+  (КРАСНЫЙ ФЛАГ, ДВА ШАРА, МАЛЕНЬКИЙ ПЁС, КОТ СПИТ). Each wrong picture changes one word of the
+  phrase and the two change different words, so the child has to read every word. Russian
+  phrases come split into syllables at once, English phrases whole with the parts on demand,
+  exactly as in the letter levels;
 - a second mode, "Find the word": a picture and three written words that differ in one letter, in
   both languages, with one pack per word length;
 - 20 chapters in every level, 10 words in every chapter — 200 readings per level, drawn from a
@@ -46,7 +52,8 @@ which does not work over `file://`.
 
 ## The game loop
 
-1. The child picks the reading language, then a level by word length, then a chapter.
+1. The child picks the reading language, then a level by word length or a phrase level, then a
+   chapter.
 2. The chapter screen shows the situation and a large word.
 3. The child reads the word themselves.
 4. If needed, opens the split into parts, or sets the word aside for later.
@@ -75,12 +82,69 @@ the one that is the same everywhere.
   have two real partners that differ from them in one letter. Every distractor is a real word of its
   language.
 
+## Phrase levels
+
+The phrase levels give more reading out of the same pictures: a few dozen nouns combined with
+colors, numbers, sizes and actions make hundreds of different phrases. There are three steps, and
+the menu card of each shows one bar per word instead of a number:
+
+| Level | Words | English letters (no spaces) | Russian letters | Longest word | Long word required |
+| --- | --- | --- | --- | --- | --- |
+| A, two short words | 2 | 5–8 | 5–12 | en 7, ru 9 | no |
+| B, two longer words | 2 | 9–14 | 11–18 | en 7, ru 10 | ru: one word of 7+ letters |
+| C, three words | 3 | 7–18 | 9–22 | en 7, ru 10 | no |
+
+Only the correct phrase counts, because the wrong answers are pictures. Russian A and B overlap at
+11–12 letters on purpose: a phrase there belongs in B only if it has a word of seven letters or
+more. Russian A allows МАЛЕНЬКИЙ (9 letters), because there is no shorter natural word for
+"small" and a size phrase only teaches reading when both size words can be the answer.
+
+Every level mixes four kinds of phrase, and each kind has one way to be drawn:
+
+- **Color + noun** (КРАСНЫЙ ФЛАГ): an emoji that genuinely has that color, such as ❤️ 💙 🟢 📕
+  🍏 🐻‍❄️.
+- **Number + noun** (ДВА ШАРА): the emoji repeated that many times, in rows of five like a ten
+  frame, with one item size for the whole task so a count never reads as big or small.
+- **Size + noun** (МАЛЕНЬКИЙ ПЁС): the same emoji scaled up or down inside its card.
+- **Subject + action** (КОТ СПИТ, ПАПА ИДЁТ): a sleeping or singing subject is its own emoji with
+  a small 💤 or 🎵 in the corner; other actions are the gendered people emoji with МАМА/ПАПА
+  (🏃‍♀️ 🏃‍♂️, 💃 🕺) and the cat faces 😿 😹 😽 for crying, laughing and kissing.
+
+A level C phrase combines two of them, such as a number and a color, or a number and an action.
+
+The two wrong pictures each change exactly one word of the phrase, and they change different
+words. For КРАСНЫЙ ФЛАГ the wrong answers are БЕЛЫЙ ФЛАГ and КРАСНЫЙ ЛИСТ: a child who reads only
+the noun, or only the color, cannot tell the right picture from a wrong one. A changed word keeps
+its kind, so a color is swapped for a color and a noun for a noun. Colors that are easy to confuse,
+such as red and orange, are not swapped for each other.
+
+The pictures come from fixed tables in [tools/validate.py](tools/validate.py) rather than from the
+author's choice in each task: `COLOR_PICTURES` maps a color and a noun to the one emoji that shows
+that noun in that color, and `VERB_PICTURES` maps a subject and an action to its emoji. Colors are
+judged on Apple Color Emoji, which the family's Mac and tablet use, up to Emoji 15.0. There is no
+recoloring and no custom drawing, so a "blue balloon" cannot exist, because 🎈 only comes in red.
+Each meaning has one picture across both languages: `cat` is 🐱 in Russian and in English.
+
+A level has floors and caps, held by the validator as errors:
+
+- at least 100 different phrases across the 200 tasks, and no phrase more than 3 times;
+- at least 30 tasks of each of the four kinds; a level C task counts for both of its kinds;
+- a number with a size, or a number with a 💤 or 🎵 badge, goes up to 3 items at most, because in
+  a row of five the big and small items or the badges stop looking different.
+
+On a phone three answers side by side leave about 100px each. A task whose answers hold four or
+more items, a size or a badge with two or more items, or a caption word longer than eight letters
+stacks its answers in one column there. The third answer may then need a scroll. The phone is
+best-effort, as in [GAME_DESIGN.md](../GAME_DESIGN.md#target-device); a computer and a tablet keep
+the three answers side by side on one screen.
+
 ## Stored progress
 
 The progress is saved to `localStorage` under the key `livingWordsProgressV2`. It holds:
 
 - the chosen language;
-- the number of words solved in each chapter of each language and level;
+- the number of words solved in each chapter of each language and level, the phrase levels
+  included under the keys `<lang>-phraseA`, `<lang>-phraseB` and `<lang>-phraseC`;
 - the number of words solved in each chapter of each "Find the word" pack, under the keys
   `en-spell3`, `ru-spell3` and `ru-spell4`;
 - the number of opened hints and wrong choices;
@@ -100,6 +164,8 @@ word-quest/
 │   ├── ui.ru.json        # Russian interface strings
 │   ├── words.<lang>.<letters>.json
 │   │                     # A word pack: 20 chapters of 10 tasks
+│   ├── phrases.<lang>.<a|b|c>.json
+│   │                     # A phrase pack: 20 chapters of 10 phrase tasks
 │   └── spell.<lang>.<letters>.json
 │                         # A "Find the word" pack: 5 or 10 chapters of 10 tasks
 ├── tools/
@@ -186,6 +252,76 @@ twice, and the first letter changing in more than 30% of the tasks of a pack. Th
 the first letter under that share, so a word whose only real partners differ in a later letter
 comes back with the same pair, and the validator lists those words.
 
+A phrase pack is a word pack with three differences: the file name, the header and the picture
+fields on the choices. The file is `phrases.<lang>.<a|b|c>.json`, and the header names the mode and
+the level instead of the letters:
+
+```json
+{
+  "language": "ru",
+  "mode": "phrase",
+  "level": "a",
+  "chapters": []
+}
+```
+
+The chapters carry the same fields as in a word pack, with ids such as `ru-a-01`. A phrase task
+from [content/phrases.ru.a.json](content/phrases.ru.a.json):
+
+```json
+{
+  "word": "ДВА ШАРА",
+  "syllables": "ДВА ША-РА",
+  "prompt": "Из фургона выпрыгивает клоун Бим. Прочитай, что он принёс.",
+  "success": "Два шара рвутся в небо, и Бим смеётся.",
+  "choices": [
+    { "id": "two-balloon", "emoji": "🎈", "count": 2, "label": "два шара" },
+    { "id": "five-balloon", "emoji": "🎈", "count": 5, "label": "пять шаров" },
+    { "id": "two-ball", "emoji": "⚽", "count": 2, "label": "два мяча" }
+  ],
+  "correct": "two-balloon"
+}
+```
+
+The fields that differ from a word task:
+
+| Field | Rule |
+| --- | --- |
+| `word` | Upper-case words separated by single spaces: 2 words in levels A and B, 3 in level C. |
+| `syllables` | Each word split exactly as a word of that length is split in the levels, words joined by single spaces. Russian: by syllables, a one-syllable word whole. English: 3–4 letters letter by letter (`R-E-D C-A-T`), 5+ letters by syllables, a one-syllable word whole. With the hyphens removed it spells `word`. |
+| `choices[].id` | The meaning of the phrase as English slugs, one per word, in word order, joined by `-`. A slug names the meaning, not the form: красный, красное and красных are all `red`, and кота and котов are both `cat`. The two languages share the slugs. The validator checks distractors against these slugs. |
+| `choices[].emoji` | One emoji, the picture of one item. It is fixed by the validator's tables: color + noun → `COLOR_PICTURES`, people and cat-face verbs → `VERB_PICTURES`, and the noun's own picture otherwise. |
+| `choices[].count` | Optional integer 1–10, present exactly when the phrase has a number word. The item is drawn that many times. |
+| `choices[].size` | Optional, `"big"` or `"small"`, present exactly when the phrase has a size word. |
+| `choices[].badge` | `"💤"` for sleep, `"🎵"` for sing. Required on every sleep or sing phrase, and allowed nowhere else. A small second emoji in the corner of each item. |
+| `choices[].label` | Required for every choice: the lower-case phrase of that choice. Only the correct one is ever shown, after the answer. The distractor labels feed the form checks. |
+
+Word levels are untouched: their choices never carry `count`, `size` or `badge`.
+
+For a phrase pack the validator checks the shape first: the word count, the letter limits of the
+level, the parts spelling the phrase back, three choices with distinct pictures, and ids with one
+slug per word. Then it checks the meaning. The correct phrase has to be a modifier and a noun or a
+noun and a known verb, with modifiers in the order number, size, color. Each distractor has to
+change exactly one slug, the two have to change different words, and a changed slug has to keep its
+kind. The picture has to match the words: the count is the number, the size and the badge are
+present exactly when the words call for them, and a color or an action uses the emoji from the
+table. One meaning keeps one picture across all six phrase packs. The prompt may not contain a word
+that a distractor changes, just as a "Find the word" prompt may not name its answer.
+
+The form checks catch inconsistent spellings, not wrong grammar. The validator remembers how each
+slug was written in each context, a noun by its number class or a color by its noun, and reports a
+second spelling, so КОТА in one task and КОТЫ in another after ДВА is an error. It does not know
+that one of them is wrong. English also gets a plural check after a number and the -S of the verb.
+Russian text has to spell Ё in the words that always have it, such as ЗЕЛЁНЫЙ, ПОЁТ and ПЁС. The
+grammar itself is checked by reading every correct label before a pack lands.
+
+The phrase floors and caps are listed under [Phrase levels](#phrase-levels). The warnings are a noun
+in more than 10% of the tasks, the same task with the same distractors more than once, a close pair
+of colors swapped, and, in level C, one word position left alone by both distractors in more than
+half of the tasks. The validator prints a summary line for every phrase pack with its unique
+phrases, the largest repeat, the mean letters per phrase and the tasks of each kind, so packs that
+overlap can be compared.
+
 ## Adding a level
 
 The list of playable levels lives in the `LEVELS` constant at the top of [game.js](game.js). All ten
@@ -193,6 +329,12 @@ packs — levels 3 to 7 in both languages — are written and listed. To add ano
 pack, run the validator, add the level number to `LEVELS` and add its strings to both `ui.*.json`
 files. A "Find the word" pack is listed in `SPELL_PACKS` in [game.js](game.js) and in `SPELL_PACKS`
 in [tools/validate.py](tools/validate.py).
+
+A phrase pack is listed by appending its key, `phraseA`, `phraseB` or `phraseC`, to `LEVELS` once
+its file passes the validator. `PHRASE_LEVELS` in [game.js](game.js) and `PHRASE_LEVELS` in
+[tools/validate.py](tools/validate.py) must agree on the three levels. The strings of all three
+phrase levels are already in both `ui.*.json` files. Listed now: Russian level A. The other five
+phrase packs are written one at a time.
 
 ## Deliberate decisions
 
@@ -213,3 +355,11 @@ These decisions were made on purpose and take precedence over the shared rules i
   words must line up letter by letter in columns, and a split would break the columns the hint relies
   on. This overrides the syllable rule in GAME_DESIGN.md and the way the Russian levels show a word
   split at once.
+- **Color phrases carry meaning by color.** In КРАСНОЕ СЕРДЦЕ against СИНЕЕ СЕРДЦЕ the color is the
+  content being read. This overrides "never carry meaning by color alone" in GAME_DESIGN.md for
+  this content only, and close color pairs are not swapped for each other.
+- **Each wrong picture changes one word, and the two change different words.** Otherwise one word
+  of the phrase could stay unread.
+- **A sleeping or singing subject is drawn as its emoji with a small 💤 or 🎵 in the corner.** No
+  emoji shows a sleeping cat, and one drawing per action keeps a verb from having two pictures.
+- **Russian phrases come split, English phrases whole.** The same as the letter levels.
