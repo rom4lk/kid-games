@@ -197,7 +197,7 @@
         {
           "word": "TEN DUCKS",
           "syllables": "T-E-N DUCKS",
-          "prompt": "Ollie hands us a pair of binoculars. Read who is out on the lake.",
+          "prompt": "Ollie points at the water by the reeds. Read who is there.",
           "success": "Ten ducks paddle by in a long line, like a little parade.",
           "choices": [
             {
@@ -224,7 +224,7 @@
         {
           "word": "BIG BOAT",
           "syllables": "B-I-G B-O-A-T",
-          "prompt": "Ollie shows us what we can use all week. Read what it is.",
+          "prompt": "Ollie shows us what we can use at camp. Read what it is.",
           "success": "A big boat - room for the whole family!",
           "choices": [
             {
@@ -251,7 +251,7 @@
         {
           "word": "BOY SINGS",
           "syllables": "B-O-Y SINGS",
-          "prompt": "In the tent next door, a lamp is still on. Read who is inside and what is happening.",
+          "prompt": "In the tent next door, somebody is cuddling a teddy. Read who is inside and what is happening.",
           "success": "A boy sings to his teddy very softly, and then the lamp goes out.",
           "choices": [
             {
@@ -496,7 +496,7 @@
           "word": "BIG CAKE",
           "syllables": "B-I-G C-A-K-E",
           "prompt": "The shop is taking orders for the camp party. Read what the poster shows.",
-          "success": "A big cake for the goodbye party at the end of the week!",
+          "success": "A big cake for the goodbye party on our last day!",
           "choices": [
             {
               "id": "big-cake",
@@ -1019,7 +1019,7 @@
         {
           "word": "TEN STARS",
           "syllables": "T-E-N STARS",
-          "prompt": "Miss Lark sprinkles glitter on a sheet of paper. Read what appears.",
+          "prompt": "Miss Lark peels the cover off a sticker sheet. Read what appears.",
           "success": "Ten stars sparkle like a night sky!",
           "choices": [
             {
@@ -1110,7 +1110,7 @@
         {
           "word": "MOM SWIMS",
           "syllables": "M-O-M SWIMS",
-          "prompt": "The lake is calm this morning. Read who it is and what they are doing.",
+          "prompt": "The lake is calm this morning, and somebody is already down at the water. Read who it is and what they are doing.",
           "success": "Mom swims all the way out to the yellow buoy!",
           "choices": [
             {
@@ -1267,7 +1267,7 @@
           "word": "RED FLAG",
           "syllables": "R-E-D F-L-A-G",
           "prompt": "Ollie points at the lifeguard tower. Read what is up there.",
-          "success": "A red flag means the lifeguard is on duty.",
+          "success": "A red flag flies on top of the tower.",
           "choices": [
             {
               "id": "red-flag",
@@ -1408,7 +1408,7 @@
         {
           "word": "FIVE BEES",
           "syllables": "F-I-V-E B-E-E-S",
-          "prompt": "On the far side, the trees are full of blossom. Read who is busy there.",
+          "prompt": "On the far side of the orchard, somebody is busy. Read who is there.",
           "success": "Five bees buzz from flower to flower.",
           "choices": [
             {
@@ -1564,7 +1564,7 @@
         {
           "word": "OWL SINGS",
           "syllables": "O-W-L SINGS",
-          "prompt": "High up in the oldest tree, somebody has a nest. Read who it is and what is going on.",
+          "prompt": "High up in the oldest tree, somebody is sitting. Read who it is and what is going on.",
           "success": "The owl sings hoo-hoo, right in the middle of the day!",
           "choices": [
             {
@@ -1929,7 +1929,7 @@
         {
           "word": "MOM COOKS",
           "syllables": "M-O-M COOKS",
-          "prompt": "Chef Basil needs help in the camp kitchen today. Read who puts on an apron and what they do.",
+          "prompt": "Chef Basil has a visitor this morning. Read who is there and what they are up to.",
           "success": "Mom cooks pancakes for the whole camp!",
           "choices": [
             {
@@ -2034,7 +2034,7 @@
         {
           "word": "DAD COOKS",
           "syllables": "D-A-D COOKS",
-          "prompt": "Out on the deck, somebody is busy at a long table. Read who it is and what they are doing.",
+          "prompt": "Out on the deck, somebody is busy. Read who it is and what they are doing.",
           "success": "Dad cooks the corn, and it smells great!",
           "choices": [
             {
@@ -2058,7 +2058,7 @@
         {
           "word": "BIG CAKE",
           "syllables": "B-I-G C-A-K-E",
-          "prompt": "Chef Basil hides a treat on the top shelf. Read what is up there.",
+          "prompt": "Chef Basil hides something on the top shelf. Read what is up there.",
           "success": "A big cake for the party - shh, it is a surprise!",
           "choices": [
             {
@@ -2085,7 +2085,7 @@
         {
           "word": "RED BOOK",
           "syllables": "R-E-D B-O-O-K",
-          "prompt": "Chef Basil looks for his favorite recipe. Read what he takes off the shelf.",
+          "prompt": "Chef Basil reaches into the cupboard. Read what he takes off the shelf.",
           "success": "A red book of recipes, covered in flour.",
           "choices": [
             {
@@ -2135,7 +2135,7 @@
         {
           "word": "SIX FISH",
           "syllables": "S-I-X F-I-S-H",
-          "prompt": "Somebody from the lake brings a bucket to the kitchen door. Read what is in it.",
+          "prompt": "Somebody brings a crate to the kitchen door. Read what is in it.",
           "success": "Six fish for dinner tonight!",
           "choices": [
             {
@@ -2379,7 +2379,7 @@
         {
           "word": "SMALL DOG",
           "syllables": "SMALL D-O-G",
-          "prompt": "Ollie hangs the last medal around somebody's neck. Read whose.",
+          "prompt": "Ollie hangs the last medal around somebody's neck. Read who gets it.",
           "success": "A small dog - Pip wins a medal too!",
           "choices": [
             {
@@ -2623,7 +2623,7 @@
         {
           "word": "SMALL BEE",
           "syllables": "SMALL B-E-E",
-          "prompt": "Something sits down on my handlebar. Read what it is.",
+          "prompt": "Something is sitting on my handlebar. Read what it is.",
           "success": "A small bee - and off it buzzes again.",
           "choices": [
             {
@@ -2674,7 +2674,7 @@
         {
           "word": "DOG SINGS",
           "syllables": "D-O-G SINGS",
-          "prompt": "In the basket on Ollie's bike, somebody is riding along. Read who it is and what is going on.",
+          "prompt": "Behind Ollie's bike, somebody rides along in a trailer. Read who it is and what is going on.",
           "success": "Pip sings the whole way home - woof-woof-la!",
           "choices": [
             {
@@ -2701,7 +2701,7 @@
         {
           "word": "SIX STARS",
           "syllables": "S-I-X STARS",
-          "prompt": "On the ride home, the sky gets dark. Read what comes out above us.",
+          "prompt": "On the ride home, we look up at the sky. Read what is above us.",
           "success": "Six stars come out, one by one.",
           "choices": [
             {
@@ -2792,7 +2792,7 @@
         {
           "word": "BLACK DOT",
           "syllables": "BLACK D-O-T",
-          "prompt": "Miss Lark spins the arrow again. Read the next spot.",
+          "prompt": "Miss Lark spins the arrow again. Read what it lands on this time.",
           "success": "A black dot - now my foot goes there, wobble, wobble!",
           "choices": [
             {
@@ -3039,7 +3039,7 @@
         {
           "word": "SMALL CAT",
           "syllables": "SMALL C-A-T",
-          "prompt": "Next, a girl carries somebody up in her arms. Read who is in them.",
+          "prompt": "Next, a girl comes up to the judges with her pet. Read who she brings.",
           "success": "A small cat with soft fur, purring.",
           "choices": [
             {
@@ -3136,10 +3136,10 @@
               "label": "small cat"
             },
             {
-              "id": "big-tiger",
-              "emoji": "🐯",
+              "id": "big-dog",
+              "emoji": "🐶",
               "size": "big",
-              "label": "big tiger"
+              "label": "big dog"
             }
           ],
           "correct": "big-cat"
@@ -3147,7 +3147,7 @@
         {
           "word": "RED BOOK",
           "syllables": "R-E-D B-O-O-K",
-          "prompt": "The judge writes down the scores. Read what she writes them in.",
+          "prompt": "The judge sits at a table by the stage. Read what she has in front of her.",
           "success": "A red book full of scores and little stars.",
           "choices": [
             {
@@ -3198,7 +3198,7 @@
         {
           "word": "BOY SINGS",
           "syllables": "B-O-Y SINGS",
-          "prompt": "The last act walks up the steps of the stage. Read who it is and what happens.",
+          "prompt": "The pet show is nearly over, and the curtain opens one last time. Read who it is and what happens.",
           "success": "A boy sings a song about his hamster!",
           "choices": [
             {
@@ -3639,7 +3639,7 @@
           "word": "RED FLAG",
           "syllables": "R-E-D F-L-A-G",
           "prompt": "At the finish line, Ollie holds something up. Read what it is.",
-          "success": "A red flag means the race is over!",
+          "success": "A red flag - the race is over!",
           "choices": [
             {
               "id": "red-flag",
@@ -3662,8 +3662,8 @@
         {
           "word": "BIG BOAT",
           "syllables": "B-I-G B-O-A-T",
-          "prompt": "Out on the water, something is far ahead of the rest. What is it? Read.",
-          "success": "A big boat with four paddlers wins the race!",
+          "prompt": "Out on the water, something is moving fast. What is it? Read.",
+          "success": "A big boat wins the race - what a splash!",
           "choices": [
             {
               "id": "big-boat",
@@ -4342,7 +4342,7 @@
         {
           "word": "FIVE EGGS",
           "syllables": "F-I-V-E E-G-G-S",
-          "prompt": "Rosa sells something from her farm in a little box. Read what is in it.",
+          "prompt": "Rosa has one more thing from her farm to sell. Read what she has.",
           "success": "Five eggs, the last box of the day!",
           "choices": [
             {
@@ -4406,7 +4406,7 @@
         {
           "word": "BOY SINGS",
           "syllables": "B-O-Y SINGS",
-          "prompt": "Next, somebody shy comes out from behind the curtain. Read who it is and what happens.",
+          "prompt": "Next, the curtain opens on somebody shy. Read who it is and what happens.",
           "success": "A boy sings, and his voice gets braver and braver!",
           "choices": [
             {
@@ -4460,7 +4460,7 @@
         {
           "word": "SMALL PIG",
           "syllables": "SMALL P-I-G",
-          "prompt": "Farmer Rosa's act has a little helper. Read who it is.",
+          "prompt": "Farmer Rosa's act has a helper. Read who it is.",
           "success": "A small pig does a twirl!",
           "choices": [
             {
@@ -4589,7 +4589,7 @@
         {
           "word": "PIG SINGS",
           "syllables": "P-I-G SINGS",
-          "prompt": "Rosa's pet is back for one more act. Read what is going on now.",
+          "prompt": "Somebody is back on the stage for one more act. Read who it is and what is going on now.",
           "success": "Rosa's pig sings again, even louder!",
           "choices": [
             {
@@ -4764,7 +4764,7 @@
         {
           "word": "DAD COOKS",
           "syllables": "D-A-D COOKS",
-          "prompt": "Somebody is in charge of the snacks tonight. Read who it is and what they are doing.",
+          "prompt": "Somebody is busy on the far side of the fire. Read who it is and what they are doing.",
           "success": "Dad cooks marshmallows until they are golden.",
           "choices": [
             {
@@ -4816,7 +4816,7 @@
         {
           "word": "TWO OWLS",
           "syllables": "T-W-O O-W-L-S",
-          "prompt": "Up in the dark trees, there are eyes shining. Read whose they are.",
+          "prompt": "In the dark trees, eyes are shining. Read who is looking at us.",
           "success": "Two owls watch our campfire from above.",
           "choices": [
             {
@@ -5254,7 +5254,7 @@
           "word": "DAD COOKS",
           "syllables": "D-A-D COOKS",
           "prompt": "Somebody is busy behind the party table. Read who it is and what they are doing.",
-          "success": "Dad cooks his famous pancakes one last time.",
+          "success": "Dad cooks his famous corn one last time.",
           "choices": [
             {
               "id": "dad-cook",
