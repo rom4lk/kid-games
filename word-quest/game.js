@@ -5,7 +5,14 @@ const STORAGE_KEY = "livingWordsProgressV2";
 const LANGUAGE_KEY = "kidGamesLanguageV1";
 const SUPPORTED_LANGUAGES = ["en", "ru"];
 
-const LEVELS = { en: [3, 4, 5, 6, 7], ru: [3, 4, 5, 6, 7] };
+// Phrase levels follow the letter levels: two short words, two longer words, three words. The key
+// names the step, not a count; the bars on the menu card stand for the words of the phrase.
+const PHRASE_LEVELS = {
+  phraseA: { file: "a", words: 2, bars: [1, 1] },
+  phraseB: { file: "b", words: 2, bars: [2, 2] },
+  phraseC: { file: "c", words: 3, bars: [1, 1, 1] },
+};
+const LEVELS = { en: [3, 4, 5, 6, 7], ru: [3, 4, 5, 6, 7, "phraseA"] };
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
@@ -139,9 +146,10 @@ function spellPack(language, key) {
 
 function packPath(language, letters) {
   const spell = spellPack(language, letters);
-  return spell
-    ? `content/spell.${language}.${spell.letters}.json`
-    : `content/words.${language}.${letters}.json`;
+  if (spell) return `content/spell.${language}.${spell.letters}.json`;
+  const phrase = PHRASE_LEVELS[letters];
+  if (phrase) return `content/phrases.${language}.${phrase.file}.json`;
+  return `content/words.${language}.${letters}.json`;
 }
 
 function getPack(language, letters) {
@@ -260,9 +268,9 @@ function initializeStaticContent() {
 
   setText("skipLabel", ui.play.skip);
   setText("backLabel", ui.play.back);
-  setText("listenLabel", ui.play.listen);
-  // The instruction, the card hint, the hint button and the choice line differ
-  // between the modes, so renderTask sets them through applyModeStrings.
+  // The instruction, the card hint, the hint button, the choice line and the
+  // listen button differ between the modes, so renderTask sets them through
+  // applyModeStrings.
 
   setText("parentEyebrow", ui.parent.eyebrow);
   setText("parentTitle", ui.parent.title);
@@ -330,6 +338,10 @@ function activeSpellPacks() {
 
 function isSpellMode() {
   return currentPack?.mode === "spell";
+}
+
+function isPhraseMode() {
+  return currentPack?.mode === "phrase";
 }
 
 function levelChapterCount(letters) {
@@ -400,9 +412,15 @@ function showMenu() {
 
 function renderMenu() {
   elements.levelGrid.innerHTML = "";
+  elements.phraseGrid.innerHTML = "";
+  elements.phraseGrid.hidden = !activeLevels().some((letters) => PHRASE_LEVELS[letters]);
   renderModeRow();
 
   activeLevels().forEach((letters) => {
+    const phrase = PHRASE_LEVELS[letters];
+    const badge = phrase
+      ? `<span class="level-number phrase-mark" aria-hidden="true">${phrase.bars.map((bar) => `<i style="--bar: ${bar}"></i>`).join("")}</span>`
+      : `<span class="level-number" aria-hidden="true">${letters}</span>`;
     const done = getLevelProgress(letters);
     const progressText = fillTemplate(ui.menu.progress, {
       done,
@@ -417,7 +435,7 @@ function renderMenu() {
       `${ui.menu.levelNames[letters]}. ${progressText}`,
     );
     button.innerHTML = `
-      <span class="level-number" aria-hidden="true">${letters}</span>
+      ${badge}
       <span class="level-name">${ui.menu.levelNames[letters]}</span>
       <span class="level-sample">${ui.menu.levelSamples[letters]}</span>
       <span class="world-progress">
@@ -426,7 +444,7 @@ function renderMenu() {
       </span>
     `;
     button.addEventListener("click", () => openLevel(letters));
-    elements.levelGrid.appendChild(button);
+    (phrase ? elements.phraseGrid : elements.levelGrid).appendChild(button);
   });
 }
 
@@ -486,8 +504,14 @@ async function showChapters(letters) {
       ? fillTemplate(ui.spell.chaptersTitle, { letters: ui.menu.levelNames[currentPack.letters] })
       : ui.chapters.titles[letters],
   );
-  setText("chaptersLead", isSpellMode() ? ui.spell.chaptersLead : ui.chapters.lead);
-  setText("finalText", isSpellMode() ? ui.spell.finalText : ui.chapters.finalText);
+  setText(
+    "chaptersLead",
+    isSpellMode() ? ui.spell.chaptersLead : isPhraseMode() ? ui.phrase.chaptersLead : ui.chapters.lead,
+  );
+  setText(
+    "finalText",
+    isSpellMode() ? ui.spell.finalText : isPhraseMode() ? ui.phrase.finalText : ui.chapters.finalText,
+  );
   setText(
     "chaptersProgressValue",
     fillTemplate(ui.chapters.progress, {
@@ -593,6 +617,7 @@ function renderTask() {
   const chapter = currentPack.chapters[currentChapterIndex];
   const task = chapter.tasks[currentTaskIndex];
   const spell = isSpellMode();
+  const phrase = isPhraseMode();
   currentAttemptCount = 0;
   currentHintUsed = false;
   currentTaskSolved = false;
@@ -604,11 +629,18 @@ function renderTask() {
   setText("storyPrompt", task.prompt);
   // In the spell mode the card carries the picture and the answers carry the
   // letters, so the two halves of the reading task swap places.
-  setText("wordMain", spell ? task.emoji : task.word);
-  setText("wordSyllables", spell ? "" : task.syllables);
-  elements.wordCard.style.setProperty("--split-length", spell ? 0 : task.syllables.length);
+  renderCardText(elements.wordMain, spell ? task.emoji : task.word, phrase);
+  renderCardText(elements.wordSyllables, spell ? "" : task.syllables, phrase);
+  // A phrase wraps between its words, so its card is sized by its longest word.
+  if (phrase) {
+    elements.wordCard.style.setProperty("--word-length", longestPart(task.word));
+    elements.wordCard.style.setProperty("--split-length", longestPart(task.syllables));
+  } else {
+    elements.wordCard.style.removeProperty("--word-length");
+    elements.wordCard.style.setProperty("--split-length", spell ? 0 : task.syllables.length);
+  }
   setText("feedbackStatus", "");
-  applyModeStrings(spell);
+  applyModeStrings(currentPack.mode);
   setText("successTitle", ui.play.successTitle);
   setText("successText", task.success);
   setText("missionLabel", fillTemplate(ui.play.mission, {
@@ -622,6 +654,7 @@ function renderTask() {
   const splitAtOnce = splitsAtOnce(task, activeLanguage);
   const canShowParts = spell || (hasSyllableSplit(task) && !splitAtOnce);
   elements.wordCard.classList.toggle("picture-card", spell);
+  elements.wordCard.classList.toggle("phrase-card", phrase);
   elements.wordCard.classList.toggle("show-syllables", splitAtOnce);
   elements.wordCard.disabled = !canShowParts;
   elements.hintButton.hidden = !canShowParts;
@@ -632,6 +665,10 @@ function renderTask() {
   elements.choiceGrid.hidden = false;
   elements.choiceGrid.classList.toggle("word-choices", spell);
   elements.choiceGrid.classList.remove("show-diff");
+  if (!phrase) {
+    elements.choiceGrid.classList.remove("phrase-choices", "stacked");
+    elements.choiceGrid.style.removeProperty("--per-row");
+  }
   elements.choiceGrid.innerHTML = "";
 
   renderMissionProgress(chapter);
@@ -647,18 +684,85 @@ function renderTask() {
   renderHeader();
 }
 
-// Both modes answer the same four questions on the screen, with their own words.
-function applyModeStrings(spell) {
-  const strings = spell ? ui.spell : ui.play;
+// Every mode answers the same four questions on the screen, with its own words.
+// A phrase only renames what says "word"; the parts hint is the levels' own.
+function applyModeStrings(mode) {
+  const spell = mode === "spell";
+  const strings = spell ? ui.spell : mode === "phrase" ? { ...ui.play, ...ui.phrase } : ui.play;
   setText("readingInstruction", strings.readInstruction);
   setText("tapHint", strings.tapHint);
   setText("hintLabel", strings.hint);
   setText("choiceInstruction", strings.choiceInstruction);
+  setText("listenLabel", mode === "phrase" ? ui.phrase.listen : ui.play.listen);
   elements.syllableMark.hidden = spell;
   elements.letterMark.hidden = !spell;
 }
 
+function longestPart(text) {
+  return Math.max(...text.split(" ").map((part) => part.length));
+}
+
+// A phrase becomes one block per word, so the card wraps between the words and
+// never inside one. The spaces stay in the text for screen readers.
+function renderCardText(element, text, phrase) {
+  if (!phrase) {
+    element.textContent = text;
+    return;
+  }
+  element.replaceChildren();
+  text.split(" ").forEach((part, index) => {
+    if (index > 0) element.append(" ");
+    const word = document.createElement("span");
+    word.className = "phrase-word";
+    word.textContent = part;
+    element.append(word);
+  });
+}
+
+// Items of a counted picture stand in rows of five, like a ten frame. One item size serves the
+// whole task, so a count never reads as "big" or "small". On a phone three answers side by side
+// leave about 100px each, too narrow for four items, for a small item among others, for a
+// badge on several items, or for a caption word of more than eight letters, so those tasks stack
+// their answers there. The caption rule reads all three labels, so it gives nothing away.
+function pictureLayout(choices) {
+  const most = Math.max(...choices.map((choice) => choice.count ?? 1));
+  const decorated = choices.some((choice) => choice.size || choice.badge);
+  const longWord = choices.some((choice) => (choice.label || "").split(" ").some((word) => word.length > 8));
+  return { perRow: Math.min(most, 5), stacked: most >= 4 || (decorated && most >= 2) || longWord };
+}
+
+// The emoji repeated for a number, scaled for big or small, and badged for an
+// action. Built from text nodes only, like the rest of the task content.
+function renderPhrasePicture(choice) {
+  const count = choice.count ?? 1;
+  const picture = document.createElement("span");
+  picture.className = choice.size ? `choice-picture size-${choice.size}` : "choice-picture";
+  picture.setAttribute("aria-hidden", "true");
+  picture.style.setProperty("--columns", Math.min(count, 5));
+  for (let index = 0; index < count; index += 1) {
+    const item = document.createElement("span");
+    item.className = "picture-item";
+    item.textContent = choice.emoji;
+    if (choice.badge) {
+      const badge = document.createElement("span");
+      badge.className = "picture-badge";
+      badge.textContent = choice.badge;
+      item.append(badge);
+    }
+    picture.append(item);
+  }
+  return picture;
+}
+
 function renderPictureChoices(task) {
+  const phrase = isPhraseMode();
+  if (phrase) {
+    const layout = pictureLayout(task.choices);
+    elements.choiceGrid.style.setProperty("--per-row", layout.perRow);
+    elements.choiceGrid.classList.add("phrase-choices");
+    elements.choiceGrid.classList.toggle("stacked", layout.stacked);
+  }
+
   shuffle([...task.choices]).forEach((choice, choiceIndex) => {
     const button = document.createElement("button");
     button.className = "choice-button";
@@ -669,7 +773,11 @@ function renderPictureChoices(task) {
     button.setAttribute("aria-label", fillTemplate(ui.play.choiceLabel, {
       number: choiceIndex + 1,
     }));
-    button.innerHTML = `<span aria-hidden="true">${choice.emoji}</span>`;
+    if (phrase) {
+      button.append(renderPhrasePicture(choice));
+    } else {
+      button.innerHTML = `<span aria-hidden="true">${choice.emoji}</span>`;
+    }
     button.addEventListener("click", () => handleChoice(button, choice));
     elements.choiceGrid.appendChild(button);
   });
@@ -783,7 +891,10 @@ function handleChoice(button, choice) {
     window.setTimeout(() => button.classList.remove("wrong"), 450);
 
     if (currentAttemptCount === 1) {
-      setText("feedbackStatus", spell ? ui.spell.wrongFirst : ui.play.wrongFirst);
+      setText(
+        "feedbackStatus",
+        spell ? ui.spell.wrongFirst : isPhraseMode() ? ui.phrase.wrongFirst : ui.play.wrongFirst,
+      );
     } else {
       revealHint();
       // A word with no parts to show is repeated whole instead of being
@@ -1015,6 +1126,7 @@ async function initialize() {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     LEVELS,
+    PHRASE_LEVELS,
     SPELL_PACKS,
     CHAPTERS_PER_LEVEL,
     WORDS_PER_CHAPTER,
@@ -1023,7 +1135,9 @@ if (typeof module !== "undefined" && module.exports) {
     fillTemplate,
     findNextUnsolved,
     hasSyllableSplit,
+    longestPart,
     packPath,
+    pictureLayout,
     spellPack,
     splitsAtOnce,
     shuffle,

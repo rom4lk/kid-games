@@ -29,14 +29,20 @@
       "4": "4 letters",
       "5": "5 letters",
       "6": "6 letters",
-      "7": "7 letters"
+      "7": "7 letters",
+      "phraseA": "Two short words",
+      "phraseB": "Two longer words",
+      "phraseC": "Three words"
     },
     "levelSamples": {
       "3": "CAT · DOG · SUN",
       "4": "FISH · MOON · STAR",
       "5": "TIGER · BREAD · TRAIN",
       "6": "TURTLE · COOKIE · GUITAR",
-      "7": "PENGUIN · RAINBOW · BALLOON"
+      "7": "PENGUIN · RAINBOW · BALLOON",
+      "phraseA": "RED CAT · DOG SINGS",
+      "phraseB": "GREEN APPLE · SEVEN STARS",
+      "phraseC": "BIG RED HEART"
     },
     "progress": "{done} of {total}"
   },
@@ -47,7 +53,10 @@
       "4": "4-letter words",
       "5": "5-letter words",
       "6": "6-letter words",
-      "7": "7-letter words"
+      "7": "7-letter words",
+      "phraseA": "Two short words",
+      "phraseB": "Two longer words",
+      "phraseC": "Three words"
     },
     "lead": "Each chapter is a little story with ten words. Finish a chapter to open the next one.",
     "chapterNumber": "Chapter {number}",
@@ -76,6 +85,14 @@
     "finish": "Finish the chapter",
     "skip": "Another word",
     "skipped": "We set that word aside. We will come back to it."
+  },
+  "phrase": {
+    "readInstruction": "Read the words out loud",
+    "choiceInstruction": "Now find the picture",
+    "wrongFirst": "Almost! Read every word and try again.",
+    "listen": "Hear the words",
+    "chaptersLead": "Each chapter is a little story with ten phrases. Finish a chapter to open the next one.",
+    "finalText": "You have read every story on this level - all two hundred phrases."
   },
   "spell": {
     "cardName": "Find the word",

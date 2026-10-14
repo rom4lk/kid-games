@@ -590,6 +590,13 @@ h1 {
   gap: 16px;
 }
 
+/* The phrase levels get a row of their own under the letter levels. The media
+   rules of .level-grid narrow it on smaller screens as well. */
+.phrase-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 16px;
+}
+
 .level-card,
 .chapter-card {
   position: relative;
@@ -645,6 +652,23 @@ h1 {
   font-size: 4.6rem;
   font-weight: 900;
   line-height: 1;
+}
+
+/* The bars are the words of the phrase, the way the number is the letters of
+   the word. They keep the height of the number, so the cards line up. */
+.phrase-mark {
+  display: flex;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.phrase-mark i {
+  width: calc(var(--bar) * 26px);
+  height: 18px;
+  border-radius: 9px;
+  background: currentColor;
 }
 
 .level-name {
@@ -1089,6 +1113,41 @@ h1 {
   display: inline !important;
 }
 
+/* A phrase wraps between its words and never inside one, so it shrinks only
+   as far as its longest word needs. The card sets --word-length and
+   --split-length to the longest word of the phrase and of its split. */
+.word-card.phrase-card {
+  width: min(680px, 100%);
+}
+
+.phrase-card .word-main,
+.phrase-card .word-syllables {
+  --word-size: clamp(2.1rem, 6vw, 3.8rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.45em;
+  row-gap: 0.1em;
+  white-space: normal;
+}
+
+.phrase-card .word-main {
+  font-size: min(var(--word-size), calc(100cqw / (var(--word-length, 7) * 0.8)));
+}
+
+.word-card.phrase-card .word-syllables {
+  font-size: min(var(--word-size), calc(100cqw / (var(--split-length, 7) * 0.8)));
+  white-space: normal;
+}
+
+.phrase-word {
+  white-space: nowrap;
+}
+
+.word-card.phrase-card.show-syllables .word-syllables {
+  display: flex !important;
+}
+
 .tap-hint {
   position: absolute;
   right: 16px;
@@ -1307,6 +1366,68 @@ html[lang="ru"] .word-choice .letter {
   font-size: 1.25rem;
   font-weight: 900;
   transform: translateX(-50%);
+}
+
+/* A phrase picture: the emoji repeated for a number in rows of --per-row, one
+   item size for the whole task, scaled for big or small, with a badge in the
+   corner for an action. */
+.phrase-choices .choice-button {
+  display: flex;
+  overflow: visible;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  container-type: inline-size;
+}
+
+.choice-picture {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), auto);
+  justify-content: center;
+  gap: 0.06em 0.12em;
+  font-size: min(1em, calc(90cqw / (var(--per-row) * 1.15)));
+  line-height: 1;
+}
+
+/* In a size task every answer is big or small, and three big items need room
+   to stay inside their button. */
+.choice-picture.size-big,
+.choice-picture.size-small {
+  font-size: min(1em, calc(78cqw / (var(--per-row) * 1.15)));
+}
+
+.picture-item {
+  position: relative;
+}
+
+.picture-badge {
+  position: absolute;
+  top: -0.2em;
+  right: -0.3em;
+  font-size: 0.45em;
+}
+
+.choice-picture.size-big .picture-item {
+  font-size: 1.25em;
+}
+
+.choice-picture.size-small .picture-item {
+  font-size: 0.55em;
+}
+
+/* A phrase caption is longer than a word, so it sits under the picture and
+   wraps between its words. It may reach into the gap, never over the next
+   picture. */
+.phrase-choices .choice-label {
+  position: static;
+  max-width: calc(100% + 8px);
+  margin-top: 6px;
+  padding: 2px 4px;
+  line-height: 1.1;
+  text-align: center;
+  white-space: normal;
+  transform: none;
 }
 
 .success-panel {
@@ -1864,6 +1985,21 @@ html[lang="ru"] .word-choice .letter {
     font-size: 2.1rem;
   }
 
+  /* Counted, badged or mixed-size answers need the full width on a phone, so
+     they stand under each other there. */
+  .choice-grid.phrase-choices.stacked {
+    grid-template-columns: 1fr;
+  }
+
+  .phrase-choices.stacked .choice-button {
+    min-height: 72px;
+  }
+
+  .word-card.phrase-card {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
   .success-panel {
     grid-template-columns: auto 1fr;
   }
@@ -1912,6 +2048,11 @@ html[lang="ru"] .word-choice .letter {
   .word-main,
   .word-syllables {
     --word-size: clamp(2.65rem, min(9vw, 11vh), 5.7rem);
+  }
+
+  .phrase-card .word-main,
+  .phrase-card .word-syllables {
+    --word-size: clamp(2.1rem, min(6vw, 8vh), 3.8rem);
   }
 
   .microphone-button,
