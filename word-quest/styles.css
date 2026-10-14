@@ -1115,9 +1115,10 @@ h1 {
 
 /* A phrase wraps between its words and never inside one, so it shrinks only
    as far as its longest word needs. The card sets --word-length and
-   --split-length to the longest word of the phrase and of its split. */
+   --split-length to the longest word of the phrase and of its split. On a
+   desktop the card is wide enough for a three-word split to take two lines. */
 .word-card.phrase-card {
-  width: min(680px, 100%);
+  width: min(960px, 100%);
 }
 
 .phrase-card .word-main,
