@@ -9,11 +9,11 @@ next word.
 - two reading languages, English and Russian, chosen on the start screen and remembered afterwards;
 - levels by word length, from 3 to 7 letters, in both languages;
 - phrase levels after the 7-letter level, in three steps: two short words, two longer words and
-  three words. A phrase is a color, a number or a size with a noun, or a subject with an action
-  (КРАСНЫЙ ФЛАГ, ДВА ШАРА, МАЛЕНЬКИЙ ПЁС, КОТ СПИТ). Each wrong picture changes one word of the
-  phrase and the two change different words, so the child has to read every word. Russian
-  phrases come split into syllables at once, English phrases whole with the parts on demand,
-  exactly as in the letter levels;
+  three words, all three in both languages. A phrase is a color, a number or a size with a noun,
+  or a subject with an action (КРАСНЫЙ ФЛАГ, ДВА ШАРА, МАЛЕНЬКИЙ ПЁС, КОТ СПИТ). Each wrong
+  picture changes one word of the phrase and the two change different words, so the child has to
+  read every word. Russian phrases come split into syllables at once, English phrases whole with
+  the parts on demand, exactly as in the letter levels;
 - a second mode, "Find the word": a picture and three written words that differ in one letter, in
   both languages, with one pack per word length;
 - 20 chapters in every level, 10 words in every chapter — 200 readings per level, drawn from a
@@ -330,11 +330,11 @@ pack, run the validator, add the level number to `LEVELS` and add its strings to
 files. A "Find the word" pack is listed in `SPELL_PACKS` in [game.js](game.js) and in `SPELL_PACKS`
 in [tools/validate.py](tools/validate.py).
 
-A phrase pack is listed by appending its key, `phraseA`, `phraseB` or `phraseC`, to `LEVELS` once
-its file passes the validator. `PHRASE_LEVELS` in [game.js](game.js) and `PHRASE_LEVELS` in
-[tools/validate.py](tools/validate.py) must agree on the three levels. The strings of all three
-phrase levels are already in both `ui.*.json` files. Listed now: Russian levels A, B and C, and
-English levels A, B and C.
+All six phrase packs — levels A, B and C in both languages — are written and listed too, so
+`python3 tools/validate.py --all` passes. A phrase pack is listed by appending its key, `phraseA`,
+`phraseB` or `phraseC`, to `LEVELS` once its file passes the validator. `PHRASE_LEVELS` in
+[game.js](game.js) and `PHRASE_LEVELS` in [tools/validate.py](tools/validate.py) must agree on the
+three levels, and the strings of each phrase level live in both `ui.*.json` files.
 
 ## Deliberate decisions
 
