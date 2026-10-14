@@ -12,7 +12,7 @@ const PHRASE_LEVELS = {
   phraseB: { file: "b", words: 2, bars: [2, 2] },
   phraseC: { file: "c", words: 3, bars: [1, 1, 1] },
 };
-const LEVELS = { en: [3, 4, 5, 6, 7, "phraseA"], ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"] };
+const LEVELS = { en: [3, 4, 5, 6, 7, "phraseA", "phraseB"], ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"] };
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;

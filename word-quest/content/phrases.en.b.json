@@ -1,0 +1,5459 @@
+{
+  "language": "en",
+  "mode": "phrase",
+  "level": "b",
+  "chapters": [
+    {
+      "id": "en-b-01",
+      "title": "The Seaside Train",
+      "emoji": "🚂",
+      "character": "👩‍🦰",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Aunt Bea is waiting on the platform with a huge hug. Tomorrow she shows us her bookshop by the harbor!",
+      "tasks": [
+        {
+          "word": "SEVEN STARS",
+          "syllables": "SEV-EN STARS",
+          "prompt": "Our train to the sea leaves early, and the conductor hands each child a sticker sheet. Read what is on ours.",
+          "success": "Seven stars - we stick them all along the window.",
+          "choices": [
+            {
+              "id": "seven-star",
+              "emoji": "⭐",
+              "count": 7,
+              "label": "seven stars"
+            },
+            {
+              "id": "nine-star",
+              "emoji": "⭐",
+              "count": 9,
+              "label": "nine stars"
+            },
+            {
+              "id": "seven-shell",
+              "emoji": "🐚",
+              "count": 7,
+              "label": "seven shells"
+            }
+          ],
+          "correct": "seven-star"
+        },
+        {
+          "word": "BABY SLEEPS",
+          "syllables": "B-A-B-Y SLEEPS",
+          "prompt": "Across the aisle sits a family with a picnic bag. Read who is by their window and what is happening.",
+          "success": "The baby sleeps all the way to the sea, and nobody wakes her up.",
+          "choices": [
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "baby sleeps"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "girl sleeps"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "baby sings"
+            }
+          ],
+          "correct": "baby-sleep"
+        },
+        {
+          "word": "BIG TURTLE",
+          "syllables": "B-I-G TUR-TLE",
+          "prompt": "At the first stop, a poster on the platform shows the seaside zoo. Read who is on it.",
+          "success": "A big turtle smiles from the poster. We will visit the zoo this week!",
+          "choices": [
+            {
+              "id": "big-turtle",
+              "emoji": "🐢",
+              "size": "big",
+              "label": "big turtle"
+            },
+            {
+              "id": "small-turtle",
+              "emoji": "🐢",
+              "size": "small",
+              "label": "small turtle"
+            },
+            {
+              "id": "big-parrot",
+              "emoji": "🦜",
+              "size": "big",
+              "label": "big parrot"
+            }
+          ],
+          "correct": "big-turtle"
+        },
+        {
+          "word": "YELLOW CAR",
+          "syllables": "YEL-LOW C-A-R",
+          "prompt": "The boy in front of us holds up his favorite toy. Read what it is.",
+          "success": "A yellow car, just like a real taxi!",
+          "choices": [
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "yellow car"
+            },
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            },
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "yellow ball"
+            }
+          ],
+          "correct": "yellow-car"
+        },
+        {
+          "word": "MOM STANDS",
+          "syllables": "M-O-M STANDS",
+          "prompt": "Someone from our family is over by the carriage door. Read who it is and what is going on.",
+          "success": "Mom stands by the door and holds the rail, so she can see the sea first.",
+          "choices": [
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            }
+          ],
+          "correct": "mom-stand"
+        },
+        {
+          "word": "FOUR PARROTS",
+          "syllables": "F-O-U-R PAR-ROTS",
+          "prompt": "A zookeeper climbs aboard with a cage under a cloth. Read who peeks out.",
+          "success": "Four parrots peek out and whistle hello to the whole carriage!",
+          "choices": [
+            {
+              "id": "four-parrot",
+              "emoji": "🦜",
+              "count": 4,
+              "label": "four parrots"
+            },
+            {
+              "id": "two-parrot",
+              "emoji": "🦜",
+              "count": 2,
+              "label": "two parrots"
+            },
+            {
+              "id": "four-penguin",
+              "emoji": "🐧",
+              "count": 4,
+              "label": "four penguins"
+            }
+          ],
+          "correct": "four-parrot"
+        },
+        {
+          "word": "SMALL HORSE",
+          "syllables": "SMALL HORSE",
+          "prompt": "Outside the window, green fields roll by. Read who is grazing by the fence.",
+          "success": "A small horse - a pony! - looks up as we rattle past.",
+          "choices": [
+            {
+              "id": "small-horse",
+              "emoji": "🐴",
+              "size": "small",
+              "label": "small horse"
+            },
+            {
+              "id": "big-horse",
+              "emoji": "🐴",
+              "size": "big",
+              "label": "big horse"
+            },
+            {
+              "id": "small-cow",
+              "emoji": "🐮",
+              "size": "small",
+              "label": "small cow"
+            }
+          ],
+          "correct": "small-horse"
+        },
+        {
+          "word": "ORANGE BALL",
+          "syllables": "OR-ANGE B-A-L-L",
+          "prompt": "The girl in the next seat opens her backpack. Read what she pulls out.",
+          "success": "An orange ball - she will bounce it all week long.",
+          "choices": [
+            {
+              "id": "orange-ball",
+              "emoji": "🏀",
+              "label": "orange ball"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "white ball"
+            },
+            {
+              "id": "orange-heart",
+              "emoji": "🧡",
+              "label": "orange heart"
+            }
+          ],
+          "correct": "orange-ball"
+        },
+        {
+          "word": "GRANDMA SINGS",
+          "syllables": "GRAND-MA SINGS",
+          "prompt": "Somebody in the seat behind us has taken this train many times. Read who it is and what is happening.",
+          "success": "Grandma sings an old song about the sea, and the whole carriage hums along.",
+          "choices": [
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "grandpa sings"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "grandma sleeps"
+            }
+          ],
+          "correct": "grandma-sing"
+        },
+        {
+          "word": "EIGHT BOATS",
+          "syllables": "EIGHT BOATS",
+          "prompt": "At last the harbor shines below the tracks. Read what is out on the water.",
+          "success": "Eight boats bob in the harbor - we are here!",
+          "choices": [
+            {
+              "id": "eight-boat",
+              "emoji": "🛶",
+              "count": 8,
+              "label": "eight boats"
+            },
+            {
+              "id": "five-boat",
+              "emoji": "🛶",
+              "count": 5,
+              "label": "five boats"
+            },
+            {
+              "id": "eight-duck",
+              "emoji": "🦆",
+              "count": 8,
+              "label": "eight ducks"
+            }
+          ],
+          "correct": "eight-boat"
+        }
+      ]
+    },
+    {
+      "id": "en-b-02",
+      "title": "Aunt Bea's Bookshop",
+      "emoji": "📚",
+      "character": "👩‍🦰",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "The shop is locked for the night, and the cat is still asleep. Tomorrow we walk down to the harbor!",
+      "tasks": [
+        {
+          "word": "GREEN BOOK",
+          "syllables": "GREEN B-O-O-K",
+          "prompt": "Aunt Bea unlocks her little shop by the harbor. Read what is lying on the counter.",
+          "success": "A green book with a map of the whole town inside!",
+          "choices": [
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "orange-book",
+              "emoji": "📙",
+              "label": "orange book"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            }
+          ],
+          "correct": "green-book"
+        },
+        {
+          "word": "CAT SLEEPS",
+          "syllables": "C-A-T SLEEPS",
+          "prompt": "The shop has a pet who never leaves the window seat. Read who it is and what is happening.",
+          "success": "The shop cat sleeps in the sun. Her name is Marmalade.",
+          "choices": [
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "cat sleeps"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            },
+            {
+              "id": "cat-laugh",
+              "emoji": "😹",
+              "label": "cat laughs"
+            }
+          ],
+          "correct": "cat-sleep"
+        },
+        {
+          "word": "TEN PENCILS",
+          "syllables": "T-E-N PEN-CILS",
+          "prompt": "Behind the counter stands a tall glass jar. Read what is in it.",
+          "success": "Ten pencils, sharp and ready for drawing.",
+          "choices": [
+            {
+              "id": "ten-pencil",
+              "emoji": "✏️",
+              "count": 10,
+              "label": "ten pencils"
+            },
+            {
+              "id": "six-pencil",
+              "emoji": "✏️",
+              "count": 6,
+              "label": "six pencils"
+            },
+            {
+              "id": "ten-candle",
+              "emoji": "🕯️",
+              "count": 10,
+              "label": "ten candles"
+            }
+          ],
+          "correct": "ten-pencil"
+        },
+        {
+          "word": "PURPLE HEART",
+          "syllables": "PUR-PLE HEART",
+          "prompt": "Aunt Bea gives each of us a bookmark. Read what is printed on mine.",
+          "success": "A purple heart on my bookmark - my favorite color!",
+          "choices": [
+            {
+              "id": "purple-heart",
+              "emoji": "💜",
+              "label": "purple heart"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "purple-flower",
+              "emoji": "🪻",
+              "label": "purple flower"
+            }
+          ],
+          "correct": "purple-heart"
+        },
+        {
+          "word": "SMALL MOUSE",
+          "syllables": "SMALL MOUSE",
+          "prompt": "Something peeks out from behind the bottom shelf. Read who it is.",
+          "success": "A small mouse! Marmalade keeps dozing, so he is quite safe.",
+          "choices": [
+            {
+              "id": "small-mouse",
+              "emoji": "🐭",
+              "size": "small",
+              "label": "small mouse"
+            },
+            {
+              "id": "big-mouse",
+              "emoji": "🐭",
+              "size": "big",
+              "label": "big mouse"
+            },
+            {
+              "id": "small-snail",
+              "emoji": "🐌",
+              "size": "small",
+              "label": "small snail"
+            }
+          ],
+          "correct": "small-mouse"
+        },
+        {
+          "word": "MOM PAINTS",
+          "syllables": "M-O-M PAINTS",
+          "prompt": "Aunt Bea's shop is quiet this morning. Read who from our family is busy and what they are doing.",
+          "success": "Mom paints a new sign for the shop window, with curly letters.",
+          "choices": [
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            },
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            }
+          ],
+          "correct": "mom-paint"
+        },
+        {
+          "word": "THREE MONKEYS",
+          "syllables": "THREE MON-KEYS",
+          "prompt": "Aunt Bea opens a picture book for us. Read who is on the first page.",
+          "success": "Three monkeys grin at us from the first page.",
+          "choices": [
+            {
+              "id": "three-monkey",
+              "emoji": "🐵",
+              "count": 3,
+              "label": "three monkeys"
+            },
+            {
+              "id": "five-monkey",
+              "emoji": "🐵",
+              "count": 5,
+              "label": "five monkeys"
+            },
+            {
+              "id": "three-tiger",
+              "emoji": "🐯",
+              "count": 3,
+              "label": "three tigers"
+            }
+          ],
+          "correct": "three-monkey"
+        },
+        {
+          "word": "WHITE FLOWER",
+          "syllables": "WHITE FLOW-ER",
+          "prompt": "A neighbor drops by and leaves a little present on the counter. Read what it is.",
+          "success": "A white flower for Aunt Bea - she puts it in a cup of water.",
+          "choices": [
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "white flower"
+            },
+            {
+              "id": "red-flower",
+              "emoji": "🌹",
+              "label": "red flower"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            }
+          ],
+          "correct": "white-flower"
+        },
+        {
+          "word": "BIG PENGUIN",
+          "syllables": "B-I-G PEN-GUIN",
+          "prompt": "On the wall hangs a poster from the aquarium on the pier. Read who is on it.",
+          "success": "A big penguin - we will meet him at the aquarium soon!",
+          "choices": [
+            {
+              "id": "big-penguin",
+              "emoji": "🐧",
+              "size": "big",
+              "label": "big penguin"
+            },
+            {
+              "id": "small-penguin",
+              "emoji": "🐧",
+              "size": "small",
+              "label": "small penguin"
+            },
+            {
+              "id": "big-dolphin",
+              "emoji": "🐬",
+              "size": "big",
+              "label": "big dolphin"
+            }
+          ],
+          "correct": "big-penguin"
+        },
+        {
+          "word": "GIRL SINGS",
+          "syllables": "G-I-R-L SINGS",
+          "prompt": "At closing time, somebody sits on the step outside the shop. Read who and what is going on.",
+          "success": "A girl from next door sings while Aunt Bea locks up.",
+          "choices": [
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "girl sleeps"
+            }
+          ],
+          "correct": "girl-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-b-03",
+      "title": "The Harbor",
+      "emoji": "⚓",
+      "character": "🦭",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Captain Gus ties up his boat for the night. Tomorrow he takes us to the aquarium at the end of the pier!",
+      "tasks": [
+        {
+          "word": "WHITE FLAG",
+          "syllables": "WHITE F-L-A-G",
+          "prompt": "Captain Gus the seal waves to us from his boat. Read what is up on top of the mast.",
+          "success": "A white flag flaps in the wind on Captain Gus's boat.",
+          "choices": [
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "white flag"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "black flag"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "white bird"
+            }
+          ],
+          "correct": "white-flag"
+        },
+        {
+          "word": "SEVEN CRABS",
+          "syllables": "SEV-EN CRABS",
+          "prompt": "Gus shows us a bucket at the end of the pier. Read who is inside.",
+          "success": "Seven crabs click their claws at the bottom of the bucket.",
+          "choices": [
+            {
+              "id": "seven-crab",
+              "emoji": "🦀",
+              "count": 7,
+              "label": "seven crabs"
+            },
+            {
+              "id": "three-crab",
+              "emoji": "🦀",
+              "count": 3,
+              "label": "three crabs"
+            },
+            {
+              "id": "seven-snail",
+              "emoji": "🐌",
+              "count": 7,
+              "label": "seven snails"
+            }
+          ],
+          "correct": "seven-crab"
+        },
+        {
+          "word": "BIG OCTOPUS",
+          "syllables": "B-I-G OC-TO-PUS",
+          "prompt": "Something is splashing in the water by the pier. Read who it is.",
+          "success": "A big octopus waves a long arm at us!",
+          "choices": [
+            {
+              "id": "big-octopus",
+              "emoji": "🐙",
+              "size": "big",
+              "label": "big octopus"
+            },
+            {
+              "id": "small-octopus",
+              "emoji": "🐙",
+              "size": "small",
+              "label": "small octopus"
+            },
+            {
+              "id": "big-dolphin",
+              "emoji": "🐬",
+              "size": "big",
+              "label": "big dolphin"
+            }
+          ],
+          "correct": "big-octopus"
+        },
+        {
+          "word": "DAD CLIMBS",
+          "syllables": "D-A-D CLIMBS",
+          "prompt": "Read who from our family is on Gus's boat and what they are doing.",
+          "success": "Dad climbs up high to get a better look at the harbor.",
+          "choices": [
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "dad climbs"
+            },
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "mom climbs"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            }
+          ],
+          "correct": "dad-climb"
+        },
+        {
+          "word": "ORANGE DIAMOND",
+          "syllables": "OR-ANGE DIA-MOND",
+          "prompt": "Every boat in the harbor has a sign on its side. Read what is painted on Gus's boat.",
+          "success": "An orange diamond - Gus says every sailor knows his boat by it.",
+          "choices": [
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "orange diamond"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "blue diamond"
+            },
+            {
+              "id": "orange-heart",
+              "emoji": "🧡",
+              "label": "orange heart"
+            }
+          ],
+          "correct": "orange-diamond"
+        },
+        {
+          "word": "NINE DUCKS",
+          "syllables": "N-I-N-E DUCKS",
+          "prompt": "Near the beach, a little family paddles in a row. Read who they are.",
+          "success": "Nine ducks paddle in a neat line behind their mother.",
+          "choices": [
+            {
+              "id": "nine-duck",
+              "emoji": "🦆",
+              "count": 9,
+              "label": "nine ducks"
+            },
+            {
+              "id": "seven-duck",
+              "emoji": "🦆",
+              "count": 7,
+              "label": "seven ducks"
+            },
+            {
+              "id": "nine-goose",
+              "emoji": "🪿",
+              "count": 9,
+              "label": "nine geese"
+            }
+          ],
+          "correct": "nine-duck"
+        },
+        {
+          "word": "SMALL BOAT",
+          "syllables": "SMALL B-O-A-T",
+          "prompt": "Gus points far out past the end of the pier. Read what he sees.",
+          "success": "A small boat - Gus's cousin is rowing back from fishing.",
+          "choices": [
+            {
+              "id": "small-boat",
+              "emoji": "🛶",
+              "size": "small",
+              "label": "small boat"
+            },
+            {
+              "id": "big-boat",
+              "emoji": "🛶",
+              "size": "big",
+              "label": "big boat"
+            },
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "small whale"
+            }
+          ],
+          "correct": "small-boat"
+        },
+        {
+          "word": "WHALE SINGS",
+          "syllables": "WHALE SINGS",
+          "prompt": "Gus says that someone lives far out past the harbor. Read who and what is happening.",
+          "success": "A whale sings far out at sea, and Gus can hear it from his deck.",
+          "choices": [
+            {
+              "id": "whale-sing",
+              "emoji": "🐋",
+              "badge": "🎵",
+              "label": "whale sings"
+            },
+            {
+              "id": "turtle-sing",
+              "emoji": "🐢",
+              "badge": "🎵",
+              "label": "turtle sings"
+            },
+            {
+              "id": "whale-sleep",
+              "emoji": "🐋",
+              "badge": "💤",
+              "label": "whale sleeps"
+            }
+          ],
+          "correct": "whale-sing"
+        },
+        {
+          "word": "RED PEPPER",
+          "syllables": "R-E-D PEP-PER",
+          "prompt": "A stall by the pier sells food for boat trips. Read what Gus buys.",
+          "success": "A red pepper for Gus's famous fish soup. Hot, hot, hot!",
+          "choices": [
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "red pepper"
+            },
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "green pepper"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-pepper"
+        },
+        {
+          "word": "EIGHT SHELLS",
+          "syllables": "EIGHT SHELLS",
+          "prompt": "Before we go, Gus empties his coat pockets onto the table. Read what he gives us.",
+          "success": "Eight shells for our collection, smooth and shiny.",
+          "choices": [
+            {
+              "id": "eight-shell",
+              "emoji": "🐚",
+              "count": 8,
+              "label": "eight shells"
+            },
+            {
+              "id": "four-shell",
+              "emoji": "🐚",
+              "count": 4,
+              "label": "four shells"
+            },
+            {
+              "id": "eight-gift",
+              "emoji": "🎁",
+              "count": 8,
+              "label": "eight gifts"
+            }
+          ],
+          "correct": "eight-shell"
+        }
+      ]
+    },
+    {
+      "id": "en-b-04",
+      "title": "The Aquarium",
+      "emoji": "🐠",
+      "character": "🦭",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "We wave goodbye to the fish. Tomorrow Miss Iris gives a painting class right on the beach!",
+      "tasks": [
+        {
+          "word": "BIG DOLPHIN",
+          "syllables": "B-I-G DOL-PHIN",
+          "prompt": "Behind the first glass wall, someone swims very fast. Read who it is.",
+          "success": "A big dolphin zooms past and leaps out of the water!",
+          "choices": [
+            {
+              "id": "big-dolphin",
+              "emoji": "🐬",
+              "size": "big",
+              "label": "big dolphin"
+            },
+            {
+              "id": "small-dolphin",
+              "emoji": "🐬",
+              "size": "small",
+              "label": "small dolphin"
+            },
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "big whale"
+            }
+          ],
+          "correct": "big-dolphin"
+        },
+        {
+          "word": "EIGHT FISH",
+          "syllables": "EIGHT F-I-S-H",
+          "prompt": "The next tank glows blue and green. Read who lives in it.",
+          "success": "Eight fish swim round and round in a shiny swirl.",
+          "choices": [
+            {
+              "id": "eight-fish",
+              "emoji": "🐟",
+              "count": 8,
+              "label": "eight fish"
+            },
+            {
+              "id": "four-fish",
+              "emoji": "🐟",
+              "count": 4,
+              "label": "four fish"
+            },
+            {
+              "id": "eight-crab",
+              "emoji": "🦀",
+              "count": 8,
+              "label": "eight crabs"
+            }
+          ],
+          "correct": "eight-fish"
+        },
+        {
+          "word": "PENGUIN SLEEPS",
+          "syllables": "PEN-GUIN SLEEPS",
+          "prompt": "Gus leads us to a room with rocks and a little pool. Read who is there and what is happening.",
+          "success": "A penguin sleeps standing up on a rock. How does he do that?",
+          "choices": [
+            {
+              "id": "penguin-sleep",
+              "emoji": "🐧",
+              "badge": "💤",
+              "label": "penguin sleeps"
+            },
+            {
+              "id": "turtle-sleep",
+              "emoji": "🐢",
+              "badge": "💤",
+              "label": "turtle sleeps"
+            },
+            {
+              "id": "penguin-sing",
+              "emoji": "🐧",
+              "badge": "🎵",
+              "label": "penguin sings"
+            }
+          ],
+          "correct": "penguin-sleep"
+        },
+        {
+          "word": "BLUE SQUARE",
+          "syllables": "B-L-U-E SQUARE",
+          "prompt": "Each tank has a button that lights up. Read what the button looks like.",
+          "success": "A blue square button - press it, and the tank lights come on!",
+          "choices": [
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            },
+            {
+              "id": "yellow-square",
+              "emoji": "🟨",
+              "label": "yellow square"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            }
+          ],
+          "correct": "blue-square"
+        },
+        {
+          "word": "THREE TURTLES",
+          "syllables": "THREE TUR-TLES",
+          "prompt": "Down a ramp there is a sandy pool. Read who is there.",
+          "success": "Three turtles crawl slowly across the warm sand.",
+          "choices": [
+            {
+              "id": "three-turtle",
+              "emoji": "🐢",
+              "count": 3,
+              "label": "three turtles"
+            },
+            {
+              "id": "five-turtle",
+              "emoji": "🐢",
+              "count": 5,
+              "label": "five turtles"
+            },
+            {
+              "id": "three-crab",
+              "emoji": "🦀",
+              "count": 3,
+              "label": "three crabs"
+            }
+          ],
+          "correct": "three-turtle"
+        },
+        {
+          "word": "SMALL CRAB",
+          "syllables": "SMALL C-R-A-B",
+          "prompt": "Gus kneels by a rock pool. Read what is hiding there.",
+          "success": "A small crab scuttles under a rock.",
+          "choices": [
+            {
+              "id": "small-crab",
+              "emoji": "🦀",
+              "size": "small",
+              "label": "small crab"
+            },
+            {
+              "id": "big-crab",
+              "emoji": "🦀",
+              "size": "big",
+              "label": "big crab"
+            },
+            {
+              "id": "small-shell",
+              "emoji": "🐚",
+              "size": "small",
+              "label": "small shell"
+            }
+          ],
+          "correct": "small-crab"
+        },
+        {
+          "word": "DAD STANDS",
+          "syllables": "D-A-D STANDS",
+          "prompt": "Someone from our family is next to the huge glass wall. Read who and what they are doing.",
+          "success": "Dad stands so close to the glass that a fish swims right up to his nose!",
+          "choices": [
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            }
+          ],
+          "correct": "dad-stand"
+        },
+        {
+          "word": "PINK HEART",
+          "syllables": "P-I-N-K HEART",
+          "prompt": "At the gift shop, each child can pick one badge. Read which badge is mine.",
+          "success": "A pink heart badge for my jacket!",
+          "choices": [
+            {
+              "id": "pink-heart",
+              "emoji": "🩷",
+              "label": "pink heart"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            },
+            {
+              "id": "pink-flower",
+              "emoji": "🌸",
+              "label": "pink flower"
+            }
+          ],
+          "correct": "pink-heart"
+        },
+        {
+          "word": "SIX WHALES",
+          "syllables": "S-I-X WHALES",
+          "prompt": "In the movie room, the screen shows the open sea. Read who swims across it.",
+          "success": "Six whales swim across the screen, slow and huge.",
+          "choices": [
+            {
+              "id": "six-whale",
+              "emoji": "🐋",
+              "count": 6,
+              "label": "six whales"
+            },
+            {
+              "id": "two-whale",
+              "emoji": "🐋",
+              "count": 2,
+              "label": "two whales"
+            },
+            {
+              "id": "six-fish",
+              "emoji": "🐟",
+              "count": 6,
+              "label": "six fish"
+            }
+          ],
+          "correct": "six-whale"
+        },
+        {
+          "word": "BABY SINGS",
+          "syllables": "B-A-B-Y SINGS",
+          "prompt": "On the bench by the exit, a family takes a rest. Read who and what is happening.",
+          "success": "The baby sings a happy la-la-la, and the fish seem to listen.",
+          "choices": [
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "baby sings"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "baby sleeps"
+            }
+          ],
+          "correct": "baby-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-b-05",
+      "title": "The Painting Class",
+      "emoji": "🎨",
+      "character": "🧑‍🎨",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "Our paintings are drying in the sun. Tomorrow Captain Gus takes us up the old lighthouse!",
+      "tasks": [
+        {
+          "word": "YELLOW DOT",
+          "syllables": "YEL-LOW D-O-T",
+          "prompt": "Miss Iris gives each of us a brush and a sheet of paper. Read what she paints first.",
+          "success": "A yellow dot - that is the sun, says Miss Iris.",
+          "choices": [
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "yellow dot"
+            },
+            {
+              "id": "purple-circle",
+              "emoji": "🟣",
+              "label": "purple dot"
+            },
+            {
+              "id": "yellow-star",
+              "emoji": "⭐",
+              "label": "yellow star"
+            }
+          ],
+          "correct": "yellow-circle"
+        },
+        {
+          "word": "GREEN SQUARE",
+          "syllables": "GREEN SQUARE",
+          "prompt": "Next, Miss Iris paints in the corner of the paper. Read what appears there.",
+          "success": "A green square - that is the garden.",
+          "choices": [
+            {
+              "id": "green-square",
+              "emoji": "🟩",
+              "label": "green square"
+            },
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "black square"
+            },
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            }
+          ],
+          "correct": "green-square"
+        },
+        {
+          "word": "MOM PAINTS",
+          "syllables": "M-O-M PAINTS",
+          "prompt": "Someone from our family comes over to see the class. Read who and what they do.",
+          "success": "Mom paints the sea with long, wavy strokes.",
+          "choices": [
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            },
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "mom climbs"
+            }
+          ],
+          "correct": "mom-paint"
+        },
+        {
+          "word": "FOUR BRUSHES",
+          "syllables": "F-O-U-R BRUSH-ES",
+          "prompt": "Miss Iris opens her wooden box. Read what is inside.",
+          "success": "Four brushes, from very thin to very fat.",
+          "choices": [
+            {
+              "id": "four-brush",
+              "emoji": "🖌️",
+              "count": 4,
+              "label": "four brushes"
+            },
+            {
+              "id": "two-brush",
+              "emoji": "🖌️",
+              "count": 2,
+              "label": "two brushes"
+            },
+            {
+              "id": "four-pencil",
+              "emoji": "✏️",
+              "count": 4,
+              "label": "four pencils"
+            }
+          ],
+          "correct": "four-brush"
+        },
+        {
+          "word": "SMALL CHICK",
+          "syllables": "SMALL CHICK",
+          "prompt": "A guest wanders onto the beach and sits right on Miss Iris's paper. Read who it is.",
+          "success": "A small chick! Now there are tiny footprints all over the painting.",
+          "choices": [
+            {
+              "id": "small-chick",
+              "emoji": "🐤",
+              "size": "small",
+              "label": "small chick"
+            },
+            {
+              "id": "big-chick",
+              "emoji": "🐤",
+              "size": "big",
+              "label": "big chick"
+            },
+            {
+              "id": "small-frog",
+              "emoji": "🐸",
+              "size": "small",
+              "label": "small frog"
+            }
+          ],
+          "correct": "small-chick"
+        },
+        {
+          "word": "ORANGE HEART",
+          "syllables": "OR-ANGE HEART",
+          "prompt": "We each make a card for Aunt Bea. Read what is on mine.",
+          "success": "An orange heart for Aunt Bea - she will love it.",
+          "choices": [
+            {
+              "id": "orange-heart",
+              "emoji": "🧡",
+              "label": "orange heart"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "orange-book",
+              "emoji": "📙",
+              "label": "orange book"
+            }
+          ],
+          "correct": "orange-heart"
+        },
+        {
+          "word": "NINE COOKIES",
+          "syllables": "N-I-N-E COOK-IES",
+          "prompt": "Break time! Miss Iris opens a tin. Read what she shares.",
+          "success": "Nine cookies, one for everyone in the class.",
+          "choices": [
+            {
+              "id": "nine-cookie",
+              "emoji": "🍪",
+              "count": 9,
+              "label": "nine cookies"
+            },
+            {
+              "id": "three-cookie",
+              "emoji": "🍪",
+              "count": 3,
+              "label": "three cookies"
+            },
+            {
+              "id": "nine-cupcake",
+              "emoji": "🧁",
+              "count": 9,
+              "label": "nine cupcakes"
+            }
+          ],
+          "correct": "nine-cookie"
+        },
+        {
+          "word": "BIG PARROT",
+          "syllables": "B-I-G PAR-ROT",
+          "prompt": "Somebody comes to watch from the palm tree. Read who is up there.",
+          "success": "A big parrot - he wants to be in the painting too!",
+          "choices": [
+            {
+              "id": "big-parrot",
+              "emoji": "🦜",
+              "size": "big",
+              "label": "big parrot"
+            },
+            {
+              "id": "small-parrot",
+              "emoji": "🦜",
+              "size": "small",
+              "label": "small parrot"
+            },
+            {
+              "id": "big-monkey",
+              "emoji": "🐵",
+              "size": "big",
+              "label": "big monkey"
+            }
+          ],
+          "correct": "big-parrot"
+        },
+        {
+          "word": "DOG SLEEPS",
+          "syllables": "D-O-G SLEEPS",
+          "prompt": "Under the class umbrella, a furry guest has found some shade. Read who and what is going on.",
+          "success": "A dog sleeps in the shade until the class is over.",
+          "choices": [
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            },
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "cat sleeps"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            }
+          ],
+          "correct": "dog-sleep"
+        },
+        {
+          "word": "DAD DANCES",
+          "syllables": "D-A-D DAN-CES",
+          "prompt": "At the end, everyone shows their picture, and somebody is very proud. Read who that is and what happens next.",
+          "success": "Dad dances a happy little dance next to his painting.",
+          "choices": [
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            }
+          ],
+          "correct": "dad-dance"
+        }
+      ]
+    },
+    {
+      "id": "en-b-06",
+      "title": "The Lighthouse",
+      "emoji": "🗼",
+      "character": "🦭",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "The lighthouse lamp sweeps over the dark sea. Tomorrow we visit the little seaside zoo!",
+      "tasks": [
+        {
+          "word": "MOM CLIMBS",
+          "syllables": "M-O-M CLIMBS",
+          "prompt": "The old lighthouse has an iron ladder on the inside. Read who is at the bottom of it and what they are doing.",
+          "success": "Mom climbs up and up, all the way to the top.",
+          "choices": [
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "mom climbs"
+            },
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "dad climbs"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            }
+          ],
+          "correct": "mom-climb"
+        },
+        {
+          "word": "BIG CANDLE",
+          "syllables": "B-I-G CAN-DLE",
+          "prompt": "In the keeper's old room, Gus opens a dusty cupboard. Read what he takes out.",
+          "success": "A big candle - the old keepers read by its light.",
+          "choices": [
+            {
+              "id": "big-candle",
+              "emoji": "🕯️",
+              "size": "big",
+              "label": "big candle"
+            },
+            {
+              "id": "small-candle",
+              "emoji": "🕯️",
+              "size": "small",
+              "label": "small candle"
+            },
+            {
+              "id": "big-pencil",
+              "emoji": "✏️",
+              "size": "big",
+              "label": "big pencil"
+            }
+          ],
+          "correct": "big-candle"
+        },
+        {
+          "word": "FIVE CLOUDS",
+          "syllables": "F-I-V-E CLOUDS",
+          "prompt": "From the top we can see the whole sky. Read what floats over the sea.",
+          "success": "Five clouds drift over the sea, fluffy and white.",
+          "choices": [
+            {
+              "id": "five-cloud",
+              "emoji": "☁️",
+              "count": 5,
+              "label": "five clouds"
+            },
+            {
+              "id": "three-cloud",
+              "emoji": "☁️",
+              "count": 3,
+              "label": "three clouds"
+            },
+            {
+              "id": "five-kite",
+              "emoji": "🪁",
+              "count": 5,
+              "label": "five kites"
+            }
+          ],
+          "correct": "five-cloud"
+        },
+        {
+          "word": "BLACK BIRD",
+          "syllables": "BLACK B-I-R-D",
+          "prompt": "Out on the balcony, somebody is sitting on the railing next to us. Read who it is.",
+          "success": "A black bird - Gus says she comes up every morning for crumbs.",
+          "choices": [
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "black bird"
+            },
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "white bird"
+            },
+            {
+              "id": "black-cat",
+              "emoji": "🐈‍⬛",
+              "label": "black cat"
+            }
+          ],
+          "correct": "black-bird"
+        },
+        {
+          "word": "SMALL HOUSE",
+          "syllables": "SMALL H-O-U-S-E",
+          "prompt": "Far below, Gus points to the place where he lives. Read what it is.",
+          "success": "A small house right by the water - that is Gus's home.",
+          "choices": [
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "small house"
+            },
+            {
+              "id": "big-house",
+              "emoji": "🏠",
+              "size": "big",
+              "label": "big house"
+            },
+            {
+              "id": "small-tent",
+              "emoji": "⛺",
+              "size": "small",
+              "label": "small tent"
+            }
+          ],
+          "correct": "small-house"
+        },
+        {
+          "word": "GRANDPA SLEEPS",
+          "syllables": "GRAND-PA SLEEPS",
+          "prompt": "In the keeper's armchair sits an old friend of Gus. Read who it is and what is happening.",
+          "success": "Grandpa sleeps in the armchair - the ladder was a lot of work!",
+          "choices": [
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "grandpa sleeps"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "grandma sleeps"
+            },
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "grandpa sings"
+            }
+          ],
+          "correct": "grandpa-sleep"
+        },
+        {
+          "word": "FOUR CANDLES",
+          "syllables": "F-O-U-R CAN-DLES",
+          "prompt": "On the window ledge, Gus keeps a few things from the old days. Read what is there.",
+          "success": "Four candles, ready for stormy nights.",
+          "choices": [
+            {
+              "id": "four-candle",
+              "emoji": "🕯️",
+              "count": 4,
+              "label": "four candles"
+            },
+            {
+              "id": "two-candle",
+              "emoji": "🕯️",
+              "count": 2,
+              "label": "two candles"
+            },
+            {
+              "id": "four-pencil",
+              "emoji": "✏️",
+              "count": 4,
+              "label": "four pencils"
+            }
+          ],
+          "correct": "four-candle"
+        },
+        {
+          "word": "YELLOW FLOWER",
+          "syllables": "YEL-LOW FLOW-ER",
+          "prompt": "Gus keeps a little pot by the lighthouse door. Read what grows in it.",
+          "success": "A yellow flower that always turns to face the sun.",
+          "choices": [
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "yellow flower"
+            },
+            {
+              "id": "pink-flower",
+              "emoji": "🌸",
+              "label": "pink flower"
+            },
+            {
+              "id": "yellow-lemon",
+              "emoji": "🍋",
+              "label": "yellow lemon"
+            }
+          ],
+          "correct": "yellow-flower"
+        },
+        {
+          "word": "SMALL WHALE",
+          "syllables": "SMALL WHALE",
+          "prompt": "Through the telescope we spot something far out at sea. Read who is out there.",
+          "success": "A small whale - just a baby, Gus says - rolls through the waves.",
+          "choices": [
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "small whale"
+            },
+            {
+              "id": "big-whale",
+              "emoji": "🐋",
+              "size": "big",
+              "label": "big whale"
+            },
+            {
+              "id": "small-boat",
+              "emoji": "🛶",
+              "size": "small",
+              "label": "small boat"
+            }
+          ],
+          "correct": "small-whale"
+        },
+        {
+          "word": "NINE STARS",
+          "syllables": "N-I-N-E STARS",
+          "prompt": "When we come back down, it is already dark. Read what we see over the lighthouse.",
+          "success": "Nine stars twinkle over the lighthouse, and the lamp begins to turn.",
+          "choices": [
+            {
+              "id": "nine-star",
+              "emoji": "⭐",
+              "count": 9,
+              "label": "nine stars"
+            },
+            {
+              "id": "five-star",
+              "emoji": "⭐",
+              "count": 5,
+              "label": "five stars"
+            },
+            {
+              "id": "nine-cloud",
+              "emoji": "☁️",
+              "count": 9,
+              "label": "nine clouds"
+            }
+          ],
+          "correct": "nine-star"
+        }
+      ]
+    },
+    {
+      "id": "en-b-07",
+      "title": "The Seaside Zoo",
+      "emoji": "🦒",
+      "character": "🧑‍🦱",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "Keeper Lou waves from the gate. Tomorrow it is going to rain, so Aunt Bea has a plan!",
+      "tasks": [
+        {
+          "word": "BIG GIRAFFE",
+          "syllables": "B-I-G GI-RAFFE",
+          "prompt": "Keeper Lou opens the gate to the first pen. Read who lives there.",
+          "success": "A big giraffe bends down to say hello.",
+          "choices": [
+            {
+              "id": "big-giraffe",
+              "emoji": "🦒",
+              "size": "big",
+              "label": "big giraffe"
+            },
+            {
+              "id": "small-giraffe",
+              "emoji": "🦒",
+              "size": "small",
+              "label": "small giraffe"
+            },
+            {
+              "id": "big-camel",
+              "emoji": "🐫",
+              "size": "big",
+              "label": "big camel"
+            }
+          ],
+          "correct": "big-giraffe"
+        },
+        {
+          "word": "THREE CAMELS",
+          "syllables": "THREE CAM-ELS",
+          "prompt": "Next to it is a wide sandy yard. Read who is standing in it.",
+          "success": "Three camels chew slowly and look at us with sleepy eyes.",
+          "choices": [
+            {
+              "id": "three-camel",
+              "emoji": "🐫",
+              "count": 3,
+              "label": "three camels"
+            },
+            {
+              "id": "five-camel",
+              "emoji": "🐫",
+              "count": 5,
+              "label": "five camels"
+            },
+            {
+              "id": "three-hippo",
+              "emoji": "🦛",
+              "count": 3,
+              "label": "three hippos"
+            }
+          ],
+          "correct": "three-camel"
+        },
+        {
+          "word": "MONKEY SLEEPS",
+          "syllables": "MON-KEY SLEEPS",
+          "prompt": "In the tree house, somebody sits on a high branch. Read who it is and what is happening.",
+          "success": "A monkey sleeps on the branch, snoring very softly.",
+          "choices": [
+            {
+              "id": "monkey-sleep",
+              "emoji": "🐵",
+              "badge": "💤",
+              "label": "monkey sleeps"
+            },
+            {
+              "id": "koala-sleep",
+              "emoji": "🐨",
+              "badge": "💤",
+              "label": "koala sleeps"
+            },
+            {
+              "id": "monkey-sing",
+              "emoji": "🐵",
+              "badge": "🎵",
+              "label": "monkey sings"
+            }
+          ],
+          "correct": "monkey-sleep"
+        },
+        {
+          "word": "BROWN BEAR",
+          "syllables": "BROWN B-E-A-R",
+          "prompt": "Keeper Lou shows us a cave with a pool in front of it. Read what we spot there.",
+          "success": "A brown bear splashes in the pool to cool off.",
+          "choices": [
+            {
+              "id": "brown-bear",
+              "emoji": "🐻",
+              "label": "brown bear"
+            },
+            {
+              "id": "white-bear",
+              "emoji": "🐻‍❄️",
+              "label": "white bear"
+            },
+            {
+              "id": "brown-ball",
+              "emoji": "🏈",
+              "label": "brown ball"
+            }
+          ],
+          "correct": "brown-bear"
+        },
+        {
+          "word": "TWO HIPPOS",
+          "syllables": "T-W-O HIP-POS",
+          "prompt": "Keeper Lou stops by a wide fence. Read who is behind it.",
+          "success": "Two hippos wallow in the mud and blow bubbles.",
+          "choices": [
+            {
+              "id": "two-hippo",
+              "emoji": "🦛",
+              "count": 2,
+              "label": "two hippos"
+            },
+            {
+              "id": "four-hippo",
+              "emoji": "🦛",
+              "count": 4,
+              "label": "four hippos"
+            },
+            {
+              "id": "two-panda",
+              "emoji": "🐼",
+              "count": 2,
+              "label": "two pandas"
+            }
+          ],
+          "correct": "two-hippo"
+        },
+        {
+          "word": "KOALA SLEEPS",
+          "syllables": "KO-A-LA SLEEPS",
+          "prompt": "In a quiet corner of the zoo, someone is holding on to a tree. Read who and what is going on.",
+          "success": "A koala sleeps in the fork of the tree - almost all day, Keeper Lou says.",
+          "choices": [
+            {
+              "id": "koala-sleep",
+              "emoji": "🐨",
+              "badge": "💤",
+              "label": "koala sleeps"
+            },
+            {
+              "id": "panda-sleep",
+              "emoji": "🐼",
+              "badge": "💤",
+              "label": "panda sleeps"
+            },
+            {
+              "id": "koala-sing",
+              "emoji": "🐨",
+              "badge": "🎵",
+              "label": "koala sings"
+            }
+          ],
+          "correct": "koala-sleep"
+        },
+        {
+          "word": "SMALL TIGER",
+          "syllables": "SMALL TI-GER",
+          "prompt": "Behind the thick glass, someone plays with a rope. Read who it is.",
+          "success": "A small tiger cub pounces on the rope!",
+          "choices": [
+            {
+              "id": "small-tiger",
+              "emoji": "🐯",
+              "size": "small",
+              "label": "small tiger"
+            },
+            {
+              "id": "big-tiger",
+              "emoji": "🐯",
+              "size": "big",
+              "label": "big tiger"
+            },
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "small lion"
+            }
+          ],
+          "correct": "small-tiger"
+        },
+        {
+          "word": "GREEN APPLE",
+          "syllables": "GREEN AP-PLE",
+          "prompt": "Keeper Lou lets us give the giraffe a snack. Read what it is.",
+          "success": "A green apple - the giraffe crunches it in one bite.",
+          "choices": [
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            }
+          ],
+          "correct": "green-apple"
+        },
+        {
+          "word": "TEN PARROTS",
+          "syllables": "T-E-N PAR-ROTS",
+          "prompt": "In a tall round cage, everyone is chattering at once. Read who is inside.",
+          "success": "Ten parrots - and every one of them says hello!",
+          "choices": [
+            {
+              "id": "ten-parrot",
+              "emoji": "🦜",
+              "count": 10,
+              "label": "ten parrots"
+            },
+            {
+              "id": "six-parrot",
+              "emoji": "🦜",
+              "count": 6,
+              "label": "six parrots"
+            },
+            {
+              "id": "ten-monkey",
+              "emoji": "🐵",
+              "count": 10,
+              "label": "ten monkeys"
+            }
+          ],
+          "correct": "ten-parrot"
+        },
+        {
+          "word": "DAD JUGGLES",
+          "syllables": "D-A-D JUG-GLES",
+          "prompt": "At the zoo cafe, someone from our family is showing off for Keeper Lou. Read who and what they do.",
+          "success": "Dad juggles, and Keeper Lou claps along.",
+          "choices": [
+            {
+              "id": "dad-juggle",
+              "emoji": "🤹‍♂️",
+              "label": "dad juggles"
+            },
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            },
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "dad climbs"
+            }
+          ],
+          "correct": "dad-juggle"
+        }
+      ]
+    },
+    {
+      "id": "en-b-08",
+      "title": "The Toy Shop",
+      "emoji": "🧸",
+      "character": "👩‍🦰",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "The rain is still drumming on the roof. Tonight we play games at Aunt Bea's kitchen table!",
+      "tasks": [
+        {
+          "word": "SMALL DRUM",
+          "syllables": "SMALL D-R-U-M",
+          "prompt": "It is raining, so Aunt Bea takes us to the toy shop on the corner. Read what is in the window.",
+          "success": "A small drum, just right for little hands. Boom, boom, boom!",
+          "choices": [
+            {
+              "id": "small-drum",
+              "emoji": "🥁",
+              "size": "small",
+              "label": "small drum"
+            },
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            },
+            {
+              "id": "small-guitar",
+              "emoji": "🎸",
+              "size": "small",
+              "label": "small guitar"
+            }
+          ],
+          "correct": "small-drum"
+        },
+        {
+          "word": "SIX GUITARS",
+          "syllables": "S-I-X GUI-TARS",
+          "prompt": "Upstairs is the music corner. Read what hangs on the wall.",
+          "success": "Six guitars hang in a row, waiting for someone to play.",
+          "choices": [
+            {
+              "id": "six-guitar",
+              "emoji": "🎸",
+              "count": 6,
+              "label": "six guitars"
+            },
+            {
+              "id": "two-guitar",
+              "emoji": "🎸",
+              "count": 2,
+              "label": "two guitars"
+            },
+            {
+              "id": "six-drum",
+              "emoji": "🥁",
+              "count": 6,
+              "label": "six drums"
+            }
+          ],
+          "correct": "six-guitar"
+        },
+        {
+          "word": "WHITE BALL",
+          "syllables": "WHITE B-A-L-L",
+          "prompt": "In a basket by the door there is one thing left for us to buy. Read what it is.",
+          "success": "A white ball for games on the beach - once the rain stops.",
+          "choices": [
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "white ball"
+            },
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "yellow ball"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "white flag"
+            }
+          ],
+          "correct": "white-ball"
+        },
+        {
+          "word": "SMALL MONKEY",
+          "syllables": "SMALL MON-KEY",
+          "prompt": "On the soft toy shelf, Aunt Bea picks one out for us. Read which toy she chooses.",
+          "success": "A small monkey with a silly grin.",
+          "choices": [
+            {
+              "id": "small-monkey",
+              "emoji": "🐵",
+              "size": "small",
+              "label": "small monkey"
+            },
+            {
+              "id": "big-monkey",
+              "emoji": "🐵",
+              "size": "big",
+              "label": "big monkey"
+            },
+            {
+              "id": "small-tiger",
+              "emoji": "🐯",
+              "size": "small",
+              "label": "small tiger"
+            }
+          ],
+          "correct": "small-monkey"
+        },
+        {
+          "word": "MOM JUGGLES",
+          "syllables": "M-O-M JUG-GLES",
+          "prompt": "Someone from our family tries out a toy from the shop. Read who and what they are doing.",
+          "success": "Mom juggles the bean bags, and the shop owner laughs.",
+          "choices": [
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            },
+            {
+              "id": "dad-juggle",
+              "emoji": "🤹‍♂️",
+              "label": "dad juggles"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            }
+          ],
+          "correct": "mom-juggle"
+        },
+        {
+          "word": "BLUE DIAMOND",
+          "syllables": "B-L-U-E DIA-MOND",
+          "prompt": "On the counter is a box of shiny stickers. Read which one we choose.",
+          "success": "A blue diamond sticker - it sparkles like real treasure!",
+          "choices": [
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "blue diamond"
+            },
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "orange diamond"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            }
+          ],
+          "correct": "blue-diamond"
+        },
+        {
+          "word": "SEVEN KITES",
+          "syllables": "SEV-EN KITES",
+          "prompt": "Up near the ceiling, toys hang on strings. Read what they are.",
+          "success": "Seven kites, ready for a windy day.",
+          "choices": [
+            {
+              "id": "seven-kite",
+              "emoji": "🪁",
+              "count": 7,
+              "label": "seven kites"
+            },
+            {
+              "id": "five-kite",
+              "emoji": "🪁",
+              "count": 5,
+              "label": "five kites"
+            },
+            {
+              "id": "seven-drum",
+              "emoji": "🥁",
+              "count": 7,
+              "label": "seven drums"
+            }
+          ],
+          "correct": "seven-kite"
+        },
+        {
+          "word": "PARROT SINGS",
+          "syllables": "PAR-ROT SINGS",
+          "prompt": "The shop owner has a pet who lives by the till. Read who it is and what is happening.",
+          "success": "The parrot sings every time the door bell rings!",
+          "choices": [
+            {
+              "id": "parrot-sing",
+              "emoji": "🦜",
+              "badge": "🎵",
+              "label": "parrot sings"
+            },
+            {
+              "id": "turtle-sing",
+              "emoji": "🐢",
+              "badge": "🎵",
+              "label": "turtle sings"
+            },
+            {
+              "id": "parrot-sleep",
+              "emoji": "🦜",
+              "badge": "💤",
+              "label": "parrot sleeps"
+            }
+          ],
+          "correct": "parrot-sing"
+        },
+        {
+          "word": "SMALL PANDA",
+          "syllables": "SMALL PAN-DA",
+          "prompt": "We spot one more soft toy on the top shelf. Read who it is.",
+          "success": "A small panda for Marmalade the shop cat to cuddle.",
+          "choices": [
+            {
+              "id": "small-panda",
+              "emoji": "🐼",
+              "size": "small",
+              "label": "small panda"
+            },
+            {
+              "id": "big-panda",
+              "emoji": "🐼",
+              "size": "big",
+              "label": "big panda"
+            },
+            {
+              "id": "small-koala",
+              "emoji": "🐨",
+              "size": "small",
+              "label": "small koala"
+            }
+          ],
+          "correct": "small-panda"
+        },
+        {
+          "word": "BOY SLEEPS",
+          "syllables": "B-O-Y SLEEPS",
+          "prompt": "In the reading nook at the back of the shop, a child is lying on a beanbag. Read who and what is going on.",
+          "success": "A boy sleeps on the beanbag - the rain makes everyone sleepy.",
+          "choices": [
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "girl sleeps"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            }
+          ],
+          "correct": "boy-sleep"
+        }
+      ]
+    },
+    {
+      "id": "en-b-09",
+      "title": "Games at the Kitchen Table",
+      "emoji": "🎲",
+      "character": "👩‍🦰",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The storm is over and the stars are back. Tomorrow is the flower show in the town square!",
+      "tasks": [
+        {
+          "word": "RED SQUARE",
+          "syllables": "R-E-D SQUARE",
+          "prompt": "Aunt Bea brings out an old game board. Read what is on the first space.",
+          "success": "A red square - that is where we start!",
+          "choices": [
+            {
+              "id": "red-square",
+              "emoji": "🟥",
+              "label": "red square"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            }
+          ],
+          "correct": "red-square"
+        },
+        {
+          "word": "FIVE CANDLES",
+          "syllables": "F-I-V-E CAN-DLES",
+          "prompt": "The storm rattles the windows, and Aunt Bea brings something to the table. Read what it is.",
+          "success": "Five candles light up the kitchen, warm and cozy.",
+          "choices": [
+            {
+              "id": "five-candle",
+              "emoji": "🕯️",
+              "count": 5,
+              "label": "five candles"
+            },
+            {
+              "id": "three-candle",
+              "emoji": "🕯️",
+              "count": 3,
+              "label": "three candles"
+            },
+            {
+              "id": "five-cookie",
+              "emoji": "🍪",
+              "count": 5,
+              "label": "five cookies"
+            }
+          ],
+          "correct": "five-candle"
+        },
+        {
+          "word": "MOUSE SLEEPS",
+          "syllables": "MOUSE SLEEPS",
+          "prompt": "Under the kitchen dresser there is a tiny bed made from a matchbox. Read who is in it and what is happening.",
+          "success": "A mouse sleeps in the matchbox bed, under a sock for a blanket.",
+          "choices": [
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "mouse sleeps"
+            },
+            {
+              "id": "frog-sleep",
+              "emoji": "🐸",
+              "badge": "💤",
+              "label": "frog sleeps"
+            },
+            {
+              "id": "mouse-sing",
+              "emoji": "🐭",
+              "badge": "🎵",
+              "label": "mouse sings"
+            }
+          ],
+          "correct": "mouse-sleep"
+        },
+        {
+          "word": "BLACK SQUARE",
+          "syllables": "BLACK SQUARE",
+          "prompt": "Aunt Bea moves her game piece. Read where it lands.",
+          "success": "A black square - oh no, Aunt Bea has to go back three spaces!",
+          "choices": [
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "black square"
+            },
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "white square"
+            },
+            {
+              "id": "black-heart",
+              "emoji": "🖤",
+              "label": "black heart"
+            }
+          ],
+          "correct": "black-square"
+        },
+        {
+          "word": "BIG CUPCAKE",
+          "syllables": "B-I-G CUP-CAKE",
+          "prompt": "For a snack, Aunt Bea opens the bread bin. Read what she finds.",
+          "success": "A big cupcake to share between all of us.",
+          "choices": [
+            {
+              "id": "big-cupcake",
+              "emoji": "🧁",
+              "size": "big",
+              "label": "big cupcake"
+            },
+            {
+              "id": "small-cupcake",
+              "emoji": "🧁",
+              "size": "small",
+              "label": "small cupcake"
+            },
+            {
+              "id": "big-cookie",
+              "emoji": "🍪",
+              "size": "big",
+              "label": "big cookie"
+            }
+          ],
+          "correct": "big-cupcake"
+        },
+        {
+          "word": "DAD PAINTS",
+          "syllables": "D-A-D PAINTS",
+          "prompt": "Someone from our family is at the end of the table. Read who and what they are doing.",
+          "success": "Dad paints a picture of the storm, with lots and lots of gray.",
+          "choices": [
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            },
+            {
+              "id": "dad-juggle",
+              "emoji": "🤹‍♂️",
+              "label": "dad juggles"
+            }
+          ],
+          "correct": "dad-paint"
+        },
+        {
+          "word": "THREE PANDAS",
+          "syllables": "THREE PAN-DAS",
+          "prompt": "Aunt Bea deals out picture cards. Read who is on my card.",
+          "success": "Three pandas - the luckiest card in the whole game!",
+          "choices": [
+            {
+              "id": "three-panda",
+              "emoji": "🐼",
+              "count": 3,
+              "label": "three pandas"
+            },
+            {
+              "id": "five-panda",
+              "emoji": "🐼",
+              "count": 5,
+              "label": "five pandas"
+            },
+            {
+              "id": "three-koala",
+              "emoji": "🐨",
+              "count": 3,
+              "label": "three koalas"
+            }
+          ],
+          "correct": "three-panda"
+        },
+        {
+          "word": "SMALL SNAIL",
+          "syllables": "SMALL SNAIL",
+          "prompt": "At the window, someone is making its way up the wet glass. Read who it is.",
+          "success": "A small snail leaves a shiny trail on the glass.",
+          "choices": [
+            {
+              "id": "small-snail",
+              "emoji": "🐌",
+              "size": "small",
+              "label": "small snail"
+            },
+            {
+              "id": "big-snail",
+              "emoji": "🐌",
+              "size": "big",
+              "label": "big snail"
+            },
+            {
+              "id": "small-frog",
+              "emoji": "🐸",
+              "size": "small",
+              "label": "small frog"
+            }
+          ],
+          "correct": "small-snail"
+        },
+        {
+          "word": "FOUR LEMONS",
+          "syllables": "F-O-U-R LEM-ONS",
+          "prompt": "Aunt Bea makes a hot drink for the grown-ups. Read what she takes from the fruit bowl.",
+          "success": "Four lemons for hot lemon tea.",
+          "choices": [
+            {
+              "id": "four-lemon",
+              "emoji": "🍋",
+              "count": 4,
+              "label": "four lemons"
+            },
+            {
+              "id": "two-lemon",
+              "emoji": "🍋",
+              "count": 2,
+              "label": "two lemons"
+            },
+            {
+              "id": "four-banana",
+              "emoji": "🍌",
+              "count": 4,
+              "label": "four bananas"
+            }
+          ],
+          "correct": "four-lemon"
+        },
+        {
+          "word": "GRANDMA SLEEPS",
+          "syllables": "GRAND-MA SLEEPS",
+          "prompt": "The neighbor from next door has come over for tea. Read who it is and what is happening.",
+          "success": "Grandma Moss sleeps in the armchair while the storm rumbles on.",
+          "choices": [
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "grandma sleeps"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "grandpa sleeps"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            }
+          ],
+          "correct": "grandma-sleep"
+        }
+      ]
+    },
+    {
+      "id": "en-b-10",
+      "title": "The Flower Show",
+      "emoji": "💐",
+      "character": "👩‍🦰",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Aunt Bea's rose stands in a jar on the counter. Tomorrow the circus comes to town!",
+      "tasks": [
+        {
+          "word": "PINK FLOWER",
+          "syllables": "P-I-N-K FLOW-ER",
+          "prompt": "The town square is full of stalls. Read what the first one sells.",
+          "success": "A pink flower, soft as a cloud.",
+          "choices": [
+            {
+              "id": "pink-flower",
+              "emoji": "🌸",
+              "label": "pink flower"
+            },
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "white flower"
+            },
+            {
+              "id": "pink-heart",
+              "emoji": "🩷",
+              "label": "pink heart"
+            }
+          ],
+          "correct": "pink-flower"
+        },
+        {
+          "word": "SIX TULIPS",
+          "syllables": "S-I-X TU-LIPS",
+          "prompt": "Farmer Ned has a stall in the corner. Read what is in his bucket.",
+          "success": "Six tulips with long green stems.",
+          "choices": [
+            {
+              "id": "six-tulip",
+              "emoji": "🌷",
+              "count": 6,
+              "label": "six tulips"
+            },
+            {
+              "id": "three-tulip",
+              "emoji": "🌷",
+              "count": 3,
+              "label": "three tulips"
+            },
+            {
+              "id": "six-carrot",
+              "emoji": "🥕",
+              "count": 6,
+              "label": "six carrots"
+            }
+          ],
+          "correct": "six-tulip"
+        },
+        {
+          "word": "PURPLE FLOWER",
+          "syllables": "PUR-PLE FLOW-ER",
+          "prompt": "A gardener has won first prize. Read what she grew.",
+          "success": "A purple flower that smells like summer.",
+          "choices": [
+            {
+              "id": "purple-flower",
+              "emoji": "🪻",
+              "label": "purple flower"
+            },
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "yellow flower"
+            },
+            {
+              "id": "purple-grapes",
+              "emoji": "🍇",
+              "label": "purple grapes"
+            }
+          ],
+          "correct": "purple-flower"
+        },
+        {
+          "word": "BIG BEETLE",
+          "syllables": "B-I-G BEE-TLE",
+          "prompt": "Someone crawls out from under a leaf on the prize table. Read who it is.",
+          "success": "A big beetle! The judges jump back.",
+          "choices": [
+            {
+              "id": "big-beetle",
+              "emoji": "🪲",
+              "size": "big",
+              "label": "big beetle"
+            },
+            {
+              "id": "small-beetle",
+              "emoji": "🪲",
+              "size": "small",
+              "label": "small beetle"
+            },
+            {
+              "id": "big-snail",
+              "emoji": "🐌",
+              "size": "big",
+              "label": "big snail"
+            }
+          ],
+          "correct": "big-beetle"
+        },
+        {
+          "word": "MOM DANCES",
+          "syllables": "M-O-M DAN-CES",
+          "prompt": "A band starts to play by the fountain. Read who from our family is there and what they are doing.",
+          "success": "Mom dances to the band right by the fountain.",
+          "choices": [
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            }
+          ],
+          "correct": "mom-dance"
+        },
+        {
+          "word": "RED FLOWER",
+          "syllables": "R-E-D FLOW-ER",
+          "prompt": "Aunt Bea buys one thing to take home for her shop counter. Read what it is.",
+          "success": "A red flower - a rose, with a lovely smell!",
+          "choices": [
+            {
+              "id": "red-flower",
+              "emoji": "🌹",
+              "label": "red flower"
+            },
+            {
+              "id": "yellow-flower",
+              "emoji": "🌻",
+              "label": "yellow flower"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            }
+          ],
+          "correct": "red-flower"
+        },
+        {
+          "word": "SEVEN BEES",
+          "syllables": "SEV-EN B-E-E-S",
+          "prompt": "Around the honey stall there are tiny visitors everywhere. Read who they are.",
+          "success": "Seven bees buzz around the honey jars.",
+          "choices": [
+            {
+              "id": "seven-bee",
+              "emoji": "🐝",
+              "count": 7,
+              "label": "seven bees"
+            },
+            {
+              "id": "five-bee",
+              "emoji": "🐝",
+              "count": 5,
+              "label": "five bees"
+            },
+            {
+              "id": "seven-ant",
+              "emoji": "🐜",
+              "count": 7,
+              "label": "seven ants"
+            }
+          ],
+          "correct": "seven-bee"
+        },
+        {
+          "word": "SMALL TULIP",
+          "syllables": "SMALL TU-LIP",
+          "prompt": "A girl brings her own pot to the children's table. Read what is in it.",
+          "success": "A small tulip - and it wins a ribbon for the youngest grower!",
+          "choices": [
+            {
+              "id": "small-tulip",
+              "emoji": "🌷",
+              "size": "small",
+              "label": "small tulip"
+            },
+            {
+              "id": "big-tulip",
+              "emoji": "🌷",
+              "size": "big",
+              "label": "big tulip"
+            },
+            {
+              "id": "small-carrot",
+              "emoji": "🥕",
+              "size": "small",
+              "label": "small carrot"
+            }
+          ],
+          "correct": "small-tulip"
+        },
+        {
+          "word": "BABY SLEEPS",
+          "syllables": "B-A-B-Y SLEEPS",
+          "prompt": "Under a shady tree, a family has spread out a blanket. Read who and what is happening.",
+          "success": "The baby sleeps under the tree, with petals falling all around.",
+          "choices": [
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "baby sleeps"
+            },
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "baby sings"
+            }
+          ],
+          "correct": "baby-sleep"
+        },
+        {
+          "word": "FOUR CARROTS",
+          "syllables": "F-O-U-R CAR-ROTS",
+          "prompt": "At the last stall, Farmer Ned has something for Aunt Bea's kitchen. Read what he hands over.",
+          "success": "Four carrots, fresh from Farmer Ned's garden.",
+          "choices": [
+            {
+              "id": "four-carrot",
+              "emoji": "🥕",
+              "count": 4,
+              "label": "four carrots"
+            },
+            {
+              "id": "two-carrot",
+              "emoji": "🥕",
+              "count": 2,
+              "label": "two carrots"
+            },
+            {
+              "id": "four-lemon",
+              "emoji": "🍋",
+              "count": 4,
+              "label": "four lemons"
+            }
+          ],
+          "correct": "four-carrot"
+        }
+      ]
+    },
+    {
+      "id": "en-b-11",
+      "title": "The Circus Comes to Town",
+      "emoji": "🎪",
+      "character": "🤡",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "The circus lights go out one by one. Tomorrow we have a picnic on the beach!",
+      "tasks": [
+        {
+          "word": "PURPLE SQUARE",
+          "syllables": "PUR-PLE SQUARE",
+          "prompt": "A striped tent goes up on the beach. Read what is printed on our tickets.",
+          "success": "A purple square on each ticket - that is our row!",
+          "choices": [
+            {
+              "id": "purple-square",
+              "emoji": "🟪",
+              "label": "purple square"
+            },
+            {
+              "id": "green-square",
+              "emoji": "🟩",
+              "label": "green square"
+            },
+            {
+              "id": "purple-heart",
+              "emoji": "💜",
+              "label": "purple heart"
+            }
+          ],
+          "correct": "purple-square"
+        },
+        {
+          "word": "BIG MONKEY",
+          "syllables": "B-I-G MON-KEY",
+          "prompt": "Lulu the clown comes out with a helper on her shoulder. Read who it is.",
+          "success": "A big monkey rides on Lulu's shoulder and waves to everyone.",
+          "choices": [
+            {
+              "id": "big-monkey",
+              "emoji": "🐵",
+              "size": "big",
+              "label": "big monkey"
+            },
+            {
+              "id": "small-monkey",
+              "emoji": "🐵",
+              "size": "small",
+              "label": "small monkey"
+            },
+            {
+              "id": "big-parrot",
+              "emoji": "🦜",
+              "size": "big",
+              "label": "big parrot"
+            }
+          ],
+          "correct": "big-monkey"
+        },
+        {
+          "word": "MOM STANDS",
+          "syllables": "M-O-M STANDS",
+          "prompt": "Lulu asks for a helper from the crowd. Read who from our family goes into the ring and what they do.",
+          "success": "Mom stands very still while Lulu balances a cup on her head!",
+          "choices": [
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            },
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            }
+          ],
+          "correct": "mom-stand"
+        },
+        {
+          "word": "SMALL CAMEL",
+          "syllables": "SMALL CAM-EL",
+          "prompt": "The drums roll, and the next act comes in. Read who walks into the ring.",
+          "success": "A small camel trots round the ring, and everyone cheers.",
+          "choices": [
+            {
+              "id": "small-camel",
+              "emoji": "🐫",
+              "size": "small",
+              "label": "small camel"
+            },
+            {
+              "id": "big-camel",
+              "emoji": "🐫",
+              "size": "big",
+              "label": "big camel"
+            },
+            {
+              "id": "small-horse",
+              "emoji": "🐴",
+              "size": "small",
+              "label": "small horse"
+            }
+          ],
+          "correct": "small-camel"
+        },
+        {
+          "word": "SEVEN BALLS",
+          "syllables": "SEV-EN BALLS",
+          "prompt": "A second clown tosses things high into the air. Read what goes up.",
+          "success": "Seven balls whirl through the air, and not one falls!",
+          "choices": [
+            {
+              "id": "seven-ball",
+              "emoji": "⚽",
+              "count": 7,
+              "label": "seven balls"
+            },
+            {
+              "id": "five-ball",
+              "emoji": "⚽",
+              "count": 5,
+              "label": "five balls"
+            },
+            {
+              "id": "seven-drum",
+              "emoji": "🥁",
+              "count": 7,
+              "label": "seven drums"
+            }
+          ],
+          "correct": "seven-ball"
+        },
+        {
+          "word": "LION SLEEPS",
+          "syllables": "LI-ON SLEEPS",
+          "prompt": "Behind the curtain, a performer waits for its turn. Read who and what is going on.",
+          "success": "A lion sleeps behind the curtain until it is time for the show.",
+          "choices": [
+            {
+              "id": "lion-sleep",
+              "emoji": "🦁",
+              "badge": "💤",
+              "label": "lion sleeps"
+            },
+            {
+              "id": "tiger-sleep",
+              "emoji": "🐯",
+              "badge": "💤",
+              "label": "tiger sleeps"
+            },
+            {
+              "id": "lion-sing",
+              "emoji": "🦁",
+              "badge": "🎵",
+              "label": "lion sings"
+            }
+          ],
+          "correct": "lion-sleep"
+        },
+        {
+          "word": "YELLOW HEART",
+          "syllables": "YEL-LOW HEART",
+          "prompt": "At the break, Lulu paints a picture on each child's cheek. Read what is on mine.",
+          "success": "A yellow heart on my cheek - it tickles!",
+          "choices": [
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "yellow heart"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "yellow-star",
+              "emoji": "⭐",
+              "label": "yellow star"
+            }
+          ],
+          "correct": "yellow-heart"
+        },
+        {
+          "word": "BIG ROOSTER",
+          "syllables": "B-I-G ROOS-TER",
+          "prompt": "Next comes a guest who struts in very proudly. Read who that is.",
+          "success": "A big rooster - cock-a-doodle-doo!",
+          "choices": [
+            {
+              "id": "big-rooster",
+              "emoji": "🐓",
+              "size": "big",
+              "label": "big rooster"
+            },
+            {
+              "id": "small-rooster",
+              "emoji": "🐓",
+              "size": "small",
+              "label": "small rooster"
+            },
+            {
+              "id": "big-parrot",
+              "emoji": "🦜",
+              "size": "big",
+              "label": "big parrot"
+            }
+          ],
+          "correct": "big-rooster"
+        },
+        {
+          "word": "THREE TIGERS",
+          "syllables": "THREE TI-GERS",
+          "prompt": "In the next act, the ring fills up. Read who jumps through the hoops.",
+          "success": "Three tigers leap through the hoops, one after another.",
+          "choices": [
+            {
+              "id": "three-tiger",
+              "emoji": "🐯",
+              "count": 3,
+              "label": "three tigers"
+            },
+            {
+              "id": "five-tiger",
+              "emoji": "🐯",
+              "count": 5,
+              "label": "five tigers"
+            },
+            {
+              "id": "three-lion",
+              "emoji": "🦁",
+              "count": 3,
+              "label": "three lions"
+            }
+          ],
+          "correct": "three-tiger"
+        },
+        {
+          "word": "GIRL SINGS",
+          "syllables": "G-I-R-L SINGS",
+          "prompt": "At the very end, someone is sitting in the front row. Read who and what happens.",
+          "success": "A girl in the front row sings the circus song, and the band plays along.",
+          "choices": [
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "girl sleeps"
+            }
+          ],
+          "correct": "girl-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-b-12",
+      "title": "The Beach Picnic",
+      "emoji": "🏖️",
+      "character": "👩‍🦰",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Our towels are full of sand and our tummies are full of lunch. Tomorrow we visit Farmer Ned up on the hill!",
+      "tasks": [
+        {
+          "word": "YELLOW BALL",
+          "syllables": "YEL-LOW B-A-L-L",
+          "prompt": "Aunt Bea opens the picnic basket. Read what is on top.",
+          "success": "A yellow ball - first a game, then lunch!",
+          "choices": [
+            {
+              "id": "yellow-ball",
+              "emoji": "🥎",
+              "label": "yellow ball"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "white ball"
+            },
+            {
+              "id": "yellow-lemon",
+              "emoji": "🍋",
+              "label": "yellow lemon"
+            }
+          ],
+          "correct": "yellow-ball"
+        },
+        {
+          "word": "SMALL TURTLE",
+          "syllables": "SMALL TUR-TLE",
+          "prompt": "Something crawls out of the sea onto the sand. Read who it is.",
+          "success": "A small turtle looks around, then heads slowly back to the waves.",
+          "choices": [
+            {
+              "id": "small-turtle",
+              "emoji": "🐢",
+              "size": "small",
+              "label": "small turtle"
+            },
+            {
+              "id": "big-turtle",
+              "emoji": "🐢",
+              "size": "big",
+              "label": "big turtle"
+            },
+            {
+              "id": "small-crab",
+              "emoji": "🦀",
+              "size": "small",
+              "label": "small crab"
+            }
+          ],
+          "correct": "small-turtle"
+        },
+        {
+          "word": "SIX SHELLS",
+          "syllables": "S-I-X SHELLS",
+          "prompt": "We dig a moat around our sandcastle. Read what we find.",
+          "success": "Six shells for the top of our sandcastle.",
+          "choices": [
+            {
+              "id": "six-shell",
+              "emoji": "🐚",
+              "count": 6,
+              "label": "six shells"
+            },
+            {
+              "id": "two-shell",
+              "emoji": "🐚",
+              "count": 2,
+              "label": "two shells"
+            },
+            {
+              "id": "six-crab",
+              "emoji": "🦀",
+              "count": 6,
+              "label": "six crabs"
+            }
+          ],
+          "correct": "six-shell"
+        },
+        {
+          "word": "DAD SLEEPS",
+          "syllables": "D-A-D SLEEPS",
+          "prompt": "Under the umbrella, someone from our family is on the towel. Read who and what is happening.",
+          "success": "Dad sleeps under the umbrella while the waves go hush, hush.",
+          "choices": [
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            }
+          ],
+          "correct": "dad-sleep"
+        },
+        {
+          "word": "BIG BANANA",
+          "syllables": "B-I-G BA-NA-NA",
+          "prompt": "Aunt Bea passes round lunch. Read what I get.",
+          "success": "A big banana - perfect after a swim.",
+          "choices": [
+            {
+              "id": "big-banana",
+              "emoji": "🍌",
+              "size": "big",
+              "label": "big banana"
+            },
+            {
+              "id": "small-banana",
+              "emoji": "🍌",
+              "size": "small",
+              "label": "small banana"
+            },
+            {
+              "id": "big-carrot",
+              "emoji": "🥕",
+              "size": "big",
+              "label": "big carrot"
+            }
+          ],
+          "correct": "big-banana"
+        },
+        {
+          "word": "WHITE HEART",
+          "syllables": "WHITE HEART",
+          "prompt": "Aunt Bea's beach towel has a pattern in the middle. Read what it is.",
+          "success": "A white heart in the middle of Aunt Bea's towel.",
+          "choices": [
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "white-cloud",
+              "emoji": "☁️",
+              "label": "white cloud"
+            }
+          ],
+          "correct": "white-heart"
+        },
+        {
+          "word": "SMALL OCTOPUS",
+          "syllables": "SMALL OC-TO-PUS",
+          "prompt": "In a rock pool, somebody is tucked under the weed. Read who is hiding there.",
+          "success": "A small octopus peeks out, then squirts away.",
+          "choices": [
+            {
+              "id": "small-octopus",
+              "emoji": "🐙",
+              "size": "small",
+              "label": "small octopus"
+            },
+            {
+              "id": "big-octopus",
+              "emoji": "🐙",
+              "size": "big",
+              "label": "big octopus"
+            },
+            {
+              "id": "small-fish",
+              "emoji": "🐟",
+              "size": "small",
+              "label": "small fish"
+            }
+          ],
+          "correct": "small-octopus"
+        },
+        {
+          "word": "NINE PEARS",
+          "syllables": "N-I-N-E PEARS",
+          "prompt": "Dessert time! Read what is in the cool box.",
+          "success": "Nine pears, cold and juicy.",
+          "choices": [
+            {
+              "id": "nine-pear",
+              "emoji": "🍐",
+              "count": 9,
+              "label": "nine pears"
+            },
+            {
+              "id": "seven-pear",
+              "emoji": "🍐",
+              "count": 7,
+              "label": "seven pears"
+            },
+            {
+              "id": "nine-lemon",
+              "emoji": "🍋",
+              "count": 9,
+              "label": "nine lemons"
+            }
+          ],
+          "correct": "nine-pear"
+        },
+        {
+          "word": "FROG SINGS",
+          "syllables": "F-R-O-G SINGS",
+          "prompt": "In the sand dunes by the path, someone sits on a log. Read who and what is going on.",
+          "success": "A frog sings ribbit-ribbit from the dunes.",
+          "choices": [
+            {
+              "id": "frog-sing",
+              "emoji": "🐸",
+              "badge": "🎵",
+              "label": "frog sings"
+            },
+            {
+              "id": "chick-sing",
+              "emoji": "🐤",
+              "badge": "🎵",
+              "label": "chick sings"
+            },
+            {
+              "id": "frog-sleep",
+              "emoji": "🐸",
+              "badge": "💤",
+              "label": "frog sleeps"
+            }
+          ],
+          "correct": "frog-sing"
+        },
+        {
+          "word": "MOM DANCES",
+          "syllables": "M-O-M DAN-CES",
+          "prompt": "Before we pack up, someone from our family jumps up from the towel. Read who and what they do.",
+          "success": "Mom dances in the sand, and we all join in!",
+          "choices": [
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            }
+          ],
+          "correct": "mom-dance"
+        }
+      ]
+    },
+    {
+      "id": "en-b-13",
+      "title": "Farmer Ned's Hill",
+      "emoji": "🐄",
+      "character": "🧑‍🌾",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Farmer Ned waves as we walk back down the hill. Tomorrow Baker Sam lets us help in the bakery!",
+      "tasks": [
+        {
+          "word": "SMALL ROOSTER",
+          "syllables": "SMALL ROOS-TER",
+          "prompt": "Farmer Ned opens the gate, and someone runs up to meet us. Read who it is.",
+          "success": "A small rooster with a very loud voice!",
+          "choices": [
+            {
+              "id": "small-rooster",
+              "emoji": "🐓",
+              "size": "small",
+              "label": "small rooster"
+            },
+            {
+              "id": "big-rooster",
+              "emoji": "🐓",
+              "size": "big",
+              "label": "big rooster"
+            },
+            {
+              "id": "small-chick",
+              "emoji": "🐤",
+              "size": "small",
+              "label": "small chick"
+            }
+          ],
+          "correct": "small-rooster"
+        },
+        {
+          "word": "SEVEN SHEEP",
+          "syllables": "SEV-EN SHEEP",
+          "prompt": "On the green slope, a flock is grazing. Read who they are.",
+          "success": "Seven sheep, white and woolly, munch the grass.",
+          "choices": [
+            {
+              "id": "seven-sheep",
+              "emoji": "🐑",
+              "count": 7,
+              "label": "seven sheep"
+            },
+            {
+              "id": "nine-sheep",
+              "emoji": "🐑",
+              "count": 9,
+              "label": "nine sheep"
+            },
+            {
+              "id": "seven-goose",
+              "emoji": "🪿",
+              "count": 7,
+              "label": "seven geese"
+            }
+          ],
+          "correct": "seven-sheep"
+        },
+        {
+          "word": "COW SLEEPS",
+          "syllables": "C-O-W SLEEPS",
+          "prompt": "In the barn, someone is lying in the straw. Read who and what is happening.",
+          "success": "A cow sleeps in the warm straw.",
+          "choices": [
+            {
+              "id": "cow-sleep",
+              "emoji": "🐮",
+              "badge": "💤",
+              "label": "cow sleeps"
+            },
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            },
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            }
+          ],
+          "correct": "cow-sleep"
+        },
+        {
+          "word": "BIG CARROT",
+          "syllables": "B-I-G CAR-ROT",
+          "prompt": "In the vegetable patch, Farmer Ned shows off his prize. Read what it is.",
+          "success": "A big carrot - Farmer Ned needs both hands to hold it!",
+          "choices": [
+            {
+              "id": "big-carrot",
+              "emoji": "🥕",
+              "size": "big",
+              "label": "big carrot"
+            },
+            {
+              "id": "small-carrot",
+              "emoji": "🥕",
+              "size": "small",
+              "label": "small carrot"
+            },
+            {
+              "id": "big-tomato",
+              "emoji": "🍅",
+              "size": "big",
+              "label": "big tomato"
+            }
+          ],
+          "correct": "big-carrot"
+        },
+        {
+          "word": "FIVE HORSES",
+          "syllables": "F-I-V-E HORS-ES",
+          "prompt": "By the stable, all the top doors are open. Read who looks out.",
+          "success": "Five horses look out and nod hello.",
+          "choices": [
+            {
+              "id": "five-horse",
+              "emoji": "🐴",
+              "count": 5,
+              "label": "five horses"
+            },
+            {
+              "id": "three-horse",
+              "emoji": "🐴",
+              "count": 3,
+              "label": "three horses"
+            },
+            {
+              "id": "five-cow",
+              "emoji": "🐮",
+              "count": 5,
+              "label": "five cows"
+            }
+          ],
+          "correct": "five-horse"
+        },
+        {
+          "word": "GREEN PEPPER",
+          "syllables": "GREEN PEP-PER",
+          "prompt": "Farmer Ned reaches into his garden for us. Read what he picks.",
+          "success": "A green pepper, crisp and shiny.",
+          "choices": [
+            {
+              "id": "green-pepper",
+              "emoji": "🫑",
+              "label": "green pepper"
+            },
+            {
+              "id": "red-pepper",
+              "emoji": "🌶️",
+              "label": "red pepper"
+            },
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            }
+          ],
+          "correct": "green-pepper"
+        },
+        {
+          "word": "SMALL SHEEP",
+          "syllables": "SMALL SHEEP",
+          "prompt": "Someone trots after Farmer Ned wherever he goes. Read who his new friend is.",
+          "success": "A small sheep - a lamb - follows Farmer Ned like a puppy.",
+          "choices": [
+            {
+              "id": "small-sheep",
+              "emoji": "🐑",
+              "size": "small",
+              "label": "small sheep"
+            },
+            {
+              "id": "big-sheep",
+              "emoji": "🐑",
+              "size": "big",
+              "label": "big sheep"
+            },
+            {
+              "id": "small-goose",
+              "emoji": "🪿",
+              "size": "small",
+              "label": "small goose"
+            }
+          ],
+          "correct": "small-sheep"
+        },
+        {
+          "word": "WHITE BIRD",
+          "syllables": "WHITE B-I-R-D",
+          "prompt": "On the barn roof sits a quiet visitor. Read who has come.",
+          "success": "A white bird - a dove - coos on the barn roof.",
+          "choices": [
+            {
+              "id": "white-bird",
+              "emoji": "🕊️",
+              "label": "white bird"
+            },
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "black bird"
+            },
+            {
+              "id": "white-swan",
+              "emoji": "🦢",
+              "label": "white swan"
+            }
+          ],
+          "correct": "white-bird"
+        },
+        {
+          "word": "DAD CLIMBS",
+          "syllables": "D-A-D CLIMBS",
+          "prompt": "Read who from our family is by the haystack and what they are doing.",
+          "success": "Dad climbs right up the haystack and waves from the top!",
+          "choices": [
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "dad climbs"
+            },
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "mom climbs"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            }
+          ],
+          "correct": "dad-climb"
+        },
+        {
+          "word": "PIG SLEEPS",
+          "syllables": "P-I-G SLEEPS",
+          "prompt": "In the pen by the barn, somebody lies in the sun. Read who and what is going on.",
+          "success": "A pig sleeps in the sun and snores like a tractor.",
+          "choices": [
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            },
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            }
+          ],
+          "correct": "pig-sleep"
+        }
+      ]
+    },
+    {
+      "id": "en-b-14",
+      "title": "The Bakery",
+      "emoji": "🥐",
+      "character": "🧑‍🍳",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "Our bags smell of warm bread. Tomorrow is the kite festival on the cliffs!",
+      "tasks": [
+        {
+          "word": "BIG COOKIE",
+          "syllables": "B-I-G COOK-IE",
+          "prompt": "Baker Sam takes a tray out of the oven. Read what is on it.",
+          "success": "A big cookie, as wide as a plate!",
+          "choices": [
+            {
+              "id": "big-cookie",
+              "emoji": "🍪",
+              "size": "big",
+              "label": "big cookie"
+            },
+            {
+              "id": "small-cookie",
+              "emoji": "🍪",
+              "size": "small",
+              "label": "small cookie"
+            },
+            {
+              "id": "big-cupcake",
+              "emoji": "🧁",
+              "size": "big",
+              "label": "big cupcake"
+            }
+          ],
+          "correct": "big-cookie"
+        },
+        {
+          "word": "FIVE CAKES",
+          "syllables": "F-I-V-E CAKES",
+          "prompt": "On the shelf by the window, Sam shows us today's orders. Read what is there.",
+          "success": "Five cakes for a birthday party in town.",
+          "choices": [
+            {
+              "id": "five-cake",
+              "emoji": "🎂",
+              "count": 5,
+              "label": "five cakes"
+            },
+            {
+              "id": "three-cake",
+              "emoji": "🎂",
+              "count": 3,
+              "label": "three cakes"
+            },
+            {
+              "id": "five-cookie",
+              "emoji": "🍪",
+              "count": 5,
+              "label": "five cookies"
+            }
+          ],
+          "correct": "five-cake"
+        },
+        {
+          "word": "DAD STANDS",
+          "syllables": "D-A-D STANDS",
+          "prompt": "Someone from our family helps out in the shop. Read who and what they are doing.",
+          "success": "Dad stands at the counter and hands out the bread.",
+          "choices": [
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            },
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            }
+          ],
+          "correct": "dad-stand"
+        },
+        {
+          "word": "SMALL CUPCAKE",
+          "syllables": "SMALL CUP-CAKE",
+          "prompt": "Sam lets each of us make a treat of our own. Read what I make.",
+          "success": "A small cupcake, just right for one bite.",
+          "choices": [
+            {
+              "id": "small-cupcake",
+              "emoji": "🧁",
+              "size": "small",
+              "label": "small cupcake"
+            },
+            {
+              "id": "big-cupcake",
+              "emoji": "🧁",
+              "size": "big",
+              "label": "big cupcake"
+            },
+            {
+              "id": "small-cookie",
+              "emoji": "🍪",
+              "size": "small",
+              "label": "small cookie"
+            }
+          ],
+          "correct": "small-cupcake"
+        },
+        {
+          "word": "BROWN HEART",
+          "syllables": "BROWN HEART",
+          "prompt": "Sam draws on a cake with icing. Read what he draws.",
+          "success": "A brown heart in chocolate icing - yum!",
+          "choices": [
+            {
+              "id": "brown-heart",
+              "emoji": "🤎",
+              "label": "brown heart"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            },
+            {
+              "id": "brown-ball",
+              "emoji": "🏈",
+              "label": "brown ball"
+            }
+          ],
+          "correct": "brown-heart"
+        },
+        {
+          "word": "SIX COOKIES",
+          "syllables": "S-I-X COOK-IES",
+          "prompt": "Sam packs a paper bag for Aunt Bea. Read what goes in.",
+          "success": "Six cookies for Aunt Bea's afternoon tea.",
+          "choices": [
+            {
+              "id": "six-cookie",
+              "emoji": "🍪",
+              "count": 6,
+              "label": "six cookies"
+            },
+            {
+              "id": "two-cookie",
+              "emoji": "🍪",
+              "count": 2,
+              "label": "two cookies"
+            },
+            {
+              "id": "six-cupcake",
+              "emoji": "🧁",
+              "count": 6,
+              "label": "six cupcakes"
+            }
+          ],
+          "correct": "six-cookie"
+        },
+        {
+          "word": "CAT SLEEPS",
+          "syllables": "C-A-T SLEEPS",
+          "prompt": "By the warm oven there is a little basket. Read who is in it and what is happening.",
+          "success": "The bakery cat sleeps by the oven, warm and cozy.",
+          "choices": [
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "cat sleeps"
+            },
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "mouse sleeps"
+            },
+            {
+              "id": "cat-cry",
+              "emoji": "😿",
+              "label": "cat cries"
+            }
+          ],
+          "correct": "cat-sleep"
+        },
+        {
+          "word": "SMALL BANANA",
+          "syllables": "SMALL BA-NA-NA",
+          "prompt": "Sam reaches into the fruit basket. Read what he takes.",
+          "success": "A small banana, sweet and ripe.",
+          "choices": [
+            {
+              "id": "small-banana",
+              "emoji": "🍌",
+              "size": "small",
+              "label": "small banana"
+            },
+            {
+              "id": "big-banana",
+              "emoji": "🍌",
+              "size": "big",
+              "label": "big banana"
+            },
+            {
+              "id": "small-lemon",
+              "emoji": "🍋",
+              "size": "small",
+              "label": "small lemon"
+            }
+          ],
+          "correct": "small-banana"
+        },
+        {
+          "word": "ORANGE BOOK",
+          "syllables": "OR-ANGE B-O-O-K",
+          "prompt": "Sam takes something down from the shelf to check a recipe. Read what it is.",
+          "success": "An orange book full of his grandma's recipes.",
+          "choices": [
+            {
+              "id": "orange-book",
+              "emoji": "📙",
+              "label": "orange book"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "orange-ball",
+              "emoji": "🏀",
+              "label": "orange ball"
+            }
+          ],
+          "correct": "orange-book"
+        },
+        {
+          "word": "GRANDPA SINGS",
+          "syllables": "GRAND-PA SINGS",
+          "prompt": "At the corner table sits a regular customer with a pot of tea. Read who and what is going on.",
+          "success": "Grandpa Joe sings a song about fresh bread every morning!",
+          "choices": [
+            {
+              "id": "grandpa-sing",
+              "emoji": "👴",
+              "badge": "🎵",
+              "label": "grandpa sings"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "grandpa sleeps"
+            }
+          ],
+          "correct": "grandpa-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-b-15",
+      "title": "The Kite Festival",
+      "emoji": "🪁",
+      "character": "👩‍🦰",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "Our kite is rolled up and tucked under Aunt Bea's arm. Tomorrow is the big town dance!",
+      "tasks": [
+        {
+          "word": "ORANGE DIAMOND",
+          "syllables": "OR-ANGE DIA-MOND",
+          "prompt": "Aunt Bea unrolls our new kite on the grass. Read what is printed on it.",
+          "success": "An orange diamond - our kite will be easy to spot in the sky!",
+          "choices": [
+            {
+              "id": "orange-diamond",
+              "emoji": "🔶",
+              "label": "orange diamond"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "blue diamond"
+            },
+            {
+              "id": "orange-book",
+              "emoji": "📙",
+              "label": "orange book"
+            }
+          ],
+          "correct": "orange-diamond"
+        },
+        {
+          "word": "SMALL KITE",
+          "syllables": "SMALL K-I-T-E",
+          "prompt": "Up in the sky, something is bobbing in the wind. Read what we spot.",
+          "success": "A small kite loops and dips in the wind.",
+          "choices": [
+            {
+              "id": "small-kite",
+              "emoji": "🪁",
+              "size": "small",
+              "label": "small kite"
+            },
+            {
+              "id": "big-kite",
+              "emoji": "🪁",
+              "size": "big",
+              "label": "big kite"
+            },
+            {
+              "id": "small-cloud",
+              "emoji": "☁️",
+              "size": "small",
+              "label": "small cloud"
+            }
+          ],
+          "correct": "small-kite"
+        },
+        {
+          "word": "NINE KITES",
+          "syllables": "N-I-N-E KITES",
+          "prompt": "From the top of the cliff we can see the whole sky. Read what is up there.",
+          "success": "Nine kites tug at their strings.",
+          "choices": [
+            {
+              "id": "nine-kite",
+              "emoji": "🪁",
+              "count": 9,
+              "label": "nine kites"
+            },
+            {
+              "id": "five-kite",
+              "emoji": "🪁",
+              "count": 5,
+              "label": "five kites"
+            },
+            {
+              "id": "nine-cloud",
+              "emoji": "☁️",
+              "count": 9,
+              "label": "nine clouds"
+            }
+          ],
+          "correct": "nine-kite"
+        },
+        {
+          "word": "GIRL SLEEPS",
+          "syllables": "G-I-R-L SLEEPS",
+          "prompt": "At the top of the cliff, a child is on a picnic blanket. Read who and what is happening.",
+          "success": "A girl sleeps on the blanket, worn out from running with her kite.",
+          "choices": [
+            {
+              "id": "girl-sleep",
+              "emoji": "👧",
+              "badge": "💤",
+              "label": "girl sleeps"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "baby sleeps"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            }
+          ],
+          "correct": "girl-sleep"
+        },
+        {
+          "word": "SMALL PARROT",
+          "syllables": "SMALL PAR-ROT",
+          "prompt": "Somebody perches on the fence by the cliff path. Read who it is.",
+          "success": "A small parrot - it must have flown over from the zoo!",
+          "choices": [
+            {
+              "id": "small-parrot",
+              "emoji": "🦜",
+              "size": "small",
+              "label": "small parrot"
+            },
+            {
+              "id": "big-parrot",
+              "emoji": "🦜",
+              "size": "big",
+              "label": "big parrot"
+            },
+            {
+              "id": "small-chick",
+              "emoji": "🐤",
+              "size": "small",
+              "label": "small chick"
+            }
+          ],
+          "correct": "small-parrot"
+        },
+        {
+          "word": "GREEN LEAF",
+          "syllables": "GREEN L-E-A-F",
+          "prompt": "Something lands right on Aunt Bea's hat. Read what has landed.",
+          "success": "A green leaf, blown all the way up from the woods.",
+          "choices": [
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            },
+            {
+              "id": "green-frog",
+              "emoji": "🐸",
+              "label": "green frog"
+            }
+          ],
+          "correct": "green-leaf"
+        },
+        {
+          "word": "BIG BALLOON",
+          "syllables": "B-I-G BAL-LOON",
+          "prompt": "A man at the festival stall hands us something on a string. Read what we get.",
+          "success": "A big balloon, tied to my wrist so it can't fly away.",
+          "choices": [
+            {
+              "id": "big-balloon",
+              "emoji": "🎈",
+              "size": "big",
+              "label": "big balloon"
+            },
+            {
+              "id": "small-balloon",
+              "emoji": "🎈",
+              "size": "small",
+              "label": "small balloon"
+            },
+            {
+              "id": "big-kite",
+              "emoji": "🪁",
+              "size": "big",
+              "label": "big kite"
+            }
+          ],
+          "correct": "big-balloon"
+        },
+        {
+          "word": "THREE WHALES",
+          "syllables": "THREE WHALES",
+          "prompt": "Far out to sea, below the cliffs, something is moving. Read what we see.",
+          "success": "Three whales swim past the cliffs - what a lucky day!",
+          "choices": [
+            {
+              "id": "three-whale",
+              "emoji": "🐋",
+              "count": 3,
+              "label": "three whales"
+            },
+            {
+              "id": "five-whale",
+              "emoji": "🐋",
+              "count": 5,
+              "label": "five whales"
+            },
+            {
+              "id": "three-boat",
+              "emoji": "🛶",
+              "count": 3,
+              "label": "three boats"
+            }
+          ],
+          "correct": "three-whale"
+        },
+        {
+          "word": "SMALL LEMON",
+          "syllables": "SMALL LEM-ON",
+          "prompt": "At the drinks stall, the lady shows us what she is about to slice. Read what it is.",
+          "success": "A small lemon, but it is very sour!",
+          "choices": [
+            {
+              "id": "small-lemon",
+              "emoji": "🍋",
+              "size": "small",
+              "label": "small lemon"
+            },
+            {
+              "id": "big-lemon",
+              "emoji": "🍋",
+              "size": "big",
+              "label": "big lemon"
+            },
+            {
+              "id": "small-tomato",
+              "emoji": "🍅",
+              "size": "small",
+              "label": "small tomato"
+            }
+          ],
+          "correct": "small-lemon"
+        },
+        {
+          "word": "DAD DANCES",
+          "syllables": "D-A-D DAN-CES",
+          "prompt": "The festival ends with music on the cliff top. Read who from our family is out there and what they do.",
+          "success": "Dad dances on the cliff top, and everyone claps along!",
+          "choices": [
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            }
+          ],
+          "correct": "dad-dance"
+        }
+      ]
+    },
+    {
+      "id": "en-b-16",
+      "title": "The Town Dance",
+      "emoji": "💃",
+      "character": "👩‍🦰",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "Our feet are tired from dancing. Tonight Aunt Bea takes us up the hill to look at the stars!",
+      "tasks": [
+        {
+          "word": "ORANGE SQUARE",
+          "syllables": "OR-ANGE SQUARE",
+          "prompt": "The floor of the town hall is painted like a giant game board. Read where we stand.",
+          "success": "An orange square - this is where we start the dance.",
+          "choices": [
+            {
+              "id": "orange-square",
+              "emoji": "🟧",
+              "label": "orange square"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            },
+            {
+              "id": "orange-heart",
+              "emoji": "🧡",
+              "label": "orange heart"
+            }
+          ],
+          "correct": "orange-square"
+        },
+        {
+          "word": "MOM JUGGLES",
+          "syllables": "M-O-M JUG-GLES",
+          "prompt": "Between the songs, someone from our family entertains the crowd. Read who and what they do.",
+          "success": "Mom juggles, and everyone counts the throws.",
+          "choices": [
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            },
+            {
+              "id": "dad-juggle",
+              "emoji": "🤹‍♂️",
+              "label": "dad juggles"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            }
+          ],
+          "correct": "mom-juggle"
+        },
+        {
+          "word": "GREEN HEART",
+          "syllables": "GREEN HEART",
+          "prompt": "Each dancer gets a paper badge at the door. Read what is on mine.",
+          "success": "A green heart badge, pinned right on my shirt.",
+          "choices": [
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            }
+          ],
+          "correct": "green-heart"
+        },
+        {
+          "word": "TWO GUITARS",
+          "syllables": "T-W-O GUI-TARS",
+          "prompt": "The band sets up on the stage. Read what they bring.",
+          "success": "Two guitars start to strum, and the dance begins.",
+          "choices": [
+            {
+              "id": "two-guitar",
+              "emoji": "🎸",
+              "count": 2,
+              "label": "two guitars"
+            },
+            {
+              "id": "four-guitar",
+              "emoji": "🎸",
+              "count": 4,
+              "label": "four guitars"
+            },
+            {
+              "id": "two-drum",
+              "emoji": "🥁",
+              "count": 2,
+              "label": "two drums"
+            }
+          ],
+          "correct": "two-guitar"
+        },
+        {
+          "word": "SMALL PENGUIN",
+          "syllables": "SMALL PEN-GUIN",
+          "prompt": "Someone in a funny costume shuffles into the hall. Read who they are dressed as.",
+          "success": "A small penguin! It is the girl from next door to the bookshop.",
+          "choices": [
+            {
+              "id": "small-penguin",
+              "emoji": "🐧",
+              "size": "small",
+              "label": "small penguin"
+            },
+            {
+              "id": "big-penguin",
+              "emoji": "🐧",
+              "size": "big",
+              "label": "big penguin"
+            },
+            {
+              "id": "small-turtle",
+              "emoji": "🐢",
+              "size": "small",
+              "label": "small turtle"
+            }
+          ],
+          "correct": "small-penguin"
+        },
+        {
+          "word": "BLACK HEART",
+          "syllables": "BLACK HEART",
+          "prompt": "The lights go down, and a sign is lifted up over the stage. Read what is on it.",
+          "success": "A black heart on the sign - it is time for the slow dance.",
+          "choices": [
+            {
+              "id": "black-heart",
+              "emoji": "🖤",
+              "label": "black heart"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "black flag"
+            }
+          ],
+          "correct": "black-heart"
+        },
+        {
+          "word": "EIGHT CANDLES",
+          "syllables": "EIGHT CAN-DLES",
+          "prompt": "On each table there is something for the dancers. Read what is on ours.",
+          "success": "Eight candles flicker on our table.",
+          "choices": [
+            {
+              "id": "eight-candle",
+              "emoji": "🕯️",
+              "count": 8,
+              "label": "eight candles"
+            },
+            {
+              "id": "five-candle",
+              "emoji": "🕯️",
+              "count": 5,
+              "label": "five candles"
+            },
+            {
+              "id": "eight-cookie",
+              "emoji": "🍪",
+              "count": 8,
+              "label": "eight cookies"
+            }
+          ],
+          "correct": "eight-candle"
+        },
+        {
+          "word": "SMALL GIRAFFE",
+          "syllables": "SMALL GI-RAFFE",
+          "prompt": "Keeper Lou brings a guest from the zoo to the dance. Read who it is.",
+          "success": "A small giraffe - Keeper Lou says she loves music.",
+          "choices": [
+            {
+              "id": "small-giraffe",
+              "emoji": "🦒",
+              "size": "small",
+              "label": "small giraffe"
+            },
+            {
+              "id": "big-giraffe",
+              "emoji": "🦒",
+              "size": "big",
+              "label": "big giraffe"
+            },
+            {
+              "id": "small-camel",
+              "emoji": "🐫",
+              "size": "small",
+              "label": "small camel"
+            }
+          ],
+          "correct": "small-giraffe"
+        },
+        {
+          "word": "OWL SLEEPS",
+          "syllables": "O-W-L SLEEPS",
+          "prompt": "Up in the rafters of the old hall, someone has made a home. Read who and what is going on.",
+          "success": "An owl sleeps in the rafters, and the music does not wake her.",
+          "choices": [
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "owl sleeps"
+            },
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "cat sleeps"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            }
+          ],
+          "correct": "owl-sleep"
+        },
+        {
+          "word": "PURPLE DOT",
+          "syllables": "PUR-PLE D-O-T",
+          "prompt": "At the end of the night, Aunt Bea gets her hand stamped. Read what the stamp shows.",
+          "success": "A purple dot on her hand - it means she danced all night!",
+          "choices": [
+            {
+              "id": "purple-circle",
+              "emoji": "🟣",
+              "label": "purple dot"
+            },
+            {
+              "id": "yellow-circle",
+              "emoji": "🟡",
+              "label": "yellow dot"
+            },
+            {
+              "id": "purple-heart",
+              "emoji": "💜",
+              "label": "purple heart"
+            }
+          ],
+          "correct": "purple-circle"
+        }
+      ]
+    },
+    {
+      "id": "en-b-17",
+      "title": "The Night Sky",
+      "emoji": "🌙",
+      "character": "👩‍🦰",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "The sky watches over the sleepy town. Tomorrow is the big concert on the pier!",
+      "tasks": [
+        {
+          "word": "EIGHT STARS",
+          "syllables": "EIGHT STARS",
+          "prompt": "On top of the hill, Aunt Bea spreads out a rug, and we lie back. Read what is above us.",
+          "success": "Eight stars, and more come out every minute.",
+          "choices": [
+            {
+              "id": "eight-star",
+              "emoji": "⭐",
+              "count": 8,
+              "label": "eight stars"
+            },
+            {
+              "id": "six-star",
+              "emoji": "⭐",
+              "count": 6,
+              "label": "six stars"
+            },
+            {
+              "id": "eight-cloud",
+              "emoji": "☁️",
+              "count": 8,
+              "label": "eight clouds"
+            }
+          ],
+          "correct": "eight-star"
+        },
+        {
+          "word": "FOX SLEEPS",
+          "syllables": "F-O-X SLEEPS",
+          "prompt": "Read who is behind a bush at the edge of the hill and what is happening.",
+          "success": "A fox sleeps behind the bush, very still and quiet.",
+          "choices": [
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "fox sleeps"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "owl sleeps"
+            },
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "fox sings"
+            }
+          ],
+          "correct": "fox-sleep"
+        },
+        {
+          "word": "YELLOW SQUARE",
+          "syllables": "YEL-LOW SQUARE",
+          "prompt": "Aunt Bea points down at the dark town. Read what she shows us.",
+          "success": "A yellow square - that is the light in Aunt Bea's shop window!",
+          "choices": [
+            {
+              "id": "yellow-square",
+              "emoji": "🟨",
+              "label": "yellow square"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            },
+            {
+              "id": "yellow-star",
+              "emoji": "⭐",
+              "label": "yellow star"
+            }
+          ],
+          "correct": "yellow-square"
+        },
+        {
+          "word": "SMALL DOLPHIN",
+          "syllables": "SMALL DOL-PHIN",
+          "prompt": "Down in the dark harbor, something splashes under the moon. Read who it is.",
+          "success": "A small dolphin jumps, and the water sparkles in the moonlight.",
+          "choices": [
+            {
+              "id": "small-dolphin",
+              "emoji": "🐬",
+              "size": "small",
+              "label": "small dolphin"
+            },
+            {
+              "id": "big-dolphin",
+              "emoji": "🐬",
+              "size": "big",
+              "label": "big dolphin"
+            },
+            {
+              "id": "small-whale",
+              "emoji": "🐋",
+              "size": "small",
+              "label": "small whale"
+            }
+          ],
+          "correct": "small-dolphin"
+        },
+        {
+          "word": "MOM SLEEPS",
+          "syllables": "M-O-M SLEEPS",
+          "prompt": "Somebody from our family is very quiet on the rug. Read who and what they are doing.",
+          "success": "Mom sleeps on the rug, and Aunt Bea tucks a blanket around her.",
+          "choices": [
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            }
+          ],
+          "correct": "mom-sleep"
+        },
+        {
+          "word": "THREE OWLS",
+          "syllables": "THREE O-W-L-S",
+          "prompt": "In the old oak tree, eyes shine in the dark. Read who they belong to.",
+          "success": "Three owls hoot softly from the oak.",
+          "choices": [
+            {
+              "id": "three-owl",
+              "emoji": "🦉",
+              "count": 3,
+              "label": "three owls"
+            },
+            {
+              "id": "six-owl",
+              "emoji": "🦉",
+              "count": 6,
+              "label": "six owls"
+            },
+            {
+              "id": "three-cat",
+              "emoji": "🐱",
+              "count": 3,
+              "label": "three cats"
+            }
+          ],
+          "correct": "three-owl"
+        },
+        {
+          "word": "SMALL CANDLE",
+          "syllables": "SMALL CAN-DLE",
+          "prompt": "Aunt Bea takes one more thing out of her bag. Read what it is.",
+          "success": "A small candle in a jar, to light our way home.",
+          "choices": [
+            {
+              "id": "small-candle",
+              "emoji": "🕯️",
+              "size": "small",
+              "label": "small candle"
+            },
+            {
+              "id": "big-candle",
+              "emoji": "🕯️",
+              "size": "big",
+              "label": "big candle"
+            },
+            {
+              "id": "small-cupcake",
+              "emoji": "🧁",
+              "size": "small",
+              "label": "small cupcake"
+            }
+          ],
+          "correct": "small-candle"
+        },
+        {
+          "word": "ORANGE DOT",
+          "syllables": "OR-ANGE D-O-T",
+          "prompt": "Aunt Bea shows us a star map. One planet has a mark next to it. Read what mark it has.",
+          "success": "An orange dot - that is Mars, Aunt Bea says.",
+          "choices": [
+            {
+              "id": "orange-circle",
+              "emoji": "🟠",
+              "label": "orange dot"
+            },
+            {
+              "id": "purple-circle",
+              "emoji": "🟣",
+              "label": "purple dot"
+            },
+            {
+              "id": "orange-heart",
+              "emoji": "🧡",
+              "label": "orange heart"
+            }
+          ],
+          "correct": "orange-circle"
+        },
+        {
+          "word": "CHICK SLEEPS",
+          "syllables": "CHICK SLEEPS",
+          "prompt": "Back at Aunt Bea's, a box sits by the warm stove. Read who is in it and what is happening.",
+          "success": "A chick sleeps in the box - Farmer Ned asked us to look after it.",
+          "choices": [
+            {
+              "id": "chick-sleep",
+              "emoji": "🐤",
+              "badge": "💤",
+              "label": "chick sleeps"
+            },
+            {
+              "id": "mouse-sleep",
+              "emoji": "🐭",
+              "badge": "💤",
+              "label": "mouse sleeps"
+            },
+            {
+              "id": "chick-sing",
+              "emoji": "🐤",
+              "badge": "🎵",
+              "label": "chick sings"
+            }
+          ],
+          "correct": "chick-sleep"
+        },
+        {
+          "word": "NINE SHELLS",
+          "syllables": "N-I-N-E SHELLS",
+          "prompt": "On my windowsill I lay out everything I collected this week. Read what is there.",
+          "success": "Nine shells in a neat row on my windowsill.",
+          "choices": [
+            {
+              "id": "nine-shell",
+              "emoji": "🐚",
+              "count": 9,
+              "label": "nine shells"
+            },
+            {
+              "id": "three-shell",
+              "emoji": "🐚",
+              "count": 3,
+              "label": "three shells"
+            },
+            {
+              "id": "nine-star",
+              "emoji": "⭐",
+              "count": 9,
+              "label": "nine stars"
+            }
+          ],
+          "correct": "nine-shell"
+        }
+      ]
+    },
+    {
+      "id": "en-b-18",
+      "title": "The Concert on the Pier",
+      "emoji": "🎶",
+      "character": "🦭",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The pier is quiet again. Tomorrow is our last day in the seaside town.",
+      "tasks": [
+        {
+          "word": "BLUE HEART",
+          "syllables": "B-L-U-E HEART",
+          "prompt": "Captain Gus gives us a song sheet. Read what is drawn at the top.",
+          "success": "A blue heart - the sign of the Seaside Singers.",
+          "choices": [
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "yellow heart"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            }
+          ],
+          "correct": "blue-heart"
+        },
+        {
+          "word": "SEVEN DRUMS",
+          "syllables": "SEV-EN DRUMS",
+          "prompt": "The band carries its things onto the pier. Read what they bring.",
+          "success": "Seven drums - this is going to be loud!",
+          "choices": [
+            {
+              "id": "seven-drum",
+              "emoji": "🥁",
+              "count": 7,
+              "label": "seven drums"
+            },
+            {
+              "id": "five-drum",
+              "emoji": "🥁",
+              "count": 5,
+              "label": "five drums"
+            },
+            {
+              "id": "seven-guitar",
+              "emoji": "🎸",
+              "count": 7,
+              "label": "seven guitars"
+            }
+          ],
+          "correct": "seven-drum"
+        },
+        {
+          "word": "PENGUIN SINGS",
+          "syllables": "PEN-GUIN SINGS",
+          "prompt": "Backstage, there is a guest from the aquarium. Read who and what is happening.",
+          "success": "A penguin sings, and everyone claps their flippers - I mean, hands!",
+          "choices": [
+            {
+              "id": "penguin-sing",
+              "emoji": "🐧",
+              "badge": "🎵",
+              "label": "penguin sings"
+            },
+            {
+              "id": "parrot-sing",
+              "emoji": "🦜",
+              "badge": "🎵",
+              "label": "parrot sings"
+            },
+            {
+              "id": "penguin-sleep",
+              "emoji": "🐧",
+              "badge": "💤",
+              "label": "penguin sleeps"
+            }
+          ],
+          "correct": "penguin-sing"
+        },
+        {
+          "word": "BIG GUITAR",
+          "syllables": "B-I-G GUI-TAR",
+          "prompt": "Captain Gus brings out his own instrument. Read what it is.",
+          "success": "A big guitar, almost as tall as Gus.",
+          "choices": [
+            {
+              "id": "big-guitar",
+              "emoji": "🎸",
+              "size": "big",
+              "label": "big guitar"
+            },
+            {
+              "id": "small-guitar",
+              "emoji": "🎸",
+              "size": "small",
+              "label": "small guitar"
+            },
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            }
+          ],
+          "correct": "big-guitar"
+        },
+        {
+          "word": "BLACK FLAG",
+          "syllables": "BLACK F-L-A-G",
+          "prompt": "At the end of the pier there is a pole with something at the top. Read what is up there.",
+          "success": "A black flag - Gus says it is for the pirate song!",
+          "choices": [
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "black flag"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "white flag"
+            },
+            {
+              "id": "black-bird",
+              "emoji": "🐦‍⬛",
+              "label": "black bird"
+            }
+          ],
+          "correct": "black-flag"
+        },
+        {
+          "word": "DAD JUGGLES",
+          "syllables": "D-A-D JUG-GLES",
+          "prompt": "During the break, someone from our family gets up on the stage. Read who and what they do.",
+          "success": "Dad juggles, and the crowd counts along - one, two, three!",
+          "choices": [
+            {
+              "id": "dad-juggle",
+              "emoji": "🤹‍♂️",
+              "label": "dad juggles"
+            },
+            {
+              "id": "mom-juggle",
+              "emoji": "🤹‍♀️",
+              "label": "mom juggles"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            }
+          ],
+          "correct": "dad-juggle"
+        },
+        {
+          "word": "BIG OCTOPUS",
+          "syllables": "B-I-G OC-TO-PUS",
+          "prompt": "Something peeks up from the water under the pier. Read who it is.",
+          "success": "A big octopus waves along to the music with all its arms!",
+          "choices": [
+            {
+              "id": "big-octopus",
+              "emoji": "🐙",
+              "size": "big",
+              "label": "big octopus"
+            },
+            {
+              "id": "small-octopus",
+              "emoji": "🐙",
+              "size": "small",
+              "label": "small octopus"
+            },
+            {
+              "id": "big-turtle",
+              "emoji": "🐢",
+              "size": "big",
+              "label": "big turtle"
+            }
+          ],
+          "correct": "big-octopus"
+        },
+        {
+          "word": "FIVE GIFTS",
+          "syllables": "F-I-V-E GIFTS",
+          "prompt": "After the concert, the town has something for the band. Read what they get.",
+          "success": "Five gifts, one for each player in the band.",
+          "choices": [
+            {
+              "id": "five-gift",
+              "emoji": "🎁",
+              "count": 5,
+              "label": "five gifts"
+            },
+            {
+              "id": "three-gift",
+              "emoji": "🎁",
+              "count": 3,
+              "label": "three gifts"
+            },
+            {
+              "id": "five-cake",
+              "emoji": "🎂",
+              "count": 5,
+              "label": "five cakes"
+            }
+          ],
+          "correct": "five-gift"
+        },
+        {
+          "word": "GRANDMA SINGS",
+          "syllables": "GRAND-MA SINGS",
+          "prompt": "In the front row sits an old friend of Aunt Bea's. Read who and what is going on.",
+          "success": "Grandma Moss sings along to the sea song, and the whole pier joins in.",
+          "choices": [
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "grandma-sleep",
+              "emoji": "👵",
+              "badge": "💤",
+              "label": "grandma sleeps"
+            }
+          ],
+          "correct": "grandma-sing"
+        },
+        {
+          "word": "WHITE FLOWER",
+          "syllables": "WHITE FLOW-ER",
+          "prompt": "Somebody hands Grandma Moss a present for her song. Read what she gets.",
+          "success": "A white flower for Grandma Moss, to wear in her hair.",
+          "choices": [
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "white flower"
+            },
+            {
+              "id": "pink-flower",
+              "emoji": "🌸",
+              "label": "pink flower"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            }
+          ],
+          "correct": "white-flower"
+        }
+      ]
+    },
+    {
+      "id": "en-b-19",
+      "title": "Packing Up",
+      "emoji": "🧳",
+      "character": "👩‍🦰",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Our bags are packed and waiting by the door. Tomorrow we say goodbye to the seaside town.",
+      "tasks": [
+        {
+          "word": "BROWN SQUARE",
+          "syllables": "BROWN SQUARE",
+          "prompt": "Aunt Bea brings out our suitcase. Read what is stitched on the tag.",
+          "success": "A brown square - so we can tell our suitcase from all the others.",
+          "choices": [
+            {
+              "id": "brown-square",
+              "emoji": "🟫",
+              "label": "brown square"
+            },
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "white square"
+            },
+            {
+              "id": "brown-heart",
+              "emoji": "🤎",
+              "label": "brown heart"
+            }
+          ],
+          "correct": "brown-square"
+        },
+        {
+          "word": "SEVEN TULIPS",
+          "syllables": "SEV-EN TU-LIPS",
+          "prompt": "Aunt Bea wraps something from her garden in paper for us. Read what it is.",
+          "success": "Seven tulips to take home on the train.",
+          "choices": [
+            {
+              "id": "seven-tulip",
+              "emoji": "🌷",
+              "count": 7,
+              "label": "seven tulips"
+            },
+            {
+              "id": "three-tulip",
+              "emoji": "🌷",
+              "count": 3,
+              "label": "three tulips"
+            },
+            {
+              "id": "seven-carrot",
+              "emoji": "🥕",
+              "count": 7,
+              "label": "seven carrots"
+            }
+          ],
+          "correct": "seven-tulip"
+        },
+        {
+          "word": "SMALL KOALA",
+          "syllables": "SMALL KO-A-LA",
+          "prompt": "Aunt Bea hides one last surprise in my bag. Read who it is.",
+          "success": "A small koala toy, to hug on the train.",
+          "choices": [
+            {
+              "id": "small-koala",
+              "emoji": "🐨",
+              "size": "small",
+              "label": "small koala"
+            },
+            {
+              "id": "big-koala",
+              "emoji": "🐨",
+              "size": "big",
+              "label": "big koala"
+            },
+            {
+              "id": "small-panda",
+              "emoji": "🐼",
+              "size": "small",
+              "label": "small panda"
+            }
+          ],
+          "correct": "small-koala"
+        },
+        {
+          "word": "MOM CLIMBS",
+          "syllables": "M-O-M CLIMBS",
+          "prompt": "Read who from our family is by the tall wardrobe and what they are doing.",
+          "success": "Mom climbs up to get the last bag down from the top.",
+          "choices": [
+            {
+              "id": "mom-climb",
+              "emoji": "🧗‍♀️",
+              "label": "mom climbs"
+            },
+            {
+              "id": "dad-climb",
+              "emoji": "🧗‍♂️",
+              "label": "dad climbs"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            }
+          ],
+          "correct": "mom-climb"
+        },
+        {
+          "word": "GREEN BOOK",
+          "syllables": "GREEN B-O-O-K",
+          "prompt": "Aunt Bea gives us a present from her shop. Read what she gives us.",
+          "success": "A green book of sea stories, for bedtime at home.",
+          "choices": [
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            }
+          ],
+          "correct": "green-book"
+        },
+        {
+          "word": "BIG PENCIL",
+          "syllables": "B-I-G PEN-CIL",
+          "prompt": "Aunt Bea's last gift for the train comes in a long thin box. Read what is inside.",
+          "success": "A big pencil, as long as my arm!",
+          "choices": [
+            {
+              "id": "big-pencil",
+              "emoji": "✏️",
+              "size": "big",
+              "label": "big pencil"
+            },
+            {
+              "id": "small-pencil",
+              "emoji": "✏️",
+              "size": "small",
+              "label": "small pencil"
+            },
+            {
+              "id": "big-candle",
+              "emoji": "🕯️",
+              "size": "big",
+              "label": "big candle"
+            }
+          ],
+          "correct": "big-pencil"
+        },
+        {
+          "word": "BABY SINGS",
+          "syllables": "B-A-B-Y SINGS",
+          "prompt": "At the house next door, the family is packing too. Read who is in the hallway and what is happening.",
+          "success": "The baby sings to the suitcases - la-la-la!",
+          "choices": [
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "baby sings"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "baby-sleep",
+              "emoji": "👶",
+              "badge": "💤",
+              "label": "baby sleeps"
+            }
+          ],
+          "correct": "baby-sing"
+        },
+        {
+          "word": "FOUR TURTLES",
+          "syllables": "F-O-U-R TUR-TLES",
+          "prompt": "Gus drops by with a farewell drawing. Read who is on it.",
+          "success": "Four turtles swimming in a row - Gus drew them himself.",
+          "choices": [
+            {
+              "id": "four-turtle",
+              "emoji": "🐢",
+              "count": 4,
+              "label": "four turtles"
+            },
+            {
+              "id": "two-turtle",
+              "emoji": "🐢",
+              "count": 2,
+              "label": "two turtles"
+            },
+            {
+              "id": "four-crab",
+              "emoji": "🦀",
+              "count": 4,
+              "label": "four crabs"
+            }
+          ],
+          "correct": "four-turtle"
+        },
+        {
+          "word": "WHITE SQUARE",
+          "syllables": "WHITE SQUARE",
+          "prompt": "Aunt Bea folds the kitchen tablecloth. Read what is printed in the corner.",
+          "success": "A white square, neat and clean, in the corner.",
+          "choices": [
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "white square"
+            },
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "black square"
+            },
+            {
+              "id": "white-cloud",
+              "emoji": "☁️",
+              "label": "white cloud"
+            }
+          ],
+          "correct": "white-square"
+        },
+        {
+          "word": "DOG SLEEPS",
+          "syllables": "D-O-G SLEEPS",
+          "prompt": "On the doorstep, the neighbor's pet lies on the mat. Read who and what is going on.",
+          "success": "The dog next door sleeps on the mat - he will miss us.",
+          "choices": [
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            },
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            }
+          ],
+          "correct": "dog-sleep"
+        }
+      ]
+    },
+    {
+      "id": "en-b-20",
+      "title": "Goodbye, Seaside Town",
+      "emoji": "👋",
+      "character": "👩‍🦰",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "We are home, and the seaside town is in our hearts. Thank you, Aunt Bea - see you next summer!",
+      "tasks": [
+        {
+          "word": "SMALL BOAT",
+          "syllables": "SMALL B-O-A-T",
+          "prompt": "From the train window we look at the harbor one last time. Read what we see.",
+          "success": "A small boat - Captain Gus is waving from it!",
+          "choices": [
+            {
+              "id": "small-boat",
+              "emoji": "🛶",
+              "size": "small",
+              "label": "small boat"
+            },
+            {
+              "id": "big-boat",
+              "emoji": "🛶",
+              "size": "big",
+              "label": "big boat"
+            },
+            {
+              "id": "small-house",
+              "emoji": "🏠",
+              "size": "small",
+              "label": "small house"
+            }
+          ],
+          "correct": "small-boat"
+        },
+        {
+          "word": "BROWN BALL",
+          "syllables": "BROWN B-A-L-L",
+          "prompt": "Aunt Bea runs along the platform with something we forgot. Read what it is.",
+          "success": "A brown ball! Aunt Bea found it under the sofa.",
+          "choices": [
+            {
+              "id": "brown-ball",
+              "emoji": "🏈",
+              "label": "brown ball"
+            },
+            {
+              "id": "white-ball",
+              "emoji": "⚾",
+              "label": "white ball"
+            },
+            {
+              "id": "brown-bear",
+              "emoji": "🐻",
+              "label": "brown bear"
+            }
+          ],
+          "correct": "brown-ball"
+        },
+        {
+          "word": "FIVE PARROTS",
+          "syllables": "F-I-V-E PAR-ROTS",
+          "prompt": "Keeper Lou has come to the station with friends from the zoo. Read who they are.",
+          "success": "Five parrots squawk goodbye from Keeper Lou's arms.",
+          "choices": [
+            {
+              "id": "five-parrot",
+              "emoji": "🦜",
+              "count": 5,
+              "label": "five parrots"
+            },
+            {
+              "id": "three-parrot",
+              "emoji": "🦜",
+              "count": 3,
+              "label": "three parrots"
+            },
+            {
+              "id": "five-monkey",
+              "emoji": "🐵",
+              "count": 5,
+              "label": "five monkeys"
+            }
+          ],
+          "correct": "five-parrot"
+        },
+        {
+          "word": "MOM STANDS",
+          "syllables": "M-O-M STANDS",
+          "prompt": "Someone from our family is at the train door. Read who and what they are doing.",
+          "success": "Mom stands at the door and watches until the town is out of sight.",
+          "choices": [
+            {
+              "id": "mom-stand",
+              "emoji": "🧍‍♀️",
+              "label": "mom stands"
+            },
+            {
+              "id": "dad-stand",
+              "emoji": "🧍‍♂️",
+              "label": "dad stands"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            }
+          ],
+          "correct": "mom-stand"
+        },
+        {
+          "word": "BIG TURTLE",
+          "syllables": "B-I-G TUR-TLE",
+          "prompt": "Gus gives us a present for the trip home. Read who is on the wrapping paper.",
+          "success": "A big turtle on the wrapping paper - Gus's favorite animal.",
+          "choices": [
+            {
+              "id": "big-turtle",
+              "emoji": "🐢",
+              "size": "big",
+              "label": "big turtle"
+            },
+            {
+              "id": "small-turtle",
+              "emoji": "🐢",
+              "size": "small",
+              "label": "small turtle"
+            },
+            {
+              "id": "big-penguin",
+              "emoji": "🐧",
+              "size": "big",
+              "label": "big penguin"
+            }
+          ],
+          "correct": "big-turtle"
+        },
+        {
+          "word": "PINK HEART",
+          "syllables": "P-I-N-K HEART",
+          "prompt": "Aunt Bea's last hug comes with a sticker for each of us. Read which one I get.",
+          "success": "A pink heart sticker - I put it right on my bag.",
+          "choices": [
+            {
+              "id": "pink-heart",
+              "emoji": "🩷",
+              "label": "pink heart"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            },
+            {
+              "id": "pink-pig",
+              "emoji": "🐷",
+              "label": "pink pig"
+            }
+          ],
+          "correct": "pink-heart"
+        },
+        {
+          "word": "EIGHT KITES",
+          "syllables": "EIGHT KITES",
+          "prompt": "As the train pulls out, we look up at the cliffs. Read what is flying over them.",
+          "success": "Eight kites - the festival friends are waving us off!",
+          "choices": [
+            {
+              "id": "eight-kite",
+              "emoji": "🪁",
+              "count": 8,
+              "label": "eight kites"
+            },
+            {
+              "id": "four-kite",
+              "emoji": "🪁",
+              "count": 4,
+              "label": "four kites"
+            },
+            {
+              "id": "eight-cloud",
+              "emoji": "☁️",
+              "count": 8,
+              "label": "eight clouds"
+            }
+          ],
+          "correct": "eight-kite"
+        },
+        {
+          "word": "SMALL HIPPO",
+          "syllables": "SMALL HIP-PO",
+          "prompt": "On the zoo field next to the tracks, someone looks up at the train. Read who is there.",
+          "success": "A small hippo watches the train go by.",
+          "choices": [
+            {
+              "id": "small-hippo",
+              "emoji": "🦛",
+              "size": "small",
+              "label": "small hippo"
+            },
+            {
+              "id": "big-hippo",
+              "emoji": "🦛",
+              "size": "big",
+              "label": "big hippo"
+            },
+            {
+              "id": "small-camel",
+              "emoji": "🐫",
+              "size": "small",
+              "label": "small camel"
+            }
+          ],
+          "correct": "small-hippo"
+        },
+        {
+          "word": "BOY SLEEPS",
+          "syllables": "B-O-Y SLEEPS",
+          "prompt": "Halfway home, read who is in the seat across from us and what is happening.",
+          "success": "A boy sleeps with his head on his backpack, dreaming of the sea.",
+          "choices": [
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            },
+            {
+              "id": "grandpa-sleep",
+              "emoji": "👴",
+              "badge": "💤",
+              "label": "grandpa sleeps"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            }
+          ],
+          "correct": "boy-sleep"
+        },
+        {
+          "word": "RED FLOWER",
+          "syllables": "R-E-D FLOW-ER",
+          "prompt": "When we get home, a postcard from Aunt Bea is waiting. Read what is drawn on it.",
+          "success": "A red flower - and the words: come back next summer!",
+          "choices": [
+            {
+              "id": "red-flower",
+              "emoji": "🌹",
+              "label": "red flower"
+            },
+            {
+              "id": "white-flower",
+              "emoji": "💮",
+              "label": "white flower"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-flower"
+        }
+      ]
+    }
+  ]
+}
