@@ -688,7 +688,7 @@
           "word": "NINE DUCKS",
           "syllables": "N-I-N-E DUCKS",
           "prompt": "Near the beach, a little family paddles in a row. Read who they are.",
-          "success": "Nine ducks paddle in a neat line behind their mother.",
+          "success": "Nine ducks paddle across the water in a neat line.",
           "choices": [
             {
               "id": "nine-duck",
@@ -991,7 +991,7 @@
         {
           "word": "DAD STANDS",
           "syllables": "D-A-D STANDS",
-          "prompt": "Someone from our family is next to the huge glass wall. Read who and what they are doing.",
+          "prompt": "Someone from our family is next to the huge glass wall. Read who it is and what they are doing.",
           "success": "Dad stands so close to the glass that a fish swims right up to his nose!",
           "choices": [
             {
@@ -1155,7 +1155,7 @@
         {
           "word": "MOM PAINTS",
           "syllables": "M-O-M PAINTS",
-          "prompt": "Someone from our family comes over to see the class. Read who and what they do.",
+          "prompt": "Someone from our family comes over to see the class. Read who it is and what they do.",
           "success": "Mom paints the sea with long, wavy strokes.",
           "choices": [
             {
@@ -1582,7 +1582,7 @@
         {
           "word": "SMALL WHALE",
           "syllables": "SMALL WHALE",
-          "prompt": "Through the telescope we spot something far out at sea. Read who is out there.",
+          "prompt": "Through the telescope we spot something far out at sea. Read what is out there.",
           "success": "A small whale - just a baby, Gus says - rolls through the waves.",
           "choices": [
             {
@@ -1781,7 +1781,7 @@
         {
           "word": "KOALA SLEEPS",
           "syllables": "KO-A-LA SLEEPS",
-          "prompt": "In a quiet corner of the zoo, someone is holding on to a tree. Read who and what is going on.",
+          "prompt": "In a far corner of the zoo, someone is holding on to a tree. Read who and what is going on.",
           "success": "A koala sleeps in the fork of the tree - almost all day, Keeper Lou says.",
           "choices": [
             {
@@ -1886,7 +1886,7 @@
         {
           "word": "DAD JUGGLES",
           "syllables": "D-A-D JUG-GLES",
-          "prompt": "At the zoo cafe, someone from our family is showing off for Keeper Lou. Read who and what they do.",
+          "prompt": "At the zoo cafe, someone from our family is showing off for Keeper Lou. Read who it is and what they do.",
           "success": "Dad juggles, and Keeper Lou claps along.",
           "choices": [
             {
@@ -2028,7 +2028,7 @@
         {
           "word": "MOM JUGGLES",
           "syllables": "M-O-M JUG-GLES",
-          "prompt": "Someone from our family tries out a toy from the shop. Read who and what they are doing.",
+          "prompt": "Someone from our family tries out a toy from the shop. Read who it is and what they are doing.",
           "success": "Mom juggles the bean bags, and the shop owner laughs.",
           "choices": [
             {
@@ -2248,7 +2248,7 @@
         {
           "word": "MOUSE SLEEPS",
           "syllables": "MOUSE SLEEPS",
-          "prompt": "Under the kitchen dresser there is a tiny bed made from a matchbox. Read who is in it and what is happening.",
+          "prompt": "Under the kitchen dresser there is a tiny house made from a matchbox. Read who is in it and what is happening.",
           "success": "A mouse sleeps in the matchbox bed, under a sock for a blanket.",
           "choices": [
             {
@@ -2326,7 +2326,7 @@
         {
           "word": "DAD PAINTS",
           "syllables": "D-A-D PAINTS",
-          "prompt": "Someone from our family is at the end of the table. Read who and what they are doing.",
+          "prompt": "Someone from our family is at the end of the table. Read who it is and what they are doing.",
           "success": "Dad paints a picture of the storm, with lots and lots of gray.",
           "choices": [
             {
@@ -2404,7 +2404,7 @@
         {
           "word": "FOUR LEMONS",
           "syllables": "F-O-U-R LEM-ONS",
-          "prompt": "Aunt Bea makes a hot drink for the grown-ups. Read what she takes from the fruit bowl.",
+          "prompt": "Aunt Bea reaches into the fruit bowl for the grown-ups. Read what she takes out.",
           "success": "Four lemons for hot lemon tea.",
           "choices": [
             {
@@ -2976,7 +2976,7 @@
         {
           "word": "GIRL SINGS",
           "syllables": "G-I-R-L SINGS",
-          "prompt": "At the very end, someone is sitting in the front row. Read who and what happens.",
+          "prompt": "At the very end, someone is sitting in the front row. Read who it is and what happens.",
           "success": "A girl in the front row sings the circus song, and the band plays along.",
           "choices": [
             {
@@ -3198,7 +3198,7 @@
         {
           "word": "NINE PEARS",
           "syllables": "N-I-N-E PEARS",
-          "prompt": "Dessert time! Read what is in the cool box.",
+          "prompt": "Aunt Bea lifts the lid of the cool box. Read what is inside.",
           "success": "Nine pears, cold and juicy.",
           "choices": [
             {
@@ -3252,7 +3252,7 @@
         {
           "word": "MOM DANCES",
           "syllables": "M-O-M DAN-CES",
-          "prompt": "Before we pack up, someone from our family jumps up from the towel. Read who and what they do.",
+          "prompt": "Before we pack up, someone from our family jumps up from the towel. Read who it is and what they do.",
           "success": "Mom dances in the sand, and we all join in!",
           "choices": [
             {
@@ -3370,7 +3370,7 @@
         {
           "word": "BIG CARROT",
           "syllables": "B-I-G CAR-ROT",
-          "prompt": "In the vegetable patch, Farmer Ned shows off his prize. Read what it is.",
+          "prompt": "In the vegetable patch, Farmer Ned pulls something up. Read what it is.",
           "success": "A big carrot - Farmer Ned needs both hands to hold it!",
           "choices": [
             {
@@ -3397,7 +3397,7 @@
         {
           "word": "FIVE HORSES",
           "syllables": "F-I-V-E HORS-ES",
-          "prompt": "By the stable, all the top doors are open. Read who looks out.",
+          "prompt": "Along the farmyard wall, all the top doors are open. Read who looks out.",
           "success": "Five horses look out and nod hello.",
           "choices": [
             {
@@ -3475,7 +3475,7 @@
         {
           "word": "WHITE BIRD",
           "syllables": "WHITE B-I-R-D",
-          "prompt": "On the barn roof sits a quiet visitor. Read who has come.",
+          "prompt": "Someone has flown over to the farm. Read who has come.",
           "success": "A white bird - a dove - coos on the barn roof.",
           "choices": [
             {
@@ -3617,7 +3617,7 @@
         {
           "word": "DAD STANDS",
           "syllables": "D-A-D STANDS",
-          "prompt": "Someone from our family helps out in the shop. Read who and what they are doing.",
+          "prompt": "Someone from our family helps out in the shop. Read who it is and what they are doing.",
           "success": "Dad stands at the counter and hands out the bread.",
           "choices": [
             {
@@ -3772,7 +3772,7 @@
         {
           "word": "ORANGE BOOK",
           "syllables": "OR-ANGE B-O-O-K",
-          "prompt": "Sam takes something down from the shelf to check a recipe. Read what it is.",
+          "prompt": "Sam takes something down from the high shelf. Read what it is.",
           "success": "An orange book full of his grandma's recipes.",
           "choices": [
             {
@@ -4046,7 +4046,7 @@
         {
           "word": "SMALL LEMON",
           "syllables": "SMALL LEM-ON",
-          "prompt": "At the drinks stall, the lady shows us what she is about to slice. Read what it is.",
+          "prompt": "At the food stall, the lady shows us what she is about to slice. Read what it is.",
           "success": "A small lemon, but it is very sour!",
           "choices": [
             {
@@ -4134,7 +4134,7 @@
         {
           "word": "MOM JUGGLES",
           "syllables": "M-O-M JUG-GLES",
-          "prompt": "Between the songs, someone from our family entertains the crowd. Read who and what they do.",
+          "prompt": "Between the songs, someone from our family entertains the crowd. Read who it is and what they do.",
           "success": "Mom juggles, and everyone counts the throws.",
           "choices": [
             {
@@ -4432,7 +4432,7 @@
         {
           "word": "YELLOW SQUARE",
           "syllables": "YEL-LOW SQUARE",
-          "prompt": "Aunt Bea points down at the dark town. Read what she shows us.",
+          "prompt": "Aunt Bea points at something that shines in the dark. Read what she shows us.",
           "success": "A yellow square - that is the light in Aunt Bea's shop window!",
           "choices": [
             {
@@ -4483,7 +4483,7 @@
         {
           "word": "MOM SLEEPS",
           "syllables": "M-O-M SLEEPS",
-          "prompt": "Somebody from our family is very quiet on the rug. Read who and what they are doing.",
+          "prompt": "Somebody from our family is very quiet on the rug. Read who it is and what they are doing.",
           "success": "Mom sleeps on the rug, and Aunt Bea tucks a blanket around her.",
           "choices": [
             {
@@ -4678,7 +4678,7 @@
         {
           "word": "SEVEN DRUMS",
           "syllables": "SEV-EN DRUMS",
-          "prompt": "The band carries its things onto the pier. Read what they bring.",
+          "prompt": "The band carries their things onto the pier. Read what they bring.",
           "success": "Seven drums - this is going to be loud!",
           "choices": [
             {
@@ -4705,7 +4705,7 @@
         {
           "word": "PENGUIN SINGS",
           "syllables": "PEN-GUIN SINGS",
-          "prompt": "Backstage, there is a guest from the aquarium. Read who and what is happening.",
+          "prompt": "Backstage, there is a special guest. Read who it is and what is happening.",
           "success": "A penguin sings, and everyone claps their flippers - I mean, hands!",
           "choices": [
             {
@@ -4783,7 +4783,7 @@
         {
           "word": "DAD JUGGLES",
           "syllables": "D-A-D JUG-GLES",
-          "prompt": "During the break, someone from our family gets up on the stage. Read who and what they do.",
+          "prompt": "During the break, someone from our family gets up on the stage. Read who it is and what they do.",
           "success": "Dad juggles, and the crowd counts along - one, two, three!",
           "choices": [
             {
@@ -4861,7 +4861,7 @@
         {
           "word": "GRANDMA SINGS",
           "syllables": "GRAND-MA SINGS",
-          "prompt": "In the front row sits an old friend of Aunt Bea's. Read who and what is going on.",
+          "prompt": "In the front row sits a neighbor of Aunt Bea's. Read who and what is going on.",
           "success": "Grandma Moss sings along to the sea song, and the whole pier joins in.",
           "choices": [
             {
@@ -4976,7 +4976,7 @@
         {
           "word": "SMALL KOALA",
           "syllables": "SMALL KO-A-LA",
-          "prompt": "Aunt Bea hides one last surprise in my bag. Read who it is.",
+          "prompt": "Aunt Bea hides a surprise in my bag. Read who it is.",
           "success": "A small koala toy, to hug on the train.",
           "choices": [
             {
@@ -5028,7 +5028,7 @@
         {
           "word": "GREEN BOOK",
           "syllables": "GREEN B-O-O-K",
-          "prompt": "Aunt Bea gives us a present from her shop. Read what she gives us.",
+          "prompt": "Aunt Bea gives us one more present. Read what she gives us.",
           "success": "A green book of sea stories, for bedtime at home.",
           "choices": [
             {
@@ -5052,7 +5052,7 @@
         {
           "word": "BIG PENCIL",
           "syllables": "B-I-G PEN-CIL",
-          "prompt": "Aunt Bea's last gift for the train comes in a long thin box. Read what is inside.",
+          "prompt": "Aunt Bea's gift for the train comes in a paper box. Read what is inside.",
           "success": "A big pencil, as long as my arm!",
           "choices": [
             {
@@ -5197,8 +5197,8 @@
         {
           "word": "SMALL BOAT",
           "syllables": "SMALL B-O-A-T",
-          "prompt": "From the train window we look at the harbor one last time. Read what we see.",
-          "success": "A small boat - Captain Gus is waving from it!",
+          "prompt": "Before we climb aboard, we look at the harbor one last time. Read what we see.",
+          "success": "A small boat - Gus's cousin rows out to wave goodbye!",
           "choices": [
             {
               "id": "small-boat",
@@ -5275,8 +5275,8 @@
         {
           "word": "MOM STANDS",
           "syllables": "M-O-M STANDS",
-          "prompt": "Someone from our family is at the train door. Read who and what they are doing.",
-          "success": "Mom stands at the door and watches until the town is out of sight.",
+          "prompt": "Someone from our family is at the train door. Read who it is and what they are doing.",
+          "success": "Mom stands at the door and waves to Aunt Bea on the platform.",
           "choices": [
             {
               "id": "mom-stand",
