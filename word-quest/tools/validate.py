@@ -147,7 +147,7 @@ RU_YO_WORDS = {
     stem + ending
     for stem in ("ЗЕЛЁН", "ЖЁЛТ", "ЧЁРН", "ВЕСЁЛ", "ТЁПЛ")
     for ending in ("ЫЙ", "АЯ", "ОЕ", "ЫЕ", "ЫХ", "ОГО", "ОЙ", "УЮ", "ЫМ", "ЫМИ", "ОМУ", "ОМ")
-} | {
+} - {"ТЁПЛОМ"} | {
     "ИДЁТ", "ПЛЫВЁТ", "ПОЁТ", "ГРЕБЁТ", "СМЕЁТСЯ", "ЖИВЁТ", "НЕСЁТ", "ВЕДЁТ", "ЗОВЁТ", "ПЬЁТ", "ЖУЁТ",
     "ПРИШЁЛ", "НАШЁЛ", "ПОШЁЛ", "УШЁЛ", "ПЁС", "ЁЖ", "ЁЖИК", "КОТЁНОК", "КОТЁНКА", "ЦЫПЛЁНОК",
     "ЦЫПЛЁНКА", "ПОРОСЁНОК", "ПОРОСЁНКА", "ЛИСЁНОК", "СЛОНЁНОК", "УТЁНОК", "ЛЁД", "ЁЛКА", "ЁЛКИ",
@@ -744,7 +744,8 @@ def validate_phrase_task(file_name, language, level, chapter, task, task_index, 
             if isinstance(choice.get(field), str) and TEXT_LETTERS.search(choice[field]):
                 errors.append(f'{where}: choice "{choice["id"]}" {field} "{choice[field]}" contains letters or digits')
         count = choice.get("count")
-        pictures.add((choice["emoji"], count if count is not None else 1, choice.get("size") or "", choice.get("badge") or ""))
+        pictures.add((choice["emoji"], repr(count if count is not None else 1), repr(choice.get("size") or ""),
+                      repr(choice.get("badge") or "")))
     if len(pictures) != 3:
         errors.append(f"{where}: two choices have the same picture")
     if task["correct"] not in ids:
