@@ -94,6 +94,9 @@ the menu card of each shows one bar per word instead of a number:
 | B, two longer words | 2 | 9–14 | 11–18 | en 7, ru 10 | ru: one word of 7+ letters |
 | C, three words | 3 | 7–18 | 9–22 | en 7, ru 10 | no |
 
+On the card no split word of a correct phrase is longer than 12 characters, so КОРИЧНЕВЫЙ and
+ФИОЛЕТОВЫЙ appear only in wrong answers.
+
 Only the correct phrase counts, because the wrong answers are pictures. Russian A and B overlap at
 11–12 letters on purpose: a phrase there belongs in B only if it has a word of seven letters or
 more. Russian A allows МАЛЕНЬКИЙ (9 letters), because there is no shorter natural word for
@@ -288,7 +291,7 @@ The fields that differ from a word task:
 | Field | Rule |
 | --- | --- |
 | `word` | Upper-case words separated by single spaces: 2 words in levels A and B, 3 in level C. |
-| `syllables` | Each word split exactly as a word of that length is split in the levels, words joined by single spaces. Russian: by syllables, a one-syllable word whole. English: 3–4 letters letter by letter (`R-E-D C-A-T`), 5+ letters by syllables, a one-syllable word whole. With the hyphens removed it spells `word`. |
+| `syllables` | Each word split exactly as a word of that length is split in the levels, words joined by single spaces. Russian: by syllables, a one-syllable word whole. English: 3–4 letters letter by letter (`R-E-D C-A-T`), 5+ letters by syllables, a one-syllable word whole. If the word already has a split in a `words.en.*.json` pack, that split wins (LION is `LI-ON`, HOUSE is `H-O-U-S-E`). With the hyphens removed it spells `word`. |
 | `choices[].id` | The meaning of the phrase as English slugs, one per word, in word order, joined by `-`. A slug names the meaning, not the form: красный, красное and красных are all `red`, and кота and котов are both `cat`. The two languages share the slugs. The validator checks distractors against these slugs. |
 | `choices[].emoji` | One emoji, the picture of one item. It is fixed by the validator's tables: color + noun → `COLOR_PICTURES`, people and cat-face verbs → `VERB_PICTURES`, and the noun's own picture otherwise. |
 | `choices[].count` | Optional integer 1–10, present exactly when the phrase has a number word. The item is drawn that many times. |
