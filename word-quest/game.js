@@ -12,7 +12,7 @@ const PHRASE_LEVELS = {
   phraseB: { file: "b", words: 2, bars: [2, 2] },
   phraseC: { file: "c", words: 3, bars: [1, 1, 1] },
 };
-const LEVELS = { en: [3, 4, 5, 6, 7], ru: [3, 4, 5, 6, 7, "phraseA"] };
+const LEVELS = { en: [3, 4, 5, 6, 7], ru: [3, 4, 5, 6, 7, "phraseA", "phraseB"] };
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
@@ -722,12 +722,12 @@ function renderCardText(element, text, phrase) {
 // Items of a counted picture stand in rows of five, like a ten frame. One item size serves the
 // whole task, so a count never reads as "big" or "small". On a phone three answers side by side
 // leave about 100px each, too narrow for four items, for a small item among others, for a
-// badge on several items, or for a caption word of more than eight letters, so those tasks stack
+// badge on several items, or for a caption word of more than seven letters, so those tasks stack
 // their answers there. The caption rule reads all three labels, so it gives nothing away.
 function pictureLayout(choices) {
   const most = Math.max(...choices.map((choice) => choice.count ?? 1));
   const decorated = choices.some((choice) => choice.size || choice.badge);
-  const longWord = choices.some((choice) => (choice.label || "").split(" ").some((word) => word.length > 8));
+  const longWord = choices.some((choice) => (choice.label || "").split(" ").some((word) => word.length > 7));
   return { perRow: Math.min(most, 5), stacked: most >= 4 || (decorated && most >= 2) || longWord };
 }
 

@@ -133,7 +133,7 @@ A level has floors and caps, held by the validator as errors:
   a row of five the big and small items or the badges stop looking different.
 
 On a phone three answers side by side leave about 100px each. A task whose answers hold four or
-more items, a size or a badge with two or more items, or a caption word longer than eight letters
+more items, a size or a badge with two or more items, or a caption word longer than seven letters
 stacks its answers in one column there. The third answer may then need a scroll. The phone is
 best-effort, as in [GAME_DESIGN.md](../GAME_DESIGN.md#target-device); a computer and a tablet keep
 the three answers side by side on one screen.
@@ -333,8 +333,8 @@ in [tools/validate.py](tools/validate.py).
 A phrase pack is listed by appending its key, `phraseA`, `phraseB` or `phraseC`, to `LEVELS` once
 its file passes the validator. `PHRASE_LEVELS` in [game.js](game.js) and `PHRASE_LEVELS` in
 [tools/validate.py](tools/validate.py) must agree on the three levels. The strings of all three
-phrase levels are already in both `ui.*.json` files. Listed now: Russian level A. The other five
-phrase packs are written one at a time.
+phrase levels are already in both `ui.*.json` files. Listed now: Russian levels A and B. The other
+four phrase packs are written one at a time.
 
 ## Deliberate decisions
 

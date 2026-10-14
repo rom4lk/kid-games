@@ -194,6 +194,7 @@ function testPictureLayout() {
   const labels = (...values) => values.map((label) => ({ label }));
   assert.equal(pictureLayout(labels("большой пёс", "маленький пёс", "большой кот")).stacked, true);
   assert.equal(pictureLayout(labels("мама танцует", "папа танцует", "мама поёт")).stacked, false);
+  assert.equal(pictureLayout(labels("цыплёнок поёт", "медведь поёт", "цыплёнок спит")).stacked, true);
 }
 
 // A phrase card is sized by its longest word, and the split follows the rules
