@@ -1,0 +1,5466 @@
+{
+  "language": "en",
+  "mode": "phrase",
+  "level": "a",
+  "chapters": [
+    {
+      "id": "en-a-01",
+      "title": "Off to Camp",
+      "emoji": "🚗",
+      "character": "🦦",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "The tent is up and the lake is shining. First stop tomorrow: the little camp shop!",
+      "tasks": [
+        {
+          "word": "RED CAR",
+          "syllables": "R-E-D C-A-R",
+          "prompt": "Our summer trip starts today, and Dad calls from the front door. Read what he is pointing at.",
+          "success": "The red car is packed to the roof - off we go!",
+          "choices": [
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "red car"
+            },
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            }
+          ],
+          "correct": "red-car"
+        },
+        {
+          "word": "TWO COWS",
+          "syllables": "T-W-O C-O-W-S",
+          "prompt": "On the way we pass a wide green field. Read who is standing by the fence.",
+          "success": "Two cows look up and chew slowly as we go by.",
+          "choices": [
+            {
+              "id": "two-cow",
+              "emoji": "🐮",
+              "count": 2,
+              "label": "two cows"
+            },
+            {
+              "id": "six-cow",
+              "emoji": "🐮",
+              "count": 6,
+              "label": "six cows"
+            },
+            {
+              "id": "two-pig",
+              "emoji": "🐷",
+              "count": 2,
+              "label": "two pigs"
+            }
+          ],
+          "correct": "two-cow"
+        },
+        {
+          "word": "DAD SINGS",
+          "syllables": "D-A-D SINGS",
+          "prompt": "Halfway there, we stop for a snack and stay in our seats. Read who is up front and what is going on.",
+          "success": "Dad sings the camp song, and we all join in!",
+          "choices": [
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            },
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "mom sings"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            }
+          ],
+          "correct": "dad-sing"
+        },
+        {
+          "word": "SMALL DOG",
+          "syllables": "SMALL D-O-G",
+          "prompt": "At the camp gate, somebody comes out to meet us. Read who it is.",
+          "success": "A small dog wags its tail - this is Pip, the camp dog.",
+          "choices": [
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "small cat"
+            }
+          ],
+          "correct": "small-dog"
+        },
+        {
+          "word": "ONE OWL",
+          "syllables": "O-N-E O-W-L",
+          "prompt": "Ollie the otter, our camp guide, points up at the old oak tree. Read who is up there.",
+          "success": "One owl blinks at us from a hole in the trunk.",
+          "choices": [
+            {
+              "id": "one-owl",
+              "emoji": "🦉",
+              "count": 1,
+              "label": "one owl"
+            },
+            {
+              "id": "three-owl",
+              "emoji": "🦉",
+              "count": 3,
+              "label": "three owls"
+            },
+            {
+              "id": "one-cat",
+              "emoji": "🐱",
+              "count": 1,
+              "label": "one cat"
+            }
+          ],
+          "correct": "one-owl"
+        },
+        {
+          "word": "BLUE CAR",
+          "syllables": "B-L-U-E C-A-R",
+          "prompt": "The family in the next tent waves hello. Read what they came with.",
+          "success": "A blue car full of beach toys - they came for the lake too!",
+          "choices": [
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            },
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "red car"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            }
+          ],
+          "correct": "blue-car"
+        },
+        {
+          "word": "MOM WALKS",
+          "syllables": "M-O-M WALKS",
+          "prompt": "Somebody is already out by the lake. Read who it is and what they are doing.",
+          "success": "Mom walks along the shore to find the best spot.",
+          "choices": [
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            },
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            }
+          ],
+          "correct": "mom-walk"
+        },
+        {
+          "word": "TEN DUCKS",
+          "syllables": "T-E-N DUCKS",
+          "prompt": "Ollie hands us a pair of binoculars. Read who is out on the lake.",
+          "success": "Ten ducks paddle by in a long line, like a little parade.",
+          "choices": [
+            {
+              "id": "ten-duck",
+              "emoji": "🦆",
+              "count": 10,
+              "label": "ten ducks"
+            },
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "six ducks"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "ten fish"
+            }
+          ],
+          "correct": "ten-duck"
+        },
+        {
+          "word": "BIG BOAT",
+          "syllables": "B-I-G B-O-A-T",
+          "prompt": "Ollie shows us what we can use all week. Read what it is.",
+          "success": "A big boat - room for the whole family!",
+          "choices": [
+            {
+              "id": "big-boat",
+              "emoji": "🛶",
+              "size": "big",
+              "label": "big boat"
+            },
+            {
+              "id": "small-boat",
+              "emoji": "🛶",
+              "size": "small",
+              "label": "small boat"
+            },
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            }
+          ],
+          "correct": "big-boat"
+        },
+        {
+          "word": "BOY SINGS",
+          "syllables": "B-O-Y SINGS",
+          "prompt": "In the tent next door, a lamp is still on. Read who is inside and what is happening.",
+          "success": "A boy sings to his teddy very softly, and then the lamp goes out.",
+          "choices": [
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            }
+          ],
+          "correct": "boy-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-a-02",
+      "title": "The Camp Shop",
+      "emoji": "🏪",
+      "character": "🦦",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Our bags are full of shop treasures. Tomorrow we visit Farmer Rosa's farm next door!",
+      "tasks": [
+        {
+          "word": "BLUE BOOK",
+          "syllables": "B-L-U-E B-O-O-K",
+          "prompt": "Ollie opens the door of the little camp shop. Read what is on the first shelf.",
+          "success": "A blue book of camp songs - we will need that!",
+          "choices": [
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            }
+          ],
+          "correct": "blue-book"
+        },
+        {
+          "word": "SIX EGGS",
+          "syllables": "S-I-X E-G-G-S",
+          "prompt": "The shop sells fresh food from the farm. Read what is in the basket by the till.",
+          "success": "Six eggs, still warm from Farmer Rosa's hens.",
+          "choices": [
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "six eggs"
+            },
+            {
+              "id": "two-egg",
+              "emoji": "🥚",
+              "count": 2,
+              "label": "two eggs"
+            },
+            {
+              "id": "six-pear",
+              "emoji": "🍐",
+              "count": 6,
+              "label": "six pears"
+            }
+          ],
+          "correct": "six-egg"
+        },
+        {
+          "word": "RED FLAG",
+          "syllables": "R-E-D F-L-A-G",
+          "prompt": "Every tent at camp gets something to hang by its door. Read what Ollie gives us.",
+          "success": "A red flag for our tent - now everyone can find us!",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            },
+            {
+              "id": "white-flag",
+              "emoji": "🏳️",
+              "label": "white flag"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "BIG BALL",
+          "syllables": "B-I-G B-A-L-L",
+          "prompt": "Ollie climbs a ladder to reach the top shelf. Read what he brings down.",
+          "success": "A big ball for games on the beach.",
+          "choices": [
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "big ball"
+            },
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "small ball"
+            },
+            {
+              "id": "big-kite",
+              "emoji": "🪁",
+              "size": "big",
+              "label": "big kite"
+            }
+          ],
+          "correct": "big-ball"
+        },
+        {
+          "word": "CAT SINGS",
+          "syllables": "C-A-T SINGS",
+          "prompt": "Behind the counter there is a soft basket. Read who is in it and what is going on.",
+          "success": "The shop cat sings a little meow-song whenever someone comes in!",
+          "choices": [
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "cat-sleep",
+              "emoji": "🐱",
+              "badge": "💤",
+              "label": "cat sleeps"
+            }
+          ],
+          "correct": "cat-sing"
+        },
+        {
+          "word": "TWO KITES",
+          "syllables": "T-W-O KITES",
+          "prompt": "Toys of all kinds hang from the ceiling. Read what Ollie points at.",
+          "success": "Two kites, one for each of us!",
+          "choices": [
+            {
+              "id": "two-kite",
+              "emoji": "🪁",
+              "count": 2,
+              "label": "two kites"
+            },
+            {
+              "id": "five-kite",
+              "emoji": "🪁",
+              "count": 5,
+              "label": "five kites"
+            },
+            {
+              "id": "two-drum",
+              "emoji": "🥁",
+              "count": 2,
+              "label": "two drums"
+            }
+          ],
+          "correct": "two-kite"
+        },
+        {
+          "word": "RED HEART",
+          "syllables": "R-E-D HEART",
+          "prompt": "At the till there is a jar of stickers. Read which sticker we pick.",
+          "success": "A red heart sticker for Mom's water bottle.",
+          "choices": [
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            }
+          ],
+          "correct": "red-heart"
+        },
+        {
+          "word": "DAD PLAYS",
+          "syllables": "D-A-D PLAYS",
+          "prompt": "Outside the shop, somebody is busy on the grass. Read who it is and what they are doing.",
+          "success": "Dad plays a game with the other dads and wins!",
+          "choices": [
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            },
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "mom plays"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            }
+          ],
+          "correct": "dad-play"
+        },
+        {
+          "word": "BIG CAKE",
+          "syllables": "B-I-G C-A-K-E",
+          "prompt": "The shop is taking orders for the camp party. Read what the poster shows.",
+          "success": "A big cake for the goodbye party at the end of the week!",
+          "choices": [
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "big cake"
+            },
+            {
+              "id": "small-cake",
+              "emoji": "🎂",
+              "size": "small",
+              "label": "small cake"
+            },
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            }
+          ],
+          "correct": "big-cake"
+        },
+        {
+          "word": "TEN ANTS",
+          "syllables": "T-E-N A-N-T-S",
+          "prompt": "On the way back, Ollie kneels down by the path. Read who is down there.",
+          "success": "Ten ants carry crumbs from the shop back home.",
+          "choices": [
+            {
+              "id": "ten-ant",
+              "emoji": "🐜",
+              "count": 10,
+              "label": "ten ants"
+            },
+            {
+              "id": "six-ant",
+              "emoji": "🐜",
+              "count": 6,
+              "label": "six ants"
+            },
+            {
+              "id": "ten-bee",
+              "emoji": "🐝",
+              "count": 10,
+              "label": "ten bees"
+            }
+          ],
+          "correct": "ten-ant"
+        }
+      ]
+    },
+    {
+      "id": "en-a-03",
+      "title": "Farmer Rosa's Farm",
+      "emoji": "🚜",
+      "character": "👩‍🌾",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "We said goodbye to every animal on the farm. Tomorrow Miss Lark opens the art tent!",
+      "tasks": [
+        {
+          "word": "PIG SINGS",
+          "syllables": "P-I-G SINGS",
+          "prompt": "Farmer Rosa opens the barn door wide. Read who is first in line and what is going on.",
+          "success": "The pig sings an oink-oink song to say good morning!",
+          "choices": [
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            },
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            }
+          ],
+          "correct": "pig-sing"
+        },
+        {
+          "word": "FOUR HENS",
+          "syllables": "F-O-U-R H-E-N-S",
+          "prompt": "Next, Rosa scatters grain on the ground. Read who comes over.",
+          "success": "Four hens peck at the grain, cluck-cluck.",
+          "choices": [
+            {
+              "id": "four-hen",
+              "emoji": "🐔",
+              "count": 4,
+              "label": "four hens"
+            },
+            {
+              "id": "two-hen",
+              "emoji": "🐔",
+              "count": 2,
+              "label": "two hens"
+            },
+            {
+              "id": "four-cow",
+              "emoji": "🐮",
+              "count": 4,
+              "label": "four cows"
+            }
+          ],
+          "correct": "four-hen"
+        },
+        {
+          "word": "SMALL PIG",
+          "syllables": "SMALL P-I-G",
+          "prompt": "In the corner of the pen there is a pile of straw. Read who is hiding in it.",
+          "success": "A small pig peeks out with a pink nose.",
+          "choices": [
+            {
+              "id": "small-pig",
+              "emoji": "🐷",
+              "size": "small",
+              "label": "small pig"
+            },
+            {
+              "id": "big-pig",
+              "emoji": "🐷",
+              "size": "big",
+              "label": "big pig"
+            },
+            {
+              "id": "small-cow",
+              "emoji": "🐮",
+              "size": "small",
+              "label": "small cow"
+            }
+          ],
+          "correct": "small-pig"
+        },
+        {
+          "word": "NINE EGGS",
+          "syllables": "N-I-N-E E-G-G-S",
+          "prompt": "Rosa hands us a basket to carry. Read what is inside.",
+          "success": "Nine eggs - we must walk very carefully!",
+          "choices": [
+            {
+              "id": "nine-egg",
+              "emoji": "🥚",
+              "count": 9,
+              "label": "nine eggs"
+            },
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "six eggs"
+            },
+            {
+              "id": "nine-pear",
+              "emoji": "🍐",
+              "count": 9,
+              "label": "nine pears"
+            }
+          ],
+          "correct": "nine-egg"
+        },
+        {
+          "word": "RED CAR",
+          "syllables": "R-E-D C-A-R",
+          "prompt": "Rosa says she keeps something special by the gate. Read what it is.",
+          "success": "A red car - Rosa drives it to the market on Saturdays.",
+          "choices": [
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "red car"
+            },
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "yellow car"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-car"
+        },
+        {
+          "word": "COW SINGS",
+          "syllables": "C-O-W SINGS",
+          "prompt": "In the next stall, Rosa lifts her lamp. Read who is there and what is happening.",
+          "success": "The cow sings moo-moo, and the whole barn echoes.",
+          "choices": [
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "cow-sleep",
+              "emoji": "🐮",
+              "badge": "💤",
+              "label": "cow sleeps"
+            }
+          ],
+          "correct": "cow-sing"
+        },
+        {
+          "word": "BIG COW",
+          "syllables": "B-I-G C-O-W",
+          "prompt": "Out in the field, somebody is eating grass by the fence. Read who it is.",
+          "success": "A big cow - her name is Daisy, and she is the boss of the field.",
+          "choices": [
+            {
+              "id": "big-cow",
+              "emoji": "🐮",
+              "size": "big",
+              "label": "big cow"
+            },
+            {
+              "id": "small-cow",
+              "emoji": "🐮",
+              "size": "small",
+              "label": "small cow"
+            },
+            {
+              "id": "big-horse",
+              "emoji": "🐴",
+              "size": "big",
+              "label": "big horse"
+            }
+          ],
+          "correct": "big-cow"
+        },
+        {
+          "word": "TWO SHEEP",
+          "syllables": "T-W-O SHEEP",
+          "prompt": "By the pond, Rosa whistles loudly. Read who hurries over.",
+          "success": "Two sheep come over, fluffy as clouds.",
+          "choices": [
+            {
+              "id": "two-sheep",
+              "emoji": "🐑",
+              "count": 2,
+              "label": "two sheep"
+            },
+            {
+              "id": "five-sheep",
+              "emoji": "🐑",
+              "count": 5,
+              "label": "five sheep"
+            },
+            {
+              "id": "two-goose",
+              "emoji": "🪿",
+              "count": 2,
+              "label": "two geese"
+            }
+          ],
+          "correct": "two-sheep"
+        },
+        {
+          "word": "DAD RIDES",
+          "syllables": "D-A-D RIDES",
+          "prompt": "Somebody sets off down the farm road to fetch the milk. Read who it is and how.",
+          "success": "Dad rides Rosa's old bike down the farm road.",
+          "choices": [
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "mom rides"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            }
+          ],
+          "correct": "dad-ride"
+        },
+        {
+          "word": "SMALL HEN",
+          "syllables": "SMALL H-E-N",
+          "prompt": "Somebody is sitting on the fence post and watching us. Who is it? Read.",
+          "success": "A small hen - she is the youngest on the farm.",
+          "choices": [
+            {
+              "id": "small-hen",
+              "emoji": "🐔",
+              "size": "small",
+              "label": "small hen"
+            },
+            {
+              "id": "big-hen",
+              "emoji": "🐔",
+              "size": "big",
+              "label": "big hen"
+            },
+            {
+              "id": "small-duck",
+              "emoji": "🦆",
+              "size": "small",
+              "label": "small duck"
+            }
+          ],
+          "correct": "small-hen"
+        }
+      ]
+    },
+    {
+      "id": "en-a-04",
+      "title": "The Art Tent",
+      "emoji": "🎨",
+      "character": "🦜",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "Our paintings are drying on a string. Tomorrow we head down to the lake!",
+      "tasks": [
+        {
+          "word": "GREEN DOT",
+          "syllables": "GREEN D-O-T",
+          "prompt": "Miss Lark the parrot dips her brush in a jar and touches the paper. Read what she painted.",
+          "success": "A green dot - the start of a whole picture.",
+          "choices": [
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            }
+          ],
+          "correct": "green-circle"
+        },
+        {
+          "word": "BLUE DOT",
+          "syllables": "B-L-U-E D-O-T",
+          "prompt": "Miss Lark paints again, right next to it. Read what is there now.",
+          "success": "A blue dot, like a little pond.",
+          "choices": [
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            }
+          ],
+          "correct": "blue-circle"
+        },
+        {
+          "word": "FIVE PIGS",
+          "syllables": "F-I-V-E P-I-G-S",
+          "prompt": "Miss Lark pins a picture up on the wall. Read who is on it.",
+          "success": "Five pigs in a row - she painted Rosa's farm!",
+          "choices": [
+            {
+              "id": "five-pig",
+              "emoji": "🐷",
+              "count": 5,
+              "label": "five pigs"
+            },
+            {
+              "id": "two-pig",
+              "emoji": "🐷",
+              "count": 2,
+              "label": "two pigs"
+            },
+            {
+              "id": "five-cat",
+              "emoji": "🐱",
+              "count": 5,
+              "label": "five cats"
+            }
+          ],
+          "correct": "five-pig"
+        },
+        {
+          "word": "BIG FISH",
+          "syllables": "B-I-G F-I-S-H",
+          "prompt": "On the next easel, a picture is drying. Read what it shows.",
+          "success": "A big fish - it fills the whole page!",
+          "choices": [
+            {
+              "id": "big-fish",
+              "emoji": "🐟",
+              "size": "big",
+              "label": "big fish"
+            },
+            {
+              "id": "small-fish",
+              "emoji": "🐟",
+              "size": "small",
+              "label": "small fish"
+            },
+            {
+              "id": "big-frog",
+              "emoji": "🐸",
+              "size": "big",
+              "label": "big frog"
+            }
+          ],
+          "correct": "big-fish"
+        },
+        {
+          "word": "DOG SINGS",
+          "syllables": "D-O-G SINGS",
+          "prompt": "Under the paint table there is a little rug. Read who is on it and what is going on.",
+          "success": "Pip the dog sings along to Miss Lark's whistle.",
+          "choices": [
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            }
+          ],
+          "correct": "dog-sing"
+        },
+        {
+          "word": "BLACK DOT",
+          "syllables": "BLACK D-O-T",
+          "prompt": "Miss Lark gives us a brush of our own. Read what we painted.",
+          "success": "A black dot - it looks like a spot on a ladybug.",
+          "choices": [
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "black dot"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "black-heart",
+              "emoji": "🖤",
+              "label": "black heart"
+            }
+          ],
+          "correct": "black-circle"
+        },
+        {
+          "word": "SMALL OWL",
+          "syllables": "SMALL O-W-L",
+          "prompt": "Miss Lark shows us a drawing from last summer. Read who is in it.",
+          "success": "A small owl on a branch, with round eyes.",
+          "choices": [
+            {
+              "id": "small-owl",
+              "emoji": "🦉",
+              "size": "small",
+              "label": "small owl"
+            },
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "big owl"
+            },
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "small fox"
+            }
+          ],
+          "correct": "small-owl"
+        },
+        {
+          "word": "TEN STARS",
+          "syllables": "T-E-N STARS",
+          "prompt": "Miss Lark sprinkles glitter on a sheet of paper. Read what appears.",
+          "success": "Ten stars sparkle like a night sky!",
+          "choices": [
+            {
+              "id": "ten-star",
+              "emoji": "⭐",
+              "count": 10,
+              "label": "ten stars"
+            },
+            {
+              "id": "six-star",
+              "emoji": "⭐",
+              "count": 6,
+              "label": "six stars"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "ten fish"
+            }
+          ],
+          "correct": "ten-star"
+        },
+        {
+          "word": "MOM SINGS",
+          "syllables": "M-O-M SINGS",
+          "prompt": "In the corner, somebody sits on a beanbag. Read who it is and what is happening.",
+          "success": "Mom sings a soft song on the beanbag.",
+          "choices": [
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "mom sings"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            }
+          ],
+          "correct": "mom-sing"
+        },
+        {
+          "word": "RED HEART",
+          "syllables": "R-E-D HEART",
+          "prompt": "To finish, Miss Lark lets everyone paint one last thing. Read what we made.",
+          "success": "A red heart for Mom and Dad!",
+          "choices": [
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            }
+          ],
+          "correct": "red-heart"
+        }
+      ]
+    },
+    {
+      "id": "en-a-05",
+      "title": "Down at the Lake",
+      "emoji": "🏞️",
+      "character": "🦦",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "We are wet, sandy and happy. Tomorrow Farmer Rosa takes us to her apple orchard!",
+      "tasks": [
+        {
+          "word": "MOM SWIMS",
+          "syllables": "M-O-M SWIMS",
+          "prompt": "The lake is calm this morning. Read who it is and what they are doing.",
+          "success": "Mom swims all the way out to the yellow buoy!",
+          "choices": [
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "dad swims"
+            },
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            }
+          ],
+          "correct": "mom-swim"
+        },
+        {
+          "word": "DAD ROWS",
+          "syllables": "D-A-D R-O-W-S",
+          "prompt": "Ollie points to the middle of the lake. Read who is out there.",
+          "success": "Dad rows our boat in slow circles.",
+          "choices": [
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "dad rows"
+            },
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "mom rows"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "dad swims"
+            }
+          ],
+          "correct": "dad-row"
+        },
+        {
+          "word": "TWO FISH",
+          "syllables": "T-W-O F-I-S-H",
+          "prompt": "We look down from the dock into the clear water. Read who is down there.",
+          "success": "Two fish flick their tails and dart away.",
+          "choices": [
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "two fish"
+            },
+            {
+              "id": "six-fish",
+              "emoji": "🐟",
+              "count": 6,
+              "label": "six fish"
+            },
+            {
+              "id": "two-duck",
+              "emoji": "🦆",
+              "count": 2,
+              "label": "two ducks"
+            }
+          ],
+          "correct": "two-fish"
+        },
+        {
+          "word": "BIG DUCK",
+          "syllables": "B-I-G D-U-C-K",
+          "prompt": "Somebody is paddling near the reeds. Read who it is.",
+          "success": "A big duck with a shiny green head.",
+          "choices": [
+            {
+              "id": "big-duck",
+              "emoji": "🦆",
+              "size": "big",
+              "label": "big duck"
+            },
+            {
+              "id": "small-duck",
+              "emoji": "🦆",
+              "size": "small",
+              "label": "small duck"
+            },
+            {
+              "id": "big-swan",
+              "emoji": "🦢",
+              "size": "big",
+              "label": "big swan"
+            }
+          ],
+          "correct": "big-duck"
+        },
+        {
+          "word": "TWO FROGS",
+          "syllables": "T-W-O FROGS",
+          "prompt": "Along the shore, Ollie lifts a lily pad. Read who is under it.",
+          "success": "Two frogs blink and hop away - plop, plop!",
+          "choices": [
+            {
+              "id": "two-frog",
+              "emoji": "🐸",
+              "count": 2,
+              "label": "two frogs"
+            },
+            {
+              "id": "five-frog",
+              "emoji": "🐸",
+              "count": 5,
+              "label": "five frogs"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "two fish"
+            }
+          ],
+          "correct": "two-frog"
+        },
+        {
+          "word": "BIG FROG",
+          "syllables": "B-I-G F-R-O-G",
+          "prompt": "Something splashes in the reeds. What is it? Read.",
+          "success": "A big frog - as big as Dad's hand!",
+          "choices": [
+            {
+              "id": "big-frog",
+              "emoji": "🐸",
+              "size": "big",
+              "label": "big frog"
+            },
+            {
+              "id": "small-frog",
+              "emoji": "🐸",
+              "size": "small",
+              "label": "small frog"
+            },
+            {
+              "id": "big-fish",
+              "emoji": "🐟",
+              "size": "big",
+              "label": "big fish"
+            }
+          ],
+          "correct": "big-frog"
+        },
+        {
+          "word": "RED FLAG",
+          "syllables": "R-E-D F-L-A-G",
+          "prompt": "Ollie points at the lifeguard tower. Read what is up there.",
+          "success": "A red flag means the lifeguard is on duty.",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "black flag"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "FOX SINGS",
+          "syllables": "F-O-X SINGS",
+          "prompt": "On the far shore, somebody sits on a rock. Read who it is and what is going on.",
+          "success": "A fox sings to the sunset - what a funny sound!",
+          "choices": [
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "fox sings"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "fox sleeps"
+            }
+          ],
+          "correct": "fox-sing"
+        },
+        {
+          "word": "SIX GEESE",
+          "syllables": "S-I-X GEESE",
+          "prompt": "A noisy group flies low over the water and lands. Read who they are.",
+          "success": "Six geese land on the lake with a big splash.",
+          "choices": [
+            {
+              "id": "six-goose",
+              "emoji": "🪿",
+              "count": 6,
+              "label": "six geese"
+            },
+            {
+              "id": "two-goose",
+              "emoji": "🪿",
+              "count": 2,
+              "label": "two geese"
+            },
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "six ducks"
+            }
+          ],
+          "correct": "six-goose"
+        },
+        {
+          "word": "BIG CRAB",
+          "syllables": "B-I-G C-R-A-B",
+          "prompt": "Something is hiding under a rock on the beach. Read what Ollie finds.",
+          "success": "A big crab waves its claws at us!",
+          "choices": [
+            {
+              "id": "big-crab",
+              "emoji": "🦀",
+              "size": "big",
+              "label": "big crab"
+            },
+            {
+              "id": "small-crab",
+              "emoji": "🦀",
+              "size": "small",
+              "label": "small crab"
+            },
+            {
+              "id": "big-shell",
+              "emoji": "🐚",
+              "size": "big",
+              "label": "big shell"
+            }
+          ],
+          "correct": "big-crab"
+        }
+      ]
+    },
+    {
+      "id": "en-a-06",
+      "title": "The Apple Orchard",
+      "emoji": "🍎",
+      "character": "👩‍🌾",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "Our baskets are heavy and our hands are sticky. Tomorrow Ollie leads a walk in the forest!",
+      "tasks": [
+        {
+          "word": "RED APPLE",
+          "syllables": "R-E-D AP-PLE",
+          "prompt": "Farmer Rosa lifts us up to the lowest branch. Read what we pick.",
+          "success": "A red apple, shiny and sweet!",
+          "choices": [
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            },
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            },
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            }
+          ],
+          "correct": "red-apple"
+        },
+        {
+          "word": "FIVE BEES",
+          "syllables": "F-I-V-E B-E-E-S",
+          "prompt": "On the far side, the trees are full of blossom. Read who is busy there.",
+          "success": "Five bees buzz from flower to flower.",
+          "choices": [
+            {
+              "id": "five-bee",
+              "emoji": "🐝",
+              "count": 5,
+              "label": "five bees"
+            },
+            {
+              "id": "two-bee",
+              "emoji": "🐝",
+              "count": 2,
+              "label": "two bees"
+            },
+            {
+              "id": "five-ant",
+              "emoji": "🐜",
+              "count": 5,
+              "label": "five ants"
+            }
+          ],
+          "correct": "five-bee"
+        },
+        {
+          "word": "BIG PEAR",
+          "syllables": "B-I-G P-E-A-R",
+          "prompt": "Rosa reaches into a different tree. Read what she picks for us.",
+          "success": "A big pear - we will share it.",
+          "choices": [
+            {
+              "id": "big-pear",
+              "emoji": "🍐",
+              "size": "big",
+              "label": "big pear"
+            },
+            {
+              "id": "small-pear",
+              "emoji": "🍐",
+              "size": "small",
+              "label": "small pear"
+            },
+            {
+              "id": "big-lemon",
+              "emoji": "🍋",
+              "size": "big",
+              "label": "big lemon"
+            }
+          ],
+          "correct": "big-pear"
+        },
+        {
+          "word": "SMALL ANT",
+          "syllables": "SMALL A-N-T",
+          "prompt": "Something tickles my arm. Read what it is.",
+          "success": "A small ant - we put it back on the grass.",
+          "choices": [
+            {
+              "id": "small-ant",
+              "emoji": "🐜",
+              "size": "small",
+              "label": "small ant"
+            },
+            {
+              "id": "big-ant",
+              "emoji": "🐜",
+              "size": "big",
+              "label": "big ant"
+            },
+            {
+              "id": "small-bee",
+              "emoji": "🐝",
+              "size": "small",
+              "label": "small bee"
+            }
+          ],
+          "correct": "small-ant"
+        },
+        {
+          "word": "DAD WALKS",
+          "syllables": "D-A-D WALKS",
+          "prompt": "Somebody carries the full basket back to the farmhouse. Read who it is and how.",
+          "success": "Dad walks slowly with the heavy basket.",
+          "choices": [
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            },
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            },
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            }
+          ],
+          "correct": "dad-walk"
+        },
+        {
+          "word": "SIX PEARS",
+          "syllables": "S-I-X PEARS",
+          "prompt": "We sort the fruit on Rosa's table. Read what is in the first bowl.",
+          "success": "Six pears, green and juicy.",
+          "choices": [
+            {
+              "id": "six-pear",
+              "emoji": "🍐",
+              "count": 6,
+              "label": "six pears"
+            },
+            {
+              "id": "nine-pear",
+              "emoji": "🍐",
+              "count": 9,
+              "label": "nine pears"
+            },
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "six eggs"
+            }
+          ],
+          "correct": "six-pear"
+        },
+        {
+          "word": "RED LEAF",
+          "syllables": "R-E-D L-E-A-F",
+          "prompt": "A gust of wind blows through the orchard. Read what lands on my hat.",
+          "success": "A red leaf, like a little maple star.",
+          "choices": [
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-leaf"
+        },
+        {
+          "word": "OWL SINGS",
+          "syllables": "O-W-L SINGS",
+          "prompt": "High up in the oldest tree, somebody has a nest. Read who it is and what is going on.",
+          "success": "The owl sings hoo-hoo, right in the middle of the day!",
+          "choices": [
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "owl sleeps"
+            }
+          ],
+          "correct": "owl-sing"
+        },
+        {
+          "word": "BIG HORSE",
+          "syllables": "B-I-G HORSE",
+          "prompt": "Something pulls Rosa's fruit cart up the hill. Read who it is.",
+          "success": "A big horse named Thunder pulls the cart.",
+          "choices": [
+            {
+              "id": "big-horse",
+              "emoji": "🐴",
+              "size": "big",
+              "label": "big horse"
+            },
+            {
+              "id": "small-horse",
+              "emoji": "🐴",
+              "size": "small",
+              "label": "small horse"
+            },
+            {
+              "id": "big-cow",
+              "emoji": "🐮",
+              "size": "big",
+              "label": "big cow"
+            }
+          ],
+          "correct": "big-horse"
+        },
+        {
+          "word": "TWO PIGS",
+          "syllables": "T-W-O P-I-G-S",
+          "prompt": "Under the trees, somebody is munching the fallen fruit. Who is it? Read.",
+          "success": "Two pigs crunch the fallen apples, very happy.",
+          "choices": [
+            {
+              "id": "two-pig",
+              "emoji": "🐷",
+              "count": 2,
+              "label": "two pigs"
+            },
+            {
+              "id": "five-pig",
+              "emoji": "🐷",
+              "count": 5,
+              "label": "five pigs"
+            },
+            {
+              "id": "two-cow",
+              "emoji": "🐮",
+              "count": 2,
+              "label": "two cows"
+            }
+          ],
+          "correct": "two-pig"
+        }
+      ]
+    },
+    {
+      "id": "en-a-07",
+      "title": "The Forest Walk",
+      "emoji": "🌲",
+      "character": "🦉",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "We found the way home by the light of the moon. Tomorrow the camp kitchen needs helpers!",
+      "tasks": [
+        {
+          "word": "ONE FOX",
+          "syllables": "O-N-E F-O-X",
+          "prompt": "Ollie leads us into the woods. Behind a fallen tree, somebody is peeking at us. Read who it is.",
+          "success": "One fox peeks out, then vanishes.",
+          "choices": [
+            {
+              "id": "one-fox",
+              "emoji": "🦊",
+              "count": 1,
+              "label": "one fox"
+            },
+            {
+              "id": "three-fox",
+              "emoji": "🦊",
+              "count": 3,
+              "label": "three foxes"
+            },
+            {
+              "id": "one-owl",
+              "emoji": "🦉",
+              "count": 1,
+              "label": "one owl"
+            }
+          ],
+          "correct": "one-fox"
+        },
+        {
+          "word": "RED LEAF",
+          "syllables": "R-E-D L-E-A-F",
+          "prompt": "Ollie asks everyone to find something for the nature table. Read what I found.",
+          "success": "A red leaf, as bright as a little fire.",
+          "choices": [
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            }
+          ],
+          "correct": "red-leaf"
+        },
+        {
+          "word": "BIG BEAR",
+          "syllables": "B-I-G B-E-A-R",
+          "prompt": "Ollie spots tracks in the mud. Read who made them.",
+          "success": "A big bear - far, far away, munching berries.",
+          "choices": [
+            {
+              "id": "big-bear",
+              "emoji": "🐻",
+              "size": "big",
+              "label": "big bear"
+            },
+            {
+              "id": "small-bear",
+              "emoji": "🐻",
+              "size": "small",
+              "label": "small bear"
+            },
+            {
+              "id": "big-fox",
+              "emoji": "🦊",
+              "size": "big",
+              "label": "big fox"
+            }
+          ],
+          "correct": "big-bear"
+        },
+        {
+          "word": "NINE ANTS",
+          "syllables": "N-I-N-E A-N-T-S",
+          "prompt": "On an old stump, there is a busy little crowd. Read who they are.",
+          "success": "Nine ants march in a line over the stump.",
+          "choices": [
+            {
+              "id": "nine-ant",
+              "emoji": "🐜",
+              "count": 9,
+              "label": "nine ants"
+            },
+            {
+              "id": "six-ant",
+              "emoji": "🐜",
+              "count": 6,
+              "label": "six ants"
+            },
+            {
+              "id": "nine-bee",
+              "emoji": "🐝",
+              "count": 9,
+              "label": "nine bees"
+            }
+          ],
+          "correct": "nine-ant"
+        },
+        {
+          "word": "MOM WALKS",
+          "syllables": "M-O-M WALKS",
+          "prompt": "Somebody leads the group along the narrow trail. Read who it is and how.",
+          "success": "Mom walks first and checks the map.",
+          "choices": [
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "mom rides"
+            }
+          ],
+          "correct": "mom-walk"
+        },
+        {
+          "word": "SMALL FOX",
+          "syllables": "SMALL F-O-X",
+          "prompt": "Something rustles under a bush. Read who is there.",
+          "success": "A small fox cub, curious and quiet.",
+          "choices": [
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "small fox"
+            },
+            {
+              "id": "big-fox",
+              "emoji": "🦊",
+              "size": "big",
+              "label": "big fox"
+            },
+            {
+              "id": "small-owl",
+              "emoji": "🦉",
+              "size": "small",
+              "label": "small owl"
+            }
+          ],
+          "correct": "small-fox"
+        },
+        {
+          "word": "WHITE DOT",
+          "syllables": "WHITE D-O-T",
+          "prompt": "Ollie shows us the marks painted on the trees along the trail. Read the first one.",
+          "success": "A white dot on every tree shows the way home.",
+          "choices": [
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "black dot"
+            },
+            {
+              "id": "white-heart",
+              "emoji": "🤍",
+              "label": "white heart"
+            }
+          ],
+          "correct": "white-circle"
+        },
+        {
+          "word": "RED DOT",
+          "syllables": "R-E-D D-O-T",
+          "prompt": "Further on, the trail splits in two. Read the mark on the left path.",
+          "success": "A red dot - this path goes to the waterfall.",
+          "choices": [
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "red-square",
+              "emoji": "🟥",
+              "label": "red square"
+            }
+          ],
+          "correct": "red-circle"
+        },
+        {
+          "word": "TWO OWLS",
+          "syllables": "T-W-O O-W-L-S",
+          "prompt": "As it gets dark, Ollie shines a torch at an old hollow tree. Read who looks back at us.",
+          "success": "Two owls blink in the torchlight.",
+          "choices": [
+            {
+              "id": "two-owl",
+              "emoji": "🦉",
+              "count": 2,
+              "label": "two owls"
+            },
+            {
+              "id": "five-owl",
+              "emoji": "🦉",
+              "count": 5,
+              "label": "five owls"
+            },
+            {
+              "id": "two-fox",
+              "emoji": "🦊",
+              "count": 2,
+              "label": "two foxes"
+            }
+          ],
+          "correct": "two-owl"
+        },
+        {
+          "word": "DAD SINGS",
+          "syllables": "D-A-D SINGS",
+          "prompt": "Back at the tent, somebody is lying in the hammock. Read who it is and what is happening.",
+          "success": "Dad sings to the stars from his hammock.",
+          "choices": [
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            },
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            }
+          ],
+          "correct": "dad-sing"
+        }
+      ]
+    },
+    {
+      "id": "en-a-08",
+      "title": "The Camp Kitchen",
+      "emoji": "🍳",
+      "character": "🧑‍🍳",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "Dinner was a feast, and the pots are clean. Tomorrow is Sports Day!",
+      "tasks": [
+        {
+          "word": "MOM COOKS",
+          "syllables": "M-O-M COOKS",
+          "prompt": "Chef Basil needs help in the camp kitchen today. Read who puts on an apron and what they do.",
+          "success": "Mom cooks pancakes for the whole camp!",
+          "choices": [
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            },
+            {
+              "id": "mom-paint",
+              "emoji": "👩‍🎨",
+              "label": "mom paints"
+            }
+          ],
+          "correct": "mom-cook"
+        },
+        {
+          "word": "TEN EGGS",
+          "syllables": "T-E-N E-G-G-S",
+          "prompt": "Chef Basil opens the tall fridge. Read what he takes out.",
+          "success": "Ten eggs for ten pancakes!",
+          "choices": [
+            {
+              "id": "ten-egg",
+              "emoji": "🥚",
+              "count": 10,
+              "label": "ten eggs"
+            },
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "six eggs"
+            },
+            {
+              "id": "ten-pear",
+              "emoji": "🍐",
+              "count": 10,
+              "label": "ten pears"
+            }
+          ],
+          "correct": "ten-egg"
+        },
+        {
+          "word": "BIG EGG",
+          "syllables": "B-I-G E-G-G",
+          "prompt": "Chef Basil holds up something funny from the box. Read what it is.",
+          "success": "A big egg - a goose from the farm laid it!",
+          "choices": [
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "big egg"
+            },
+            {
+              "id": "small-egg",
+              "emoji": "🥚",
+              "size": "small",
+              "label": "small egg"
+            },
+            {
+              "id": "big-lemon",
+              "emoji": "🍋",
+              "size": "big",
+              "label": "big lemon"
+            }
+          ],
+          "correct": "big-egg"
+        },
+        {
+          "word": "TWO CAKES",
+          "syllables": "T-W-O CAKES",
+          "prompt": "Chef Basil opens the pantry door. Read what is waiting inside.",
+          "success": "Two cakes, with candles on top already!",
+          "choices": [
+            {
+              "id": "two-cake",
+              "emoji": "🎂",
+              "count": 2,
+              "label": "two cakes"
+            },
+            {
+              "id": "five-cake",
+              "emoji": "🎂",
+              "count": 5,
+              "label": "five cakes"
+            },
+            {
+              "id": "two-pear",
+              "emoji": "🍐",
+              "count": 2,
+              "label": "two pears"
+            }
+          ],
+          "correct": "two-cake"
+        },
+        {
+          "word": "DAD COOKS",
+          "syllables": "D-A-D COOKS",
+          "prompt": "Out on the deck, somebody is busy at a long table. Read who it is and what they are doing.",
+          "success": "Dad cooks the corn, and it smells great!",
+          "choices": [
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            },
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            }
+          ],
+          "correct": "dad-cook"
+        },
+        {
+          "word": "BIG CAKE",
+          "syllables": "B-I-G C-A-K-E",
+          "prompt": "Chef Basil hides a treat on the top shelf. Read what is up there.",
+          "success": "A big cake for the party - shh, it is a surprise!",
+          "choices": [
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "big cake"
+            },
+            {
+              "id": "small-cake",
+              "emoji": "🎂",
+              "size": "small",
+              "label": "small cake"
+            },
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "big egg"
+            }
+          ],
+          "correct": "big-cake"
+        },
+        {
+          "word": "RED BOOK",
+          "syllables": "R-E-D B-O-O-K",
+          "prompt": "Chef Basil looks for his favorite recipe. Read what he takes off the shelf.",
+          "success": "A red book of recipes, covered in flour.",
+          "choices": [
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-book"
+        },
+        {
+          "word": "CAT SINGS",
+          "syllables": "C-A-T SINGS",
+          "prompt": "On the warm windowsill, somebody is lying in the sun. Read who it is and what is happening.",
+          "success": "The kitchen cat sings for a bit of fish.",
+          "choices": [
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "cat-laugh",
+              "emoji": "😹",
+              "label": "cat laughs"
+            }
+          ],
+          "correct": "cat-sing"
+        },
+        {
+          "word": "SIX FISH",
+          "syllables": "S-I-X F-I-S-H",
+          "prompt": "Somebody from the lake brings a bucket to the kitchen door. Read what is in it.",
+          "success": "Six fish for dinner tonight!",
+          "choices": [
+            {
+              "id": "six-fish",
+              "emoji": "🐟",
+              "count": 6,
+              "label": "six fish"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "two fish"
+            },
+            {
+              "id": "six-egg",
+              "emoji": "🥚",
+              "count": 6,
+              "label": "six eggs"
+            }
+          ],
+          "correct": "six-fish"
+        },
+        {
+          "word": "BIG LEMON",
+          "syllables": "B-I-G LEM-ON",
+          "prompt": "Chef Basil needs something for the drinks. Read what he cuts in half.",
+          "success": "A big lemon - enough for the whole jug!",
+          "choices": [
+            {
+              "id": "big-lemon",
+              "emoji": "🍋",
+              "size": "big",
+              "label": "big lemon"
+            },
+            {
+              "id": "small-lemon",
+              "emoji": "🍋",
+              "size": "small",
+              "label": "small lemon"
+            },
+            {
+              "id": "big-pear",
+              "emoji": "🍐",
+              "size": "big",
+              "label": "big pear"
+            }
+          ],
+          "correct": "big-lemon"
+        }
+      ]
+    },
+    {
+      "id": "en-a-09",
+      "title": "Sports Day",
+      "emoji": "🏅",
+      "character": "🦦",
+      "colors": [
+        "#2a6b62",
+        "#4f3b8f"
+      ],
+      "completeText": "Everybody got a medal, even Pip. Tomorrow we ride the bike trail!",
+      "tasks": [
+        {
+          "word": "BLUE DOT",
+          "syllables": "B-L-U-E D-O-T",
+          "prompt": "Ollie gives every team a sticker. Read what is on ours.",
+          "success": "A blue dot - we are the blue team!",
+          "choices": [
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            }
+          ],
+          "correct": "blue-circle"
+        },
+        {
+          "word": "MOM RUNS",
+          "syllables": "M-O-M R-U-N-S",
+          "prompt": "The first race starts at the whistle. Read who is in front and what is going on.",
+          "success": "Mom runs past everyone and wins!",
+          "choices": [
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "mom runs"
+            },
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "dad runs"
+            },
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            }
+          ],
+          "correct": "mom-run"
+        },
+        {
+          "word": "DAD RUNS",
+          "syllables": "D-A-D R-U-N-S",
+          "prompt": "In the next race, somebody is way ahead. Read who it is and how.",
+          "success": "Dad runs and runs - and trips over Pip, oops!",
+          "choices": [
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "dad runs"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "mom runs"
+            },
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            }
+          ],
+          "correct": "dad-run"
+        },
+        {
+          "word": "SIX BALLS",
+          "syllables": "S-I-X BALLS",
+          "prompt": "Ollie empties the sports bag onto the grass. Read what falls out.",
+          "success": "Six balls - enough for every game today!",
+          "choices": [
+            {
+              "id": "six-ball",
+              "emoji": "⚽",
+              "count": 6,
+              "label": "six balls"
+            },
+            {
+              "id": "two-ball",
+              "emoji": "⚽",
+              "count": 2,
+              "label": "two balls"
+            },
+            {
+              "id": "six-kite",
+              "emoji": "🪁",
+              "count": 6,
+              "label": "six kites"
+            }
+          ],
+          "correct": "six-ball"
+        },
+        {
+          "word": "BIG BALL",
+          "syllables": "B-I-G B-A-L-L",
+          "prompt": "For the last game, Ollie brings something out of the shed. Read what it is.",
+          "success": "A big ball - it takes two of us to push it!",
+          "choices": [
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "big ball"
+            },
+            {
+              "id": "small-ball",
+              "emoji": "⚽",
+              "size": "small",
+              "label": "small ball"
+            },
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            }
+          ],
+          "correct": "big-ball"
+        },
+        {
+          "word": "DAD PLAYS",
+          "syllables": "D-A-D PLAYS",
+          "prompt": "On the court, somebody shows the kids a trick. Read who it is and what they are doing.",
+          "success": "Dad plays and scores a basket!",
+          "choices": [
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            },
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "mom plays"
+            },
+            {
+              "id": "dad-dance",
+              "emoji": "🕺",
+              "label": "dad dances"
+            }
+          ],
+          "correct": "dad-play"
+        },
+        {
+          "word": "TWO DOGS",
+          "syllables": "T-W-O D-O-G-S",
+          "prompt": "In the funny pet race, the winners cross the finish line side by side. Read who they are.",
+          "success": "Two dogs cross the line together - it is a tie!",
+          "choices": [
+            {
+              "id": "two-dog",
+              "emoji": "🐶",
+              "count": 2,
+              "label": "two dogs"
+            },
+            {
+              "id": "four-dog",
+              "emoji": "🐶",
+              "count": 4,
+              "label": "four dogs"
+            },
+            {
+              "id": "two-cat",
+              "emoji": "🐱",
+              "count": 2,
+              "label": "two cats"
+            }
+          ],
+          "correct": "two-dog"
+        },
+        {
+          "word": "SMALL DOG",
+          "syllables": "SMALL D-O-G",
+          "prompt": "Ollie hangs the last medal around somebody's neck. Read whose.",
+          "success": "A small dog - Pip wins a medal too!",
+          "choices": [
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            },
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "small fox"
+            }
+          ],
+          "correct": "small-dog"
+        },
+        {
+          "word": "RED HEART",
+          "syllables": "R-E-D HEART",
+          "prompt": "Every runner gets a badge at the end. Read what is on mine.",
+          "success": "A red heart badge, for trying your best!",
+          "choices": [
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            },
+            {
+              "id": "yellow-heart",
+              "emoji": "💛",
+              "label": "yellow heart"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            }
+          ],
+          "correct": "red-heart"
+        },
+        {
+          "word": "TEN SHEEP",
+          "syllables": "T-E-N SHEEP",
+          "prompt": "Over the fence, Rosa's animals are watching the races. Read who is there.",
+          "success": "Ten sheep stand in a row and say baa for the winners!",
+          "choices": [
+            {
+              "id": "ten-sheep",
+              "emoji": "🐑",
+              "count": 10,
+              "label": "ten sheep"
+            },
+            {
+              "id": "six-sheep",
+              "emoji": "🐑",
+              "count": 6,
+              "label": "six sheep"
+            },
+            {
+              "id": "ten-cow",
+              "emoji": "🐮",
+              "count": 10,
+              "label": "ten cows"
+            }
+          ],
+          "correct": "ten-sheep"
+        }
+      ]
+    },
+    {
+      "id": "en-a-10",
+      "title": "The Bike Trail",
+      "emoji": "🚲",
+      "character": "🦦",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Our legs are tired and our faces are muddy. Tomorrow it rains - time for games in the dining hall!",
+      "tasks": [
+        {
+          "word": "MOM RIDES",
+          "syllables": "M-O-M RIDES",
+          "prompt": "Ollie blows his whistle at the start of the trail. Read who sets off first and how.",
+          "success": "Mom rides ahead and rings her bell - ring, ring!",
+          "choices": [
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "mom rides"
+            },
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "mom runs"
+            }
+          ],
+          "correct": "mom-ride"
+        },
+        {
+          "word": "DAD WALKS",
+          "syllables": "D-A-D WALKS",
+          "prompt": "At the steep hill, somebody is falling behind. Read who it is and how they go.",
+          "success": "Dad walks up the hill and pushes his bike.",
+          "choices": [
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            },
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            },
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "dad runs"
+            }
+          ],
+          "correct": "dad-walk"
+        },
+        {
+          "word": "SIX COWS",
+          "syllables": "S-I-X C-O-W-S",
+          "prompt": "The trail passes Rosa's back field. Read who is lying in the grass.",
+          "success": "Six cows rest in the shade and watch us go by.",
+          "choices": [
+            {
+              "id": "six-cow",
+              "emoji": "🐮",
+              "count": 6,
+              "label": "six cows"
+            },
+            {
+              "id": "two-cow",
+              "emoji": "🐮",
+              "count": 2,
+              "label": "two cows"
+            },
+            {
+              "id": "six-pig",
+              "emoji": "🐷",
+              "count": 6,
+              "label": "six pigs"
+            }
+          ],
+          "correct": "six-cow"
+        },
+        {
+          "word": "BIG SNAIL",
+          "syllables": "B-I-G SNAIL",
+          "prompt": "We stop at a puddle in the middle of the trail. Read what is crossing it.",
+          "success": "A big snail - we wait for it to cross!",
+          "choices": [
+            {
+              "id": "big-snail",
+              "emoji": "🐌",
+              "size": "big",
+              "label": "big snail"
+            },
+            {
+              "id": "small-snail",
+              "emoji": "🐌",
+              "size": "small",
+              "label": "small snail"
+            },
+            {
+              "id": "big-frog",
+              "emoji": "🐸",
+              "size": "big",
+              "label": "big frog"
+            }
+          ],
+          "correct": "big-snail"
+        },
+        {
+          "word": "GREEN DOT",
+          "syllables": "GREEN D-O-T",
+          "prompt": "At the fork in the trail, Ollie points at the sign. Read the mark on it.",
+          "success": "A green dot - the easy way back to camp.",
+          "choices": [
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "green-square",
+              "emoji": "🟩",
+              "label": "green square"
+            }
+          ],
+          "correct": "green-circle"
+        },
+        {
+          "word": "TWO DUCKS",
+          "syllables": "T-W-O DUCKS",
+          "prompt": "Down by the creek, somebody is waddling along. Who is it? Read.",
+          "success": "Two ducks waddle to the water, quack-quack.",
+          "choices": [
+            {
+              "id": "two-duck",
+              "emoji": "🦆",
+              "count": 2,
+              "label": "two ducks"
+            },
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "six ducks"
+            },
+            {
+              "id": "two-goose",
+              "emoji": "🪿",
+              "count": 2,
+              "label": "two geese"
+            }
+          ],
+          "correct": "two-duck"
+        },
+        {
+          "word": "SMALL BEE",
+          "syllables": "SMALL B-E-E",
+          "prompt": "Something sits down on my handlebar. Read what it is.",
+          "success": "A small bee - and off it buzzes again.",
+          "choices": [
+            {
+              "id": "small-bee",
+              "emoji": "🐝",
+              "size": "small",
+              "label": "small bee"
+            },
+            {
+              "id": "big-bee",
+              "emoji": "🐝",
+              "size": "big",
+              "label": "big bee"
+            },
+            {
+              "id": "small-ant",
+              "emoji": "🐜",
+              "size": "small",
+              "label": "small ant"
+            }
+          ],
+          "correct": "small-bee"
+        },
+        {
+          "word": "BLUE CAR",
+          "syllables": "B-L-U-E C-A-R",
+          "prompt": "At the end of the trail, Ollie points at something by the gate. Read what is waiting there.",
+          "success": "A blue car - our tent neighbors have room for our bikes!",
+          "choices": [
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            },
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "red car"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            }
+          ],
+          "correct": "blue-car"
+        },
+        {
+          "word": "DOG SINGS",
+          "syllables": "D-O-G SINGS",
+          "prompt": "In the basket on Ollie's bike, somebody is riding along. Read who it is and what is going on.",
+          "success": "Pip sings the whole way home - woof-woof-la!",
+          "choices": [
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            }
+          ],
+          "correct": "dog-sing"
+        },
+        {
+          "word": "SIX STARS",
+          "syllables": "S-I-X STARS",
+          "prompt": "On the ride home, the sky gets dark. Read what comes out above us.",
+          "success": "Six stars come out, one by one.",
+          "choices": [
+            {
+              "id": "six-star",
+              "emoji": "⭐",
+              "count": 6,
+              "label": "six stars"
+            },
+            {
+              "id": "ten-star",
+              "emoji": "⭐",
+              "count": 10,
+              "label": "ten stars"
+            },
+            {
+              "id": "six-cloud",
+              "emoji": "☁️",
+              "count": 6,
+              "label": "six clouds"
+            }
+          ],
+          "correct": "six-star"
+        }
+      ]
+    },
+    {
+      "id": "en-a-11",
+      "title": "A Rainy Day",
+      "emoji": "🌧️",
+      "character": "🦜",
+      "colors": [
+        "#285a8a",
+        "#2d7973"
+      ],
+      "completeText": "The rain has stopped, and there is a rainbow over the lake. Tomorrow is the pet show!",
+      "tasks": [
+        {
+          "word": "BROWN DOT",
+          "syllables": "BROWN D-O-T",
+          "prompt": "Rain drums on the roof of the dining hall, so Miss Lark spins the arrow on a game board. Read where it stops.",
+          "success": "A brown dot - everybody puts a hand on it!",
+          "choices": [
+            {
+              "id": "brown-circle",
+              "emoji": "🟤",
+              "label": "brown dot"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "brown-bear",
+              "emoji": "🐻",
+              "label": "brown bear"
+            }
+          ],
+          "correct": "brown-circle"
+        },
+        {
+          "word": "TWO MICE",
+          "syllables": "T-W-O M-I-C-E",
+          "prompt": "Something is hiding under the stage. Read who it is.",
+          "success": "Two mice nibble a cookie crumb.",
+          "choices": [
+            {
+              "id": "two-mouse",
+              "emoji": "🐭",
+              "count": 2,
+              "label": "two mice"
+            },
+            {
+              "id": "six-mouse",
+              "emoji": "🐭",
+              "count": 6,
+              "label": "six mice"
+            },
+            {
+              "id": "two-cat",
+              "emoji": "🐱",
+              "count": 2,
+              "label": "two cats"
+            }
+          ],
+          "correct": "two-mouse"
+        },
+        {
+          "word": "BLACK DOT",
+          "syllables": "BLACK D-O-T",
+          "prompt": "Miss Lark spins the arrow again. Read the next spot.",
+          "success": "A black dot - now my foot goes there, wobble, wobble!",
+          "choices": [
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "black dot"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            },
+            {
+              "id": "black-square",
+              "emoji": "⬛",
+              "label": "black square"
+            }
+          ],
+          "correct": "black-circle"
+        },
+        {
+          "word": "BIG DRUM",
+          "syllables": "B-I-G D-R-U-M",
+          "prompt": "Ollie pulls something out of the toy chest. Read what it is.",
+          "success": "A big drum - boom, boom, louder than the rain!",
+          "choices": [
+            {
+              "id": "big-drum",
+              "emoji": "🥁",
+              "size": "big",
+              "label": "big drum"
+            },
+            {
+              "id": "small-drum",
+              "emoji": "🥁",
+              "size": "small",
+              "label": "small drum"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "big ball"
+            }
+          ],
+          "correct": "big-drum"
+        },
+        {
+          "word": "MOM PLAYS",
+          "syllables": "M-O-M PLAYS",
+          "prompt": "In the middle of the hall, somebody is busy with the kids. Read who it is and what they are doing.",
+          "success": "Mom plays a ball game with us, nice and gently.",
+          "choices": [
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "mom plays"
+            },
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            }
+          ],
+          "correct": "mom-play"
+        },
+        {
+          "word": "BLUE BOOK",
+          "syllables": "B-L-U-E B-O-O-K",
+          "prompt": "Miss Lark opens the reading corner. Read what I take from the box.",
+          "success": "A blue book about whales - my favorite!",
+          "choices": [
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "blue-heart",
+              "emoji": "💙",
+              "label": "blue heart"
+            }
+          ],
+          "correct": "blue-book"
+        },
+        {
+          "word": "SMALL COW",
+          "syllables": "SMALL C-O-W",
+          "prompt": "Ollie sets up the toy farm on the floor. Read who he puts by the barn.",
+          "success": "A small cow - just like Daisy, only tiny.",
+          "choices": [
+            {
+              "id": "small-cow",
+              "emoji": "🐮",
+              "size": "small",
+              "label": "small cow"
+            },
+            {
+              "id": "big-cow",
+              "emoji": "🐮",
+              "size": "big",
+              "label": "big cow"
+            },
+            {
+              "id": "small-pig",
+              "emoji": "🐷",
+              "size": "small",
+              "label": "small pig"
+            }
+          ],
+          "correct": "small-cow"
+        },
+        {
+          "word": "TEN FISH",
+          "syllables": "T-E-N F-I-S-H",
+          "prompt": "We finish a jigsaw puzzle together. Read what is in the picture.",
+          "success": "Ten fish in a big blue sea!",
+          "choices": [
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "ten fish"
+            },
+            {
+              "id": "four-fish",
+              "emoji": "🐟",
+              "count": 4,
+              "label": "four fish"
+            },
+            {
+              "id": "ten-frog",
+              "emoji": "🐸",
+              "count": 10,
+              "label": "ten frogs"
+            }
+          ],
+          "correct": "ten-fish"
+        },
+        {
+          "word": "COW SINGS",
+          "syllables": "C-O-W SINGS",
+          "prompt": "Ollie turns the toy farm around. Read who is in the barn and what is going on.",
+          "success": "The cow sings moo-la-la in Ollie's funny voice.",
+          "choices": [
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "cow-sleep",
+              "emoji": "🐮",
+              "badge": "💤",
+              "label": "cow sleeps"
+            }
+          ],
+          "correct": "cow-sing"
+        },
+        {
+          "word": "TWO TENTS",
+          "syllables": "T-W-O TENTS",
+          "prompt": "From the window we can see the rest of the camp in the rain. Read what is down by the trees.",
+          "success": "Two tents, wet but cozy.",
+          "choices": [
+            {
+              "id": "two-tent",
+              "emoji": "⛺",
+              "count": 2,
+              "label": "two tents"
+            },
+            {
+              "id": "five-tent",
+              "emoji": "⛺",
+              "count": 5,
+              "label": "five tents"
+            },
+            {
+              "id": "two-boat",
+              "emoji": "🛶",
+              "count": 2,
+              "label": "two boats"
+            }
+          ],
+          "correct": "two-tent"
+        }
+      ]
+    },
+    {
+      "id": "en-a-12",
+      "title": "The Pet Show",
+      "emoji": "🏆",
+      "character": "🦦",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "Every pet got a ribbon, and Pip got two. Tomorrow we explore the frog pond!",
+      "tasks": [
+        {
+          "word": "BIG DOG",
+          "syllables": "B-I-G D-O-G",
+          "prompt": "The first pet steps onto the stage. Read who it is.",
+          "success": "A big dog - it sits so nicely for the judges.",
+          "choices": [
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            },
+            {
+              "id": "big-pig",
+              "emoji": "🐷",
+              "size": "big",
+              "label": "big pig"
+            }
+          ],
+          "correct": "big-dog"
+        },
+        {
+          "word": "SMALL CAT",
+          "syllables": "SMALL C-A-T",
+          "prompt": "Next, a girl carries somebody up in her arms. Read who is in them.",
+          "success": "A small cat with soft fur, purring.",
+          "choices": [
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "small cat"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "big cat"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            }
+          ],
+          "correct": "small-cat"
+        },
+        {
+          "word": "FOUR CATS",
+          "syllables": "F-O-U-R C-A-T-S",
+          "prompt": "A basket is set on the judges' table. Read who peeks out of it.",
+          "success": "Four cats in one basket - what a sight!",
+          "choices": [
+            {
+              "id": "four-cat",
+              "emoji": "🐱",
+              "count": 4,
+              "label": "four cats"
+            },
+            {
+              "id": "two-cat",
+              "emoji": "🐱",
+              "count": 2,
+              "label": "two cats"
+            },
+            {
+              "id": "four-dog",
+              "emoji": "🐶",
+              "count": 4,
+              "label": "four dogs"
+            }
+          ],
+          "correct": "four-cat"
+        },
+        {
+          "word": "PIG SINGS",
+          "syllables": "P-I-G SINGS",
+          "prompt": "Farmer Rosa brings her own pet to the stage. Read who it is and what is going on.",
+          "success": "Rosa's pig sings, and the judges clap!",
+          "choices": [
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            }
+          ],
+          "correct": "pig-sing"
+        },
+        {
+          "word": "BIG CAT",
+          "syllables": "B-I-G C-A-T",
+          "prompt": "The next pet sits on a velvet pillow. What is it? Read.",
+          "success": "A big cat - the biggest one at camp!",
+          "choices": [
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "big cat"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "small cat"
+            },
+            {
+              "id": "big-tiger",
+              "emoji": "🐯",
+              "size": "big",
+              "label": "big tiger"
+            }
+          ],
+          "correct": "big-cat"
+        },
+        {
+          "word": "RED BOOK",
+          "syllables": "R-E-D B-O-O-K",
+          "prompt": "The judge writes down the scores. Read what she writes them in.",
+          "success": "A red book full of scores and little stars.",
+          "choices": [
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            }
+          ],
+          "correct": "red-book"
+        },
+        {
+          "word": "TEN MICE",
+          "syllables": "T-E-N M-I-C-E",
+          "prompt": "A boy shows off his pets in a glass box. Read who is inside.",
+          "success": "Ten mice run around a little wheel.",
+          "choices": [
+            {
+              "id": "ten-mouse",
+              "emoji": "🐭",
+              "count": 10,
+              "label": "ten mice"
+            },
+            {
+              "id": "six-mouse",
+              "emoji": "🐭",
+              "count": 6,
+              "label": "six mice"
+            },
+            {
+              "id": "ten-ant",
+              "emoji": "🐜",
+              "count": 10,
+              "label": "ten ants"
+            }
+          ],
+          "correct": "ten-mouse"
+        },
+        {
+          "word": "BOY SINGS",
+          "syllables": "B-O-Y SINGS",
+          "prompt": "The last act walks up the steps of the stage. Read who it is and what happens.",
+          "success": "A boy sings a song about his hamster!",
+          "choices": [
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "baby-sing",
+              "emoji": "👶",
+              "badge": "🎵",
+              "label": "baby sings"
+            },
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            }
+          ],
+          "correct": "boy-sing"
+        },
+        {
+          "word": "BROWN DOT",
+          "syllables": "BROWN D-O-T",
+          "prompt": "Each pet gets a ribbon with a sticker. Read what is on Pip's.",
+          "success": "A brown dot - Pip's favorite color!",
+          "choices": [
+            {
+              "id": "brown-circle",
+              "emoji": "🟤",
+              "label": "brown dot"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "brown-heart",
+              "emoji": "🤎",
+              "label": "brown heart"
+            }
+          ],
+          "correct": "brown-circle"
+        },
+        {
+          "word": "SMALL PIG",
+          "syllables": "SMALL P-I-G",
+          "prompt": "Rosa holds up the winner of the cutest pet prize. Read who won.",
+          "success": "A small pig - it squeals with joy!",
+          "choices": [
+            {
+              "id": "small-pig",
+              "emoji": "🐷",
+              "size": "small",
+              "label": "small pig"
+            },
+            {
+              "id": "big-pig",
+              "emoji": "🐷",
+              "size": "big",
+              "label": "big pig"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            }
+          ],
+          "correct": "small-pig"
+        }
+      ]
+    },
+    {
+      "id": "en-a-13",
+      "title": "The Frog Pond",
+      "emoji": "🐸",
+      "character": "🦉",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "The frogs croaked us goodnight. Tomorrow is the big boat race!",
+      "tasks": [
+        {
+          "word": "TEN FROGS",
+          "syllables": "T-E-N FROGS",
+          "prompt": "Ollie lifts his net out of the pond. Read who is in it.",
+          "success": "Ten frogs hop out of the net, one after another!",
+          "choices": [
+            {
+              "id": "ten-frog",
+              "emoji": "🐸",
+              "count": 10,
+              "label": "ten frogs"
+            },
+            {
+              "id": "six-frog",
+              "emoji": "🐸",
+              "count": 6,
+              "label": "six frogs"
+            },
+            {
+              "id": "ten-fish",
+              "emoji": "🐟",
+              "count": 10,
+              "label": "ten fish"
+            }
+          ],
+          "correct": "ten-frog"
+        },
+        {
+          "word": "BIG SWAN",
+          "syllables": "B-I-G S-W-A-N",
+          "prompt": "Somebody glides across the pond, very proud. Read who it is.",
+          "success": "A big swan, white as snow.",
+          "choices": [
+            {
+              "id": "big-swan",
+              "emoji": "🦢",
+              "size": "big",
+              "label": "big swan"
+            },
+            {
+              "id": "small-swan",
+              "emoji": "🦢",
+              "size": "small",
+              "label": "small swan"
+            },
+            {
+              "id": "big-duck",
+              "emoji": "🦆",
+              "size": "big",
+              "label": "big duck"
+            }
+          ],
+          "correct": "big-swan"
+        },
+        {
+          "word": "OWL SINGS",
+          "syllables": "O-W-L SINGS",
+          "prompt": "On a branch over the water, somebody is sitting. Read who it is and what is going on.",
+          "success": "An owl sings to the frogs - hoo-hoo, ribbit!",
+          "choices": [
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "fox sings"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "owl sleeps"
+            }
+          ],
+          "correct": "owl-sing"
+        },
+        {
+          "word": "SMALL EGG",
+          "syllables": "SMALL E-G-G",
+          "prompt": "In the reeds, Ollie finds a nest. Read what is in it.",
+          "success": "A small egg - a duckling will hatch soon!",
+          "choices": [
+            {
+              "id": "small-egg",
+              "emoji": "🥚",
+              "size": "small",
+              "label": "small egg"
+            },
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "big egg"
+            },
+            {
+              "id": "small-ant",
+              "emoji": "🐜",
+              "size": "small",
+              "label": "small ant"
+            }
+          ],
+          "correct": "small-egg"
+        },
+        {
+          "word": "RED APPLE",
+          "syllables": "R-E-D AP-PLE",
+          "prompt": "We have a picnic by the pond. Read what Ollie gives me.",
+          "success": "A red apple from Rosa's orchard.",
+          "choices": [
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            },
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            },
+            {
+              "id": "red-tomato",
+              "emoji": "🍅",
+              "label": "red tomato"
+            }
+          ],
+          "correct": "red-apple"
+        },
+        {
+          "word": "TWO GEESE",
+          "syllables": "T-W-O GEESE",
+          "prompt": "A group comes splashing across the water. Read who they are.",
+          "success": "Two geese splash and flap their wings.",
+          "choices": [
+            {
+              "id": "two-goose",
+              "emoji": "🪿",
+              "count": 2,
+              "label": "two geese"
+            },
+            {
+              "id": "five-goose",
+              "emoji": "🪿",
+              "count": 5,
+              "label": "five geese"
+            },
+            {
+              "id": "two-duck",
+              "emoji": "🦆",
+              "count": 2,
+              "label": "two ducks"
+            }
+          ],
+          "correct": "two-goose"
+        },
+        {
+          "word": "DAD SWIMS",
+          "syllables": "D-A-D SWIMS",
+          "prompt": "Somebody is out in the middle of the pond. Read who it is and what they are doing.",
+          "success": "Dad swims with the frogs - ribbit!",
+          "choices": [
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "dad swims"
+            },
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            },
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "dad rows"
+            }
+          ],
+          "correct": "dad-swim"
+        },
+        {
+          "word": "FOUR BEES",
+          "syllables": "F-O-U-R B-E-E-S",
+          "prompt": "The water lilies are open on the pond. Read who visits them.",
+          "success": "Four bees visit the water lilies.",
+          "choices": [
+            {
+              "id": "four-bee",
+              "emoji": "🐝",
+              "count": 4,
+              "label": "four bees"
+            },
+            {
+              "id": "nine-bee",
+              "emoji": "🐝",
+              "count": 9,
+              "label": "nine bees"
+            },
+            {
+              "id": "four-ant",
+              "emoji": "🐜",
+              "count": 4,
+              "label": "four ants"
+            }
+          ],
+          "correct": "four-bee"
+        },
+        {
+          "word": "FOX SINGS",
+          "syllables": "F-O-X SINGS",
+          "prompt": "In the tall grass by the pond, somebody has a hiding place. Read who it is and what is happening.",
+          "success": "A fox sings along with the frogs - what a choir!",
+          "choices": [
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "fox sings"
+            },
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "fox sleeps"
+            }
+          ],
+          "correct": "fox-sing"
+        },
+        {
+          "word": "WHITE DOT",
+          "syllables": "WHITE D-O-T",
+          "prompt": "Back at camp, Ollie marks the pond on our map. Read the mark he makes.",
+          "success": "A white dot on the map - the frog pond!",
+          "choices": [
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "white-square",
+              "emoji": "⬜",
+              "label": "white square"
+            }
+          ],
+          "correct": "white-circle"
+        }
+      ]
+    },
+    {
+      "id": "en-a-14",
+      "title": "The Boat Race",
+      "emoji": "🚣",
+      "character": "🦦",
+      "colors": [
+        "#564086",
+        "#643c65"
+      ],
+      "completeText": "Our boat came in second, and we are still cheering. Tomorrow Ollie hides a treasure!",
+      "tasks": [
+        {
+          "word": "MOM ROWS",
+          "syllables": "M-O-M R-O-W-S",
+          "prompt": "The race begins with a whistle. Read who is out in front and what is going on.",
+          "success": "Mom rows hard and takes the lead!",
+          "choices": [
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "mom rows"
+            },
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "dad rows"
+            },
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            }
+          ],
+          "correct": "mom-row"
+        },
+        {
+          "word": "DAD ROWS",
+          "syllables": "D-A-D R-O-W-S",
+          "prompt": "On the shore, everyone is cheering for somebody. Read who it is and what they are doing.",
+          "success": "Dad rows past the flag - go, Dad, go!",
+          "choices": [
+            {
+              "id": "dad-row",
+              "emoji": "🚣‍♂️",
+              "label": "dad rows"
+            },
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "mom rows"
+            },
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            }
+          ],
+          "correct": "dad-row"
+        },
+        {
+          "word": "SIX BOATS",
+          "syllables": "S-I-X BOATS",
+          "prompt": "Ollie counts everyone at the start line. Read what lines up.",
+          "success": "Six boats in a row, ready to race!",
+          "choices": [
+            {
+              "id": "six-boat",
+              "emoji": "🛶",
+              "count": 6,
+              "label": "six boats"
+            },
+            {
+              "id": "ten-boat",
+              "emoji": "🛶",
+              "count": 10,
+              "label": "ten boats"
+            },
+            {
+              "id": "six-duck",
+              "emoji": "🦆",
+              "count": 6,
+              "label": "six ducks"
+            }
+          ],
+          "correct": "six-boat"
+        },
+        {
+          "word": "RED FLAG",
+          "syllables": "R-E-D F-L-A-G",
+          "prompt": "At the finish line, Ollie holds something up. Read what it is.",
+          "success": "A red flag means the race is over!",
+          "choices": [
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            },
+            {
+              "id": "black-flag",
+              "emoji": "🏴",
+              "label": "black flag"
+            },
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            }
+          ],
+          "correct": "red-flag"
+        },
+        {
+          "word": "BIG BOAT",
+          "syllables": "B-I-G B-O-A-T",
+          "prompt": "Out on the water, something is far ahead of the rest. What is it? Read.",
+          "success": "A big boat with four paddlers wins the race!",
+          "choices": [
+            {
+              "id": "big-boat",
+              "emoji": "🛶",
+              "size": "big",
+              "label": "big boat"
+            },
+            {
+              "id": "small-boat",
+              "emoji": "🛶",
+              "size": "small",
+              "label": "small boat"
+            },
+            {
+              "id": "big-duck",
+              "emoji": "🦆",
+              "size": "big",
+              "label": "big duck"
+            }
+          ],
+          "correct": "big-boat"
+        },
+        {
+          "word": "SMALL DOG",
+          "syllables": "SMALL D-O-G",
+          "prompt": "Somebody sits at the front of our boat like a captain. Read who it is.",
+          "success": "A small dog - Pip is our captain!",
+          "choices": [
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            },
+            {
+              "id": "small-pig",
+              "emoji": "🐷",
+              "size": "small",
+              "label": "small pig"
+            }
+          ],
+          "correct": "small-dog"
+        },
+        {
+          "word": "TWO SWANS",
+          "syllables": "T-W-O SWANS",
+          "prompt": "Near the finish, somebody glides out of the reeds to watch. Read who they are.",
+          "success": "Two swans watch the race like judges.",
+          "choices": [
+            {
+              "id": "two-swan",
+              "emoji": "🦢",
+              "count": 2,
+              "label": "two swans"
+            },
+            {
+              "id": "five-swan",
+              "emoji": "🦢",
+              "count": 5,
+              "label": "five swans"
+            },
+            {
+              "id": "two-goose",
+              "emoji": "🪿",
+              "count": 2,
+              "label": "two geese"
+            }
+          ],
+          "correct": "two-swan"
+        },
+        {
+          "word": "BLUE BOOK",
+          "syllables": "B-L-U-E B-O-O-K",
+          "prompt": "The winners write their names down. Read where they write them.",
+          "success": "A blue book of winners - our names are in it now!",
+          "choices": [
+            {
+              "id": "blue-book",
+              "emoji": "📘",
+              "label": "blue book"
+            },
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "blue-square",
+              "emoji": "🟦",
+              "label": "blue square"
+            }
+          ],
+          "correct": "blue-book"
+        },
+        {
+          "word": "CAT SINGS",
+          "syllables": "C-A-T SINGS",
+          "prompt": "On the dock, somebody is watching the boats. Read who it is and what is happening.",
+          "success": "The shop cat sings for the winners!",
+          "choices": [
+            {
+              "id": "cat-sing",
+              "emoji": "🐱",
+              "badge": "🎵",
+              "label": "cat sings"
+            },
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "cat-cry",
+              "emoji": "😿",
+              "label": "cat cries"
+            }
+          ],
+          "correct": "cat-sing"
+        },
+        {
+          "word": "FIVE FISH",
+          "syllables": "F-I-V-E F-I-S-H",
+          "prompt": "After the race, we peek into the water by the dock. Read who is there.",
+          "success": "Five fish swim under our boat.",
+          "choices": [
+            {
+              "id": "five-fish",
+              "emoji": "🐟",
+              "count": 5,
+              "label": "five fish"
+            },
+            {
+              "id": "two-fish",
+              "emoji": "🐟",
+              "count": 2,
+              "label": "two fish"
+            },
+            {
+              "id": "five-frog",
+              "emoji": "🐸",
+              "count": 5,
+              "label": "five frogs"
+            }
+          ],
+          "correct": "five-fish"
+        }
+      ]
+    },
+    {
+      "id": "en-a-15",
+      "title": "The Treasure Hunt",
+      "emoji": "🗺️",
+      "character": "🦦",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "We found the treasure chest at last, with a gift for everyone. Tomorrow is the bake sale!",
+      "tasks": [
+        {
+          "word": "RED DOT",
+          "syllables": "R-E-D D-O-T",
+          "prompt": "Ollie gives us a map. Read the mark on the first tree.",
+          "success": "A red dot - the hunt starts here!",
+          "choices": [
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            },
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            }
+          ],
+          "correct": "red-circle"
+        },
+        {
+          "word": "ONE SHELL",
+          "syllables": "O-N-E SHELL",
+          "prompt": "Under the first tree, Ollie digs a little hole. Read what we find.",
+          "success": "One shell with a note inside: go to the lake!",
+          "choices": [
+            {
+              "id": "one-shell",
+              "emoji": "🐚",
+              "count": 1,
+              "label": "one shell"
+            },
+            {
+              "id": "three-shell",
+              "emoji": "🐚",
+              "count": 3,
+              "label": "three shells"
+            },
+            {
+              "id": "one-egg",
+              "emoji": "🥚",
+              "count": 1,
+              "label": "one egg"
+            }
+          ],
+          "correct": "one-shell"
+        },
+        {
+          "word": "BIG SHELL",
+          "syllables": "B-I-G SHELL",
+          "prompt": "By the lake, something is lying on the sand. Read what it is.",
+          "success": "A big shell - hold it to your ear and hear the sea!",
+          "choices": [
+            {
+              "id": "big-shell",
+              "emoji": "🐚",
+              "size": "big",
+              "label": "big shell"
+            },
+            {
+              "id": "small-shell",
+              "emoji": "🐚",
+              "size": "small",
+              "label": "small shell"
+            },
+            {
+              "id": "big-crab",
+              "emoji": "🦀",
+              "size": "big",
+              "label": "big crab"
+            }
+          ],
+          "correct": "big-shell"
+        },
+        {
+          "word": "MOM RUNS",
+          "syllables": "M-O-M R-U-N-S",
+          "prompt": "Somebody spots the next clue first. Read who it is and how they get there.",
+          "success": "Mom runs to the old boathouse to get it!",
+          "choices": [
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "mom runs"
+            },
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "dad runs"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "mom rides"
+            }
+          ],
+          "correct": "mom-run"
+        },
+        {
+          "word": "TWO STARS",
+          "syllables": "T-W-O STARS",
+          "prompt": "Inside the boathouse, there is a shiny drawing on the wall. Read what it shows.",
+          "success": "Two stars point to the forest path.",
+          "choices": [
+            {
+              "id": "two-star",
+              "emoji": "⭐",
+              "count": 2,
+              "label": "two stars"
+            },
+            {
+              "id": "four-star",
+              "emoji": "⭐",
+              "count": 4,
+              "label": "four stars"
+            },
+            {
+              "id": "two-gift",
+              "emoji": "🎁",
+              "count": 2,
+              "label": "two gifts"
+            }
+          ],
+          "correct": "two-star"
+        },
+        {
+          "word": "BLACK DOT",
+          "syllables": "BLACK D-O-T",
+          "prompt": "On the path, Ollie finds a painted stone. Read what is on it.",
+          "success": "A black dot - the pirate's mark!",
+          "choices": [
+            {
+              "id": "black-circle",
+              "emoji": "⚫",
+              "label": "black dot"
+            },
+            {
+              "id": "white-circle",
+              "emoji": "⚪",
+              "label": "white dot"
+            },
+            {
+              "id": "black-cat",
+              "emoji": "🐈‍⬛",
+              "label": "black cat"
+            }
+          ],
+          "correct": "black-circle"
+        },
+        {
+          "word": "COW SINGS",
+          "syllables": "C-O-W SINGS",
+          "prompt": "At Rosa's barn, somebody is keeping the next clue. Read who it is and what is going on.",
+          "success": "The cow sings, and the clue falls out of the hay!",
+          "choices": [
+            {
+              "id": "cow-sing",
+              "emoji": "🐮",
+              "badge": "🎵",
+              "label": "cow sings"
+            },
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "cow-sleep",
+              "emoji": "🐮",
+              "badge": "💤",
+              "label": "cow sleeps"
+            }
+          ],
+          "correct": "cow-sing"
+        },
+        {
+          "word": "BIG GIFT",
+          "syllables": "B-I-G G-I-F-T",
+          "prompt": "Behind the barn, something is waiting for us. Read what is there.",
+          "success": "A big gift - but it is only the next clue!",
+          "choices": [
+            {
+              "id": "big-gift",
+              "emoji": "🎁",
+              "size": "big",
+              "label": "big gift"
+            },
+            {
+              "id": "small-gift",
+              "emoji": "🎁",
+              "size": "small",
+              "label": "small gift"
+            },
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "big cake"
+            }
+          ],
+          "correct": "big-gift"
+        },
+        {
+          "word": "SIX GIFTS",
+          "syllables": "S-I-X GIFTS",
+          "prompt": "At last, the treasure chest! Ollie opens the lid. Read what is inside.",
+          "success": "Six gifts - one for every kid in our tent row!",
+          "choices": [
+            {
+              "id": "six-gift",
+              "emoji": "🎁",
+              "count": 6,
+              "label": "six gifts"
+            },
+            {
+              "id": "two-gift",
+              "emoji": "🎁",
+              "count": 2,
+              "label": "two gifts"
+            },
+            {
+              "id": "six-cake",
+              "emoji": "🎂",
+              "count": 6,
+              "label": "six cakes"
+            }
+          ],
+          "correct": "six-gift"
+        },
+        {
+          "word": "SMALL OWL",
+          "syllables": "SMALL O-W-L",
+          "prompt": "Somebody watched us from the treasure tree the whole time. Read who it was.",
+          "success": "A small owl - it knew where the treasure was!",
+          "choices": [
+            {
+              "id": "small-owl",
+              "emoji": "🦉",
+              "size": "small",
+              "label": "small owl"
+            },
+            {
+              "id": "big-owl",
+              "emoji": "🦉",
+              "size": "big",
+              "label": "big owl"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "small cat"
+            }
+          ],
+          "correct": "small-owl"
+        }
+      ]
+    },
+    {
+      "id": "en-a-16",
+      "title": "The Bake Sale",
+      "emoji": "🧁",
+      "character": "🧑‍🍳",
+      "colors": [
+        "#57468f",
+        "#2a6b62"
+      ],
+      "completeText": "Every cake is sold, and the money goes to the camp library. Tomorrow is the talent show!",
+      "tasks": [
+        {
+          "word": "MOM COOKS",
+          "syllables": "M-O-M COOKS",
+          "prompt": "Early in the morning, the kitchen lights are already on. Read who is in there and what they are doing.",
+          "success": "Mom cooks a big pot of jam for the sale.",
+          "choices": [
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            },
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            },
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "mom sings"
+            }
+          ],
+          "correct": "mom-cook"
+        },
+        {
+          "word": "TEN CAKES",
+          "syllables": "T-E-N CAKES",
+          "prompt": "Chef Basil carries out a long tray. Read what is on it.",
+          "success": "Ten cakes with candles - the bake sale can begin!",
+          "choices": [
+            {
+              "id": "ten-cake",
+              "emoji": "🎂",
+              "count": 10,
+              "label": "ten cakes"
+            },
+            {
+              "id": "six-cake",
+              "emoji": "🎂",
+              "count": 6,
+              "label": "six cakes"
+            },
+            {
+              "id": "ten-pear",
+              "emoji": "🍐",
+              "count": 10,
+              "label": "ten pears"
+            }
+          ],
+          "correct": "ten-cake"
+        },
+        {
+          "word": "BIG CAKE",
+          "syllables": "B-I-G C-A-K-E",
+          "prompt": "The prize for the raffle sits on the front table. Read what it is.",
+          "success": "A big cake - and we win it!",
+          "choices": [
+            {
+              "id": "big-cake",
+              "emoji": "🎂",
+              "size": "big",
+              "label": "big cake"
+            },
+            {
+              "id": "small-cake",
+              "emoji": "🎂",
+              "size": "small",
+              "label": "small cake"
+            },
+            {
+              "id": "big-gift",
+              "emoji": "🎁",
+              "size": "big",
+              "label": "big gift"
+            }
+          ],
+          "correct": "big-cake"
+        },
+        {
+          "word": "RED APPLE",
+          "syllables": "R-E-D AP-PLE",
+          "prompt": "Farmer Rosa brings a crate to sell. Read what is on top.",
+          "success": "A red apple for every pie.",
+          "choices": [
+            {
+              "id": "red-apple",
+              "emoji": "🍎",
+              "label": "red apple"
+            },
+            {
+              "id": "green-apple",
+              "emoji": "🍏",
+              "label": "green apple"
+            },
+            {
+              "id": "red-strawberry",
+              "emoji": "🍓",
+              "label": "red strawberry"
+            }
+          ],
+          "correct": "red-apple"
+        },
+        {
+          "word": "DAD SINGS",
+          "syllables": "D-A-D SINGS",
+          "prompt": "Somebody sits behind the money box. Read who it is and what is going on.",
+          "success": "Dad sings 'Cakes for sale!' to everyone who walks by.",
+          "choices": [
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            },
+            {
+              "id": "girl-sing",
+              "emoji": "👧",
+              "badge": "🎵",
+              "label": "girl sings"
+            },
+            {
+              "id": "dad-sleep",
+              "emoji": "👨",
+              "badge": "💤",
+              "label": "dad sleeps"
+            }
+          ],
+          "correct": "dad-sing"
+        },
+        {
+          "word": "BIG LEMON",
+          "syllables": "B-I-G LEM-ON",
+          "prompt": "Chef Basil needs one more thing for the pie. Read what he picks.",
+          "success": "A big lemon for a sour, sunny pie!",
+          "choices": [
+            {
+              "id": "big-lemon",
+              "emoji": "🍋",
+              "size": "big",
+              "label": "big lemon"
+            },
+            {
+              "id": "small-lemon",
+              "emoji": "🍋",
+              "size": "small",
+              "label": "small lemon"
+            },
+            {
+              "id": "big-egg",
+              "emoji": "🥚",
+              "size": "big",
+              "label": "big egg"
+            }
+          ],
+          "correct": "big-lemon"
+        },
+        {
+          "word": "SIX DOGS",
+          "syllables": "S-I-X D-O-G-S",
+          "prompt": "Outside, some pets are hoping for treats. Read who is waiting.",
+          "success": "Six dogs sit and wait for a cookie each.",
+          "choices": [
+            {
+              "id": "six-dog",
+              "emoji": "🐶",
+              "count": 6,
+              "label": "six dogs"
+            },
+            {
+              "id": "two-dog",
+              "emoji": "🐶",
+              "count": 2,
+              "label": "two dogs"
+            },
+            {
+              "id": "six-cat",
+              "emoji": "🐱",
+              "count": 6,
+              "label": "six cats"
+            }
+          ],
+          "correct": "six-dog"
+        },
+        {
+          "word": "BLUE CAR",
+          "syllables": "B-L-U-E C-A-R",
+          "prompt": "Ollie points at something new by the gate. Read what he sees.",
+          "success": "A blue car - more customers are here!",
+          "choices": [
+            {
+              "id": "blue-car",
+              "emoji": "🚙",
+              "label": "blue car"
+            },
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "yellow car"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "blue diamond"
+            }
+          ],
+          "correct": "blue-car"
+        },
+        {
+          "word": "OWL SINGS",
+          "syllables": "O-W-L SINGS",
+          "prompt": "Up on the roof of the bake sale tent, somebody is sitting. Read who it is and what is happening.",
+          "success": "An owl sings hoo-hoo, and everyone looks up!",
+          "choices": [
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "owl-sleep",
+              "emoji": "🦉",
+              "badge": "💤",
+              "label": "owl sleeps"
+            }
+          ],
+          "correct": "owl-sing"
+        },
+        {
+          "word": "FIVE EGGS",
+          "syllables": "F-I-V-E E-G-G-S",
+          "prompt": "Rosa sells something from her farm in a little box. Read what is in it.",
+          "success": "Five eggs, the last box of the day!",
+          "choices": [
+            {
+              "id": "five-egg",
+              "emoji": "🥚",
+              "count": 5,
+              "label": "five eggs"
+            },
+            {
+              "id": "two-egg",
+              "emoji": "🥚",
+              "count": 2,
+              "label": "two eggs"
+            },
+            {
+              "id": "five-pear",
+              "emoji": "🍐",
+              "count": 5,
+              "label": "five pears"
+            }
+          ],
+          "correct": "five-egg"
+        }
+      ]
+    },
+    {
+      "id": "en-a-17",
+      "title": "The Talent Show",
+      "emoji": "🎤",
+      "character": "🦜",
+      "colors": [
+        "#4f3b8f",
+        "#225b57"
+      ],
+      "completeText": "Everybody took a bow, even the shy ones. Tomorrow night is the campfire!",
+      "tasks": [
+        {
+          "word": "MOM PLAYS",
+          "syllables": "M-O-M PLAYS",
+          "prompt": "The show begins, and somebody steps into the spotlight. Read who it is and what they are doing.",
+          "success": "Mom plays ball like a star!",
+          "choices": [
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "mom plays"
+            },
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            },
+            {
+              "id": "mom-dance",
+              "emoji": "💃",
+              "label": "mom dances"
+            }
+          ],
+          "correct": "mom-play"
+        },
+        {
+          "word": "BOY SINGS",
+          "syllables": "B-O-Y SINGS",
+          "prompt": "Next, somebody shy comes out from behind the curtain. Read who it is and what happens.",
+          "success": "A boy sings, and his voice gets braver and braver!",
+          "choices": [
+            {
+              "id": "boy-sing",
+              "emoji": "👦",
+              "badge": "🎵",
+              "label": "boy sings"
+            },
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            },
+            {
+              "id": "boy-sleep",
+              "emoji": "👦",
+              "badge": "💤",
+              "label": "boy sleeps"
+            }
+          ],
+          "correct": "boy-sing"
+        },
+        {
+          "word": "TEN OWLS",
+          "syllables": "T-E-N O-W-L-S",
+          "prompt": "Miss Lark brings out her puppets. Read who she shows us.",
+          "success": "Ten owls on ten sticks - a puppet choir!",
+          "choices": [
+            {
+              "id": "ten-owl",
+              "emoji": "🦉",
+              "count": 10,
+              "label": "ten owls"
+            },
+            {
+              "id": "six-owl",
+              "emoji": "🦉",
+              "count": 6,
+              "label": "six owls"
+            },
+            {
+              "id": "ten-fox",
+              "emoji": "🦊",
+              "count": 10,
+              "label": "ten foxes"
+            }
+          ],
+          "correct": "ten-owl"
+        },
+        {
+          "word": "SMALL PIG",
+          "syllables": "SMALL P-I-G",
+          "prompt": "Farmer Rosa's act has a little helper. Read who it is.",
+          "success": "A small pig does a twirl!",
+          "choices": [
+            {
+              "id": "small-pig",
+              "emoji": "🐷",
+              "size": "small",
+              "label": "small pig"
+            },
+            {
+              "id": "big-pig",
+              "emoji": "🐷",
+              "size": "big",
+              "label": "big pig"
+            },
+            {
+              "id": "small-hen",
+              "emoji": "🐔",
+              "size": "small",
+              "label": "small hen"
+            }
+          ],
+          "correct": "small-pig"
+        },
+        {
+          "word": "DAD PLAYS",
+          "syllables": "D-A-D PLAYS",
+          "prompt": "After the break, somebody takes the stage. Read who is up there and what they are doing.",
+          "success": "Dad plays and bounces the ball under his leg!",
+          "choices": [
+            {
+              "id": "dad-play",
+              "emoji": "⛹️‍♂️",
+              "label": "dad plays"
+            },
+            {
+              "id": "mom-play",
+              "emoji": "⛹️‍♀️",
+              "label": "mom plays"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            }
+          ],
+          "correct": "dad-play"
+        },
+        {
+          "word": "BIG LION",
+          "syllables": "B-I-G LI-ON",
+          "prompt": "Somebody in a furry costume jumps out and roars. Read who it is meant to be.",
+          "success": "A big lion - and it is Ollie under there!",
+          "choices": [
+            {
+              "id": "big-lion",
+              "emoji": "🦁",
+              "size": "big",
+              "label": "big lion"
+            },
+            {
+              "id": "small-lion",
+              "emoji": "🦁",
+              "size": "small",
+              "label": "small lion"
+            },
+            {
+              "id": "big-tiger",
+              "emoji": "🐯",
+              "size": "big",
+              "label": "big tiger"
+            }
+          ],
+          "correct": "big-lion"
+        },
+        {
+          "word": "GREEN DOT",
+          "syllables": "GREEN D-O-T",
+          "prompt": "The magician taps her wand, and something appears on the screen. Read what appears.",
+          "success": "A green dot - and then poof, it is gone!",
+          "choices": [
+            {
+              "id": "green-circle",
+              "emoji": "🟢",
+              "label": "green dot"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "green-heart",
+              "emoji": "💚",
+              "label": "green heart"
+            }
+          ],
+          "correct": "green-circle"
+        },
+        {
+          "word": "SIX MICE",
+          "syllables": "S-I-X M-I-C-E",
+          "prompt": "The magician lifts her hat. Read who is under it.",
+          "success": "Six mice wave at the crowd!",
+          "choices": [
+            {
+              "id": "six-mouse",
+              "emoji": "🐭",
+              "count": 6,
+              "label": "six mice"
+            },
+            {
+              "id": "ten-mouse",
+              "emoji": "🐭",
+              "count": 10,
+              "label": "ten mice"
+            },
+            {
+              "id": "six-cat",
+              "emoji": "🐱",
+              "count": 6,
+              "label": "six cats"
+            }
+          ],
+          "correct": "six-mouse"
+        },
+        {
+          "word": "PIG SINGS",
+          "syllables": "P-I-G SINGS",
+          "prompt": "Rosa's pet is back for one more act. Read what is going on now.",
+          "success": "Rosa's pig sings again, even louder!",
+          "choices": [
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "pig-sleep",
+              "emoji": "🐷",
+              "badge": "💤",
+              "label": "pig sleeps"
+            }
+          ],
+          "correct": "pig-sing"
+        },
+        {
+          "word": "BIG STAR",
+          "syllables": "B-I-G S-T-A-R",
+          "prompt": "At the end, Miss Lark gives a prize to every act. Read what she hands out.",
+          "success": "A big star for every act - we all shine!",
+          "choices": [
+            {
+              "id": "big-star",
+              "emoji": "⭐",
+              "size": "big",
+              "label": "big star"
+            },
+            {
+              "id": "small-star",
+              "emoji": "⭐",
+              "size": "small",
+              "label": "small star"
+            },
+            {
+              "id": "big-gift",
+              "emoji": "🎁",
+              "size": "big",
+              "label": "big gift"
+            }
+          ],
+          "correct": "big-star"
+        }
+      ]
+    },
+    {
+      "id": "en-a-18",
+      "title": "The Campfire",
+      "emoji": "🔥",
+      "character": "🦉",
+      "colors": [
+        "#8a5a3b",
+        "#643c65"
+      ],
+      "completeText": "The fire is low and the marshmallows are gone. Tomorrow is our last day at camp.",
+      "tasks": [
+        {
+          "word": "DOG SINGS",
+          "syllables": "D-O-G SINGS",
+          "prompt": "Everyone sits around the fire. Read who sits closest to it and what is going on.",
+          "success": "Pip sings a howly campfire song - aroooo!",
+          "choices": [
+            {
+              "id": "dog-sing",
+              "emoji": "🐶",
+              "badge": "🎵",
+              "label": "dog sings"
+            },
+            {
+              "id": "owl-sing",
+              "emoji": "🦉",
+              "badge": "🎵",
+              "label": "owl sings"
+            },
+            {
+              "id": "dog-sleep",
+              "emoji": "🐶",
+              "badge": "💤",
+              "label": "dog sleeps"
+            }
+          ],
+          "correct": "dog-sing"
+        },
+        {
+          "word": "TEN STARS",
+          "syllables": "T-E-N STARS",
+          "prompt": "We lie on our backs and look up. Read what we see.",
+          "success": "Ten stars, and then more and more!",
+          "choices": [
+            {
+              "id": "ten-star",
+              "emoji": "⭐",
+              "count": 10,
+              "label": "ten stars"
+            },
+            {
+              "id": "four-star",
+              "emoji": "⭐",
+              "count": 4,
+              "label": "four stars"
+            },
+            {
+              "id": "ten-owl",
+              "emoji": "🦉",
+              "count": 10,
+              "label": "ten owls"
+            }
+          ],
+          "correct": "ten-star"
+        },
+        {
+          "word": "FOX SINGS",
+          "syllables": "F-O-X SINGS",
+          "prompt": "At the edge of the forest, somebody sits and looks at the fire. Read who it is and what is happening.",
+          "success": "A fox sings to the fire, very quietly.",
+          "choices": [
+            {
+              "id": "fox-sing",
+              "emoji": "🦊",
+              "badge": "🎵",
+              "label": "fox sings"
+            },
+            {
+              "id": "pig-sing",
+              "emoji": "🐷",
+              "badge": "🎵",
+              "label": "pig sings"
+            },
+            {
+              "id": "fox-sleep",
+              "emoji": "🦊",
+              "badge": "💤",
+              "label": "fox sleeps"
+            }
+          ],
+          "correct": "fox-sing"
+        },
+        {
+          "word": "SMALL FOX",
+          "syllables": "SMALL F-O-X",
+          "prompt": "Something peeks out from behind a tree near the fire. Read who it is.",
+          "success": "A small fox - it wants a marshmallow too!",
+          "choices": [
+            {
+              "id": "small-fox",
+              "emoji": "🦊",
+              "size": "small",
+              "label": "small fox"
+            },
+            {
+              "id": "big-fox",
+              "emoji": "🦊",
+              "size": "big",
+              "label": "big fox"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            }
+          ],
+          "correct": "small-fox"
+        },
+        {
+          "word": "DAD COOKS",
+          "syllables": "D-A-D COOKS",
+          "prompt": "Somebody is in charge of the snacks tonight. Read who it is and what they are doing.",
+          "success": "Dad cooks marshmallows until they are golden.",
+          "choices": [
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            },
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            }
+          ],
+          "correct": "dad-cook"
+        },
+        {
+          "word": "MOM SINGS",
+          "syllables": "M-O-M SINGS",
+          "prompt": "Somebody wraps up in a blanket by the fire. Read what is going on, and who it is.",
+          "success": "Mom sings a slow, sleepy song.",
+          "choices": [
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "mom sings"
+            },
+            {
+              "id": "dad-sing",
+              "emoji": "👨",
+              "badge": "🎵",
+              "label": "dad sings"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            }
+          ],
+          "correct": "mom-sing"
+        },
+        {
+          "word": "TWO OWLS",
+          "syllables": "T-W-O O-W-L-S",
+          "prompt": "Up in the dark trees, there are eyes shining. Read whose they are.",
+          "success": "Two owls watch our campfire from above.",
+          "choices": [
+            {
+              "id": "two-owl",
+              "emoji": "🦉",
+              "count": 2,
+              "label": "two owls"
+            },
+            {
+              "id": "six-owl",
+              "emoji": "🦉",
+              "count": 6,
+              "label": "six owls"
+            },
+            {
+              "id": "two-cat",
+              "emoji": "🐱",
+              "count": 2,
+              "label": "two cats"
+            }
+          ],
+          "correct": "two-owl"
+        },
+        {
+          "word": "RED LEAF",
+          "syllables": "R-E-D L-E-A-F",
+          "prompt": "A gust of wind blows something into the firelight. Read what it is.",
+          "success": "A red leaf floats in the warm air.",
+          "choices": [
+            {
+              "id": "red-leaf",
+              "emoji": "🍁",
+              "label": "red leaf"
+            },
+            {
+              "id": "green-leaf",
+              "emoji": "🍃",
+              "label": "green leaf"
+            },
+            {
+              "id": "red-balloon",
+              "emoji": "🎈",
+              "label": "red balloon"
+            }
+          ],
+          "correct": "red-leaf"
+        },
+        {
+          "word": "BIG MOUSE",
+          "syllables": "B-I-G MOUSE",
+          "prompt": "Something comes for the crumbs we dropped. Read what comes.",
+          "success": "A big mouse with a fat belly - it ate too many crumbs!",
+          "choices": [
+            {
+              "id": "big-mouse",
+              "emoji": "🐭",
+              "size": "big",
+              "label": "big mouse"
+            },
+            {
+              "id": "small-mouse",
+              "emoji": "🐭",
+              "size": "small",
+              "label": "small mouse"
+            },
+            {
+              "id": "big-cat",
+              "emoji": "🐱",
+              "size": "big",
+              "label": "big cat"
+            }
+          ],
+          "correct": "big-mouse"
+        },
+        {
+          "word": "ONE STAR",
+          "syllables": "O-N-E S-T-A-R",
+          "prompt": "When the fire goes out, Ollie points at the sky again. Read what he shows us.",
+          "success": "One star, the brightest of all, to make a wish on.",
+          "choices": [
+            {
+              "id": "one-star",
+              "emoji": "⭐",
+              "count": 1,
+              "label": "one star"
+            },
+            {
+              "id": "three-star",
+              "emoji": "⭐",
+              "count": 3,
+              "label": "three stars"
+            },
+            {
+              "id": "one-owl",
+              "emoji": "🦉",
+              "count": 1,
+              "label": "one owl"
+            }
+          ],
+          "correct": "one-star"
+        }
+      ]
+    },
+    {
+      "id": "en-a-19",
+      "title": "The Last Swim",
+      "emoji": "🌅",
+      "character": "🦦",
+      "colors": [
+        "#38458f",
+        "#5c337c"
+      ],
+      "completeText": "We packed the tent and said goodbye to the lake. Only the goodbye party is left!",
+      "tasks": [
+        {
+          "word": "MOM SWIMS",
+          "syllables": "M-O-M SWIMS",
+          "prompt": "It is our last morning by the lake. Read who is out first and what they are doing.",
+          "success": "Mom swims one last time to the buoy and back.",
+          "choices": [
+            {
+              "id": "mom-swim",
+              "emoji": "🏊‍♀️",
+              "label": "mom swims"
+            },
+            {
+              "id": "dad-swim",
+              "emoji": "🏊‍♂️",
+              "label": "dad swims"
+            },
+            {
+              "id": "mom-row",
+              "emoji": "🚣‍♀️",
+              "label": "mom rows"
+            }
+          ],
+          "correct": "mom-swim"
+        },
+        {
+          "word": "DAD RIDES",
+          "syllables": "D-A-D RIDES",
+          "prompt": "Somebody heads back to the shop to return the things we borrowed. Read who it is and how.",
+          "success": "Dad rides to the shop on the borrowed bike.",
+          "choices": [
+            {
+              "id": "dad-ride",
+              "emoji": "🚴‍♂️",
+              "label": "dad rides"
+            },
+            {
+              "id": "mom-ride",
+              "emoji": "🚴‍♀️",
+              "label": "mom rides"
+            },
+            {
+              "id": "dad-run",
+              "emoji": "🏃‍♂️",
+              "label": "dad runs"
+            }
+          ],
+          "correct": "dad-ride"
+        },
+        {
+          "word": "BIG FISH",
+          "syllables": "B-I-G F-I-S-H",
+          "prompt": "Ollie's rod bends and jerks. Read what he pulls up.",
+          "success": "A big fish - and he lets it go again.",
+          "choices": [
+            {
+              "id": "big-fish",
+              "emoji": "🐟",
+              "size": "big",
+              "label": "big fish"
+            },
+            {
+              "id": "small-fish",
+              "emoji": "🐟",
+              "size": "small",
+              "label": "small fish"
+            },
+            {
+              "id": "big-crab",
+              "emoji": "🦀",
+              "size": "big",
+              "label": "big crab"
+            }
+          ],
+          "correct": "big-fish"
+        },
+        {
+          "word": "TEN DUCKS",
+          "syllables": "T-E-N DUCKS",
+          "prompt": "For the last time, a long line paddles past the dock. Read who they are.",
+          "success": "Ten ducks - they came to say goodbye!",
+          "choices": [
+            {
+              "id": "ten-duck",
+              "emoji": "🦆",
+              "count": 10,
+              "label": "ten ducks"
+            },
+            {
+              "id": "four-duck",
+              "emoji": "🦆",
+              "count": 4,
+              "label": "four ducks"
+            },
+            {
+              "id": "ten-goose",
+              "emoji": "🪿",
+              "count": 10,
+              "label": "ten geese"
+            }
+          ],
+          "correct": "ten-duck"
+        },
+        {
+          "word": "RED CAR",
+          "syllables": "R-E-D C-A-R",
+          "prompt": "Dad calls us from the parking field. Read what he is standing next to.",
+          "success": "The red car is packed again - it is almost time to go home.",
+          "choices": [
+            {
+              "id": "red-car",
+              "emoji": "🚗",
+              "label": "red car"
+            },
+            {
+              "id": "yellow-car",
+              "emoji": "🚕",
+              "label": "yellow car"
+            },
+            {
+              "id": "red-flag",
+              "emoji": "🚩",
+              "label": "red flag"
+            }
+          ],
+          "correct": "red-car"
+        },
+        {
+          "word": "SMALL HEN",
+          "syllables": "SMALL H-E-N",
+          "prompt": "On our way past the farm, somebody hurries to the fence. Read who it is.",
+          "success": "A small hen - cluck, cluck, goodbye!",
+          "choices": [
+            {
+              "id": "small-hen",
+              "emoji": "🐔",
+              "size": "small",
+              "label": "small hen"
+            },
+            {
+              "id": "big-hen",
+              "emoji": "🐔",
+              "size": "big",
+              "label": "big hen"
+            },
+            {
+              "id": "small-cat",
+              "emoji": "🐱",
+              "size": "small",
+              "label": "small cat"
+            }
+          ],
+          "correct": "small-hen"
+        },
+        {
+          "word": "TWO COWS",
+          "syllables": "T-W-O C-O-W-S",
+          "prompt": "Behind her, more friends come to the fence. Read who else comes.",
+          "success": "Two cows moo goodbye.",
+          "choices": [
+            {
+              "id": "two-cow",
+              "emoji": "🐮",
+              "count": 2,
+              "label": "two cows"
+            },
+            {
+              "id": "five-cow",
+              "emoji": "🐮",
+              "count": 5,
+              "label": "five cows"
+            },
+            {
+              "id": "two-horse",
+              "emoji": "🐴",
+              "count": 2,
+              "label": "two horses"
+            }
+          ],
+          "correct": "two-cow"
+        },
+        {
+          "word": "BLUE DOT",
+          "syllables": "B-L-U-E D-O-T",
+          "prompt": "Ollie gives us a goodbye card. Read what is drawn on it.",
+          "success": "A blue dot - it is the lake, seen from the sky!",
+          "choices": [
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "red-circle",
+              "emoji": "🔴",
+              "label": "red dot"
+            },
+            {
+              "id": "blue-diamond",
+              "emoji": "🔷",
+              "label": "blue diamond"
+            }
+          ],
+          "correct": "blue-circle"
+        },
+        {
+          "word": "MOM WALKS",
+          "syllables": "M-O-M WALKS",
+          "prompt": "Somebody takes one last look along the shore. Read who it is and how they go.",
+          "success": "Mom walks along the shore and picks up a shell.",
+          "choices": [
+            {
+              "id": "mom-walk",
+              "emoji": "🚶‍♀️",
+              "label": "mom walks"
+            },
+            {
+              "id": "dad-walk",
+              "emoji": "🚶‍♂️",
+              "label": "dad walks"
+            },
+            {
+              "id": "mom-run",
+              "emoji": "🏃‍♀️",
+              "label": "mom runs"
+            }
+          ],
+          "correct": "mom-walk"
+        },
+        {
+          "word": "BIG BEAR",
+          "syllables": "B-I-G B-E-A-R",
+          "prompt": "At the edge of the forest, something is watching us leave. What is it? Read.",
+          "success": "A big bear, far away. Bye, bear!",
+          "choices": [
+            {
+              "id": "big-bear",
+              "emoji": "🐻",
+              "size": "big",
+              "label": "big bear"
+            },
+            {
+              "id": "small-bear",
+              "emoji": "🐻",
+              "size": "small",
+              "label": "small bear"
+            },
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            }
+          ],
+          "correct": "big-bear"
+        }
+      ]
+    },
+    {
+      "id": "en-a-20",
+      "title": "The Goodbye Party",
+      "emoji": "🎉",
+      "character": "🦦",
+      "colors": [
+        "#2d5f8a",
+        "#3e4a8f"
+      ],
+      "completeText": "Goodbye, Camp Willow! We will be back next summer - Pip, Ollie and the frogs will wait for us.",
+      "tasks": [
+        {
+          "word": "BROWN DOT",
+          "syllables": "BROWN D-O-T",
+          "prompt": "Miss Lark hands out party hats with stickers. Read what is on mine.",
+          "success": "A brown dot - just like on Pip's ribbon!",
+          "choices": [
+            {
+              "id": "brown-circle",
+              "emoji": "🟤",
+              "label": "brown dot"
+            },
+            {
+              "id": "blue-circle",
+              "emoji": "🔵",
+              "label": "blue dot"
+            },
+            {
+              "id": "brown-ball",
+              "emoji": "🏈",
+              "label": "brown ball"
+            }
+          ],
+          "correct": "brown-circle"
+        },
+        {
+          "word": "SIX CAKES",
+          "syllables": "S-I-X CAKES",
+          "prompt": "Chef Basil rolls out a cart for the party. Read what is on it.",
+          "success": "Six cakes - one for each table!",
+          "choices": [
+            {
+              "id": "six-cake",
+              "emoji": "🎂",
+              "count": 6,
+              "label": "six cakes"
+            },
+            {
+              "id": "two-cake",
+              "emoji": "🎂",
+              "count": 2,
+              "label": "two cakes"
+            },
+            {
+              "id": "six-gift",
+              "emoji": "🎁",
+              "count": 6,
+              "label": "six gifts"
+            }
+          ],
+          "correct": "six-cake"
+        },
+        {
+          "word": "DAD COOKS",
+          "syllables": "D-A-D COOKS",
+          "prompt": "Somebody is busy behind the party table. Read who it is and what they are doing.",
+          "success": "Dad cooks his famous pancakes one last time.",
+          "choices": [
+            {
+              "id": "dad-cook",
+              "emoji": "👨‍🍳",
+              "label": "dad cooks"
+            },
+            {
+              "id": "mom-cook",
+              "emoji": "👩‍🍳",
+              "label": "mom cooks"
+            },
+            {
+              "id": "dad-paint",
+              "emoji": "👨‍🎨",
+              "label": "dad paints"
+            }
+          ],
+          "correct": "dad-cook"
+        },
+        {
+          "word": "BIG KITE",
+          "syllables": "B-I-G K-I-T-E",
+          "prompt": "Ollie has a present for us. Read what it is.",
+          "success": "A big kite to take home - with a long tail!",
+          "choices": [
+            {
+              "id": "big-kite",
+              "emoji": "🪁",
+              "size": "big",
+              "label": "big kite"
+            },
+            {
+              "id": "small-kite",
+              "emoji": "🪁",
+              "size": "small",
+              "label": "small kite"
+            },
+            {
+              "id": "big-ball",
+              "emoji": "⚽",
+              "size": "big",
+              "label": "big ball"
+            }
+          ],
+          "correct": "big-kite"
+        },
+        {
+          "word": "FIVE DOGS",
+          "syllables": "F-I-V-E D-O-G-S",
+          "prompt": "Every pet from the pet show comes to the party. Read who comes in.",
+          "success": "Five dogs bark hello - Pip is the loudest!",
+          "choices": [
+            {
+              "id": "five-dog",
+              "emoji": "🐶",
+              "count": 5,
+              "label": "five dogs"
+            },
+            {
+              "id": "two-dog",
+              "emoji": "🐶",
+              "count": 2,
+              "label": "two dogs"
+            },
+            {
+              "id": "five-cat",
+              "emoji": "🐱",
+              "count": 5,
+              "label": "five cats"
+            }
+          ],
+          "correct": "five-dog"
+        },
+        {
+          "word": "MOM SINGS",
+          "syllables": "M-O-M SINGS",
+          "prompt": "Somebody sits in the comfy armchair by the stage. Read who it is and what is going on.",
+          "success": "Mom sings our camp song, and everyone joins in.",
+          "choices": [
+            {
+              "id": "mom-sing",
+              "emoji": "👩",
+              "badge": "🎵",
+              "label": "mom sings"
+            },
+            {
+              "id": "grandma-sing",
+              "emoji": "👵",
+              "badge": "🎵",
+              "label": "grandma sings"
+            },
+            {
+              "id": "mom-sleep",
+              "emoji": "👩",
+              "badge": "💤",
+              "label": "mom sleeps"
+            }
+          ],
+          "correct": "mom-sing"
+        },
+        {
+          "word": "FOUR PIGS",
+          "syllables": "F-O-U-R P-I-G-S",
+          "prompt": "Farmer Rosa arrives at the party gate. Read who is with her.",
+          "success": "Four pigs oink a happy hello!",
+          "choices": [
+            {
+              "id": "four-pig",
+              "emoji": "🐷",
+              "count": 4,
+              "label": "four pigs"
+            },
+            {
+              "id": "nine-pig",
+              "emoji": "🐷",
+              "count": 9,
+              "label": "nine pigs"
+            },
+            {
+              "id": "four-cow",
+              "emoji": "🐮",
+              "count": 4,
+              "label": "four cows"
+            }
+          ],
+          "correct": "four-pig"
+        },
+        {
+          "word": "RED BOOK",
+          "syllables": "R-E-D B-O-O-K",
+          "prompt": "Ollie brings out something for everyone to sign. Read what he brings.",
+          "success": "A red book of camp memories - we write our names in it!",
+          "choices": [
+            {
+              "id": "red-book",
+              "emoji": "📕",
+              "label": "red book"
+            },
+            {
+              "id": "green-book",
+              "emoji": "📗",
+              "label": "green book"
+            },
+            {
+              "id": "red-heart",
+              "emoji": "❤️",
+              "label": "red heart"
+            }
+          ],
+          "correct": "red-book"
+        },
+        {
+          "word": "SMALL ANT",
+          "syllables": "SMALL A-N-T",
+          "prompt": "Something is on our picnic blanket. Read what is there.",
+          "success": "A small ant - it wants some cake crumbs!",
+          "choices": [
+            {
+              "id": "small-ant",
+              "emoji": "🐜",
+              "size": "small",
+              "label": "small ant"
+            },
+            {
+              "id": "big-ant",
+              "emoji": "🐜",
+              "size": "big",
+              "label": "big ant"
+            },
+            {
+              "id": "small-hen",
+              "emoji": "🐔",
+              "size": "small",
+              "label": "small hen"
+            }
+          ],
+          "correct": "small-ant"
+        },
+        {
+          "word": "BIG DOG",
+          "syllables": "B-I-G D-O-G",
+          "prompt": "At the gate, somebody waits to say the very last goodbye. Read who is waiting.",
+          "success": "A big dog - Pip's best friend from the pet show!",
+          "choices": [
+            {
+              "id": "big-dog",
+              "emoji": "🐶",
+              "size": "big",
+              "label": "big dog"
+            },
+            {
+              "id": "small-dog",
+              "emoji": "🐶",
+              "size": "small",
+              "label": "small dog"
+            },
+            {
+              "id": "big-cow",
+              "emoji": "🐮",
+              "size": "big",
+              "label": "big cow"
+            }
+          ],
+          "correct": "big-dog"
+        }
+      ]
+    }
+  ]
+}

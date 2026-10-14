@@ -22,7 +22,7 @@
   "menu": {
     "eyebrow": "Main menu",
     "title": "Pick your words",
-    "lead": "The number tells how many letters are in each word. Every level is open - start where you like.",
+    "lead": "The number tells how many letters are in each word, and the bars stand for the words of a phrase. Every level is open - start where you like.",
     "readerLabel": "Words read",
     "levelNames": {
       "3": "3 letters",
