@@ -4,6 +4,7 @@ import json
 import os
 import signal
 import socket
+import ssl
 import subprocess
 import sys
 import threading
@@ -15,11 +16,15 @@ from pathlib import Path
 BIND_HOST = "0.0.0.0"
 DISPLAY_HOST = "127.0.0.1"
 PORT = 4173
+# HTTPS runs next to HTTP only when a certificate is present, see "HTTPS" in README.md.
+HTTPS_PORT = 4443
 SERVER_PATH = Path(__file__).resolve()
 RUNTIME_PATH = SERVER_PATH.parent / ".server"
 PID_PATH = RUNTIME_PATH / "server.pid"
 LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
+CERT_PATH = SERVER_PATH.parent / "certs" / "cert.pem"
+KEY_PATH = SERVER_PATH.parent / "certs" / "key.pem"
 PROGRESS_PATH = SERVER_PATH.parent / "saves" / "progress.json"
 API_PATH = "/api/progress"
 # A full 200 x 100 Block Town world is about 100 KB of JSON; the cap leaves room for many and only
@@ -143,13 +148,33 @@ def lan_host():
     return name if "." in name else f"{name}.local"
 
 
+def has_certificate():
+    return CERT_PATH.exists() and KEY_PATH.exists()
+
+
 def urls():
-    return f"http://{DISPLAY_HOST}:{PORT}/ and http://{lan_host()}:{PORT}/"
+    text = f"http://{DISPLAY_HOST}:{PORT}/ and http://{lan_host()}:{PORT}/"
+    if has_certificate():
+        text += f" and https://{lan_host()}:{HTTPS_PORT}/"
+    return text
+
+
+def https_server():
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(CERT_PATH, KEY_PATH)
+    server = ThreadingHTTPServer((BIND_HOST, HTTPS_PORT), NoCacheRequestHandler)
+    # The handshake waits for the first read, so it runs in the request thread and a slow client
+    # does not hold up the others.
+    server.socket = context.wrap_socket(server.socket, server_side=True, do_handshake_on_connect=False)
+    return server
 
 
 def serve():
     os.chdir(SERVER_PATH.parent)
     server = ThreadingHTTPServer((BIND_HOST, PORT), NoCacheRequestHandler)
+    secure_server = https_server() if has_certificate() else None
+    if secure_server:
+        threading.Thread(target=secure_server.serve_forever, daemon=True).start()
     print(f"Serving games at {urls()}", flush=True)
 
     try:
@@ -158,6 +183,8 @@ def serve():
         pass
     finally:
         server.server_close()
+        if secure_server:
+            secure_server.server_close()
 
 
 def running_pid():

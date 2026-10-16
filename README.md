@@ -58,6 +58,26 @@ loaded, do not run `start` or the foreground `python3 server.py` either: if one 
 4173 while the agent restarts, the agent retries every ten seconds and appends a traceback to the log
 each time. To recover, stop that server and run `launchctl kickstart -k` as above.
 
+### HTTPS
+
+Over plain HTTP, Chrome marks `<name>.local` as "Not Secure", and an installed app keeps that address
+bar in its window. When `certs/cert.pem` and `certs/key.pem` exist, the server also answers
+`https://<name>.local:4443/` with the same files and the same progress; port 4173 keeps serving
+HTTP. The `certs/` folder is ignored by git. Issue the certificate with
+[mkcert](https://github.com/FiloSottile/mkcert) from the repository root, listing the names and the
+LAN address the other computers use:
+
+```bash
+mkdir -p certs
+mkcert -cert-file certs/cert.pem -key-file certs/key.pem <name>.local <lan-ip> localhost 127.0.0.1
+```
+
+Then restart the server. Each computer that opens the HTTPS address trusts the mkcert root
+certificate once: copy `rootCA.pem` from the folder that `mkcert -CAROOT` prints (never
+`rootCA-key.pem`) and, on a Mac, run
+`sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain rootCA.pem`.
+Sound and language are stored per address, so they are picked again on the HTTPS one.
+
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
 `island-discovery`, `forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and
 `block-town` load translations or other content the same way. That does not work when a file is
