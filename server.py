@@ -23,8 +23,9 @@ RUNTIME_PATH = SERVER_PATH.parent / ".server"
 PID_PATH = RUNTIME_PATH / "server.pid"
 LOG_PATH = RUNTIME_PATH / "server.log"
 STOP_TIMEOUT = 5.0
-CERT_PATH = SERVER_PATH.parent / "certs" / "cert.pem"
-KEY_PATH = SERVER_PATH.parent / "certs" / "key.pem"
+# Outside the repository, because the server hands out every file under it.
+CERT_PATH = Path.home() / "Library" / "Application Support" / "kid-games" / "cert.pem"
+KEY_PATH = CERT_PATH.with_name("key.pem")
 PROGRESS_PATH = SERVER_PATH.parent / "saves" / "progress.json"
 API_PATH = "/api/progress"
 # A full 200 x 100 Block Town world is about 100 KB of JSON; the cap leaves room for many and only

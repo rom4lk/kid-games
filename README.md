@@ -61,15 +61,15 @@ each time. To recover, stop that server and run `launchctl kickstart -k` as abov
 ### HTTPS
 
 Over plain HTTP, Chrome marks `<name>.local` as "Not Secure", and an installed app keeps that address
-bar in its window. When `certs/cert.pem` and `certs/key.pem` exist, the server also answers
-`https://<name>.local:4443/` with the same files and the same progress; port 4173 keeps serving
-HTTP. The `certs/` folder is ignored by git. Issue the certificate with
-[mkcert](https://github.com/FiloSottile/mkcert) from the repository root, listing the names and the
-LAN address the other computers use:
+bar in its window. When `cert.pem` and `key.pem` exist in `~/Library/Application Support/kid-games/`,
+the server also answers `https://<name>.local:4443/` with the same files and the same progress; port
+4173 keeps serving HTTP. The certificate lives outside the repository because the server hands out
+every file under it. Issue it with [mkcert](https://github.com/FiloSottile/mkcert), listing the
+names and the LAN address the other computers use:
 
 ```bash
-mkdir -p certs
-mkcert -cert-file certs/cert.pem -key-file certs/key.pem <name>.local <lan-ip> localhost 127.0.0.1
+cd ~/Library/Application\ Support && mkdir -p kid-games && cd kid-games
+mkcert -cert-file cert.pem -key-file key.pem <name>.local <lan-ip> localhost 127.0.0.1
 ```
 
 Then restart the server. Each computer that opens the HTTPS address trusts the mkcert root
