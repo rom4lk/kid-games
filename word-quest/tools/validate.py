@@ -154,7 +154,7 @@ RU_YO_WORDS = {
     "ЕЩЁ", "ЕЁ", "САМОЛЁТ", "МЁД", "ОРЁЛ", "КЛЁН", "БЕРЁЗА", "ПЧЁЛКА", "ЗВЁЗД", "ЗВЁЗДОЧКА",
     # Forms the stories need. A form whose Е spelling is another word (ВСЁ, ПОЁМ) never goes here.
     "ДАЁТ", "ВСТАЁТ", "ЛЁГ", "ПРИНЁС", "ГРЫЗЁТ", "ИДЁМ", "ЁЖИКА", "ЁЖИКУ", "ЖДЁТ", "КЛЮЁТ", "ПЕЧЁТ",
-    "НЁС", "КЛАДЁТ", "ВЕЗЁТ", "ЁЛКУ", "ШЬЁТ", "ЛЬЁТ", "ДНЁМ",
+    "НЁС", "КЛАДЁТ", "ВЕЗЁТ", "ЁЛКУ", "ШЬЁТ", "ЛЬЁТ", "ДНЁМ", "ДОСТАЁТ", "РВЁТ", "УНЁС", "ПОЙДЁТ",
 }
 RU_YO_AS_E = {word.replace("Ё", "Е"): word for word in RU_YO_WORDS}
 PHRASE_ID = re.compile(r"^[a-z]+(-[a-z]+)*$")
@@ -210,6 +210,7 @@ GLUE_SLUGS = FUNCTION_SLUGS | {
     "live", "fly", "jump", "go", "seek", "knit", "call", "wait", "lick", "sniff", "roll", "hug",
     "pick", "throw", "chase", "feed", "pull", "dig", "buy", "put", "make", "meet", "sew", "fix",
     "plant", "water", "rock", "stroke", "peck", "drag", "lose", "hear", "grow", "knock", "pour",
+    "scare", "wear", "cut", "wipe", "warm", "kick", "praise", "lead", "light", "snuff",
     # places and times with no emoji of their own
     "forest", "park", "garden", "field", "river", "yard", "street", "town",
     "morning", "day", "evening", "night",
@@ -1338,8 +1339,11 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
         if shaped:
             for panel, drawn in zip(scene, drawn_panels):
                 for group, expected in zip(panel, drawn):
-                    if expected["emoji"] is None and isinstance(group.get("emoji"), str):
+                    if expected["emoji"] is None and isinstance(group.get("emoji"), str) and group["emoji"]:
                         expected["emoji"] = group["emoji"]
+        if any(group["emoji"] is None for drawn in drawn_panels for group in drawn):
+            errors.append(f'{where}: choice "{choice_id}" draws a noun with no emoji')
+            continue
         expected_scene = [
             [{field: group[field] for field in ("emoji", "count", "size", "badge") if field in group} for group in drawn]
             for drawn in drawn_panels
