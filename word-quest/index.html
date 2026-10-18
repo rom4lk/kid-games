@@ -97,6 +97,7 @@
 
         <div class="level-grid" id="levelGrid"></div>
         <div class="level-grid phrase-grid" id="phraseGrid" hidden></div>
+        <div class="level-grid phrase-grid story-grid" id="storyGrid" hidden></div>
         <div class="mode-row" id="modeRow"></div>
       </section>
 
@@ -165,7 +166,7 @@
             <span class="tap-hint" id="tapHint"></span>
           </button>
 
-          <div class="reading-actions">
+          <div class="reading-actions" id="readingActions">
             <button class="hint-button" id="hintButton" type="button">
               <span class="syllable-mark" id="syllableMark" aria-hidden="true">ОО<i></i>ОО</span>
               <span class="letter-mark" id="letterMark" aria-hidden="true" hidden>
@@ -209,6 +210,7 @@
           <p class="eyebrow" id="chapterEyebrow"></p>
           <h1 id="chapterTitle" tabindex="-1"></h1>
           <p id="chapterText"></p>
+          <div class="story-page" id="storyPage" hidden></div>
           <div class="chapter-stars" aria-hidden="true">✦ ✦ ✦</div>
           <button class="primary-button" id="chapterButton" type="button"></button>
         </div>

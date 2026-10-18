@@ -671,6 +671,40 @@ h1 {
   background: currentColor;
 }
 
+/* A story mark is one row per sentence: a bar for every word and a dot for the
+   full stop. It keeps the height of the number, so the cards line up. */
+.story-mark {
+  display: flex;
+  height: 1em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.story-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.story-line i {
+  width: 18px;
+  height: 12px;
+  border-radius: 6px;
+  background: currentColor;
+}
+
+/* The dot follows the last word closely, as a full stop does. */
+.story-line b {
+  width: 10px;
+  height: 10px;
+  margin-left: -2px;
+  align-self: flex-end;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .level-name {
   font-size: 1.3rem;
   font-weight: 900;
@@ -1034,6 +1068,22 @@ h1 {
   line-height: 1.35;
 }
 
+/* The story so far: the newest sentence sits at the bottom and always shows in
+   full, older ones fade out at the top as the story grows. */
+.story-bubble.story-recap p {
+  display: flex;
+  max-height: 4.6rem;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: flex-end;
+  mask-image: linear-gradient(to top, #000 3.4rem, transparent 4.6rem);
+}
+
+.recap-line {
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
 .reading-panel {
   padding: 18px clamp(18px, 5vw, 58px) 20px;
   border: 1px solid var(--border);
@@ -1147,6 +1197,29 @@ h1 {
 
 .word-card.phrase-card.show-syllables .word-syllables {
   display: flex !important;
+}
+
+/* A story card holds one sentence per line, and a sentence wraps between its
+   words like a phrase. */
+.story-card .word-main,
+.story-card .word-syllables {
+  --word-size: clamp(2rem, 4.6vw, 3.4rem);
+  flex-direction: column;
+  align-items: center;
+}
+
+.sentence-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.45em;
+}
+
+/* Two sentences and their two-panel answers have to fit one desktop screen
+   together, so a two-sentence card stops at 36px. */
+.story-card:has(.sentence-line + .sentence-line) .word-main,
+.story-card:has(.sentence-line + .sentence-line) .word-syllables {
+  --word-size: clamp(2rem, 4.6vw, 2.25rem);
 }
 
 .tap-hint {
@@ -1431,6 +1504,39 @@ html[lang="ru"] .word-choice .letter {
   transform: none;
 }
 
+/* A story answer is a scene: one panel per sentence, its noun groups side by
+   side in word order. The widest panel of the task, --scene-columns items
+   wide, sets one item size for all three answers. */
+.story-choices .choice-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15em;
+  padding: 6px 0;
+  container-type: inline-size;
+}
+
+.scene-panel {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.3em;
+  font-size: min(0.9em, calc(90cqw / (var(--scene-columns) * 1.15)));
+  line-height: 1;
+}
+
+.scene-panel + .scene-panel {
+  padding-top: 0.15em;
+  border-top: 2px dashed rgba(255, 255, 255, 0.22);
+}
+
+/* The panel, not the group, sizes the items; big, small and the badge keep
+   their own rules. */
+.story-choices .choice-picture {
+  font-size: 1em;
+}
+
 .success-panel {
   display: grid;
   max-width: 780px;
@@ -1530,6 +1636,20 @@ html[lang="ru"] .word-choice .letter {
   color: var(--gold);
   font-size: 1.5rem;
   letter-spacing: 0.25em;
+}
+
+/* The whole story, as it was read, under the closing line of a story chapter. */
+.story-page {
+  max-width: 530px;
+  margin: 0 auto 20px;
+  text-align: left;
+}
+
+.story-page-line {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.35;
 }
 
 .parent-dialog {
@@ -1996,6 +2116,11 @@ html[lang="ru"] .word-choice .letter {
     min-height: 72px;
   }
 
+  /* A scene needs the full width on a phone, so story answers always stack. */
+  .choice-grid.story-choices {
+    grid-template-columns: 1fr;
+  }
+
   .word-card.phrase-card {
     padding-right: 12px;
     padding-left: 12px;
@@ -2054,6 +2179,11 @@ html[lang="ru"] .word-choice .letter {
   .phrase-card .word-main,
   .phrase-card .word-syllables {
     --word-size: clamp(2.1rem, min(6vw, 8vh), 3.8rem);
+  }
+
+  .story-card .word-main,
+  .story-card .word-syllables {
+    --word-size: clamp(2rem, min(4.6vw, 6vh), 3.4rem);
   }
 
   .microphone-button,

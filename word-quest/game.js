@@ -12,7 +12,17 @@ const PHRASE_LEVELS = {
   phraseB: { file: "b", words: 2, bars: [2, 2] },
   phraseC: { file: "c", words: 3, bars: [1, 1, 1] },
 };
-const LEVELS = { en: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"], ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"] };
+// Story levels follow the phrase levels: short sentences, longer sentences, two sentences in a
+// row. Each line of the menu mark is a sentence; its bars are words and the dot is the full stop.
+const STORY_LEVELS = {
+  storyA: { file: "a", sentences: 1, lines: [3] },
+  storyB: { file: "b", sentences: 1, lines: [4] },
+  storyC: { file: "c", sentences: 2, lines: [3, 3] },
+};
+const LEVELS = {
+  en: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"],
+  ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA"],
+};
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
 const WORDS_PER_LEVEL = CHAPTERS_PER_LEVEL * WORDS_PER_CHAPTER;
@@ -149,6 +159,8 @@ function packPath(language, letters) {
   if (spell) return `content/spell.${language}.${spell.letters}.json`;
   const phrase = PHRASE_LEVELS[letters];
   if (phrase) return `content/phrases.${language}.${phrase.file}.json`;
+  const story = STORY_LEVELS[letters];
+  if (story) return `content/stories.${language}.${story.file}.json`;
   return `content/words.${language}.${letters}.json`;
 }
 
@@ -344,6 +356,10 @@ function isPhraseMode() {
   return currentPack?.mode === "phrase";
 }
 
+function isStoryMode() {
+  return currentPack?.mode === "story";
+}
+
 function levelChapterCount(letters) {
   return spellPack(activeLanguage, letters)?.chapters ?? CHAPTERS_PER_LEVEL;
 }
@@ -414,13 +430,20 @@ function renderMenu() {
   elements.levelGrid.innerHTML = "";
   elements.phraseGrid.innerHTML = "";
   elements.phraseGrid.hidden = !activeLevels().some((letters) => PHRASE_LEVELS[letters]);
+  elements.storyGrid.innerHTML = "";
+  elements.storyGrid.hidden = !activeLevels().some((letters) => STORY_LEVELS[letters]);
   renderModeRow();
 
   activeLevels().forEach((letters) => {
     const phrase = PHRASE_LEVELS[letters];
-    const badge = phrase
-      ? `<span class="level-number phrase-mark" aria-hidden="true">${phrase.bars.map((bar) => `<i style="--bar: ${bar}"></i>`).join("")}</span>`
-      : `<span class="level-number" aria-hidden="true">${letters}</span>`;
+    const story = STORY_LEVELS[letters];
+    let badge = `<span class="level-number" aria-hidden="true">${letters}</span>`;
+    if (phrase) {
+      badge = `<span class="level-number phrase-mark" aria-hidden="true">${phrase.bars.map((bar) => `<i style="--bar: ${bar}"></i>`).join("")}</span>`;
+    } else if (story) {
+      const lines = story.lines.map((words) => `<span class="story-line">${"<i></i>".repeat(words)}<b></b></span>`);
+      badge = `<span class="level-number story-mark" aria-hidden="true">${lines.join("")}</span>`;
+    }
     const done = getLevelProgress(letters);
     const progressText = fillTemplate(ui.menu.progress, {
       done,
@@ -444,7 +467,7 @@ function renderMenu() {
       </span>
     `;
     button.addEventListener("click", () => openLevel(letters));
-    (phrase ? elements.phraseGrid : elements.levelGrid).appendChild(button);
+    (phrase ? elements.phraseGrid : story ? elements.storyGrid : elements.levelGrid).appendChild(button);
   });
 }
 
@@ -504,14 +527,9 @@ async function showChapters(letters) {
       ? fillTemplate(ui.spell.chaptersTitle, { letters: ui.menu.levelNames[currentPack.letters] })
       : ui.chapters.titles[letters],
   );
-  setText(
-    "chaptersLead",
-    isSpellMode() ? ui.spell.chaptersLead : isPhraseMode() ? ui.phrase.chaptersLead : ui.chapters.lead,
-  );
-  setText(
-    "finalText",
-    isSpellMode() ? ui.spell.finalText : isPhraseMode() ? ui.phrase.finalText : ui.chapters.finalText,
-  );
+  const modeText = isSpellMode() ? ui.spell : isPhraseMode() ? ui.phrase : isStoryMode() ? ui.story : null;
+  setText("chaptersLead", modeText ? modeText.chaptersLead : ui.chapters.lead);
+  setText("finalText", modeText ? modeText.finalText : ui.chapters.finalText);
   setText(
     "chaptersProgressValue",
     fillTemplate(ui.chapters.progress, {
@@ -618,6 +636,8 @@ function renderTask() {
   const task = chapter.tasks[currentTaskIndex];
   const spell = isSpellMode();
   const phrase = isPhraseMode();
+  const story = isStoryMode();
+  const strings = modeStrings(ui, currentPack.mode);
   currentAttemptCount = 0;
   currentHintUsed = false;
   currentTaskSolved = false;
@@ -626,13 +646,19 @@ function renderTask() {
   elements.adventureScene.style.setProperty("--scene-b", chapter.colors[1]);
   setText("sceneCharacter", chapter.character);
   elements.sceneCharacter.classList.remove("celebrate");
-  setText("storyPrompt", task.prompt);
+  // A story has no adult line per task: the bubble holds the intro, then the story read so far.
+  if (story) {
+    renderStory(chapter, solvedPrefixLength());
+  } else {
+    elements.storyPrompt.parentElement.classList.remove("story-recap");
+    setText("storyPrompt", task.prompt);
+  }
   // In the spell mode the card carries the picture and the answers carry the
   // letters, so the two halves of the reading task swap places.
-  renderCardText(elements.wordMain, spell ? task.emoji : task.word, phrase);
-  renderCardText(elements.wordSyllables, spell ? "" : task.syllables, phrase);
-  // A phrase wraps between its words, so its card is sized by its longest word.
-  if (phrase) {
+  renderCardText(elements.wordMain, spell ? task.emoji : task.word, currentPack.mode);
+  renderCardText(elements.wordSyllables, spell ? "" : task.syllables, currentPack.mode);
+  // A phrase or a story wraps between its words, so its card is sized by its longest word.
+  if (phrase || story) {
     elements.wordCard.style.setProperty("--word-length", longestPart(task.word));
     elements.wordCard.style.setProperty("--split-length", longestPart(task.syllables));
   } else {
@@ -642,8 +668,9 @@ function renderTask() {
   setText("feedbackStatus", "");
   applyModeStrings(currentPack.mode);
   setText("successTitle", ui.play.successTitle);
-  setText("successText", task.success);
-  setText("missionLabel", fillTemplate(ui.play.mission, {
+  setText("successText", task.success ?? "");
+  elements.successText.hidden = story;
+  setText("missionLabel", fillTemplate(strings.mission, {
     current: currentTaskIndex + 1,
     total: chapter.tasks.length,
   }));
@@ -654,7 +681,8 @@ function renderTask() {
   const splitAtOnce = splitsAtOnce(task, activeLanguage);
   const canShowParts = spell || (hasSyllableSplit(task) && !splitAtOnce);
   elements.wordCard.classList.toggle("picture-card", spell);
-  elements.wordCard.classList.toggle("phrase-card", phrase);
+  elements.wordCard.classList.toggle("phrase-card", phrase || story);
+  elements.wordCard.classList.toggle("story-card", story);
   elements.wordCard.classList.toggle("show-syllables", splitAtOnce);
   elements.wordCard.disabled = !canShowParts;
   elements.hintButton.hidden = !canShowParts;
@@ -662,6 +690,9 @@ function renderTask() {
   elements.wordSyllables.hidden = !splitAtOnce;
   elements.successPanel.hidden = true;
   elements.skipButton.disabled = nextUnsolvedTaskIndex(currentTaskIndex) === -1;
+  // A story is read in order, so nothing can be set aside; an empty actions row takes no space.
+  elements.skipButton.hidden = story;
+  elements.readingActions.hidden = story && elements.hintButton.hidden;
   elements.choiceGrid.hidden = false;
   elements.choiceGrid.classList.toggle("word-choices", spell);
   elements.choiceGrid.classList.remove("show-diff");
@@ -669,31 +700,45 @@ function renderTask() {
     elements.choiceGrid.classList.remove("phrase-choices", "stacked");
     elements.choiceGrid.style.removeProperty("--per-row");
   }
+  if (!story) {
+    elements.choiceGrid.classList.remove("story-choices");
+    elements.choiceGrid.style.removeProperty("--scene-columns");
+  }
   elements.choiceGrid.innerHTML = "";
 
   renderMissionProgress(chapter);
 
   if (spell) {
     renderWordChoices(task);
+  } else if (story) {
+    renderSceneChoices(task);
   } else {
     renderPictureChoices(task);
   }
 
   const isLastTask = currentTaskIndex === chapter.tasks.length - 1;
-  setText("nextButton", isLastTask ? ui.play.finish : ui.play.next);
+  setText("nextButton", isLastTask ? strings.finish : strings.next);
   renderHeader();
 }
 
 // Every mode answers the same four questions on the screen, with its own words.
-// A phrase only renames what says "word"; the parts hint is the levels' own.
+// A phrase only renames what says "word"; the parts hint is the levels' own. A
+// story renames the steps as well. A key a mode lacks falls back to the levels'.
+function modeStrings(texts, mode) {
+  if (mode === "spell") return { ...texts.play, ...texts.spell };
+  if (mode === "phrase") return { ...texts.play, ...texts.phrase };
+  if (mode === "story") return { ...texts.play, ...texts.phrase, ...texts.story };
+  return texts.play;
+}
+
 function applyModeStrings(mode) {
   const spell = mode === "spell";
-  const strings = spell ? ui.spell : mode === "phrase" ? { ...ui.play, ...ui.phrase } : ui.play;
+  const strings = modeStrings(ui, mode);
   setText("readingInstruction", strings.readInstruction);
   setText("tapHint", strings.tapHint);
   setText("hintLabel", strings.hint);
   setText("choiceInstruction", strings.choiceInstruction);
-  setText("listenLabel", mode === "phrase" ? ui.phrase.listen : ui.play.listen);
+  setText("listenLabel", strings.listen);
   elements.syllableMark.hidden = spell;
   elements.letterMark.hidden = !spell;
 }
@@ -702,20 +747,59 @@ function longestPart(text) {
   return Math.max(...text.split(" ").map((part) => part.length));
 }
 
+function sentencesOf(text) {
+  return text.split(/(?<=[.!]) /);
+}
+
+// The sentences of the first tasks of a chapter, written the way the card showed them.
+function storyLines(chapter, count, language) {
+  return chapter.tasks.slice(0, count).flatMap(
+    (task) => sentencesOf(splitsAtOnce(task, language) ? task.syllables : task.word),
+  );
+}
+
 // A phrase becomes one block per word, so the card wraps between the words and
-// never inside one. The spaces stay in the text for screen readers.
-function renderCardText(element, text, phrase) {
-  if (!phrase) {
+// never inside one; a story also puts each sentence on a line of its own. The
+// spaces stay in the text for screen readers.
+function renderCardText(element, text, mode) {
+  if (mode !== "phrase" && mode !== "story") {
     element.textContent = text;
     return;
   }
   element.replaceChildren();
-  text.split(" ").forEach((part, index) => {
-    if (index > 0) element.append(" ");
-    const word = document.createElement("span");
-    word.className = "phrase-word";
-    word.textContent = part;
-    element.append(word);
+  (mode === "story" ? sentencesOf(text) : [text]).forEach((sentence, lineIndex) => {
+    let line = element;
+    if (mode === "story") {
+      if (lineIndex > 0) element.append(" ");
+      line = document.createElement("span");
+      line.className = "sentence-line";
+      element.append(line);
+    }
+    sentence.split(" ").forEach((part, index) => {
+      if (index > 0) line.append(" ");
+      const word = document.createElement("span");
+      word.className = "phrase-word";
+      word.textContent = part;
+      line.append(word);
+    });
+  });
+}
+
+// With nothing read yet the bubble holds the adult intro; then it holds the
+// sentences read so far, newest at the bottom, so the story grows as it is read.
+function renderStory(chapter, solvedCount) {
+  elements.storyPrompt.parentElement.classList.toggle("story-recap", solvedCount > 0);
+  if (solvedCount === 0) {
+    setText("storyPrompt", chapter.intro);
+    return;
+  }
+  elements.storyPrompt.replaceChildren();
+  storyLines(chapter, solvedCount, activeLanguage).forEach((sentence, index) => {
+    if (index > 0) elements.storyPrompt.append(" ");
+    const line = document.createElement("span");
+    line.className = "recap-line";
+    line.textContent = sentence;
+    elements.storyPrompt.append(line);
   });
 }
 
@@ -778,6 +862,41 @@ function renderPictureChoices(task) {
     } else {
       button.innerHTML = `<span aria-hidden="true">${choice.emoji}</span>`;
     }
+    button.addEventListener("click", () => handleChoice(button, choice));
+    elements.choiceGrid.appendChild(button);
+  });
+}
+
+// A scene is one panel per sentence, each panel its noun groups side by side. The widest panel of
+// the three answers sets one item size for the whole task: an item counts 1, a big item 1.25 and
+// a gap between groups 0.5. The validator's 2-3 emoji per panel keep it at 4.5 or less.
+function sceneLayout(choices) {
+  const widths = choices.flatMap((choice) => choice.scene.map((groups) => groups.reduce(
+    (sum, group) => sum + (group.count ?? 1) * (group.size === "big" ? 1.25 : 1),
+    0.5 * (groups.length - 1),
+  )));
+  return { columns: Math.max(...widths) };
+}
+
+function renderSceneChoices(task) {
+  elements.choiceGrid.classList.add("story-choices");
+  elements.choiceGrid.style.setProperty("--scene-columns", sceneLayout(task.choices).columns);
+
+  shuffle([...task.choices]).forEach((choice, choiceIndex) => {
+    const button = document.createElement("button");
+    button.className = "choice-button";
+    button.type = "button";
+    button.dataset.choice = choice.id;
+    // The sentence becomes the accessible name only after the correct answer.
+    button.setAttribute("aria-label", fillTemplate(ui.play.choiceLabel, {
+      number: choiceIndex + 1,
+    }));
+    choice.scene.forEach((groups) => {
+      const panel = document.createElement("span");
+      panel.className = "scene-panel";
+      groups.forEach((group) => panel.append(renderPhrasePicture(group)));
+      button.append(panel);
+    });
     button.addEventListener("click", () => handleChoice(button, choice));
     elements.choiceGrid.appendChild(button);
   });
@@ -881,6 +1000,8 @@ function handleChoice(button, choice) {
   // In the spell mode the word itself is the answer, so no separate id is stored.
   const correctId = spell ? task.word : task.correct;
 
+  const strings = modeStrings(ui, currentPack.mode);
+
   if (choice.id !== correctId) {
     currentAttemptCount += 1;
     state.stats.wrongChoices += 1;
@@ -891,18 +1012,15 @@ function handleChoice(button, choice) {
     window.setTimeout(() => button.classList.remove("wrong"), 450);
 
     if (currentAttemptCount === 1) {
-      setText(
-        "feedbackStatus",
-        spell ? ui.spell.wrongFirst : isPhraseMode() ? ui.phrase.wrongFirst : ui.play.wrongFirst,
-      );
+      setText("feedbackStatus", strings.wrongFirst);
     } else {
       revealHint();
       // A word with no parts to show is repeated whole instead of being
       // promised a split that would look exactly the same.
       const wholeWord = !spell && !hasSyllableSplit(task);
       setText("feedbackStatus", spell
-        ? ui.spell.wrongAgain
-        : fillTemplate(wholeWord ? ui.play.wrongAgainWhole : ui.play.wrongAgain, {
+        ? strings.wrongAgain
+        : fillTemplate(wholeWord ? strings.wrongAgainWhole : strings.wrongAgain, {
           word: task.word,
           syllables: task.syllables,
         }));
@@ -917,11 +1035,14 @@ function handleChoice(button, choice) {
   button.classList.add("correct");
   // Only now may the caption appear: in the DOM and in the accessible name.
   // A word choice needs none of that - it has been showing its letters all along.
+  // A scene gets no caption: its sentence is on the card right above it.
   if (!spell) {
-    const caption = document.createElement("span");
-    caption.className = "choice-label";
-    caption.textContent = choice.label;
-    button.appendChild(caption);
+    if (!isStoryMode()) {
+      const caption = document.createElement("span");
+      caption.className = "choice-label";
+      caption.textContent = choice.label;
+      button.appendChild(caption);
+    }
     button.setAttribute("aria-label", choice.label);
   }
   elements.choiceGrid.querySelectorAll("button").forEach((choiceButton) => {
@@ -939,7 +1060,12 @@ function handleChoice(button, choice) {
     ),
   );
 
-  setText("storyPrompt", task.success);
+  // The solved sentence joins the story so far: the story growing is the reward.
+  if (isStoryMode()) {
+    renderStory(chapter, solvedPrefixLength());
+  } else {
+    setText("storyPrompt", task.success);
+  }
   setText("feedbackStatus", "");
   elements.sceneCharacter.classList.add("celebrate");
   elements.successPanel.hidden = false;
@@ -975,6 +1101,17 @@ function showChapterComplete() {
   setText("chapterEyebrow", ui.chapter.eyebrow);
   setText("chapterTitle", ui.chapter.title);
   setText("chapterText", chapter.completeText);
+  // A finished story is shown whole under the closing line, split as the card showed it.
+  elements.storyPage.replaceChildren();
+  elements.storyPage.hidden = !isStoryMode();
+  if (isStoryMode()) {
+    storyLines(chapter, chapter.tasks.length, activeLanguage).forEach((sentence) => {
+      const line = document.createElement("span");
+      line.className = "story-page-line";
+      line.textContent = sentence;
+      elements.storyPage.append(line, " ");
+    });
+  }
   setText("chapterButton", isLastChapter ? ui.chapter.final : ui.chapter.next);
   showScreen(elements.chapterScreen);
   playTone("chapter");
@@ -1127,6 +1264,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     LEVELS,
     PHRASE_LEVELS,
+    STORY_LEVELS,
     SPELL_PACKS,
     CHAPTERS_PER_LEVEL,
     WORDS_PER_CHAPTER,
@@ -1136,12 +1274,16 @@ if (typeof module !== "undefined" && module.exports) {
     findNextUnsolved,
     hasSyllableSplit,
     longestPart,
+    modeStrings,
     packPath,
     pictureLayout,
+    sceneLayout,
+    sentencesOf,
     spellPack,
     splitsAtOnce,
     shuffle,
     solvedPrefixLength,
+    storyLines,
   };
 }
 

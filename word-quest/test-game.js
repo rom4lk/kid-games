@@ -4,6 +4,7 @@ const path = require("node:path");
 const {
   LEVELS,
   PHRASE_LEVELS,
+  STORY_LEVELS,
   SPELL_PACKS,
   CHAPTERS_PER_LEVEL,
   WORDS_PER_CHAPTER,
@@ -13,12 +14,16 @@ const {
   findNextUnsolved,
   hasSyllableSplit,
   longestPart,
+  modeStrings,
   packPath,
   pictureLayout,
+  sceneLayout,
+  sentencesOf,
   shuffle,
   spellPack,
   solvedPrefixLength,
   splitsAtOnce,
+  storyLines,
 } = require("./game.js");
 
 const CONTENT = path.join(__dirname, "content");
@@ -96,6 +101,9 @@ function testPackPaths() {
       if (PHRASE_LEVELS[count]) {
         assert.equal(pack.mode, "phrase");
         assert.equal(pack.level, PHRASE_LEVELS[count].file);
+      } else if (STORY_LEVELS[count]) {
+        assert.equal(pack.mode, "story");
+        assert.equal(pack.level, STORY_LEVELS[count].file);
       } else {
         assert.equal(pack.letters, count);
       }
@@ -166,14 +174,79 @@ function testSpellChoicesDifferInOneLetter() {
 }
 
 // The phrase levels follow the letter levels in their fixed order, and both
-// languages list all three.
-function testPhraseLevels() {
+// languages list all three. The story levels follow them, listed one pack at a
+// time, so each language holds the first of them in order.
+function testLevelOrder() {
   const full = [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"];
-  assert.deepEqual(LEVELS.en, full, "en levels");
-  assert.deepEqual(LEVELS.ru, full, "ru levels");
+  const stories = ["storyA", "storyB", "storyC"];
+  Object.entries(LEVELS).forEach(([language, levels]) => {
+    assert.deepEqual(levels.slice(0, full.length), full, `${language} levels`);
+    const listed = levels.slice(full.length);
+    assert.deepEqual(listed, stories.slice(0, listed.length), `${language} story levels`);
+  });
   assert.equal(packPath("ru", "phraseA"), "content/phrases.ru.a.json");
   assert.equal(packPath("en", "phraseC"), "content/phrases.en.c.json");
+  assert.equal(packPath("ru", "storyA"), "content/stories.ru.a.json");
   assert.deepEqual(Object.values(PHRASE_LEVELS).map((level) => level.file), ["a", "b", "c"]);
+  assert.deepEqual(Object.values(STORY_LEVELS).map((level) => level.file), ["a", "b", "c"]);
+}
+
+// A story card puts each sentence on a line, and the story so far is read back
+// the way the card showed it: Russian split, English whole.
+function testSentences() {
+  assert.deepEqual(sentencesOf("КОТ СПИТ. ПЁС ПОЁТ."), ["КОТ СПИТ.", "ПЁС ПОЁТ."]);
+  assert.deepEqual(sentencesOf("КОТ ПЬЁТ МОЛОКО."), ["КОТ ПЬЁТ МОЛОКО."]);
+  assert.deepEqual(sentencesOf("THE CAT RUNS! THE DOG SINGS."), ["THE CAT RUNS!", "THE DOG SINGS."]);
+  const chapter = {
+    tasks: [
+      { word: "КОТ ПЬЁТ МОЛОКО.", syllables: "КОТ ПЬЁТ МО-ЛО-КО." },
+      { word: "ПЁС СПИТ. КОТ ПОЁТ.", syllables: "ПЁС СПИТ. КОТ ПОЁТ." },
+      { word: "МАМА ВАРИТ СУП.", syllables: "МА-МА ВА-РИТ СУП." },
+    ],
+  };
+  assert.deepEqual(storyLines(chapter, 2, "ru"), ["КОТ ПЬЁТ МО-ЛО-КО.", "ПЁС СПИТ.", "КОТ ПОЁТ."]);
+  assert.deepEqual(storyLines(chapter, 0, "ru"), []);
+  const english = { tasks: [{ word: "THE CAT DRINKS MILK.", syllables: "THE C-A-T DRINKS M-I-L-K." }] };
+  assert.deepEqual(storyLines(english, 1, "en"), ["THE CAT DRINKS MILK."]);
+}
+
+// The widest panel of the three answers sets the item size: an item counts 1,
+// a big item 1.25 and a gap between groups 0.5.
+function testSceneLayout() {
+  const scene = (...panels) => ({ scene: panels });
+  assert.equal(sceneLayout([scene([{ emoji: "🐱" }, { emoji: "🥛" }])]).columns, 2.5);
+  assert.equal(sceneLayout([scene([{ emoji: "👴" }, { emoji: "🍎", count: 2 }])]).columns, 3.5);
+  assert.equal(sceneLayout([scene([{ emoji: "🐱" }, { emoji: "🐶" }, { emoji: "🥛" }])]).columns, 4);
+  assert.equal(sceneLayout([scene([{ emoji: "🐱", size: "big" }, { emoji: "🥛" }])]).columns, 2.75);
+  assert.equal(sceneLayout([scene([{ emoji: "🐱", count: 3, badge: "💤" }])]).columns, 3);
+  assert.equal(sceneLayout([
+    scene([{ emoji: "🐱" }, { emoji: "🥛" }]),
+    scene([{ emoji: "🐱" }, { emoji: "🥛" }], [{ emoji: "👴" }, { emoji: "🍎", count: 2 }]),
+    scene([{ emoji: "🐶" }, { emoji: "🦴" }]),
+  ]).columns, 3.5, "the widest panel of any answer wins");
+}
+
+// A mode only renames what it has to: a key it lacks falls back to the levels,
+// and every key of its own still wins.
+function testModeStrings() {
+  const texts = {
+    play: { mission: "Word", listen: "Hear the word", next: "Next word", readInstruction: "Read the word", wrongFirst: "Look" },
+    spell: { readInstruction: "What is it?", hint: "Compare", wrongFirst: "Letters" },
+    phrase: { readInstruction: "Read the words", listen: "Hear the words", wrongFirst: "Every word" },
+    story: { readInstruction: "Read it", mission: "Step", listen: "Hear it", next: "Next" },
+  };
+  const spell = modeStrings(texts, "spell");
+  assert.equal(spell.mission, "Word");
+  assert.equal(spell.listen, "Hear the word");
+  assert.equal(spell.next, "Next word");
+  Object.entries(texts.spell).forEach(([key, value]) => assert.equal(spell[key], value, `spell ${key}`));
+  assert.equal(modeStrings(texts, "phrase").listen, "Hear the words");
+  assert.equal(modeStrings(texts, "phrase").mission, "Word");
+  const story = modeStrings(texts, "story");
+  assert.equal(story.mission, "Step");
+  assert.equal(story.wrongFirst, "Every word", "a story takes the first mistake line from the phrases");
+  assert.equal(story.readInstruction, "Read it");
+  assert.equal(modeStrings(texts, undefined), texts.play, "a word pack has no mode");
 }
 
 // Counts stand in rows of five, and a phone stacks the answers whenever three
@@ -235,6 +308,41 @@ function testPhrasePacksShape() {
   });
 }
 
+function testStoryPacksShape() {
+  Object.entries(LEVELS).forEach(([language, levels]) => {
+    levels.filter((key) => STORY_LEVELS[key]).forEach((key) => {
+      const pack = readPack(path.basename(packPath(language, key)));
+      pack.chapters.forEach((chapter, chapterIndex) => {
+        assert.ok(typeof chapter.intro === "string" && chapter.intro.trim(), `${language} ${key} chapter ${chapterIndex + 1} intro`);
+        chapter.tasks.forEach((task, taskIndex) => {
+          const where = `${language} ${key} chapter ${chapterIndex + 1}, task ${taskIndex + 1}`;
+          assert.equal(sentencesOf(task.word).length, STORY_LEVELS[key].sentences, `${where} sentence count`);
+          assert.equal(task.prompt, undefined, `${where} has no prompt`);
+          assert.equal(task.success, undefined, `${where} has no success line`);
+          task.choices.forEach((choice) => {
+            assert.equal(choice.scene.length, STORY_LEVELS[key].sentences, `${where} panels`);
+            choice.scene.forEach((groups) => {
+              const emoji = groups.reduce((sum, group) => sum + (group.count ?? 1), 0);
+              assert.ok(emoji >= 2 && emoji <= 3, `${where} a panel draws ${emoji} emoji`);
+            });
+          });
+          assert.ok(sceneLayout(task.choices).columns <= 4.5, `${where} scene width`);
+          assert.equal(new Set(task.choices.map((choice) => JSON.stringify(choice.scene))).size, 3, `${where} scenes must differ`);
+          if (language === "en") {
+            const split = task.syllables.split(" ");
+            assert.equal(split.length, task.word.split(" ").length, `${where} split word count`);
+            split.forEach((part) => {
+              if (["A", "AN", "THE"].includes(part.replace(/-/g, "").replace(/[.!]$/, ""))) {
+                assert.ok(!part.includes("-"), `${where} article "${part}" is split`);
+              }
+            });
+          }
+        });
+      });
+    });
+  });
+}
+
 testSyllableSplit();
 testSplitsAtOnce();
 testChangingPositions();
@@ -246,8 +354,12 @@ testShuffleKeepsEveryChoice();
 testPackPaths();
 testSpellPackKeys();
 testSpellChoicesDifferInOneLetter();
-testPhraseLevels();
+testLevelOrder();
+testSentences();
+testSceneLayout();
+testModeStrings();
 testPictureLayout();
 testPhraseCardText();
 testPhrasePacksShape();
+testStoryPacksShape();
 console.log("Living Words: reading rules and word packs passed.");

@@ -32,7 +32,10 @@
       "7": "7 letters",
       "phraseA": "Two short words",
       "phraseB": "Two longer words",
-      "phraseC": "Three words"
+      "phraseC": "Three words",
+      "storyA": "Short sentences",
+      "storyB": "Longer sentences",
+      "storyC": "Two sentences"
     },
     "levelSamples": {
       "3": "CAT · DOG · SUN",
@@ -42,7 +45,10 @@
       "7": "PENGUIN · RAINBOW · BALLOON",
       "phraseA": "RED HEART · DOG SINGS",
       "phraseB": "GREEN APPLE · SEVEN STARS",
-      "phraseC": "BIG RED HEART"
+      "phraseC": "BIG RED HEART",
+      "storyA": "THE CAT DRINKS MILK.",
+      "storyB": "THE CAT SLEEPS ON THE SOFA.",
+      "storyC": "THE CAT DRINKS MILK. THE DOG GNAWS A BONE."
     },
     "progress": "{done} of {total}"
   },
@@ -56,7 +62,10 @@
       "7": "7-letter words",
       "phraseA": "Two short words",
       "phraseB": "Two longer words",
-      "phraseC": "Three words"
+      "phraseC": "Three words",
+      "storyA": "Short sentences",
+      "storyB": "Longer sentences",
+      "storyC": "Two sentences"
     },
     "lead": "Each chapter is a little story with ten words. Finish a chapter to open the next one.",
     "chapterNumber": "Chapter {number}",
@@ -93,6 +102,16 @@
     "listen": "Hear the words",
     "chaptersLead": "Each chapter is a little story with ten phrases. Finish a chapter to open the next one.",
     "finalText": "You have read every story on this level - all two hundred phrases."
+  },
+  "story": {
+    "readInstruction": "Read it out loud",
+    "mission": "Step {current} of {total}",
+    "listen": "Hear it",
+    "next": "Next",
+    "wrongAgain": "Piece by piece: {syllables} Now find the picture.",
+    "wrongAgainWhole": "Read it again: {word} Now find the picture.",
+    "chaptersLead": "Each chapter is one story. Read it in order, step by step. Finish a chapter to open the next one.",
+    "finalText": "You have read all twenty stories on this level."
   },
   "spell": {
     "cardName": "Find the word",
