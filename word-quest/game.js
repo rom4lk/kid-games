@@ -21,7 +21,7 @@ const STORY_LEVELS = {
 };
 const LEVELS = {
   en: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"],
-  ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB"],
+  ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB", "storyC"],
 };
 const CHAPTERS_PER_LEVEL = 20;
 const WORDS_PER_CHAPTER = 10;
