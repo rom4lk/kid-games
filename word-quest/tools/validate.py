@@ -202,7 +202,7 @@ PRONOUN_SLUGS = {"he", "she", "it", "they", "him", "her", "them"}
 # the function words among them.
 FUNCTION_SLUGS = PRONOUN_SLUGS | {
     # prepositions
-    "on", "in", "under", "to", "from", "with", "by", "behind", "over",
+    "on", "in", "under", "to", "from", "with", "by", "behind", "over", "along", "for",
     # possession: У, HAS
     "have",
     # articles

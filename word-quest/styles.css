@@ -1215,6 +1215,13 @@ h1 {
   column-gap: 0.45em;
 }
 
+/* A sentence of four or five words keeps to a few lines on a desktop, so the
+   card and the answers under it stay on one screen. */
+.story-card:has(.sentence-line > :nth-child(4)) .word-main,
+.story-card:has(.sentence-line > :nth-child(4)) .word-syllables {
+  --word-size: clamp(2rem, min(4.6vw, 6vh), 2.75rem);
+}
+
 /* Two sentences and their two-panel answers have to fit one desktop screen
    together, so a two-sentence card stops at 36px. */
 .story-card:has(.sentence-line + .sentence-line) .word-main,
@@ -2119,6 +2126,18 @@ html[lang="ru"] .word-choice .letter {
   /* A scene needs the full width on a phone, so story answers always stack. */
   .choice-grid.story-choices {
     grid-template-columns: 1fr;
+  }
+
+  /* One panel of scene needs no more height than a stacked phrase answer, and
+     a sentence of four or five words takes the 28px a 12-character split needs at
+     360px, so the card and the first answer share a phone screen. */
+  .story-choices .choice-button {
+    min-height: 72px;
+  }
+
+  .story-card:has(.sentence-line > :nth-child(4)) .word-main,
+  .story-card:has(.sentence-line > :nth-child(4)) .word-syllables {
+    --word-size: 1.75rem;
   }
 
   .word-card.phrase-card {
