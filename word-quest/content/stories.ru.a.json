@@ -1528,37 +1528,9 @@
       "completeText": "Урожай собран, тыква в печи. А заяц всё-таки унёс одну морковку - пусть грызёт.",
       "tasks": [
         {
-          "word": "БАБУШКА ПОЛИВАЕТ ОГУРЕЦ.",
-          "syllables": "БА-БУШ-КА ПО-ЛИ-ВА-ЕТ О-ГУ-РЕЦ.",
+          "word": "БАБУШКА ПОЛИВАЕТ ТЫКВУ.",
+          "syllables": "БА-БУШ-КА ПО-ЛИ-ВА-ЕТ ТЫК-ВУ.",
           "choices": [
-            {
-              "id": "grandma-water-cucumber",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🥒"
-                  }
-                ]
-              ],
-              "label": "бабушка поливает огурец."
-            },
-            {
-              "id": "girl-water-cucumber",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🥒"
-                  }
-                ]
-              ],
-              "label": "маша поливает огурец."
-            },
             {
               "id": "grandma-water-pumpkin",
               "scene": [
@@ -1572,9 +1544,37 @@
                 ]
               ],
               "label": "бабушка поливает тыкву."
+            },
+            {
+              "id": "girl-water-pumpkin",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🎃"
+                  }
+                ]
+              ],
+              "label": "маша поливает тыкву."
+            },
+            {
+              "id": "grandma-water-carrot",
+              "scene": [
+                [
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "🥕"
+                  }
+                ]
+              ],
+              "label": "бабушка поливает морковку."
             }
           ],
-          "correct": "grandma-water-cucumber"
+          "correct": "grandma-water-pumpkin"
         },
         {
           "word": "МАША РВЁТ МОРКОВКУ.",
@@ -1724,37 +1724,9 @@
           "correct": "snail-eat-cucumber"
         },
         {
-          "word": "ЗАЯЦ ГРЫЗЁТ МОРКОВКУ.",
-          "syllables": "ЗА-ЯЦ ГРЫ-ЗЁТ МОР-КОВ-КУ.",
+          "word": "ЗАЯЦ ГРЫЗЁТ ОГУРЕЦ.",
+          "syllables": "ЗА-ЯЦ ГРЫ-ЗЁТ О-ГУ-РЕЦ.",
           "choices": [
-            {
-              "id": "hare-gnaw-carrot",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐰"
-                  },
-                  {
-                    "emoji": "🥕"
-                  }
-                ]
-              ],
-              "label": "заяц грызёт морковку."
-            },
-            {
-              "id": "dog-gnaw-carrot",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🥕"
-                  }
-                ]
-              ],
-              "label": "пёс грызёт морковку."
-            },
             {
               "id": "hare-gnaw-cucumber",
               "scene": [
@@ -1768,9 +1740,37 @@
                 ]
               ],
               "label": "заяц грызёт огурец."
+            },
+            {
+              "id": "dog-gnaw-cucumber",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐶"
+                  },
+                  {
+                    "emoji": "🥒"
+                  }
+                ]
+              ],
+              "label": "пёс грызёт огурец."
+            },
+            {
+              "id": "hare-gnaw-carrot",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐰"
+                  },
+                  {
+                    "emoji": "🥕"
+                  }
+                ]
+              ],
+              "label": "заяц грызёт морковку."
             }
           ],
-          "correct": "hare-gnaw-carrot"
+          "correct": "hare-gnaw-cucumber"
         },
         {
           "word": "ПЁС ГОНИТ ЗАЙЦА.",
@@ -1822,23 +1822,9 @@
           "correct": "dog-chase-hare"
         },
         {
-          "word": "БАБУШКА НЕСЁТ ТЫКВУ.",
-          "syllables": "БА-БУШ-КА НЕ-СЁТ ТЫК-ВУ.",
+          "word": "МАША НЕСЁТ ТЫКВУ.",
+          "syllables": "МА-ША НЕ-СЁТ ТЫК-ВУ.",
           "choices": [
-            {
-              "id": "grandma-carry-pumpkin",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🎃"
-                  }
-                ]
-              ],
-              "label": "бабушка несёт тыкву."
-            },
             {
               "id": "girl-carry-pumpkin",
               "scene": [
@@ -1854,21 +1840,35 @@
               "label": "маша несёт тыкву."
             },
             {
-              "id": "grandma-carry-tomato",
+              "id": "grandma-carry-pumpkin",
               "scene": [
                 [
                   {
                     "emoji": "👵"
                   },
                   {
+                    "emoji": "🎃"
+                  }
+                ]
+              ],
+              "label": "бабушка несёт тыкву."
+            },
+            {
+              "id": "girl-carry-tomato",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
                     "emoji": "🍅"
                   }
                 ]
               ],
-              "label": "бабушка несёт помидор."
+              "label": "маша несёт помидор."
             }
           ],
-          "correct": "grandma-carry-pumpkin"
+          "correct": "girl-carry-pumpkin"
         },
         {
           "word": "МАМА ПЕЧЁТ ТЫКВУ.",
@@ -3090,23 +3090,9 @@
           "correct": "boy-wear-hat"
         },
         {
-          "word": "ДЕД БЕРЁТ КОРЗИНУ.",
-          "syllables": "ДЕД БЕ-РЁТ КОР-ЗИ-НУ.",
+          "word": "ПЕТЯ БЕРЁТ КОРЗИНУ.",
+          "syllables": "ПЕ-ТЯ БЕ-РЁТ КОР-ЗИ-НУ.",
           "choices": [
-            {
-              "id": "grandpa-take-basket",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🧺"
-                  }
-                ]
-              ],
-              "label": "дед берёт корзину."
-            },
             {
               "id": "boy-take-basket",
               "scene": [
@@ -3122,21 +3108,35 @@
               "label": "петя берёт корзину."
             },
             {
-              "id": "grandpa-take-backpack",
+              "id": "grandpa-take-basket",
               "scene": [
                 [
                   {
                     "emoji": "👴"
                   },
                   {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "дед берёт корзину."
+            },
+            {
+              "id": "boy-take-backpack",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
                     "emoji": "🎒"
                   }
                 ]
               ],
-              "label": "дед берёт рюкзак."
+              "label": "петя берёт рюкзак."
             }
           ],
-          "correct": "grandpa-take-basket"
+          "correct": "boy-take-basket"
         },
         {
           "word": "ПЕТЯ НАХОДИТ ГРИБ.",
@@ -3332,11 +3332,11 @@
           "correct": "hedgehog-carry-mushroom"
         },
         {
-          "word": "ДЕД КЛАДЁТ ГРИБ.",
-          "syllables": "ДЕД КЛА-ДЁТ ГРИБ.",
+          "word": "ДЕД РЕЖЕТ ГРИБ.",
+          "syllables": "ДЕД РЕ-ЖЕТ ГРИБ.",
           "choices": [
             {
-              "id": "grandpa-put-mushroom",
+              "id": "grandpa-cut-mushroom",
               "scene": [
                 [
                   {
@@ -3347,10 +3347,10 @@
                   }
                 ]
               ],
-              "label": "дед кладёт гриб."
+              "label": "дед режет гриб."
             },
             {
-              "id": "boy-put-mushroom",
+              "id": "boy-cut-mushroom",
               "scene": [
                 [
                   {
@@ -3361,24 +3361,24 @@
                   }
                 ]
               ],
-              "label": "петя кладёт гриб."
+              "label": "петя режет гриб."
             },
             {
-              "id": "grandpa-put-nut",
+              "id": "grandpa-cut-apple",
               "scene": [
                 [
                   {
                     "emoji": "👴"
                   },
                   {
-                    "emoji": "🥜"
+                    "emoji": "🍎"
                   }
                 ]
               ],
-              "label": "дед кладёт орех."
+              "label": "дед режет яблоко."
             }
           ],
-          "correct": "grandpa-put-mushroom"
+          "correct": "grandpa-cut-mushroom"
         },
         {
           "word": "ПЕТЯ КОРМИТ БЕЛКУ.",
@@ -3541,6 +3541,52 @@
       "intro": "Вечером в саду кто-то шуршит в траве.",
       "completeText": "Ёжик уносит яблоко в свою норку. Маша обещает каждый вечер оставлять ему угощение.",
       "tasks": [
+        {
+          "word": "ДВЕ ПТИЦЫ СПЯТ.",
+          "syllables": "ДВЕ ПТИ-ЦЫ СПЯТ.",
+          "choices": [
+            {
+              "id": "two-bird-sleep",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐦",
+                    "count": 2,
+                    "badge": "💤"
+                  }
+                ]
+              ],
+              "label": "две птицы спят."
+            },
+            {
+              "id": "three-bird-sleep",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐦",
+                    "count": 3,
+                    "badge": "💤"
+                  }
+                ]
+              ],
+              "label": "три птицы спят."
+            },
+            {
+              "id": "two-bird-sing",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐦",
+                    "count": 2,
+                    "badge": "🎵"
+                  }
+                ]
+              ],
+              "label": "две птицы поют."
+            }
+          ],
+          "correct": "two-bird-sleep"
+        },
         {
           "word": "ПЁС НАХОДИТ ЁЖИКА.",
           "syllables": "ПЁС НА-ХО-ДИТ Ё-ЖИ-КА.",
@@ -3738,55 +3784,6 @@
           "correct": "boy-carry-apple"
         },
         {
-          "word": "ЁЖИК НЮХАЕТ ЯБЛОКО.",
-          "syllables": "Ё-ЖИК НЮ-ХА-ЕТ ЯБ-ЛО-КО.",
-          "choices": [
-            {
-              "id": "hedgehog-sniff-apple",
-              "scene": [
-                [
-                  {
-                    "emoji": "🦔"
-                  },
-                  {
-                    "emoji": "🍎"
-                  }
-                ]
-              ],
-              "label": "ёжик нюхает яблоко."
-            },
-            {
-              "id": "cat-sniff-apple",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🍎"
-                  }
-                ]
-              ],
-              "label": "кот нюхает яблоко."
-            },
-            {
-              "id": "hedgehog-sniff-pear",
-              "scene": [
-                [
-                  {
-                    "emoji": "🦔"
-                  },
-                  {
-                    "emoji": "🍐"
-                  }
-                ]
-              ],
-              "label": "ёжик нюхает грушу."
-            }
-          ],
-          "correct": "hedgehog-sniff-apple"
-        },
-        {
           "word": "КОТ НЮХАЕТ ЁЖИКА.",
           "syllables": "КОТ НЮ-ХА-ЕТ Ё-ЖИ-КА.",
           "choices": [
@@ -3836,53 +3833,53 @@
           "correct": "cat-sniff-hedgehog"
         },
         {
-          "word": "КОТ ПЛАЧЕТ ДОМА.",
-          "syllables": "КОТ ПЛА-ЧЕТ ДО-МА.",
+          "word": "ЁЖИК ПУГАЕТ КОТА.",
+          "syllables": "Ё-ЖИК ПУ-ГА-ЕТ КО-ТА.",
           "choices": [
             {
-              "id": "cat-cry-house",
+              "id": "hedgehog-scare-cat",
               "scene": [
                 [
                   {
-                    "emoji": "😿"
+                    "emoji": "🦔"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "кот плачет дома."
+              "label": "ёжик пугает кота."
             },
             {
-              "id": "cat-laugh-house",
+              "id": "hedgehog-scare-dog",
               "scene": [
                 [
                   {
-                    "emoji": "😹"
+                    "emoji": "🦔"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🐶"
                   }
                 ]
               ],
-              "label": "кот смеётся дома."
+              "label": "ёжик пугает пса."
             },
             {
-              "id": "dog-cry-house",
+              "id": "dog-scare-cat",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "пёс плачет дома."
+              "label": "пёс пугает кота."
             }
           ],
-          "correct": "cat-cry-house"
+          "correct": "hedgehog-scare-cat"
         },
         {
           "word": "МАША ГЛАДИТ КОТА.",
@@ -3934,53 +3931,53 @@
           "correct": "girl-stroke-cat"
         },
         {
-          "word": "ЁЖИК ЕСТ ГРУШУ.",
-          "syllables": "Ё-ЖИК ЕСТ ГРУ-ШУ.",
+          "word": "МАША ДАЁТ ЯБЛОКО.",
+          "syllables": "МА-ША ДА-ЁТ ЯБ-ЛО-КО.",
           "choices": [
             {
-              "id": "hedgehog-eat-pear",
+              "id": "girl-give-apple",
               "scene": [
                 [
                   {
-                    "emoji": "🦔"
-                  },
-                  {
-                    "emoji": "🍐"
-                  }
-                ]
-              ],
-              "label": "ёжик ест грушу."
-            },
-            {
-              "id": "dog-eat-pear",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🍐"
-                  }
-                ]
-              ],
-              "label": "пёс ест грушу."
-            },
-            {
-              "id": "hedgehog-eat-apple",
-              "scene": [
-                [
-                  {
-                    "emoji": "🦔"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🍎"
                   }
                 ]
               ],
-              "label": "ёжик ест яблоко."
+              "label": "маша даёт яблоко."
+            },
+            {
+              "id": "boy-give-apple",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🍎"
+                  }
+                ]
+              ],
+              "label": "петя даёт яблоко."
+            },
+            {
+              "id": "girl-give-pear",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🍐"
+                  }
+                ]
+              ],
+              "label": "маша даёт грушу."
             }
           ],
-          "correct": "hedgehog-eat-pear"
+          "correct": "girl-give-apple"
         },
         {
           "word": "ЁЖИК НЕСЁТ ЯБЛОКО.",
@@ -4043,7 +4040,7 @@
         "#4f3b8f"
       ],
       "intro": "У соседки есть корова Зорька. Сегодня все идут к ней в гости.",
-      "completeText": "Гуси успокоились, корова отдыхает, а Маша несёт домой молоко. Завтра будут блины!",
+      "completeText": "Гуси успокоились, корова отдыхает, а Маша несёт домой ведро молока. Завтра будут блины!",
       "tasks": [
         {
           "word": "БАБУШКА БЕРЁТ ВЕДРО.",
@@ -4484,37 +4481,9 @@
           "correct": "goose-chase-girl"
         },
         {
-          "word": "МАША НЕСЁТ МОЛОКО.",
-          "syllables": "МА-ША НЕ-СЁТ МО-ЛО-КО.",
+          "word": "МАША НЕСЁТ ВЕДРО.",
+          "syllables": "МА-ША НЕ-СЁТ ВЕД-РО.",
           "choices": [
-            {
-              "id": "girl-carry-milk",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🥛"
-                  }
-                ]
-              ],
-              "label": "маша несёт молоко."
-            },
-            {
-              "id": "grandma-carry-milk",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🥛"
-                  }
-                ]
-              ],
-              "label": "бабушка несёт молоко."
-            },
             {
               "id": "girl-carry-bucket",
               "scene": [
@@ -4528,9 +4497,37 @@
                 ]
               ],
               "label": "маша несёт ведро."
+            },
+            {
+              "id": "grandma-carry-bucket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "🪣"
+                  }
+                ]
+              ],
+              "label": "бабушка несёт ведро."
+            },
+            {
+              "id": "girl-carry-milk",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🥛"
+                  }
+                ]
+              ],
+              "label": "маша несёт молоко."
             }
           ],
-          "correct": "girl-carry-milk"
+          "correct": "girl-carry-bucket"
         }
       ]
     },
@@ -4546,6 +4543,55 @@
       "intro": "В саду поспели ягоды. Пора их собирать.",
       "completeText": "Торт с клубникой готов. А одну ягодку Петя оставил птице - пусть тоже радуется.",
       "tasks": [
+        {
+          "word": "МАША БЕРЁТ КОРЗИНУ.",
+          "syllables": "МА-ША БЕ-РЁТ КОР-ЗИ-НУ.",
+          "choices": [
+            {
+              "id": "girl-take-basket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "маша берёт корзину."
+            },
+            {
+              "id": "boy-take-basket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "петя берёт корзину."
+            },
+            {
+              "id": "girl-take-strawberry",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🍓"
+                  }
+                ]
+              ],
+              "label": "маша берёт клубнику."
+            }
+          ],
+          "correct": "girl-take-basket"
+        },
         {
           "word": "МАША ВИДИТ ПТИЦУ.",
           "syllables": "МА-ША ВИ-ДИТ ПТИ-ЦУ.",
@@ -4628,40 +4674,26 @@
               "label": "петух клюёт клубнику."
             },
             {
-              "id": "bird-peck-grapes",
+              "id": "bird-peck-basket",
               "scene": [
                 [
                   {
                     "emoji": "🐦"
                   },
                   {
-                    "emoji": "🍇"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "птица клюёт виноград."
+              "label": "птица клюёт корзину."
             }
           ],
           "correct": "bird-peck-strawberry"
         },
         {
-          "word": "ПЕТЯ ГОНИТ ПТИЦУ.",
-          "syllables": "ПЕ-ТЯ ГО-НИТ ПТИ-ЦУ.",
+          "word": "ПЁС ГОНИТ ПТИЦУ.",
+          "syllables": "ПЁС ГО-НИТ ПТИ-ЦУ.",
           "choices": [
-            {
-              "id": "boy-chase-bird",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🐦"
-                  }
-                ]
-              ],
-              "label": "петя гонит птицу."
-            },
             {
               "id": "dog-chase-bird",
               "scene": [
@@ -4677,70 +4709,35 @@
               "label": "пёс гонит птицу."
             },
             {
-              "id": "boy-chase-rooster",
+              "id": "boy-chase-bird",
               "scene": [
                 [
                   {
                     "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🐦"
+                  }
+                ]
+              ],
+              "label": "петя гонит птицу."
+            },
+            {
+              "id": "dog-chase-rooster",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐶"
                   },
                   {
                     "emoji": "🐓"
                   }
                 ]
               ],
-              "label": "петя гонит петуха."
+              "label": "пёс гонит петуха."
             }
           ],
-          "correct": "boy-chase-bird"
-        },
-        {
-          "word": "МАША РВЁТ КЛУБНИКУ.",
-          "syllables": "МА-ША РВЁТ КЛУБ-НИ-КУ.",
-          "choices": [
-            {
-              "id": "girl-pick-strawberry",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🍓"
-                  }
-                ]
-              ],
-              "label": "маша рвёт клубнику."
-            },
-            {
-              "id": "boy-pick-strawberry",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🍓"
-                  }
-                ]
-              ],
-              "label": "петя рвёт клубнику."
-            },
-            {
-              "id": "girl-pick-grapes",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🍇"
-                  }
-                ]
-              ],
-              "label": "маша рвёт виноград."
-            }
-          ],
-          "correct": "girl-pick-strawberry"
+          "correct": "dog-chase-bird"
         },
         {
           "word": "ПЕТЯ ЕСТ КЛУБНИКУ.",
@@ -4775,70 +4772,119 @@
               "label": "маша ест клубнику."
             },
             {
-              "id": "boy-eat-grapes",
+              "id": "boy-eat-cake",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍇"
+                    "emoji": "🎂"
                   }
                 ]
               ],
-              "label": "петя ест виноград."
+              "label": "петя ест торт."
             }
           ],
           "correct": "boy-eat-strawberry"
         },
         {
-          "word": "МАША НЕСЁТ КЛУБНИКУ.",
-          "syllables": "МА-ША НЕ-СЁТ КЛУБ-НИ-КУ.",
+          "word": "ПЕТЯ НЕСЁТ КОРЗИНУ.",
+          "syllables": "ПЕ-ТЯ НЕ-СЁТ КОР-ЗИ-НУ.",
           "choices": [
             {
-              "id": "girl-carry-strawberry",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🍓"
-                  }
-                ]
-              ],
-              "label": "маша несёт клубнику."
-            },
-            {
-              "id": "boy-carry-strawberry",
+              "id": "boy-carry-basket",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍓"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "петя несёт клубнику."
+              "label": "петя несёт корзину."
             },
             {
-              "id": "girl-carry-grapes",
+              "id": "girl-carry-basket",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🍇"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "маша несёт виноград."
+              "label": "маша несёт корзину."
+            },
+            {
+              "id": "boy-carry-cake",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🎂"
+                  }
+                ]
+              ],
+              "label": "петя несёт торт."
             }
           ],
-          "correct": "girl-carry-strawberry"
+          "correct": "boy-carry-basket"
+        },
+        {
+          "word": "МАМА МОЕТ КЛУБНИКУ.",
+          "syllables": "МА-МА МО-ЕТ КЛУБ-НИ-КУ.",
+          "choices": [
+            {
+              "id": "mom-wash-strawberry",
+              "scene": [
+                [
+                  {
+                    "emoji": "👩"
+                  },
+                  {
+                    "emoji": "🍓"
+                  }
+                ]
+              ],
+              "label": "мама моет клубнику."
+            },
+            {
+              "id": "dad-wash-strawberry",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🍓"
+                  }
+                ]
+              ],
+              "label": "папа моет клубнику."
+            },
+            {
+              "id": "mom-wash-basket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👩"
+                  },
+                  {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "мама моет корзину."
+            }
+          ],
+          "correct": "mom-wash-strawberry"
         },
         {
           "word": "МАМА ПЕЧЁТ ТОРТ.",
@@ -4888,55 +4934,6 @@
             }
           ],
           "correct": "mom-cook-cake"
-        },
-        {
-          "word": "МАМА КЛАДЁТ КЛУБНИКУ.",
-          "syllables": "МА-МА КЛА-ДЁТ КЛУБ-НИ-КУ.",
-          "choices": [
-            {
-              "id": "mom-put-strawberry",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🍓"
-                  }
-                ]
-              ],
-              "label": "мама кладёт клубнику."
-            },
-            {
-              "id": "boy-put-strawberry",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🍓"
-                  }
-                ]
-              ],
-              "label": "петя кладёт клубнику."
-            },
-            {
-              "id": "mom-put-grapes",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🍇"
-                  }
-                ]
-              ],
-              "label": "мама кладёт виноград."
-            }
-          ],
-          "correct": "mom-put-strawberry"
         },
         {
           "word": "МАША РЕЖЕТ ТОРТ.",
@@ -5391,22 +5388,22 @@
           "correct": "dad-throw-ball"
         },
         {
-          "word": "ПЕТЯ ЛОВИТ МЯЧ.",
-          "syllables": "ПЕ-ТЯ ЛО-ВИТ МЯЧ.",
+          "word": "МАША ЛОВИТ МЯЧ.",
+          "syllables": "МА-ША ЛО-ВИТ МЯЧ.",
           "choices": [
             {
-              "id": "boy-catch-ball",
+              "id": "girl-catch-ball",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "петя ловит мяч."
+              "label": "маша ловит мяч."
             },
             {
               "id": "dad-catch-ball",
@@ -5423,21 +5420,21 @@
               "label": "папа ловит мяч."
             },
             {
-              "id": "boy-catch-fish",
+              "id": "girl-catch-fish",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🐟"
                   }
                 ]
               ],
-              "label": "петя ловит рыбу."
+              "label": "маша ловит рыбу."
             }
           ],
-          "correct": "boy-catch-ball"
+          "correct": "girl-catch-ball"
         },
         {
           "word": "ПАПА РЕЖЕТ АРБУЗ.",
@@ -6353,50 +6350,53 @@
           "correct": "dad-read-book"
         },
         {
-          "word": "ДВЕ СОВЫ ПОЮТ.",
-          "syllables": "ДВЕ СО-ВЫ ПО-ЮТ.",
+          "word": "ПАПА ПЕЧЁТ КАРТОШКУ.",
+          "syllables": "ПА-ПА ПЕ-ЧЁТ КАР-ТОШ-КУ.",
           "choices": [
             {
-              "id": "two-owl-sing",
+              "id": "dad-cook-potato",
               "scene": [
                 [
                   {
-                    "emoji": "🦉",
-                    "count": 2,
-                    "badge": "🎵"
+                    "emoji": "👨‍🍳"
+                  },
+                  {
+                    "emoji": "🥔"
                   }
                 ]
               ],
-              "label": "две совы поют."
+              "label": "папа печёт картошку."
             },
             {
-              "id": "three-owl-sing",
+              "id": "mom-cook-potato",
               "scene": [
                 [
                   {
-                    "emoji": "🦉",
-                    "count": 3,
-                    "badge": "🎵"
+                    "emoji": "👩‍🍳"
+                  },
+                  {
+                    "emoji": "🥔"
                   }
                 ]
               ],
-              "label": "три совы поют."
+              "label": "мама печёт картошку."
             },
             {
-              "id": "two-owl-sleep",
+              "id": "dad-paint-potato",
               "scene": [
                 [
                   {
-                    "emoji": "🦉",
-                    "count": 2,
-                    "badge": "💤"
+                    "emoji": "👨‍🎨"
+                  },
+                  {
+                    "emoji": "🥔"
                   }
                 ]
               ],
-              "label": "две совы спят."
+              "label": "папа рисует картошку."
             }
           ],
-          "correct": "two-owl-sing"
+          "correct": "dad-cook-potato"
         },
         {
           "word": "КОТ ПУГАЕТ МЫШЬ.",
@@ -6592,18 +6592,18 @@
               "label": "маша видит карусель."
             },
             {
-              "id": "boy-see-horse",
+              "id": "boy-see-clown",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐴"
+                    "emoji": "🤡"
                   }
                 ]
               ],
-              "label": "петя видит лошадь."
+              "label": "петя видит клоуна."
             }
           ],
           "correct": "boy-see-carousel"
@@ -6788,18 +6788,18 @@
               "label": "петя видит клоуна."
             },
             {
-              "id": "girl-see-horse",
+              "id": "girl-see-carousel",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐴"
+                    "emoji": "🎠"
                   }
                 ]
               ],
-              "label": "маша видит лошадь."
+              "label": "маша видит карусель."
             }
           ],
           "correct": "girl-see-clown"
@@ -6903,25 +6903,11 @@
           "correct": "girl-eat-candy"
         },
         {
-          "word": "ПЕТЯ БЕРЁТ БАРАБАН.",
-          "syllables": "ПЕ-ТЯ БЕ-РЁТ БА-РА-БАН.",
+          "word": "КЛОУН ДАЁТ БАРАБАН.",
+          "syllables": "КЛО-УН ДА-ЁТ БА-РА-БАН.",
           "choices": [
             {
-              "id": "boy-take-drum",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🥁"
-                  }
-                ]
-              ],
-              "label": "петя берёт барабан."
-            },
-            {
-              "id": "clown-take-drum",
+              "id": "clown-give-drum",
               "scene": [
                 [
                   {
@@ -6932,24 +6918,38 @@
                   }
                 ]
               ],
-              "label": "клоун берёт барабан."
+              "label": "клоун даёт барабан."
             },
             {
-              "id": "boy-take-balloon",
+              "id": "grandma-give-drum",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "🥁"
+                  }
+                ]
+              ],
+              "label": "бабушка даёт барабан."
+            },
+            {
+              "id": "clown-give-balloon",
+              "scene": [
+                [
+                  {
+                    "emoji": "🤡"
                   },
                   {
                     "emoji": "🎈"
                   }
                 ]
               ],
-              "label": "петя берёт шар."
+              "label": "клоун даёт шар."
             }
           ],
-          "correct": "boy-take-drum"
+          "correct": "clown-give-drum"
         },
         {
           "word": "ДВА КЛОУНА ПОЮТ.",
@@ -7453,50 +7453,53 @@
           "correct": "boy-kick-ball"
         },
         {
-          "word": "ДВЕ ПЧЕЛЫ ПОЮТ.",
-          "syllables": "ДВЕ ПЧЕ-ЛЫ ПО-ЮТ.",
+          "word": "МАМА ИДЁТ ДОМОЙ.",
+          "syllables": "МА-МА И-ДЁТ ДО-МОЙ.",
           "choices": [
             {
-              "id": "two-bee-sing",
+              "id": "mom-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "🐝",
-                    "count": 2,
-                    "badge": "🎵"
+                    "emoji": "🚶‍♀️"
+                  },
+                  {
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "две пчелы поют."
+              "label": "мама идёт домой."
             },
             {
-              "id": "three-bee-sing",
+              "id": "mom-run-house",
               "scene": [
                 [
                   {
-                    "emoji": "🐝",
-                    "count": 3,
-                    "badge": "🎵"
+                    "emoji": "🏃‍♀️"
+                  },
+                  {
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "три пчелы поют."
+              "label": "мама бежит домой."
             },
             {
-              "id": "two-bee-sleep",
+              "id": "dad-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "🐝",
-                    "count": 2,
-                    "badge": "💤"
+                    "emoji": "🚶‍♂️"
+                  },
+                  {
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "две пчелы спят."
+              "label": "папа идёт домой."
             }
           ],
-          "correct": "two-bee-sing"
+          "correct": "mom-walk-house"
         },
         {
           "word": "ПАПА НЕСЁТ МАШУ.",
@@ -7594,18 +7597,18 @@
               "label": "петя ищет ключ."
             },
             {
-              "id": "grandpa-seek-cat",
+              "id": "grandpa-seek-ball",
               "scene": [
                 [
                   {
                     "emoji": "👴"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "дед ищет кота."
+              "label": "дед ищет мяч."
             }
           ],
           "correct": "grandpa-seek-key"
@@ -7758,72 +7761,61 @@
           "correct": "girl-find-ball"
         },
         {
-          "word": "ПАПА БЕЖИТ ДОМОЙ.",
-          "syllables": "ПА-ПА БЕ-ЖИТ ДО-МОЙ.",
+          "word": "ПЁС СПИТ ДОМА.",
+          "syllables": "ПЁС СПИТ ДО-МА.",
           "choices": [
             {
-              "id": "dad-run-house",
+              "id": "dog-sleep-house",
               "scene": [
                 [
                   {
-                    "emoji": "🏃‍♂️"
+                    "emoji": "🐶",
+                    "badge": "💤"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "папа бежит домой."
+              "label": "пёс спит дома."
             },
             {
-              "id": "dad-walk-house",
+              "id": "dog-sing-house",
               "scene": [
                 [
                   {
-                    "emoji": "🚶‍♂️"
+                    "emoji": "🐶",
+                    "badge": "🎵"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "папа идёт домой."
+              "label": "пёс поёт дома."
             },
             {
-              "id": "grandpa-run-house",
+              "id": "grandpa-sleep-house",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👴",
+                    "badge": "💤"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "дед бежит домой."
+              "label": "дед спит дома."
             }
           ],
-          "correct": "dad-run-house"
+          "correct": "dog-sleep-house"
         },
         {
-          "word": "ДЕД ЗОВЁТ ПСА.",
-          "syllables": "ДЕД ЗО-ВЁТ ПСА.",
+          "word": "МАША ЗОВЁТ ПСА.",
+          "syllables": "МА-ША ЗО-ВЁТ ПСА.",
           "choices": [
-            {
-              "id": "grandpa-call-dog",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🐶"
-                  }
-                ]
-              ],
-              "label": "дед зовёт пса."
-            },
             {
               "id": "girl-call-dog",
               "scene": [
@@ -7839,70 +7831,84 @@
               "label": "маша зовёт пса."
             },
             {
-              "id": "grandpa-call-cat",
+              "id": "boy-call-dog",
               "scene": [
                 [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🐶"
+                  }
+                ]
+              ],
+              "label": "петя зовёт пса."
+            },
+            {
+              "id": "girl-call-grandpa",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
                   {
                     "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "дед зовёт кота."
+              "label": "маша зовёт деда."
             }
           ],
-          "correct": "grandpa-call-dog"
+          "correct": "girl-call-dog"
         },
         {
-          "word": "ПЁС ИЩЕТ КЛЮЧ.",
-          "syllables": "ПЁС И-ЩЕТ КЛЮЧ.",
+          "word": "ПЁС ВЕДЁТ ПЕТЮ.",
+          "syllables": "ПЁС ВЕ-ДЁТ ПЕ-ТЮ.",
           "choices": [
             {
-              "id": "dog-seek-key",
+              "id": "dog-lead-boy",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🔑"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "пёс ищет ключ."
+              "label": "пёс ведёт петю."
             },
             {
-              "id": "cat-seek-key",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🔑"
-                  }
-                ]
-              ],
-              "label": "кот ищет ключ."
-            },
-            {
-              "id": "dog-seek-ball",
+              "id": "dog-lead-grandpa",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "⚽"
+                    "emoji": "👴"
                   }
                 ]
               ],
-              "label": "пёс ищет мяч."
+              "label": "пёс ведёт деда."
+            },
+            {
+              "id": "girl-lead-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "маша ведёт петю."
             }
           ],
-          "correct": "dog-seek-key"
+          "correct": "dog-lead-boy"
         },
         {
           "word": "ПЁС НАХОДИТ КЛЮЧ.",
@@ -7923,20 +7929,6 @@
               "label": "пёс находит ключ."
             },
             {
-              "id": "cat-find-key",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🔑"
-                  }
-                ]
-              ],
-              "label": "кот находит ключ."
-            },
-            {
               "id": "dog-find-ball",
               "scene": [
                 [
@@ -7949,58 +7941,72 @@
                 ]
               ],
               "label": "пёс находит мяч."
+            },
+            {
+              "id": "boy-find-key",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🔑"
+                  }
+                ]
+              ],
+              "label": "петя находит ключ."
             }
           ],
           "correct": "dog-find-key"
         },
         {
-          "word": "ПЁС НЕСЁТ КЛЮЧ.",
-          "syllables": "ПЁС НЕ-СЁТ КЛЮЧ.",
+          "word": "ПЕТЯ НЕСЁТ КЛЮЧ.",
+          "syllables": "ПЕ-ТЯ НЕ-СЁТ КЛЮЧ.",
           "choices": [
             {
-              "id": "dog-carry-key",
+              "id": "boy-carry-key",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🔑"
                   }
                 ]
               ],
-              "label": "пёс несёт ключ."
+              "label": "петя несёт ключ."
             },
             {
-              "id": "cat-carry-key",
+              "id": "girl-carry-key",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🔑"
                   }
                 ]
               ],
-              "label": "кот несёт ключ."
+              "label": "маша несёт ключ."
             },
             {
-              "id": "dog-carry-ball",
+              "id": "boy-carry-ball",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "пёс несёт мяч."
+              "label": "петя несёт мяч."
             }
           ],
-          "correct": "dog-carry-key"
+          "correct": "boy-carry-key"
         },
         {
           "word": "ДЕД ОБНИМАЕТ ПСА.",
@@ -8035,18 +8041,18 @@
               "label": "маша обнимает пса."
             },
             {
-              "id": "grandpa-hug-cat",
+              "id": "grandpa-hug-boy",
               "scene": [
                 [
                   {
                     "emoji": "👴"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "дед обнимает кота."
+              "label": "дед обнимает петю."
             }
           ],
           "correct": "grandpa-hug-dog"
@@ -8815,53 +8821,53 @@
           "correct": "dad-hug-mom"
         },
         {
-          "word": "ПЕТЯ НЕСЁТ ПОДАРОК.",
-          "syllables": "ПЕ-ТЯ НЕ-СЁТ ПО-ДА-РОК.",
+          "word": "ПАПА ДАРИТ ПОДАРОК.",
+          "syllables": "ПА-ПА ДА-РИТ ПО-ДА-РОК.",
           "choices": [
             {
-              "id": "boy-carry-gift",
+              "id": "dad-give-gift",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🎁"
                   }
                 ]
               ],
-              "label": "петя несёт подарок."
+              "label": "папа дарит подарок."
             },
             {
-              "id": "girl-carry-gift",
+              "id": "mom-give-gift",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👩"
                   },
                   {
                     "emoji": "🎁"
                   }
                 ]
               ],
-              "label": "маша несёт подарок."
+              "label": "мама дарит подарок."
             },
             {
-              "id": "boy-carry-suitcase",
+              "id": "dad-give-locomotive",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "🧳"
+                    "emoji": "🚂"
                   }
                 ]
               ],
-              "label": "петя несёт чемодан."
+              "label": "папа дарит поезд."
             }
           ],
-          "correct": "boy-carry-gift"
+          "correct": "dad-give-gift"
         },
         {
           "word": "ПЕТЯ ОТКРЫВАЕТ ПОДАРОК.",
@@ -9072,138 +9078,12 @@
         "#564086"
       ],
       "intro": "Ночью над деревней гремит гром. В доме погас свет.",
-      "completeText": "Гроза ушла за реку. Свеча погасла, и все спят до самого утра.",
+      "completeText": "Гроза ушла за реку. Маша и кот спят до самого утра, а папа сидит рядом.",
       "tasks": [
         {
-          "word": "МАМА ЗАЖИГАЕТ СВЕЧУ.",
-          "syllables": "МА-МА ЗА-ЖИ-ГА-ЕТ СВЕ-ЧУ.",
+          "word": "МАША ЗОВЁТ ПАПУ.",
+          "syllables": "МА-ША ЗО-ВЁТ ПА-ПУ.",
           "choices": [
-            {
-              "id": "mom-light-candle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🕯️"
-                  }
-                ]
-              ],
-              "label": "мама зажигает свечу."
-            },
-            {
-              "id": "dad-light-candle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "🕯️"
-                  }
-                ]
-              ],
-              "label": "папа зажигает свечу."
-            },
-            {
-              "id": "mom-light-lamp",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🔦"
-                  }
-                ]
-              ],
-              "label": "мама зажигает фонарик."
-            }
-          ],
-          "correct": "mom-light-candle"
-        },
-        {
-          "word": "ПАПА ИЩЕТ ФОНАРИК.",
-          "syllables": "ПА-ПА И-ЩЕТ ФО-НА-РИК.",
-          "choices": [
-            {
-              "id": "dad-seek-lamp",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "🔦"
-                  }
-                ]
-              ],
-              "label": "папа ищет фонарик."
-            },
-            {
-              "id": "grandpa-seek-lamp",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🔦"
-                  }
-                ]
-              ],
-              "label": "дед ищет фонарик."
-            },
-            {
-              "id": "dad-seek-candle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "🕯️"
-                  }
-                ]
-              ],
-              "label": "папа ищет свечу."
-            }
-          ],
-          "correct": "dad-seek-lamp"
-        },
-        {
-          "word": "МАША ЗОВЁТ МАМУ.",
-          "syllables": "МА-ША ЗО-ВЁТ МА-МУ.",
-          "choices": [
-            {
-              "id": "girl-call-mom",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "👩"
-                  }
-                ]
-              ],
-              "label": "маша зовёт маму."
-            },
-            {
-              "id": "boy-call-mom",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👩"
-                  }
-                ]
-              ],
-              "label": "петя зовёт маму."
-            },
             {
               "id": "girl-call-dad",
               "scene": [
@@ -9217,254 +9097,432 @@
                 ]
               ],
               "label": "маша зовёт папу."
-            }
-          ],
-          "correct": "girl-call-mom"
-        },
-        {
-          "word": "ПЁС ЛИЖЕТ МАШУ.",
-          "syllables": "ПЁС ЛИ-ЖЕТ МА-ШУ.",
-          "choices": [
-            {
-              "id": "dog-lick-girl",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "👧"
-                  }
-                ]
-              ],
-              "label": "пёс лижет машу."
             },
             {
-              "id": "cat-lick-girl",
+              "id": "cat-call-dad",
               "scene": [
                 [
                   {
                     "emoji": "🐱"
                   },
                   {
-                    "emoji": "👧"
+                    "emoji": "👨"
                   }
                 ]
               ],
-              "label": "кот лижет машу."
+              "label": "кот зовёт папу."
             },
             {
-              "id": "dog-lick-boy",
+              "id": "girl-call-cat",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "пёс лижет петю."
+              "label": "маша зовёт кота."
             }
           ],
-          "correct": "dog-lick-girl"
+          "correct": "girl-call-dad"
         },
         {
-          "word": "МАМА ОБНИМАЕТ МАШУ.",
-          "syllables": "МА-МА ОБ-НИ-МА-ЕТ МА-ШУ.",
+          "word": "МАША НЕСЁТ СВЕЧУ.",
+          "syllables": "МА-ША НЕ-СЁТ СВЕ-ЧУ.",
           "choices": [
             {
-              "id": "mom-hug-girl",
+              "id": "girl-carry-candle",
               "scene": [
                 [
                   {
-                    "emoji": "👩"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "👧"
+                    "emoji": "🕯️"
                   }
                 ]
               ],
-              "label": "мама обнимает машу."
+              "label": "маша несёт свечу."
             },
             {
-              "id": "dad-hug-girl",
+              "id": "dad-carry-candle",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
+                    "emoji": "🕯️"
+                  }
+                ]
+              ],
+              "label": "папа несёт свечу."
+            },
+            {
+              "id": "girl-carry-cat",
+              "scene": [
+                [
+                  {
                     "emoji": "👧"
-                  }
-                ]
-              ],
-              "label": "папа обнимает машу."
-            },
-            {
-              "id": "mom-hug-boy",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "мама обнимает петю."
+              "label": "маша несёт кота."
             }
           ],
-          "correct": "mom-hug-girl"
+          "correct": "girl-carry-candle"
         },
         {
-          "word": "ПАПА ЧИТАЕТ КНИГУ.",
-          "syllables": "ПА-ПА ЧИ-ТА-ЕТ КНИ-ГУ.",
+          "word": "ПАПА НАХОДИТ ФОНАРИК.",
+          "syllables": "ПА-ПА НА-ХО-ДИТ ФО-НА-РИК.",
           "choices": [
             {
-              "id": "dad-read-book",
+              "id": "dad-find-lamp",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "📖"
+                    "emoji": "🔦"
                   }
                 ]
               ],
-              "label": "папа читает книгу."
+              "label": "папа находит фонарик."
             },
             {
-              "id": "grandpa-read-book",
+              "id": "girl-find-lamp",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "📖"
+                    "emoji": "🔦"
                   }
                 ]
               ],
-              "label": "дед читает книгу."
+              "label": "маша находит фонарик."
             },
             {
-              "id": "dad-read-letter",
+              "id": "dad-find-candle",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "✉️"
+                    "emoji": "🕯️"
                   }
                 ]
               ],
-              "label": "папа читает письмо."
+              "label": "папа находит свечу."
             }
           ],
-          "correct": "dad-read-book"
+          "correct": "dad-find-lamp"
         },
         {
-          "word": "БАБУШКА ПЬЁТ ЧАЙ.",
-          "syllables": "БА-БУШ-КА ПЬЁТ ЧАЙ.",
+          "word": "МАША ИЩЕТ КОТА.",
+          "syllables": "МА-ША И-ЩЕТ КО-ТА.",
           "choices": [
             {
-              "id": "grandma-drink-tea",
+              "id": "girl-seek-cat",
               "scene": [
                 [
                   {
-                    "emoji": "👵"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "☕"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "бабушка пьёт чай."
+              "label": "маша ищет кота."
             },
             {
-              "id": "grandpa-drink-tea",
+              "id": "dad-seek-cat",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "☕"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "дед пьёт чай."
+              "label": "папа ищет кота."
             },
             {
-              "id": "grandma-drink-milk",
+              "id": "girl-seek-lamp",
               "scene": [
                 [
                   {
-                    "emoji": "👵"
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🔦"
+                  }
+                ]
+              ],
+              "label": "маша ищет фонарик."
+            }
+          ],
+          "correct": "girl-seek-cat"
+        },
+        {
+          "word": "ПАПА НАХОДИТ КОТА.",
+          "syllables": "ПА-ПА НА-ХО-ДИТ КО-ТА.",
+          "choices": [
+            {
+              "id": "dad-find-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "папа находит кота."
+            },
+            {
+              "id": "girl-find-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "маша находит кота."
+            },
+            {
+              "id": "dad-find-candle",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🕯️"
+                  }
+                ]
+              ],
+              "label": "папа находит свечу."
+            }
+          ],
+          "correct": "dad-find-cat"
+        },
+        {
+          "word": "КОТ ПЬЁТ МОЛОКО.",
+          "syllables": "КОТ ПЬЁТ МО-ЛО-КО.",
+          "choices": [
+            {
+              "id": "cat-drink-milk",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐱"
                   },
                   {
                     "emoji": "🥛"
                   }
                 ]
               ],
-              "label": "бабушка пьёт молоко."
-            }
-          ],
-          "correct": "grandma-drink-tea"
-        },
-        {
-          "word": "ПЕТЯ ЕСТ ПИРОГ.",
-          "syllables": "ПЕ-ТЯ ЕСТ ПИ-РОГ.",
-          "choices": [
-            {
-              "id": "boy-eat-pie",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🥧"
-                  }
-                ]
-              ],
-              "label": "петя ест пирог."
+              "label": "кот пьёт молоко."
             },
             {
-              "id": "girl-eat-pie",
+              "id": "girl-drink-milk",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🥧"
+                    "emoji": "🥛"
                   }
                 ]
               ],
-              "label": "маша ест пирог."
+              "label": "маша пьёт молоко."
             },
             {
-              "id": "boy-eat-bread",
+              "id": "cat-drink-tea",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🍞"
+                    "emoji": "☕"
                   }
                 ]
               ],
-              "label": "петя ест хлеб."
+              "label": "кот пьёт чай."
             }
           ],
-          "correct": "boy-eat-pie"
+          "correct": "cat-drink-milk"
+        },
+        {
+          "word": "МАША ВИДИТ ЛУНУ.",
+          "syllables": "МА-ША ВИ-ДИТ ЛУ-НУ.",
+          "choices": [
+            {
+              "id": "girl-see-moon",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🌙"
+                  }
+                ]
+              ],
+              "label": "маша видит луну."
+            },
+            {
+              "id": "dad-see-moon",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🌙"
+                  }
+                ]
+              ],
+              "label": "папа видит луну."
+            },
+            {
+              "id": "girl-see-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "маша видит кота."
+            }
+          ],
+          "correct": "girl-see-moon"
+        },
+        {
+          "word": "ПАПА ПОЁТ МАШЕ.",
+          "syllables": "ПА-ПА ПО-ЁТ МА-ШЕ.",
+          "choices": [
+            {
+              "id": "dad-sing-girl",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨",
+                    "badge": "🎵"
+                  },
+                  {
+                    "emoji": "👧"
+                  }
+                ]
+              ],
+              "label": "папа поёт маше."
+            },
+            {
+              "id": "dad-sing-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨",
+                    "badge": "🎵"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "папа поёт коту."
+            },
+            {
+              "id": "cat-sing-girl",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐱",
+                    "badge": "🎵"
+                  },
+                  {
+                    "emoji": "👧"
+                  }
+                ]
+              ],
+              "label": "кот поёт маше."
+            }
+          ],
+          "correct": "dad-sing-girl"
+        },
+        {
+          "word": "ПАПА ГАСИТ СВЕЧУ.",
+          "syllables": "ПА-ПА ГА-СИТ СВЕ-ЧУ.",
+          "choices": [
+            {
+              "id": "dad-snuff-candle",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🕯️"
+                  }
+                ]
+              ],
+              "label": "папа гасит свечу."
+            },
+            {
+              "id": "girl-snuff-candle",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🕯️"
+                  }
+                ]
+              ],
+              "label": "маша гасит свечу."
+            },
+            {
+              "id": "dad-snuff-lamp",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🔦"
+                  }
+                ]
+              ],
+              "label": "папа гасит фонарик."
+            }
+          ],
+          "correct": "dad-snuff-candle"
         },
         {
           "word": "КОТ СПИТ ДОМА.",
@@ -9486,25 +9544,26 @@
               "label": "кот спит дома."
             },
             {
-              "id": "cat-cry-house",
+              "id": "cat-sing-house",
               "scene": [
                 [
                   {
-                    "emoji": "😿"
+                    "emoji": "🐱",
+                    "badge": "🎵"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "кот плачет дома."
+              "label": "кот поёт дома."
             },
             {
-              "id": "dog-sleep-house",
+              "id": "dad-sleep-house",
               "scene": [
                 [
                   {
-                    "emoji": "🐶",
+                    "emoji": "👨",
                     "badge": "💤"
                   },
                   {
@@ -9512,59 +9571,10 @@
                   }
                 ]
               ],
-              "label": "пёс спит дома."
+              "label": "папа спит дома."
             }
           ],
           "correct": "cat-sleep-house"
-        },
-        {
-          "word": "ДЕД ГАСИТ СВЕЧУ.",
-          "syllables": "ДЕД ГА-СИТ СВЕ-ЧУ.",
-          "choices": [
-            {
-              "id": "grandpa-snuff-candle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🕯️"
-                  }
-                ]
-              ],
-              "label": "дед гасит свечу."
-            },
-            {
-              "id": "mom-snuff-candle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🕯️"
-                  }
-                ]
-              ],
-              "label": "мама гасит свечу."
-            },
-            {
-              "id": "grandpa-snuff-lamp",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🔦"
-                  }
-                ]
-              ],
-              "label": "дед гасит фонарик."
-            }
-          ],
-          "correct": "grandpa-snuff-candle"
         }
       ]
     },
@@ -9578,26 +9588,12 @@
         "#225b57"
       ],
       "intro": "Лето кончается. Пора возвращаться в город.",
-      "completeText": "Машина уезжает, бабушка и дед машут вслед. До следующего лета, дача!",
+      "completeText": "Петя и кот снова в городе. До следующего лета, дача!",
       "tasks": [
         {
-          "word": "ПАПА МОЕТ МАШИНУ.",
-          "syllables": "ПА-ПА МО-ЕТ МА-ШИ-НУ.",
+          "word": "ПЕТЯ МОЕТ МАШИНУ.",
+          "syllables": "ПЕ-ТЯ МО-ЕТ МА-ШИ-НУ.",
           "choices": [
-            {
-              "id": "dad-wash-car",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "🚗"
-                  }
-                ]
-              ],
-              "label": "папа моет машину."
-            },
             {
               "id": "boy-wash-car",
               "scene": [
@@ -9613,40 +9609,89 @@
               "label": "петя моет машину."
             },
             {
-              "id": "dad-wash-dog",
+              "id": "dad-wash-car",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🚗"
                   }
                 ]
               ],
-              "label": "папа моет пса."
-            }
-          ],
-          "correct": "dad-wash-car"
-        },
-        {
-          "word": "МАМА НЕСЁТ ЧЕМОДАН.",
-          "syllables": "МА-МА НЕ-СЁТ ЧЕ-МО-ДАН.",
-          "choices": [
+              "label": "папа моет машину."
+            },
             {
-              "id": "mom-carry-suitcase",
+              "id": "boy-wash-ball",
               "scene": [
                 [
                   {
-                    "emoji": "👩"
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "⚽"
+                  }
+                ]
+              ],
+              "label": "петя моет мяч."
+            }
+          ],
+          "correct": "boy-wash-car"
+        },
+        {
+          "word": "ПЕТЯ НЕСЁТ МЯЧ.",
+          "syllables": "ПЕ-ТЯ НЕ-СЁТ МЯЧ.",
+          "choices": [
+            {
+              "id": "boy-carry-ball",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "⚽"
+                  }
+                ]
+              ],
+              "label": "петя несёт мяч."
+            },
+            {
+              "id": "dad-carry-ball",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "⚽"
+                  }
+                ]
+              ],
+              "label": "папа несёт мяч."
+            },
+            {
+              "id": "boy-carry-suitcase",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🧳"
                   }
                 ]
               ],
-              "label": "мама несёт чемодан."
-            },
+              "label": "петя несёт чемодан."
+            }
+          ],
+          "correct": "boy-carry-ball"
+        },
+        {
+          "word": "ПАПА НЕСЁТ ЧЕМОДАН.",
+          "syllables": "ПА-ПА НЕ-СЁТ ЧЕ-МО-ДАН.",
+          "choices": [
             {
               "id": "dad-carry-suitcase",
               "scene": [
@@ -9662,187 +9707,40 @@
               "label": "папа несёт чемодан."
             },
             {
-              "id": "mom-carry-basket",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🧺"
-                  }
-                ]
-              ],
-              "label": "мама несёт корзину."
-            }
-          ],
-          "correct": "mom-carry-suitcase"
-        },
-        {
-          "word": "БАБУШКА ПЕЧЁТ ПИРОГ.",
-          "syllables": "БА-БУШ-КА ПЕ-ЧЁТ ПИ-РОГ.",
-          "choices": [
-            {
-              "id": "grandma-cook-pie",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🥧"
-                  }
-                ]
-              ],
-              "label": "бабушка печёт пирог."
-            },
-            {
-              "id": "mom-cook-pie",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩‍🍳"
-                  },
-                  {
-                    "emoji": "🥧"
-                  }
-                ]
-              ],
-              "label": "мама печёт пирог."
-            },
-            {
-              "id": "grandma-cook-cake",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🎂"
-                  }
-                ]
-              ],
-              "label": "бабушка печёт торт."
-            }
-          ],
-          "correct": "grandma-cook-pie"
-        },
-        {
-          "word": "БАБУШКА КЛАДЁТ ПИРОГ.",
-          "syllables": "БА-БУШ-КА КЛА-ДЁТ ПИ-РОГ.",
-          "choices": [
-            {
-              "id": "grandma-put-pie",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🥧"
-                  }
-                ]
-              ],
-              "label": "бабушка кладёт пирог."
-            },
-            {
-              "id": "girl-put-pie",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🥧"
-                  }
-                ]
-              ],
-              "label": "маша кладёт пирог."
-            },
-            {
-              "id": "grandma-put-apple",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🍎"
-                  }
-                ]
-              ],
-              "label": "бабушка кладёт яблоко."
-            }
-          ],
-          "correct": "grandma-put-pie"
-        },
-        {
-          "word": "ДЕД НЕСЁТ КОРЗИНУ.",
-          "syllables": "ДЕД НЕ-СЁТ КОР-ЗИ-НУ.",
-          "choices": [
-            {
-              "id": "grandpa-carry-basket",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🧺"
-                  }
-                ]
-              ],
-              "label": "дед несёт корзину."
-            },
-            {
-              "id": "boy-carry-basket",
+              "id": "boy-carry-suitcase",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🧺"
-                  }
-                ]
-              ],
-              "label": "петя несёт корзину."
-            },
-            {
-              "id": "grandpa-carry-suitcase",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
                     "emoji": "🧳"
                   }
                 ]
               ],
-              "label": "дед несёт чемодан."
-            }
-          ],
-          "correct": "grandpa-carry-basket"
-        },
-        {
-          "word": "МАША ИЩЕТ КОТА.",
-          "syllables": "МА-ША И-ЩЕТ КО-ТА.",
-          "choices": [
+              "label": "петя несёт чемодан."
+            },
             {
-              "id": "girl-seek-cat",
+              "id": "dad-carry-basket",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "маша ищет кота."
-            },
+              "label": "папа несёт корзину."
+            }
+          ],
+          "correct": "dad-carry-suitcase"
+        },
+        {
+          "word": "ПЕТЯ ИЩЕТ КОТА.",
+          "syllables": "ПЕ-ТЯ И-ЩЕТ КО-ТА.",
+          "choices": [
             {
               "id": "boy-seek-cat",
               "scene": [
@@ -9858,21 +9756,84 @@
               "label": "петя ищет кота."
             },
             {
-              "id": "girl-seek-dog",
+              "id": "dad-seek-cat",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "маша ищет пса."
+              "label": "папа ищет кота."
+            },
+            {
+              "id": "boy-seek-ball",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "⚽"
+                  }
+                ]
+              ],
+              "label": "петя ищет мяч."
             }
           ],
-          "correct": "girl-seek-cat"
+          "correct": "boy-seek-cat"
+        },
+        {
+          "word": "ПАПА ЗОВЁТ КОТА.",
+          "syllables": "ПА-ПА ЗО-ВЁТ КО-ТА.",
+          "choices": [
+            {
+              "id": "dad-call-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "папа зовёт кота."
+            },
+            {
+              "id": "boy-call-cat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "петя зовёт кота."
+            },
+            {
+              "id": "dad-call-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "папа зовёт петю."
+            }
+          ],
+          "correct": "dad-call-cat"
         },
         {
           "word": "В КОРЗИНЕ КОТ.",
@@ -9907,165 +9868,220 @@
               "label": "в чемодане кот."
             },
             {
-              "id": "in-basket-dog",
+              "id": "in-basket-ball",
               "scene": [
                 [
                   {
                     "emoji": "🧺"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "в корзине пёс."
+              "label": "в корзине мяч."
             }
           ],
           "correct": "in-basket-cat"
         },
         {
-          "word": "КОТ ЦЕЛУЕТ БАБУШКУ.",
-          "syllables": "КОТ ЦЕ-ЛУ-ЕТ БА-БУШ-КУ.",
+          "word": "КОТ ЦЕЛУЕТ ПЕТЮ.",
+          "syllables": "КОТ ЦЕ-ЛУ-ЕТ ПЕ-ТЮ.",
           "choices": [
             {
-              "id": "cat-kiss-grandma",
+              "id": "cat-kiss-boy",
               "scene": [
                 [
                   {
                     "emoji": "😽"
                   },
                   {
-                    "emoji": "👵"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "кот целует бабушку."
+              "label": "кот целует петю."
             },
             {
-              "id": "dog-kiss-grandma",
+              "id": "dad-kiss-boy",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "👵"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "пёс целует бабушку."
+              "label": "папа целует петю."
             },
             {
-              "id": "cat-kiss-grandpa",
+              "id": "cat-kiss-dad",
               "scene": [
                 [
                   {
                     "emoji": "😽"
                   },
                   {
-                    "emoji": "👴"
+                    "emoji": "👨"
                   }
                 ]
               ],
-              "label": "кот целует деда."
+              "label": "кот целует папу."
             }
           ],
-          "correct": "cat-kiss-grandma"
+          "correct": "cat-kiss-boy"
         },
         {
-          "word": "ДВЕ КУРИЦЫ ПОЮТ.",
-          "syllables": "ДВЕ КУ-РИ-ЦЫ ПО-ЮТ.",
+          "word": "ПАПА ВЕДЁТ МАШИНУ.",
+          "syllables": "ПА-ПА ВЕ-ДЁТ МА-ШИ-НУ.",
           "choices": [
             {
-              "id": "two-hen-sing",
+              "id": "dad-lead-car",
               "scene": [
                 [
                   {
-                    "emoji": "🐔",
-                    "count": 2,
-                    "badge": "🎵"
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🚗"
                   }
                 ]
               ],
-              "label": "две курицы поют."
+              "label": "папа ведёт машину."
             },
             {
-              "id": "three-hen-sing",
+              "id": "boy-lead-car",
               "scene": [
                 [
                   {
-                    "emoji": "🐔",
-                    "count": 3,
-                    "badge": "🎵"
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🚗"
                   }
                 ]
               ],
-              "label": "три курицы поют."
+              "label": "петя ведёт машину."
             },
             {
-              "id": "two-hen-sleep",
+              "id": "dad-lead-cat",
               "scene": [
                 [
                   {
-                    "emoji": "🐔",
-                    "count": 2,
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🐱"
+                  }
+                ]
+              ],
+              "label": "папа ведёт кота."
+            }
+          ],
+          "correct": "dad-lead-car"
+        },
+        {
+          "word": "ПЕТЯ ДЕРЖИТ КОРЗИНУ.",
+          "syllables": "ПЕ-ТЯ ДЕР-ЖИТ КОР-ЗИ-НУ.",
+          "choices": [
+            {
+              "id": "boy-hold-basket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "петя держит корзину."
+            },
+            {
+              "id": "dad-hold-basket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🧺"
+                  }
+                ]
+              ],
+              "label": "папа держит корзину."
+            },
+            {
+              "id": "boy-hold-ball",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "⚽"
+                  }
+                ]
+              ],
+              "label": "петя держит мяч."
+            }
+          ],
+          "correct": "boy-hold-basket"
+        },
+        {
+          "word": "ПЕТЯ СПИТ ДОМА.",
+          "syllables": "ПЕ-ТЯ СПИТ ДО-МА.",
+          "choices": [
+            {
+              "id": "boy-sleep-house",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦",
                     "badge": "💤"
-                  }
-                ]
-              ],
-              "label": "две курицы спят."
-            }
-          ],
-          "correct": "two-hen-sing"
-        },
-        {
-          "word": "ДЕД ОБНИМАЕТ ПЕТЮ.",
-          "syllables": "ДЕД ОБ-НИ-МА-ЕТ ПЕ-ТЮ.",
-          "choices": [
-            {
-              "id": "grandpa-hug-boy",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "дед обнимает петю."
+              "label": "петя спит дома."
             },
             {
-              "id": "grandma-hug-boy",
+              "id": "boy-sing-house",
               "scene": [
                 [
                   {
-                    "emoji": "👵"
+                    "emoji": "👦",
+                    "badge": "🎵"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "бабушка обнимает петю."
+              "label": "петя поёт дома."
             },
             {
-              "id": "grandpa-hug-girl",
+              "id": "dad-sleep-house",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👨",
+                    "badge": "💤"
                   },
                   {
-                    "emoji": "👧"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "дед обнимает машу."
+              "label": "папа спит дома."
             }
           ],
-          "correct": "grandpa-hug-boy"
+          "correct": "boy-sleep-house"
         }
       ]
     }
