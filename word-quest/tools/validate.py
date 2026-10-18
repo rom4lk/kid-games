@@ -189,6 +189,14 @@ MAX_SCENE_EMOJI = 3
 MAX_SCENE_UNITS = 4.5        # layout units per panel: an item 1, a big item 1.25, a gap 0.5
 MAX_PHRASE_LIKE_SHARE = 0.2  # warning: sentences with no glue word, a phrase with a full stop
 MAX_CONTEXT_GIVEAWAY_SHARE = 0.3   # warning: tasks the story so far answers without reading
+# Pictures a child takes for each other: a wrong answer never swaps them (close colors likewise).
+LOOKALIKE_NOUNS = {frozenset(pair) for pair in [("teddy", "bear"), ("mom", "girl"), ("horse", "carousel")]}
+# The 🎵 badge on a correct sentence: only subjects that really sing in that language. ПЕТУХ ПОЁТ is
+# idiomatic Russian; ROOSTER SINGS is not English.
+SINGING_SUBJECTS = {
+    "en": {"mom", "dad", "grandma", "grandpa", "boy", "girl", "baby", "clown", "bird"},
+    "ru": {"mom", "dad", "grandma", "grandpa", "boy", "girl", "baby", "clown", "bird", "rooster"},
+}
 PRONOUN_SLUGS = {"he", "she", "it", "they", "him", "her", "them"}
 # Glue words are read but never drawn, and a wrong answer never changes them. English never splits
 # the function words among them.
@@ -1315,6 +1323,9 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
             classes_per.append(classes)
             if choice_id == task["correct"]:
                 glue_by_sentence = (glue_by_sentence or []) + [has_glue]
+                for group in drawn:
+                    if group["verb"] == "sing" and group["noun"] not in SINGING_SUBJECTS[language]:
+                        story_error(f'{context}: "{group["noun"]}" does not sing in {language}; give the 🎵 to a person or a songbird')
         if len(classes_per) != sentence_count:
             continue
         classes_by_choice[choice_id] = classes_per
@@ -1365,6 +1376,12 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
     for choice_id, (choice, slugs_per, words_per) in parsed.items():
         if choice_id == task["correct"]:
             continue
+        if [len(slugs) for slugs in slugs_per] != [len(slugs) for slugs in correct_slugs]:
+            errors.append(
+                f'{where}: distractor "{choice_id}" has a different number of words than the correct answer;'
+                " it must change one word, not add or drop one"
+            )
+            continue
         changed = [(index, position) for index, position, slug in flat_correct if slugs_per[index][position] != slug]
         if len(changed) != 1:
             errors.append(f'{where}: distractor "{choice_id}" changes {len(changed)} words, expected exactly 1')
@@ -1382,6 +1399,9 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 continue
             if old_kind != new_kind:
                 errors.append(f'{where}: distractor "{choice_id}" turns a {old_kind} into a {new_kind}')
+                continue
+            if frozenset((old_slug, new_slug)) in CLOSE_COLORS | LOOKALIKE_NOUNS:
+                errors.append(f'{where}: distractor "{choice_id}" swaps {old_slug} for {new_slug}, which look alike')
                 continue
         else:
             old_kind = None
@@ -1407,6 +1427,8 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
         "slugs": {slug for slugs in correct_slugs for slug in slugs},
         "glue": glue_by_sentence or [],
         "giveaways": {form for change in changes for form in change["forms"]},
+        "scene": json.dumps(correct_choice["scene"], sort_keys=True, ensure_ascii=False),
+        "scenes": frozenset(json.dumps(choice["scene"], sort_keys=True, ensure_ascii=False) for choice in choices),
     }
 
 
@@ -1473,6 +1495,22 @@ def validate_story_pack(language, level):
             for token in phrase_tokens(intro):
                 if token in chapter_infos[0]["giveaways"]:
                     errors.append(f'{where}: the intro gives away the changed word "{token}" of task 1')
+
+        # The child would tap the picture he tapped before: a correct scene comes back in the chapter.
+        shown: dict[str, tuple] = {}
+        for task_index, info in enumerate(chapter_infos):
+            if not info:
+                continue
+            earlier_task = shown.get(info["scene"])
+            if earlier_task is None:
+                shown[info["scene"]] = (task_index, info["scenes"])
+            elif earlier_task[1] == info["scenes"]:
+                errors.append(
+                    f"{where}: task {task_index + 1} shows the same three scenes as task {earlier_task[0] + 1}"
+                    " with the same correct one"
+                )
+            else:
+                warnings.append(f"{where}: task {task_index + 1} has the same correct scene as task {earlier_task[0] + 1}")
 
         # A context giveaway: the story has met the correct noun, and the wrong one never appears in it.
         chapter_slugs = set().union(*(info["slugs"] for info in chapter_infos if info))
