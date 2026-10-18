@@ -152,11 +152,68 @@ RU_YO_WORDS = {
     "ПРИШЁЛ", "НАШЁЛ", "ПОШЁЛ", "УШЁЛ", "ПЁС", "ЁЖ", "ЁЖИК", "КОТЁНОК", "КОТЁНКА", "ЦЫПЛЁНОК",
     "ЦЫПЛЁНКА", "ПОРОСЁНОК", "ПОРОСЁНКА", "ЛИСЁНОК", "СЛОНЁНОК", "УТЁНОК", "ЛЁД", "ЁЛКА", "ЁЛКИ",
     "ЕЩЁ", "ЕЁ", "САМОЛЁТ", "МЁД", "ОРЁЛ", "КЛЁН", "БЕРЁЗА", "ПЧЁЛКА", "ЗВЁЗД", "ЗВЁЗДОЧКА",
+    # Forms the stories need. A form whose Е spelling is another word (ВСЁ, ПОЁМ) never goes here.
+    "ДАЁТ", "ВСТАЁТ", "ЛЁГ", "ПРИНЁС", "ГРЫЗЁТ", "ИДЁМ", "ЁЖИКА", "ЁЖИКУ", "ЖДЁТ", "КЛЮЁТ", "ПЕЧЁТ",
+    "НЁС", "КЛАДЁТ", "ВЕЗЁТ", "ЁЛКУ", "ШЬЁТ", "ЛЬЁТ", "ДНЁМ",
 }
 RU_YO_AS_E = {word.replace("Ё", "Е"): word for word in RU_YO_WORDS}
 PHRASE_ID = re.compile(r"^[a-z]+(-[a-z]+)*$")
 PHRASE_KINDS = ("color", "number", "size", "action")
 MODIFIER_ORDER = ["number", "size", "color"]
+
+# Story levels: stories.<lang>.<a|b|c>.json, a chapter is one story of short sentences read in order.
+# level -> sentences per task and, per language, (min words, max words, longest word) per sentence.
+# English articles do not count as words: THE CAT DRINKS MILK is a three-word sentence.
+STORY_LEVELS = {
+    "a": (1, {"en": (3, 3, 7), "ru": (3, 3, 9)}),
+    "b": (1, {"en": (4, 5, 8), "ru": (4, 5, 10)}),
+    "c": (2, {"en": (3, 5, 8), "ru": (3, 5, 10)}),
+}
+STORY_ALPHABETS = {
+    "en": re.compile(r"^[A-Z]+( [A-Z]+)*[.!]( [A-Z]+( [A-Z]+)*[.!])*$"),
+    "ru": re.compile(r"^[А-ЯЁ]+( [А-ЯЁ]+)*[.!]( [А-ЯЁ]+( [А-ЯЁ]+)*[.!])*$"),
+}
+STORY_ID = re.compile(r"^[a-z]+(-[a-z]+)*(\.[a-z]+(-[a-z]+)*)*$")
+EN_ARTICLES = {"A", "AN", "THE"}
+MAX_SPLIT_WORD = 12          # characters of a split word on the card, its final full stop included
+# A story level is two hundred tasks too; a sentence may come back once, never in the same chapter.
+MIN_UNIQUE_SENTENCES = {"a": 170, "b": 170, "c": 340}
+MAX_SENTENCE_REPEATS = 2
+# Most verbs have no picture and are read but never checked, so the tasks that change a pictured
+# verb have a floor of their own, as do the number, size and color changes in levels B and C.
+MIN_VERB_TASKS = {"a": 20, "b": 20, "c": 20}
+MIN_MODIFIER_TASKS = 30      # levels b and c
+# A panel is a scene of 2-3 emoji: a badge is not counted, every counted copy is.
+MIN_SCENE_EMOJI = 2
+MAX_SCENE_EMOJI = 3
+MAX_SCENE_UNITS = 4.5        # layout units per panel: an item 1, a big item 1.25, a gap 0.5
+MAX_PHRASE_LIKE_SHARE = 0.2  # warning: sentences with no glue word, a phrase with a full stop
+MAX_CONTEXT_GIVEAWAY_SHARE = 0.3   # warning: tasks the story so far answers without reading
+PRONOUN_SLUGS = {"he", "she", "it", "they", "him", "her", "them"}
+# Glue words are read but never drawn, and a wrong answer never changes them. English never splits
+# the function words among them.
+FUNCTION_SLUGS = PRONOUN_SLUGS | {
+    # prepositions
+    "on", "in", "under", "to", "from", "with", "by", "behind", "over",
+    # possession: У, HAS
+    "have",
+    # articles
+    "the", "a",
+    "and",
+}
+GLUE_SLUGS = FUNCTION_SLUGS | {
+    # adverbs
+    "here", "there", "now", "again", "too", "fast", "very",
+    # verbs with no picture; drive is riding in a vehicle, toy is playing with something
+    "drink", "eat", "gnaw", "read", "carry", "give", "drive", "toy", "see", "find", "look", "like",
+    "want", "take", "hold", "bring", "catch", "build", "wash", "open", "hide", "wake", "sit", "lie",
+    "live", "fly", "jump", "go", "seek", "knit", "call", "wait", "lick", "sniff", "roll", "hug",
+    "pick", "throw", "chase", "feed", "pull", "dig", "buy", "put", "make", "meet", "sew", "fix",
+    "plant", "water", "rock", "stroke", "peck", "drag", "lose", "hear", "grow", "knock", "pour",
+    # places and times with no emoji of their own
+    "forest", "park", "garden", "field", "river", "yard", "street", "town",
+    "morning", "day", "evening", "night",
+} | {verb for _, verb in VERB_PICTURES}   # glue for a subject that has no picture of them
 
 require_all = "--all" in sys.argv
 errors: list[str] = []
@@ -929,6 +986,556 @@ def validate_phrase_pack(language, level):
                 )
 
 
+# Registries of the story packs. Picture -> noun spans both languages and is seeded from the phrase
+# packs; form -> slug is kept per language. Russian puts one noun in several cases (КОТ, КОТА, КОТУ),
+# so a story checks that one form always means one slug, the other way round from the phrases.
+story_nouns: dict[str, tuple] = {}
+story_forms: dict[tuple, tuple] = {}
+
+
+def story_error(message):
+    # The sentence a distractor leaves alone is drawn three times, so the same fault would repeat.
+    if message not in errors:
+        errors.append(message)
+
+
+def seed_story_nouns():
+    for meaning, (picture, where) in phrase_pictures.items():
+        noun = next((slug for slug in meaning if slug_class(slug) == "noun"), None)
+        if noun:
+            story_nouns.setdefault(picture[0], (noun, where))
+
+
+def sentences_of(text):
+    return re.split(r"(?<=[.!]) ", text)
+
+
+def bare_word(word):
+    return word.rstrip(".!").upper()
+
+
+def counted_words(language, words):
+    return [word for word in words if not (language == "en" and bare_word(word) in EN_ARTICLES)]
+
+
+def show_scene(panels):
+    def show_group(group):
+        text = group.get("emoji") or "?"
+        if group.get("badge"):
+            text += f'+{group["badge"]}'
+        if "count" in group:
+            text += f'x{group["count"]}'
+        if group.get("size"):
+            text += f'({group["size"]})'
+        return f"[{text}]"
+    return " / ".join(" ".join(show_group(group) for group in panel) for panel in panels)
+
+
+def panel_units(groups):
+    items = sum((group.get("count") or 1) * (1.25 if group.get("size") == "big" else 1) for group in groups)
+    return items + 0.5 * (len(groups) - 1)
+
+
+def story_scene(language, slugs, words, where):
+    """Draws one sentence from its slugs.
+
+    Returns (groups, classes, has_glue), where every group carries its picture fields and, under
+    "meaning", "noun" and "position", what the registries need; or None after reporting why not.
+    """
+    groups, classes, pending = [], [], []
+    has_glue = joined = False
+    for position, slug in enumerate(slugs):
+        kind = slug_class(slug)
+        if kind in MODIFIER_ORDER:
+            if pending and MODIFIER_ORDER.index(kind) <= MODIFIER_ORDER.index(pending[-1][0]):
+                story_error(f"{where}: the modifiers must come in the order number, size, color, each kind once")
+                return None
+            pending.append((kind, slug, position))
+            classes.append(kind)
+            continue
+        if kind == "verb" and classes and classes[-1] == "noun":
+            group = groups[-1]
+            if slug in BADGE_VERBS or (group["noun"], slug) in VERB_PICTURES:
+                if group["joined"]:
+                    story_error(f'{where}: "{slug}" is drawn, so a pictured verb needs one noun subject right before it')
+                    return None
+                group["verb"] = slug
+                classes.append("verb")
+                continue
+        if pending and (kind == "verb" or slug in GLUE_SLUGS):
+            story_error(f"{where}: a number, a size or a color must stand right before its noun")
+            return None
+        if kind == "verb" and (slug in BADGE_VERBS or (classes and slugs[position - 1] in PRONOUN_SLUGS)):
+            story_error(f'{where}: "{slug}" is drawn, so a pictured verb needs one noun subject right before it')
+            return None
+        if kind == "verb" or slug in GLUE_SLUGS:
+            joined = joined or (slug == "and" and bool(classes) and classes[-1] == "noun")
+            has_glue = True
+            classes.append("glue")
+            continue
+        modifiers = {value_kind: (value, value_position) for value_kind, value, value_position in pending}
+        groups.append({
+            "noun": slug, "position": position, "joined": joined,
+            "number": modifiers.get("number", (None, None))[0],
+            "number_position": modifiers.get("number", (None, None))[1],
+            "size": modifiers.get("size", (None, None))[0],
+            "color": modifiers.get("color", (None, None))[0],
+            "verb": None,
+        })
+        classes.append("noun")
+        pending, joined = [], False
+    if pending:
+        story_error(f"{where}: a number, a size or a color must stand right before its noun")
+        return None
+
+    drawn = []
+    for group in groups:
+        noun, color, verb = group["noun"], group["color"], group["verb"]
+        badge = BADGE_VERBS.get(verb) if verb else None
+        if verb and not badge:
+            if color:
+                story_error(f'{where}: "{color} {noun} {verb}" would need a color and an action in one picture')
+                return None
+            emoji = VERB_PICTURES[(noun, verb)]
+        elif color:
+            emoji = COLOR_PICTURES.get((color, noun))
+            if emoji is None:
+                story_error(
+                    f'{where}: COLOR_PICTURES has no {color} {noun}; the emoji must genuinely have that color'
+                )
+                return None
+        else:
+            # A noun drawn for the first time takes the picture its choice gives and registers it.
+            known = phrase_pictures.get((noun,))
+            emoji = known[0][0] if known else None
+        picture = {"emoji": emoji}
+        if group["number"]:
+            picture["count"] = NUMBER_SLUGS[group["number"]]
+        if group["size"]:
+            picture["size"] = group["size"]
+        if badge:
+            picture["badge"] = badge
+        meaning = tuple(slug for slug in (color, noun, verb) if slug)
+        drawn.append({**picture, "meaning": meaning, "noun": noun, "position": group["position"],
+                      "value": NUMBER_SLUGS.get(group["number"]), "number_position": group["number_position"],
+                      "verb": verb})
+
+    emoji_count = sum(group.get("count", 1) for group in drawn)
+    if not MIN_SCENE_EMOJI <= emoji_count <= MAX_SCENE_EMOJI:
+        story_error(
+            f"{where}: the sentence draws {emoji_count} emoji, a scene needs {MIN_SCENE_EMOJI}-{MAX_SCENE_EMOJI}"
+        )
+        return None
+    if panel_units(drawn) > MAX_SCENE_UNITS:
+        story_error(f"{where}: the scene is wider than {MAX_SCENE_UNITS} layout units")
+        return None
+
+    # English number agreement, the phrase checks applied per group. A drawn noun is drawn once
+    # unless a number says otherwise, so without a number it has to be singular.
+    if language == "en":
+        for group in drawn:
+            noun_word = bare_word(words[group["position"]])
+            value = group["value"]
+            if value is not None and value > 1:
+                if not noun_word.endswith("S") and noun_word not in EN_IRREGULAR_PLURALS:
+                    story_error(f'{where}: noun "{noun_word}" is not plural after a number above one')
+            elif noun_word in EN_IRREGULAR_PLURALS or (noun_word.endswith("S") and noun_word not in EN_SINGULAR_S):
+                story_error(f'{where}: noun "{noun_word}" is drawn once, so it has to be singular')
+            if group["verb"]:
+                verb_word = bare_word(words[group["position"] + 1])
+                if value is not None and value > 1:
+                    if verb_word.endswith("S") and not verb_word.endswith("SS"):
+                        story_error(f'{where}: verb "{verb_word}" takes no -S after a plural')
+                elif not verb_word.endswith("S"):
+                    story_error(f'{where}: verb "{verb_word}" needs -S after a singular')
+    for group in drawn:
+        if group["value"] is not None:
+            numeral = bare_word(words[group["number_position"]])
+            if NUMBER_WORDS[language].get(numeral) != group["value"]:
+                story_error(f'{where}: word "{numeral}" is not the number {group["value"]}')
+    return drawn, classes, has_glue
+
+
+def register_story_group(where, group):
+    """Meaning -> picture as in the phrases, and picture -> noun across the story packs."""
+    register_picture(group["meaning"], (group["emoji"], group.get("badge") or ""), where)
+    if group.get("badge"):
+        register_picture(group["meaning"][:-1], (group["emoji"], ""), where)
+    known = story_nouns.get(group["emoji"])
+    if known is None:
+        story_nouns[group["emoji"]] = (group["noun"], where)
+    elif known[0] != group["noun"]:
+        story_error(
+            f'{where}: {group["emoji"]} is drawn for "{group["noun"]}" here but for "{known[0]}" in {known[1]};'
+            " one picture names one noun"
+        )
+
+
+def validate_story_task(file_name, language, level, chapter, task, task_index, seen_sentences):
+    """Checks one story task; returns what the pack-level checks need, or None if it is broken."""
+    where = f'{file_name}: chapter "{chapter.get("id")}", task {task_index + 1}'
+    sentence_count, limits = STORY_LEVELS[level]
+    min_words, max_words, longest_word = limits[language]
+
+    for field in ("word", "syllables", "correct"):
+        if not isinstance(task.get(field), str) or not task[field].strip():
+            errors.append(f'{where}: field "{field}" is missing or empty')
+            return None
+    for field in ("prompt", "success"):
+        if field in task:
+            errors.append(f'{where}: a story task has no "{field}"; the sentences are the story')
+
+    word = task["word"]
+    if not STORY_ALPHABETS[language].match(word):
+        errors.append(
+            f'{where}: "{word}" is not {language} upper-case sentences, each ending in "." or "!",'
+            " separated by single spaces"
+        )
+        return None
+    sentences = sentences_of(word)
+    if len(sentences) != sentence_count:
+        errors.append(f'{where}: "{word}" has {len(sentences)} sentences, expected {sentence_count}')
+        return None
+    for sentence in sentences:
+        sentence_words = sentence.split(" ")
+        count = len(counted_words(language, sentence_words))
+        if not min_words <= count <= max_words:
+            expected = f"{min_words}" if min_words == max_words else f"{min_words}-{max_words}"
+            errors.append(f'{where}: sentence "{sentence}" has {count} words, expected {expected}')
+        if max(len(bare_word(part)) for part in sentence_words) > longest_word:
+            errors.append(f'{where}: sentence "{sentence}" has a word longer than {longest_word} letters')
+        if sentence in seen_sentences:
+            errors.append(f'{where}: sentence "{sentence}" repeats inside the chapter')
+        seen_sentences.add(sentence)
+
+    syllables = task["syllables"]
+    word_tokens, split_tokens = word.split(" "), syllables.split(" ")
+    split_ok = False
+    if len(split_tokens) != len(word_tokens) or any(
+        split.replace("-", "") != token for split, token in zip(split_tokens, word_tokens)
+    ):
+        errors.append(f'{where}: syllables "{syllables}" do not spell "{word}"')
+    elif any(part == "" for split in split_tokens for part in split.split("-")):
+        errors.append(f'{where}: syllables "{syllables}" have an empty part')
+    else:
+        split_ok = True
+        for split in split_tokens:
+            if len(split) > MAX_SPLIT_WORD:
+                errors.append(f'{where}: "{split}" is longer than {MAX_SPLIT_WORD} characters on the card')
+        pack_splits = word_pack_splits(language)
+        for token, split in zip(word_tokens, split_tokens):
+            bare, bare_split = bare_word(token), split.rstrip(".!")
+            known = phrase_splits.get((language, bare))
+            if known is None:
+                phrase_splits[(language, bare)] = (bare_split, where)
+            elif known[0] != bare_split:
+                errors.append(f'{where}: "{bare}" is split "{bare_split}" here but "{known[0]}" in {known[1]}')
+            if bare in pack_splits and bare_split not in pack_splits[bare]:
+                warnings.append(
+                    f'{where}: "{bare}" is split "{bare_split}", but the word packs split it'
+                    f' {" or ".join(sorted(pack_splits[bare]))}'
+                )
+
+    choices = task.get("choices")
+    if not isinstance(choices, list) or len(choices) != 3:
+        errors.append(f"{where}: expected exactly 3 choices")
+        return None
+    for choice in choices:
+        if not (
+            isinstance(choice, dict)
+            and all(isinstance(choice.get(field), str) and choice[field].strip() for field in ("id", "label"))
+            and isinstance(choice.get("scene"), list)
+        ):
+            errors.append(f"{where}: a choice is missing id, scene or label")
+            return None
+    ids = {choice["id"] for choice in choices}
+    if len(ids) != 3:
+        errors.append(f"{where}: choice ids are not unique")
+        return None
+    if len({choice["label"].lower() for choice in choices}) != 3:
+        errors.append(f"{where}: choice labels are not unique")
+    for choice in choices:
+        for panel in choice["scene"]:
+            for group in panel if isinstance(panel, list) else []:
+                for field in ("emoji", "badge"):
+                    if isinstance(group, dict) and isinstance(group.get(field), str) and TEXT_LETTERS.search(group[field]):
+                        errors.append(f'{where}: choice "{choice["id"]}" {field} "{group[field]}" contains letters or digits')
+    if len({json.dumps(choice["scene"], sort_keys=True, ensure_ascii=False) for choice in choices}) != 3:
+        errors.append(f"{where}: two choices have the same scene")
+    if task["correct"] not in ids:
+        errors.append(f'{where}: correct id "{task["correct"]}" is not among the choices')
+        return None
+
+    parsed = {}
+    for choice in choices:
+        choice_id, label = choice["id"], choice["label"]
+        parts = choice_id.split(".")
+        if not STORY_ID.match(choice_id) or len(parts) != sentence_count:
+            errors.append(
+                f'{where}: choice id "{choice_id}" is not {sentence_count} part(s) of slugs joined by "-",'
+                ' the parts joined by "."'
+            )
+            return None
+        if not STORY_ALPHABETS[language].match(label.upper()) or len(sentences_of(label)) != sentence_count:
+            errors.append(f'{where}: choice label "{label}" is not {sentence_count} sentence(s) like the word')
+            return None
+        slugs_per = [part.split("-") for part in parts]
+        words_per = [sentence.split(" ") for sentence in sentences_of(label)]
+        if any(len(slugs) != len(words) for slugs, words in zip(slugs_per, words_per)):
+            errors.append(f'{where}: choice "{choice_id}" does not have one slug per word of its label "{label}"')
+            return None
+        parsed[choice_id] = (choice, slugs_per, words_per)
+
+    correct_choice, correct_slugs, correct_words = parsed[task["correct"]]
+    if correct_choice["label"].upper() != word:
+        errors.append(f'{where}: label of the correct choice "{correct_choice["label"]}" does not match "{word}"')
+
+    # English never splits a function word, an article or a word of one or two letters.
+    if language == "en" and split_ok:
+        position = 0
+        for slugs, sentence in zip(correct_slugs, sentences):
+            for slug, token in zip(slugs, sentence.split(" ")):
+                bare = bare_word(token)
+                if "-" in split_tokens[position] and (len(bare) <= 2 or bare in EN_ARTICLES or slug in FUNCTION_SLUGS):
+                    errors.append(f'{where}: "{bare}" is a function word and stays whole, found "{split_tokens[position]}"')
+                position += 1
+
+    classes_by_choice = {}
+    glue_by_sentence = None
+    for choice_id, (choice, slugs_per, words_per) in parsed.items():
+        drawn_panels, classes_per = [], []
+        for index, (slugs, words) in enumerate(zip(slugs_per, words_per)):
+            context = f'{where}: choice "{choice_id}"' + (f", sentence {index + 1}" if sentence_count > 1 else "")
+            result = story_scene(language, slugs, words, context)
+            if result is None:
+                break
+            drawn, classes, has_glue = result
+            drawn_panels.append(drawn)
+            classes_per.append(classes)
+            if choice_id == task["correct"]:
+                glue_by_sentence = (glue_by_sentence or []) + [has_glue]
+        if len(classes_per) != sentence_count:
+            continue
+        classes_by_choice[choice_id] = classes_per
+
+        # Form -> slug: one written form of a drawn word always means one slug. A typo check.
+        for slugs, words, classes in zip(slugs_per, words_per, classes_per):
+            for slug, form, kind in zip(slugs, (bare_word(word) for word in words), classes):
+                if kind == "glue":
+                    continue
+                known = story_forms.get((language, form))
+                if known is None:
+                    story_forms[(language, form)] = (slug, where)
+                elif known[0] != slug:
+                    story_error(f'{where}: "{form}" means "{slug}" here but "{known[0]}" in {known[1]}')
+
+        scene = choice["scene"]
+        shaped = len(scene) == sentence_count and all(
+            isinstance(panel, list) and len(panel) == len(drawn)
+            and all(isinstance(group, dict) for group in panel)
+            for panel, drawn in zip(scene, drawn_panels)
+        )
+        if shaped:
+            for panel, drawn in zip(scene, drawn_panels):
+                for group, expected in zip(panel, drawn):
+                    if expected["emoji"] is None and isinstance(group.get("emoji"), str):
+                        expected["emoji"] = group["emoji"]
+        expected_scene = [
+            [{field: group[field] for field in ("emoji", "count", "size", "badge") if field in group} for group in drawn]
+            for drawn in drawn_panels
+        ]
+        if scene != expected_scene:
+            errors.append(
+                f'{where}: choice "{choice_id}" scene {show_scene(scene) if shaped else json.dumps(scene, ensure_ascii=False)}'
+                f" does not match its words, expected {show_scene(expected_scene)}"
+            )
+            continue
+        for drawn in drawn_panels:
+            for group in drawn:
+                register_story_group(where, group)
+
+    # Distractors: one picturable word changed, a different word for each wrong answer, and in a
+    # two-sentence task a different sentence.
+    flat_correct = [(index, position, slug) for index, slugs in enumerate(correct_slugs) for position, slug in enumerate(slugs)]
+    changes = []
+    for choice_id, (choice, slugs_per, words_per) in parsed.items():
+        if choice_id == task["correct"]:
+            continue
+        changed = [(index, position) for index, position, slug in flat_correct if slugs_per[index][position] != slug]
+        if len(changed) != 1:
+            errors.append(f'{where}: distractor "{choice_id}" changes {len(changed)} words, expected exactly 1')
+            continue
+        index, position = changed[0]
+        old_slug, new_slug = correct_slugs[index][position], slugs_per[index][position]
+        old_classes, new_classes = classes_by_choice.get(task["correct"]), classes_by_choice.get(choice_id)
+        if old_classes and new_classes:
+            old_kind, new_kind = old_classes[index][position], new_classes[index][position]
+            if "glue" in (old_kind, new_kind):
+                errors.append(
+                    f'{where}: distractor "{choice_id}" changes "{old_slug}" to "{new_slug}", a glue word that is'
+                    " never drawn, so a wrong answer may not change it"
+                )
+                continue
+            if old_kind != new_kind:
+                errors.append(f'{where}: distractor "{choice_id}" turns a {old_kind} into a {new_kind}')
+                continue
+        else:
+            old_kind = None
+        changes.append({
+            "sentence": index, "position": position, "kind": old_kind, "old": old_slug, "new": new_slug,
+            "forms": {bare_word(correct_words[index][position]), bare_word(words_per[index][position])},
+        })
+    if len(changes) == 2:
+        first, second = changes
+        if sentence_count == 1 and first["position"] == second["position"]:
+            errors.append(f'{where}: both distractors change word {first["position"] + 1}; they must change different words')
+        if sentence_count > 1 and first["sentence"] == second["sentence"]:
+            errors.append(
+                f'{where}: both distractors change sentence {first["sentence"] + 1}; they must change words in'
+                " different sentences"
+            )
+
+    return {
+        "sentences": sentences,
+        "words": [len(counted_words(language, sentence.split(" "))) for sentence in sentences],
+        "kinds": {change["kind"] for change in changes if change["kind"]},
+        "noun_changes": [(change["old"], change["new"]) for change in changes if change["kind"] == "noun"],
+        "slugs": {slug for slugs in correct_slugs for slug in slugs},
+        "glue": glue_by_sentence or [],
+        "giveaways": {form for change in changes for form in change["forms"]},
+    }
+
+
+def validate_story_pack(language, level):
+    file_name = f"stories.{language}.{level}.json"
+    if not (CONTENT_DIR / file_name).exists():
+        (errors if require_all else warnings).append(f"{file_name}: file is missing")
+        return
+
+    pack = load_json(file_name)
+    if pack.get("language") != language:
+        errors.append(f'{file_name}: language "{pack.get("language")}" does not match the file name')
+    if pack.get("mode") != "story":
+        errors.append(f'{file_name}: mode "{pack.get("mode")}" is not "story"')
+    if pack.get("level") != level:
+        errors.append(f'{file_name}: level {pack.get("level")!r} does not match the file name')
+    chapters = pack.get("chapters")
+    if not isinstance(chapters, list):
+        errors.append(f"{file_name}: chapters must be a list")
+        return
+    # A pack is written five chapters at a time, so a short pack still gets its task checks.
+    if len(chapters) != CHAPTERS_PER_LEVEL:
+        errors.append(f"{file_name}: expected {CHAPTERS_PER_LEVEL} chapters, found {len(chapters)}")
+
+    chapter_ids = set()
+    infos = []
+    giveaway_tasks = 0
+    for chapter_index, chapter in enumerate(chapters):
+        where = f"{file_name}: chapter {chapter_index + 1}"
+        validate_chapter_header(where, chapter, chapter_ids)
+        intro = chapter.get("intro")
+        if not isinstance(intro, str) or not intro.strip():
+            errors.append(f'{where}: field "intro" is missing or empty')
+        if language == "ru":
+            for field in ("title", "intro", "completeText"):
+                if isinstance(chapter.get(field), str):
+                    check_yo(where, field, chapter[field])
+        tasks = chapter.get("tasks")
+        if not isinstance(tasks, list):
+            errors.append(f"{where}: tasks must be a list")
+            continue
+        if len(tasks) != WORDS_PER_CHAPTER:
+            errors.append(f"{where}: expected {WORDS_PER_CHAPTER} tasks, found {len(tasks)}")
+        seen_sentences: set[str] = set()
+        chapter_infos = []
+        for task_index, task in enumerate(tasks):
+            if not isinstance(task, dict):
+                errors.append(f"{where}, task {task_index + 1}: a task must be an object")
+                continue
+            chapter_infos.append(
+                validate_story_task(file_name, language, level, chapter, task, task_index, seen_sentences)
+            )
+            if language == "ru":
+                task_where = f'{file_name}: chapter "{chapter.get("id")}", task {task_index + 1}'
+                for field in ("word", "syllables"):
+                    if isinstance(task.get(field), str):
+                        check_yo(task_where, field, task[field])
+                for choice in task.get("choices") or []:
+                    if isinstance(choice, dict) and isinstance(choice.get("label"), str):
+                        check_yo(task_where, "label", choice["label"])
+
+        # The intro is read before task 1, so it may not name a word a distractor of task 1 changes.
+        if isinstance(intro, str) and chapter_infos and chapter_infos[0]:
+            for token in phrase_tokens(intro):
+                if token in chapter_infos[0]["giveaways"]:
+                    errors.append(f'{where}: the intro gives away the changed word "{token}" of task 1')
+
+        # A context giveaway: the story has met the correct noun, and the wrong one never appears in it.
+        chapter_slugs = set().union(*(info["slugs"] for info in chapter_infos if info))
+        earlier: set[str] = set()
+        for info in chapter_infos:
+            if not info:
+                continue
+            if any(old in earlier and new not in chapter_slugs for old, new in info["noun_changes"]):
+                giveaway_tasks += 1
+            earlier |= info["slugs"]
+            infos.append(info)
+
+    sentence_counts: dict[str, int] = {}
+    kind_counts = {kind: 0 for kind in ("noun", "number", "size", "color", "verb")}
+    word_counts = []
+    phrase_like = 0
+    for info in infos:
+        for sentence in info["sentences"]:
+            sentence_counts[sentence] = sentence_counts.get(sentence, 0) + 1
+        word_counts.extend(info["words"])
+        phrase_like += sum(1 for has_glue in info["glue"] if not has_glue)
+        for kind in info["kinds"]:
+            kind_counts[kind] += 1
+
+    total = len(infos)
+    max_repeat = max(sentence_counts.values(), default=0)
+    mean_words = sum(word_counts) / len(word_counts) if word_counts else 0
+    print(
+        f"{file_name}: {len(sentence_counts)} unique sentences, max repeats {max_repeat},"
+        f" mean {mean_words:.1f} words; changed "
+        + ", ".join(f"{kind} {count}" for kind, count in kind_counts.items())
+        + f"; context giveaways {giveaway_tasks} of {total}"
+    )
+
+    if len(sentence_counts) < MIN_UNIQUE_SENTENCES[level]:
+        errors.append(
+            f"{file_name}: only {len(sentence_counts)} unique sentences, fewer than the"
+            f" {MIN_UNIQUE_SENTENCES[level]} a level has to hold"
+        )
+    for sentence, count in sentence_counts.items():
+        if count > MAX_SENTENCE_REPEATS:
+            errors.append(
+                f'{file_name}: "{sentence}" is used {count} times, more than the {MAX_SENTENCE_REPEATS}'
+                " times one sentence may appear in a level"
+            )
+    if kind_counts["verb"] < MIN_VERB_TASKS[level]:
+        errors.append(f"{file_name}: only {kind_counts['verb']} tasks change a verb, fewer than {MIN_VERB_TASKS[level]}")
+    modifier_tasks = sum(1 for info in infos if info["kinds"] & {"number", "size", "color"})
+    if level in ("b", "c") and modifier_tasks < MIN_MODIFIER_TASKS:
+        errors.append(
+            f"{file_name}: only {modifier_tasks} tasks change a number, a size or a color, fewer than"
+            f" {MIN_MODIFIER_TASKS}"
+        )
+
+    # Content quality signals. Warnings only, like the ones for the phrase levels.
+    if word_counts and phrase_like / len(word_counts) > MAX_PHRASE_LIKE_SHARE:
+        warnings.append(
+            f"{file_name}: {phrase_like} of {len(word_counts)} sentences have no glue word, more than"
+            f" {MAX_PHRASE_LIKE_SHARE:.0%}; they read as a phrase with a full stop"
+        )
+    if total and giveaway_tasks / total > MAX_CONTEXT_GIVEAWAY_SHARE:
+        warnings.append(
+            f"{file_name}: in {giveaway_tasks} of {total} tasks the story so far rules out a wrong answer, more"
+            f" than {MAX_CONTEXT_GIVEAWAY_SHARE:.0%}"
+        )
+
+
 validate_ui()
 for lang in LANGUAGES:
     for level in LEVELS:
@@ -938,6 +1545,11 @@ for (lang, letters), limits in SPELL_PACKS.items():
 for lang in LANGUAGES:
     for level in PHRASE_LEVELS:
         validate_phrase_pack(lang, level)
+# The story packs come after the phrase packs, so the shared registries are filled.
+seed_story_nouns()
+for lang in LANGUAGES:
+    for level in STORY_LEVELS:
+        validate_story_pack(lang, level)
 
 for message in warnings:
     print(f"WARN  {message}")
