@@ -197,17 +197,17 @@
               "label": "пёс несёт коту мяч. кот прячет мяч под диван."
             },
             {
-              "id": "dog-carry-cat-bone.cat-hide-ball-under-sofa",
+              "id": "girl-carry-cat-ball.cat-hide-ball-under-sofa",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🐱"
                   },
                   {
-                    "emoji": "🦴"
+                    "emoji": "⚽"
                   }
                 ],
                 [
@@ -222,7 +222,7 @@
                   }
                 ]
               ],
-              "label": "пёс несёт коту кость. кот прячет мяч под диван."
+              "label": "маша несёт коту мяч. кот прячет мяч под диван."
             },
             {
               "id": "dog-carry-cat-ball.cat-hide-ball-under-chair",
@@ -2149,14 +2149,14 @@
               "label": "цыплёнок прыгает в ведро. петух поёт у ведра."
             },
             {
-              "id": "chick-jump-in-basket.rooster-sing-by-bucket",
+              "id": "hen-jump-in-bucket.rooster-sing-by-bucket",
               "scene": [
                 [
                   {
-                    "emoji": "🐤"
+                    "emoji": "🐔"
                   },
                   {
-                    "emoji": "🧺"
+                    "emoji": "🪣"
                   }
                 ],
                 [
@@ -2169,7 +2169,7 @@
                   }
                 ]
               ],
-              "label": "цыплёнок прыгает в корзину. петух поёт у ведра."
+              "label": "курица прыгает в ведро. петух поёт у ведра."
             },
             {
               "id": "chick-jump-in-bucket.rooster-sleep-by-bucket",
@@ -3400,7 +3400,7 @@
               "label": "под деревом растёт гриб. маша кладёт гриб в корзину."
             },
             {
-              "id": "under-fir-grow-mushroom.girl-put-apple-in-basket",
+              "id": "under-fir-grow-mushroom.grandpa-put-mushroom-in-basket",
               "scene": [
                 [
                   {
@@ -3412,17 +3412,17 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👴"
                   },
                   {
-                    "emoji": "🍎"
+                    "emoji": "🍄"
                   },
                   {
                     "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "под ёлкой растёт гриб. маша кладёт яблоко в корзину."
+              "label": "под ёлкой растёт гриб. дед кладёт гриб в корзину."
             }
           ],
           "correct": "under-fir-grow-mushroom.girl-put-mushroom-in-basket"
@@ -3688,14 +3688,14 @@
               "label": "ёжик бежит под ёлку. маша идёт за ёжиком."
             },
             {
-              "id": "hedgehog-run-under-tree.girl-walk-behind-hedgehog",
+              "id": "hedgehog-run-under-basket.girl-walk-behind-hedgehog",
               "scene": [
                 [
                   {
                     "emoji": "🦔"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🧺"
                   }
                 ],
                 [
@@ -3707,7 +3707,7 @@
                   }
                 ]
               ],
-              "label": "ёжик бежит под дерево. маша идёт за ёжиком."
+              "label": "ёжик бежит под корзину. маша идёт за ёжиком."
             },
             {
               "id": "hedgehog-run-under-fir.grandpa-walk-behind-hedgehog",
@@ -3735,11 +3735,11 @@
           "correct": "hedgehog-run-under-fir.girl-walk-behind-hedgehog"
         },
         {
-          "word": "ЁЖИК ВЕДЁТ МАШУ К ЁЛКЕ. ПОД ЁЛКОЙ ДВА ГРИБА.",
-          "syllables": "Ё-ЖИК ВЕ-ДЁТ МА-ШУ К ЁЛ-КЕ. ПОД ЁЛ-КОЙ ДВА ГРИ-БА.",
+          "word": "ЁЖИК ВЕДЁТ МАШУ К ДЕРЕВУ. ПОД ДЕРЕВОМ ДВА ГРИБА.",
+          "syllables": "Ё-ЖИК ВЕ-ДЁТ МА-ШУ К ДЕ-РЕ-ВУ. ПОД ДЕ-РЕ-ВОМ ДВА ГРИ-БА.",
           "choices": [
             {
-              "id": "hedgehog-lead-girl-to-fir.under-fir-two-mushroom",
+              "id": "hedgehog-lead-girl-to-tree.under-tree-two-mushroom",
               "scene": [
                 [
                   {
@@ -3749,12 +3749,12 @@
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   }
                 ],
                 [
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   },
                   {
                     "emoji": "🍄",
@@ -3762,10 +3762,10 @@
                   }
                 ]
               ],
-              "label": "ёжик ведёт машу к ёлке. под ёлкой два гриба."
+              "label": "ёжик ведёт машу к дереву. под деревом два гриба."
             },
             {
-              "id": "hedgehog-lead-grandpa-to-fir.under-fir-two-mushroom",
+              "id": "hedgehog-lead-grandpa-to-tree.under-tree-two-mushroom",
               "scene": [
                 [
                   {
@@ -3775,12 +3775,12 @@
                     "emoji": "👴"
                   },
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   }
                 ],
                 [
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   },
                   {
                     "emoji": "🍄",
@@ -3788,10 +3788,10 @@
                   }
                 ]
               ],
-              "label": "ёжик ведёт деда к ёлке. под ёлкой два гриба."
+              "label": "ёжик ведёт деда к дереву. под деревом два гриба."
             },
             {
-              "id": "hedgehog-lead-girl-to-fir.under-fir-one-mushroom",
+              "id": "hedgehog-lead-girl-to-tree.under-tree-one-mushroom",
               "scene": [
                 [
                   {
@@ -3801,12 +3801,12 @@
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   }
                 ],
                 [
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   },
                   {
                     "emoji": "🍄",
@@ -3814,10 +3814,10 @@
                   }
                 ]
               ],
-              "label": "ёжик ведёт машу к ёлке. под ёлкой один гриб."
+              "label": "ёжик ведёт машу к дереву. под деревом один гриб."
             }
           ],
-          "correct": "hedgehog-lead-girl-to-fir.under-fir-two-mushroom"
+          "correct": "hedgehog-lead-girl-to-tree.under-tree-two-mushroom"
         },
         {
           "word": "МАША ЗОВЁТ ДЕДА. ДЕД РЕЖЕТ БОЛЬШОЙ ГРИБ.",
@@ -3896,11 +3896,11 @@
           "correct": "girl-call-grandpa.grandpa-cut-big-mushroom"
         },
         {
-          "word": "МАША НЕСЁТ ЁЖИКУ ЯБЛОКО. ЁЖИК ЕСТ ЯБЛОКО ПОД ЁЛКОЙ.",
-          "syllables": "МА-ША НЕ-СЁТ Ё-ЖИ-КУ ЯБ-ЛО-КО. Ё-ЖИК ЕСТ ЯБ-ЛО-КО ПОД ЁЛ-КОЙ.",
+          "word": "МАША НЕСЁТ ЁЖИКУ ЯБЛОКО. ЁЖИК ЕСТ ПОД ЁЛКОЙ.",
+          "syllables": "МА-ША НЕ-СЁТ Ё-ЖИ-КУ ЯБ-ЛО-КО. Ё-ЖИК ЕСТ ПОД ЁЛ-КОЙ.",
           "choices": [
             {
-              "id": "girl-carry-hedgehog-apple.hedgehog-eat-apple-under-fir",
+              "id": "girl-carry-hedgehog-apple.hedgehog-eat-under-fir",
               "scene": [
                 [
                   {
@@ -3918,17 +3918,14 @@
                     "emoji": "🦔"
                   },
                   {
-                    "emoji": "🍎"
-                  },
-                  {
                     "emoji": "🌲"
                   }
                 ]
               ],
-              "label": "маша несёт ёжику яблоко. ёжик ест яблоко под ёлкой."
+              "label": "маша несёт ёжику яблоко. ёжик ест под ёлкой."
             },
             {
-              "id": "girl-carry-hedgehog-mushroom.hedgehog-eat-apple-under-fir",
+              "id": "girl-carry-hedgehog-mushroom.hedgehog-eat-under-fir",
               "scene": [
                 [
                   {
@@ -3946,17 +3943,14 @@
                     "emoji": "🦔"
                   },
                   {
-                    "emoji": "🍎"
-                  },
-                  {
                     "emoji": "🌲"
                   }
                 ]
               ],
-              "label": "маша несёт ёжику гриб. ёжик ест яблоко под ёлкой."
+              "label": "маша несёт ёжику гриб. ёжик ест под ёлкой."
             },
             {
-              "id": "girl-carry-hedgehog-apple.hedgehog-eat-apple-under-tree",
+              "id": "girl-carry-hedgehog-apple.hedgehog-eat-under-tree",
               "scene": [
                 [
                   {
@@ -3974,17 +3968,14 @@
                     "emoji": "🦔"
                   },
                   {
-                    "emoji": "🍎"
-                  },
-                  {
                     "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "маша несёт ёжику яблоко. ёжик ест яблоко под деревом."
+              "label": "маша несёт ёжику яблоко. ёжик ест под деревом."
             }
           ],
-          "correct": "girl-carry-hedgehog-apple.hedgehog-eat-apple-under-fir"
+          "correct": "girl-carry-hedgehog-apple.hedgehog-eat-under-fir"
         },
         {
           "word": "ДЕД НЕСЁТ КОРЗИНУ ДОМОЙ. ДОМА ДЕД ВАРИТ СУП.",
@@ -4273,14 +4264,14 @@
               "label": "жёлтая машинка едет к дереву. пёс хватает жёлтую машинку."
             },
             {
-              "id": "blue-car-drive-to-tree.dog-take-yellow-car",
+              "id": "yellow-car-drive-to-slide.dog-take-yellow-car",
               "scene": [
                 [
                   {
-                    "emoji": "🚙"
+                    "emoji": "🚕"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🛝"
                   }
                 ],
                 [
@@ -4292,7 +4283,7 @@
                   }
                 ]
               ],
-              "label": "синяя машинка едет к дереву. пёс хватает жёлтую машинку."
+              "label": "жёлтая машинка едет к горке. пёс хватает жёлтую машинку."
             },
             {
               "id": "yellow-car-drive-to-tree.boy-take-yellow-car",
@@ -4959,7 +4950,7 @@
               "label": "бабушка даёт пете перо. у реки петя видит гуся."
             },
             {
-              "id": "grandma-give-boy-bucket.by-river-boy-see-duck",
+              "id": "grandma-give-boy-bucket.by-river-boy-see-house",
               "scene": [
                 [
                   {
@@ -4977,11 +4968,11 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "бабушка даёт пете ведро. у реки петя видит утку."
+              "label": "бабушка даёт пете ведро. у реки петя видит дом."
             }
           ],
           "correct": "grandma-give-boy-bucket.by-river-boy-see-goose"
@@ -5129,7 +5120,7 @@
               "label": "бабушка даёт гусю хлеб. петя несёт гусю хлеб."
             },
             {
-              "id": "grandma-give-boy-bread.boy-carry-goose-bucket",
+              "id": "grandma-give-boy-bread.boy-carry-grandma-bread",
               "scene": [
                 [
                   {
@@ -5147,14 +5138,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🪿"
+                    "emoji": "👵"
                   },
                   {
-                    "emoji": "🪣"
+                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "бабушка даёт пете хлеб. петя несёт гусю ведро."
+              "label": "бабушка даёт пете хлеб. петя несёт бабушке хлеб."
             }
           ],
           "correct": "grandma-give-boy-bread.boy-carry-goose-bread"
@@ -5189,17 +5180,17 @@
               "label": "гусь ест хлеб у дома. бабушка гладит гуся."
             },
             {
-              "id": "duck-eat-bread-by-house.grandma-stroke-goose",
+              "id": "goose-eat-bread-by-bucket.grandma-stroke-goose",
               "scene": [
                 [
                   {
-                    "emoji": "🦆"
+                    "emoji": "🪿"
                   },
                   {
                     "emoji": "🍞"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🪣"
                   }
                 ],
                 [
@@ -5211,7 +5202,7 @@
                   }
                 ]
               ],
-              "label": "утка ест хлеб у дома. бабушка гладит гуся."
+              "label": "гусь ест хлеб у ведра. бабушка гладит гуся."
             },
             {
               "id": "goose-eat-bread-by-house.boy-stroke-goose",
@@ -5242,34 +5233,9 @@
           "correct": "goose-eat-bread-by-house.grandma-stroke-goose"
         },
         {
-          "word": "ГУСЬ ВЕДЁТ ПЕТЮ К ВЕДРУ. ПЕТЯ НАБИРАЕТ В ВЕДРО ВОДУ.",
-          "syllables": "ГУСЬ ВЕ-ДЁТ ПЕ-ТЮ К ВЕД-РУ. ПЕ-ТЯ НА-БИ-РА-ЕТ В ВЕД-РО ВО-ДУ.",
+          "word": "ГУСЬ ВЕДЁТ ПЕТЮ К ЛОДКЕ. ПЕТЯ НАБИРАЕТ В ВЕДРО ВОДУ.",
+          "syllables": "ГУСЬ ВЕ-ДЁТ ПЕ-ТЮ К ЛОД-КЕ. ПЕ-ТЯ НА-БИ-РА-ЕТ В ВЕД-РО ВО-ДУ.",
           "choices": [
-            {
-              "id": "goose-lead-boy-to-bucket.boy-take-in-bucket-water",
-              "scene": [
-                [
-                  {
-                    "emoji": "🪿"
-                  },
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🪣"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🪣"
-                  }
-                ]
-              ],
-              "label": "гусь ведёт петю к ведру. петя набирает в ведро воду."
-            },
             {
               "id": "goose-lead-boy-to-boat.boy-take-in-bucket-water",
               "scene": [
@@ -5296,7 +5262,7 @@
               "label": "гусь ведёт петю к лодке. петя набирает в ведро воду."
             },
             {
-              "id": "goose-lead-boy-to-bucket.grandma-take-in-bucket-water",
+              "id": "goose-lead-boy-to-house.boy-take-in-bucket-water",
               "scene": [
                 [
                   {
@@ -5306,7 +5272,32 @@
                     "emoji": "👦"
                   },
                   {
+                    "emoji": "🏠"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
                     "emoji": "🪣"
+                  }
+                ]
+              ],
+              "label": "гусь ведёт петю к дому. петя набирает в ведро воду."
+            },
+            {
+              "id": "goose-lead-boy-to-boat.grandma-take-in-bucket-water",
+              "scene": [
+                [
+                  {
+                    "emoji": "🪿"
+                  },
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🛶"
                   }
                 ],
                 [
@@ -5318,17 +5309,17 @@
                   }
                 ]
               ],
-              "label": "гусь ведёт петю к ведру. бабушка набирает в ведро воду."
+              "label": "гусь ведёт петю к лодке. бабушка набирает в ведро воду."
             }
           ],
-          "correct": "goose-lead-boy-to-bucket.boy-take-in-bucket-water"
+          "correct": "goose-lead-boy-to-boat.boy-take-in-bucket-water"
         },
         {
-          "word": "ГУСЬ ПЛЫВЁТ К ЛОДКЕ. В ЛОДКЕ СИДИТ УТКА.",
-          "syllables": "ГУСЬ ПЛЫ-ВЁТ К ЛОД-КЕ. В ЛОД-КЕ СИ-ДИТ УТ-КА.",
+          "word": "ГУСЬ ПЛЫВЁТ К ЛОДКЕ. УТКА СИДИТ В ЛОДКЕ.",
+          "syllables": "ГУСЬ ПЛЫ-ВЁТ К ЛОД-КЕ. УТ-КА СИ-ДИТ В ЛОД-КЕ.",
           "choices": [
             {
-              "id": "goose-swim-to-boat.in-boat-sit-duck",
+              "id": "goose-swim-to-boat.duck-sit-in-boat",
               "scene": [
                 [
                   {
@@ -5340,39 +5331,39 @@
                 ],
                 [
                   {
-                    "emoji": "🛶"
+                    "emoji": "🦆"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "гусь плывёт к лодке. в лодке сидит утка."
+              "label": "гусь плывёт к лодке. утка сидит в лодке."
             },
             {
-              "id": "goose-swim-to-duck.in-boat-sit-duck",
+              "id": "boy-swim-to-boat.duck-sit-in-boat",
               "scene": [
                 [
                   {
-                    "emoji": "🪿"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🛶"
                   }
                 ],
                 [
                   {
-                    "emoji": "🛶"
+                    "emoji": "🦆"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "гусь плывёт к утке. в лодке сидит утка."
+              "label": "петя плывёт к лодке. утка сидит в лодке."
             },
             {
-              "id": "goose-swim-to-boat.in-boat-sit-goose",
+              "id": "goose-swim-to-boat.goose-sit-in-boat",
               "scene": [
                 [
                   {
@@ -5384,17 +5375,17 @@
                 ],
                 [
                   {
-                    "emoji": "🛶"
+                    "emoji": "🪿"
                   },
                   {
-                    "emoji": "🪿"
+                    "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "гусь плывёт к лодке. в лодке сидит гусь."
+              "label": "гусь плывёт к лодке. гусь сидит в лодке."
             }
           ],
-          "correct": "goose-swim-to-boat.in-boat-sit-duck"
+          "correct": "goose-swim-to-boat.duck-sit-in-boat"
         },
         {
           "word": "ПЕТЯ НЕСЁТ ВЕДРО ДОМОЙ. ГУСЬ ИДЁТ ЗА ПЕТЕЙ.",
@@ -5426,14 +5417,14 @@
               "label": "петя несёт ведро домой. гусь идёт за петей."
             },
             {
-              "id": "boy-carry-duck-house.goose-walk-behind-boy",
+              "id": "boy-carry-bread-house.goose-walk-behind-boy",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🍞"
                   },
                   {
                     "emoji": "🏠"
@@ -5448,10 +5439,10 @@
                   }
                 ]
               ],
-              "label": "петя несёт утку домой. гусь идёт за петей."
+              "label": "петя несёт хлеб домой. гусь идёт за петей."
             },
             {
-              "id": "boy-carry-bucket-house.goose-walk-behind-duck",
+              "id": "boy-carry-bucket-house.goose-walk-behind-grandma",
               "scene": [
                 [
                   {
@@ -5469,11 +5460,11 @@
                     "emoji": "🪿"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "👵"
                   }
                 ]
               ],
-              "label": "петя несёт ведро домой. гусь идёт за уткой."
+              "label": "петя несёт ведро домой. гусь идёт за бабушкой."
             }
           ],
           "correct": "boy-carry-bucket-house.goose-walk-behind-boy"
@@ -6428,14 +6419,14 @@
               "label": "кот прыгает на кровать. мишка спит в кровати."
             },
             {
-              "id": "cat-jump-on-sofa.teddy-sleep-in-bed",
+              "id": "girl-jump-on-bed.teddy-sleep-in-bed",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "🛋️"
+                    "emoji": "🛏️"
                   }
                 ],
                 [
@@ -6448,7 +6439,7 @@
                   }
                 ]
               ],
-              "label": "кот прыгает на диван. мишка спит в кровати."
+              "label": "маша прыгает на кровать. мишка спит в кровати."
             },
             {
               "id": "cat-jump-on-bed.teddy-sing-in-bed",
@@ -6950,11 +6941,11 @@
           "correct": "bear-run-to-hare.hare-give-bear-carrot"
         },
         {
-          "word": "ЗАЯЦ НАХОДИТ ЖЁЛТЫЙ ЦВЕТОК. МЕДВЕДЬ НЕСЁТ ПЧЕЛЕ ЖЁЛТЫЙ ЦВЕТОК.",
-          "syllables": "ЗА-ЯЦ НА-ХО-ДИТ ЖЁЛ-ТЫЙ ЦВЕ-ТОК. МЕД-ВЕДЬ НЕ-СЁТ ПЧЕ-ЛЕ ЖЁЛ-ТЫЙ ЦВЕ-ТОК.",
+          "word": "ЗАЯЦ НАХОДИТ ЖЁЛТЫЙ ЦВЕТОК. МЕДВЕДЬ НЕСЁТ ЕГО ПЧЕЛЕ.",
+          "syllables": "ЗА-ЯЦ НА-ХО-ДИТ ЖЁЛ-ТЫЙ ЦВЕ-ТОК. МЕД-ВЕДЬ НЕ-СЁТ Е-ГО ПЧЕ-ЛЕ.",
           "choices": [
             {
-              "id": "hare-find-yellow-flower.bear-carry-bee-yellow-flower",
+              "id": "hare-find-yellow-flower.bear-carry-him-bee",
               "scene": [
                 [
                   {
@@ -6970,16 +6961,13 @@
                   },
                   {
                     "emoji": "🐝"
-                  },
-                  {
-                    "emoji": "🌻"
                   }
                 ]
               ],
-              "label": "заяц находит жёлтый цветок. медведь несёт пчеле жёлтый цветок."
+              "label": "заяц находит жёлтый цветок. медведь несёт его пчеле."
             },
             {
-              "id": "hare-find-pink-flower.bear-carry-bee-yellow-flower",
+              "id": "hare-find-pink-flower.bear-carry-him-bee",
               "scene": [
                 [
                   {
@@ -6995,16 +6983,13 @@
                   },
                   {
                     "emoji": "🐝"
-                  },
-                  {
-                    "emoji": "🌻"
                   }
                 ]
               ],
-              "label": "заяц находит розовый цветок. медведь несёт пчеле жёлтый цветок."
+              "label": "заяц находит розовый цветок. медведь несёт его пчеле."
             },
             {
-              "id": "hare-find-yellow-flower.bear-carry-hare-yellow-flower",
+              "id": "hare-find-yellow-flower.bear-carry-him-hare",
               "scene": [
                 [
                   {
@@ -7020,16 +7005,13 @@
                   },
                   {
                     "emoji": "🐰"
-                  },
-                  {
-                    "emoji": "🌻"
                   }
                 ]
               ],
-              "label": "заяц находит жёлтый цветок. медведь несёт зайцу жёлтый цветок."
+              "label": "заяц находит жёлтый цветок. медведь несёт его зайцу."
             }
           ],
-          "correct": "hare-find-yellow-flower.bear-carry-bee-yellow-flower"
+          "correct": "hare-find-yellow-flower.bear-carry-him-bee"
         },
         {
           "word": "ПЧЕЛА ДАЁТ МЕДВЕДЮ МЁД. МЕДВЕДЬ ЕСТ МЁД С ЗАЙЦЕМ.",
@@ -7092,7 +7074,7 @@
               "label": "пчела даёт зайцу мёд. медведь ест мёд с зайцем."
             },
             {
-              "id": "bee-give-bear-honey.bear-eat-carrot-with-hare",
+              "id": "bee-give-bear-honey.bear-eat-honey-with-bee",
               "scene": [
                 [
                   {
@@ -7110,14 +7092,14 @@
                     "emoji": "🐻"
                   },
                   {
-                    "emoji": "🥕"
+                    "emoji": "🍯"
                   },
                   {
-                    "emoji": "🐰"
+                    "emoji": "🐝"
                   }
                 ]
               ],
-              "label": "пчела даёт медведю мёд. медведь ест морковку с зайцем."
+              "label": "пчела даёт медведю мёд. медведь ест мёд с пчелой."
             }
           ],
           "correct": "bee-give-bear-honey.bear-eat-honey-with-hare"
@@ -7523,11 +7505,11 @@
           "correct": "frog-jump-on-green-leaf.girl-see-two-duck"
         },
         {
-          "word": "ПАПА ДАЁТ МАШЕ ХЛЕБ. МАША БРОСАЕТ УТКЕ ХЛЕБ.",
-          "syllables": "ПА-ПА ДА-ЁТ МА-ШЕ ХЛЕБ. МА-ША БРО-СА-ЕТ УТ-КЕ ХЛЕБ.",
+          "word": "ПАПА ДАЁТ МАШЕ ХЛЕБ. МАША КОРМИТ УТКУ.",
+          "syllables": "ПА-ПА ДА-ЁТ МА-ШЕ ХЛЕБ. МА-ША КОР-МИТ УТ-КУ.",
           "choices": [
             {
-              "id": "dad-give-girl-bread.girl-throw-duck-bread",
+              "id": "dad-give-girl-bread.girl-feed-duck",
               "scene": [
                 [
                   {
@@ -7546,16 +7528,13 @@
                   },
                   {
                     "emoji": "🦆"
-                  },
-                  {
-                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "папа даёт маше хлеб. маша бросает утке хлеб."
+              "label": "папа даёт маше хлеб. маша кормит утку."
             },
             {
-              "id": "dad-give-girl-shell.girl-throw-duck-bread",
+              "id": "dad-give-girl-shell.girl-feed-duck",
               "scene": [
                 [
                   {
@@ -7574,16 +7553,13 @@
                   },
                   {
                     "emoji": "🦆"
-                  },
-                  {
-                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "папа даёт маше ракушку. маша бросает утке хлеб."
+              "label": "папа даёт маше ракушку. маша кормит утку."
             },
             {
-              "id": "dad-give-girl-bread.girl-throw-frog-bread",
+              "id": "dad-give-girl-bread.girl-feed-frog",
               "scene": [
                 [
                   {
@@ -7602,16 +7578,13 @@
                   },
                   {
                     "emoji": "🐸"
-                  },
-                  {
-                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "папа даёт маше хлеб. маша бросает лягушке хлеб."
+              "label": "папа даёт маше хлеб. маша кормит лягушку."
             }
           ],
-          "correct": "dad-give-girl-bread.girl-throw-duck-bread"
+          "correct": "dad-give-girl-bread.girl-feed-duck"
         },
         {
           "word": "УТКА ЕСТ ХЛЕБ. ЛЯГУШКА ЛОВИТ КОМАРА.",
@@ -7905,7 +7878,7 @@
               "label": "папа дарит утке ракушку. маша несёт ракушку лягушке."
             },
             {
-              "id": "dad-give-girl-shell.girl-carry-bread-frog",
+              "id": "dad-give-girl-shell.dad-carry-shell-frog",
               "scene": [
                 [
                   {
@@ -7920,17 +7893,17 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "🍞"
+                    "emoji": "🐚"
                   },
                   {
                     "emoji": "🐸"
                   }
                 ]
               ],
-              "label": "папа дарит маше ракушку. маша несёт хлеб лягушке."
+              "label": "папа дарит маше ракушку. папа несёт ракушку лягушке."
             }
           ],
           "correct": "dad-give-girl-shell.girl-carry-shell-frog"
@@ -8706,11 +8679,11 @@
           "correct": "mom-carry-boy-house.house-dog-sleep-on-sofa"
         },
         {
-          "word": "ПЕТЯ ДАЁТ ПСУ СЫР. ПЁС ЕСТ СЫР.",
-          "syllables": "ПЕ-ТЯ ДА-ЁТ ПСУ СЫР. ПЁС ЕСТ СЫР.",
+          "word": "ПЕТЯ ДАЁТ ПСУ СЫР. ПЁС ЛИЖЕТ ПЕТЮ.",
+          "syllables": "ПЕ-ТЯ ДА-ЁТ ПСУ СЫР. ПЁС ЛИ-ЖЕТ ПЕ-ТЮ.",
           "choices": [
             {
-              "id": "boy-give-dog-cheese.dog-eat-cheese",
+              "id": "boy-give-dog-cheese.dog-lick-boy",
               "scene": [
                 [
                   {
@@ -8728,14 +8701,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🧀"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "петя даёт псу сыр. пёс ест сыр."
+              "label": "петя даёт псу сыр. пёс лижет петю."
             },
             {
-              "id": "boy-give-dog-bread.dog-eat-cheese",
+              "id": "boy-give-dog-bread.dog-lick-boy",
               "scene": [
                 [
                   {
@@ -8753,14 +8726,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🧀"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "петя даёт псу хлеб. пёс ест сыр."
+              "label": "петя даёт псу хлеб. пёс лижет петю."
             },
             {
-              "id": "boy-give-dog-cheese.dog-eat-banana",
+              "id": "boy-give-dog-cheese.dog-lick-mom",
               "scene": [
                 [
                   {
@@ -8778,14 +8751,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🍌"
+                    "emoji": "👩"
                   }
                 ]
               ],
-              "label": "петя даёт псу сыр. пёс ест банан."
+              "label": "петя даёт псу сыр. пёс лижет маму."
             }
           ],
-          "correct": "boy-give-dog-cheese.dog-eat-cheese"
+          "correct": "boy-give-dog-cheese.dog-lick-boy"
         },
         {
           "word": "МАМА РЕЖЕТ ХЛЕБ. МАМА ВАРИТ СУП.",
@@ -10156,17 +10129,17 @@
               "label": "папа даёт пете улитку. улитка сидит на ракушке."
             },
             {
-              "id": "dad-give-boy-shell.snail-sit-on-shell",
+              "id": "dad-give-cat-snail.snail-sit-on-shell",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🐚"
+                    "emoji": "🐌"
                   }
                 ],
                 [
@@ -10178,7 +10151,7 @@
                   }
                 ]
               ],
-              "label": "папа даёт пете ракушку. улитка сидит на ракушке."
+              "label": "папа даёт коту улитку. улитка сидит на ракушке."
             },
             {
               "id": "dad-give-boy-snail.snail-sit-on-stone",
@@ -10857,17 +10830,17 @@
               "label": "мама дарит пете гитару. дед играет на гитаре."
             },
             {
-              "id": "mom-give-boy-drum.grandpa-toy-on-guitar",
+              "id": "grandpa-give-boy-guitar.grandpa-toy-on-guitar",
               "scene": [
                 [
                   {
-                    "emoji": "👩"
+                    "emoji": "👴"
                   },
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🥁"
+                    "emoji": "🎸"
                   }
                 ],
                 [
@@ -10879,10 +10852,10 @@
                   }
                 ]
               ],
-              "label": "мама дарит пете барабан. дед играет на гитаре."
+              "label": "дед дарит пете гитару. дед играет на гитаре."
             },
             {
-              "id": "mom-give-boy-guitar.grandpa-toy-on-drum",
+              "id": "mom-give-boy-guitar.boy-toy-on-guitar",
               "scene": [
                 [
                   {
@@ -10897,14 +10870,14 @@
                 ],
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "🥁"
+                    "emoji": "🎸"
                   }
                 ]
               ],
-              "label": "мама дарит пете гитару. дед играет на барабане."
+              "label": "мама дарит пете гитару. петя играет на гитаре."
             }
           ],
           "correct": "mom-give-boy-guitar.grandpa-toy-on-guitar"
@@ -11183,16 +11156,16 @@
               "label": "петя бросает деду жёлтый мяч. дед ловит жёлтый мяч."
             },
             {
-              "id": "boy-throw-mom-yellow-ball.grandpa-catch-yellow-ball",
+              "id": "mom-throw-grandpa-yellow-ball.grandpa-catch-yellow-ball",
               "scene": [
                 [
-                  {
-                    "emoji": "👦"
-                  },
                   {
                     "emoji": "👩"
                   },
                   {
+                    "emoji": "👴"
+                  },
+                  {
                     "emoji": "🥎"
                   }
                 ],
@@ -11205,10 +11178,10 @@
                   }
                 ]
               ],
-              "label": "петя бросает маме жёлтый мяч. дед ловит жёлтый мяч."
+              "label": "мама бросает деду жёлтый мяч. дед ловит жёлтый мяч."
             },
             {
-              "id": "boy-throw-grandpa-yellow-ball.grandpa-catch-white-ball",
+              "id": "boy-throw-grandpa-yellow-ball.boy-catch-yellow-ball",
               "scene": [
                 [
                   {
@@ -11223,14 +11196,14 @@
                 ],
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "⚾"
+                    "emoji": "🥎"
                   }
                 ]
               ],
-              "label": "петя бросает деду жёлтый мяч. дед ловит белый мяч."
+              "label": "петя бросает деду жёлтый мяч. петя ловит жёлтый мяч."
             }
           ],
           "correct": "boy-throw-grandpa-yellow-ball.grandpa-catch-yellow-ball"
@@ -11538,7 +11511,7 @@
               "label": "пёс стоит у дерева. маша пинает мяч к дереву."
             },
             {
-              "id": "boy-stand-by-tree.girl-kick-ball-to-house",
+              "id": "boy-stand-by-tree.boy-kick-ball-to-tree",
               "scene": [
                 [
                   {
@@ -11550,27 +11523,27 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "⚽"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "петя стоит у дерева. маша пинает мяч к дому."
+              "label": "петя стоит у дерева. петя пинает мяч к дереву."
             }
           ],
           "correct": "boy-stand-by-tree.girl-kick-ball-to-tree"
         },
         {
-          "word": "ПЁС ЛОВИТ МЯЧ. ПЁС НЕСЁТ МЯЧ К ДОМУ.",
-          "syllables": "ПЁС ЛО-ВИТ МЯЧ. ПЁС НЕ-СЁТ МЯЧ К ДО-МУ.",
+          "word": "ПЁС ЛОВИТ МЯЧ. ОН НЕСЁТ МЯЧ К ДОМУ.",
+          "syllables": "ПЁС ЛО-ВИТ МЯЧ. ОН НЕ-СЁТ МЯЧ К ДО-МУ.",
           "choices": [
             {
-              "id": "dog-catch-ball.dog-carry-ball-to-house",
+              "id": "dog-catch-ball.he-carry-ball-to-house",
               "scene": [
                 [
                   {
@@ -11582,9 +11555,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐶"
-                  },
-                  {
                     "emoji": "⚽"
                   },
                   {
@@ -11592,10 +11562,10 @@
                   }
                 ]
               ],
-              "label": "пёс ловит мяч. пёс несёт мяч к дому."
+              "label": "пёс ловит мяч. он несёт мяч к дому."
             },
             {
-              "id": "boy-catch-ball.dog-carry-ball-to-house",
+              "id": "boy-catch-ball.he-carry-ball-to-house",
               "scene": [
                 [
                   {
@@ -11607,9 +11577,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐶"
-                  },
-                  {
                     "emoji": "⚽"
                   },
                   {
@@ -11617,10 +11584,10 @@
                   }
                 ]
               ],
-              "label": "петя ловит мяч. пёс несёт мяч к дому."
+              "label": "петя ловит мяч. он несёт мяч к дому."
             },
             {
-              "id": "dog-catch-ball.dog-carry-bone-to-house",
+              "id": "dog-catch-ball.he-carry-ball-to-tree",
               "scene": [
                 [
                   {
@@ -11632,20 +11599,17 @@
                 ],
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "⚽"
                   },
                   {
-                    "emoji": "🦴"
-                  },
-                  {
-                    "emoji": "🏠"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "пёс ловит мяч. пёс несёт кость к дому."
+              "label": "пёс ловит мяч. он несёт мяч к дереву."
             }
           ],
-          "correct": "dog-catch-ball.dog-carry-ball-to-house"
+          "correct": "dog-catch-ball.he-carry-ball-to-house"
         },
         {
           "word": "ПЕТЯ БЕЖИТ ЗА ПСОМ. ПЁС ОТДАЁТ МЯЧ МАШЕ.",
@@ -11730,11 +11694,11 @@
           "correct": "boy-run-behind-dog.dog-give-ball-girl"
         },
         {
-          "word": "ПЕТЯ ДАЁТ ПСУ КОСТЬ. ТЕПЕРЬ ПЁС ГРЫЗЁТ КОСТЬ.",
-          "syllables": "ПЕ-ТЯ ДА-ЁТ ПСУ КОСТЬ. ТЕ-ПЕРЬ ПЁС ГРЫ-ЗЁТ КОСТЬ.",
+          "word": "ПЕТЯ ДАЁТ ПСУ КОСТЬ. ПЁС ГРЫЗЁТ КОСТЬ У ДЕРЕВА.",
+          "syllables": "ПЕ-ТЯ ДА-ЁТ ПСУ КОСТЬ. ПЁС ГРЫ-ЗЁТ КОСТЬ У ДЕ-РЕ-ВА.",
           "choices": [
             {
-              "id": "boy-give-dog-bone.now-dog-gnaw-bone",
+              "id": "boy-give-dog-bone.dog-gnaw-bone-by-tree",
               "scene": [
                 [
                   {
@@ -11753,13 +11717,16 @@
                   },
                   {
                     "emoji": "🦴"
+                  },
+                  {
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "петя даёт псу кость. теперь пёс грызёт кость."
+              "label": "петя даёт псу кость. пёс грызёт кость у дерева."
             },
             {
-              "id": "girl-give-dog-bone.now-dog-gnaw-bone",
+              "id": "girl-give-dog-bone.dog-gnaw-bone-by-tree",
               "scene": [
                 [
                   {
@@ -11778,13 +11745,16 @@
                   },
                   {
                     "emoji": "🦴"
+                  },
+                  {
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "маша даёт псу кость. теперь пёс грызёт кость."
+              "label": "маша даёт псу кость. пёс грызёт кость у дерева."
             },
             {
-              "id": "boy-give-dog-bone.now-dog-gnaw-ball",
+              "id": "boy-give-dog-bone.dog-gnaw-bone-by-house",
               "scene": [
                 [
                   {
@@ -11802,14 +11772,17 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "⚽"
+                    "emoji": "🦴"
+                  },
+                  {
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "петя даёт псу кость. теперь пёс грызёт мяч."
+              "label": "петя даёт псу кость. пёс грызёт кость у дома."
             }
           ],
-          "correct": "boy-give-dog-bone.now-dog-gnaw-bone"
+          "correct": "boy-give-dog-bone.dog-gnaw-bone-by-tree"
         },
         {
           "word": "МАША ПИНАЕТ МЯЧ ПЕТЕ. МЯЧ ЛЕТИТ НА ДЕРЕВО.",
@@ -12476,11 +12449,11 @@
           "correct": "boy-wash-horse.horse-drink-from-bucket"
         },
         {
-          "word": "ДЕД САЖАЕТ ПЕТЮ НА ЛОШАДЬ. ЛОШАДЬ ВЕЗЁТ ПЕТЮ К ДЕРЕВУ.",
-          "syllables": "ДЕД СА-ЖА-ЕТ ПЕ-ТЮ НА ЛО-ШАДЬ. ЛО-ШАДЬ ВЕ-ЗЁТ ПЕ-ТЮ К ДЕ-РЕ-ВУ.",
+          "word": "ДЕД САЖАЕТ ПЕТЮ НА ЛОШАДЬ. ПЕТЯ ЕДЕТ К ДЕРЕВУ.",
+          "syllables": "ДЕД СА-ЖА-ЕТ ПЕ-ТЮ НА ЛО-ШАДЬ. ПЕ-ТЯ Е-ДЕТ К ДЕ-РЕ-ВУ.",
           "choices": [
             {
-              "id": "grandpa-sit-boy-on-horse.horse-carry-boy-to-tree",
+              "id": "grandpa-sit-boy-on-horse.boy-drive-to-tree",
               "scene": [
                 [
                   {
@@ -12495,9 +12468,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
-                  },
-                  {
                     "emoji": "👦"
                   },
                   {
@@ -12505,10 +12475,10 @@
                   }
                 ]
               ],
-              "label": "дед сажает петю на лошадь. лошадь везёт петю к дереву."
+              "label": "дед сажает петю на лошадь. петя едет к дереву."
             },
             {
-              "id": "grandpa-sit-boy-on-tree.horse-carry-boy-to-tree",
+              "id": "grandpa-sit-boy-on-tree.boy-drive-to-tree",
               "scene": [
                 [
                   {
@@ -12523,9 +12493,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
-                  },
-                  {
                     "emoji": "👦"
                   },
                   {
@@ -12533,10 +12500,10 @@
                   }
                 ]
               ],
-              "label": "дед сажает петю на дерево. лошадь везёт петю к дереву."
+              "label": "дед сажает петю на дерево. петя едет к дереву."
             },
             {
-              "id": "grandpa-sit-boy-on-horse.horse-carry-grandpa-to-tree",
+              "id": "grandpa-sit-boy-on-horse.boy-drive-to-house",
               "scene": [
                 [
                   {
@@ -12551,20 +12518,17 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "🌳"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "дед сажает петю на лошадь. лошадь везёт деда к дереву."
+              "label": "дед сажает петю на лошадь. петя едет к дому."
             }
           ],
-          "correct": "grandpa-sit-boy-on-horse.horse-carry-boy-to-tree"
+          "correct": "grandpa-sit-boy-on-horse.boy-drive-to-tree"
         },
         {
           "word": "ДЕД НЕСЁТ ПЕТЕ КОРЗИНУ. ТАМ ЛЕЖАТ ТРИ ЯБЛОКА.",
@@ -12697,7 +12661,7 @@
               "label": "петя даёт птице яблоко. дед ест яблоко."
             },
             {
-              "id": "boy-give-horse-apple.grandpa-eat-carrot",
+              "id": "boy-give-horse-apple.boy-eat-apple",
               "scene": [
                 [
                   {
@@ -12712,14 +12676,14 @@
                 ],
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "🥕"
+                    "emoji": "🍎"
                   }
                 ]
               ],
-              "label": "петя даёт лошади яблоко. дед ест морковку."
+              "label": "петя даёт лошади яблоко. петя ест яблоко."
             }
           ],
           "correct": "boy-give-horse-apple.grandpa-eat-apple"
@@ -13118,7 +13082,7 @@
               "label": "сова несёт орех. она прячет орех под ёлку."
             },
             {
-              "id": "squirrel-carry-nut.she-hide-mushroom-under-fir",
+              "id": "squirrel-carry-nut.she-hide-nut-under-tree",
               "scene": [
                 [
                   {
@@ -13130,14 +13094,14 @@
                 ],
                 [
                   {
-                    "emoji": "🍄"
+                    "emoji": "🥜"
                   },
                   {
-                    "emoji": "🌲"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "белка несёт орех. она прячет гриб под ёлку."
+              "label": "белка несёт орех. она прячет орех под дерево."
             }
           ],
           "correct": "squirrel-carry-nut.she-hide-nut-under-fir"
@@ -13682,7 +13646,7 @@
               "label": "белка даёт сове гриб. ёжик спит под красным листом."
             },
             {
-              "id": "squirrel-give-owl-nut.hedgehog-sleep-under-green-leaf",
+              "id": "squirrel-give-owl-nut.squirrel-sleep-under-red-leaf",
               "scene": [
                 [
                   {
@@ -13697,15 +13661,15 @@
                 ],
                 [
                   {
-                    "emoji": "🦔",
+                    "emoji": "🐿️",
                     "badge": "💤"
                   },
                   {
-                    "emoji": "🍃"
+                    "emoji": "🍁"
                   }
                 ]
               ],
-              "label": "белка даёт сове орех. ёжик спит под зелёным листом."
+              "label": "белка даёт сове орех. белка спит под красным листом."
             }
           ],
           "correct": "squirrel-give-owl-nut.hedgehog-sleep-under-red-leaf"
@@ -15084,9 +15048,59 @@
           "correct": "owl-fly-to-house.dad-give-girl-telescope"
         },
         {
-          "word": "МАША ВИДИТ В ТЕЛЕСКОП ЛУНУ. ПАПА РИСУЕТ ЛУНУ.",
-          "syllables": "МА-ША ВИ-ДИТ В ТЕ-ЛЕС-КОП ЛУ-НУ. ПА-ПА РИ-СУ-ЕТ ЛУ-НУ.",
+          "word": "МАША ВИДИТ В ТЕЛЕСКОП ЛУНУ. ПАПА РИСУЕТ МАШУ.",
+          "syllables": "МА-ША ВИ-ДИТ В ТЕ-ЛЕС-КОП ЛУ-НУ. ПА-ПА РИ-СУ-ЕТ МА-ШУ.",
           "choices": [
+            {
+              "id": "girl-see-in-telescope-moon.dad-paint-girl",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🔭"
+                  },
+                  {
+                    "emoji": "🌙"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👨‍🎨"
+                  },
+                  {
+                    "emoji": "👧"
+                  }
+                ]
+              ],
+              "label": "маша видит в телескоп луну. папа рисует машу."
+            },
+            {
+              "id": "girl-see-in-telescope-owl.dad-paint-girl",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🔭"
+                  },
+                  {
+                    "emoji": "🦉"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👨‍🎨"
+                  },
+                  {
+                    "emoji": "👧"
+                  }
+                ]
+              ],
+              "label": "маша видит в телескоп сову. папа рисует машу."
+            },
             {
               "id": "girl-see-in-telescope-moon.dad-paint-moon",
               "scene": [
@@ -15111,59 +15125,9 @@
                 ]
               ],
               "label": "маша видит в телескоп луну. папа рисует луну."
-            },
-            {
-              "id": "girl-see-in-telescope-owl.dad-paint-moon",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🔭"
-                  },
-                  {
-                    "emoji": "🦉"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👨‍🎨"
-                  },
-                  {
-                    "emoji": "🌙"
-                  }
-                ]
-              ],
-              "label": "маша видит в телескоп сову. папа рисует луну."
-            },
-            {
-              "id": "girl-see-in-telescope-moon.dad-paint-owl",
-              "scene": [
-                [
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🔭"
-                  },
-                  {
-                    "emoji": "🌙"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👨‍🎨"
-                  },
-                  {
-                    "emoji": "🦉"
-                  }
-                ]
-              ],
-              "label": "маша видит в телескоп луну. папа рисует сову."
             }
           ],
-          "correct": "girl-see-in-telescope-moon.dad-paint-moon"
+          "correct": "girl-see-in-telescope-moon.dad-paint-girl"
         },
         {
           "word": "МАША РИСУЕТ ДВЕ ЗВЕЗДЫ. МАША ВИДИТ САМОЛЁТ.",
@@ -15818,11 +15782,11 @@
           "correct": "in-book-have-castle.in-castle-live-princess"
         },
         {
-          "word": "У ПРИНЦЕССЫ ЕСТЬ ЛОШАДЬ. ЛОШАДЬ ВЕЗЁТ ПРИНЦЕССУ К МОРЮ.",
-          "syllables": "У ПРИН-ЦЕС-СЫ ЕСТЬ ЛО-ШАДЬ. ЛО-ШАДЬ ВЕ-ЗЁТ ПРИН-ЦЕС-СУ К МО-РЮ.",
+          "word": "У ПРИНЦЕССЫ ЕСТЬ ЛОШАДЬ. ОНА ВЕЗЁТ ПРИНЦЕССУ К МОРЮ.",
+          "syllables": "У ПРИН-ЦЕС-СЫ ЕСТЬ ЛО-ШАДЬ. О-НА ВЕ-ЗЁТ ПРИН-ЦЕС-СУ К МО-РЮ.",
           "choices": [
             {
-              "id": "have-princess-have-horse.horse-carry-princess-to-sea",
+              "id": "have-princess-have-horse.she-carry-princess-to-sea",
               "scene": [
                 [
                   {
@@ -15834,9 +15798,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
-                  },
-                  {
                     "emoji": "👸"
                   },
                   {
@@ -15844,10 +15805,10 @@
                   }
                 ]
               ],
-              "label": "у принцессы есть лошадь. лошадь везёт принцессу к морю."
+              "label": "у принцессы есть лошадь. она везёт принцессу к морю."
             },
             {
-              "id": "have-princess-have-boat.horse-carry-princess-to-sea",
+              "id": "have-princess-have-boat.she-carry-princess-to-sea",
               "scene": [
                 [
                   {
@@ -15859,9 +15820,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
-                  },
-                  {
                     "emoji": "👸"
                   },
                   {
@@ -15869,10 +15827,10 @@
                   }
                 ]
               ],
-              "label": "у принцессы есть лодка. лошадь везёт принцессу к морю."
+              "label": "у принцессы есть лодка. она везёт принцессу к морю."
             },
             {
-              "id": "have-princess-have-horse.horse-carry-princess-to-castle",
+              "id": "have-princess-have-horse.she-carry-princess-to-castle",
               "scene": [
                 [
                   {
@@ -15884,9 +15842,6 @@
                 ],
                 [
                   {
-                    "emoji": "🐴"
-                  },
-                  {
                     "emoji": "👸"
                   },
                   {
@@ -15894,10 +15849,10 @@
                   }
                 ]
               ],
-              "label": "у принцессы есть лошадь. лошадь везёт принцессу к замку."
+              "label": "у принцессы есть лошадь. она везёт принцессу к замку."
             }
           ],
-          "correct": "have-princess-have-horse.horse-carry-princess-to-sea"
+          "correct": "have-princess-have-horse.she-carry-princess-to-sea"
         },
         {
           "word": "ПРИНЦЕССА ПЛЫВЁТ НА ЛОДКЕ. ДРАКОН СПИТ НА ОСТРОВЕ.",
