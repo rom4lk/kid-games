@@ -1332,6 +1332,7 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
 
     classes_by_choice = {}
     glue_by_sentence = None
+    pictures = {}   # choice id -> the emoji and badges of its scene, once the scene matches its words
     for choice_id, (choice, slugs_per, words_per) in parsed.items():
         drawn_panels, classes_per = [], []
         for index, (slugs, words) in enumerate(zip(slugs_per, words_per)):
@@ -1386,6 +1387,10 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 f" does not match its words, expected {show_scene(expected_scene)}"
             )
             continue
+        pictures[choice_id] = {
+            picture.replace("\ufe0f", "") for panel in expected_scene for group in panel
+            for picture in (group["emoji"], group.get("badge")) if picture
+        }
         for drawn in drawn_panels:
             for group in drawn:
                 register_story_group(where, group)
@@ -1491,6 +1496,8 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
         "scenes": frozenset(json.dumps(choice["scene"], sort_keys=True, ensure_ascii=False) for choice in choices),
         "back_references": back_references,
         "subjects": subjects,
+        "pictures": (pictures[task["correct"]], [pictures[choice_id] for choice_id in parsed if choice_id != task["correct"]])
+        if len(pictures) == len(parsed) else None,
     }
 
 
@@ -1539,6 +1546,7 @@ def validate_story_pack(language, level):
         for task_index, task in enumerate(tasks):
             if not isinstance(task, dict):
                 errors.append(f"{where}, task {task_index + 1}: a task must be an object")
+                chapter_infos.append(None)
                 continue
             chapter_infos.append(
                 validate_story_task(file_name, language, level, chapter, task, task_index, seen_sentences)
@@ -1560,15 +1568,14 @@ def validate_story_pack(language, level):
                 if CAST_FORMS.get(token, token) in giveaways:
                     errors.append(f'{where}: the intro gives away the changed word "{token}" of task 1')
         # The chapter card is tapped right before task 1, so its emoji may not tell the correct scene
-        # of task 1 from a wrong one.
-        if chapter_infos and chapter_infos[0] and isinstance(chapter.get("emoji"), str):
-            def scene_emoji(choice):
-                return {group["emoji"].replace("\ufe0f", "") for panel in choice["scene"] for group in panel}
-            first = tasks[0]
-            correct_emoji = next(scene_emoji(choice) for choice in first["choices"] if choice["id"] == first["correct"])
+        # of task 1 from a wrong one, a badge included. A task whose scenes do not match their words
+        # is already reported and skipped here. A resumed chapter opens on a later task, but there the
+        # chapter emoji is mostly the story's own subject (about 100 tasks on the six packs), so only
+        # task 1, which every first visit opens on, is held to it.
+        if chapter_infos and chapter_infos[0] and chapter_infos[0]["pictures"] and isinstance(chapter.get("emoji"), str):
+            correct_pictures, wrong_pictures = chapter_infos[0]["pictures"]
             chapter_emoji = chapter["emoji"].replace("\ufe0f", "")
-            if any(chapter_emoji in correct_emoji ^ scene_emoji(choice)
-                   for choice in first["choices"] if choice["id"] != first["correct"]):
+            if any(chapter_emoji in correct_pictures ^ pictures for pictures in wrong_pictures):
                 errors.append(f'{where}: the chapter emoji {chapter["emoji"]} is in some scenes of task 1 and not in others')
 
         # The child would tap the picture he tapped before: a correct scene comes back in the chapter.
