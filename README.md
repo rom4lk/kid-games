@@ -87,7 +87,7 @@ opened directly over `file://`.
 
 | Folder | Title | What it is about | Interface language |
 | --- | --- | --- | --- |
-| `word-quest/` | Living Words | Reading a word or a short phrase and picking a picture, levels by word length and by phrase | Russian, English |
+| `word-quest/` | Living Words | Reading a word, a short phrase or a short story and picking a picture, levels by word length, by phrase and by sentence | Russian, English |
 | `island-discovery/` | Island of Discovery | A first strategy game: exploring the map, resources, buildings | Russian, English |
 | `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
 | `robo-stories/` | Robo Stories | Building programs out of picture cards across eight robot stories: parcels, gates, batteries, a rover, a room, snowballs, conveyor belts and a pond | Russian, English |
@@ -127,8 +127,8 @@ next to it through the shared `shared/game-language.js`. The home page, `island-
 
 ## Content checks
 
-The word packs, the phrase packs and the UI strings live in `word-quest/content/` and are
-validated by a script:
+The word packs, the phrase packs, the story packs and the UI strings live in `word-quest/content/`
+and are validated by a script:
 
 ```bash
 python3 word-quest/tools/validate.py
