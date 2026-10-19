@@ -320,6 +320,7 @@ function bindEvents() {
   elements.soundSetting.addEventListener("change", updateSoundSetting);
   elements.resetButton.addEventListener("click", resetProgress);
   elements.resetDialog.addEventListener("close", applyReset);
+  window.addEventListener("resize", fitRecap);
 }
 
 async function chooseLanguage(language) {
@@ -594,6 +595,8 @@ function startChapter(chapterIndex, forceFirst = false) {
   currentTaskIndex = Math.min(progress, chapter.tasks.length - 1);
   renderTask();
   showScreen(elements.playScreen);
+  // The task was drawn on a hidden screen, where the newest line has no height yet.
+  fitRecap();
 }
 
 // A word can be set aside, so progress is the run of solved words from the
@@ -779,13 +782,18 @@ function renderCardText(element, text, mode) {
       line.className = "sentence-line";
       element.append(line);
     }
-    sentence.split(" ").forEach((part, index) => {
-      if (index > 0) line.append(" ");
-      const word = document.createElement("span");
-      word.className = "phrase-word";
-      word.textContent = part;
-      line.append(word);
-    });
+    appendWords(line, sentence);
+  });
+}
+
+// One block per word, so a line wraps between the words and never at the hyphens of a split.
+function appendWords(element, text) {
+  text.split(" ").forEach((part, index) => {
+    if (index > 0) element.append(" ");
+    const word = document.createElement("span");
+    word.className = "phrase-word";
+    word.textContent = part;
+    element.append(word);
   });
 }
 
@@ -802,9 +810,20 @@ function renderStory(chapter, solvedCount) {
     if (index > 0) elements.storyPrompt.append(" ");
     const line = document.createElement("span");
     line.className = "recap-line";
-    line.textContent = sentence;
+    appendWords(line, sentence);
     elements.storyPrompt.append(line);
   });
+  fitRecap();
+}
+
+// The bubble shows two rows of the newest line in its usual height; a newest line of three rows
+// on a narrow phone grows it by what that line needs, so the line always shows whole.
+function fitRecap() {
+  const newest = elements.storyPrompt.lastElementChild;
+  const height = newest && elements.storyPrompt.parentElement.classList.contains("story-recap")
+    ? newest.getBoundingClientRect().height
+    : 0;
+  elements.storyPrompt.style.setProperty("--newest-line", `${height}px`);
 }
 
 // Items of a counted picture stand in rows of five, like a ten frame. One item size serves the
@@ -1112,7 +1131,7 @@ function showChapterComplete() {
     storyLines(chapter, chapter.tasks.length, activeLanguage).forEach((sentence) => {
       const line = document.createElement("span");
       line.className = "story-page-line";
-      line.textContent = sentence;
+      appendWords(line, sentence);
       elements.storyPage.append(line, " ");
     });
   }

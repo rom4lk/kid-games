@@ -1080,12 +1080,13 @@ h1 {
 /* The story so far: the newest sentence sits at the bottom and always shows in
    full, older ones fade out at the top as the story grows. */
 .story-bubble.story-recap p {
+  --opaque: max(3.4rem, var(--newest-line, 0px));
   display: flex;
-  max-height: 4.6rem;
+  max-height: calc(var(--opaque) + 1.2rem);
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-end;
-  mask-image: linear-gradient(to top, #000 3.4rem, transparent 4.6rem);
+  mask-image: linear-gradient(to top, #000 var(--opaque), transparent calc(var(--opaque) + 1.2rem));
 }
 
 .recap-line {
