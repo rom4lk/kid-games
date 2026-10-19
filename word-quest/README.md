@@ -272,7 +272,8 @@ tasks where the story so far rules a wrong answer out: a changed noun of the cor
 appeared earlier in the chapter, while the wrong answer's noun appears in none of its correct
 sentences. More than 30% of a pack is a warning. The intro is read right before task 1, so it may
 not name a word a distractor of task 1 changes, in any case form of the recurring cast (ПЕТЮ for
-ПЕТЯ), and the chapter emoji may not stand in some scenes of task 1 and not in others.
+ПЕТЯ). The chapter card is shown before task 1 and before the next task of a resumed chapter, so
+the chapter emoji may not stand in some scenes of any task and not in others.
 
 ### The phone
 
@@ -550,9 +551,9 @@ subject before a pictured verb keeps the verb drawn or undrawn. The two distract
 words, and in level C different sentences. One meaning keeps one picture across the phrase and
 story packs, and one picture names one noun across the story packs. The intro may not name a word a
 distractor of task 1 changes, in any case form of the cast, and the chapter emoji, as a picture or
-as a badge, may not tell the correct scene of task 1 from a wrong one. Only task 1 is held to it: a
-resumed chapter opens on a later task, but there the chapter emoji is mostly the story's own
-subject.
+as a badge, may not tell the correct scene of any task from a wrong one: a resumed chapter opens on
+its next task right after the chapter card. The packs use a chapter emoji that no scene of the
+chapter draws.
 
 The form check runs the other way round from the phrases: one written form of a drawn word always
 means one slug in its language, so КОТ, КОТА and КОТУ can all be `cat`, but КОТА cannot be `cat` in
