@@ -193,7 +193,7 @@ pronoun draws nothing, so ОН ПЬЁТ МОЛОКО has a one-emoji scene and i
 noun without a number is singular, because it is drawn once. A name takes its noun's slug and
 picture: Маша and Meg are `girl` 👧, Петя and Tom are `boy` 👦, with one named character per noun.
 One picture names one noun across all the story packs, checked against the nouns the phrase packs
-already draw, so ЛЕС cannot borrow 🌲, which is ЁЛКА there.
+already draw, so ДЕРЕВО (`tree`, 🌳) cannot borrow 🌲, which is ЁЛКА (`fir`) there.
 
 ### Pictured verbs
 
@@ -224,19 +224,27 @@ In level C the check spans two sentences. Every answer is two panels, the top on
 sentence and the bottom one for the second, with a dashed line between them, matching the two lines
 on the card. One wrong answer changes a word of the first sentence and the other a word of the
 second, so a child who reads only one sentence is left with two equally good pictures. A wrong
-answer should not change a word the other sentence names as well, such as МЯЧ in ПЁС НЕСЁТ КОТУ
-МЯЧ. КОТ ПРЯЧЕТ МЯЧ ПОД ДИВАН., because the unchanged sentence then settles the check. The people
-and every noun that is the subject of a sentence in the chapter are exempt, since swapping a
-character still gives a pair that makes sense.
+answer should not change a noun, number, size or color the other sentence names as well, such as
+МЯЧ in ПЁС НЕСЁТ КОТУ МЯЧ. КОТ ПРЯЧЕТ МЯЧ ПОД ДИВАН., because the unchanged sentence then settles
+the check. A number, size or color counts only on the same noun in both sentences: RED in TOM HAS A
+RED CAR. MEG HAS A RED APPLE. may change. Three kinds of noun are exempt: the people; the first drawn
+noun of every correct sentence in the chapter, meant for the characters, since swapping a character
+still gives a pair that makes sense; and a noun the other sentence counts differently (РЫБУ against
+ДВЕ РЫБЫ is another fish). The first drawn noun is not always a character: it is also a place that
+opens a Russian sentence (В ДЕРЕВЕ ЖИВУТ...), the possessor in У ДЕДА and an inanimate subject (THE
+BALL ROLLS), so such a noun is not warned on either. Telling them apart would need a list of animate
+nouns.
 
 ### The story so far
 
-The story bubble above the card shows the chapter's intro before the first sentence. From then on
-it shows the sentences read so far, newest at the bottom; the older ones fade out at the top, so the
-newest stays whole on every screen. A Russian line is split as the card shows it. On the chapter
-screen the whole story stands under the closing line. On a story screen the hero beside the bubble
-is hidden and the bubble takes the scene's whole width, because the answers are scenes and the
-hero would be one more picture to match.
+The story bubble above the card shows the chapter's intro before the first sentence. From then on it
+shows the sentences read so far, newest at the bottom; the older ones fade out at the top, and the
+newest always shows whole. The bubble keeps room for two rows of the newest sentence and grows only
+when that sentence takes three rows, which happens on a narrow phone. A Russian line is split as the
+card shows it, and as on the card every word stays on one row: a line wraps between words, never at
+a syllable hyphen. On the chapter screen the whole story stands under the closing line, wrapped the
+same way. On a story screen the hero beside the bubble is hidden and the bubble takes the scene's
+whole width, because the answers are scenes and the hero would be one more picture to match.
 
 A story is read in order, so a sentence cannot be set aside for later. The help of the other
 levels stays: Russian sentences come split at once, English sentences whole with the parts on
@@ -274,11 +282,15 @@ card stops at 36px. Under two English sentences the card is followed by the part
 two-panel scenes there stop at 45px items.
 
 On a phone the scenes always stack in one column, at least 72px high, and a sentence of four or more
-words is set at 28px, the size a 12-character split needs at 360px. An English card is followed by
-the parts button, which gets a full-width row of its own there. In levels A and B the card as first
-shown and the first answer share a 360×740 screen; with the English parts open, the answer may need
-a scroll. In level C the two sentences and the two-panel answers do not, and the first answer often
-needs a scroll. The phone is best-effort, as in [GAME_DESIGN.md](../GAME_DESIGN.md#target-device).
+words is set at 28px, the size a 12-character split needs at 360px. The story scene above the card
+is only as tall as its bubble, so it does not keep the 260px the word and phrase scenes have on a
+tall phone. At 360px a newest line of the story so far can take three rows (a few long sentences of
+levels B and C); the bubble then grows by one row for that sentence rather than hiding its first
+row. An English card is followed by the parts button, which gets a full-width row of its own there.
+In levels A and B the card as first shown and the first answer share a 360×740 screen; with the
+English parts open, the answer may need a scroll. In level C the two sentences and the two-panel
+answers do not, and the first answer often needs a scroll. The phone is best-effort, as in
+[GAME_DESIGN.md](../GAME_DESIGN.md#target-device).
 
 ## Stored progress
 
@@ -527,16 +539,20 @@ be exactly that drawing: the nouns in word order, the emoji from the tables, the
 the badge, two or three emoji per panel and at most 4.5 layout units. A number has to be the number
 its word says, and the modifiers come in the order number, size, color. English nouns are plural
 after a number above one and singular otherwise, and a pictured verb takes -S after a singular
-subject. A 🎵 on a correct sentence needs a subject that sings. Russian text, the title, the intro
-and the closing text included, spells Ё in the words that always have it.
+subject. A final S reads as plural except in the singulars of `EN_SINGULAR_S` (BUS, PRINCESS,
+CIRCUS...); FISH, SHEEP and DEER pass both ways. A 🎵 on a correct sentence needs a subject that
+sings. Russian text, the title, the intro and the closing text included, spells Ё in the words that
+always have it.
 
 Each distractor has to change exactly one slug, with the same number of words as the correct
 answer. The changed slug may not be glue, keeps its kind, is no look-alike of the old one, and on a
 subject before a pictured verb keeps the verb drawn or undrawn. The two distractors change different
 words, and in level C different sentences. One meaning keeps one picture across the phrase and
 story packs, and one picture names one noun across the story packs. The intro may not name a word a
-distractor of task 1 changes, in any case form of the cast, and the chapter emoji may not tell the
-correct scene of task 1 from a wrong one.
+distractor of task 1 changes, in any case form of the cast, and the chapter emoji, as a picture or
+as a badge, may not tell the correct scene of task 1 from a wrong one. Only task 1 is held to it: a
+resumed chapter opens on a later task, but there the chapter emoji is mostly the story's own
+subject.
 
 The form check runs the other way round from the phrases: one written form of a drawn word always
 means one slug in its language, so КОТ, КОТА and КОТУ can all be `cat`, but КОТА cannot be `cat` in
