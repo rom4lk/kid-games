@@ -2140,6 +2140,22 @@ html[lang="ru"] .word-choice .letter {
     --word-size: 1.75rem;
   }
 
+  /* An English sentence keeps its parts on demand, so its card is followed by
+     the parts button. A two-line card and a one-line button leave room for the
+     first answer on a phone screen. */
+  .word-card.story-card:has(+ .reading-actions:not([hidden])) {
+    min-height: 96px;
+  }
+
+  .story-card + .reading-actions:not([hidden]) {
+    grid-template-columns: 1fr;
+    margin: 4px 0 0;
+  }
+
+  .story-card + .reading-actions:not([hidden]) .hint-button {
+    min-height: 44px;
+  }
+
   .word-card.phrase-card {
     padding-right: 12px;
     padding-left: 12px;
