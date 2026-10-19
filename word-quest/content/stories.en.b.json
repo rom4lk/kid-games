@@ -1598,19 +1598,19 @@
               "label": "the dog sleeps by grandpa."
             },
             {
-              "id": "the-squirrel-sleep-by-girl",
+              "id": "the-dog-sing-by-girl",
               "scene": [
                 [
                   {
-                    "emoji": "🐿️",
-                    "badge": "💤"
+                    "emoji": "🐶",
+                    "badge": "🎵"
                   },
                   {
                     "emoji": "👧"
                   }
                 ]
               ],
-              "label": "the squirrel sleeps by meg."
+              "label": "the dog sings by meg."
             }
           ],
           "correct": "the-dog-sleep-by-girl"
@@ -1648,18 +1648,18 @@
               "label": "grandpa holds the red flower."
             },
             {
-              "id": "girl-hold-the-yellow-flower",
+              "id": "grandpa-hold-the-yellow-ball",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👴"
                   },
                   {
-                    "emoji": "🌻"
+                    "emoji": "🥎"
                   }
                 ]
               ],
-              "label": "meg holds the yellow flower."
+              "label": "grandpa holds the yellow ball."
             }
           ],
           "correct": "grandpa-hold-the-yellow-flower"
@@ -1933,11 +1933,11 @@
           "correct": "a-monkey-eat-two-banana"
         },
         {
-          "word": "A LION SLEEPS UNDER A TREE.",
-          "syllables": "A LI-ON SLEEPS UNDER A T-R-E-E.",
+          "word": "A LION SLEEPS UNDER A BIG TREE.",
+          "syllables": "A LI-ON SLEEPS UNDER A B-I-G T-R-E-E.",
           "choices": [
             {
-              "id": "a-lion-sleep-under-a-tree",
+              "id": "a-lion-sleep-under-a-big-tree",
               "scene": [
                 [
                   {
@@ -1945,14 +1945,15 @@
                     "badge": "💤"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🌳",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "a lion sleeps under a tree."
+              "label": "a lion sleeps under a big tree."
             },
             {
-              "id": "a-lion-sing-under-a-tree",
+              "id": "a-lion-sing-under-a-big-tree",
               "scene": [
                 [
                   {
@@ -1960,29 +1961,31 @@
                     "badge": "🎵"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🌳",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "a lion sings under a tree."
+              "label": "a lion sings under a big tree."
             },
             {
-              "id": "a-monkey-sleep-under-a-tree",
+              "id": "a-lion-sleep-under-a-small-tree",
               "scene": [
                 [
                   {
-                    "emoji": "🐵",
+                    "emoji": "🦁",
                     "badge": "💤"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🌳",
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "a monkey sleeps under a tree."
+              "label": "a lion sleeps under a small tree."
             }
           ],
-          "correct": "a-lion-sleep-under-a-tree"
+          "correct": "a-lion-sleep-under-a-big-tree"
         },
         {
           "word": "THE ELEPHANT HUGS A SMALL ELEPHANT.",
@@ -2241,19 +2244,19 @@
               "label": "mom bakes a small cake."
             },
             {
-              "id": "mom-cook-a-big-pie",
+              "id": "dad-cook-a-big-cake",
               "scene": [
                 [
                   {
-                    "emoji": "👩‍🍳"
+                    "emoji": "👨‍🍳"
                   },
                   {
-                    "emoji": "🥧",
+                    "emoji": "🎂",
                     "size": "big"
                   }
                 ]
               ],
-              "label": "mom bakes a big pie."
+              "label": "dad bakes a big cake."
             }
           ],
           "correct": "mom-cook-a-big-cake"
@@ -3434,11 +3437,11 @@
           "correct": "girl-put-the-bread-in-the-box"
         },
         {
-          "word": "GRANDPA PUTS THE BOX ON THE TREE.",
-          "syllables": "GRAND-PA P-U-T-S THE B-O-X ON THE T-R-E-E.",
+          "word": "GRANDPA PUTS THE BOX IN THE TREE.",
+          "syllables": "GRAND-PA P-U-T-S THE B-O-X IN THE T-R-E-E.",
           "choices": [
             {
-              "id": "grandpa-put-the-box-on-the-tree",
+              "id": "grandpa-put-the-box-in-the-tree",
               "scene": [
                 [
                   {
@@ -3452,10 +3455,10 @@
                   }
                 ]
               ],
-              "label": "grandpa puts the box on the tree."
+              "label": "grandpa puts the box in the tree."
             },
             {
-              "id": "girl-put-the-box-on-the-tree",
+              "id": "girl-put-the-box-in-the-tree",
               "scene": [
                 [
                   {
@@ -3469,10 +3472,10 @@
                   }
                 ]
               ],
-              "label": "meg puts the box on the tree."
+              "label": "meg puts the box in the tree."
             },
             {
-              "id": "grandpa-put-the-box-on-the-window",
+              "id": "grandpa-put-the-box-in-the-window",
               "scene": [
                 [
                   {
@@ -3486,10 +3489,10 @@
                   }
                 ]
               ],
-              "label": "grandpa puts the box on the window."
+              "label": "grandpa puts the box in the window."
             }
           ],
-          "correct": "grandpa-put-the-box-on-the-tree"
+          "correct": "grandpa-put-the-box-in-the-tree"
         },
         {
           "word": "MEG WAITS BY THE WINDOW.",
@@ -3573,18 +3576,18 @@
               "label": "a white bird sits on the box."
             },
             {
-              "id": "a-black-bird-sit-on-the-tree",
+              "id": "a-black-bird-sit-on-the-bread",
               "scene": [
                 [
                   {
                     "emoji": "🐦‍⬛"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "a black bird sits on the tree."
+              "label": "a black bird sits on the bread."
             }
           ],
           "correct": "a-black-bird-sit-on-the-box"
@@ -3642,11 +3645,11 @@
           "correct": "two-white-bird-eat-the-bread"
         },
         {
-          "word": "THE BLACK BIRD SINGS ON THE TREE.",
-          "syllables": "THE BLACK B-I-R-D SINGS ON THE T-R-E-E.",
+          "word": "THE BLACK BIRD SINGS IN THE TREE.",
+          "syllables": "THE BLACK B-I-R-D SINGS IN THE T-R-E-E.",
           "choices": [
             {
-              "id": "the-black-bird-sing-on-the-tree",
+              "id": "the-black-bird-sing-in-the-tree",
               "scene": [
                 [
                   {
@@ -3658,10 +3661,10 @@
                   }
                 ]
               ],
-              "label": "the black bird sings on the tree."
+              "label": "the black bird sings in the tree."
             },
             {
-              "id": "the-black-bird-sleep-on-the-tree",
+              "id": "the-black-bird-sleep-in-the-tree",
               "scene": [
                 [
                   {
@@ -3673,25 +3676,25 @@
                   }
                 ]
               ],
-              "label": "the black bird sleeps on the tree."
+              "label": "the black bird sleeps in the tree."
             },
             {
-              "id": "the-black-bird-sing-on-the-box",
+              "id": "the-white-bird-sing-in-the-tree",
               "scene": [
                 [
                   {
-                    "emoji": "🐦‍⬛",
+                    "emoji": "🕊️",
                     "badge": "🎵"
                   },
                   {
-                    "emoji": "📦"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the black bird sings on the box."
+              "label": "the white bird sings in the tree."
             }
           ],
-          "correct": "the-black-bird-sing-on-the-tree"
+          "correct": "the-black-bird-sing-in-the-tree"
         },
         {
           "word": "MEG PAINTS A WHITE BIRD.",
@@ -3863,7 +3866,7 @@
         "#8a5a3b",
         "#643c65"
       ],
-      "intro": "It is time to go to the shop, but the door will not open.",
+      "intro": "It is a busy morning, and something is missing.",
       "completeText": "The key is found, the dog has a bone, and Mom is off to the shop at last.",
       "tasks": [
         {
@@ -4398,7 +4401,7 @@
         "#38458f"
       ],
       "intro": "Tonight there is a show in town, and Meg has two tickets.",
-      "completeText": "A red balloon, a candy for the clown and a black hat: Meg will remember this show for a long time.",
+      "completeText": "A red balloon, a candy for the clown and a big hat: Meg will remember this show for a long time.",
       "tasks": [
         {
           "word": "A CLOWN SITS ON A BIG BALL.",
@@ -4435,19 +4438,19 @@
               "label": "a clown sits on a small ball."
             },
             {
-              "id": "a-clown-sit-on-a-big-horse",
+              "id": "a-clown-sit-on-a-big-bike",
               "scene": [
                 [
                   {
                     "emoji": "🤡"
                   },
                   {
-                    "emoji": "🐴",
+                    "emoji": "🚲",
                     "size": "big"
                   }
                 ]
               ],
-              "label": "a clown sits on a big horse."
+              "label": "a clown sits on a big bike."
             }
           ],
           "correct": "a-clown-sit-on-a-big-ball"
@@ -4511,11 +4514,11 @@
           "correct": "the-clown-give-girl-a-red-balloon"
         },
         {
-          "word": "TWO HORSES DANCE WITH THE CLOWN.",
-          "syllables": "T-W-O HORS-ES DANCE WITH THE CLOWN.",
+          "word": "TWO HORSES DANCE FOR MEG.",
+          "syllables": "T-W-O HORS-ES DANCE FOR M-E-G.",
           "choices": [
             {
-              "id": "two-horse-dance-with-the-clown",
+              "id": "two-horse-dance-for-girl",
               "scene": [
                 [
                   {
@@ -4523,14 +4526,14 @@
                     "count": 2
                   },
                   {
-                    "emoji": "🤡"
+                    "emoji": "👧"
                   }
                 ]
               ],
-              "label": "two horses dance with the clown."
+              "label": "two horses dance for meg."
             },
             {
-              "id": "one-horse-dance-with-the-clown",
+              "id": "one-horse-dance-for-girl",
               "scene": [
                 [
                   {
@@ -4538,14 +4541,14 @@
                     "count": 1
                   },
                   {
-                    "emoji": "🤡"
+                    "emoji": "👧"
                   }
                 ]
               ],
-              "label": "one horse dances with the clown."
+              "label": "one horse dances for meg."
             },
             {
-              "id": "two-horse-dance-with-the-monkey",
+              "id": "two-horse-dance-for-dad",
               "scene": [
                 [
                   {
@@ -4553,21 +4556,21 @@
                     "count": 2
                   },
                   {
-                    "emoji": "🐵"
+                    "emoji": "👨"
                   }
                 ]
               ],
-              "label": "two horses dance with the monkey."
+              "label": "two horses dance for dad."
             }
           ],
-          "correct": "two-horse-dance-with-the-clown"
+          "correct": "two-horse-dance-for-girl"
         },
         {
-          "word": "A SMALL MONKEY RIDES A BIKE.",
-          "syllables": "A SMALL MON-KEY RIDES A B-I-K-E.",
+          "word": "A SMALL MONKEY SITS ON A BIKE.",
+          "syllables": "A SMALL MON-KEY SITS ON A B-I-K-E.",
           "choices": [
             {
-              "id": "a-small-monkey-ride-a-bike",
+              "id": "a-small-monkey-sit-on-a-bike",
               "scene": [
                 [
                   {
@@ -4579,10 +4582,10 @@
                   }
                 ]
               ],
-              "label": "a small monkey rides a bike."
+              "label": "a small monkey sits on a bike."
             },
             {
-              "id": "a-big-monkey-ride-a-bike",
+              "id": "a-big-monkey-sit-on-a-bike",
               "scene": [
                 [
                   {
@@ -4594,10 +4597,10 @@
                   }
                 ]
               ],
-              "label": "a big monkey rides a bike."
+              "label": "a big monkey sits on a bike."
             },
             {
-              "id": "a-small-monkey-ride-a-horse",
+              "id": "a-small-monkey-sit-on-a-ball",
               "scene": [
                 [
                   {
@@ -4605,14 +4608,14 @@
                     "size": "small"
                   },
                   {
-                    "emoji": "🐴"
+                    "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "a small monkey rides a horse."
+              "label": "a small monkey sits on a ball."
             }
           ],
-          "correct": "a-small-monkey-ride-a-bike"
+          "correct": "a-small-monkey-sit-on-a-bike"
         },
         {
           "word": "DAD BUYS TWO CANDIES.",
@@ -4717,53 +4720,53 @@
           "correct": "dad-dance-with-the-clown"
         },
         {
-          "word": "THE CLOWN CATCHES THE RED BALLOON.",
-          "syllables": "THE CLOWN CATCH-ES THE R-E-D BAL-LOON.",
+          "word": "MEG CATCHES THE RED BALLOON.",
+          "syllables": "M-E-G CATCH-ES THE R-E-D BAL-LOON.",
           "choices": [
             {
-              "id": "the-clown-catch-the-red-balloon",
+              "id": "girl-catch-the-red-balloon",
               "scene": [
                 [
                   {
-                    "emoji": "🤡"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🎈"
                   }
                 ]
               ],
-              "label": "the clown catches the red balloon."
+              "label": "meg catches the red balloon."
             },
             {
-              "id": "the-monkey-catch-the-red-balloon",
+              "id": "dad-catch-the-red-balloon",
               "scene": [
                 [
                   {
-                    "emoji": "🐵"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🎈"
                   }
                 ]
               ],
-              "label": "the monkey catches the red balloon."
+              "label": "dad catches the red balloon."
             },
             {
-              "id": "the-clown-catch-the-red-heart",
+              "id": "girl-catch-the-red-heart",
               "scene": [
                 [
                   {
-                    "emoji": "🤡"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "❤️"
                   }
                 ]
               ],
-              "label": "the clown catches the red heart."
+              "label": "meg catches the red heart."
             }
           ],
-          "correct": "the-clown-catch-the-red-balloon"
+          "correct": "girl-catch-the-red-balloon"
         },
         {
           "word": "DAD JUGGLES TWO BALLS.",
@@ -4856,31 +4859,31 @@
               "label": "dad gives the clown a candy."
             },
             {
-              "id": "girl-give-the-horse-a-candy",
+              "id": "girl-give-the-clown-a-balloon",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐴"
+                    "emoji": "🤡"
                   },
                   {
-                    "emoji": "🍬"
+                    "emoji": "🎈"
                   }
                 ]
               ],
-              "label": "meg gives the horse a candy."
+              "label": "meg gives the clown a balloon."
             }
           ],
           "correct": "girl-give-the-clown-a-candy"
         },
         {
-          "word": "THE CLOWN GIVES MEG A BLACK HAT.",
-          "syllables": "THE CLOWN GIVES M-E-G A BLACK H-A-T.",
+          "word": "THE CLOWN GIVES MEG A BIG HAT.",
+          "syllables": "THE CLOWN GIVES M-E-G A B-I-G H-A-T.",
           "choices": [
             {
-              "id": "the-clown-give-girl-a-black-hat",
+              "id": "the-clown-give-girl-a-big-hat",
               "scene": [
                 [
                   {
@@ -4890,14 +4893,15 @@
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🎩"
+                    "emoji": "👒",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "the clown gives meg a black hat."
+              "label": "the clown gives meg a big hat."
             },
             {
-              "id": "the-clown-give-dad-a-black-hat",
+              "id": "the-clown-give-dad-a-big-hat",
               "scene": [
                 [
                   {
@@ -4907,31 +4911,33 @@
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "🎩"
+                    "emoji": "👒",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "the clown gives dad a black hat."
+              "label": "the clown gives dad a big hat."
             },
             {
-              "id": "the-monkey-give-girl-a-black-hat",
+              "id": "the-clown-give-girl-a-small-hat",
               "scene": [
                 [
                   {
-                    "emoji": "🐵"
+                    "emoji": "🤡"
                   },
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🎩"
+                    "emoji": "👒",
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "the monkey gives meg a black hat."
+              "label": "the clown gives meg a small hat."
             }
           ],
-          "correct": "the-clown-give-girl-a-black-hat"
+          "correct": "the-clown-give-girl-a-big-hat"
         }
       ]
     },
@@ -5052,43 +5058,9 @@
           "correct": "girl-have-a-small-umbrella"
         },
         {
-          "word": "THE DOG SEES A FROG ON A LOG.",
-          "syllables": "THE D-O-G S-E-E-S A F-R-O-G ON A L-O-G.",
+          "word": "THE DOG SEES A FROG ON A STONE.",
+          "syllables": "THE D-O-G S-E-E-S A F-R-O-G ON A STONE.",
           "choices": [
-            {
-              "id": "the-dog-see-a-frog-on-a-log",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🐸"
-                  },
-                  {
-                    "emoji": "🪵"
-                  }
-                ]
-              ],
-              "label": "the dog sees a frog on a log."
-            },
-            {
-              "id": "the-dog-see-a-duck-on-a-log",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🦆"
-                  },
-                  {
-                    "emoji": "🪵"
-                  }
-                ]
-              ],
-              "label": "the dog sees a duck on a log."
-            },
             {
               "id": "the-dog-see-a-frog-on-a-stone",
               "scene": [
@@ -5105,9 +5077,43 @@
                 ]
               ],
               "label": "the dog sees a frog on a stone."
+            },
+            {
+              "id": "the-dog-see-a-bone-on-a-stone",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐶"
+                  },
+                  {
+                    "emoji": "🦴"
+                  },
+                  {
+                    "emoji": "🪨"
+                  }
+                ]
+              ],
+              "label": "the dog sees a bone on a stone."
+            },
+            {
+              "id": "the-dog-see-a-frog-on-a-log",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐶"
+                  },
+                  {
+                    "emoji": "🐸"
+                  },
+                  {
+                    "emoji": "🪵"
+                  }
+                ]
+              ],
+              "label": "the dog sees a frog on a log."
             }
           ],
-          "correct": "the-dog-see-a-frog-on-a-log"
+          "correct": "the-dog-see-a-frog-on-a-stone"
         },
         {
           "word": "MEG SEES TWO DUCKS.",
@@ -5194,18 +5200,18 @@
               "label": "the dog jumps on a log."
             },
             {
-              "id": "the-duck-jump-on-a-stone",
+              "id": "the-frog-jump-on-a-stone",
               "scene": [
                 [
                   {
-                    "emoji": "🦆"
+                    "emoji": "🐸"
                   },
                   {
                     "emoji": "🪨"
                   }
                 ]
               ],
-              "label": "the duck jumps on a stone."
+              "label": "the frog jumps on a stone."
             }
           ],
           "correct": "the-dog-jump-on-a-stone"
@@ -5323,56 +5329,56 @@
           "correct": "dad-give-the-dog-a-bone"
         },
         {
-          "word": "MEG JUMPS OVER A BIG STONE.",
-          "syllables": "M-E-G JUMPS OVER A B-I-G STONE.",
+          "word": "MEG JUMPS OVER A BIG LOG.",
+          "syllables": "M-E-G JUMPS OVER A B-I-G L-O-G.",
           "choices": [
             {
-              "id": "girl-jump-over-a-big-stone",
+              "id": "girl-jump-over-a-big-log",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🪨",
+                    "emoji": "🪵",
                     "size": "big"
                   }
                 ]
               ],
-              "label": "meg jumps over a big stone."
+              "label": "meg jumps over a big log."
             },
             {
-              "id": "girl-jump-over-a-small-stone",
+              "id": "girl-jump-over-a-small-log",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🪨",
+                    "emoji": "🪵",
                     "size": "small"
                   }
                 ]
               ],
-              "label": "meg jumps over a small stone."
+              "label": "meg jumps over a small log."
             },
             {
-              "id": "dad-jump-over-a-big-stone",
+              "id": "dad-jump-over-a-big-log",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "🪨",
+                    "emoji": "🪵",
                     "size": "big"
                   }
                 ]
               ],
-              "label": "dad jumps over a big stone."
+              "label": "dad jumps over a big log."
             }
           ],
-          "correct": "girl-jump-over-a-big-stone"
+          "correct": "girl-jump-over-a-big-log"
         },
         {
           "word": "MEG SEES A RAINBOW OVER THE RIVER.",
@@ -6962,18 +6968,18 @@
               "label": "a bee sits on grandpa."
             },
             {
-              "id": "a-snail-sit-on-girl",
+              "id": "a-bird-sit-on-girl",
               "scene": [
                 [
                   {
-                    "emoji": "🐌"
+                    "emoji": "🐦"
                   },
                   {
                     "emoji": "👧"
                   }
                 ]
               ],
-              "label": "a snail sits on meg."
+              "label": "a bird sits on meg."
             }
           ],
           "correct": "a-bee-sit-on-girl"
@@ -7288,21 +7294,21 @@
               "label": "dad hears the cat in the tree."
             },
             {
-              "id": "girl-hear-the-bird-in-the-tree",
+              "id": "girl-hear-the-cat-in-the-house",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐦"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "meg hears the bird in the tree."
+              "label": "meg hears the cat in the house."
             }
           ],
           "correct": "girl-hear-the-cat-in-the-tree"
@@ -7409,53 +7415,62 @@
           "correct": "dad-stand-on-a-big-box"
         },
         {
-          "word": "THE CAT JUMPS ON DAD.",
-          "syllables": "THE C-A-T JUMPS ON D-A-D.",
+          "word": "DAD CATCHES THE CAT IN THE TREE.",
+          "syllables": "D-A-D CATCH-ES THE C-A-T IN THE T-R-E-E.",
           "choices": [
             {
-              "id": "the-cat-jump-on-dad",
+              "id": "dad-catch-the-cat-in-the-tree",
               "scene": [
                 [
+                  {
+                    "emoji": "👨"
+                  },
                   {
                     "emoji": "🐱"
                   },
                   {
-                    "emoji": "👨"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the cat jumps on dad."
+              "label": "dad catches the cat in the tree."
             },
             {
-              "id": "the-cat-jump-on-girl",
+              "id": "girl-catch-the-cat-in-the-tree",
               "scene": [
                 [
-                  {
-                    "emoji": "🐱"
-                  },
                   {
                     "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🐱"
+                  },
+                  {
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the cat jumps on meg."
+              "label": "meg catches the cat in the tree."
             },
             {
-              "id": "the-bird-jump-on-dad",
+              "id": "dad-catch-the-cat-in-the-house",
               "scene": [
                 [
                   {
-                    "emoji": "🐦"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "👨"
+                    "emoji": "🐱"
+                  },
+                  {
+                    "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "the bird jumps on dad."
+              "label": "dad catches the cat in the house."
             }
           ],
-          "correct": "the-cat-jump-on-dad"
+          "correct": "dad-catch-the-cat-in-the-tree"
         },
         {
           "word": "THE CAT KISSES MEG IN THE HOUSE.",
@@ -8282,62 +8297,56 @@
           "correct": "boy-find-two-shell"
         },
         {
-          "word": "DAD AND TOM BUILD A CASTLE.",
-          "syllables": "D-A-D AND T-O-M BUILD A CAS-TLE.",
+          "word": "DAD BUILDS A SMALL CASTLE.",
+          "syllables": "D-A-D BUILDS A SMALL CAS-TLE.",
           "choices": [
             {
-              "id": "dad-and-boy-build-a-castle",
+              "id": "dad-build-a-small-castle",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🏰"
+                    "emoji": "🏰",
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "dad and tom build a castle."
+              "label": "dad builds a small castle."
             },
             {
-              "id": "mom-and-boy-build-a-castle",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🏰"
-                  }
-                ]
-              ],
-              "label": "mom and tom build a castle."
-            },
-            {
-              "id": "dad-and-mom-build-a-castle",
+              "id": "dad-build-a-big-castle",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🏰"
+                    "emoji": "🏰",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "dad and mom build a castle."
+              "label": "dad builds a big castle."
+            },
+            {
+              "id": "boy-build-a-small-castle",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🏰",
+                    "size": "small"
+                  }
+                ]
+              ],
+              "label": "tom builds a small castle."
             }
           ],
-          "correct": "dad-and-boy-build-a-castle"
+          "correct": "dad-build-a-small-castle"
         },
         {
           "word": "A CRAB SITS ON THE CASTLE.",
@@ -8638,7 +8647,7 @@
               "label": "mom hugs tom by the sea."
             },
             {
-              "id": "dad-hug-boy-by-the-castle",
+              "id": "dad-hug-boy-by-the-bucket",
               "scene": [
                 [
                   {
@@ -8648,11 +8657,11 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🏰"
+                    "emoji": "🪣"
                   }
                 ]
               ],
-              "label": "dad hugs tom by the castle."
+              "label": "dad hugs tom by the bucket."
             }
           ],
           "correct": "dad-hug-boy-by-the-sea"
@@ -8748,21 +8757,21 @@
               "label": "dad puts a shell on the castle."
             },
             {
-              "id": "boy-put-a-crab-on-the-castle",
+              "id": "boy-put-a-shell-on-the-bucket",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🦀"
+                    "emoji": "🐚"
                   },
                   {
-                    "emoji": "🏰"
+                    "emoji": "🪣"
                   }
                 ]
               ],
-              "label": "tom puts a crab on the castle."
+              "label": "tom puts a shell on the bucket."
             }
           ],
           "correct": "boy-put-a-shell-on-the-castle"
@@ -8869,21 +8878,21 @@
               "label": "mom holds the rod in the boat."
             },
             {
-              "id": "boy-hold-the-turtle-in-the-boat",
+              "id": "boy-hold-the-stone-in-the-boat",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐢"
+                    "emoji": "🪨"
                   },
                   {
                     "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "tom holds the turtle in the boat."
+              "label": "tom holds the stone in the boat."
             }
           ],
           "correct": "boy-hold-the-rod-in-the-boat"
@@ -9606,62 +9615,56 @@
           "correct": "mom-cook-soup-on-the-fire"
         },
         {
-          "word": "MEG DRINKS TEA BY THE TENT.",
-          "syllables": "M-E-G DRINKS T-E-A BY THE T-E-N-T.",
+          "word": "MEG SITS ON A BIG STONE.",
+          "syllables": "M-E-G SITS ON A B-I-G STONE.",
           "choices": [
             {
-              "id": "girl-drink-tea-by-the-tent",
+              "id": "girl-sit-on-a-big-stone",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "☕"
-                  },
-                  {
-                    "emoji": "⛺"
+                    "emoji": "🪨",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "meg drinks tea by the tent."
+              "label": "meg sits on a big stone."
             },
             {
-              "id": "dad-drink-tea-by-the-tent",
+              "id": "dad-sit-on-a-big-stone",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "☕"
-                  },
-                  {
-                    "emoji": "⛺"
+                    "emoji": "🪨",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "dad drinks tea by the tent."
+              "label": "dad sits on a big stone."
             },
             {
-              "id": "girl-drink-tea-by-the-fire",
+              "id": "girl-sit-on-a-small-stone",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "☕"
-                  },
-                  {
-                    "emoji": "🔥"
+                    "emoji": "🪨",
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "meg drinks tea by the fire."
+              "label": "meg sits on a small stone."
             }
           ],
-          "correct": "girl-drink-tea-by-the-tent"
+          "correct": "girl-sit-on-a-big-stone"
         },
         {
           "word": "AN OWL SITS ON THE STONE.",
@@ -9886,7 +9889,7 @@
         "#5c337c"
       ],
       "intro": "It is late, the lamp is on, and it is time for a story.",
-      "completeText": "The dragon ate the cakes, the prince found the key, and Meg is fast asleep with her teddy.",
+      "completeText": "The dragon ate the cakes and fell asleep on his key, and Meg is fast asleep with her teddy.",
       "tasks": [
         {
           "word": "GRANDPA OPENS THE GREEN BOOK.",
@@ -9970,133 +9973,84 @@
               "label": "the orange book has a dragon."
             },
             {
-              "id": "the-green-book-have-a-prince",
+              "id": "the-green-book-have-a-castle",
               "scene": [
                 [
                   {
                     "emoji": "📗"
                   },
                   {
-                    "emoji": "🤴"
+                    "emoji": "🏰"
                   }
                 ]
               ],
-              "label": "the green book has a prince."
+              "label": "the green book has a castle."
             }
           ],
           "correct": "the-green-book-have-a-dragon"
         },
         {
-          "word": "A DRAGON LIVES IN A CASTLE.",
-          "syllables": "A DRAG-ON LIVES IN A CAS-TLE.",
+          "word": "A DRAGON LIVES IN A BIG CASTLE.",
+          "syllables": "A DRAG-ON LIVES IN A B-I-G CAS-TLE.",
           "choices": [
             {
-              "id": "a-dragon-live-in-a-castle",
+              "id": "a-dragon-live-in-a-big-castle",
               "scene": [
                 [
                   {
                     "emoji": "🐉"
                   },
                   {
-                    "emoji": "🏰"
+                    "emoji": "🏰",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "a dragon lives in a castle."
+              "label": "a dragon lives in a big castle."
             },
             {
-              "id": "a-dragon-live-in-a-house",
+              "id": "a-dragon-live-in-a-small-castle",
               "scene": [
                 [
                   {
                     "emoji": "🐉"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🏰",
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "a dragon lives in a house."
+              "label": "a dragon lives in a small castle."
             },
             {
-              "id": "a-prince-live-in-a-castle",
+              "id": "a-dragon-live-in-a-big-house",
               "scene": [
                 [
                   {
-                    "emoji": "🤴"
+                    "emoji": "🐉"
                   },
                   {
-                    "emoji": "🏰"
+                    "emoji": "🏠",
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "a prince lives in a castle."
+              "label": "a dragon lives in a big house."
             }
           ],
-          "correct": "a-dragon-live-in-a-castle"
+          "correct": "a-dragon-live-in-a-big-castle"
         },
         {
-          "word": "THE DRAGON SLEEPS IN THE CASTLE.",
-          "syllables": "THE DRAG-ON SLEEPS IN THE CAS-TLE.",
+          "word": "THE DRAGON HAS A BIG KEY.",
+          "syllables": "THE DRAG-ON HAS A B-I-G K-E-Y.",
           "choices": [
             {
-              "id": "the-dragon-sleep-in-the-castle",
+              "id": "the-dragon-have-a-big-key",
               "scene": [
                 [
                   {
-                    "emoji": "🐉",
-                    "badge": "💤"
-                  },
-                  {
-                    "emoji": "🏰"
-                  }
-                ]
-              ],
-              "label": "the dragon sleeps in the castle."
-            },
-            {
-              "id": "the-dragon-sing-in-the-castle",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐉",
-                    "badge": "🎵"
-                  },
-                  {
-                    "emoji": "🏰"
-                  }
-                ]
-              ],
-              "label": "the dragon sings in the castle."
-            },
-            {
-              "id": "the-prince-sleep-in-the-castle",
-              "scene": [
-                [
-                  {
-                    "emoji": "🤴",
-                    "badge": "💤"
-                  },
-                  {
-                    "emoji": "🏰"
-                  }
-                ]
-              ],
-              "label": "the prince sleeps in the castle."
-            }
-          ],
-          "correct": "the-dragon-sleep-in-the-castle"
-        },
-        {
-          "word": "THE PRINCE FINDS A BIG KEY.",
-          "syllables": "THE PRINCE FINDS A B-I-G K-E-Y.",
-          "choices": [
-            {
-              "id": "the-prince-find-a-big-key",
-              "scene": [
-                [
-                  {
-                    "emoji": "🤴"
+                    "emoji": "🐉"
                   },
                   {
                     "emoji": "🔑",
@@ -10104,14 +10058,14 @@
                   }
                 ]
               ],
-              "label": "the prince finds a big key."
+              "label": "the dragon has a big key."
             },
             {
-              "id": "the-prince-find-a-small-key",
+              "id": "the-dragon-have-a-small-key",
               "scene": [
                 [
                   {
-                    "emoji": "🤴"
+                    "emoji": "🐉"
                   },
                   {
                     "emoji": "🔑",
@@ -10119,32 +10073,32 @@
                   }
                 ]
               ],
-              "label": "the prince finds a small key."
+              "label": "the dragon has a small key."
             },
             {
-              "id": "the-dragon-find-a-big-key",
+              "id": "the-dragon-have-a-big-cake",
               "scene": [
                 [
                   {
                     "emoji": "🐉"
                   },
                   {
-                    "emoji": "🔑",
+                    "emoji": "🎂",
                     "size": "big"
                   }
                 ]
               ],
-              "label": "the dragon finds a big key."
+              "label": "the dragon has a big cake."
             }
           ],
-          "correct": "the-prince-find-a-big-key"
+          "correct": "the-dragon-have-a-big-key"
         },
         {
-          "word": "THE DRAGON EATS TWO CAKES.",
-          "syllables": "THE DRAG-ON E-A-T-S T-W-O CAKES.",
+          "word": "THE DRAGON EATS TWO BIG CAKES.",
+          "syllables": "THE DRAG-ON E-A-T-S T-W-O B-I-G CAKES.",
           "choices": [
             {
-              "id": "the-dragon-eat-two-cake",
+              "id": "the-dragon-eat-two-big-cake",
               "scene": [
                 [
                   {
@@ -10152,14 +10106,15 @@
                   },
                   {
                     "emoji": "🎂",
-                    "count": 2
+                    "count": 2,
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "the dragon eats two cakes."
+              "label": "the dragon eats two big cakes."
             },
             {
-              "id": "the-dragon-eat-one-cake",
+              "id": "the-dragon-eat-one-big-cake",
               "scene": [
                 [
                   {
@@ -10167,29 +10122,83 @@
                   },
                   {
                     "emoji": "🎂",
-                    "count": 1
+                    "count": 1,
+                    "size": "big"
                   }
                 ]
               ],
-              "label": "the dragon eats one cake."
+              "label": "the dragon eats one big cake."
             },
             {
-              "id": "the-prince-eat-two-cake",
+              "id": "the-dragon-eat-two-small-cake",
               "scene": [
                 [
                   {
-                    "emoji": "🤴"
+                    "emoji": "🐉"
                   },
                   {
                     "emoji": "🎂",
-                    "count": 2
+                    "count": 2,
+                    "size": "small"
                   }
                 ]
               ],
-              "label": "the prince eats two cakes."
+              "label": "the dragon eats two small cakes."
             }
           ],
-          "correct": "the-dragon-eat-two-cake"
+          "correct": "the-dragon-eat-two-big-cake"
+        },
+        {
+          "word": "THE DRAGON SLEEPS ON THE KEY.",
+          "syllables": "THE DRAG-ON SLEEPS ON THE K-E-Y.",
+          "choices": [
+            {
+              "id": "the-dragon-sleep-on-the-key",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐉",
+                    "badge": "💤"
+                  },
+                  {
+                    "emoji": "🔑"
+                  }
+                ]
+              ],
+              "label": "the dragon sleeps on the key."
+            },
+            {
+              "id": "the-dragon-sing-on-the-key",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐉",
+                    "badge": "🎵"
+                  },
+                  {
+                    "emoji": "🔑"
+                  }
+                ]
+              ],
+              "label": "the dragon sings on the key."
+            },
+            {
+              "id": "the-dragon-sleep-on-the-cake",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐉",
+                    "badge": "💤"
+                  },
+                  {
+                    "emoji": "🎂"
+                  }
+                ]
+              ],
+              "label": "the dragon sleeps on the cake."
+            }
+          ],
+          "correct": "the-dragon-sleep-on-the-key"
         },
         {
           "word": "MEG HOLDS THE TEDDY ON THE BED.",
