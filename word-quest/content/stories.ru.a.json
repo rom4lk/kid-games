@@ -1385,18 +1385,18 @@
               "label": "папа гребёт домой."
             },
             {
-              "id": "dad-swim-house",
+              "id": "dad-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "🏊‍♂️"
+                    "emoji": "🚶‍♂️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "папа плывёт домой."
+              "label": "папа идёт домой."
             },
             {
               "id": "mom-row-house",
