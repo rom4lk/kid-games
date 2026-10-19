@@ -6628,18 +6628,18 @@
               "label": "a bird sees tom."
             },
             {
-              "id": "a-crab-see-mom",
+              "id": "a-crab-see-girl",
               "scene": [
                 [
                   {
                     "emoji": "🦀"
                   },
                   {
-                    "emoji": "👩"
+                    "emoji": "👧"
                   }
                 ]
               ],
-              "label": "a crab sees mom."
+              "label": "a crab sees meg."
             }
           ],
           "correct": "a-crab-see-boy"
@@ -9914,18 +9914,18 @@
               "label": "tom holds the cat."
             },
             {
-              "id": "dad-hold-the-cat",
+              "id": "grandpa-hold-the-cat",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👴"
                   },
                   {
                     "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "dad holds the cat."
+              "label": "grandpa holds the cat."
             },
             {
               "id": "boy-hold-the-pie",
