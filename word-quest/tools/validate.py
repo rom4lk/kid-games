@@ -1451,17 +1451,33 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 f'{where}: both distractors change sentence {first["sentence"] + 1}; they must change words in'
                 " different sentences"
             )
-    # The other sentence names the changed word too, so the wrong pair contradicts itself and that
-    # sentence settles the check. A warning for now: people swaps and verbs are left alone.
-    if sentence_count > 1:
+    # Words the other sentence of the pair names too; the chapter decides which of them are characters.
+    # A noun counted differently there (РЫБУ against ДВЕ РЫБЫ) is another thing of the same kind.
+    correct_classes = classes_by_choice.get(task["correct"]) or []
+
+    def number_before(index, position):
+        while position > 0 and correct_classes[index][position - 1] in MODIFIER_ORDER:
+            position -= 1
+            if correct_classes[index][position] == "number":
+                return correct_slugs[index][position]
+        return None
+
+    back_references = []
+    if sentence_count > 1 and len(correct_classes) == sentence_count:
         for change in changes:
-            other = correct_slugs[1 - change["sentence"]]
-            if change["kind"] in ("noun", "number", "size", "color") and change["old"] not in STORY_PEOPLE \
-                    and change["old"] in other:
-                warnings.append(
-                    f'{where}: distractor changes "{change["old"]}" in sentence {change["sentence"] + 1}, which'
-                    f' sentence {2 - change["sentence"]} also names; that sentence settles the check'
-                )
+            index, other = change["sentence"], 1 - change["sentence"]
+            if change["kind"] not in ("noun", "number", "size", "color") or change["old"] not in correct_slugs[other]:
+                continue
+            if change["kind"] == "noun" and all(
+                number_before(other, position) != number_before(index, change["position"])
+                for position, slug in enumerate(correct_slugs[other]) if slug == change["old"]
+            ):
+                continue
+            back_references.append((where, index, change["old"]))
+    subjects = {
+        next((slug for slug, kind in zip(slugs, classes) if kind == "noun"), None)
+        for slugs, classes in zip(correct_slugs, correct_classes)
+    } - {None}
 
     return {
         "sentences": sentences,
@@ -1473,6 +1489,8 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
         "giveaways": {form for change in changes for form in change["forms"]},
         "scene": json.dumps(correct_choice["scene"], sort_keys=True, ensure_ascii=False),
         "scenes": frozenset(json.dumps(choice["scene"], sort_keys=True, ensure_ascii=False) for choice in choices),
+        "back_references": back_references,
+        "subjects": subjects,
     }
 
 
@@ -1568,6 +1586,20 @@ def validate_story_pack(language, level):
                 )
             else:
                 warnings.append(f"{where}: task {task_index + 1} has the same correct scene as task {earlier_task[0] + 1}")
+
+        # A two-sentence task whose wrong answer changes a word the other sentence also names reads as a
+        # pair that contradicts itself, so that sentence settles the check. Characters are left alone: the
+        # people, and any noun that is the subject of a correct sentence of the chapter, since swapping
+        # one of them gives a pair that still makes sense. A warning: some repeated places and objects
+        # still make a coherent wrong pair.
+        characters = STORY_PEOPLE.union(*(info["subjects"] for info in chapter_infos if info))
+        for info in chapter_infos:
+            for task_where, sentence_index, old in (info or {}).get("back_references", []):
+                if old not in characters:
+                    warnings.append(
+                        f'{task_where}: a distractor changes "{old}" in sentence {sentence_index + 1}, which'
+                        f" sentence {2 - sentence_index} also names; that sentence settles the check"
+                    )
 
         # A context giveaway: the story has met the correct noun, and the wrong one never appears in it.
         chapter_slugs = set().union(*(info["slugs"] for info in chapter_infos if info))
