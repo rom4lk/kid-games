@@ -282,17 +282,17 @@
               "label": "tom pours milk for the cat. the cat drinks the milk."
             },
             {
-              "id": "boy-pour-juice-for-the-cat.the-cat-drink-the-milk",
+              "id": "boy-pour-milk-for-the-dog.the-cat-drink-the-milk",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🧃"
+                    "emoji": "🥛"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "🐶"
                   }
                 ],
                 [
@@ -304,7 +304,7 @@
                   }
                 ]
               ],
-              "label": "tom pours juice for the cat. the cat drinks the milk."
+              "label": "tom pours milk for the dog. the cat drinks the milk."
             },
             {
               "id": "boy-pour-milk-for-the-cat.the-dog-drink-the-milk",
@@ -434,14 +434,14 @@
               "label": "the ball rolls under the sofa. the dog looks under the sofa."
             },
             {
-              "id": "the-ball-roll-under-the-bed.the-dog-look-under-the-sofa",
+              "id": "the-bone-roll-under-the-sofa.the-dog-look-under-the-sofa",
               "scene": [
                 [
                   {
-                    "emoji": "⚽"
+                    "emoji": "🦴"
                   },
                   {
-                    "emoji": "🛏️"
+                    "emoji": "🛋️"
                   }
                 ],
                 [
@@ -453,7 +453,7 @@
                   }
                 ]
               ],
-              "label": "the ball rolls under the bed. the dog looks under the sofa."
+              "label": "the bone rolls under the sofa. the dog looks under the sofa."
             },
             {
               "id": "the-ball-roll-under-the-sofa.the-cat-look-under-the-sofa",
@@ -784,7 +784,7 @@
               "label": "tom throws the ball to the cat. the dog catches the ball."
             },
             {
-              "id": "boy-throw-the-ball-to-the-dog.the-dog-catch-the-bone",
+              "id": "boy-throw-the-ball-to-the-dog.the-cat-catch-the-ball",
               "scene": [
                 [
                   {
@@ -799,14 +799,14 @@
                 ],
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🦴"
+                    "emoji": "⚽"
                   }
                 ]
               ],
-              "label": "tom throws the ball to the dog. the dog catches the bone."
+              "label": "tom throws the ball to the dog. the cat catches the ball."
             }
           ],
           "correct": "boy-throw-the-ball-to-the-dog.the-dog-catch-the-ball"
@@ -928,14 +928,14 @@
               "label": "meg washes a red apple. grandma cuts the red apple."
             },
             {
-              "id": "girl-wash-a-green-apple.grandma-cut-the-red-apple",
+              "id": "grandma-wash-a-red-apple.grandma-cut-the-red-apple",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👵"
                   },
                   {
-                    "emoji": "🍏"
+                    "emoji": "🍎"
                   }
                 ],
                 [
@@ -947,7 +947,7 @@
                   }
                 ]
               ],
-              "label": "meg washes a green apple. grandma cuts the red apple."
+              "label": "grandma washes a red apple. grandma cuts the red apple."
             },
             {
               "id": "girl-wash-a-red-apple.girl-cut-the-red-apple",
@@ -1943,11 +1943,11 @@
           "correct": "boy-build-a-big-castle.dad-bring-two-shell"
         },
         {
-          "word": "TWO SHELLS GO ON THE CASTLE. THE CRAB SITS ON THE CASTLE.",
-          "syllables": "T-W-O SHELLS GO ON THE CAS-TLE. THE C-R-A-B SITS ON THE CAS-TLE.",
+          "word": "TWO SHELLS GO ON THE CASTLE. TOM PUTS THE CRAB ON THE CASTLE.",
+          "syllables": "T-W-O SHELLS GO ON THE CAS-TLE. T-O-M P-U-T-S THE C-R-A-B ON THE CAS-TLE.",
           "choices": [
             {
-              "id": "two-shell-go-on-the-castle.the-crab-sit-on-the-castle",
+              "id": "two-shell-go-on-the-castle.boy-put-the-crab-on-the-castle",
               "scene": [
                 [
                   {
@@ -1960,6 +1960,9 @@
                 ],
                 [
                   {
+                    "emoji": "👦"
+                  },
+                  {
                     "emoji": "🦀"
                   },
                   {
@@ -1967,10 +1970,10 @@
                   }
                 ]
               ],
-              "label": "two shells go on the castle. the crab sits on the castle."
+              "label": "two shells go on the castle. tom puts the crab on the castle."
             },
             {
-              "id": "one-shell-go-on-the-castle.the-crab-sit-on-the-castle",
+              "id": "one-shell-go-on-the-castle.boy-put-the-crab-on-the-castle",
               "scene": [
                 [
                   {
@@ -1983,6 +1986,9 @@
                 ],
                 [
                   {
+                    "emoji": "👦"
+                  },
+                  {
                     "emoji": "🦀"
                   },
                   {
@@ -1990,10 +1996,10 @@
                   }
                 ]
               ],
-              "label": "one shell goes on the castle. the crab sits on the castle."
+              "label": "one shell goes on the castle. tom puts the crab on the castle."
             },
             {
-              "id": "two-shell-go-on-the-castle.the-crab-sit-on-the-bucket",
+              "id": "two-shell-go-on-the-castle.dad-put-the-crab-on-the-castle",
               "scene": [
                 [
                   {
@@ -2006,24 +2012,27 @@
                 ],
                 [
                   {
+                    "emoji": "👨"
+                  },
+                  {
                     "emoji": "🦀"
                   },
                   {
-                    "emoji": "🪣"
+                    "emoji": "🏰"
                   }
                 ]
               ],
-              "label": "two shells go on the castle. the crab sits on the bucket."
+              "label": "two shells go on the castle. dad puts the crab on the castle."
             }
           ],
-          "correct": "two-shell-go-on-the-castle.the-crab-sit-on-the-castle"
+          "correct": "two-shell-go-on-the-castle.boy-put-the-crab-on-the-castle"
         },
         {
-          "word": "DAD THROWS A WHITE BALL. TOM CATCHES THE WHITE BALL.",
-          "syllables": "D-A-D THROWS A WHITE B-A-L-L. T-O-M CATCH-ES THE WHITE B-A-L-L.",
+          "word": "DAD THROWS A WHITE BALL. TOM RUNS TO THE SEA.",
+          "syllables": "D-A-D THROWS A WHITE B-A-L-L. T-O-M R-U-N-S TO THE S-E-A.",
           "choices": [
             {
-              "id": "dad-throw-a-white-ball.boy-catch-the-white-ball",
+              "id": "dad-throw-a-white-ball.boy-run-to-the-sea",
               "scene": [
                 [
                   {
@@ -2038,14 +2047,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "⚾"
+                    "emoji": "🌊"
                   }
                 ]
               ],
-              "label": "dad throws a white ball. tom catches the white ball."
+              "label": "dad throws a white ball. tom runs to the sea."
             },
             {
-              "id": "dad-throw-a-yellow-ball.boy-catch-the-white-ball",
+              "id": "dad-throw-a-yellow-ball.boy-run-to-the-sea",
               "scene": [
                 [
                   {
@@ -2060,14 +2069,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "⚾"
+                    "emoji": "🌊"
                   }
                 ]
               ],
-              "label": "dad throws a yellow ball. tom catches the white ball."
+              "label": "dad throws a yellow ball. tom runs to the sea."
             },
             {
-              "id": "dad-throw-a-white-ball.dad-catch-the-white-ball",
+              "id": "dad-throw-a-white-ball.boy-run-to-the-umbrella",
               "scene": [
                 [
                   {
@@ -2079,17 +2088,17 @@
                 ],
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "⚾"
+                    "emoji": "☂️"
                   }
                 ]
               ],
-              "label": "dad throws a white ball. dad catches the white ball."
+              "label": "dad throws a white ball. tom runs to the umbrella."
             }
           ],
-          "correct": "dad-throw-a-white-ball.boy-catch-the-white-ball"
+          "correct": "dad-throw-a-white-ball.boy-run-to-the-sea"
         },
         {
           "word": "THE SEA TAKES THE CASTLE. DAD HUGS TOM BY THE SEA.",
@@ -3443,7 +3452,7 @@
               "label": "dad makes a big fire. meg sits by the fire."
             },
             {
-              "id": "dad-make-a-small-fire.girl-sit-by-the-tent",
+              "id": "dad-make-a-small-fire.boy-sit-by-the-fire",
               "scene": [
                 [
                   {
@@ -3456,24 +3465,24 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "⛺"
+                    "emoji": "🔥"
                   }
                 ]
               ],
-              "label": "dad makes a small fire. meg sits by the tent."
+              "label": "dad makes a small fire. tom sits by the fire."
             }
           ],
           "correct": "dad-make-a-small-fire.girl-sit-by-the-fire"
         },
         {
-          "word": "DAD COOKS SOUP ON THE FIRE. TOM EATS SOUP WITH MEG.",
-          "syllables": "D-A-D COOKS S-O-U-P ON THE F-I-R-E. T-O-M E-A-T-S S-O-U-P WITH M-E-G.",
+          "word": "DAD COOKS SOUP ON THE FIRE. TOM SITS BY MEG.",
+          "syllables": "D-A-D COOKS S-O-U-P ON THE F-I-R-E. T-O-M SITS BY M-E-G.",
           "choices": [
             {
-              "id": "dad-cook-soup-on-the-fire.boy-eat-soup-with-girl",
+              "id": "dad-cook-soup-on-the-fire.boy-sit-by-girl",
               "scene": [
                 [
                   {
@@ -3491,17 +3500,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍲"
-                  },
-                  {
                     "emoji": "👧"
                   }
                 ]
               ],
-              "label": "dad cooks soup on the fire. tom eats soup with meg."
+              "label": "dad cooks soup on the fire. tom sits by meg."
             },
             {
-              "id": "dad-cook-corn-on-the-fire.boy-eat-soup-with-girl",
+              "id": "dad-cook-corn-on-the-fire.boy-sit-by-girl",
               "scene": [
                 [
                   {
@@ -3519,17 +3525,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍲"
-                  },
-                  {
                     "emoji": "👧"
                   }
                 ]
               ],
-              "label": "dad cooks corn on the fire. tom eats soup with meg."
+              "label": "dad cooks corn on the fire. tom sits by meg."
             },
             {
-              "id": "dad-cook-soup-on-the-fire.boy-eat-soup-with-dad",
+              "id": "dad-cook-soup-on-the-fire.boy-sit-by-dad",
               "scene": [
                 [
                   {
@@ -3547,17 +3550,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍲"
-                  },
-                  {
                     "emoji": "👨"
                   }
                 ]
               ],
-              "label": "dad cooks soup on the fire. tom eats soup with dad."
+              "label": "dad cooks soup on the fire. tom sits by dad."
             }
           ],
-          "correct": "dad-cook-soup-on-the-fire.boy-eat-soup-with-girl"
+          "correct": "dad-cook-soup-on-the-fire.boy-sit-by-girl"
         },
         {
           "word": "MEG SEES AN OWL IN THE TREE. TOM HOLDS THE TORCH.",
@@ -3859,11 +3859,11 @@
           "correct": "dad-dance-by-the-fire.girl-laugh-by-the-tent"
         },
         {
-          "word": "DAD CARRIES MEG TO THE TENT. TOM WALKS TO THE TENT.",
-          "syllables": "D-A-D CAR-RIES M-E-G TO THE T-E-N-T. T-O-M WALKS TO THE T-E-N-T.",
+          "word": "DAD CARRIES MEG TO THE TENT. TOM BRINGS THE GUITAR.",
+          "syllables": "D-A-D CAR-RIES M-E-G TO THE T-E-N-T. T-O-M BRINGS THE GUI-TAR.",
           "choices": [
             {
-              "id": "dad-carry-girl-to-the-tent.boy-walk-to-the-tent",
+              "id": "dad-carry-girl-to-the-tent.boy-bring-the-guitar",
               "scene": [
                 [
                   {
@@ -3881,14 +3881,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "⛺"
+                    "emoji": "🎸"
                   }
                 ]
               ],
-              "label": "dad carries meg to the tent. tom walks to the tent."
+              "label": "dad carries meg to the tent. tom brings the guitar."
             },
             {
-              "id": "dad-carry-boy-to-the-tent.boy-walk-to-the-tent",
+              "id": "dad-carry-boy-to-the-tent.boy-bring-the-guitar",
               "scene": [
                 [
                   {
@@ -3906,14 +3906,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "⛺"
+                    "emoji": "🎸"
                   }
                 ]
               ],
-              "label": "dad carries tom to the tent. tom walks to the tent."
+              "label": "dad carries tom to the tent. tom brings the guitar."
             },
             {
-              "id": "dad-carry-girl-to-the-tent.boy-walk-to-the-fire",
+              "id": "dad-carry-girl-to-the-tent.boy-bring-the-lamp",
               "scene": [
                 [
                   {
@@ -3931,14 +3931,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🔥"
+                    "emoji": "🔦"
                   }
                 ]
               ],
-              "label": "dad carries meg to the tent. tom walks to the fire."
+              "label": "dad carries meg to the tent. tom brings the torch."
             }
           ],
-          "correct": "dad-carry-girl-to-the-tent.boy-walk-to-the-tent"
+          "correct": "dad-carry-girl-to-the-tent.boy-bring-the-guitar"
         },
         {
           "word": "TOM SLEEPS BY MEG. DAD SINGS BY THE TENT.",
@@ -4227,17 +4227,17 @@
               "label": "meg brings the teddy to tom. tom hugs the teddy."
             },
             {
-              "id": "girl-bring-the-ball-to-boy.boy-hug-the-teddy",
+              "id": "girl-bring-the-teddy-to-mom.boy-hug-the-teddy",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "⚽"
+                    "emoji": "🧸"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "👩"
                   }
                 ],
                 [
@@ -4249,7 +4249,7 @@
                   }
                 ]
               ],
-              "label": "meg brings the ball to tom. tom hugs the teddy."
+              "label": "meg brings the teddy to mom. tom hugs the teddy."
             },
             {
               "id": "girl-bring-the-teddy-to-boy.mom-hug-the-teddy",
@@ -4544,17 +4544,17 @@
               "label": "mom paints a star on the box. meg likes the star."
             },
             {
-              "id": "mom-paint-a-window-on-the-box.girl-like-the-star",
+              "id": "mom-paint-a-star-on-the-window.girl-like-the-star",
               "scene": [
                 [
                   {
                     "emoji": "👩‍🎨"
                   },
                   {
-                    "emoji": "🪟"
+                    "emoji": "⭐"
                   },
                   {
-                    "emoji": "📦"
+                    "emoji": "🪟"
                   }
                 ],
                 [
@@ -4566,7 +4566,7 @@
                   }
                 ]
               ],
-              "label": "mom paints a window on the box. meg likes the star."
+              "label": "mom paints a star on the window. meg likes the star."
             },
             {
               "id": "mom-paint-a-star-on-the-box.boy-like-the-star",
@@ -4832,7 +4832,7 @@
     {
       "id": "en-story-c-07",
       "title": "The Cat and the Yarn",
-      "emoji": "🧶",
+      "emoji": "☔",
       "character": "🪡",
       "colors": [
         "#8a2d5f",
@@ -5392,61 +5392,9 @@
           "correct": "grandma-give-the-cat-milk.girl-drink-tea-with-grandma"
         },
         {
-          "word": "GRANDMA GIVES MEG THE SCARF. THE CAT SLEEPS ON THE SCARF.",
-          "syllables": "GRAND-MA GIVES M-E-G THE SCARF. THE C-A-T SLEEPS ON THE SCARF.",
+          "word": "GRANDMA GIVES MEG THE SCARF. THE CAT SLEEPS ON THE SOFA.",
+          "syllables": "GRAND-MA GIVES M-E-G THE SCARF. THE C-A-T SLEEPS ON THE S-O-F-A.",
           "choices": [
-            {
-              "id": "grandma-give-girl-the-scarf.the-cat-sleep-on-the-scarf",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🧣"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐱",
-                    "badge": "💤"
-                  },
-                  {
-                    "emoji": "🧣"
-                  }
-                ]
-              ],
-              "label": "grandma gives meg the scarf. the cat sleeps on the scarf."
-            },
-            {
-              "id": "grandma-give-girl-the-yarn.the-cat-sleep-on-the-scarf",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "👧"
-                  },
-                  {
-                    "emoji": "🧶"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐱",
-                    "badge": "💤"
-                  },
-                  {
-                    "emoji": "🧣"
-                  }
-                ]
-              ],
-              "label": "grandma gives meg the yarn. the cat sleeps on the scarf."
-            },
             {
               "id": "grandma-give-girl-the-scarf.the-cat-sleep-on-the-sofa",
               "scene": [
@@ -5472,9 +5420,61 @@
                 ]
               ],
               "label": "grandma gives meg the scarf. the cat sleeps on the sofa."
+            },
+            {
+              "id": "grandma-give-girl-the-yarn.the-cat-sleep-on-the-sofa",
+              "scene": [
+                [
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🧶"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐱",
+                    "badge": "💤"
+                  },
+                  {
+                    "emoji": "🛋️"
+                  }
+                ]
+              ],
+              "label": "grandma gives meg the yarn. the cat sleeps on the sofa."
+            },
+            {
+              "id": "grandma-give-girl-the-scarf.the-cat-sleep-on-the-bed",
+              "scene": [
+                [
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🧣"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐱",
+                    "badge": "💤"
+                  },
+                  {
+                    "emoji": "🛏️"
+                  }
+                ]
+              ],
+              "label": "grandma gives meg the scarf. the cat sleeps on the bed."
             }
           ],
-          "correct": "grandma-give-girl-the-scarf.the-cat-sleep-on-the-scarf"
+          "correct": "grandma-give-girl-the-scarf.the-cat-sleep-on-the-sofa"
         },
         {
           "word": "MEG SINGS TO THE CAT. THE CAT LAUGHS ON THE SCARF.",
@@ -5584,15 +5584,15 @@
               "label": "grandma knits a small scarf. meg gives the cat the small scarf."
             },
             {
-              "id": "grandma-knit-a-big-scarf.girl-give-the-cat-the-small-scarf",
+              "id": "girl-knit-a-small-scarf.girl-give-the-cat-the-small-scarf",
               "scene": [
                 [
                   {
-                    "emoji": "👵"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🧣",
-                    "size": "big"
+                    "size": "small"
                   }
                 ],
                 [
@@ -5608,7 +5608,7 @@
                   }
                 ]
               ],
-              "label": "grandma knits a big scarf. meg gives the cat the small scarf."
+              "label": "meg knits a small scarf. meg gives the cat the small scarf."
             },
             {
               "id": "grandma-knit-a-small-scarf.grandma-give-the-cat-the-small-scarf",
@@ -5813,11 +5813,11 @@
           "correct": "mom-buy-two-red-apple.boy-want-a-banana"
         },
         {
-          "word": "MOM TAKES BREAD AND MILK. TOM PUTS THE MILK IN THE BASKET.",
-          "syllables": "M-O-M TAKES BREAD AND M-I-L-K. T-O-M P-U-T-S THE M-I-L-K IN THE BAS-KET.",
+          "word": "MOM TAKES BREAD AND MILK. TOM HOLDS TWO RED APPLES.",
+          "syllables": "M-O-M TAKES BREAD AND M-I-L-K. T-O-M HOLDS T-W-O R-E-D AP-PLES.",
           "choices": [
             {
-              "id": "mom-take-bread-and-milk.boy-put-the-milk-in-the-basket",
+              "id": "mom-take-bread-and-milk.boy-hold-two-red-apple",
               "scene": [
                 [
                   {
@@ -5835,17 +5835,15 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🥛"
-                  },
-                  {
-                    "emoji": "🧺"
+                    "emoji": "🍎",
+                    "count": 2
                   }
                 ]
               ],
-              "label": "mom takes bread and milk. tom puts the milk in the basket."
+              "label": "mom takes bread and milk. tom holds two red apples."
             },
             {
-              "id": "mom-take-bread-and-cheese.boy-put-the-milk-in-the-basket",
+              "id": "mom-take-bread-and-cheese.boy-hold-two-red-apple",
               "scene": [
                 [
                   {
@@ -5863,17 +5861,15 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🥛"
-                  },
-                  {
-                    "emoji": "🧺"
+                    "emoji": "🍎",
+                    "count": 2
                   }
                 ]
               ],
-              "label": "mom takes bread and cheese. tom puts the milk in the basket."
+              "label": "mom takes bread and cheese. tom holds two red apples."
             },
             {
-              "id": "mom-take-bread-and-milk.boy-put-the-bread-in-the-basket",
+              "id": "mom-take-bread-and-milk.mom-hold-two-red-apple",
               "scene": [
                 [
                   {
@@ -5888,20 +5884,18 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👩"
                   },
                   {
-                    "emoji": "🍞"
-                  },
-                  {
-                    "emoji": "🧺"
+                    "emoji": "🍎",
+                    "count": 2
                   }
                 ]
               ],
-              "label": "mom takes bread and milk. tom puts the bread in the basket."
+              "label": "mom takes bread and milk. mom holds two red apples."
             }
           ],
-          "correct": "mom-take-bread-and-milk.boy-put-the-milk-in-the-basket"
+          "correct": "mom-take-bread-and-milk.boy-hold-two-red-apple"
         },
         {
           "word": "TOM SEES A BIG CHEESE. MOM BUYS THE BIG CHEESE.",
@@ -5932,15 +5926,15 @@
               "label": "tom sees a big cheese. mom buys the big cheese."
             },
             {
-              "id": "boy-see-a-small-cheese.mom-buy-the-big-cheese",
+              "id": "mom-see-a-big-cheese.mom-buy-the-big-cheese",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👩"
                   },
                   {
                     "emoji": "🧀",
-                    "size": "small"
+                    "size": "big"
                   }
                 ],
                 [
@@ -5953,7 +5947,7 @@
                   }
                 ]
               ],
-              "label": "tom sees a small cheese. mom buys the big cheese."
+              "label": "mom sees a big cheese. mom buys the big cheese."
             },
             {
               "id": "boy-see-a-big-cheese.boy-buy-the-big-cheese",
@@ -5983,11 +5977,11 @@
           "correct": "boy-see-a-big-cheese.mom-buy-the-big-cheese"
         },
         {
-          "word": "MOM BUYS TOM A BANANA. TOM EATS THE BANANA IN THE SHOP.",
-          "syllables": "M-O-M B-U-Y-S T-O-M A BA-NA-NA. T-O-M E-A-T-S THE BA-NA-NA IN THE S-H-O-P.",
+          "word": "MOM BUYS TOM A BANANA. TOM EATS IT IN THE SHOP.",
+          "syllables": "M-O-M B-U-Y-S T-O-M A BA-NA-NA. T-O-M E-A-T-S IT IN THE S-H-O-P.",
           "choices": [
             {
-              "id": "mom-buy-boy-a-banana.boy-eat-the-banana-in-the-shop",
+              "id": "mom-buy-boy-a-banana.boy-eat-it-in-the-shop",
               "scene": [
                 [
                   {
@@ -6005,17 +5999,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍌"
-                  },
-                  {
                     "emoji": "🏪"
                   }
                 ]
               ],
-              "label": "mom buys tom a banana. tom eats the banana in the shop."
+              "label": "mom buys tom a banana. tom eats it in the shop."
             },
             {
-              "id": "mom-buy-boy-a-candy.boy-eat-the-banana-in-the-shop",
+              "id": "mom-buy-boy-a-candy.boy-eat-it-in-the-shop",
               "scene": [
                 [
                   {
@@ -6033,17 +6024,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🍌"
-                  },
-                  {
                     "emoji": "🏪"
                   }
                 ]
               ],
-              "label": "mom buys tom a candy. tom eats the banana in the shop."
+              "label": "mom buys tom a candy. tom eats it in the shop."
             },
             {
-              "id": "mom-buy-boy-a-banana.mom-eat-the-banana-in-the-shop",
+              "id": "mom-buy-boy-a-banana.mom-eat-it-in-the-shop",
               "scene": [
                 [
                   {
@@ -6061,17 +6049,14 @@
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🍌"
-                  },
-                  {
                     "emoji": "🏪"
                   }
                 ]
               ],
-              "label": "mom buys tom a banana. mom eats the banana in the shop."
+              "label": "mom buys tom a banana. mom eats it in the shop."
             }
           ],
-          "correct": "mom-buy-boy-a-banana.boy-eat-the-banana-in-the-shop"
+          "correct": "mom-buy-boy-a-banana.boy-eat-it-in-the-shop"
         },
         {
           "word": "MOM WALKS HOME WITH THE BASKET. TOM HOLDS THE BREAD.",
@@ -6303,7 +6288,7 @@
               "label": "mom cuts the big cheese. tom eats bread with cheese."
             },
             {
-              "id": "dad-cut-the-big-cheese.boy-eat-bread-with-soup",
+              "id": "dad-cut-the-big-cheese.dad-eat-bread-with-cheese",
               "scene": [
                 [
                   {
@@ -6316,17 +6301,17 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🍞"
                   },
                   {
-                    "emoji": "🍲"
+                    "emoji": "🧀"
                   }
                 ]
               ],
-              "label": "dad cuts the big cheese. tom eats bread with soup."
+              "label": "dad cuts the big cheese. dad eats bread with cheese."
             }
           ],
           "correct": "dad-cut-the-big-cheese.boy-eat-bread-with-cheese"
@@ -6501,7 +6486,7 @@
         "#2a6b62",
         "#225b57"
       ],
-      "intro": "It is spring, and Meg is in the garden with Grandpa.",
+      "intro": "It is spring, and the garden is full of life.",
       "completeText": "The chicks can fly now, and every morning their mother sings for Meg.",
       "tasks": [
         {
@@ -6534,14 +6519,14 @@
               "label": "meg sees a nest in the tree. a bird sits in the nest."
             },
             {
-              "id": "girl-see-a-bird-in-the-tree.a-bird-sit-in-the-nest",
+              "id": "grandpa-see-a-nest-in-the-tree.a-bird-sit-in-the-nest",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👴"
                   },
                   {
-                    "emoji": "🐦"
+                    "emoji": "🪹"
                   },
                   {
                     "emoji": "🌳"
@@ -6556,10 +6541,10 @@
                   }
                 ]
               ],
-              "label": "meg sees a bird in the tree. a bird sits in the nest."
+              "label": "grandpa sees a nest in the tree. a bird sits in the nest."
             },
             {
-              "id": "girl-see-a-nest-in-the-tree.a-bird-sit-in-the-tree",
+              "id": "girl-see-a-nest-in-the-tree.a-chick-sit-in-the-nest",
               "scene": [
                 [
                   {
@@ -6574,14 +6559,14 @@
                 ],
                 [
                   {
-                    "emoji": "🐦"
+                    "emoji": "🐤"
                   },
                   {
-                    "emoji": "🌳"
+                    "emoji": "🪹"
                   }
                 ]
               ],
-              "label": "meg sees a nest in the tree. a bird sits in the tree."
+              "label": "meg sees a nest in the tree. a chick sits in the nest."
             }
           ],
           "correct": "girl-see-a-nest-in-the-tree.a-bird-sit-in-the-nest"
@@ -6833,53 +6818,11 @@
           "correct": "grandpa-put-bread-by-the-tree.girl-see-the-bird-with-the-bread"
         },
         {
-          "word": "TWO EGGS OPEN. TWO CHICKS SIT IN THE NEST.",
-          "syllables": "T-W-O E-G-G-S O-P-E-N. T-W-O CHICKS S-I-T IN THE N-E-S-T.",
+          "word": "TWO EGGS OPEN. THE BIRD SINGS IN THE NEST.",
+          "syllables": "T-W-O E-G-G-S O-P-E-N. THE B-I-R-D SINGS IN THE N-E-S-T.",
           "choices": [
             {
-              "id": "two-egg-open.two-chick-sit-in-the-nest",
-              "scene": [
-                [
-                  {
-                    "emoji": "🥚",
-                    "count": 2
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐤",
-                    "count": 2
-                  },
-                  {
-                    "emoji": "🪹"
-                  }
-                ]
-              ],
-              "label": "two eggs open. two chicks sit in the nest."
-            },
-            {
-              "id": "three-egg-open.two-chick-sit-in-the-nest",
-              "scene": [
-                [
-                  {
-                    "emoji": "🥚",
-                    "count": 3
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐤",
-                    "count": 2
-                  },
-                  {
-                    "emoji": "🪹"
-                  }
-                ]
-              ],
-              "label": "three eggs open. two chicks sit in the nest."
-            },
-            {
-              "id": "two-egg-open.two-bird-sit-in-the-nest",
+              "id": "two-egg-open.the-bird-sing-in-the-nest",
               "scene": [
                 [
                   {
@@ -6890,17 +6833,59 @@
                 [
                   {
                     "emoji": "🐦",
-                    "count": 2
+                    "badge": "🎵"
                   },
                   {
                     "emoji": "🪹"
                   }
                 ]
               ],
-              "label": "two eggs open. two birds sit in the nest."
+              "label": "two eggs open. the bird sings in the nest."
+            },
+            {
+              "id": "three-egg-open.the-bird-sing-in-the-nest",
+              "scene": [
+                [
+                  {
+                    "emoji": "🥚",
+                    "count": 3
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐦",
+                    "badge": "🎵"
+                  },
+                  {
+                    "emoji": "🪹"
+                  }
+                ]
+              ],
+              "label": "three eggs open. the bird sings in the nest."
+            },
+            {
+              "id": "two-egg-open.the-bird-sleep-in-the-nest",
+              "scene": [
+                [
+                  {
+                    "emoji": "🥚",
+                    "count": 2
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐦",
+                    "badge": "💤"
+                  },
+                  {
+                    "emoji": "🪹"
+                  }
+                ]
+              ],
+              "label": "two eggs open. the bird sleeps in the nest."
             }
           ],
-          "correct": "two-egg-open.two-chick-sit-in-the-nest"
+          "correct": "two-egg-open.the-bird-sing-in-the-nest"
         },
         {
           "word": "THE BIRD FEEDS TWO CHICKS. MEG SITS UNDER THE TREE.",
@@ -7690,11 +7675,11 @@
           "correct": "boy-wear-a-black-hat.dad-dance-with-mom"
         },
         {
-          "word": "MOM BAKES TWO CUPCAKES. TOM EATS A CUPCAKE.",
-          "syllables": "M-O-M BAKES T-W-O CUP-CAKES. T-O-M E-A-T-S A CUP-CAKE.",
+          "word": "MOM BAKES TWO CUPCAKES. TOM SINGS FOR MOM.",
+          "syllables": "M-O-M BAKES T-W-O CUP-CAKES. T-O-M SINGS FOR M-O-M.",
           "choices": [
             {
-              "id": "mom-cook-two-cupcake.boy-eat-a-cupcake",
+              "id": "mom-cook-two-cupcake.boy-sing-for-mom",
               "scene": [
                 [
                   {
@@ -7707,17 +7692,18 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👦",
+                    "badge": "🎵"
                   },
                   {
-                    "emoji": "🧁"
+                    "emoji": "👩"
                   }
                 ]
               ],
-              "label": "mom bakes two cupcakes. tom eats a cupcake."
+              "label": "mom bakes two cupcakes. tom sings for mom."
             },
             {
-              "id": "mom-cook-two-cookie.boy-eat-a-cupcake",
+              "id": "mom-cook-two-cookie.boy-sing-for-mom",
               "scene": [
                 [
                   {
@@ -7730,17 +7716,18 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👦",
+                    "badge": "🎵"
                   },
                   {
-                    "emoji": "🧁"
+                    "emoji": "👩"
                   }
                 ]
               ],
-              "label": "mom bakes two cookies. tom eats a cupcake."
+              "label": "mom bakes two cookies. tom sings for mom."
             },
             {
-              "id": "mom-cook-two-cupcake.dad-eat-a-cupcake",
+              "id": "mom-cook-two-cupcake.boy-sing-for-dad",
               "scene": [
                 [
                   {
@@ -7753,17 +7740,18 @@
                 ],
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👦",
+                    "badge": "🎵"
                   },
                   {
-                    "emoji": "🧁"
+                    "emoji": "👨"
                   }
                 ]
               ],
-              "label": "mom bakes two cupcakes. dad eats a cupcake."
+              "label": "mom bakes two cupcakes. tom sings for dad."
             }
           ],
-          "correct": "mom-cook-two-cupcake.boy-eat-a-cupcake"
+          "correct": "mom-cook-two-cupcake.boy-sing-for-mom"
         },
         {
           "word": "TOM SINGS ON THE CHAIR. MOM HUGS TOM.",
@@ -8470,11 +8458,11 @@
           "correct": "two-bird-sing-in-the-tree.the-turtle-walk-over-the-stone"
         },
         {
-          "word": "THE OWL WAITS FOR THE TURTLE. THE TURTLE SEES THE GIFT.",
-          "syllables": "THE O-W-L WAITS FOR THE TUR-TLE. THE TUR-TLE S-E-E-S THE G-I-F-T.",
+          "word": "THE OWL WAITS FOR THE TURTLE. THE TURTLE SEES A GIFT.",
+          "syllables": "THE O-W-L WAITS FOR THE TUR-TLE. THE TUR-TLE S-E-E-S A G-I-F-T.",
           "choices": [
             {
-              "id": "the-owl-wait-for-the-turtle.the-turtle-see-the-gift",
+              "id": "the-owl-wait-for-the-turtle.the-turtle-see-a-gift",
               "scene": [
                 [
                   {
@@ -8493,61 +8481,61 @@
                   }
                 ]
               ],
-              "label": "the owl waits for the turtle. the turtle sees the gift."
+              "label": "the owl waits for the turtle. the turtle sees a gift."
             },
             {
-              "id": "the-owl-wait-for-the-hare.the-turtle-see-the-gift",
+              "id": "the-hare-wait-for-the-turtle.the-turtle-see-a-gift",
               "scene": [
-                [
-                  {
-                    "emoji": "🦉"
-                  },
-                  {
-                    "emoji": "🐰"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐢"
-                  },
-                  {
-                    "emoji": "🎁"
-                  }
-                ]
-              ],
-              "label": "the owl waits for the rabbit. the turtle sees the gift."
-            },
-            {
-              "id": "the-owl-wait-for-the-turtle.the-hare-see-the-gift",
-              "scene": [
-                [
-                  {
-                    "emoji": "🦉"
-                  },
-                  {
-                    "emoji": "🐢"
-                  }
-                ],
                 [
                   {
                     "emoji": "🐰"
                   },
                   {
+                    "emoji": "🐢"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐢"
+                  },
+                  {
                     "emoji": "🎁"
                   }
                 ]
               ],
-              "label": "the owl waits for the turtle. the rabbit sees the gift."
+              "label": "the rabbit waits for the turtle. the turtle sees a gift."
+            },
+            {
+              "id": "the-owl-wait-for-the-turtle.the-turtle-see-a-carrot",
+              "scene": [
+                [
+                  {
+                    "emoji": "🦉"
+                  },
+                  {
+                    "emoji": "🐢"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐢"
+                  },
+                  {
+                    "emoji": "🥕"
+                  }
+                ]
+              ],
+              "label": "the owl waits for the turtle. the turtle sees a carrot."
             }
           ],
-          "correct": "the-owl-wait-for-the-turtle.the-turtle-see-the-gift"
+          "correct": "the-owl-wait-for-the-turtle.the-turtle-see-a-gift"
         },
         {
-          "word": "THE TURTLE COMES TO THE OWL. THE OWL GIVES THE TURTLE A GIFT.",
-          "syllables": "THE TUR-TLE COMES TO THE O-W-L. THE O-W-L GIVES THE TUR-TLE A G-I-F-T.",
+          "word": "THE TURTLE COMES TO THE OWL. THE OWL GIVES THE TURTLE THE GIFT.",
+          "syllables": "THE TUR-TLE COMES TO THE O-W-L. THE O-W-L GIVES THE TUR-TLE THE G-I-F-T.",
           "choices": [
             {
-              "id": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-a-gift",
+              "id": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-the-gift",
               "scene": [
                 [
                   {
@@ -8569,17 +8557,17 @@
                   }
                 ]
               ],
-              "label": "the turtle comes to the owl. the owl gives the turtle a gift."
+              "label": "the turtle comes to the owl. the owl gives the turtle the gift."
             },
             {
-              "id": "the-hare-go-to-the-owl.the-owl-give-the-turtle-a-gift",
+              "id": "the-turtle-go-to-the-log.the-owl-give-the-turtle-the-gift",
               "scene": [
                 [
                   {
-                    "emoji": "🐰"
+                    "emoji": "🐢"
                   },
                   {
-                    "emoji": "🦉"
+                    "emoji": "🪵"
                   }
                 ],
                 [
@@ -8594,10 +8582,10 @@
                   }
                 ]
               ],
-              "label": "the rabbit comes to the owl. the owl gives the turtle a gift."
+              "label": "the turtle comes to the log. the owl gives the turtle the gift."
             },
             {
-              "id": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-a-carrot",
+              "id": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-the-carrot",
               "scene": [
                 [
                   {
@@ -8619,10 +8607,10 @@
                   }
                 ]
               ],
-              "label": "the turtle comes to the owl. the owl gives the turtle a carrot."
+              "label": "the turtle comes to the owl. the owl gives the turtle the carrot."
             }
           ],
-          "correct": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-a-gift"
+          "correct": "the-turtle-go-to-the-owl.the-owl-give-the-turtle-the-gift"
         },
         {
           "word": "THE RABBIT RUNS TO THE OWL. THE TURTLE SLEEPS BY THE OWL.",
@@ -8701,11 +8689,11 @@
           "correct": "the-hare-run-to-the-owl.the-turtle-sleep-by-the-owl"
         },
         {
-          "word": "THE RABBIT GIVES THE TURTLE A CARROT. THE TURTLE EATS THE CARROT.",
-          "syllables": "THE RAB-BIT GIVES THE TUR-TLE A CAR-ROT. THE TUR-TLE E-A-T-S THE CAR-ROT.",
+          "word": "THE RABBIT GIVES THE TURTLE A CARROT. THE OWL SLEEPS IN THE TREE.",
+          "syllables": "THE RAB-BIT GIVES THE TUR-TLE A CAR-ROT. THE O-W-L SLEEPS IN THE T-R-E-E.",
           "choices": [
             {
-              "id": "the-hare-give-the-turtle-a-carrot.the-turtle-eat-the-carrot",
+              "id": "the-hare-give-the-turtle-a-carrot.the-owl-sleep-in-the-tree",
               "scene": [
                 [
                   {
@@ -8720,17 +8708,18 @@
                 ],
                 [
                   {
-                    "emoji": "🐢"
+                    "emoji": "🦉",
+                    "badge": "💤"
                   },
                   {
-                    "emoji": "🥕"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the rabbit gives the turtle a carrot. the turtle eats the carrot."
+              "label": "the rabbit gives the turtle a carrot. the owl sleeps in the tree."
             },
             {
-              "id": "the-owl-give-the-turtle-a-carrot.the-turtle-eat-the-carrot",
+              "id": "the-owl-give-the-turtle-a-carrot.the-owl-sleep-in-the-tree",
               "scene": [
                 [
                   {
@@ -8745,17 +8734,18 @@
                 ],
                 [
                   {
-                    "emoji": "🐢"
+                    "emoji": "🦉",
+                    "badge": "💤"
                   },
                   {
-                    "emoji": "🥕"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the owl gives the turtle a carrot. the turtle eats the carrot."
+              "label": "the owl gives the turtle a carrot. the owl sleeps in the tree."
             },
             {
-              "id": "the-hare-give-the-turtle-a-carrot.the-hare-eat-the-carrot",
+              "id": "the-hare-give-the-turtle-a-carrot.the-owl-sing-in-the-tree",
               "scene": [
                 [
                   {
@@ -8770,74 +8760,25 @@
                 ],
                 [
                   {
-                    "emoji": "🐰"
+                    "emoji": "🦉",
+                    "badge": "🎵"
                   },
                   {
-                    "emoji": "🥕"
+                    "emoji": "🌳"
                   }
                 ]
               ],
-              "label": "the rabbit gives the turtle a carrot. the rabbit eats the carrot."
+              "label": "the rabbit gives the turtle a carrot. the owl sings in the tree."
             }
           ],
-          "correct": "the-hare-give-the-turtle-a-carrot.the-turtle-eat-the-carrot"
+          "correct": "the-hare-give-the-turtle-a-carrot.the-owl-sleep-in-the-tree"
         },
         {
-          "word": "THE TURTLE GIVES THE RABBIT THE GIFT. THE RABBIT OPENS THE GIFT.",
-          "syllables": "THE TUR-TLE GIVES THE RAB-BIT THE G-I-F-T. THE RAB-BIT O-PENS THE G-I-F-T.",
+          "word": "THE TURTLE GIVES THE RABBIT THE GIFT. THE OWL SEES THE GIFT.",
+          "syllables": "THE TUR-TLE GIVES THE RAB-BIT THE G-I-F-T. THE O-W-L S-E-E-S THE G-I-F-T.",
           "choices": [
             {
-              "id": "the-turtle-give-the-hare-the-gift.the-hare-open-the-gift",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐢"
-                  },
-                  {
-                    "emoji": "🐰"
-                  },
-                  {
-                    "emoji": "🎁"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐰"
-                  },
-                  {
-                    "emoji": "🎁"
-                  }
-                ]
-              ],
-              "label": "the turtle gives the rabbit the gift. the rabbit opens the gift."
-            },
-            {
-              "id": "the-turtle-give-the-owl-the-gift.the-hare-open-the-gift",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐢"
-                  },
-                  {
-                    "emoji": "🦉"
-                  },
-                  {
-                    "emoji": "🎁"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "🐰"
-                  },
-                  {
-                    "emoji": "🎁"
-                  }
-                ]
-              ],
-              "label": "the turtle gives the owl the gift. the rabbit opens the gift."
-            },
-            {
-              "id": "the-turtle-give-the-hare-the-gift.the-owl-open-the-gift",
+              "id": "the-turtle-give-the-hare-the-gift.the-owl-see-the-gift",
               "scene": [
                 [
                   {
@@ -8859,10 +8800,60 @@
                   }
                 ]
               ],
-              "label": "the turtle gives the rabbit the gift. the owl opens the gift."
+              "label": "the turtle gives the rabbit the gift. the owl sees the gift."
+            },
+            {
+              "id": "the-owl-give-the-hare-the-gift.the-owl-see-the-gift",
+              "scene": [
+                [
+                  {
+                    "emoji": "🦉"
+                  },
+                  {
+                    "emoji": "🐰"
+                  },
+                  {
+                    "emoji": "🎁"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🦉"
+                  },
+                  {
+                    "emoji": "🎁"
+                  }
+                ]
+              ],
+              "label": "the owl gives the rabbit the gift. the owl sees the gift."
+            },
+            {
+              "id": "the-turtle-give-the-hare-the-gift.the-hare-see-the-gift",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐢"
+                  },
+                  {
+                    "emoji": "🐰"
+                  },
+                  {
+                    "emoji": "🎁"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "🐰"
+                  },
+                  {
+                    "emoji": "🎁"
+                  }
+                ]
+              ],
+              "label": "the turtle gives the rabbit the gift. the rabbit sees the gift."
             }
           ],
-          "correct": "the-turtle-give-the-hare-the-gift.the-hare-open-the-gift"
+          "correct": "the-turtle-give-the-hare-the-gift.the-owl-see-the-gift"
         }
       ]
     },
@@ -8981,14 +8972,14 @@
               "label": "meg brings a bucket. tom puts the frog in the bucket."
             },
             {
-              "id": "girl-bring-a-basket.boy-put-the-frog-in-the-bucket",
+              "id": "boy-bring-a-bucket.boy-put-the-frog-in-the-bucket",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👦"
                   },
                   {
-                    "emoji": "🧺"
+                    "emoji": "🪣"
                   }
                 ],
                 [
@@ -9003,7 +8994,7 @@
                   }
                 ]
               ],
-              "label": "meg brings a basket. tom puts the frog in the bucket."
+              "label": "tom brings a bucket. tom puts the frog in the bucket."
             },
             {
               "id": "girl-bring-a-bucket.boy-put-the-stone-in-the-bucket",
@@ -10168,7 +10159,7 @@
               "label": "tom sees the sea. two birds fly over the sea."
             },
             {
-              "id": "girl-see-the-sea.two-bird-fly-over-the-locomotive",
+              "id": "girl-see-the-sea.one-bird-fly-over-the-sea",
               "scene": [
                 [
                   {
@@ -10181,14 +10172,14 @@
                 [
                   {
                     "emoji": "🐦",
-                    "count": 2
+                    "count": 1
                   },
                   {
-                    "emoji": "🚂"
+                    "emoji": "🌊"
                   }
                 ]
               ],
-              "label": "meg sees the sea. two birds fly over the train."
+              "label": "meg sees the sea. one bird flies over the sea."
             }
           ],
           "correct": "girl-see-the-sea.two-bird-fly-over-the-sea"
@@ -10343,61 +10334,9 @@
           "correct": "boy-run-to-the-sea.girl-find-a-big-shell"
         },
         {
-          "word": "GRANDMA SITS UNDER THE UMBRELLA. TOM GIVES GRANDMA THE BIG SHELL.",
-          "syllables": "GRAND-MA SITS UNDER THE UM-BREL-LA. T-O-M GIVES GRAND-MA THE B-I-G SHELL.",
+          "word": "GRANDMA SITS UNDER THE UMBRELLA. MEG GIVES GRANDMA THE BIG SHELL.",
+          "syllables": "GRAND-MA SITS UNDER THE UM-BREL-LA. M-E-G GIVES GRAND-MA THE B-I-G SHELL.",
           "choices": [
-            {
-              "id": "grandma-sit-under-the-umbrella.boy-give-grandma-the-big-shell",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "☂️"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🐚",
-                    "size": "big"
-                  }
-                ]
-              ],
-              "label": "grandma sits under the umbrella. tom gives grandma the big shell."
-            },
-            {
-              "id": "boy-sit-under-the-umbrella.boy-give-grandma-the-big-shell",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "☂️"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🐚",
-                    "size": "big"
-                  }
-                ]
-              ],
-              "label": "tom sits under the umbrella. tom gives grandma the big shell."
-            },
             {
               "id": "grandma-sit-under-the-umbrella.girl-give-grandma-the-big-shell",
               "scene": [
@@ -10423,9 +10362,61 @@
                 ]
               ],
               "label": "grandma sits under the umbrella. meg gives grandma the big shell."
+            },
+            {
+              "id": "boy-sit-under-the-umbrella.girl-give-grandma-the-big-shell",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "☂️"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "🐚",
+                    "size": "big"
+                  }
+                ]
+              ],
+              "label": "tom sits under the umbrella. meg gives grandma the big shell."
+            },
+            {
+              "id": "grandma-sit-under-the-umbrella.boy-give-grandma-the-big-shell",
+              "scene": [
+                [
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "☂️"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "👵"
+                  },
+                  {
+                    "emoji": "🐚",
+                    "size": "big"
+                  }
+                ]
+              ],
+              "label": "grandma sits under the umbrella. tom gives grandma the big shell."
             }
           ],
-          "correct": "grandma-sit-under-the-umbrella.boy-give-grandma-the-big-shell"
+          "correct": "grandma-sit-under-the-umbrella.girl-give-grandma-the-big-shell"
         }
       ]
     },
@@ -10910,18 +10901,18 @@
           "correct": "boy-walk-on-the-moon.girl-find-a-big-stone"
         },
         {
-          "word": "TOM GIVES MEG THE BIG STONE. THE TEDDY SLEEPS IN THE ROCKET.",
-          "syllables": "T-O-M GIVES M-E-G THE B-I-G STONE. THE TED-DY SLEEPS IN THE ROCK-ET.",
+          "word": "MEG GIVES TOM THE BIG STONE. THE TEDDY SLEEPS IN THE ROCKET.",
+          "syllables": "M-E-G GIVES T-O-M THE B-I-G STONE. THE TED-DY SLEEPS IN THE ROCK-ET.",
           "choices": [
             {
-              "id": "boy-give-girl-the-big-stone.the-teddy-sleep-in-the-rocket",
+              "id": "girl-give-boy-the-big-stone.the-teddy-sleep-in-the-rocket",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "👧"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🪨",
@@ -10938,14 +10929,14 @@
                   }
                 ]
               ],
-              "label": "tom gives meg the big stone. the teddy sleeps in the rocket."
+              "label": "meg gives tom the big stone. the teddy sleeps in the rocket."
             },
             {
-              "id": "boy-give-dad-the-big-stone.the-teddy-sleep-in-the-rocket",
+              "id": "girl-give-dad-the-big-stone.the-teddy-sleep-in-the-rocket",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "👨"
@@ -10965,17 +10956,17 @@
                   }
                 ]
               ],
-              "label": "tom gives dad the big stone. the teddy sleeps in the rocket."
+              "label": "meg gives dad the big stone. the teddy sleeps in the rocket."
             },
             {
-              "id": "boy-give-girl-the-big-stone.the-teddy-sing-in-the-rocket",
+              "id": "girl-give-boy-the-big-stone.the-teddy-sing-in-the-rocket",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "👧"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🪨",
@@ -10992,10 +10983,10 @@
                   }
                 ]
               ],
-              "label": "tom gives meg the big stone. the teddy sings in the rocket."
+              "label": "meg gives tom the big stone. the teddy sings in the rocket."
             }
           ],
-          "correct": "boy-give-girl-the-big-stone.the-teddy-sleep-in-the-rocket"
+          "correct": "girl-give-boy-the-big-stone.the-teddy-sleep-in-the-rocket"
         },
         {
           "word": "DAD COOKS TWO EGGS. TOM RUNS TO DAD.",
@@ -11128,7 +11119,7 @@
               "label": "meg eats an egg. meg gives the teddy an egg."
             },
             {
-              "id": "boy-eat-a-egg.girl-give-the-teddy-a-stone",
+              "id": "boy-eat-a-egg.dad-give-the-teddy-a-egg",
               "scene": [
                 [
                   {
@@ -11140,17 +11131,17 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🧸"
                   },
                   {
-                    "emoji": "🪨"
+                    "emoji": "🥚"
                   }
                 ]
               ],
-              "label": "tom eats an egg. meg gives the teddy a stone."
+              "label": "tom eats an egg. dad gives the teddy an egg."
             }
           ],
           "correct": "boy-eat-a-egg.girl-give-the-teddy-a-egg"
@@ -11771,7 +11762,7 @@
               "label": "the dog bakes bread. the cat sniffs the bread."
             },
             {
-              "id": "the-hen-cook-bread.the-cat-sniff-the-corn",
+              "id": "the-hen-cook-bread.the-dog-sniff-the-bread",
               "scene": [
                 [
                   {
@@ -11783,14 +11774,14 @@
                 ],
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "🐶"
                   },
                   {
-                    "emoji": "🌽"
+                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "the hen bakes bread. the cat sniffs the corn."
+              "label": "the hen bakes bread. the dog sniffs the bread."
             }
           ],
           "correct": "the-hen-cook-bread.the-cat-sniff-the-bread"
@@ -11977,14 +11968,14 @@
               "label": "the cat brings the hen corn. the hen gives the cat bread."
             },
             {
-              "id": "the-dog-bring-the-hen-corn.the-hen-give-the-cat-bread",
+              "id": "the-cat-bring-the-dog-corn.the-hen-give-the-cat-bread",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🐔"
+                    "emoji": "🐶"
                   },
                   {
                     "emoji": "🌽"
@@ -12002,10 +11993,10 @@
                   }
                 ]
               ],
-              "label": "the dog brings the hen corn. the hen gives the cat bread."
+              "label": "the cat brings the dog corn. the hen gives the cat bread."
             },
             {
-              "id": "the-cat-bring-the-hen-corn.the-hen-give-the-dog-bread",
+              "id": "the-cat-bring-the-hen-corn.the-hen-give-the-cat-milk",
               "scene": [
                 [
                   {
@@ -12023,14 +12014,14 @@
                     "emoji": "🐔"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🍞"
+                    "emoji": "🥛"
                   }
                 ]
               ],
-              "label": "the cat brings the hen corn. the hen gives the dog bread."
+              "label": "the cat brings the hen corn. the hen gives the cat milk."
             }
           ],
           "correct": "the-cat-bring-the-hen-corn.the-hen-give-the-cat-bread"
@@ -12196,11 +12187,11 @@
           "correct": "girl-sit-on-the-slide.the-teddy-sit-by-the-tree"
         },
         {
-          "word": "DAD THROWS A YELLOW BALL. THE DOG CATCHES THE YELLOW BALL.",
-          "syllables": "D-A-D THROWS A YEL-LOW B-A-L-L. THE D-O-G CATCH-ES THE YEL-LOW B-A-L-L.",
+          "word": "DAD THROWS A YELLOW BALL. THE DOG RUNS TO THE SLIDE.",
+          "syllables": "D-A-D THROWS A YEL-LOW B-A-L-L. THE D-O-G R-U-N-S TO THE SLIDE.",
           "choices": [
             {
-              "id": "dad-throw-a-yellow-ball.the-dog-catch-the-yellow-ball",
+              "id": "dad-throw-a-yellow-ball.the-dog-run-to-the-slide",
               "scene": [
                 [
                   {
@@ -12215,14 +12206,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🥎"
+                    "emoji": "🛝"
                   }
                 ]
               ],
-              "label": "dad throws a yellow ball. the dog catches the yellow ball."
+              "label": "dad throws a yellow ball. the dog runs to the slide."
             },
             {
-              "id": "dad-throw-a-white-ball.the-dog-catch-the-yellow-ball",
+              "id": "dad-throw-a-white-ball.the-dog-run-to-the-slide",
               "scene": [
                 [
                   {
@@ -12237,14 +12228,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🥎"
+                    "emoji": "🛝"
                   }
                 ]
               ],
-              "label": "dad throws a white ball. the dog catches the yellow ball."
+              "label": "dad throws a white ball. the dog runs to the slide."
             },
             {
-              "id": "dad-throw-a-yellow-ball.the-dog-catch-the-brown-ball",
+              "id": "dad-throw-a-yellow-ball.the-dog-run-to-the-car",
               "scene": [
                 [
                   {
@@ -12259,14 +12250,14 @@
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🏈"
+                    "emoji": "🚗"
                   }
                 ]
               ],
-              "label": "dad throws a yellow ball. the dog catches the brown ball."
+              "label": "dad throws a yellow ball. the dog runs to the car."
             }
           ],
-          "correct": "dad-throw-a-yellow-ball.the-dog-catch-the-yellow-ball"
+          "correct": "dad-throw-a-yellow-ball.the-dog-run-to-the-slide"
         },
         {
           "word": "MEG RUNS WITH THE DOG. DAD WALKS TO THE CAR.",
@@ -12491,18 +12482,18 @@
           "correct": "the-dog-lick-girl.dad-run-to-the-tree"
         },
         {
-          "word": "THE DOG FINDS THE TEDDY. THE DOG BRINGS MEG THE TEDDY.",
-          "syllables": "THE D-O-G FINDS THE TED-DY. THE D-O-G BRINGS M-E-G THE TED-DY.",
+          "word": "THE DOG SNIFFS THE TREE. THE DOG BRINGS MEG THE TEDDY.",
+          "syllables": "THE D-O-G SNIFFS THE T-R-E-E. THE D-O-G BRINGS M-E-G THE TED-DY.",
           "choices": [
             {
-              "id": "the-dog-find-the-teddy.the-dog-bring-girl-the-teddy",
+              "id": "the-dog-sniff-the-tree.the-dog-bring-girl-the-teddy",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🧸"
+                    "emoji": "🌳"
                   }
                 ],
                 [
@@ -12517,17 +12508,17 @@
                   }
                 ]
               ],
-              "label": "the dog finds the teddy. the dog brings meg the teddy."
+              "label": "the dog sniffs the tree. the dog brings meg the teddy."
             },
             {
-              "id": "the-dog-find-the-ball.the-dog-bring-girl-the-teddy",
+              "id": "the-dog-sniff-the-car.the-dog-bring-girl-the-teddy",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "⚽"
+                    "emoji": "🚗"
                   }
                 ],
                 [
@@ -12542,17 +12533,17 @@
                   }
                 ]
               ],
-              "label": "the dog finds the ball. the dog brings meg the teddy."
+              "label": "the dog sniffs the car. the dog brings meg the teddy."
             },
             {
-              "id": "the-dog-find-the-teddy.the-dog-bring-dad-the-teddy",
+              "id": "the-dog-sniff-the-tree.the-dog-bring-dad-the-teddy",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "🧸"
+                    "emoji": "🌳"
                   }
                 ],
                 [
@@ -12567,10 +12558,10 @@
                   }
                 ]
               ],
-              "label": "the dog finds the teddy. the dog brings dad the teddy."
+              "label": "the dog sniffs the tree. the dog brings dad the teddy."
             }
           ],
-          "correct": "the-dog-find-the-teddy.the-dog-bring-girl-the-teddy"
+          "correct": "the-dog-sniff-the-tree.the-dog-bring-girl-the-teddy"
         },
         {
           "word": "MEG SINGS TO THE TEDDY. DAD GIVES THE DOG A BONE.",
@@ -13643,11 +13634,11 @@
       "completeText": "Tea, a big cake, a pink flower and a red heart. Mom says it is the best morning of the year!",
       "tasks": [
         {
-          "word": "DAD COOKS TWO EGGS. TOM POURS JUICE.",
-          "syllables": "D-A-D COOKS T-W-O E-G-G-S. T-O-M POURS JUICE.",
+          "word": "DAD COOKS TWO EGGS. TOM POURS TEA.",
+          "syllables": "D-A-D COOKS T-W-O E-G-G-S. T-O-M POURS T-E-A.",
           "choices": [
             {
-              "id": "dad-cook-two-egg.boy-pour-juice",
+              "id": "dad-cook-two-egg.boy-pour-tea",
               "scene": [
                 [
                   {
@@ -13663,14 +13654,14 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🧃"
+                    "emoji": "☕"
                   }
                 ]
               ],
-              "label": "dad cooks two eggs. tom pours juice."
+              "label": "dad cooks two eggs. tom pours tea."
             },
             {
-              "id": "dad-cook-one-egg.boy-pour-juice",
+              "id": "dad-cook-one-egg.boy-pour-tea",
               "scene": [
                 [
                   {
@@ -13686,11 +13677,11 @@
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🧃"
+                    "emoji": "☕"
                   }
                 ]
               ],
-              "label": "dad cooks one egg. tom pours juice."
+              "label": "dad cooks one egg. tom pours tea."
             },
             {
               "id": "dad-cook-two-egg.boy-pour-milk",
@@ -13716,7 +13707,7 @@
               "label": "dad cooks two eggs. tom pours milk."
             }
           ],
-          "correct": "dad-cook-two-egg.boy-pour-juice"
+          "correct": "dad-cook-two-egg.boy-pour-tea"
         },
         {
           "word": "TOM PICKS A PINK FLOWER. TOM PAINTS A RED HEART.",
@@ -13848,7 +13839,7 @@
               "label": "dad bakes a small cake. tom puts a star on the cake."
             },
             {
-              "id": "dad-cook-a-big-cake.boy-put-a-star-on-the-chair",
+              "id": "dad-cook-a-big-cake.dad-put-a-star-on-the-cake",
               "scene": [
                 [
                   {
@@ -13861,17 +13852,17 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "⭐"
                   },
                   {
-                    "emoji": "🪑"
+                    "emoji": "🎂"
                   }
                 ]
               ],
-              "label": "dad bakes a big cake. tom puts a star on the chair."
+              "label": "dad bakes a big cake. dad puts a star on the cake."
             }
           ],
           "correct": "dad-cook-a-big-cake.boy-put-a-star-on-the-cake"
@@ -13951,11 +13942,33 @@
           "correct": "dad-dance-with-boy.the-cat-sit-on-the-cake"
         },
         {
-          "word": "DAD TAKES THE CAKE. TOM CARRIES THE TEA.",
-          "syllables": "D-A-D TAKES THE C-A-K-E. T-O-M CAR-RIES THE T-E-A.",
+          "word": "TOM TAKES THE CAKE. DAD CARRIES THE TEA.",
+          "syllables": "T-O-M TAKES THE C-A-K-E. D-A-D CAR-RIES THE T-E-A.",
           "choices": [
             {
-              "id": "dad-take-the-cake.boy-carry-the-tea",
+              "id": "boy-take-the-cake.dad-carry-the-tea",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🎂"
+                  }
+                ],
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "☕"
+                  }
+                ]
+              ],
+              "label": "tom takes the cake. dad carries the tea."
+            },
+            {
+              "id": "dad-take-the-cake.dad-carry-the-tea",
               "scene": [
                 [
                   {
@@ -13967,14 +13980,14 @@
                 ],
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "☕"
                   }
                 ]
               ],
-              "label": "dad takes the cake. tom carries the tea."
+              "label": "dad takes the cake. dad carries the tea."
             },
             {
               "id": "boy-take-the-cake.boy-carry-the-tea",
@@ -13997,31 +14010,9 @@
                 ]
               ],
               "label": "tom takes the cake. tom carries the tea."
-            },
-            {
-              "id": "dad-take-the-cake.boy-carry-the-juice",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "🎂"
-                  }
-                ],
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🧃"
-                  }
-                ]
-              ],
-              "label": "dad takes the cake. tom carries the juice."
             }
           ],
-          "correct": "dad-take-the-cake.boy-carry-the-tea"
+          "correct": "boy-take-the-cake.dad-carry-the-tea"
         },
         {
           "word": "DAD CUTS THE BIG CAKE. MOM SLEEPS IN BED.",
@@ -14163,7 +14154,7 @@
               "label": "dad brings mom the pink flower. dad brings mom the tea."
             },
             {
-              "id": "boy-bring-mom-the-pink-flower.dad-bring-mom-the-juice",
+              "id": "boy-bring-mom-the-pink-flower.boy-bring-mom-the-tea",
               "scene": [
                 [
                   {
@@ -14178,17 +14169,17 @@
                 ],
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🧃"
+                    "emoji": "☕"
                   }
                 ]
               ],
-              "label": "tom brings mom the pink flower. dad brings mom the juice."
+              "label": "tom brings mom the pink flower. tom brings mom the tea."
             }
           ],
           "correct": "boy-bring-mom-the-pink-flower.dad-bring-mom-the-tea"
@@ -14332,7 +14323,7 @@
               "label": "dad eats the big cake. mom drinks tea with tom."
             },
             {
-              "id": "mom-eat-the-big-cake.mom-drink-juice-with-boy",
+              "id": "mom-eat-the-big-cake.mom-drink-tea-with-dad",
               "scene": [
                 [
                   {
@@ -14348,14 +14339,14 @@
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🧃"
+                    "emoji": "☕"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   }
                 ]
               ],
-              "label": "mom eats the big cake. mom drinks juice with tom."
+              "label": "mom eats the big cake. mom drinks tea with dad."
             }
           ],
           "correct": "mom-eat-the-big-cake.mom-drink-tea-with-boy"
@@ -14870,14 +14861,14 @@
               "label": "dad finds a purple flower. dad gives mom the purple flower."
             },
             {
-              "id": "dad-find-a-yellow-flower.dad-give-mom-the-purple-flower",
+              "id": "mom-find-a-purple-flower.dad-give-mom-the-purple-flower",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👩"
                   },
                   {
-                    "emoji": "🌻"
+                    "emoji": "🪻"
                   }
                 ],
                 [
@@ -14892,7 +14883,7 @@
                   }
                 ]
               ],
-              "label": "dad finds a yellow flower. dad gives mom the purple flower."
+              "label": "mom finds a purple flower. dad gives mom the purple flower."
             },
             {
               "id": "dad-find-a-purple-flower.girl-give-mom-the-purple-flower",
@@ -15068,7 +15059,7 @@
               "label": "dad sees the sea from the mountain. mom paints the sea."
             },
             {
-              "id": "girl-see-the-sea-from-the-mountain.mom-paint-the-mountain",
+              "id": "girl-see-the-sea-from-the-mountain.dad-paint-the-sea",
               "scene": [
                 [
                   {
@@ -15083,14 +15074,14 @@
                 ],
                 [
                   {
-                    "emoji": "👩‍🎨"
+                    "emoji": "👨‍🎨"
                   },
                   {
-                    "emoji": "⛰️"
+                    "emoji": "🌊"
                   }
                 ]
               ],
-              "label": "meg sees the sea from the mountain. mom paints the mountain."
+              "label": "meg sees the sea from the mountain. dad paints the sea."
             }
           ],
           "correct": "girl-see-the-sea-from-the-mountain.mom-paint-the-sea"
