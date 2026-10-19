@@ -141,7 +141,9 @@ COLOR_PICTURES = {
 CLOSE_COLORS = {frozenset(pair) for pair in [("red", "orange"), ("red", "pink"), ("orange", "yellow"),
                 ("orange", "brown"), ("blue", "purple"), ("purple", "pink"), ("black", "brown")]}
 EN_IRREGULAR_PLURALS = {"MICE", "SHEEP", "FISH", "GEESE", "TEETH", "FEET", "CHILDREN", "MEN", "WOMEN", "DEER"}
-EN_SINGULAR_S = {"BUS", "DRESS", "GLASS", "CACTUS", "OCTOPUS"}   # singular nouns that end in S
+EN_SINGULAR_S = {"BUS", "DRESS", "GLASS", "CACTUS", "OCTOPUS",   # singular nouns that end in S
+                 "PRINCESS", "CIRCUS", "WALRUS", "HIPPOPOTAMUS", "PLATYPUS", "GRASS", "COMPASS"}
+EN_SAME_PLURALS = {"SHEEP", "FISH", "DEER"}   # one form for one and many
 # Russian forms that are always spelled with Ё; their Е spelling is an error in a phrase pack.
 RU_YO_WORDS = {
     stem + ending
@@ -1169,7 +1171,9 @@ def story_scene(language, slugs, words, where):
             if value is not None and value > 1:
                 if not noun_word.endswith("S") and noun_word not in EN_IRREGULAR_PLURALS:
                     story_error(f'{where}: noun "{noun_word}" is not plural after a number above one')
-            elif noun_word in EN_IRREGULAR_PLURALS or (noun_word.endswith("S") and noun_word not in EN_SINGULAR_S):
+            elif noun_word in EN_IRREGULAR_PLURALS - EN_SAME_PLURALS or (
+                noun_word.endswith("S") and noun_word not in EN_SINGULAR_S
+            ):
                 story_error(f'{where}: noun "{noun_word}" is drawn once, so it has to be singular')
             if group["verb"]:
                 verb_word = bare_word(words[group["position"] + 1])
