@@ -1584,16 +1584,20 @@ def validate_story_pack(language, level):
             for token in phrase_tokens(intro):
                 if CAST_FORMS.get(token, token) in giveaways:
                     errors.append(f'{where}: the intro gives away the changed word "{token}" of task 1')
-        # The chapter card is tapped right before task 1, so its emoji may not tell the correct scene
-        # of task 1 from a wrong one, a badge included. A task whose scenes do not match their words
-        # is already reported and skipped here. A resumed chapter opens on a later task, but there the
-        # chapter emoji is mostly the story's own subject (about 100 tasks on the six packs), so only
-        # task 1, which every first visit opens on, is held to it.
-        if chapter_infos and chapter_infos[0] and chapter_infos[0]["pictures"] and isinstance(chapter.get("emoji"), str):
-            correct_pictures, wrong_pictures = chapter_infos[0]["pictures"]
+        # The chapter card is tapped right before task 1, and a resumed chapter opens on its next task
+        # straight after the card, so the chapter emoji may not tell the correct scene of any task from
+        # a wrong one, a badge included. A task whose scenes do not match their words is already
+        # reported and skipped here.
+        if isinstance(chapter.get("emoji"), str):
             chapter_emoji = chapter["emoji"].replace("\ufe0f", "")
-            if any(chapter_emoji in correct_pictures ^ pictures for pictures in wrong_pictures):
-                errors.append(f'{where}: the chapter emoji {chapter["emoji"]} is in some scenes of task 1 and not in others')
+            for task_index, info in enumerate(chapter_infos):
+                if not (info and info["pictures"]):
+                    continue
+                correct_pictures, wrong_pictures = info["pictures"]
+                if any(chapter_emoji in correct_pictures ^ pictures for pictures in wrong_pictures):
+                    errors.append(
+                        f'{where}: the chapter emoji {chapter["emoji"]} is in some scenes of task {task_index + 1} and not in others'
+                    )
 
         # The child would tap the picture he tapped before: a correct scene comes back in the chapter.
         shown: dict[str, tuple] = {}
