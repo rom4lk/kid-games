@@ -2075,6 +2075,11 @@ html[lang="ru"] .word-choice .letter {
     gap: 8px;
   }
 
+  /* A story scene holds only the bubble, so it is no taller than the bubble. */
+  .adventure-scene.story-scene {
+    min-height: 0;
+  }
+
   .scene-character {
     font-size: 5.2rem;
   }
