@@ -1151,18 +1151,18 @@
               "label": "tom carries the basket."
             },
             {
-              "id": "dad-carry-the-pie",
+              "id": "dad-carry-the-pear",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "🥧"
+                    "emoji": "🍐"
                   }
                 ]
               ],
-              "label": "dad carries the pie."
+              "label": "dad carries the pear."
             }
           ],
           "correct": "dad-carry-the-basket"
@@ -1522,7 +1522,7 @@
         "#4f3b8f"
       ],
       "intro": "Behind the barn there is a noisy little house. Grandpa goes there every morning.",
-      "completeText": "A basket full of eggs and a nap for the chicks. The hen house is quiet again.",
+      "completeText": "An egg in the basket and a nap for the chicks. The hen house is quiet again.",
       "tasks": [
         {
           "word": "THE ROOSTER WAKES TOM.",
@@ -2124,53 +2124,53 @@
           "correct": "boy-bring-a-bucket"
         },
         {
-          "word": "MOM SEES A FROG.",
-          "syllables": "M-O-M S-E-E-S A F-R-O-G.",
+          "word": "MOM FINDS A ROD.",
+          "syllables": "M-O-M FINDS A R-O-D.",
           "choices": [
             {
-              "id": "mom-see-a-frog",
+              "id": "mom-find-a-rod",
               "scene": [
                 [
                   {
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🐸"
+                    "emoji": "🎣"
                   }
                 ]
               ],
-              "label": "mom sees a frog."
+              "label": "mom finds a rod."
             },
             {
-              "id": "boy-see-a-frog",
+              "id": "dad-find-a-rod",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "🐸"
+                    "emoji": "🎣"
                   }
                 ]
               ],
-              "label": "tom sees a frog."
+              "label": "dad finds a rod."
             },
             {
-              "id": "mom-see-a-duck",
+              "id": "mom-find-a-bucket",
               "scene": [
                 [
                   {
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🪣"
                   }
                 ]
               ],
-              "label": "mom sees a duck."
+              "label": "mom finds a bucket."
             }
           ],
-          "correct": "mom-see-a-frog"
+          "correct": "mom-find-a-rod"
         },
         {
           "word": "MOM ROWS THE BOAT.",
@@ -2271,53 +2271,53 @@
           "correct": "boy-hold-the-rod"
         },
         {
-          "word": "A FROG SEES TOM.",
-          "syllables": "A F-R-O-G S-E-E-S T-O-M.",
+          "word": "DAD SEES AN ISLAND.",
+          "syllables": "D-A-D S-E-E-S AN IS-LAND.",
           "choices": [
             {
-              "id": "a-frog-see-boy",
+              "id": "dad-see-a-island",
               "scene": [
                 [
                   {
-                    "emoji": "🐸"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "🏝️"
                   }
                 ]
               ],
-              "label": "a frog sees tom."
+              "label": "dad sees an island."
             },
             {
-              "id": "a-duck-see-boy",
+              "id": "mom-see-a-island",
               "scene": [
                 [
-                  {
-                    "emoji": "🦆"
-                  },
-                  {
-                    "emoji": "👦"
-                  }
-                ]
-              ],
-              "label": "a duck sees tom."
-            },
-            {
-              "id": "a-frog-see-mom",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐸"
-                  },
                   {
                     "emoji": "👩"
+                  },
+                  {
+                    "emoji": "🏝️"
                   }
                 ]
               ],
-              "label": "a frog sees mom."
+              "label": "mom sees an island."
+            },
+            {
+              "id": "dad-see-a-duck",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🦆"
+                  }
+                ]
+              ],
+              "label": "dad sees a duck."
             }
           ],
-          "correct": "a-frog-see-boy"
+          "correct": "dad-see-a-island"
         },
         {
           "word": "TWO DUCKS SLEEP.",
@@ -2350,69 +2350,69 @@
               "label": "two ducks sing."
             },
             {
-              "id": "two-frog-sleep",
+              "id": "three-duck-sleep",
               "scene": [
                 [
                   {
-                    "emoji": "🐸",
-                    "count": 2,
+                    "emoji": "🦆",
+                    "count": 3,
                     "badge": "💤"
                   }
                 ]
               ],
-              "label": "two frogs sleep."
+              "label": "three ducks sleep."
             }
           ],
           "correct": "two-duck-sleep"
         },
         {
-          "word": "MOM FEEDS A DUCK.",
-          "syllables": "M-O-M FEEDS A D-U-C-K.",
+          "word": "DAD TAKES THE ROD.",
+          "syllables": "D-A-D TAKES THE R-O-D.",
           "choices": [
             {
-              "id": "mom-feed-a-duck",
-              "scene": [
-                [
-                  {
-                    "emoji": "👩"
-                  },
-                  {
-                    "emoji": "🦆"
-                  }
-                ]
-              ],
-              "label": "mom feeds a duck."
-            },
-            {
-              "id": "dad-feed-a-duck",
+              "id": "dad-take-the-rod",
               "scene": [
                 [
                   {
                     "emoji": "👨"
                   },
                   {
-                    "emoji": "🦆"
+                    "emoji": "🎣"
                   }
                 ]
               ],
-              "label": "dad feeds a duck."
+              "label": "dad takes the rod."
             },
             {
-              "id": "mom-feed-a-frog",
+              "id": "mom-take-the-rod",
               "scene": [
                 [
                   {
                     "emoji": "👩"
                   },
                   {
-                    "emoji": "🐸"
+                    "emoji": "🎣"
                   }
                 ]
               ],
-              "label": "mom feeds a frog."
+              "label": "mom takes the rod."
+            },
+            {
+              "id": "dad-take-the-bucket",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🪣"
+                  }
+                ]
+              ],
+              "label": "dad takes the bucket."
             }
           ],
-          "correct": "mom-feed-a-duck"
+          "correct": "dad-take-the-rod"
         },
         {
           "word": "TOM HUGS MOM.",
@@ -3423,6 +3423,52 @@
           "correct": "girl-carry-the-bucket"
         },
         {
+          "word": "TWO CATS SLEEP.",
+          "syllables": "T-W-O C-A-T-S SLEEP.",
+          "choices": [
+            {
+              "id": "two-cat-sleep",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐱",
+                    "count": 2,
+                    "badge": "💤"
+                  }
+                ]
+              ],
+              "label": "two cats sleep."
+            },
+            {
+              "id": "two-cat-sing",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐱",
+                    "count": 2,
+                    "badge": "🎵"
+                  }
+                ]
+              ],
+              "label": "two cats sing."
+            },
+            {
+              "id": "three-cat-sleep",
+              "scene": [
+                [
+                  {
+                    "emoji": "🐱",
+                    "count": 3,
+                    "badge": "💤"
+                  }
+                ]
+              ],
+              "label": "three cats sleep."
+            }
+          ],
+          "correct": "two-cat-sleep"
+        },
+        {
           "word": "DAD PETS THE COW.",
           "syllables": "D-A-D P-E-T-S THE C-O-W.",
           "choices": [
@@ -3470,55 +3516,6 @@
             }
           ],
           "correct": "dad-stroke-the-cow"
-        },
-        {
-          "word": "DAD WALKS HOME.",
-          "syllables": "D-A-D WALKS H-O-M-E.",
-          "choices": [
-            {
-              "id": "dad-walk-house",
-              "scene": [
-                [
-                  {
-                    "emoji": "🚶‍♂️"
-                  },
-                  {
-                    "emoji": "🏠"
-                  }
-                ]
-              ],
-              "label": "dad walks home."
-            },
-            {
-              "id": "dad-ride-house",
-              "scene": [
-                [
-                  {
-                    "emoji": "🚴‍♂️"
-                  },
-                  {
-                    "emoji": "🏠"
-                  }
-                ]
-              ],
-              "label": "dad rides home."
-            },
-            {
-              "id": "mom-walk-house",
-              "scene": [
-                [
-                  {
-                    "emoji": "🚶‍♀️"
-                  },
-                  {
-                    "emoji": "🏠"
-                  }
-                ]
-              ],
-              "label": "mom walks home."
-            }
-          ],
-          "correct": "dad-walk-house"
         }
       ]
     },
@@ -3927,53 +3924,50 @@
           "correct": "boy-stroke-the-cat"
         },
         {
-          "word": "THE DOG GETS A BONE.",
-          "syllables": "THE D-O-G G-E-T-S A B-O-N-E.",
+          "word": "TWO BIRDS SING.",
+          "syllables": "T-W-O BIRDS S-I-N-G.",
           "choices": [
             {
-              "id": "the-dog-take-a-bone",
+              "id": "two-bird-sing",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🦴"
+                    "emoji": "🐦",
+                    "count": 2,
+                    "badge": "🎵"
                   }
                 ]
               ],
-              "label": "the dog gets a bone."
+              "label": "two birds sing."
             },
             {
-              "id": "the-cat-take-a-bone",
+              "id": "two-bird-sleep",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🦴"
+                    "emoji": "🐦",
+                    "count": 2,
+                    "badge": "💤"
                   }
                 ]
               ],
-              "label": "the cat gets a bone."
+              "label": "two birds sleep."
             },
             {
-              "id": "the-dog-take-a-sponge",
+              "id": "three-bird-sing",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🧽"
+                    "emoji": "🐦",
+                    "count": 3,
+                    "badge": "🎵"
                   }
                 ]
               ],
-              "label": "the dog gets a sponge."
+              "label": "three birds sing."
             }
           ],
-          "correct": "the-dog-take-a-bone"
+          "correct": "two-bird-sing"
         },
         {
           "word": "THE DOG HIDES THE SOAP.",
@@ -4382,39 +4376,11 @@
           "correct": "the-fox-lose-a-egg"
         },
         {
-          "word": "TOM FINDS A FEATHER.",
-          "syllables": "T-O-M FINDS A FEATH-ER.",
+          "word": "TOM FINDS THE EGG.",
+          "syllables": "T-O-M FINDS THE E-G-G.",
           "choices": [
             {
-              "id": "boy-find-a-feather",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "🪶"
-                  }
-                ]
-              ],
-              "label": "tom finds a feather."
-            },
-            {
-              "id": "grandma-find-a-feather",
-              "scene": [
-                [
-                  {
-                    "emoji": "👵"
-                  },
-                  {
-                    "emoji": "🪶"
-                  }
-                ]
-              ],
-              "label": "grandma finds a feather."
-            },
-            {
-              "id": "boy-find-a-egg",
+              "id": "boy-find-the-egg",
               "scene": [
                 [
                   {
@@ -4425,10 +4391,38 @@
                   }
                 ]
               ],
-              "label": "tom finds an egg."
+              "label": "tom finds the egg."
+            },
+            {
+              "id": "grandpa-find-the-egg",
+              "scene": [
+                [
+                  {
+                    "emoji": "👴"
+                  },
+                  {
+                    "emoji": "🥚"
+                  }
+                ]
+              ],
+              "label": "grandpa finds the egg."
+            },
+            {
+              "id": "boy-find-the-lamp",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🔦"
+                  }
+                ]
+              ],
+              "label": "tom finds the torch."
             }
           ],
-          "correct": "boy-find-a-feather"
+          "correct": "boy-find-the-egg"
         },
         {
           "word": "THREE HENS SLEEP.",
@@ -5037,7 +5031,7 @@
         "#8a5a3b",
         "#643c65"
       ],
-      "intro": "Today Tom turns six! The whole house is busy and full of secrets.",
+      "intro": "Something special is happening at Tom's house today. Everyone is busy and full of secrets.",
       "completeText": "One big cake, one big wish and a very loud drum. Happy birthday, Tom!",
       "tasks": [
         {
@@ -5137,6 +5131,55 @@
             }
           ],
           "correct": "dad-buy-a-balloon"
+        },
+        {
+          "word": "DAD WALKS HOME.",
+          "syllables": "D-A-D WALKS H-O-M-E.",
+          "choices": [
+            {
+              "id": "dad-walk-house",
+              "scene": [
+                [
+                  {
+                    "emoji": "🚶‍♂️"
+                  },
+                  {
+                    "emoji": "🏠"
+                  }
+                ]
+              ],
+              "label": "dad walks home."
+            },
+            {
+              "id": "dad-run-house",
+              "scene": [
+                [
+                  {
+                    "emoji": "🏃‍♂️"
+                  },
+                  {
+                    "emoji": "🏠"
+                  }
+                ]
+              ],
+              "label": "dad runs home."
+            },
+            {
+              "id": "mom-walk-house",
+              "scene": [
+                [
+                  {
+                    "emoji": "🚶‍♀️"
+                  },
+                  {
+                    "emoji": "🏠"
+                  }
+                ]
+              ],
+              "label": "mom walks home."
+            }
+          ],
+          "correct": "dad-walk-house"
         },
         {
           "word": "MOM HIDES A GIFT.",
@@ -5384,55 +5427,6 @@
           "correct": "boy-eat-the-cake"
         },
         {
-          "word": "TOM HUGS MOM.",
-          "syllables": "T-O-M H-U-G-S M-O-M.",
-          "choices": [
-            {
-              "id": "boy-hug-mom",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👩"
-                  }
-                ]
-              ],
-              "label": "tom hugs mom."
-            },
-            {
-              "id": "dad-hug-mom",
-              "scene": [
-                [
-                  {
-                    "emoji": "👨"
-                  },
-                  {
-                    "emoji": "👩"
-                  }
-                ]
-              ],
-              "label": "dad hugs mom."
-            },
-            {
-              "id": "boy-hug-dad",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👨"
-                  }
-                ]
-              ],
-              "label": "tom hugs dad."
-            }
-          ],
-          "correct": "boy-hug-mom"
-        },
-        {
           "word": "TOM HOLDS THE BALLOON.",
           "syllables": "T-O-M HOLDS THE BAL-LOON.",
           "choices": [
@@ -5643,53 +5637,53 @@
           "correct": "girl-take-a-brush"
         },
         {
-          "word": "TOM PAINTS A CHICK.",
-          "syllables": "T-O-M PAINTS A CHICK.",
+          "word": "TOM PAINTS A BASKET.",
+          "syllables": "T-O-M PAINTS A BAS-KET.",
           "choices": [
             {
-              "id": "boy-paint-a-chick",
+              "id": "boy-paint-a-basket",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐤"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "tom paints a chick."
+              "label": "tom paints a basket."
             },
             {
-              "id": "girl-paint-a-chick",
+              "id": "girl-paint-a-basket",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐤"
+                    "emoji": "🧺"
                   }
                 ]
               ],
-              "label": "meg paints a chick."
+              "label": "meg paints a basket."
             },
             {
-              "id": "boy-paint-a-hen",
+              "id": "boy-paint-a-egg",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐔"
+                    "emoji": "🥚"
                   }
                 ]
               ],
-              "label": "tom paints a hen."
+              "label": "tom paints an egg."
             }
           ],
-          "correct": "boy-paint-a-chick"
+          "correct": "boy-paint-a-basket"
         },
         {
           "word": "MOM HOLDS THE BASKET.",
@@ -5822,18 +5816,18 @@
               "label": "mom finds an egg."
             },
             {
-              "id": "boy-find-a-chick",
+              "id": "boy-find-a-brush",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐤"
+                    "emoji": "🖌️"
                   }
                 ]
               ],
-              "label": "tom finds a chick."
+              "label": "tom finds a brush."
             }
           ],
           "correct": "boy-find-a-egg"
@@ -6130,18 +6124,18 @@
               "label": "meg washes the bike."
             },
             {
-              "id": "boy-wash-the-dog",
+              "id": "boy-wash-the-bell",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🔔"
                   }
                 ]
               ],
-              "label": "tom washes the dog."
+              "label": "tom washes the bell."
             }
           ],
           "correct": "boy-wash-the-bike"
@@ -6196,53 +6190,53 @@
           "correct": "girl-find-a-bell"
         },
         {
-          "word": "THE CAT HEARS THE BELL.",
-          "syllables": "THE C-A-T HEARS THE B-E-L-L.",
+          "word": "DAD HEARS THE BELL.",
+          "syllables": "D-A-D HEARS THE B-E-L-L.",
           "choices": [
             {
-              "id": "the-cat-hear-the-bell",
+              "id": "dad-hear-the-bell",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🔔"
                   }
                 ]
               ],
-              "label": "the cat hears the bell."
+              "label": "dad hears the bell."
             },
             {
-              "id": "the-dog-hear-the-bell",
+              "id": "boy-hear-the-bell",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🔔"
                   }
                 ]
               ],
-              "label": "the dog hears the bell."
+              "label": "tom hears the bell."
             },
             {
-              "id": "the-cat-hear-the-bike",
+              "id": "dad-hear-the-bike",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "👨"
                   },
                   {
                     "emoji": "🚲"
                   }
                 ]
               ],
-              "label": "the cat hears the bike."
+              "label": "dad hears the bike."
             }
           ],
-          "correct": "the-cat-hear-the-bell"
+          "correct": "dad-hear-the-bell"
         },
         {
           "word": "TOM GETS A HAT.",
@@ -6294,151 +6288,151 @@
           "correct": "boy-take-a-hat"
         },
         {
-          "word": "THE CAT SEES THE BIKE.",
-          "syllables": "THE C-A-T S-E-E-S THE B-I-K-E.",
+          "word": "MEG WANTS THE BIKE.",
+          "syllables": "M-E-G WANTS THE B-I-K-E.",
           "choices": [
             {
-              "id": "the-cat-see-the-bike",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🚲"
-                  }
-                ]
-              ],
-              "label": "the cat sees the bike."
-            },
-            {
-              "id": "the-dog-see-the-bike",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "🚲"
-                  }
-                ]
-              ],
-              "label": "the dog sees the bike."
-            },
-            {
-              "id": "the-cat-see-the-hat",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "👒"
-                  }
-                ]
-              ],
-              "label": "the cat sees the hat."
-            }
-          ],
-          "correct": "the-cat-see-the-bike"
-        },
-        {
-          "word": "THE DOG CHASES DAD.",
-          "syllables": "THE D-O-G CHAS-ES D-A-D.",
-          "choices": [
-            {
-              "id": "the-dog-chase-dad",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "👨"
-                  }
-                ]
-              ],
-              "label": "the dog chases dad."
-            },
-            {
-              "id": "the-cat-chase-dad",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "👨"
-                  }
-                ]
-              ],
-              "label": "the cat chases dad."
-            },
-            {
-              "id": "the-dog-chase-boy",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "👦"
-                  }
-                ]
-              ],
-              "label": "the dog chases tom."
-            }
-          ],
-          "correct": "the-dog-chase-dad"
-        },
-        {
-          "word": "MEG CALLS THE DOG.",
-          "syllables": "M-E-G CALLS THE D-O-G.",
-          "choices": [
-            {
-              "id": "girl-call-the-dog",
+              "id": "girl-want-the-bike",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🚲"
                   }
                 ]
               ],
-              "label": "meg calls the dog."
+              "label": "meg wants the bike."
             },
             {
-              "id": "boy-call-the-dog",
+              "id": "boy-want-the-bike",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🚲"
                   }
                 ]
               ],
-              "label": "tom calls the dog."
+              "label": "tom wants the bike."
             },
             {
-              "id": "girl-call-the-cat",
+              "id": "girl-want-the-bell",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "🔔"
                   }
                 ]
               ],
-              "label": "meg calls the cat."
+              "label": "meg wants the bell."
             }
           ],
-          "correct": "girl-call-the-dog"
+          "correct": "girl-want-the-bike"
+        },
+        {
+          "word": "TOM CHASES DAD.",
+          "syllables": "T-O-M CHAS-ES D-A-D.",
+          "choices": [
+            {
+              "id": "boy-chase-dad",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "👨"
+                  }
+                ]
+              ],
+              "label": "tom chases dad."
+            },
+            {
+              "id": "girl-chase-dad",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👨"
+                  }
+                ]
+              ],
+              "label": "meg chases dad."
+            },
+            {
+              "id": "boy-chase-girl",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "👧"
+                  }
+                ]
+              ],
+              "label": "tom chases meg."
+            }
+          ],
+          "correct": "boy-chase-dad"
+        },
+        {
+          "word": "MEG CALLS TOM.",
+          "syllables": "M-E-G CALLS T-O-M.",
+          "choices": [
+            {
+              "id": "girl-call-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "meg calls tom."
+            },
+            {
+              "id": "dad-call-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "dad calls tom."
+            },
+            {
+              "id": "girl-call-dad",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👨"
+                  }
+                ]
+              ],
+              "label": "meg calls dad."
+            }
+          ],
+          "correct": "girl-call-boy"
         },
         {
           "word": "MEG HUGS DAD.",
@@ -6550,7 +6544,7 @@
         "#2d7973"
       ],
       "intro": "The family takes the train to the seaside. The sand is hot and the water is cool.",
-      "completeText": "The sea took the castle, but Tom has a bucket of shells. They will build a bigger one tomorrow.",
+      "completeText": "The sea took the castle, but Tom still has his bucket. They will build a bigger one tomorrow.",
       "tasks": [
         {
           "word": "TOM FINDS A SHELL.",
@@ -6896,22 +6890,9 @@
           "correct": "boy-feed-the-bird"
         },
         {
-          "word": "TWO BIRDS SING.",
-          "syllables": "T-W-O BIRDS S-I-N-G.",
+          "word": "TWO BIRDS SLEEP.",
+          "syllables": "T-W-O BIRDS SLEEP.",
           "choices": [
-            {
-              "id": "two-bird-sing",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐦",
-                    "count": 2,
-                    "badge": "🎵"
-                  }
-                ]
-              ],
-              "label": "two birds sing."
-            },
             {
               "id": "two-bird-sleep",
               "scene": [
@@ -6926,20 +6907,33 @@
               "label": "two birds sleep."
             },
             {
-              "id": "two-crab-sing",
+              "id": "two-bird-sing",
               "scene": [
                 [
                   {
-                    "emoji": "🦀",
+                    "emoji": "🐦",
                     "count": 2,
                     "badge": "🎵"
                   }
                 ]
               ],
-              "label": "two crabs sing."
+              "label": "two birds sing."
+            },
+            {
+              "id": "two-crab-sleep",
+              "scene": [
+                [
+                  {
+                    "emoji": "🦀",
+                    "count": 2,
+                    "badge": "💤"
+                  }
+                ]
+              ],
+              "label": "two crabs sleep."
             }
           ],
-          "correct": "two-bird-sing"
+          "correct": "two-bird-sleep"
         },
         {
           "word": "DAD HUGS TOM.",
@@ -8056,7 +8050,7 @@
         "#4f3b8f"
       ],
       "intro": "Snow fell all night, and the whole farm is white.",
-      "completeText": "The snowman has a carrot nose and a hat. Meg says good night to him, and hot tea is waiting inside!",
+      "completeText": "The snowman has a carrot nose and a scarf. Meg says good night to him, and hot tea is waiting inside!",
       "tasks": [
         {
           "word": "MEG FINDS A SCARF.",
@@ -8126,18 +8120,18 @@
               "label": "tom gets a carrot."
             },
             {
-              "id": "dad-take-a-carrot",
+              "id": "girl-take-a-carrot",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🥕"
                   }
                 ]
               ],
-              "label": "dad gets a carrot."
+              "label": "meg gets a carrot."
             },
             {
               "id": "boy-take-a-hat",
@@ -8206,37 +8200,9 @@
           "correct": "the-snowman-have-a-carrot"
         },
         {
-          "word": "THE SNOWMAN GETS A HAT.",
-          "syllables": "THE SNOW-MAN G-E-T-S A H-A-T.",
+          "word": "THE SNOWMAN GETS A SCARF.",
+          "syllables": "THE SNOW-MAN G-E-T-S A SCARF.",
           "choices": [
-            {
-              "id": "the-snowman-take-a-hat",
-              "scene": [
-                [
-                  {
-                    "emoji": "⛄"
-                  },
-                  {
-                    "emoji": "👒"
-                  }
-                ]
-              ],
-              "label": "the snowman gets a hat."
-            },
-            {
-              "id": "the-dog-take-a-hat",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐶"
-                  },
-                  {
-                    "emoji": "👒"
-                  }
-                ]
-              ],
-              "label": "the dog gets a hat."
-            },
             {
               "id": "the-snowman-take-a-scarf",
               "scene": [
@@ -8250,58 +8216,86 @@
                 ]
               ],
               "label": "the snowman gets a scarf."
-            }
-          ],
-          "correct": "the-snowman-take-a-hat"
-        },
-        {
-          "word": "A BIRD SEES THE SNOWMAN.",
-          "syllables": "A B-I-R-D S-E-E-S THE SNOW-MAN.",
-          "choices": [
-            {
-              "id": "a-bird-see-the-snowman",
-              "scene": [
-                [
-                  {
-                    "emoji": "🐦"
-                  },
-                  {
-                    "emoji": "⛄"
-                  }
-                ]
-              ],
-              "label": "a bird sees the snowman."
             },
             {
-              "id": "a-dog-see-the-snowman",
+              "id": "the-dog-take-a-scarf",
               "scene": [
                 [
                   {
                     "emoji": "🐶"
                   },
                   {
-                    "emoji": "⛄"
+                    "emoji": "🧣"
                   }
                 ]
               ],
-              "label": "a dog sees the snowman."
+              "label": "the dog gets a scarf."
             },
             {
-              "id": "a-bird-see-the-carrot",
+              "id": "the-snowman-take-a-hat",
               "scene": [
                 [
                   {
-                    "emoji": "🐦"
+                    "emoji": "⛄"
+                  },
+                  {
+                    "emoji": "👒"
+                  }
+                ]
+              ],
+              "label": "the snowman gets a hat."
+            }
+          ],
+          "correct": "the-snowman-take-a-scarf"
+        },
+        {
+          "word": "MEG HAS A HAT.",
+          "syllables": "M-E-G HAS A H-A-T.",
+          "choices": [
+            {
+              "id": "girl-have-a-hat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "👒"
+                  }
+                ]
+              ],
+              "label": "meg has a hat."
+            },
+            {
+              "id": "boy-have-a-hat",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "👒"
+                  }
+                ]
+              ],
+              "label": "tom has a hat."
+            },
+            {
+              "id": "girl-have-a-carrot",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🥕"
                   }
                 ]
               ],
-              "label": "a bird sees the carrot."
+              "label": "meg has a carrot."
             }
           ],
-          "correct": "a-bird-see-the-snowman"
+          "correct": "girl-have-a-hat"
         },
         {
           "word": "THE DOG WANTS THE CARROT.",
@@ -8353,11 +8347,11 @@
           "correct": "the-dog-want-the-carrot"
         },
         {
-          "word": "TOM CALLS THE DOG.",
-          "syllables": "T-O-M CALLS THE D-O-G.",
+          "word": "TOM HOLDS THE DOG.",
+          "syllables": "T-O-M HOLDS THE D-O-G.",
           "choices": [
             {
-              "id": "boy-call-the-dog",
+              "id": "boy-hold-the-dog",
               "scene": [
                 [
                   {
@@ -8368,136 +8362,133 @@
                   }
                 ]
               ],
-              "label": "tom calls the dog."
+              "label": "tom holds the dog."
             },
             {
-              "id": "dad-call-the-dog",
+              "id": "girl-hold-the-dog",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "🐶"
                   }
                 ]
               ],
-              "label": "dad calls the dog."
+              "label": "meg holds the dog."
             },
             {
-              "id": "boy-call-the-bird",
+              "id": "boy-hold-the-carrot",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🐦"
+                    "emoji": "🥕"
                   }
                 ]
               ],
-              "label": "tom calls the bird."
+              "label": "tom holds the carrot."
             }
           ],
-          "correct": "boy-call-the-dog"
+          "correct": "boy-hold-the-dog"
         },
         {
-          "word": "DAD PULLS THE SLED.",
-          "syllables": "D-A-D PULLS THE S-L-E-D.",
+          "word": "MEG BRINGS A BONE.",
+          "syllables": "M-E-G BRINGS A B-O-N-E.",
           "choices": [
             {
-              "id": "dad-pull-the-sled",
+              "id": "girl-bring-a-bone",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "🛷"
+                    "emoji": "🦴"
                   }
                 ]
               ],
-              "label": "dad pulls the sled."
+              "label": "meg brings a bone."
             },
             {
-              "id": "boy-pull-the-sled",
+              "id": "boy-bring-a-bone",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "🛷"
+                    "emoji": "🦴"
                   }
                 ]
               ],
-              "label": "tom pulls the sled."
+              "label": "tom brings a bone."
             },
             {
-              "id": "dad-pull-the-dog",
+              "id": "girl-bring-a-carrot",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "👧"
                   },
                   {
-                    "emoji": "🐶"
+                    "emoji": "🥕"
                   }
                 ]
               ],
-              "label": "dad pulls the dog."
+              "label": "meg brings a carrot."
             }
           ],
-          "correct": "dad-pull-the-sled"
+          "correct": "girl-bring-a-bone"
         },
         {
-          "word": "DAD RUNS HOME.",
-          "syllables": "D-A-D R-U-N-S H-O-M-E.",
+          "word": "THREE BIRDS SLEEP.",
+          "syllables": "THREE BIRDS SLEEP.",
           "choices": [
             {
-              "id": "dad-run-house",
+              "id": "three-bird-sleep",
               "scene": [
                 [
                   {
-                    "emoji": "🏃‍♂️"
-                  },
-                  {
-                    "emoji": "🏠"
+                    "emoji": "🐦",
+                    "count": 3,
+                    "badge": "💤"
                   }
                 ]
               ],
-              "label": "dad runs home."
+              "label": "three birds sleep."
             },
             {
-              "id": "dad-walk-house",
+              "id": "three-bird-sing",
               "scene": [
                 [
                   {
-                    "emoji": "🚶‍♂️"
-                  },
-                  {
-                    "emoji": "🏠"
+                    "emoji": "🐦",
+                    "count": 3,
+                    "badge": "🎵"
                   }
                 ]
               ],
-              "label": "dad walks home."
+              "label": "three birds sing."
             },
             {
-              "id": "mom-run-house",
+              "id": "two-bird-sleep",
               "scene": [
                 [
                   {
-                    "emoji": "🏃‍♀️"
-                  },
-                  {
-                    "emoji": "🏠"
+                    "emoji": "🐦",
+                    "count": 2,
+                    "badge": "💤"
                   }
                 ]
               ],
-              "label": "mom runs home."
+              "label": "two birds sleep."
             }
           ],
-          "correct": "dad-run-house"
+          "correct": "three-bird-sleep"
         },
         {
           "word": "MEG HUGS THE SNOWMAN.",
@@ -8559,15 +8550,15 @@
         "#57468f",
         "#2a6b62"
       ],
-      "intro": "There is a tiny hole in the wall of Grandma's kitchen. Somebody small lives there.",
+      "intro": "It is a quiet evening in Grandma's kitchen. Meg is peeking into every corner.",
       "completeText": "Surprise! The little mouse is a mother. Now three mice live in Meg's tiny house.",
       "tasks": [
         {
-          "word": "THE MOUSE FINDS CHEESE.",
-          "syllables": "THE MOUSE FINDS CHEESE.",
+          "word": "THE MOUSE FINDS THE CHEESE.",
+          "syllables": "THE MOUSE FINDS THE CHEESE.",
           "choices": [
             {
-              "id": "the-mouse-find-cheese",
+              "id": "the-mouse-find-the-cheese",
               "scene": [
                 [
                   {
@@ -8578,10 +8569,10 @@
                   }
                 ]
               ],
-              "label": "the mouse finds cheese."
+              "label": "the mouse finds the cheese."
             },
             {
-              "id": "the-cat-find-cheese",
+              "id": "the-cat-find-the-cheese",
               "scene": [
                 [
                   {
@@ -8592,24 +8583,24 @@
                   }
                 ]
               ],
-              "label": "the cat finds cheese."
+              "label": "the cat finds the cheese."
             },
             {
-              "id": "the-mouse-find-bread",
+              "id": "the-mouse-find-the-cat",
               "scene": [
                 [
                   {
                     "emoji": "🐭"
                   },
                   {
-                    "emoji": "🍞"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "the mouse finds bread."
+              "label": "the mouse finds the cat."
             }
           ],
-          "correct": "the-mouse-find-cheese"
+          "correct": "the-mouse-find-the-cheese"
         },
         {
           "word": "GRANDMA SEES THE MOUSE.",
@@ -8808,53 +8799,53 @@
           "correct": "girl-find-the-mouse"
         },
         {
-          "word": "THE MOUSE EATS BREAD.",
-          "syllables": "THE MOUSE E-A-T-S BREAD.",
+          "word": "MEG FEEDS THE CAT.",
+          "syllables": "M-E-G FEEDS THE C-A-T.",
           "choices": [
             {
-              "id": "the-mouse-eat-bread",
+              "id": "girl-feed-the-cat",
               "scene": [
                 [
                   {
-                    "emoji": "🐭"
+                    "emoji": "👧"
                   },
-                  {
-                    "emoji": "🍞"
-                  }
-                ]
-              ],
-              "label": "the mouse eats bread."
-            },
-            {
-              "id": "the-cat-eat-bread",
-              "scene": [
-                [
                   {
                     "emoji": "🐱"
-                  },
-                  {
-                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "the cat eats bread."
+              "label": "meg feeds the cat."
             },
             {
-              "id": "the-mouse-eat-cheese",
+              "id": "grandma-feed-the-cat",
               "scene": [
                 [
                   {
-                    "emoji": "🐭"
+                    "emoji": "👵"
                   },
                   {
-                    "emoji": "🧀"
+                    "emoji": "🐱"
                   }
                 ]
               ],
-              "label": "the mouse eats cheese."
+              "label": "grandma feeds the cat."
+            },
+            {
+              "id": "girl-feed-the-dog",
+              "scene": [
+                [
+                  {
+                    "emoji": "👧"
+                  },
+                  {
+                    "emoji": "🐶"
+                  }
+                ]
+              ],
+              "label": "meg feeds the dog."
             }
           ],
-          "correct": "the-mouse-eat-bread"
+          "correct": "girl-feed-the-cat"
         },
         {
           "word": "THE DOG WAKES THE CAT.",
