@@ -215,6 +215,8 @@ SINGING_SUBJECTS = {
     "ru": {"mom", "dad", "grandma", "grandpa", "boy", "girl", "baby", "clown", "bird", "rooster"},
 }
 PRONOUN_SLUGS = {"he", "she", "it", "they", "him", "her", "them"}
+# The people of a story: a wrong answer of a two-sentence task may swap one that both sentences name.
+STORY_PEOPLE = {"mom", "dad", "grandma", "grandpa", "boy", "girl", "baby"}
 # Glue words are read but never drawn, and a wrong answer never changes them. English never splits
 # the function words among them.
 FUNCTION_SLUGS = PRONOUN_SLUGS | {
@@ -1449,6 +1451,17 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 f'{where}: both distractors change sentence {first["sentence"] + 1}; they must change words in'
                 " different sentences"
             )
+    # The other sentence names the changed word too, so the wrong pair contradicts itself and that
+    # sentence settles the check. A warning for now: people swaps and verbs are left alone.
+    if sentence_count > 1:
+        for change in changes:
+            other = correct_slugs[1 - change["sentence"]]
+            if change["kind"] in ("noun", "number", "size", "color") and change["old"] not in STORY_PEOPLE \
+                    and change["old"] in other:
+                warnings.append(
+                    f'{where}: distractor changes "{change["old"]}" in sentence {change["sentence"] + 1}, which'
+                    f' sentence {2 - change["sentence"]} also names; that sentence settles the check'
+                )
 
     return {
         "sentences": sentences,
