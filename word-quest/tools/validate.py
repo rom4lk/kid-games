@@ -1471,6 +1471,13 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 return correct_slugs[index][position]
         return None
 
+    def noun_after(index, position):
+        while position < len(correct_classes[index]) and correct_classes[index][position] in MODIFIER_ORDER:
+            position += 1
+        if position < len(correct_classes[index]) and correct_classes[index][position] == "noun":
+            return correct_slugs[index][position]
+        return None
+
     back_references = []
     if sentence_count > 1 and len(correct_classes) == sentence_count:
         for change in changes:
@@ -1479,6 +1486,12 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
                 continue
             if change["kind"] == "noun" and all(
                 number_before(other, position) != number_before(index, change["position"])
+                for position, slug in enumerate(correct_slugs[other]) if slug == change["old"]
+            ):
+                continue
+            # A number, size or color names the same thing only on the same noun.
+            if change["kind"] != "noun" and all(
+                noun_after(other, position) != noun_after(index, change["position"])
                 for position, slug in enumerate(correct_slugs[other]) if slug == change["old"]
             ):
                 continue
