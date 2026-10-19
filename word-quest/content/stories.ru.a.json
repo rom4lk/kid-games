@@ -1399,18 +1399,18 @@
               "label": "папа плывёт домой."
             },
             {
-              "id": "grandpa-row-house",
+              "id": "mom-row-house",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "🚣‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "дед гребёт домой."
+              "label": "мама гребёт домой."
             }
           ],
           "correct": "dad-row-house"
@@ -1497,18 +1497,18 @@
               "label": "папа рисует рыбу."
             },
             {
-              "id": "grandpa-cook-fish",
+              "id": "dad-cook-bread",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👨‍🍳"
                   },
                   {
-                    "emoji": "🐟"
+                    "emoji": "🍞"
                   }
                 ]
               ],
-              "label": "дед жарит рыбу."
+              "label": "папа жарит хлеб."
             }
           ],
           "correct": "dad-cook-fish"
@@ -2162,18 +2162,18 @@
               "label": "мама идёт домой."
             },
             {
-              "id": "boy-run-house",
+              "id": "dad-run-house",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🏃‍♂️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "петя бежит домой."
+              "label": "папа бежит домой."
             }
           ],
           "correct": "mom-run-house"
@@ -5843,53 +5843,53 @@
           "correct": "girl-give-sponge"
         },
         {
-          "word": "КОТ СМЕЁТСЯ ДОМА.",
-          "syllables": "КОТ СМЕ-ЁТ-СЯ ДО-МА.",
+          "word": "КОТ ВИДИТ ПСА.",
+          "syllables": "КОТ ВИ-ДИТ ПСА.",
           "choices": [
             {
-              "id": "cat-laugh-house",
+              "id": "cat-see-dog",
               "scene": [
                 [
                   {
-                    "emoji": "😹"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🐶"
                   }
                 ]
               ],
-              "label": "кот смеётся дома."
+              "label": "кот видит пса."
             },
             {
-              "id": "cat-cry-house",
+              "id": "mom-see-dog",
               "scene": [
                 [
                   {
-                    "emoji": "😿"
+                    "emoji": "👩"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🐶"
                   }
                 ]
               ],
-              "label": "кот плачет дома."
+              "label": "мама видит пса."
             },
             {
-              "id": "boy-laugh-house",
+              "id": "cat-see-soap",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🐱"
                   },
                   {
-                    "emoji": "🏠"
+                    "emoji": "🧼"
                   }
                 ]
               ],
-              "label": "петя смеётся дома."
+              "label": "кот видит мыло."
             }
           ],
-          "correct": "cat-laugh-house"
+          "correct": "cat-see-dog"
         },
         {
           "word": "ПЁС ЛИЖЕТ МАМУ.",
@@ -9885,53 +9885,53 @@
           "correct": "in-basket-cat"
         },
         {
-          "word": "КОТ ЦЕЛУЕТ ПЕТЮ.",
-          "syllables": "КОТ ЦЕ-ЛУ-ЕТ ПЕ-ТЮ.",
+          "word": "КОТ ЛИЖЕТ ПЕТЮ.",
+          "syllables": "КОТ ЛИ-ЖЕТ ПЕ-ТЮ.",
           "choices": [
             {
-              "id": "cat-kiss-boy",
+              "id": "cat-lick-boy",
               "scene": [
                 [
                   {
-                    "emoji": "😽"
+                    "emoji": "🐱"
                   },
                   {
                     "emoji": "👦"
                   }
                 ]
               ],
-              "label": "кот целует петю."
+              "label": "кот лижет петю."
             },
             {
-              "id": "dad-kiss-boy",
+              "id": "dog-lick-boy",
               "scene": [
                 [
                   {
-                    "emoji": "👨"
+                    "emoji": "🐶"
                   },
                   {
                     "emoji": "👦"
                   }
                 ]
               ],
-              "label": "папа целует петю."
+              "label": "пёс лижет петю."
             },
             {
-              "id": "cat-kiss-dad",
+              "id": "cat-lick-dad",
               "scene": [
                 [
                   {
-                    "emoji": "😽"
+                    "emoji": "🐱"
                   },
                   {
                     "emoji": "👨"
                   }
                 ]
               ],
-              "label": "кот целует папу."
+              "label": "кот лижет папу."
             }
           ],
-          "correct": "cat-kiss-boy"
+          "correct": "cat-lick-boy"
         },
         {
           "word": "ПАПА ВЕДЁТ МАШИНУ.",

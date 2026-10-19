@@ -97,18 +97,18 @@
               "label": "dad paints an egg."
             },
             {
-              "id": "girl-cook-a-egg",
+              "id": "mom-cook-a-egg",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👩‍🍳"
                   },
                   {
                     "emoji": "🥚"
                   }
                 ]
               ],
-              "label": "meg cooks an egg."
+              "label": "mom cooks an egg."
             }
           ],
           "correct": "dad-cook-a-egg"
@@ -510,7 +510,7 @@
     {
       "id": "en-story-a-02",
       "title": "The Kite",
-      "emoji": "🪁",
+      "emoji": "🌬️",
       "character": "🐶",
       "colors": [
         "#285a8a",
@@ -990,18 +990,18 @@
               "label": "dad runs home."
             },
             {
-              "id": "boy-walk-house",
+              "id": "mom-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🚶‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "tom walks home."
+              "label": "mom walks home."
             }
           ],
           "correct": "dad-walk-house"
@@ -1347,18 +1347,18 @@
               "label": "dad walks home."
             },
             {
-              "id": "boy-run-house",
+              "id": "mom-run-house",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🏃‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "tom runs home."
+              "label": "mom runs home."
             }
           ],
           "correct": "dad-run-house"
@@ -2058,18 +2058,18 @@
               "label": "dad rows the boat."
             },
             {
-              "id": "boy-paint-the-boat",
+              "id": "mom-paint-the-boat",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👩‍🎨"
                   },
                   {
                     "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "tom paints the boat."
+              "label": "mom paints the boat."
             }
           ],
           "correct": "dad-paint-the-boat"
@@ -2517,7 +2517,7 @@
     {
       "id": "en-story-a-06",
       "title": "The Picnic",
-      "emoji": "🧺",
+      "emoji": "☀️",
       "character": "🐝",
       "colors": [
         "#8a5a3b",
@@ -2951,18 +2951,18 @@
               "label": "mom runs home."
             },
             {
-              "id": "boy-walk-house",
+              "id": "dad-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🚶‍♂️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "tom walks home."
+              "label": "dad walks home."
             }
           ],
           "correct": "mom-walk-house"
@@ -3021,7 +3021,7 @@
     {
       "id": "en-story-a-07",
       "title": "Farm Work",
-      "emoji": "🐷",
+      "emoji": "🌾",
       "character": "🐷",
       "colors": [
         "#2a6b62",
@@ -3504,18 +3504,18 @@
               "label": "dad rides home."
             },
             {
-              "id": "girl-walk-house",
+              "id": "mom-walk-house",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "🚶‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "meg walks home."
+              "label": "mom walks home."
             }
           ],
           "correct": "dad-walk-house"
@@ -3525,7 +3525,7 @@
     {
       "id": "en-story-a-08",
       "title": "Bath Time",
-      "emoji": "🛁",
+      "emoji": "🫧",
       "character": "🐶",
       "colors": [
         "#285a8a",
@@ -4029,7 +4029,7 @@
     {
       "id": "en-story-a-09",
       "title": "The Fox",
-      "emoji": "🦊",
+      "emoji": "🌛",
       "character": "🦊",
       "colors": [
         "#564086",
@@ -5031,7 +5031,7 @@
     {
       "id": "en-story-a-11",
       "title": "Tom's Birthday",
-      "emoji": "🎂",
+      "emoji": "🎉",
       "character": "🎈",
       "colors": [
         "#8a5a3b",
@@ -5577,18 +5577,18 @@
               "label": "mom cooks an egg."
             },
             {
-              "id": "boy-paint-a-egg",
+              "id": "dad-paint-a-egg",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👨‍🎨"
                   },
                   {
                     "emoji": "🥚"
                   }
                 ]
               ],
-              "label": "tom paints an egg."
+              "label": "dad paints an egg."
             }
           ],
           "correct": "mom-paint-a-egg"
@@ -6039,7 +6039,7 @@
     {
       "id": "en-story-a-13",
       "title": "The Old Bike",
-      "emoji": "🚲",
+      "emoji": "🔧",
       "character": "👨",
       "colors": [
         "#38458f",
@@ -6522,18 +6522,18 @@
               "label": "dad runs home."
             },
             {
-              "id": "girl-ride-house",
+              "id": "mom-ride-house",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "🚴‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "meg rides home."
+              "label": "mom rides home."
             }
           ],
           "correct": "dad-ride-house"
@@ -7044,7 +7044,7 @@
     {
       "id": "en-story-a-15",
       "title": "The Big Pumpkin",
-      "emoji": "🎃",
+      "emoji": "🍂",
       "character": "👵",
       "colors": [
         "#8a5a3b",
@@ -7380,18 +7380,18 @@
               "label": "mom cooks the pumpkin."
             },
             {
-              "id": "grandma-paint-the-pumpkin",
+              "id": "dad-paint-the-pumpkin",
               "scene": [
                 [
                   {
-                    "emoji": "👵"
+                    "emoji": "👨‍🎨"
                   },
                   {
                     "emoji": "🎃"
                   }
                 ]
               ],
-              "label": "grandma paints the pumpkin."
+              "label": "dad paints the pumpkin."
             }
           ],
           "correct": "mom-paint-the-pumpkin"
@@ -7415,18 +7415,18 @@
               "label": "grandma bakes a pie."
             },
             {
-              "id": "mom-cook-a-pie",
+              "id": "boy-cook-a-pie",
               "scene": [
                 [
                   {
-                    "emoji": "👩‍🍳"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🥧"
                   }
                 ]
               ],
-              "label": "mom bakes a pie."
+              "label": "tom bakes a pie."
             },
             {
               "id": "grandma-cook-a-pumpkin",
@@ -7548,7 +7548,7 @@
     {
       "id": "en-story-a-16",
       "title": "Night in the Tent",
-      "emoji": "⛺",
+      "emoji": "🏕️",
       "character": "🦉",
       "colors": [
         "#38458f",
@@ -8483,18 +8483,18 @@
               "label": "dad walks home."
             },
             {
-              "id": "boy-run-house",
+              "id": "mom-run-house",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🏃‍♀️"
                   },
                   {
                     "emoji": "🏠"
                   }
                 ]
               ],
-              "label": "tom runs home."
+              "label": "mom runs home."
             }
           ],
           "correct": "dad-run-house"
@@ -8553,7 +8553,7 @@
     {
       "id": "en-story-a-18",
       "title": "The Little Mouse",
-      "emoji": "🐭",
+      "emoji": "🕳️",
       "character": "🐭",
       "colors": [
         "#57468f",
@@ -9555,7 +9555,7 @@
     {
       "id": "en-story-a-20",
       "title": "Goodbye, Farm",
-      "emoji": "🚗",
+      "emoji": "👋",
       "character": "👴",
       "colors": [
         "#57468f",

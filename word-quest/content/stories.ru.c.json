@@ -15138,7 +15138,7 @@
               "label": "маша видит в телескоп сову. папа рисует луну."
             },
             {
-              "id": "girl-see-in-telescope-moon.girl-paint-moon",
+              "id": "girl-see-in-telescope-moon.dad-paint-owl",
               "scene": [
                 [
                   {
@@ -15153,14 +15153,14 @@
                 ],
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "👨‍🎨"
                   },
                   {
-                    "emoji": "🌙"
+                    "emoji": "🦉"
                   }
                 ]
               ],
-              "label": "маша видит в телескоп луну. маша рисует луну."
+              "label": "маша видит в телескоп луну. папа рисует сову."
             }
           ],
           "correct": "girl-see-in-telescope-moon.dad-paint-moon"

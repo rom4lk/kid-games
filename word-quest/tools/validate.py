@@ -190,7 +190,24 @@ MAX_SCENE_UNITS = 4.5        # layout units per panel: an item 1, a big item 1.2
 MAX_PHRASE_LIKE_SHARE = 0.2  # warning: sentences with no glue word, a phrase with a full stop
 MAX_CONTEXT_GIVEAWAY_SHARE = 0.3   # warning: tasks the story so far answers without reading
 # Pictures a child takes for each other: a wrong answer never swaps them (close colors likewise).
-LOOKALIKE_NOUNS = {frozenset(pair) for pair in [("teddy", "bear"), ("mom", "girl"), ("horse", "carousel")]}
+LOOKALIKE_NOUNS = {frozenset(pair) for pair in [("teddy", "bear"), ("mom", "girl"), ("horse", "carousel"),
+                                                  ("boat", "sailboat"), ("island", "beach")]}
+# The intro check compares words, so the case forms of the recurring cast count as one word there.
+# A table, not a stemmer; English possessives (TOM'S) already split into TOM and S.
+CAST_FORMS = {
+    form: name
+    for name, forms in {
+        "ПЕТЯ": "ПЕТИ ПЕТЕ ПЕТЮ ПЕТЕЙ ПЕТИН ПЕТИНА ПЕТИНО ПЕТИНЫ ПЕТИНУ ПЕТИНОЙ",
+        "МАША": "МАШИ МАШЕ МАШУ МАШЕЙ",   # not МАШИН...: those are forms of МАШИНА, a car
+        "МАМА": "МАМЫ МАМЕ МАМУ МАМОЙ МАМИН МАМИНА МАМИНО МАМИНЫ МАМИНУ МАМИНОЙ",
+        "ПАПА": "ПАПЫ ПАПЕ ПАПУ ПАПОЙ ПАПИН ПАПИНА ПАПИНО ПАПИНЫ ПАПИНУ ПАПИНОЙ",
+        "ДЕД": "ДЕДА ДЕДУ ДЕДОМ ДЕДЕ",
+        "БАБУШКА": "БАБУШКИ БАБУШКЕ БАБУШКУ БАБУШКОЙ БАБУШКИН БАБУШКИНА БАБУШКИНО БАБУШКИНЫ",
+        "КОТ": "КОТА КОТУ КОТОМ КОТЕ",
+        "ПЁС": "ПСА ПСУ ПСОМ ПСЕ",
+    }.items()
+    for form in [name, *forms.split()]
+}
 # The 🎵 badge on a correct sentence: only subjects that really sing in that language. ПЕТУХ ПОЁТ is
 # idiomatic Russian; ROOSTER SINGS is not English.
 SINGING_SUBJECTS = {
@@ -217,8 +234,10 @@ GLUE_SLUGS = FUNCTION_SLUGS | {
     "want", "take", "hold", "bring", "catch", "build", "wash", "open", "hide", "wake", "sit", "lie",
     "live", "fly", "jump", "go", "seek", "knit", "call", "wait", "lick", "sniff", "roll", "hug",
     "pick", "throw", "chase", "feed", "pull", "dig", "buy", "put", "make", "meet", "sew", "fix",
-    "plant", "water", "rock", "stroke", "peck", "drag", "lose", "hear", "grow", "knock", "pour",
+    "plant", "rock", "stroke", "peck", "drag", "lose", "hear", "grow", "knock", "pour",
     "scare", "wear", "cut", "wipe", "warm", "kick", "praise", "lead", "light", "snuff",
+    # the verb ПОЛИВАЕТ and the noun ВОДА, which is never drawn either
+    "water",
     # places and times with no emoji of their own
     "forest", "park", "garden", "field", "river", "yard", "street", "town",
     "morning", "day", "evening", "night",
@@ -1403,6 +1422,18 @@ def validate_story_task(file_name, language, level, chapter, task, task_index, s
             if frozenset((old_slug, new_slug)) in CLOSE_COLORS | LOOKALIKE_NOUNS:
                 errors.append(f'{where}: distractor "{choice_id}" swaps {old_slug} for {new_slug}, which look alike')
                 continue
+            # A subject swap that draws the verb for one subject only: the one picture of the action
+            # settles the check without reading. Badge verbs are drawn for every subject.
+            sentence_slugs = correct_slugs[index]
+            verb = sentence_slugs[position + 1] if position + 1 < len(sentence_slugs) else None
+            if old_kind == "noun" and verb in VERB_SLUGS and verb not in BADGE_VERBS and (
+                ((old_slug, verb) in VERB_PICTURES) != ((new_slug, verb) in VERB_PICTURES)
+            ):
+                errors.append(
+                    f'{where}: distractor "{choice_id}" swaps {old_slug} for {new_slug}, and "{verb}" is drawn for'
+                    " only one of them; the picture of the action gives the answer away"
+                )
+                continue
         else:
             old_kind = None
         changes.append({
@@ -1490,11 +1521,24 @@ def validate_story_pack(language, level):
                     if isinstance(choice, dict) and isinstance(choice.get("label"), str):
                         check_yo(task_where, "label", choice["label"])
 
-        # The intro is read before task 1, so it may not name a word a distractor of task 1 changes.
+        # The intro is read before task 1, so it may not name a word a distractor of task 1 changes,
+        # the cast in any case form.
         if isinstance(intro, str) and chapter_infos and chapter_infos[0]:
+            giveaways = {CAST_FORMS.get(form, form) for form in chapter_infos[0]["giveaways"]}
             for token in phrase_tokens(intro):
-                if token in chapter_infos[0]["giveaways"]:
+                if CAST_FORMS.get(token, token) in giveaways:
                     errors.append(f'{where}: the intro gives away the changed word "{token}" of task 1')
+        # The chapter card is tapped right before task 1, so its emoji may not tell the correct scene
+        # of task 1 from a wrong one.
+        if chapter_infos and chapter_infos[0] and isinstance(chapter.get("emoji"), str):
+            def scene_emoji(choice):
+                return {group["emoji"].replace("\ufe0f", "") for panel in choice["scene"] for group in panel}
+            first = tasks[0]
+            correct_emoji = next(scene_emoji(choice) for choice in first["choices"] if choice["id"] == first["correct"])
+            chapter_emoji = chapter["emoji"].replace("\ufe0f", "")
+            if any(chapter_emoji in correct_emoji ^ scene_emoji(choice)
+                   for choice in first["choices"] if choice["id"] != first["correct"]):
+                errors.append(f'{where}: the chapter emoji {chapter["emoji"]} is in some scenes of task 1 and not in others')
 
         # The child would tap the picture he tapped before: a correct scene comes back in the chapter.
         shown: dict[str, tuple] = {}

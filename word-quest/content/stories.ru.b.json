@@ -2977,18 +2977,18 @@
               "label": "папа бежит на гору."
             },
             {
-              "id": "boy-climb-on-mountain",
+              "id": "mom-climb-on-mountain",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🧗‍♀️"
                   },
                   {
                     "emoji": "⛰️"
                   }
                 ]
               ],
-              "label": "петя лезет на гору."
+              "label": "мама лезет на гору."
             }
           ],
           "correct": "dad-climb-on-mountain"
@@ -4896,18 +4896,18 @@
               "label": "папа поёт у ёлки."
             },
             {
-              "id": "girl-dance-by-fir",
+              "id": "dad-dance-by-box",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "🕺"
                   },
                   {
-                    "emoji": "🌲"
+                    "emoji": "📦"
                   }
                 ]
               ],
-              "label": "маша танцует у ёлки."
+              "label": "папа танцует у коробки."
             }
           ],
           "correct": "dad-dance-by-fir"
@@ -6532,18 +6532,18 @@
               "label": "папа поёт с клоуном."
             },
             {
-              "id": "girl-dance-with-clown",
+              "id": "dad-dance-with-monkey",
               "scene": [
                 [
                   {
-                    "emoji": "👧"
+                    "emoji": "🕺"
                   },
                   {
-                    "emoji": "🤡"
+                    "emoji": "🐵"
                   }
                 ]
               ],
-              "label": "маша танцует с клоуном."
+              "label": "папа танцует с обезьяной."
             }
           ],
           "correct": "dad-dance-with-clown"
@@ -10044,41 +10044,16 @@
       "completeText": "Папа и Петя вернулись с острова с большой ракушкой. Её можно приложить к уху и слушать море.",
       "tasks": [
         {
-          "word": "ПАПА ГРЕБЁТ К ОСТРОВУ.",
-          "syllables": "ПА-ПА ГРЕ-БЁТ К ОС-ТРО-ВУ.",
+          "word": "ПАПА ВЕЗЁТ ПЕТЮ К ОСТРОВУ.",
+          "syllables": "ПА-ПА ВЕ-ЗЁТ ПЕ-ТЮ К ОС-ТРО-ВУ.",
           "choices": [
             {
-              "id": "dad-row-to-island",
+              "id": "dad-carry-boy-to-island",
               "scene": [
                 [
                   {
-                    "emoji": "🚣‍♂️"
+                    "emoji": "👨"
                   },
-                  {
-                    "emoji": "🏝️"
-                  }
-                ]
-              ],
-              "label": "папа гребёт к острову."
-            },
-            {
-              "id": "dad-row-to-stone",
-              "scene": [
-                [
-                  {
-                    "emoji": "🚣‍♂️"
-                  },
-                  {
-                    "emoji": "🪨"
-                  }
-                ]
-              ],
-              "label": "папа гребёт к камню."
-            },
-            {
-              "id": "boy-row-to-island",
-              "scene": [
-                [
                   {
                     "emoji": "👦"
                   },
@@ -10087,10 +10062,44 @@
                   }
                 ]
               ],
-              "label": "петя гребёт к острову."
+              "label": "папа везёт петю к острову."
+            },
+            {
+              "id": "dad-carry-boy-to-stone",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "🪨"
+                  }
+                ]
+              ],
+              "label": "папа везёт петю к камню."
+            },
+            {
+              "id": "dad-carry-crab-to-island",
+              "scene": [
+                [
+                  {
+                    "emoji": "👨"
+                  },
+                  {
+                    "emoji": "🦀"
+                  },
+                  {
+                    "emoji": "🏝️"
+                  }
+                ]
+              ],
+              "label": "папа везёт краба к острову."
             }
           ],
-          "correct": "dad-row-to-island"
+          "correct": "dad-carry-boy-to-island"
         },
         {
           "word": "НА ОСТРОВЕ ЖИВЁТ КРАБ.",
@@ -10434,18 +10443,18 @@
               "label": "папа стоит у замка."
             },
             {
-              "id": "boy-dance-by-castle",
+              "id": "dad-dance-by-sea",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "🕺"
                   },
                   {
-                    "emoji": "🏰"
+                    "emoji": "🌊"
                   }
                 ]
               ],
-              "label": "петя танцует у замка."
+              "label": "папа танцует у моря."
             }
           ],
           "correct": "dad-dance-by-castle"
