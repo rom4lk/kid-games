@@ -646,6 +646,10 @@ function renderTask() {
   elements.adventureScene.style.setProperty("--scene-b", chapter.colors[1]);
   setText("sceneCharacter", chapter.character);
   elements.sceneCharacter.classList.remove("celebrate");
+  // A story's scenes are the answers, so the hero beside the bubble would be one more picture to
+  // match: it stays hidden and the bubble takes the width.
+  elements.sceneCharacter.hidden = story;
+  elements.adventureScene.classList.toggle("story-scene", story);
   // A story has no adult line per task: the bubble holds the intro, then the story read so far.
   if (story) {
     renderStory(chapter, solvedPrefixLength());

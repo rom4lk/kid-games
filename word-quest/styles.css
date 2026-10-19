@@ -1041,6 +1041,15 @@ h1 {
   animation: character-celebrate 620ms ease;
 }
 
+/* A story level hides the character, so the bubble is the scene's one column. */
+.adventure-scene.story-scene {
+  grid-template-columns: 1fr;
+}
+
+.story-scene .story-bubble::before {
+  display: none;
+}
+
 .story-bubble {
   position: relative;
   padding: 22px 24px;
