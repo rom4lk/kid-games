@@ -173,16 +173,13 @@ function testSpellChoicesDifferInOneLetter() {
   });
 }
 
-// The phrase levels follow the letter levels in their fixed order, and both
-// languages list all three. The story levels follow them, listed one pack at a
-// time, so each language holds the first of them in order.
+// The phrase levels follow the letter levels in their fixed order, and the story
+// levels follow them; both languages list all of them.
 function testLevelOrder() {
-  const full = [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC"];
-  const stories = ["storyA", "storyB", "storyC"];
+  const full = [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB", "storyC"];
+  assert.deepEqual(Object.keys(LEVELS).sort(), ["en", "ru"]);
   Object.entries(LEVELS).forEach(([language, levels]) => {
-    assert.deepEqual(levels.slice(0, full.length), full, `${language} levels`);
-    const listed = levels.slice(full.length);
-    assert.deepEqual(listed, stories.slice(0, listed.length), `${language} story levels`);
+    assert.deepEqual(levels, full, `${language} levels`);
   });
   assert.equal(packPath("ru", "phraseA"), "content/phrases.ru.a.json");
   assert.equal(packPath("en", "phraseC"), "content/phrases.en.c.json");

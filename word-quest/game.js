@@ -20,7 +20,7 @@ const STORY_LEVELS = {
   storyC: { file: "c", sentences: 2, lines: [3, 3] },
 };
 const LEVELS = {
-  en: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB"],
+  en: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB", "storyC"],
   ru: [3, 4, 5, 6, 7, "phraseA", "phraseB", "phraseC", "storyA", "storyB", "storyC"],
 };
 const CHAPTERS_PER_LEVEL = 20;

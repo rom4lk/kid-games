@@ -1544,6 +1544,13 @@ html[lang="ru"] .word-choice .letter {
   font-size: 1em;
 }
 
+/* An English card is followed by the parts button, so under two English
+   sentences the two-panel scenes stop at 45px items to keep the card and all
+   three answers on one desktop screen. */
+.reading-panel:has(.story-card + .reading-actions:not([hidden])) .story-choices .choice-button:has(.scene-panel + .scene-panel) .scene-panel {
+  font-size: min(0.9em, calc(90cqw / (var(--scene-columns) * 1.15)), 2.8rem);
+}
+
 .success-panel {
   display: grid;
   max-width: 780px;
