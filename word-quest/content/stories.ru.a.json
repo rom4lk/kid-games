@@ -1518,7 +1518,7 @@
     {
       "id": "ru-story-a-04",
       "title": "Огород",
-      "emoji": "🥕",
+      "emoji": "🌱",
       "character": "🐰",
       "colors": [
         "#2a6b62",
@@ -2022,7 +2022,7 @@
     {
       "id": "ru-story-a-05",
       "title": "Дождь",
-      "emoji": "🌈",
+      "emoji": "🌧️",
       "character": "🐸",
       "colors": [
         "#38458f",
@@ -4534,7 +4534,7 @@
     {
       "id": "ru-story-a-10",
       "title": "Клубника",
-      "emoji": "🍓",
+      "emoji": "🍰",
       "character": "🐦",
       "colors": [
         "#285a8a",
@@ -5539,7 +5539,7 @@
     {
       "id": "ru-story-a-12",
       "title": "Банный день",
-      "emoji": "🛁",
+      "emoji": "🫧",
       "character": "🐶",
       "colors": [
         "#285a8a",
@@ -6550,7 +6550,7 @@
     {
       "id": "ru-story-a-14",
       "title": "Ярмарка",
-      "emoji": "🎠",
+      "emoji": "🎡",
       "character": "🤡",
       "colors": [
         "#564086",
@@ -7051,7 +7051,7 @@
     {
       "id": "ru-story-a-15",
       "title": "Пикник",
-      "emoji": "🧺",
+      "emoji": "🌼",
       "character": "🐜",
       "colors": [
         "#2a6b62",
@@ -7555,7 +7555,7 @@
     {
       "id": "ru-story-a-16",
       "title": "Пропажа",
-      "emoji": "🔑",
+      "emoji": "🔍",
       "character": "🐶",
       "colors": [
         "#8a5a3b",
@@ -9581,7 +9581,7 @@
     {
       "id": "ru-story-a-20",
       "title": "До свидания, дача",
-      "emoji": "🚗",
+      "emoji": "👋",
       "character": "🐱",
       "colors": [
         "#57468f",
