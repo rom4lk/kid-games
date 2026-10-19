@@ -4180,22 +4180,36 @@
           "correct": "the-goose-wake-grandma"
         },
         {
-          "word": "TOM WAKES GRANDPA.",
-          "syllables": "T-O-M WAKES GRAND-PA.",
+          "word": "GRANDMA WAKES TOM.",
+          "syllables": "GRAND-MA WAKES T-O-M.",
           "choices": [
             {
-              "id": "boy-wake-grandpa",
+              "id": "grandma-wake-boy",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👵"
                   },
                   {
-                    "emoji": "👴"
+                    "emoji": "👦"
                   }
                 ]
               ],
-              "label": "tom wakes grandpa."
+              "label": "grandma wakes tom."
+            },
+            {
+              "id": "grandpa-wake-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👴"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "grandpa wakes tom."
             },
             {
               "id": "grandma-wake-grandpa",
@@ -4210,23 +4224,9 @@
                 ]
               ],
               "label": "grandma wakes grandpa."
-            },
-            {
-              "id": "boy-wake-grandma",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👵"
-                  }
-                ]
-              ],
-              "label": "tom wakes grandma."
             }
           ],
-          "correct": "boy-wake-grandpa"
+          "correct": "grandma-wake-boy"
         },
         {
           "word": "GRANDPA TAKES THE TORCH.",
@@ -4730,53 +4730,53 @@
           "correct": "grandma-read-the-letter"
         },
         {
-          "word": "THE DOG LIKES THE BOX.",
-          "syllables": "THE D-O-G LIKES THE B-O-X.",
+          "word": "MEG LIKES THE BOX.",
+          "syllables": "M-E-G LIKES THE B-O-X.",
           "choices": [
             {
-              "id": "the-dog-like-the-box",
+              "id": "girl-like-the-box",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "📦"
                   }
                 ]
               ],
-              "label": "the dog likes the box."
+              "label": "meg likes the box."
             },
             {
-              "id": "the-cat-like-the-box",
+              "id": "boy-like-the-box",
               "scene": [
                 [
                   {
-                    "emoji": "🐱"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "📦"
                   }
                 ]
               ],
-              "label": "the cat likes the box."
+              "label": "tom likes the box."
             },
             {
-              "id": "the-dog-like-the-book",
+              "id": "girl-like-the-book",
               "scene": [
                 [
                   {
-                    "emoji": "🐶"
+                    "emoji": "👧"
                   },
                   {
                     "emoji": "📖"
                   }
                 ]
               ],
-              "label": "the dog likes the book."
+              "label": "meg likes the book."
             }
           ],
-          "correct": "the-dog-like-the-box"
+          "correct": "girl-like-the-box"
         },
         {
           "word": "TOM DRINKS TEA.",
@@ -5004,18 +5004,18 @@
               "label": "tom paints a rainbow."
             },
             {
-              "id": "girl-paint-a-cat",
+              "id": "girl-paint-a-box",
               "scene": [
                 [
                   {
                     "emoji": "👧"
                   },
                   {
-                    "emoji": "🐱"
+                    "emoji": "📦"
                   }
                 ]
               ],
-              "label": "meg paints a cat."
+              "label": "meg paints a box."
             }
           ],
           "correct": "girl-paint-a-rainbow"
@@ -6810,18 +6810,18 @@
               "label": "dad sees a boat."
             },
             {
-              "id": "mom-see-a-boat",
+              "id": "boy-see-a-boat",
               "scene": [
                 [
                   {
-                    "emoji": "👩"
+                    "emoji": "👦"
                   },
                   {
                     "emoji": "🛶"
                   }
                 ]
               ],
-              "label": "mom sees a boat."
+              "label": "tom sees a boat."
             },
             {
               "id": "dad-see-a-crab",
@@ -6841,22 +6841,22 @@
           "correct": "dad-see-a-boat"
         },
         {
-          "word": "TOM FEEDS THE BIRD.",
-          "syllables": "T-O-M FEEDS THE B-I-R-D.",
+          "word": "MOM FEEDS THE BIRD.",
+          "syllables": "M-O-M FEEDS THE B-I-R-D.",
           "choices": [
             {
-              "id": "boy-feed-the-bird",
+              "id": "mom-feed-the-bird",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👩"
                   },
                   {
                     "emoji": "🐦"
                   }
                 ]
               ],
-              "label": "tom feeds the bird."
+              "label": "mom feeds the bird."
             },
             {
               "id": "dad-feed-the-bird",
@@ -6873,21 +6873,21 @@
               "label": "dad feeds the bird."
             },
             {
-              "id": "boy-feed-the-crab",
+              "id": "mom-feed-the-crab",
               "scene": [
                 [
                   {
-                    "emoji": "👦"
+                    "emoji": "👩"
                   },
                   {
                     "emoji": "🦀"
                   }
                 ]
               ],
-              "label": "tom feeds the crab."
+              "label": "mom feeds the crab."
             }
           ],
-          "correct": "boy-feed-the-bird"
+          "correct": "mom-feed-the-bird"
         },
         {
           "word": "TWO BIRDS SLEEP.",
@@ -7440,23 +7440,9 @@
           "correct": "grandma-cook-a-pie"
         },
         {
-          "word": "TOM HUGS GRANDMA.",
-          "syllables": "T-O-M H-U-G-S GRAND-MA.",
+          "word": "MOM HUGS GRANDMA.",
+          "syllables": "M-O-M H-U-G-S GRAND-MA.",
           "choices": [
-            {
-              "id": "boy-hug-grandma",
-              "scene": [
-                [
-                  {
-                    "emoji": "👦"
-                  },
-                  {
-                    "emoji": "👵"
-                  }
-                ]
-              ],
-              "label": "tom hugs grandma."
-            },
             {
               "id": "mom-hug-grandma",
               "scene": [
@@ -7472,21 +7458,35 @@
               "label": "mom hugs grandma."
             },
             {
-              "id": "boy-hug-mom",
+              "id": "boy-hug-grandma",
               "scene": [
                 [
                   {
                     "emoji": "👦"
                   },
                   {
-                    "emoji": "👩"
+                    "emoji": "👵"
                   }
                 ]
               ],
-              "label": "tom hugs mom."
+              "label": "tom hugs grandma."
+            },
+            {
+              "id": "mom-hug-boy",
+              "scene": [
+                [
+                  {
+                    "emoji": "👩"
+                  },
+                  {
+                    "emoji": "👦"
+                  }
+                ]
+              ],
+              "label": "mom hugs tom."
             }
           ],
-          "correct": "boy-hug-grandma"
+          "correct": "mom-hug-grandma"
         },
         {
           "word": "TOM EATS THE PIE.",
@@ -9801,22 +9801,36 @@
           "correct": "the-cat-find-the-box"
         },
         {
-          "word": "GRANDPA HUGS TOM.",
-          "syllables": "GRAND-PA H-U-G-S T-O-M.",
+          "word": "DAD HUGS GRANDPA.",
+          "syllables": "D-A-D H-U-G-S GRAND-PA.",
           "choices": [
             {
-              "id": "grandpa-hug-boy",
+              "id": "dad-hug-grandpa",
               "scene": [
                 [
                   {
-                    "emoji": "👴"
+                    "emoji": "👨"
                   },
                   {
-                    "emoji": "👦"
+                    "emoji": "👴"
                   }
                 ]
               ],
-              "label": "grandpa hugs tom."
+              "label": "dad hugs grandpa."
+            },
+            {
+              "id": "boy-hug-grandpa",
+              "scene": [
+                [
+                  {
+                    "emoji": "👦"
+                  },
+                  {
+                    "emoji": "👴"
+                  }
+                ]
+              ],
+              "label": "tom hugs grandpa."
             },
             {
               "id": "dad-hug-boy",
@@ -9831,23 +9845,9 @@
                 ]
               ],
               "label": "dad hugs tom."
-            },
-            {
-              "id": "grandpa-hug-dad",
-              "scene": [
-                [
-                  {
-                    "emoji": "👴"
-                  },
-                  {
-                    "emoji": "👨"
-                  }
-                ]
-              ],
-              "label": "grandpa hugs dad."
             }
           ],
-          "correct": "grandpa-hug-boy"
+          "correct": "dad-hug-grandpa"
         },
         {
           "word": "THREE BIRDS SING.",
