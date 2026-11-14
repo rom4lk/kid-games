@@ -717,7 +717,8 @@ h1 {
   font-weight: 700;
 }
 
-.level-card .world-progress {
+.level-card .world-progress,
+.chapter-card .world-progress {
   width: 100%;
 }
 
