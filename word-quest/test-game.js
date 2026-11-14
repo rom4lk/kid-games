@@ -250,10 +250,10 @@ function testModeStrings() {
 // side by side would make the items too small to count or compare.
 function testPictureLayout() {
   const counts = (...values) => values.map((count) => (count === undefined ? {} : { count }));
-  assert.deepEqual(pictureLayout(counts(2, 3, undefined)), { perRow: 3, stacked: false });
-  assert.deepEqual(pictureLayout(counts(4, 5, 3)), { perRow: 5, stacked: true });
-  assert.deepEqual(pictureLayout(counts(7, 8, 2)), { perRow: 5, stacked: true });
-  assert.deepEqual(pictureLayout(counts(undefined, undefined, undefined)), { perRow: 1, stacked: false });
+  assert.deepEqual(pictureLayout(counts(2, 3, undefined)), { perRow: 3, rows: 1, stacked: false });
+  assert.deepEqual(pictureLayout(counts(4, 5, 3)), { perRow: 5, rows: 1, stacked: true });
+  assert.deepEqual(pictureLayout(counts(7, 8, 2)), { perRow: 5, rows: 2, stacked: true });
+  assert.deepEqual(pictureLayout(counts(undefined, undefined, undefined)), { perRow: 1, rows: 1, stacked: false });
   assert.equal(pictureLayout([{ size: "big", count: 3 }, { size: "small", count: 3 }, { size: "big", count: 1 }]).stacked, true);
   assert.equal(pictureLayout([{ size: "big" }, { size: "small" }, { size: "big" }]).stacked, false);
   assert.equal(pictureLayout([{ badge: "💤", count: 2 }, { badge: "🎵", count: 2 }, { badge: "💤", count: 1 }]).stacked, true);

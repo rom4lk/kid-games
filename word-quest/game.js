@@ -204,6 +204,8 @@ function showScreen(target) {
   const isStart = target === elements.startScreen;
   elements.homeButton.hidden = isStart;
   elements.headerActions.hidden = isStart;
+  // The way back and the chapter progress share the header row with the brand.
+  elements.playTopbar.hidden = target !== elements.playScreen;
 
   // The pressed button just went hidden with its old screen; without a new
   // focus target the keyboard tab order would restart from the page top.
@@ -706,6 +708,7 @@ function renderTask() {
   if (!phrase) {
     elements.choiceGrid.classList.remove("phrase-choices", "stacked");
     elements.choiceGrid.style.removeProperty("--per-row");
+    elements.choiceGrid.style.removeProperty("--rows");
   }
   if (!story) {
     elements.choiceGrid.classList.remove("story-choices");
@@ -835,7 +838,12 @@ function pictureLayout(choices) {
   const most = Math.max(...choices.map((choice) => choice.count ?? 1));
   const decorated = choices.some((choice) => choice.size || choice.badge);
   const longWord = choices.some((choice) => (choice.label || "").split(" ").some((word) => word.length > 7));
-  return { perRow: Math.min(most, 5), stacked: most >= 4 || (decorated && most >= 2) || longWord };
+  const perRow = Math.min(most, 5);
+  return {
+    perRow,
+    rows: Math.ceil(most / perRow),
+    stacked: most >= 4 || (decorated && most >= 2) || longWord,
+  };
 }
 
 // The emoji repeated for a number, scaled for big or small, and badged for an
@@ -866,6 +874,7 @@ function renderPictureChoices(task) {
   if (phrase) {
     const layout = pictureLayout(task.choices);
     elements.choiceGrid.style.setProperty("--per-row", layout.perRow);
+    elements.choiceGrid.style.setProperty("--rows", layout.rows);
     elements.choiceGrid.classList.add("phrase-choices");
     elements.choiceGrid.classList.toggle("stacked", layout.stacked);
   }

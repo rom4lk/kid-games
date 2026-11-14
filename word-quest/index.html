@@ -17,6 +17,19 @@
           <span id="brandLabel"></span>
         </button>
 
+        <div class="play-topbar" id="playTopbar" hidden>
+          <button class="back-button" id="backButton" type="button">
+            <span aria-hidden="true">←</span>
+            <span id="backLabel"></span>
+          </button>
+          <div class="mission-progress">
+            <span id="missionLabel"></span>
+            <div class="progress-track" role="progressbar" id="missionProgress">
+              <div id="missionProgressFill"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="header-actions" id="headerActions" hidden>
           <div class="spark-counter">
             <span aria-hidden="true">✦</span>
@@ -132,19 +145,6 @@
       </section>
 
       <section class="screen play-screen" id="playScreen" tabindex="-1" hidden>
-        <div class="play-topbar">
-          <button class="back-button" id="backButton" type="button">
-            <span aria-hidden="true">←</span>
-            <span id="backLabel"></span>
-          </button>
-          <div class="mission-progress">
-            <span id="missionLabel"></span>
-            <div class="progress-track" role="progressbar" id="missionProgress">
-              <div id="missionProgressFill"></div>
-            </div>
-          </div>
-        </div>
-
         <section class="adventure-scene" id="adventureScene">
           <div class="scene-sky" aria-hidden="true">
             <span class="scene-orb orb-one"></span>
