@@ -2272,9 +2272,10 @@ html[lang="ru"] .word-choice .letter {
 
 /* A computer and a tablet show every screen whole: the shell is as tall as the
    window and each screen divides that height, so nothing waits below the fold
-   and the page never scrolls. A phone, or a window too short to hold a task,
-   keeps the scrolling layout above. */
-@media (min-width: 641px) and (min-height: 600px) {
+   and the page never scrolls. A phone, or a window too short to hold a task
+   (under 600px, or under 820px when it is narrower than 901px), keeps the
+   scrolling layout above. */
+@media (min-width: 901px) and (min-height: 600px), (min-width: 641px) and (min-height: 820px) {
   .app-shell {
     display: flex;
     height: min(100vh, 900px);
@@ -2425,7 +2426,7 @@ html[lang="ru"] .word-choice .letter {
   }
 
   .story-choices .choice-button:has(.scene-panel + .scene-panel) .scene-panel {
-    font-size: min(0.9em, calc(90cqw / (var(--scene-columns) * 1.15)), calc((100cqh - 26px) / 3.1));
+    font-size: min(0.9em, calc(90cqw / (var(--scene-columns) * 1.15)), calc((100cqh - 30px) / 3.1));
   }
 
   .choice-grid.word-choices {
@@ -2485,10 +2486,341 @@ html[lang="ru"] .word-choice .letter {
   }
 }
 
+/* The other screens divide the same height. Lists keep their cards in rows
+   that share what the heading leaves, so twenty chapters stand on one screen. */
+@media (min-width: 901px) and (min-height: 600px), (min-width: 641px) and (min-height: 820px) {
+  .start-screen {
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 60px);
+  }
+
+  .start-screen h1 {
+    font-size: clamp(2.55rem, min(7vw, 10vh), 5.8rem);
+  }
+
+  .start-copy {
+    margin-top: 0;
+  }
+
+  .start-lead {
+    margin-bottom: clamp(14px, 3vh, 34px);
+  }
+
+  .language-picker {
+    margin-bottom: clamp(14px, 3vh, 32px);
+  }
+
+  .book-hero {
+    height: min(100%, 570px);
+    min-height: 0;
+  }
+
+  .map-heading {
+    align-items: center;
+    margin: 0;
+  }
+
+  .map-heading .eyebrow,
+  .journey-line {
+    display: none;
+  }
+
+  .map-heading h1 {
+    margin-bottom: 4px;
+    font-size: clamp(1.9rem, 5.5vh, 3rem);
+  }
+
+  .map-heading > div > p:last-child {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .menu-side {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* The menu: letter levels, phrase levels, story levels and the modes, each
+     in a row of its own. A card drops its sample words before anything else. */
+  .menu-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .level-grid {
+    min-height: 0;
+    flex: 1 1 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 12px;
+    container-type: size;
+  }
+
+  .phrase-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  .level-card {
+    min-height: 0;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 22px;
+  }
+
+  .level-number {
+    font-size: clamp(2.4rem, 7vh, 4.6rem);
+  }
+
+  .level-name {
+    font-size: 1.2rem;
+    line-height: 1.15;
+  }
+
+  .level-sample {
+    display: none;
+    margin-bottom: 4px;
+  }
+
+  @container (min-height: 180px) and (min-width: 860px) {
+    .level-sample {
+      display: block;
+    }
+  }
+
+  .phrase-grid .level-sample {
+    display: none;
+  }
+
+  @container (min-height: 230px) {
+    .phrase-grid .level-sample {
+      display: block;
+    }
+  }
+
+  .mode-row {
+    flex: none;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 12px;
+    margin-top: 0;
+  }
+
+  .mode-card {
+    gap: 14px;
+    padding: 10px 20px;
+    border-radius: 22px;
+  }
+
+  .mode-picture {
+    font-size: 2.4rem;
+  }
+
+  /* The chapters: the emoji and the number share the first line of a card, and
+     the lock is told by the mark alone. */
+  .chapters-screen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 12px 20px;
+  }
+
+  .chapters-screen .map-heading {
+    grid-column: 1 / -1;
+  }
+
+  .chapters-screen .map-heading > div > p:last-child {
+    display: none;
+  }
+
+  .chapter-grid {
+    min-height: 0;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .chapter-card {
+    min-height: 0;
+    max-height: 205px;
+    flex-flow: row wrap;
+    align-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px 8px;
+    padding: 10px 14px;
+    border-radius: 20px;
+  }
+
+  .chapter-top {
+    margin-bottom: 0;
+  }
+
+  .chapter-card-emoji {
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+
+  .chapter-card .world-number {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .chapter-card h2 {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.12;
+  }
+
+  .chapter-card p {
+    display: none;
+  }
+
+  .chapter-card .world-lock {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+  }
+
+  .final-banner {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    gap: 12px;
+    margin-top: 0;
+    padding: 8px 14px;
+    border-radius: 20px;
+  }
+
+  .final-banner p {
+    display: none;
+  }
+
+  .final-banner h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .final-medal {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    font-size: 1.3rem;
+  }
+
+  .final-banner .secondary-button {
+    min-height: 44px;
+  }
+
+  .chapters-screen:has(.final-banner:not([hidden])) {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .chapters-screen:has(.final-banner:not([hidden])) .chapter-grid {
+    grid-row: 3;
+  }
+
+  /* A finished chapter. */
+  .chapter-screen {
+    min-height: 0;
+  }
+
+  .chapter-celebration {
+    padding: clamp(16px, 4vh, 52px) 40px;
+  }
+
+  .chapter-emblem {
+    width: clamp(72px, 16vh, 130px);
+    height: clamp(72px, 16vh, 130px);
+    margin-bottom: clamp(10px, 2.5vh, 28px);
+    border-radius: 30%;
+    font-size: clamp(2.5rem, 9vh, 4.5rem);
+  }
+
+  .chapter-celebration h1 {
+    margin-bottom: clamp(8px, 1.6vh, 15px);
+    font-size: clamp(2.35rem, min(6vw, 8vh), 4.2rem);
+  }
+
+  .chapter-celebration > p:not(.eyebrow) {
+    margin-bottom: clamp(10px, 2vh, 20px);
+  }
+
+  .chapter-stars {
+    margin-bottom: clamp(10px, 2.5vh, 25px);
+  }
+
+  /* A finished story stands whole under its closing line, so the emblem, the
+     title and the button move into one row above it. */
+  .chapter-celebration:has(.story-page:not([hidden])) {
+    display: grid;
+    width: min(1040px, 100%);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0 20px;
+    padding: 18px 28px;
+    text-align: left;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) .chapter-emblem {
+    width: 72px;
+    height: 72px;
+    margin: 0;
+    grid-area: 1 / 1 / 4 / 2;
+    border-radius: 24px;
+    font-size: 2.5rem;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) .eyebrow {
+    margin: 0;
+    grid-area: 1 / 2;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) h1 {
+    margin: 0;
+    grid-area: 2 / 2;
+    font-size: 2rem;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) > p:not(.eyebrow) {
+    max-width: none;
+    margin: 4px 0 0;
+    grid-area: 3 / 2;
+    line-height: 1.35;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) .primary-button {
+    grid-area: 1 / 3 / 4 / 4;
+  }
+
+  .chapter-celebration:has(.story-page:not([hidden])) .chapter-stars {
+    display: none;
+  }
+
+  .chapter-celebration .story-page {
+    max-width: none;
+    margin: 12px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    grid-area: 4 / 1 / 5 / 4;
+  }
+
+  .story-page-line {
+    break-inside: avoid;
+  }
+}
+
 /* On a wide screen the spell mode puts the picture and the three words side by
    side: three stacked words are the tallest answers of the game, and beside the
    picture they keep a size a child reads at a glance. */
-@media (min-width: 900px) and (min-height: 600px) {
+@media (min-width: 901px) and (min-height: 600px) {
   .reading-panel:has(.picture-card) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2536,11 +2868,57 @@ html[lang="ru"] .word-choice .letter {
   .reading-panel:has(.picture-card) .picture-card .word-main {
     font-size: clamp(3.2rem, min(12vw, 16vh), 7rem);
   }
+
+  /* The phrase and the story levels share the second row of the menu. */
+  .menu-screen {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 12px 14px;
+  }
+
+  .menu-screen .map-heading,
+  .level-grid:not(.phrase-grid),
+  .mode-row {
+    grid-column: 1 / -1;
+  }
+
+  .chapter-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  /* A finished level says so beside its title instead of taking a row. */
+  .chapters-screen:has(.final-banner:not([hidden])) {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .chapters-screen:has(.final-banner:not([hidden])) .map-heading {
+    grid-column: 1;
+  }
+
+  .chapters-screen:has(.final-banner:not([hidden])) .reader-badge {
+    display: none;
+  }
+
+  .chapters-screen:has(.final-banner:not([hidden])) .chapter-grid {
+    grid-row: 2;
+  }
+
+  .final-banner {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* A story of two sentences a task is twenty lines long. */
+  .story-page:has(.story-page-line:nth-child(11)) {
+    column-count: 2;
+    column-gap: 32px;
+  }
 }
 
 /* A short tablet window gives up paddings and the size of the scene before
    anything a child reads or taps. */
-@media (min-width: 641px) and (min-height: 600px) and (max-height: 680px) {
+@media (min-width: 901px) and (min-height: 600px) and (max-height: 680px) {
   .app-shell {
     padding: 8px 0;
   }
@@ -2584,6 +2962,53 @@ html[lang="ru"] .word-choice .letter {
   .success-panel .primary-button,
   .success-panel .secondary-button {
     min-height: 44px;
+  }
+
+  .menu-screen .map-heading > div > p:last-child {
+    display: none;
+  }
+
+  .menu-screen,
+  .chapters-screen {
+    gap: 8px 14px;
+  }
+
+  .level-grid,
+  .mode-row {
+    gap: 8px;
+  }
+
+  .chapter-grid {
+    gap: 8px;
+  }
+
+  .chapter-card {
+    padding: 7px 12px;
+  }
+}
+
+/* A tablet held upright stacks the start text over the book and stands its
+   chapters four in a row, so a card has to be a little tighter there. */
+@media (min-width: 641px) and (max-width: 900px) and (min-height: 820px) {
+  .start-screen {
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .book-hero {
+    overflow: hidden;
+  }
+
+  .chapter-card {
+    padding: 8px 12px;
+  }
+
+  .chapter-card-emoji {
+    font-size: 1.5rem;
+  }
+
+  .chapter-card h2 {
+    line-height: 1.08;
   }
 }
 

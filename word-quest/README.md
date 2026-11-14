@@ -70,6 +70,35 @@ which does not work over `file://`.
 A story level reads its chapter in order: the card shows a sentence instead of a word, nothing can
 be set aside, and each solved sentence joins the story so far. See [Story levels](#story-levels).
 
+## One screen, no scrolling
+
+On a computer and a tablet every screen fits the window and the page does not scroll: an answer or
+a chapter below the fold is one the child never considers. The layout holds from 600px of height at
+901px of width or more, and from 820px of height at 641-900px (a tablet held upright). The floor
+is a tablet browser with its tab bar and address bar open, about 1024x600. A phone, or a shorter
+window, keeps the scrolling layout and is best-effort, as in
+[GAME_DESIGN.md](../GAME_DESIGN.md#target-device).
+
+- **The shell is as tall as the window** (`100dvh`, at most 900px), and each screen divides that
+  height. Sizes that a child reads follow the height as well as the width, down to the floors the
+  rules give them.
+- **The task.** The way back and the chapter progress stand in the header row. The scene and the
+  fixed rows take what they need; the card and the answers share the rest, and a picture is sized by
+  the height of its answer as well as by its width. The line about a wrong pick and the panel of a
+  right one take turns in one row under the answers, so nothing moves when either shows. The panel
+  does not repeat the success line: the bubble above already says it.
+- **The "Find the word" mode** stands the picture and the three words side by side from 901px of
+  width: three stacked words are the tallest answers of the game.
+- **The menu** keeps the letter levels in one row, the phrase and the story levels in a second one
+  (a row each on an upright tablet) and the modes in a third. A card drops its sample words before
+  anything else.
+- **The chapters** stand five in a row (four on an upright tablet), so twenty share a screen. The
+  emoji and the number share the first line of a card; a locked card keeps its mark and its dimmed
+  look but not the line of text, and the lead under the title is left out. A finished level says so
+  beside its title.
+- **A finished story** stands whole under its closing line, in two columns when it has more than
+  ten sentences, with the emblem, the title and the button in one row above it.
+
 ## The "Find the word" mode
 
 The levels ask the child to read a word and pick the picture. This mode turns the task around: the
@@ -278,8 +307,9 @@ the chapter emoji may not stand in some scenes of any task and not in others.
 ### The phone
 
 On a computer and a tablet the card and all three answers share one screen, and the three answers
-stand side by side. The card text shrinks for a sentence of four or more words, and a two-sentence
-card stops at 36px. Under two English sentences the card is followed by the parts button, so the
+stand side by side, see [One screen, no scrolling](#one-screen-no-scrolling). The card text shrinks
+for a sentence of four or more words, and a two-sentence card stops at 36px; in a short window it
+goes down to 28px. Under two English sentences the card is followed by the parts button, so the
 two-panel scenes there stop at 45px items.
 
 On a phone the scenes always stack in one column, at least 72px high, and a sentence of four or more
