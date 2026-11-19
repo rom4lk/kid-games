@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff4dc" />
+    <title>Mouse Maze</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../shared/game-language.css" />
+  </head>
+  <body data-translations="translations.json">
+    <main class="game-shell">
+      <header class="hero">
+        <div class="hero-title">
+          <h1>Mouse Maze</h1>
+          <p class="subtitle">Collect the cheese and run from the cats!</p>
+        </div>
+        <div class="language-settings">
+          <button class="cats-button" id="catsButton" type="button" aria-pressed="true">
+            <span class="cats-icon" aria-hidden="true">🐱</span>
+            <span class="cats-text">Cats: on</span>
+          </button>
+          <label class="language-picker">
+            <span aria-hidden="true">🌐</span>
+            <span class="language-picker-text">Language</span>
+            <select data-language-select aria-label="Interface language">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </label>
+          <button class="sound-button" id="soundButton" type="button" aria-label="Turn sound off">
+            <span aria-hidden="true">🔊</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="game-layout">
+        <div class="board-wrap" id="boardWrap">
+          <canvas class="board" id="board" role="img" aria-label="The maze"></canvas>
+          <div class="board-overlay" id="boardOverlay" role="status">
+            <span class="overlay-icon" id="overlayIcon" aria-hidden="true">← ↑ ↓ →</span>
+            <span class="overlay-text" id="overlayText">Press an arrow</span>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <nav class="maze-picker" id="mazePicker" aria-label="Choose a maze"></nav>
+
+          <section class="goal-card">
+            <p class="goal"><span aria-hidden="true">🧀</span> <span>Collect all the cheese!</span></p>
+            <div class="cheese-meter" id="cheeseMeter" role="progressbar" aria-label="Cheese collected"
+              aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="cheese-fill" id="cheeseFill"></div>
+            </div>
+            <p class="cheese-count" id="cheeseCount">Cheese: 0 of 0</p>
+            <p class="score"><span aria-hidden="true">⭐</span> <strong id="scoreValue">0</strong></p>
+            <p class="tip" id="tipText">Run from the cats!</p>
+          </section>
+
+          <section class="controls-card" aria-label="Movement controls">
+            <div class="d-pad">
+              <button class="move-button move-up" type="button" data-direction="up" aria-label="Move up">↑</button>
+              <button class="move-button move-left" type="button" data-direction="left" aria-label="Move left">←</button>
+              <div class="d-pad-center" aria-hidden="true">🐭</div>
+              <button class="move-button move-right" type="button" data-direction="right" aria-label="Move right">→</button>
+              <button class="move-button move-down" type="button" data-direction="down" aria-label="Move down">↓</button>
+            </div>
+            <button class="pause-button" id="pauseButton" type="button">
+              <span aria-hidden="true" id="pauseIcon">⏸</span> <span id="pauseText">Pause</span>
+            </button>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="dialog-backdrop" id="winDialog" hidden>
+      <section class="result-dialog" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <div class="result-confetti" aria-hidden="true">🧀 🐭 🧀</div>
+        <h2 id="resultTitle">All the cheese is yours!</h2>
+        <p class="result-score" id="resultScore">Score: 0</p>
+        <div class="result-actions">
+          <button class="secondary-button" id="replayButton" type="button">Play again</button>
+          <button class="primary-button" id="nextButton" type="button">Next maze →</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="../shared/progress-sync.js"></script>
+    <script src="../shared/game-language.js"></script>
+    <script src="../shared/game-home.js"></script>
+    <script src="../shared/game-sound.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

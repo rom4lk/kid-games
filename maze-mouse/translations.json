@@ -1,0 +1,39 @@
+{
+  "pairs": [
+    ["Language", "Язык"],
+    ["Interface language", "Язык интерфейса"],
+    ["Mouse Maze", "Мышкин лабиринт"],
+    ["Collect the cheese and run from the cats!", "Собери сыр и убегай от котов!"],
+    ["Cats: on", "Коты: есть"],
+    ["Cats: off", "Коты: нет"],
+    ["Turn sound off", "Выключить звук"],
+    ["Turn sound on", "Включить звук"],
+    ["The maze", "Лабиринт"],
+    ["Press an arrow", "Нажми стрелку"],
+    ["Press an arrow to go on", "Нажми стрелку, чтобы бежать дальше"],
+    ["Pause", "Пауза"],
+    ["Go on", "Дальше"],
+    ["Oops! Back to the hole!", "Ой! Обратно в норку!"],
+    ["Choose a maze", "Выбрать лабиринт"],
+    ["Kitchen", "Кухня"],
+    ["Garden", "Сад"],
+    ["Cellar", "Погреб"],
+    ["Collect all the cheese!", "Собери весь сыр!"],
+    ["Cheese collected", "Собрано сыра"],
+    ["Run from the cats!", "Убегай от котов!"],
+    ["No cats today. Take your time!", "Котов нет. Можно не спешить!"],
+    ["💤 The cats are sleepy. Catch them!", "💤 Коты уснули. Догони их!"],
+    ["Movement controls", "Кнопки движения"],
+    ["Move up", "Вверх"],
+    ["Move left", "Влево"],
+    ["Move right", "Вправо"],
+    ["Move down", "Вниз"],
+    ["All the cheese is yours!", "Весь сыр твой!"],
+    ["Play again", "Ещё раз"],
+    ["Next maze →", "Следующий лабиринт →"]
+  ],
+  "templates": [
+    ["Cheese: {eaten} of {total}", "Сыр: {eaten} из {total}"],
+    ["Score: {score}", "Очки: {score}"]
+  ]
+}

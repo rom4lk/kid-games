@@ -79,8 +79,8 @@ certificate once: copy `rootCA.pem` from the folder that `mkcert -CAROOT` prints
 Sound and language are stored per address, so they are picked again on the HTTPS one.
 
 A local server is required: `word-quest` loads its text and word packs through `fetch`, while
-`island-discovery`, `forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and
-`block-town` load translations or other content the same way. That does not work when a file is
+`island-discovery`, `forest-light`, `robo-stories`, `garden-quest`, `maze-mouse`, `hypothesis-lab`
+and `block-town` load translations or other content the same way. That does not work when a file is
 opened directly over `file://`.
 
 ## The games
@@ -92,13 +92,14 @@ opened directly over `file://`.
 | `forest-light/` | Forest Light | Gathering supplies, returning home and building a campfire | Russian, English |
 | `robo-stories/` | Robo Stories | Building programs out of picture cards across eight robot stories: parcels, gates, batteries, a rover, a room, snowballs, conveyor belts and a pond | Russian, English |
 | `garden-quest/` | Garden Quest | Collecting a harvest on a fixed board within a limited number of steps | Russian, English |
+| `maze-mouse/` | Mouse Maze | A maze chase: collecting cheese and dodging cats, who can be switched off | Russian, English |
 | `hypothesis-lab/` | Secret Rule Lab | Forming a hypothesis, predicting a result and testing a secret sorting rule | Russian, English |
 | `block-town/` | Block Town | Painting a town on squared paper, where roads, water and houses connect themselves | Russian, English |
 
 Details about a game loop and its deliberate design decisions are in the README of the game:
 [word-quest/README.md](word-quest/README.md), [island-discovery/README.md](island-discovery/README.md),
 [forest-light/README.md](forest-light/README.md), [robo-stories/README.md](robo-stories/README.md),
-[garden-quest/README.md](garden-quest/README.md),
+[garden-quest/README.md](garden-quest/README.md), [maze-mouse/README.md](maze-mouse/README.md),
 [hypothesis-lab/README.md](hypothesis-lab/README.md), [block-town/README.md](block-town/README.md).
 
 ## Returning to the shelf
@@ -122,8 +123,8 @@ page is the one a game opens in, and a language picked inside a game is the one 
 
 The text is written in English in the HTML, and the Russian version comes from a `translations.json`
 next to it through the shared `shared/game-language.js`. The home page, `island-discovery`,
-`forest-light`, `robo-stories`, `garden-quest`, `hypothesis-lab` and `block-town` work this way;
-`word-quest` carries its own two-language content in `word-quest/content/`.
+`forest-light`, `robo-stories`, `garden-quest`, `maze-mouse`, `hypothesis-lab` and `block-town` work
+this way; `word-quest` carries its own two-language content in `word-quest/content/`.
 
 ## Content checks
 
@@ -146,6 +147,7 @@ node block-town/test-game.js       # the world model, the shelf's copy of the bl
 node robo-stories/test-game.js     # the levels, the simulator, the hint search, the progress rules
 node forest-light/test-game.js     # gathering, building and the evening
 node garden-quest/test-game.js     # the ten gardens: every star and the perfect route are reachable
+node maze-mouse/test-game.js       # the three mazes, the cats, catches that keep the cheese
 node island-discovery/test-game.js # the hex map, the fog, the path of discoveries
 node word-quest/test-game.js       # the reading rules and the shape of the word packs
 ```
@@ -163,6 +165,9 @@ Every game writes its progress to `localStorage` under its own key:
 | `garden-quest` | `gardenQuestBestScoresV3`, `gardenQuestUnlockedV1` |
 | `hypothesis-lab` | `secretRuleLabCompletedV1` |
 | `block-town` | `blockTownWorldsV1` |
+
+`maze-mouse` saves no progress, so its card has no settings button. Its sound and cats switches are
+settings, kept per device under `mazeMouseSoundV1` and `mazeMouseCatsV1`.
 
 When the games are opened from `server.py`, the progress is shared between computers, as described
 below. Pages opened over `file://` or from another static server keep progress in the browser only.
