@@ -115,6 +115,9 @@ const PHASES = [
 ];
 
 const CATCH_DISTANCE = 0.6;
+// A turn pressed a moment late still counts while the mouse is less than half
+// a cell past the opening: it still looks as if it is standing in it.
+const LATE_TURN = 0.45;
 const MAX_STEP = 0.02;
 const MAX_FRAME = 0.1;
 
@@ -322,7 +325,28 @@ function steer(game, direction) {
   if (game.mouse.dir === OPPOSITE[direction]) {
     game.mouse.dir = direction;
     game.mouse.facing = direction;
+    return;
   }
+  takeLateTurn(game, direction);
+}
+
+// The mouse has just run past a side opening and the child asks for it: step
+// back to the middle of that cell and turn there, as if pressed in time.
+function takeLateTurn(game, direction) {
+  const { maze, mouse } = game;
+  if (!mouse.dir || mouse.dir === direction || isCentered(mouse)) return;
+  const step = DIRECTIONS[mouse.dir];
+  const axis = step.x !== 0 ? "x" : "y";
+  const sign = step.x + step.y;
+  const passed = sign > 0 ? Math.floor(mouse[axis]) : Math.ceil(mouse[axis]);
+  if (Math.abs(mouse[axis] - passed) > LATE_TURN) return;
+  const col = wrapCol(maze, axis === "x" ? passed : Math.round(mouse.x));
+  const row = axis === "y" ? passed : Math.round(mouse.y);
+  if (!canGo(maze, col, row, direction, "roam")) return;
+  mouse.x = col;
+  mouse.y = row;
+  mouse.dir = direction;
+  mouse.facing = direction;
 }
 
 function setPaused(game, paused) {
@@ -532,6 +556,7 @@ if (typeof module !== "undefined" && module.exports) {
     MOUSE_SPEED,
     SLEEP_TIME,
     CAUGHT_TIME,
+    LATE_TURN,
     SYMBOL_CELLS,
     parseMaze,
     cellAt,
@@ -928,8 +953,17 @@ if (typeof document !== "undefined") {
 
   // ---- Controls ----------------------------------------------------------
 
+  // An arrow button steers the moment it is touched, not when the finger
+  // lifts: waiting for the release made turns come too late. The keyboard
+  // still presses it through click, which then has no pointer behind it.
   document.querySelectorAll(".move-button").forEach((button) => {
-    button.addEventListener("click", () => steerMouse(button.dataset.direction));
+    button.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      steerMouse(button.dataset.direction);
+    });
+    button.addEventListener("click", (event) => {
+      if (event.detail === 0) steerMouse(button.dataset.direction);
+    });
   });
 
   pauseButton.addEventListener("click", togglePause);
@@ -988,19 +1022,30 @@ if (typeof document !== "undefined") {
     pointerStart = { x: event.clientX, y: event.clientY };
   });
 
-  boardWrap.addEventListener("pointerup", (event) => {
-    if (!pointerStart) return;
-    let dx = event.clientX - pointerStart.x;
-    let dy = event.clientY - pointerStart.y;
-    pointerStart = null;
-    if (Math.hypot(dx, dy) < SWIPE_DISTANCE) {
-      const box = canvas.getBoundingClientRect();
-      dx = event.clientX - (box.left + (game.mouse.x + 0.5) * tile);
-      dy = event.clientY - (box.top + (game.mouse.y + 0.5) * tile);
-      if (Math.hypot(dx, dy) < tile * 0.5) return;
-    }
+  function steerToward(dx, dy) {
     if (Math.abs(dx) > Math.abs(dy)) steerMouse(dx > 0 ? "right" : "left");
     else steerMouse(dy > 0 ? "down" : "up");
+  }
+
+  // A swipe steers as soon as the finger has travelled far enough, without
+  // waiting for it to lift.
+  boardWrap.addEventListener("pointermove", (event) => {
+    if (!pointerStart) return;
+    const dx = event.clientX - pointerStart.x;
+    const dy = event.clientY - pointerStart.y;
+    if (Math.hypot(dx, dy) < SWIPE_DISTANCE) return;
+    pointerStart = null;
+    steerToward(dx, dy);
+  });
+
+  boardWrap.addEventListener("pointerup", (event) => {
+    if (!pointerStart) return;
+    pointerStart = null;
+    const box = canvas.getBoundingClientRect();
+    const dx = event.clientX - (box.left + (game.mouse.x + 0.5) * tile);
+    const dy = event.clientY - (box.top + (game.mouse.y + 0.5) * tile);
+    if (Math.hypot(dx, dy) < tile * 0.5) return;
+    steerToward(dx, dy);
   });
 
   boardWrap.addEventListener("pointercancel", () => { pointerStart = null; });

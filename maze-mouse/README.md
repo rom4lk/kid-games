@@ -8,6 +8,8 @@ look, not a copy of any existing game.
 
 - The mouse keeps running in the chosen direction until it meets a wall. An arrow pressed early is
   remembered and used at the next turn, so the child does not have to time the press.
+- A turn pressed a moment too late still counts: while the mouse is less than half a cell past a side
+  opening, it steps back to the opening and turns into it.
 - A crumb gives 10 points, a big cheese 50.
 - A big cheese makes the cats sleepy for seven seconds: they turn pale blue with 💤 and wander
   slowly. In the last two seconds their circle flickers back to their own color. A mouse that touches
@@ -42,8 +44,10 @@ crumbs in a corner.
 ## Controls
 
 - Arrow keys or WASD; Space or P pauses.
-- The big arrow buttons next to the maze.
-- On a tablet, a swipe across the maze, or a tap on the side of the mouse it should run to.
+- The big arrow buttons next to the maze. They steer the moment they are touched, not when the
+  finger lifts.
+- On a tablet, a swipe across the maze, or a tap on the side of the mouse it should run to. A swipe
+  steers as soon as the finger has moved far enough.
 
 The game pauses itself when the tab is hidden.
 

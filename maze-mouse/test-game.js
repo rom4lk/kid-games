@@ -5,6 +5,7 @@ const {
   SCORES,
   SYMBOL_CELLS,
   CAUGHT_TIME,
+  LATE_TURN,
   parseMaze,
   cellAt,
   isOpen,
@@ -268,6 +269,32 @@ function testStartNeedsAnOpenWay() {
   });
 }
 
+// Kitchen row 3 is one long corridor with an opening down at column 4.
+function testLateTurn() {
+  const late = createGame(0, { catsEnabled: false });
+  late.state = "playing";
+  Object.assign(late.mouse, { x: 4 + LATE_TURN - 0.05, y: 3, dir: "right", facing: "right" });
+  steer(late, "down");
+  assert.deepEqual([late.mouse.x, late.mouse.y, late.mouse.dir], [4, 3, "down"],
+    "a turn pressed just after the opening is still taken");
+  update(late, 0.1);
+  assert.ok(late.mouse.y > 3 && late.mouse.x === 4, "the mouse runs down the side corridor");
+
+  const tooLate = createGame(0, { catsEnabled: false });
+  tooLate.state = "playing";
+  Object.assign(tooLate.mouse, { x: 4.6, y: 3, dir: "right", facing: "right" });
+  steer(tooLate, "down");
+  assert.equal(tooLate.mouse.dir, "right", "past half a cell the mouse keeps running");
+  assert.equal(tooLate.desired, "down", "and remembers the turn for the next opening");
+
+  const wall = createGame(0, { catsEnabled: false });
+  wall.state = "playing";
+  Object.assign(wall.mouse, { x: 5.2, y: 3, dir: "right", facing: "right" });
+  steer(wall, "down");
+  assert.equal(wall.mouse.x, 5.2, "no step back where the side is a wall");
+  assert.equal(wall.mouse.dir, "right");
+}
+
 function testPause() {
   const game = createGame(0);
   steer(game, "left");
@@ -287,5 +314,6 @@ testCaughtKeepsTheCheese();
 testBigCheeseMakesCatsSleepy();
 testCatsCanBeSwitchedOff();
 testStartNeedsAnOpenWay();
+testLateTurn();
 testPause();
 console.log("maze-mouse: all checks passed");
